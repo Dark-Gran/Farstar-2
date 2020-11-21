@@ -125,3 +125,9 @@ Thumbs.db
 !/ios-moe/xcode/*.xcodeproj/xcshareddata
 !/ios-moe/xcode/*.xcodeproj/project.pbxproj
 /ios-moe/xcode/native/
+
+## CUSTOM
+
+/core/assets/DGLogo.jpg
+/core/assets/exit.png
+/core/assets/start.png

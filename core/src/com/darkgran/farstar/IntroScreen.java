@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 
-public class IntroScreen extends SuperScreen {
+public class IntroScreen extends SuperScreen { //Used only once on app-launch
     private final Texture logo;
     private float alpha = 0;
     private boolean fadeDirection = true; //true in, false out
@@ -17,14 +17,20 @@ public class IntroScreen extends SuperScreen {
         try { Thread.sleep(500); } catch(InterruptedException ignored) { }
     }
 
-    private void moveOn() {
+    private void endIntro() {
         exit = new Texture("exit.png"); //TODO:
         game.setScreen(new MenuScreen(game, exit));
+        this.dispose();
+    }
+
+    @Override
+    public void control() {
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){ endIntro(); }
     }
 
     @Override
     public void render(float delta) {
-        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){ moveOn(); }
+        control();
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -32,7 +38,7 @@ public class IntroScreen extends SuperScreen {
 
         if (alpha < 0 && !fadeDirection) { //end=>goNext
             try { Thread.sleep(900); } catch (InterruptedException ignored) { }
-            moveOn();
+            endIntro();
         } else { //intro animation
             game.batch.setProjectionMatrix(camera.combined);
             game.batch.begin();

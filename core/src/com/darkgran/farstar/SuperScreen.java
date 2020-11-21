@@ -23,24 +23,28 @@ public class SuperScreen implements Screen {
         camera.position.set((float) Farstar.STAGE_WIDTH/2,(float) Farstar.STAGE_HEIGHT/2,0);
     }
 
+    public void control() { }
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
+
         drawScreen();
         drawTable();
+        control();
     }
 
     public void drawScreen() { }//for all screens except intro
 
     public void drawTable() { //for all screens except intro
-        if (exit != null) { //todo: actual table buttons
+        if (exit != null) {
             game.batch.begin();
             game.batch.setColor(1, 1, 1, 1);
 
-            //game.batch.draw(exit, 1, 1, (float) Farstar.STAGE_WIDTH/40,(float) Farstar.STAGE_HEIGHT/20);
+            game.batch.draw(exit, 1, 1, (float) Farstar.STAGE_WIDTH/40,(float) Farstar.STAGE_HEIGHT/20);
 
             game.batch.end();
         }

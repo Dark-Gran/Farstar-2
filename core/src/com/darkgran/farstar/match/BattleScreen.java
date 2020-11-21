@@ -1,6 +1,8 @@
-package com.darkgran.farstar;
+package com.darkgran.farstar.match;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.SuperScreen;
 
 public class BattleScreen extends SuperScreen {
 
