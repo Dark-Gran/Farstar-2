@@ -22,22 +22,22 @@ public class SuperScreen implements Screen {
         camera.position.set((float) Farstar.STAGE_WIDTH/2,(float) Farstar.STAGE_HEIGHT/2,0);
     }
 
+    public void setTableMenu(TableMenu tableMenu) {
+        this.tableMenu = tableMenu;
+        game.getInputMultiplexer().addProcessor(tableMenu);
+    }
+
+    public void drawScreen(float delta, Batch batch) { }//for all screens except intro
+
     public Farstar getGame() { return game; }
 
     public OrthographicCamera getCamera() { return camera; }
 
     public Viewport getViewport() { return viewport; }
 
-    public void setTableMenu(TableMenu tableMenu) {
-        this.tableMenu = tableMenu;
-        game.getInputMultiplexer().addProcessor(tableMenu);
-    }
-
     public TableMenu getTableMenu() {
         return tableMenu;
     }
-
-    public void drawScreen(float delta, Batch batch) { }//for all screens except intro
 
     @Override
     public void render(float delta) {
