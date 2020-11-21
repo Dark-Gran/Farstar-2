@@ -4,15 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.darkgran.farstar.ui.TableMenu;
 
 public class SuperScreen implements Screen {
     final Farstar game;
     public final OrthographicCamera camera;
     public final Viewport viewport;
-    public Texture exit;
+    public TableMenu tableMenu;
 
     public SuperScreen(final Farstar game) {
         this.game = game;
@@ -23,7 +23,7 @@ public class SuperScreen implements Screen {
         camera.position.set((float) Farstar.STAGE_WIDTH/2,(float) Farstar.STAGE_HEIGHT/2,0);
     }
 
-    public void control() { }
+    public void drawScreen() { }//for all screens except intro
 
     @Override
     public void render(float delta) {
@@ -33,20 +33,9 @@ public class SuperScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         drawScreen();
-        drawTable();
-        control();
-    }
-
-    public void drawScreen() { }//for all screens except intro
-
-    public void drawTable() { //for all screens except intro
-        if (exit != null) {
-            game.batch.begin();
-            game.batch.setColor(1, 1, 1, 1);
-
-            game.batch.draw(exit, 1, 1, (float) Farstar.STAGE_WIDTH/40,(float) Farstar.STAGE_HEIGHT/20);
-
-            game.batch.end();
+        if (tableMenu != null) {
+            tableMenu.act(Gdx.graphics.getDeltaTime());
+            tableMenu.draw();
         }
     }
 

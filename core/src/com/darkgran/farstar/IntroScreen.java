@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.darkgran.farstar.ui.TableMenu;
 
 public class IntroScreen extends SuperScreen { //Used only once on app-launch
     private final Texture logo;
@@ -18,19 +19,13 @@ public class IntroScreen extends SuperScreen { //Used only once on app-launch
     }
 
     private void endIntro() {
-        exit = new Texture("exit.png"); //TODO:
-        game.setScreen(new MenuScreen(game, exit));
+        game.setScreen(new MenuScreen(game, new TableMenu(viewport)));
         this.dispose();
     }
 
     @Override
-    public void control() {
-        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){ endIntro(); }
-    }
-
-    @Override
     public void render(float delta) {
-        control();
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){ endIntro(); }
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

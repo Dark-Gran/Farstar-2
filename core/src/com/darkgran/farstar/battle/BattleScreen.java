@@ -1,15 +1,15 @@
-package com.darkgran.farstar.match;
+package com.darkgran.farstar.battle;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
+import com.darkgran.farstar.ui.TableMenu;
 
 public class BattleScreen extends SuperScreen {
 
-    public BattleScreen(final Farstar game, Texture exit)
+    public BattleScreen(final Farstar game, TableMenu tableMenu)
     {
         super(game);
-        this.exit = exit;
+        this.tableMenu = tableMenu;
         System.out.println("OK");
     }
 
