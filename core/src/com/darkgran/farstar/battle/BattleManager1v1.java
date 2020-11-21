@@ -11,8 +11,8 @@ public class BattleManager1v1 implements BattleManager, BattleSettings {
 
     public BattleManager1v1() {
         System.out.println("Launching Battle.");
-        player1 = new Player((byte) 1, STARTING_ENERGY);
-        player2 = new Player((byte) 2, STARTING_ENERGY);
+        player1 = new Player((byte) 1, STARTING_ENERGY, STARTING_MATTER);
+        player2 = new Player((byte) 2, STARTING_ENERGY, STARTING_MATTER);
         gui1v1 = new GUI1v1(player1, player2);
     }
 
