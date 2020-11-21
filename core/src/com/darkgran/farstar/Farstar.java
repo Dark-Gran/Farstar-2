@@ -8,11 +8,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Farstar extends Game {
 	public static final int STAGE_WIDTH = 1280;
 	public static final int STAGE_HEIGHT = 640;
-	public final InputMultiplexer inputMultiplexer = new InputMultiplexer();
+	private final InputMultiplexer inputMultiplexer = new InputMultiplexer();
 
 	protected SuperScreen superScreen;
 	SpriteBatch batch;
-	
+
+	public InputMultiplexer getInputMultiplexer() { return inputMultiplexer; }
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();

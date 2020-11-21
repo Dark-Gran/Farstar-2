@@ -21,9 +21,9 @@ public class IntroScreen extends SuperScreen { //Animation used only once on app
     }
 
     private void endIntro() {
-        Gdx.input.setInputProcessor(game.inputMultiplexer);
+        Gdx.input.setInputProcessor(getGame().getInputMultiplexer());
         this.dispose();
-        game.setScreen(new MenuScreen(game, new TableMenu(game, viewport)));
+        getGame().setScreen(new MenuScreen(getGame(), new TableMenu(getGame(), getViewport())));
     }
 
     private void updateAlpha(float delta) {
@@ -49,14 +49,14 @@ public class IntroScreen extends SuperScreen { //Animation used only once on app
 
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            camera.update();
-            game.batch.setProjectionMatrix(camera.combined);
-            game.batch.begin();
-            game.batch.setColor(1, 1, 1, alpha);
+            getCamera().update();
+            getGame().batch.setProjectionMatrix(getCamera().combined);
+            getGame().batch.begin();
+            getGame().batch.setColor(1, 1, 1, alpha);
 
-            game.batch.draw(logo, (float) (Farstar.STAGE_WIDTH/2-logo.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-logo.getHeight()/2));
+            getGame().batch.draw(logo, (float) (Farstar.STAGE_WIDTH/2-logo.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-logo.getHeight()/2));
 
-            game.batch.end();
+            getGame().batch.end();
 
             updateAlpha(delta);
 

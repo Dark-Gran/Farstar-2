@@ -10,20 +10,20 @@ public class MenuScreen extends SuperScreen {
     public MenuScreen(final Farstar game, TableMenu tableMenu) {
         super(game);
         setTableMenu(tableMenu);
-        menu = new MainMenu(game, viewport);
-        game.inputMultiplexer.addProcessor(menu);
+        menu = new MainMenu(getGame(), getViewport());
+        game.getInputMultiplexer().addProcessor(menu);
         Gdx.input.setCursorCatched(false);
     }
 
     @Override
-    public void drawScreen() {
+    public void drawScreen(float delta) {
         menu.act(Gdx.graphics.getDeltaTime());
         menu.draw();
     }
 
     @Override
     public void dispose() {
-        game.inputMultiplexer.removeProcessor(menu);
+        getGame().getInputMultiplexer().removeProcessor(menu);
         menu.dispose();
     }
 }
