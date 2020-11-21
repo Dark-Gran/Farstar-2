@@ -29,7 +29,7 @@ public class ResourceMeter {
     public void draw(Batch batch) {
         String res = "Energy: "+player.getEnergy();
         font.draw(batch, res, x, onBottom ? y+height*8 : y-height*6);
-        res = "Matter: "+player.getMatter();
+        res = " Matter: "+player.getMatter();
         font.draw(batch, res, x, onBottom ? y+height*6 : y-height*8);
     }
 
