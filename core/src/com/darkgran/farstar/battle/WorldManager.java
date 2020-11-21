@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class WorldManager implements WorldSettings {
     private float accumulator = 0;
-    private World world = new World(new Vector2(0, 0), true);;
+    private World world = new World(new Vector2(0, 0), true);
     private ArrayList corpses = new ArrayList();
     //private CollisionListener collisionListener = new CollisionListener();
 

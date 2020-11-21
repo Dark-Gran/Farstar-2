@@ -13,7 +13,7 @@ import com.darkgran.farstar.MenuScreen;
 
 public class TableMenu extends ListeningMenu {
     private final Texture exit = new Texture("exit.png");
-    private final ImageButton exitButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(exit)));;
+    private final ImageButton exitButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(exit)));
 
     public TableMenu(final Farstar game, Viewport viewport) {
         super(game, viewport);

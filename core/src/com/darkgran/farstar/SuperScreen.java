@@ -10,8 +10,8 @@ import com.darkgran.farstar.ui.TableMenu;
 
 public class SuperScreen implements Screen {
     private Farstar game;
-    private OrthographicCamera camera = new OrthographicCamera();;
-    private Viewport viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);;
+    private OrthographicCamera camera = new OrthographicCamera();
+    private Viewport viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);
     private TableMenu tableMenu;
 
     public SuperScreen(final Farstar game) {
