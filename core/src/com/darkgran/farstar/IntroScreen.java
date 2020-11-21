@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.darkgran.farstar.ui.TableMenu;
 
-public class IntroScreen extends SuperScreen { //Used only once on app-launch
+public class IntroScreen extends SuperScreen { //Animation used only once on app-launch
     private final Texture logo;
     private float alpha = 0;
     private boolean fadeDirection = true; //true in, false out
+
+    private final static float INTRO_SPEED = 0.35f;
 
     public IntroScreen(final Farstar game) {
         super(game);
@@ -23,31 +25,40 @@ public class IntroScreen extends SuperScreen { //Used only once on app-launch
         this.dispose();
     }
 
+    private void updateAlpha(float delta) {
+        if (delta > 0.03f) { delta = 0.03f; } //todo: rework (like time-steps)?
+        if (alpha >= 1) {
+            fadeDirection = false;
+            try { Thread.sleep(900); } catch(InterruptedException ignored) { }
+        }
+        alpha += fadeDirection ? (INTRO_SPEED *delta) : -(INTRO_SPEED *delta)*4;
+    }
+
     @Override
     public void render(float delta) {
+
+        //control
         if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){ endIntro(); }
 
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        camera.update();
-
-        if (alpha < 0 && !fadeDirection) { //end=>goNext
+        //INTRO ANIMATION
+        if (alpha < 0 && !fadeDirection) { //animation over
             try { Thread.sleep(900); } catch (InterruptedException ignored) { }
             endIntro();
-        } else { //intro animation
+        } else {
+
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            camera.update();
             game.batch.setProjectionMatrix(camera.combined);
             game.batch.begin();
             game.batch.setColor(1, 1, 1, alpha);
+
             game.batch.draw(logo, (float) (Farstar.STAGE_WIDTH/2-logo.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-logo.getHeight()/2));
+
             game.batch.end();
 
-            if (delta > 0.03f) { delta = 0.03f; } //todo: rework (like time-steps)?
-            if (alpha >= 1) {
-                fadeDirection = false;
-                try { Thread.sleep(900); } catch(InterruptedException ignored) { }
-            }
-            final float introSpeed = 0.35f;
-            alpha += fadeDirection ? (introSpeed *delta) : -(introSpeed *delta)*4;
+            updateAlpha(delta);
+
         }
     }
 
