@@ -24,7 +24,9 @@ public class SuperScreen implements Screen {
 
     public void setTableMenu(TableMenu tableMenu) {
         this.tableMenu = tableMenu;
-        game.getInputMultiplexer().addProcessor(tableMenu);
+        if (!game.getInputMultiplexer().getProcessors().contains(tableMenu, true)) {
+            game.getInputMultiplexer().addProcessor(tableMenu);
+        }
     }
 
     public void drawScreen(float delta, Batch batch) { }//for all screens except intro
