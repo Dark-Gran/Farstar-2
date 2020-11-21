@@ -21,7 +21,8 @@ public class IntroScreen extends SuperScreen { //Animation used only once on app
     }
 
     private void endIntro() {
-        game.setScreen(new MenuScreen(game, new TableMenu(viewport)));
+        Gdx.input.setInputProcessor(game.inputMultiplexer);
+        game.setScreen(new MenuScreen(game, new TableMenu(game, viewport)));
         this.dispose();
     }
 

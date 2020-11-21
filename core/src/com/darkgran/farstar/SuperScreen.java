@@ -9,10 +9,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.ui.TableMenu;
 
 public class SuperScreen implements Screen {
-    final Farstar game;
+    public final Farstar game;
     public final OrthographicCamera camera;
     public final Viewport viewport;
-    public TableMenu tableMenu;
+    private TableMenu tableMenu;
 
     public SuperScreen(final Farstar game) {
         this.game = game;
@@ -21,6 +21,15 @@ public class SuperScreen implements Screen {
         viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);
         viewport.apply();
         camera.position.set((float) Farstar.STAGE_WIDTH/2,(float) Farstar.STAGE_HEIGHT/2,0);
+    }
+
+    public void setTableMenu(TableMenu tableMenu) {
+        this.tableMenu = tableMenu;
+        game.inputMultiplexer.addProcessor(tableMenu);
+    }
+
+    public TableMenu getTableMenu() {
+        return tableMenu;
     }
 
     public void drawScreen() { }//for all screens except intro

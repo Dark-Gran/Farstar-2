@@ -9,9 +9,9 @@ public class MenuScreen extends SuperScreen {
 
     public MenuScreen(final Farstar game, TableMenu tableMenu) {
         super(game);
-        this.tableMenu = tableMenu;
-        menu = new MainMenu(viewport);
-        Gdx.input.setInputProcessor(menu);
+        setTableMenu(tableMenu);
+        menu = new MainMenu(game, viewport);
+        game.inputMultiplexer.addProcessor(menu);
         Gdx.input.setCursorCatched(false);
     }
 
@@ -23,6 +23,7 @@ public class MenuScreen extends SuperScreen {
 
     @Override
     public void dispose() {
+        game.inputMultiplexer.removeProcessor(menu);
         menu.dispose();
     }
 }

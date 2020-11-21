@@ -14,12 +14,13 @@ public class MainMenu extends ListeningMenu {
     private final ImageButton startButton;
     private final Texture start;
 
-    public MainMenu(Viewport viewport) {
-        super(viewport);
+    public MainMenu(final Farstar game, Viewport viewport) {
+        super(game, viewport);
         start = new Texture("start.png");
         startButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(start)));
         startButton.setPosition((float) (Farstar.STAGE_WIDTH/2-start.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-start.getHeight()/2));
         this.addActor(startButton);
+        setupListeners();
     }
 
     @Override
@@ -29,8 +30,9 @@ public class MainMenu extends ListeningMenu {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                //game.getScreen().dispose();
-                //game.setScreen(new BattleScreen(game, tableMenu));
+                final TableMenu tableMenu =  game.getSuperScreen().getTableMenu();
+                game.getScreen().dispose();
+                game.setScreen(new BattleScreen(game, tableMenu));
                 //startButton.removeListener(this);
             }
         });
