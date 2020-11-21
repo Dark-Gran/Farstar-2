@@ -1,26 +1,29 @@
-package com.darkgran.farstar.battle;
+package com.darkgran.farstar;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.*;
-import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.SuperScreen;
-import com.darkgran.farstar.ui.TableMenu;
+import com.darkgran.farstar.battle.BattleManager;
+import com.darkgran.farstar.battle.WorldManager;
+import com.darkgran.farstar.menus.TableMenu;
 
 public class BattleScreen extends SuperScreen {
     private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
     private final WorldManager worldManager = new WorldManager();
-    private final BattleManager battleManager = new BattleManager();
+    private final BattleManager battleManager;
 
-    public BattleScreen(final Farstar game, TableMenu tableMenu)
+    public BattleScreen(final Farstar game, TableMenu tableMenu, BattleManager battleManager)
     {
         super(game);
         setTableMenu(tableMenu);
         Box2D.init();
+        this.battleManager = battleManager;
     }
 
     @Override
-    public void drawScreen(float delta) {
-        drawBox2DDebug();
+    public void drawScreen(float delta, Batch batch) {
+        battleManager.getGui().drawGUI(batch);
+        //drawBox2DDebug(); //draws boundaries of world-bodies but disables fonts
         worldManager.worldTimer(delta); //world stepping
     }
 

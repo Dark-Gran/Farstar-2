@@ -15,7 +15,7 @@ public class WorldManager implements WorldSettings {
     public WorldManager() {
         //world.setContactListener(collisionListener);
 
-        //addTestBody();
+        addTestBody();
     }
 
     @Deprecated

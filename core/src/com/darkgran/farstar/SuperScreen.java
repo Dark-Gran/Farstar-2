@@ -4,9 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.darkgran.farstar.ui.TableMenu;
+import com.darkgran.farstar.menus.TableMenu;
 
 public class SuperScreen implements Screen {
     private Farstar game;
@@ -36,7 +37,7 @@ public class SuperScreen implements Screen {
         return tableMenu;
     }
 
-    public void drawScreen(float delta) { }//for all screens except intro
+    public void drawScreen(float delta, Batch batch) { }//for all screens except intro
 
     @Override
     public void render(float delta) {
@@ -49,7 +50,11 @@ public class SuperScreen implements Screen {
             tableMenu.act(Gdx.graphics.getDeltaTime());
             tableMenu.draw();
         }
-        drawScreen(delta);
+
+        getGame().batch.begin();
+        getGame().batch.setColor(1, 1, 1, 1);
+        drawScreen(delta, getGame().batch);
+        getGame().batch.end();
     }
 
     @Override

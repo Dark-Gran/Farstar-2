@@ -1,8 +1,9 @@
 package com.darkgran.farstar;
 
 import com.badlogic.gdx.Gdx;
-import com.darkgran.farstar.ui.MainMenu;
-import com.darkgran.farstar.ui.TableMenu;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.darkgran.farstar.menus.MainMenu;
+import com.darkgran.farstar.menus.TableMenu;
 
 public class MenuScreen extends SuperScreen {
     private final MainMenu menu = new MainMenu(getGame(), getViewport());
@@ -15,7 +16,7 @@ public class MenuScreen extends SuperScreen {
     }
 
     @Override
-    public void drawScreen(float delta) {
+    public void drawScreen(float delta, Batch batch) {
         menu.act(Gdx.graphics.getDeltaTime());
         menu.draw();
     }

@@ -1,4 +1,4 @@
-package com.darkgran.farstar.ui;
+package com.darkgran.farstar.menus;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

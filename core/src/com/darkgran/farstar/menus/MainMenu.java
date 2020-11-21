@@ -1,4 +1,4 @@
-package com.darkgran.farstar.ui;
+package com.darkgran.farstar.menus;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -8,7 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.battle.BattleScreen;
+import com.darkgran.farstar.BattleScreen;
+import com.darkgran.farstar.battle.BattleManager1v1;
 
 public class MainMenu extends ListeningMenu {
     private final Texture start = new Texture("start.png");
@@ -30,7 +31,7 @@ public class MainMenu extends ListeningMenu {
             {
                 final TableMenu tableMenu =  game.getSuperScreen().getTableMenu();
                 game.getScreen().dispose();
-                game.setScreen(new BattleScreen(game, tableMenu));
+                game.setScreen(new BattleScreen(game, tableMenu, new BattleManager1v1()));
                 //startButton.removeListener(this);
             }
         });
