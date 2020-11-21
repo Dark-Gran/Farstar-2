@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.MenuScreen;
 
 
 public class TableMenu extends ListeningMenu {
@@ -30,7 +31,15 @@ public class TableMenu extends ListeningMenu {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                System.exit(0);
+
+                if (game.getScreen().getClass() == MenuScreen.class) {
+                    System.exit(0); //asd
+                } else  {
+                    final TableMenu tableMenu =  game.getSuperScreen().getTableMenu();
+                    game.getScreen().dispose();
+                    game.setScreen(new MenuScreen(game, tableMenu));
+                }
+
             }
         });
     }
