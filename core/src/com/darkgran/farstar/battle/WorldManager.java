@@ -1,20 +1,37 @@
 package com.darkgran.farstar.battle;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
+import com.darkgran.farstar.Farstar;
 
 import java.util.ArrayList;
 
 public class WorldManager implements WorldSettings {
     private float accumulator = 0;
-    private World world;
+    private World world = new World(new Vector2(0, 0), true);;
     private ArrayList corpses = new ArrayList();
-    //private CollisionListener collisionListener;
+    //private CollisionListener collisionListener = new CollisionListener();
 
     public WorldManager() {
-        world = new World(new Vector2(0, 0), true);
-        //collisionListener = new CollisionListener();
         //world.setContactListener(collisionListener);
+
+        //addTestBody();
+    }
+
+    @Deprecated
+    private void addTestBody() { //temp
+        BodyDef myBodyDef = new BodyDef();
+        myBodyDef.type = BodyDef.BodyType.DynamicBody;
+
+        Body dynamicBody = world.createBody(myBodyDef);
+        dynamicBody.setTransform((float) (Farstar.STAGE_WIDTH/2-10), (float) (Farstar.STAGE_HEIGHT/2-10), 0f);
+        PolygonShape boxShape = new PolygonShape();
+        boxShape.setAsBox(20f,20f);
+
+        FixtureDef boxFixtureDef = new FixtureDef();
+        boxFixtureDef.shape = boxShape;
+        boxFixtureDef.density = 1;
+        dynamicBody.createFixture(boxFixtureDef);
     }
 
     public World getWorld() { return world; }

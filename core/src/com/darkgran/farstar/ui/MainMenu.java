@@ -11,13 +11,11 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.BattleScreen;
 
 public class MainMenu extends ListeningMenu {
-    private final ImageButton startButton;
-    private final Texture start;
+    private final Texture start = new Texture("start.png");
+    private final ImageButton startButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(start)));
 
     public MainMenu(final Farstar game, Viewport viewport) {
         super(game, viewport);
-        start = new Texture("start.png");
-        startButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(start)));
         startButton.setPosition((float) (Farstar.STAGE_WIDTH/2-start.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-start.getHeight()/2));
         this.addActor(startButton);
         setupListeners();

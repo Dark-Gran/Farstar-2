@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.darkgran.farstar.ui.TableMenu;
 
 public class IntroScreen extends SuperScreen { //Animation used only once on app-launch
-    private final Texture logo;
+    private final Texture logo = new Texture("DGLogo.jpg");
     private float alpha = 0;
     private boolean fadeDirection = true; //true in, false out
 
@@ -16,7 +16,6 @@ public class IntroScreen extends SuperScreen { //Animation used only once on app
     public IntroScreen(final Farstar game) {
         super(game);
         Gdx.input.setCursorCatched(true);
-        logo = new Texture("DGLogo.jpg");
         try { Thread.sleep(500); } catch(InterruptedException ignored) { }
     }
 
