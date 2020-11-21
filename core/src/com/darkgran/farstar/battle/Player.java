@@ -1,12 +1,12 @@
 package com.darkgran.farstar.battle;
 
 public class Player {
-    private final byte id;
+    private final byte battleID;
     private int energy;
     private int matter;
 
-    public Player(byte id, int energy, int matter) {
-        this.id = id;
+    public Player(byte battleID, int energy, int matter) {
+        this.battleID = battleID;
         setEnergy(energy);
         setMatter(matter);
     }
@@ -19,5 +19,5 @@ public class Player {
 
     public int getMatter() { return matter; }
 
-    public int getId() { return id; }
+    public int getBattleID() { return battleID; }
 }
