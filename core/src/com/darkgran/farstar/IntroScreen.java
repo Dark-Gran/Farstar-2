@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.darkgran.farstar.menus.TableMenu;
 
 public class IntroScreen extends SuperScreen { //Animation used only once on app-launch
-    private final Texture logo = new Texture("DGLogo.jpg");
+    private final Texture logo = new Texture("images/DGLogo.jpg");
     private float alpha = 0;
     private boolean fadeDirection = true; //true in, false out
 

@@ -1,0 +1,11 @@
+[
+  {
+    "id": 0,
+    "name": "Battlestation",
+    "source": "MS",
+    "energy": 0,
+    "matter": 0,
+    "offense": 0,
+    "defense": 0
+  }
+]

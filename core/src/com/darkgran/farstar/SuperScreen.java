@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.menus.TableMenu;
 
-public class SuperScreen implements Screen {
+public abstract class SuperScreen implements Screen {
     private Farstar game;
     private OrthographicCamera camera = new OrthographicCamera();
     private Viewport viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);

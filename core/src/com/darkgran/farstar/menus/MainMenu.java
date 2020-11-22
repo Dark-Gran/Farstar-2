@@ -12,7 +12,7 @@ import com.darkgran.farstar.BattleScreen;
 import com.darkgran.farstar.battle.BattleManager1v1;
 
 public class MainMenu extends ListeningMenu {
-    private final Texture start = new Texture("start.png");
+    private final Texture start = new Texture("images/start.png");
     private final ImageButton startButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(start)));
 
     public MainMenu(final Farstar game, Viewport viewport) {
