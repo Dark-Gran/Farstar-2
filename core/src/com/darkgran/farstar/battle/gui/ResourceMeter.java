@@ -3,16 +3,11 @@ package com.darkgran.farstar.battle.gui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.darkgran.farstar.battle.Player;
+import com.darkgran.farstar.battle.players.Player;
 
-public class ResourceMeter {
-    private BitmapFont font = new BitmapFont();
+public class ResourceMeter extends TextFont {
     private final Player player;
     private final boolean onBottom;
-    private final float x;
-    private final float y;
-    private final float width;
-    private final float height;
 
     public ResourceMeter(Player player, boolean onBottom, float x, float y) {
         this.player = player;
@@ -20,17 +15,17 @@ public class ResourceMeter {
         String res = "Population: 999";
         GlyphLayout layout = new GlyphLayout();
         layout.setText(new BitmapFont(), res);
-        width = layout.width;
-        height = layout.height;
-        this.x = x-width*2;
-        this.y = y;
+        setWidth(layout.width);
+        setHeight(layout.height);
+        setX(x-getWidth()*2);
+        setY(y);
     }
 
     public void draw(Batch batch) {
         String res = "Energy: "+player.getEnergy();
-        font.draw(batch, res, x, onBottom ? y+height*8 : y-height*6);
+        getFont().draw(batch, res, getX(), onBottom ? getY()+getHeight()*8 : getY()-getHeight()*6);
         res = " Matter: "+player.getMatter();
-        font.draw(batch, res, x, onBottom ? y+height*6 : y-height*8);
+        getFont().draw(batch, res, getX(), onBottom ? getY()+getHeight()*6 : getY()-getHeight()*8);
     }
 
 }

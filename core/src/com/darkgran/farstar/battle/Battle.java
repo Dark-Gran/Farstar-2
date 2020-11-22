@@ -2,7 +2,8 @@ package com.darkgran.farstar.battle;
 
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.battle.cards.CardLibrary;
+import com.darkgran.farstar.battle.players.CardLibrary;
+import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.gui.BattleMenu;
 import com.darkgran.farstar.battle.gui.GUI;
 

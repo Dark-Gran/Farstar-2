@@ -1,5 +1,7 @@
 package com.darkgran.farstar.battle;
 
+import com.darkgran.farstar.battle.players.Player;
+
 public class RoundManager {
     private final Battle battle;
     private int roundNum = 0;
@@ -16,7 +18,7 @@ public class RoundManager {
     }
 
     public void newTurn() {
-        battle.getWhoseTurn().drawCards(battle.CARDS_PER_TURN);
+        battle.getWhoseTurn().getHand().drawCards(battle.getWhoseTurn().getDeck(), battle.CARDS_PER_TURN);
         resourceIncomes(battle.getWhoseTurn());
         System.out.println("Player #"+battle.getWhoseTurn().getBattleID()+" may play his cards.");
     }
