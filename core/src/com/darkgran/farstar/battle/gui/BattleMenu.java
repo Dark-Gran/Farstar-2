@@ -15,6 +15,8 @@ import com.darkgran.farstar.battle.BattleScreen;
 public class BattleMenu extends ListeningMenu {
     private final Texture turn = new Texture("images/turn.png");
     public final ImageButton turnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(turn)));
+    private final Texture yard = new Texture("images/yard.png");
+    public final ImageButton yardButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(yard)));
 
     public BattleMenu(final Farstar game, Viewport viewport) {
         super(game, viewport);
@@ -33,11 +35,22 @@ public class BattleMenu extends ListeningMenu {
                 }
             }
         });
+        yardButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                //TODO
+            }
+        });
     }
 
     @Override
     public void dispose() {
+        turnButton.removeListener(turnButton.getClickListener());
         turn.dispose();
+        yardButton.removeListener(yardButton.getClickListener());
+        yard.dispose();
         super.dispose();
     }
 
