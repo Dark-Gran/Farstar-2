@@ -9,11 +9,13 @@ public class GUI1v1 implements GUI {
     private final ResourceMeter resourceMeter1;
     private final ResourceMeter resourceMeter2;
     private final MothershipToken mothershipToken1;
+    private final MothershipToken mothershipToken2;
 
     public GUI1v1(Farstar game, Viewport viewport, Player player1, Player player2) {
         resourceMeter1 = new ResourceMeter(player1, true, Farstar.STAGE_WIDTH, 0f);
         resourceMeter2 = new ResourceMeter(player2, false, Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT);
         mothershipToken1 = new MothershipToken(player1.getMs(), Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*1/4);
+        mothershipToken2 = new MothershipToken(player2.getMs(), Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*3/4);
     }
 
     @Override
@@ -21,6 +23,7 @@ public class GUI1v1 implements GUI {
         resourceMeter2.draw(batch);
         resourceMeter1.draw(batch);
         mothershipToken1.draw(batch);
+        mothershipToken2.draw(batch);
     }
 
 }

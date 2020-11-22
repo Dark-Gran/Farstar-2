@@ -17,15 +17,15 @@ public class ShipToken extends TextFont {
         GlyphLayout layout = new GlyphLayout();
         layout.setText(new BitmapFont(), res);
         setWidth(layout.width);
-        setHeight(layout.height*3);
-        setX(x-getWidth()/2);
-        setY(y-getHeight()/2);
+        setHeight(layout.height);
+        setX(x);
+        setY(y);
     }
 
     public void draw(Batch batch) {
-        cardName.draw(getFont(), batch, getX(), getY(), card.getCardInfo().getName());
-        cardOffense.draw(getFont(), batch, getX()-getWidth()/2, getY()-getHeight()/2, String.valueOf(card.getCardInfo().getOffense()));
-        cardDefense.draw(getFont(), batch, getX()+getWidth(), getY()-getHeight()/2, String.valueOf(card.getCardInfo().getDefense()));
+        cardName.draw(getFont(), batch, getX()-getWidth()/2, getY()+getHeight()*3, card.getCardInfo().getName());
+        cardOffense.draw(getFont(), batch, getX()-getWidth()/10-getWidth()/2, getY(), String.valueOf(card.getCardInfo().getOffense()));
+        cardDefense.draw(getFont(), batch, getX()-getWidth()/10+getWidth()/2, getY(), String.valueOf(card.getCardInfo().getDefense()));
     }
 
     public Card getCard() { return card; }
