@@ -4,6 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 public interface GUI {
 
-    void drawGUI(Batch batch);
+    void drawGUI(float delta, Batch batch);
 
 }

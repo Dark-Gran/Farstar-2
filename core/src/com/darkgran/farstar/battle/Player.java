@@ -24,14 +24,18 @@ public class Player {
     }
 
     public void drawCards(int howMany) {
-        for (int i = 0; i < howMany; i++) {
+        for (int i = 0; i < howMany && hand.size < Battle.MAX_CARDS; i++) {
             hand.add(deck.drawCard());
         }
     }
 
     public void setEnergy(int energy) { this.energy = energy; }
 
-    public void setMatter(int energy) { this.matter = energy; }
+    public void setMatter(int matter) { this.matter = matter; }
+
+    public void addEnergy(int energy) { this.energy += energy; }
+
+    public void addMatter(int matter) { this.matter += matter; }
 
     public int getEnergy() { return energy; }
 

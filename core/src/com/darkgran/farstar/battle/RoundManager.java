@@ -9,15 +9,15 @@ public class RoundManager {
     }
 
     public void newRound() {
-        System.out.println("New Round.");
         roundNum++;
         newTurn();
     }
 
     public void newTurn() {
-        System.out.println("New Turn.");
         battle.getWhoseTurn().drawCards(battle.CARDS_PER_TURN);
-
+        battle.getWhoseTurn().addEnergy(roundNum);
+        battle.getWhoseTurn().addMatter(roundNum);
+        System.out.println("Player #"+battle.getWhoseTurn().getBattleID()+" may play his cards.");
     }
 
     public int getRoundNum() { return roundNum; }

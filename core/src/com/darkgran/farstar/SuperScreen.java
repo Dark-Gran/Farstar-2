@@ -28,7 +28,9 @@ public abstract class SuperScreen implements Screen {
         }
     }
 
-    public void drawScreen(float delta, Batch batch) { }//for all screens except intro
+    public void drawContent(float delta, Batch batch) { }//for all screens except intro
+
+    public void drawMenus(float delta) { }//for all screens except intro
 
     public Farstar getGame() { return game; }
 
@@ -47,15 +49,18 @@ public abstract class SuperScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
-        if (tableMenu != null) {
-            tableMenu.act(Gdx.graphics.getDeltaTime());
+        if (tableMenu != null) { //should persist over all screens
+            tableMenu.act(delta);
             tableMenu.draw();
         }
 
+        drawMenus(delta);
+
         getGame().batch.begin();
         getGame().batch.setColor(1, 1, 1, 1);
-        drawScreen(delta, getGame().batch);
+        drawContent(delta, getGame().batch);
         getGame().batch.end();
+
     }
 
     @Override
