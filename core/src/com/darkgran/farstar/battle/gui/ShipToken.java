@@ -3,10 +3,10 @@ package com.darkgran.farstar.battle.gui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.darkgran.farstar.battle.players.Card;
 
-public class ShipSlot extends TextFont {
+public class ShipToken extends TextFont {
     private Card card;
 
-    public ShipSlot(Card card, float x, float y){
+    public ShipToken(Card card, float x, float y){
         setCard(card);
         setX(x);
         setY(y);
