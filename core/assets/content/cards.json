@@ -6,6 +6,24 @@
     "energy": 0,
     "matter": 0,
     "offense": 0,
+    "defense": 10
+  },
+  {
+    "id": 1,
+    "name": "Fighter",
+    "source": "YARD",
+    "energy": 1,
+    "matter": 1,
+    "offense": 1,
+    "defense": 1
+  },
+  {
+    "id": 2,
+    "name": "Tactical Advantage",
+    "source": "HAND",
+    "energy": 0,
+    "matter": 0,
+    "offense": 0,
     "defense": 0
   }
 ]

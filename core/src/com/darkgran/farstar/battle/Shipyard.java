@@ -9,8 +9,11 @@ public class Shipyard {
         this.cards = cards;
     }
 
-    public Shipyard() {
-        cards = new ArrayList<>(); //Todo: default shipyard
+    public Shipyard() { //generates basic yard
+        cards = new ArrayList<>();
+        for (int i = 0; i < BattleSettings.YARD_SIZE; i++) {
+            cards.add(new Card(BattleManager.CARD_LIBRARY.getCard(1)));
+        }
     }
 
     public ArrayList<Card> getCards() { return cards; }

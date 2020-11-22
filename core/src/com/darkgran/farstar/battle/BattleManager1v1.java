@@ -13,8 +13,8 @@ public class BattleManager1v1 implements BattleManager, BattleSettings {
         System.out.println("Launching Battle.");
         loadLibrary();
         //in future: pass the Players in parameters
-        player1 = new Player((byte) 1, STARTING_ENERGY, STARTING_MATTER, new Card(CARD_LIBRARY.getCard(0)), new Deck(), new Shipyard());
-        player2 = new Player((byte) 2, STARTING_ENERGY, STARTING_MATTER, new Card(CARD_LIBRARY.getCard(0)), new Deck(), new Shipyard());
+        player1 = new Player((byte) 1, STARTING_ENERGY, STARTING_MATTER, new Card(), new Deck(), new Shipyard());
+        player2 = new Player((byte) 2, STARTING_ENERGY, STARTING_MATTER, new Card(), new Deck(), new Shipyard());
         gui1v1 = new GUI1v1(player1, player2);
     }
 

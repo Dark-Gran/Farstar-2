@@ -7,4 +7,8 @@ public class Card {
         this.cardInfo = cardInfo;
     }
 
+    public Card() {
+        cardInfo = BattleManager.CARD_LIBRARY.getCard(0);
+    }
+
 }
