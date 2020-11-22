@@ -42,6 +42,7 @@ public class TableMenu extends ListeningMenu {
 
     @Override
     public void dispose() {
+        exitButton.removeListener(exitButton.getClickListener());
         exit.dispose();
         super.dispose();
     }

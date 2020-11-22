@@ -38,6 +38,7 @@ public class MainMenu extends ListeningMenu {
 
     @Override
     public void dispose() {
+        startButton.removeListener(startButton.getClickListener());
         start.dispose();
         super.dispose();
     }
