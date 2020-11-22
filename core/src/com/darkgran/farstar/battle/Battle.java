@@ -16,6 +16,8 @@ public abstract class Battle implements BattleSettings {
         loadLibrary();
     }
 
+    public void loadLibrary() { CARD_LIBRARY.loadLocal("content/cards.json"); }
+
     public GUI createGUI(Farstar game, Viewport viewport) {
         return null;
     }
@@ -23,8 +25,6 @@ public abstract class Battle implements BattleSettings {
     public BattleMenu createBattleMenu(Farstar game, Viewport viewport) {
         return null;
     }
-
-    public void loadLibrary() { CARD_LIBRARY.loadLocal("content/cards.json"); }
 
     public void launchBattle(RoundManager roundManager) {
         coinToss();
