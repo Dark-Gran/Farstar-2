@@ -28,7 +28,7 @@ public class RoundManager {
         if (income > battle.MAX_TECH_INCOME) {
             income = battle.MAX_TECH_INCOME;
         }
-        player.addEnergy(income);
+        player.setEnergy(income);
         player.addMatter(income);
     }
 
