@@ -1,4 +1,4 @@
-package com.darkgran.farstar.menus;
+package com.darkgran.farstar;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;

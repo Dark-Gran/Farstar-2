@@ -1,4 +1,7 @@
-package com.darkgran.farstar.battle;
+package com.darkgran.farstar.battle.cards;
+
+import com.darkgran.farstar.battle.Battle;
+import com.darkgran.farstar.battle.BattleSettings;
 
 import java.util.ArrayList;
 
@@ -12,7 +15,7 @@ public class Shipyard {
     public Shipyard() { //generates basic yard
         cards = new ArrayList<>();
         for (int i = 0; i < BattleSettings.YARD_SIZE; i++) {
-            cards.add(new Card(BattleManager.CARD_LIBRARY.getCard(1)));
+            cards.add(new Card(Battle.CARD_LIBRARY.getCard(1)));
         }
     }
 

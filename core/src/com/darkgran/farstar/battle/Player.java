@@ -1,5 +1,10 @@
 package com.darkgran.farstar.battle;
 
+import com.badlogic.gdx.utils.Array;
+import com.darkgran.farstar.battle.cards.Card;
+import com.darkgran.farstar.battle.cards.Deck;
+import com.darkgran.farstar.battle.cards.Shipyard;
+
 public class Player {
     private final byte battleID;
     private int energy;
@@ -7,6 +12,7 @@ public class Player {
     private Card ms; //MotherShip
     private Deck deck;
     private Shipyard shipyard;
+    private Array<Card> hand = new Array<>();
 
     public Player(byte battleID, int energy, int matter, Card ms, Deck deck, Shipyard shipyard) {
         this.battleID = battleID;
@@ -15,6 +21,12 @@ public class Player {
         this.ms = ms;
         this.deck = deck;
         this.shipyard = shipyard;
+    }
+
+    public void drawCards(int howMany) {
+        for (int i = 0; i < howMany; i++) {
+            hand.add(deck.drawCard());
+        }
     }
 
     public void setEnergy(int energy) { this.energy = energy; }

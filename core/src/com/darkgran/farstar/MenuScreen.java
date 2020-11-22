@@ -2,8 +2,6 @@ package com.darkgran.farstar;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.darkgran.farstar.menus.MainMenu;
-import com.darkgran.farstar.menus.TableMenu;
 
 public class MenuScreen extends SuperScreen {
     private final MainMenu menu = new MainMenu(getGame(), getViewport());

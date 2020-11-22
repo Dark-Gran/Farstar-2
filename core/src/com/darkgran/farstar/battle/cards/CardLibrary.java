@@ -1,4 +1,4 @@
-package com.darkgran.farstar.battle;
+package com.darkgran.farstar.battle.cards;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;

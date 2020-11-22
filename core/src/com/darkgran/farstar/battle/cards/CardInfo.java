@@ -1,4 +1,4 @@
-package com.darkgran.farstar.battle;
+package com.darkgran.farstar.battle.cards;
 
 public class CardInfo {
     private final byte id;
