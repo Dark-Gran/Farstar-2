@@ -27,9 +27,9 @@ public class MainMenu extends ListeningMenu {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                final TableMenu tableMenu =  game.getSuperScreen().getTableMenu();
-                game.getScreen().dispose();
-                game.setScreen(new BattleScreen(game, tableMenu, new Battle1v1()));
+                final TableMenu tableMenu =  getGame().getSuperScreen().getTableMenu();
+                getGame().getScreen().dispose();
+                getGame().setScreen(new BattleScreen(getGame(), tableMenu, new Battle1v1(getGame(), getViewport())));
                 //startButton.removeListener(this);
             }
         });

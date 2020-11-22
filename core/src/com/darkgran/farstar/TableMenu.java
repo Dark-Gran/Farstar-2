@@ -28,12 +28,12 @@ public class TableMenu extends ListeningMenu {
             public void clicked(InputEvent event, float x, float y)
             {
 
-                if (game.getScreen().getClass() == MenuScreen.class) {
+                if (getGame().getScreen().getClass() == MenuScreen.class) {
                     System.exit(0); //asd
                 } else  {
-                    final TableMenu tableMenu =  game.getSuperScreen().getTableMenu();
-                    game.getScreen().dispose();
-                    game.setScreen(new MenuScreen(game, tableMenu));
+                    final TableMenu tableMenu =  getGame().getSuperScreen().getTableMenu();
+                    getGame().getScreen().dispose();
+                    getGame().setScreen(new MenuScreen(getGame(), tableMenu));
                 }
 
             }
