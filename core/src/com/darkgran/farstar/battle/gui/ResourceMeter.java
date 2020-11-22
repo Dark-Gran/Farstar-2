@@ -17,11 +17,11 @@ public class ResourceMeter extends TextFont {
         layout.setText(new BitmapFont(), res);
         setWidth(layout.width);
         setHeight(layout.height);
-        setX(x-getWidth()*2);
+        setX(x);
         setY(y);
     }
 
-    public void draw(Batch batch) { //todo: move positioning to GUI1v1
+    public void draw(Batch batch) {
         String res = "Energy: "+player.getEnergy();
         getFont().draw(batch, res, getX(), onBottom ? getY()+getHeight()*8 : getY()-getHeight()*6);
         res = " Matter: "+player.getMatter();
