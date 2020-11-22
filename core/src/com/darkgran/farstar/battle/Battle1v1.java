@@ -5,6 +5,8 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.cards.Card;
 import com.darkgran.farstar.battle.cards.Deck;
 import com.darkgran.farstar.battle.cards.Shipyard;
+import com.darkgran.farstar.battle.gui.BattleMenu;
+import com.darkgran.farstar.battle.gui.BattleMenu1v1;
 import com.darkgran.farstar.battle.gui.GUI;
 import com.darkgran.farstar.battle.gui.GUI1v1;
 
@@ -27,8 +29,18 @@ public class Battle1v1 extends Battle {
     }
 
     @Override
+    public BattleMenu createBattleMenu(Farstar game, Viewport viewport) {
+        return new BattleMenu1v1(game, viewport);
+    }
+
+    @Override
     public void coinToss() {
         setWhoseTurn((ThreadLocalRandom.current().nextInt(0, 2) == 0) ? player1 : player2);
+    }
+
+    @Override
+    public void passTurn() {
+        setWhoseTurn(player1 == getWhoseTurn() ? player2 : player1);
     }
 
     @Override

@@ -1,11 +1,11 @@
-package com.darkgran.farstar;
+package com.darkgran.farstar.battle;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.*;
-import com.darkgran.farstar.battle.Battle;
-import com.darkgran.farstar.battle.RoundManager;
-import com.darkgran.farstar.battle.WorldManager;
+import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.SuperScreen;
+import com.darkgran.farstar.TableMenu;
 import com.darkgran.farstar.battle.gui.BattleMenu;
 import com.darkgran.farstar.battle.gui.GUI;
 
@@ -22,7 +22,8 @@ public class BattleScreen extends SuperScreen {
         setTableMenu(tableMenu);
         Box2D.init();
         this.battle = battle;
-        battleMenu = new BattleMenu(game, getViewport());
+        battleMenu = battle.createBattleMenu(game, getViewport());
+        game.getInputMultiplexer().addProcessor(battleMenu);
         gui = battle.createGUI(game, getViewport());
         battle.launchBattle(new RoundManager(battle));
     }
@@ -52,6 +53,8 @@ public class BattleScreen extends SuperScreen {
     @Override
     public void dispose() {
         worldManager.disposeWorld();
+        getGame().getInputMultiplexer().removeProcessor(battleMenu);
+        battleMenu.dispose();
     }
 
     public GUI getGUI() { return gui; }

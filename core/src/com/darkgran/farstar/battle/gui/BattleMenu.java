@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.ListeningMenu;
+import com.darkgran.farstar.SuperScreen;
+import com.darkgran.farstar.battle.BattleScreen;
 
 public class BattleMenu extends ListeningMenu {
     private final Texture turn = new Texture("images/turn.png");
@@ -16,9 +18,6 @@ public class BattleMenu extends ListeningMenu {
 
     public BattleMenu(final Farstar game, Viewport viewport) {
         super(game, viewport);
-        turnButton.setBounds(10, 10, (float) Farstar.STAGE_WIDTH/40,(float) Farstar.STAGE_HEIGHT/20);
-        this.addActor(turnButton);
-        setupListeners();
     }
 
     @Override
@@ -28,8 +27,18 @@ public class BattleMenu extends ListeningMenu {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                //asd
+                SuperScreen screen = getGame().getSuperScreen();
+                if (screen instanceof BattleScreen) {
+                    ((BattleScreen) screen).getBattle().getRoundManager().endTurn();
+                }
             }
         });
     }
+
+    @Override
+    public void dispose() {
+        turn.dispose();
+        super.dispose();
+    }
+
 }

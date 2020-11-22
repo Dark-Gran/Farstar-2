@@ -39,4 +39,10 @@ public class TableMenu extends ListeningMenu {
             }
         });
     }
+
+    @Override
+    public void dispose() {
+        exit.dispose();
+        super.dispose();
+    }
 }

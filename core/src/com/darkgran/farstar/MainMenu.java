@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.battle.Battle1v1;
+import com.darkgran.farstar.battle.BattleScreen;
 
 public class MainMenu extends ListeningMenu {
     private final Texture start = new Texture("images/start.png");
