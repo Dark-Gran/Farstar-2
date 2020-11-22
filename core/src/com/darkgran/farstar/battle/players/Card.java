@@ -13,4 +13,6 @@ public class Card {
         cardInfo = Battle.CARD_LIBRARY.getCard(0);
     }
 
+    public CardInfo getCardInfo() { return cardInfo; }
+
 }

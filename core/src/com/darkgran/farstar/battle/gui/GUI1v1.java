@@ -13,7 +13,7 @@ public class GUI1v1 implements GUI {
     public GUI1v1(Farstar game, Viewport viewport, Player player1, Player player2) {
         resourceMeter1 = new ResourceMeter(player1, true, Farstar.STAGE_WIDTH, 0f);
         resourceMeter2 = new ResourceMeter(player2, false, Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT);
-        mothershipToken1 = new MothershipToken(player1.getMs(), Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT/2);
+        mothershipToken1 = new MothershipToken(player1.getMs(), Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*1/4);
     }
 
     @Override
