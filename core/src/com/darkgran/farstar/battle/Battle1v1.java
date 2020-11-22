@@ -6,6 +6,7 @@ import com.darkgran.farstar.battle.cards.Card;
 import com.darkgran.farstar.battle.cards.Deck;
 import com.darkgran.farstar.battle.cards.Shipyard;
 import com.darkgran.farstar.battle.gui.GUI;
+import com.darkgran.farstar.battle.gui.GUI1v1;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -18,6 +19,11 @@ public class Battle1v1 extends Battle {
         //in future: pass the Players in parameters
         player1 = new Player((byte) 1, STARTING_ENERGY, STARTING_MATTER, new Card(), new Deck(), new Shipyard());
         player2 = new Player((byte) 2, STARTING_ENERGY, STARTING_MATTER, new Card(), new Deck(), new Shipyard());
+    }
+
+    @Override
+    public GUI createGUI(Farstar game, Viewport viewport) {
+        return new GUI1v1(game, viewport, player1, player2);
     }
 
     @Override

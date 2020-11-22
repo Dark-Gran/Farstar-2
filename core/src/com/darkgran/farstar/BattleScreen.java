@@ -6,13 +6,15 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.RoundManager;
 import com.darkgran.farstar.battle.WorldManager;
+import com.darkgran.farstar.battle.gui.BattleMenu;
 import com.darkgran.farstar.battle.gui.GUI;
 
 public class BattleScreen extends SuperScreen {
     private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
     private final WorldManager worldManager = new WorldManager();
     private final Battle battle;
-    private GUI gui;
+    private final BattleMenu battleMenu; //buttons
+    private final GUI gui; //resources etc
 
     public BattleScreen(final Farstar game, TableMenu tableMenu, Battle battle)
     {
@@ -20,19 +22,24 @@ public class BattleScreen extends SuperScreen {
         setTableMenu(tableMenu);
         Box2D.init();
         this.battle = battle;
-        this.battle.launchBattle(new RoundManager(this.battle));
+        battleMenu = new BattleMenu(game, getViewport());
+        gui = battle.createGUI(game, getViewport());
+        battle.launchBattle(new RoundManager(battle));
     }
 
     @Override
     public void drawContent(float delta, Batch batch) {
-        //battle.getGUI().drawGUI(delta, batch);
+        gui.drawGUI(delta, batch);
         //drawBox2DDebug(); //draws boundaries of world-bodies but disables fonts
         worldManager.worldTimer(delta); //world stepping
     }
 
     @Override
     public void drawMenus(float delta) {
-        //battle.getGUI().
+        if (battleMenu != null) {
+            battleMenu.act(delta);
+            battleMenu.draw();
+        }
     }
 
     private void drawBox2DDebug() {
@@ -46,4 +53,13 @@ public class BattleScreen extends SuperScreen {
     public void dispose() {
         worldManager.disposeWorld();
     }
+
+    public GUI getGUI() { return gui; }
+
+    public BattleMenu getBattleMenu() { return battleMenu; }
+
+    public Battle getBattle() { return battle; }
+
+    public WorldManager getWorldManager() { return worldManager; }
+
 }
