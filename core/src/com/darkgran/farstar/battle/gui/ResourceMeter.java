@@ -17,7 +17,7 @@ public class ResourceMeter extends TextFont {
         layout.setText(new BitmapFont(), res);
         setWidth(layout.width);
         setHeight(layout.height);
-        setX(x);
+        setX(x-getWidth()*2);
         setY(y);
     }
 
