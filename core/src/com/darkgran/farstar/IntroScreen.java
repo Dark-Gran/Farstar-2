@@ -24,8 +24,8 @@ public class IntroScreen extends SuperScreen { //Animation used only once on app
         getGame().setScreen(new MenuScreen(getGame(), new TableMenu(getGame(), getViewport())));
     }
 
-    private void updateAlpha(float delta) {
-        if (delta > 0.03f) { delta = 0.03f; } //todo: rework (like time-steps)?
+    private void updateAlpha(float delta) { //rework? (like time-steps)?
+        if (delta > 0.03f) { delta = 0.03f; }
         if (alpha >= 1) {
             fadeDirection = false;
             try { Thread.sleep(900); } catch(InterruptedException ignored) { }
