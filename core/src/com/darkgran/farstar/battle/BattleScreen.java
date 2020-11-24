@@ -22,9 +22,9 @@ public class BattleScreen extends SuperScreen {
         setTableMenu(tableMenu);
         Box2D.init();
         this.battle = battle;
-        battleMenu = battle.createBattleMenu(game, getViewport());
+        battleMenu = battle.createBattleMenu(game, getViewport(), this);
         game.getInputMultiplexer().addProcessor(battleMenu);
-        gui = battle.createGUI(game, getViewport());
+        gui = battle.createGUI();
         battle.launchBattle(new RoundManager(battle));
     }
 

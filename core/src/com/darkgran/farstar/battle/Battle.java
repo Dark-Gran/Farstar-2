@@ -19,11 +19,11 @@ public abstract class Battle implements BattleSettings {
 
     public void loadLibrary() { CARD_LIBRARY.loadLocal("content/cards.json"); }
 
-    public GUI createGUI(Farstar game, Viewport viewport) {
+    public GUI createGUI() {
         return null;
     }
 
-    public BattleMenu createBattleMenu(Farstar game, Viewport viewport) {
+    public BattleMenu createBattleMenu(Farstar game, Viewport viewport, BattleScreen battleScreen) {
         return null;
     }
 

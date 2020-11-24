@@ -9,17 +9,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.ListeningMenu;
-import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.battle.BattleScreen;
 
-public class BattleMenu extends ListeningMenu {
+public abstract class BattleMenu extends ListeningMenu {
+    private final BattleScreen battleScreen;
     private final Texture turn = new Texture("images/turn.png");
     public final ImageButton turnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(turn)));
-    private final Texture yard = new Texture("images/yard.png");
-    public final ImageButton yardButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(yard)));
+    private final Texture yardPic = new Texture("images/yard.png");
 
-    public BattleMenu(final Farstar game, Viewport viewport) {
+    public BattleMenu(final Farstar game, Viewport viewport, BattleScreen battleScreen) {
         super(game, viewport);
+        this.battleScreen = battleScreen;
     }
 
     @Override
@@ -29,18 +29,7 @@ public class BattleMenu extends ListeningMenu {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                SuperScreen screen = getGame().getSuperScreen();
-                if (screen instanceof BattleScreen) {
-                    ((BattleScreen) screen).getBattle().getRoundManager().endTurn();
-                }
-            }
-        });
-        yardButton.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y)
-            {
-                //TODO
+               battleScreen.getBattle().getRoundManager().endTurn();
             }
         });
     }
@@ -49,9 +38,11 @@ public class BattleMenu extends ListeningMenu {
     public void dispose() {
         turnButton.removeListener(turnButton.getClickListener());
         turn.dispose();
-        yardButton.removeListener(yardButton.getClickListener());
-        yard.dispose();
         super.dispose();
     }
+
+    public Texture getYardPic() { return yardPic; }
+
+    public BattleScreen getBattleScreen() { return battleScreen; }
 
 }

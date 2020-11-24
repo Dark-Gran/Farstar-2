@@ -30,7 +30,7 @@ public class MainMenu extends ListeningMenu {
             {
                 final TableMenu tableMenu =  getGame().getSuperScreen().getTableMenu();
                 getGame().getScreen().dispose();
-                getGame().setScreen(new BattleScreen(getGame(), tableMenu, new Battle1v1(getGame(), getViewport())));
+                getGame().setScreen(new BattleScreen(getGame(), tableMenu, new Battle1v1()));
                 //startButton.removeListener(this);
             }
         });

@@ -14,7 +14,7 @@ public class Battle1v1 extends Battle {
     private final Player player1;
     private final Player player2;
 
-    public Battle1v1(Farstar game, Viewport viewport) {
+    public Battle1v1() {
         super();
         //in future: pass the Players in parameters
         player1 = new Player((byte) 1, STARTING_ENERGY, STARTING_MATTER, new Mothership(), new Deck(), new Shipyard());
@@ -22,13 +22,13 @@ public class Battle1v1 extends Battle {
     }
 
     @Override
-    public GUI createGUI(Farstar game, Viewport viewport) {
-        return new GUI1v1(game, viewport, player1, player2);
+    public GUI createGUI() {
+        return new GUI1v1(player1, player2);
     }
 
     @Override
-    public BattleMenu createBattleMenu(Farstar game, Viewport viewport) {
-        return new BattleMenu1v1(game, viewport);
+    public BattleMenu createBattleMenu(Farstar game, Viewport viewport, BattleScreen battleScreen) {
+        return new BattleMenu1v1(game, viewport, battleScreen, player1, player2);
     }
 
     @Override
