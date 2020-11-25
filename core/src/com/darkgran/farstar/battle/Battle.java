@@ -4,7 +4,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.CardLibrary;
 import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.battle.gui.BattleMenu;
 import com.darkgran.farstar.battle.gui.GUI;
 
 public abstract class Battle implements BattleSettings {
@@ -19,11 +18,7 @@ public abstract class Battle implements BattleSettings {
 
     public void loadLibrary() { CARD_LIBRARY.loadLocal("content/cards.json"); }
 
-    public GUI createGUI() {
-        return null;
-    }
-
-    public BattleMenu createBattleMenu(Farstar game, Viewport viewport, BattleScreen battleScreen) {
+    public GUI createGUI(Farstar game, Viewport viewport, BattleScreen battleScreen) {
         return null;
     }
 

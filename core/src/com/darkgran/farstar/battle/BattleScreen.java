@@ -6,15 +6,13 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.TableMenu;
-import com.darkgran.farstar.battle.gui.BattleMenu;
 import com.darkgran.farstar.battle.gui.GUI;
 
 public class BattleScreen extends SuperScreen {
     private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
     private final WorldManager worldManager = new WorldManager();
     private final Battle battle;
-    private final BattleMenu battleMenu; //buttons
-    private final GUI gui; //resources etc
+    private final GUI gui; //buttons
 
     public BattleScreen(final Farstar game, TableMenu tableMenu, Battle battle)
     {
@@ -22,9 +20,8 @@ public class BattleScreen extends SuperScreen {
         setTableMenu(tableMenu);
         Box2D.init();
         this.battle = battle;
-        battleMenu = battle.createBattleMenu(game, getViewport(), this);
-        game.getInputMultiplexer().addProcessor(battleMenu);
-        gui = battle.createGUI();
+        gui = battle.createGUI(game, getViewport(), this);
+        game.getInputMultiplexer().addProcessor(gui);
         battle.launchBattle(new RoundManager(battle));
     }
 
@@ -37,9 +34,9 @@ public class BattleScreen extends SuperScreen {
 
     @Override
     public void drawMenus(float delta) {
-        if (battleMenu != null) {
-            battleMenu.act(delta);
-            battleMenu.draw();
+        if (gui != null) {
+            gui.act(delta);
+            gui.draw();
         }
     }
 
@@ -53,13 +50,11 @@ public class BattleScreen extends SuperScreen {
     @Override
     public void dispose() {
         worldManager.disposeWorld();
-        getGame().getInputMultiplexer().removeProcessor(battleMenu);
-        battleMenu.dispose();
+        getGame().getInputMultiplexer().removeProcessor(gui);
+        gui.dispose();
     }
 
     public GUI getGUI() { return gui; }
-
-    public BattleMenu getBattleMenu() { return battleMenu; }
 
     public Battle getBattle() { return battle; }
 

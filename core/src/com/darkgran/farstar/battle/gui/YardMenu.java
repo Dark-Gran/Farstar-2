@@ -1,5 +1,7 @@
 package com.darkgran.farstar.battle.gui;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.darkgran.farstar.battle.players.Shipyard;
 import com.darkgran.farstar.util.SimpleVector2;
 
@@ -20,8 +22,11 @@ public class YardMenu extends SimpleVector2 {
     }
 
     public void generateTokens() {
+        String res = "Battlestation";
+        GlyphLayout layout = new GlyphLayout();
+        layout.setText(new BitmapFont(), res);
         for (int i = 0; i < shipyard.getCards().size(); i++) {
-            yardTokens.add(new YardToken(shipyard.getCards().get(i), getX(), getY())); //TODO offset... or remove?
+            yardTokens.add(new YardToken(shipyard.getCards().get(i), getX(), getY()+ layout.height*(2+i*2)));
         }
     }
 
