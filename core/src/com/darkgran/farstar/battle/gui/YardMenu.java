@@ -21,7 +21,8 @@ public class YardMenu extends SimpleVector2 {
         generateTokens();
     }
 
-    public void generateTokens() {
+    private void generateTokens() {
+        yardTokens.clear();
         String res = "Battlestation";
         GlyphLayout layout = new GlyphLayout();
         layout.setText(new BitmapFont(), res);

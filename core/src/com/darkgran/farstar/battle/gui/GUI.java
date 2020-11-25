@@ -44,6 +44,18 @@ public abstract class GUI extends ListeningMenu {
         super.dispose();
     }
 
+    public void drawYardMenu(YardMenu yardMenu, Batch batch) {
+        for (int i = 0; i < yardMenu.getYardTokens().size(); i++) {
+            yardMenu.getYardTokens().get(i).draw(batch);
+        }
+    }
+
+    public void drawHandMenu(HandMenu handMenu, Batch batch) {
+        for (int i = 0; i < handMenu.getCards().size(); i++) {
+            handMenu.getCards().get(i).draw(batch);
+        }
+    }
+
     public Texture getYardPic() { return yardPic; }
 
     public BattleScreen getBattleScreen() { return battleScreen; }

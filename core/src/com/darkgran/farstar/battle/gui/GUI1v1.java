@@ -20,6 +20,8 @@ public class GUI1v1 extends GUI {
     private final YardMenu yardMenu1;
     public final ImageButton yardButton2 = new ImageButton(new TextureRegionDrawable(new TextureRegion(getYardPic())));
     private final YardMenu yardMenu2;
+    private final HandMenu handMenu1;
+    private final HandMenu handMenu2;
 
     public GUI1v1(Farstar game, Viewport viewport, BattleScreen battleScreen, Player player1, Player player2) {
         super(game, viewport, battleScreen);
@@ -39,6 +41,10 @@ public class GUI1v1 extends GUI {
         yardMenu2 = new YardMenu(player2.getShipyard(), true, Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*4/5);
         yardButton2.setBounds(Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*4/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
         this.addActor(yardButton2);
+        //Hands
+        handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/8);
+        handMenu2 = new HandMenu(player2.getHand(),Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*7/8);
+        //Finish
         setupListeners();
     }
 
@@ -48,16 +54,10 @@ public class GUI1v1 extends GUI {
         resourceMeter1.draw(batch);
         mothershipToken1.draw(batch);
         mothershipToken2.draw(batch);
-        if (yardMenu1.isVisible()) {
-            for (int i = 0; i < yardMenu1.getYardTokens().size(); i++) {
-                yardMenu1.getYardTokens().get(i).draw(batch);
-            }
-        }
-        if (yardMenu2.isVisible()) {
-            for (int i = 0; i < yardMenu2.getYardTokens().size(); i++) {
-                yardMenu2.getYardTokens().get(i).draw(batch);
-            }
-        }
+        if (yardMenu1.isVisible()) { drawYardMenu(yardMenu1, batch); }
+        if (yardMenu2.isVisible()) { drawYardMenu(yardMenu2, batch); }
+        drawHandMenu(handMenu1, batch);
+        drawHandMenu(handMenu2, batch);
     }
 
     @Override
