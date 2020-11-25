@@ -33,10 +33,10 @@ public class BattleScreen extends SuperScreen {
     }
 
     @Override
-    public void drawMenus(float delta) {
+    public void drawMenus(float delta) { //Stage-menus use their own Batch
         if (gui != null) {
             gui.act(delta);
-            gui.draw();
+            gui.draw(); //draws "Actors"
         }
     }
 

@@ -11,7 +11,7 @@ public class YardMenu extends SimpleVector2 {
     private ArrayList<YardToken> yardTokens = new ArrayList<>();
     private final Shipyard shipyard; //getCards() ArrayList<Card>
     private boolean onTop = false;
-    private boolean visible = true;
+    private boolean visible = false;
 
     public YardMenu(Shipyard shipyard, boolean onTop, float x, float y) {
         this.shipyard = shipyard;
@@ -26,7 +26,8 @@ public class YardMenu extends SimpleVector2 {
         GlyphLayout layout = new GlyphLayout();
         layout.setText(new BitmapFont(), res);
         for (int i = 0; i < shipyard.getCards().size(); i++) {
-            yardTokens.add(new YardToken(shipyard.getCards().get(i), getX(), getY()+ layout.height*(2+i*2)));
+            float offsetY = onTop ? -layout.height*(5+i*5) : layout.height*(5+i*5);
+            yardTokens.add(new YardToken(shipyard.getCards().get(i), getX(), getY()+offsetY));
         }
     }
 

@@ -18,8 +18,8 @@ public class GUI1v1 extends GUI {
     private final MothershipToken mothershipToken2;
     public final ImageButton yardButton1 = new ImageButton(new TextureRegionDrawable(new TextureRegion(getYardPic())));
     private final YardMenu yardMenu1;
-    //public final ImageButton yardButton2 = new ImageButton(new TextureRegionDrawable(new TextureRegion(getYardPic())));
-    //private final YardMenu yardMenu2;
+    public final ImageButton yardButton2 = new ImageButton(new TextureRegionDrawable(new TextureRegion(getYardPic())));
+    private final YardMenu yardMenu2;
 
     public GUI1v1(Farstar game, Viewport viewport, BattleScreen battleScreen, Player player1, Player player2) {
         super(game, viewport, battleScreen);
@@ -33,12 +33,12 @@ public class GUI1v1 extends GUI {
         turnButton.setBounds(Farstar.STAGE_WIDTH*6/7, Farstar.STAGE_HEIGHT/2, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
         this.addActor(turnButton);
         //Shipyards
-        yardMenu1 = new YardMenu(player1.getShipyard(), false, Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT/2);
+        yardMenu1 = new YardMenu(player1.getShipyard(), false, Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*1/5);
         yardButton1.setBounds(Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*1/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
         this.addActor(yardButton1);
-        /*yardMenu2 = new YardMenu(player2.getShipyard(), false, Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT/2);
-        yardButton2.setBounds(Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*1/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
-        this.addActor(yardButton2);*/
+        yardMenu2 = new YardMenu(player2.getShipyard(), true, Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*4/5);
+        yardButton2.setBounds(Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*4/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
+        this.addActor(yardButton2);
         setupListeners();
     }
 
@@ -48,6 +48,16 @@ public class GUI1v1 extends GUI {
         resourceMeter1.draw(batch);
         mothershipToken1.draw(batch);
         mothershipToken2.draw(batch);
+        if (yardMenu1.isVisible()) {
+            for (int i = 0; i < yardMenu1.getYardTokens().size(); i++) {
+                yardMenu1.getYardTokens().get(i).draw(batch);
+            }
+        }
+        if (yardMenu2.isVisible()) {
+            for (int i = 0; i < yardMenu2.getYardTokens().size(); i++) {
+                yardMenu2.getYardTokens().get(i).draw(batch);
+            }
+        }
     }
 
     @Override
@@ -60,27 +70,21 @@ public class GUI1v1 extends GUI {
                 yardMenu1.switchVisibility();
             }
         });
-        /*yardButton2.addListener(new ClickListener()
+        yardButton2.addListener(new ClickListener()
         {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
                 yardMenu2.switchVisibility();
             }
-        });*/
+        });
         super.setupListeners();
-    }
-
-    @Override
-    public void draw() {
-        super.draw();
-        //TODO draw yardMenu
     }
 
     @Override
     public void dispose() {
         yardButton1.removeListener(yardButton1.getClickListener());
-        //yardButton2.removeListener(yardButton2.getClickListener());
+        yardButton2.removeListener(yardButton2.getClickListener());
         super.dispose();
     }
 }
