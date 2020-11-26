@@ -12,7 +12,7 @@ public class BattleScreen extends SuperScreen {
     private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
     private final WorldManager worldManager = new WorldManager();
     private final Battle battle;
-    private final GUI gui; //buttons
+    private final GUI gui;
 
     public BattleScreen(final Farstar game, TableMenu tableMenu, Battle battle)
     {
@@ -36,7 +36,7 @@ public class BattleScreen extends SuperScreen {
     public void drawMenus(float delta) { //Stage-menus use their own Batch
         if (gui != null) {
             gui.act(delta);
-            gui.draw(); //draws "Actors"
+            gui.draw();
         }
     }
 
