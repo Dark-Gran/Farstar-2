@@ -5,7 +5,7 @@ import com.darkgran.farstar.battle.Battle;
 import java.util.ArrayList;
 
 public abstract class CardList {
-    private final ArrayList<Card> cards;
+    private ArrayList<Card> cards;
     private int maxSize;
 
     public void setupSize() {
@@ -34,6 +34,7 @@ public abstract class CardList {
     }
 
     public ArrayList<Card> getCards() { return cards; }
+    public void setCards(ArrayList<Card> cards) { this.cards = cards; }
 
     public int getMaxSize() { return maxSize; }
 

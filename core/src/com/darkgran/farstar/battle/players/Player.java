@@ -5,9 +5,10 @@ public class Player {
     private int energy;
     private int matter;
     private Mothership ms; //MotherShip
-    private Deck deck;
-    private Shipyard shipyard;
-    private Hand hand = new Hand();
+    private final Deck deck;
+    private final Shipyard shipyard;
+    private final Hand hand = new Hand();
+    private final Fleet fleet;
 
     public Player(byte battleID, int energy, int matter, Mothership ms, Deck deck, Shipyard shipyard) {
         this.battleID = battleID;
@@ -16,6 +17,7 @@ public class Player {
         this.ms = ms;
         this.deck = deck;
         this.shipyard = shipyard;
+        fleet = new Fleet();
     }
 
     public void setEnergy(int energy) { this.energy = energy; }
