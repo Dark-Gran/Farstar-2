@@ -54,10 +54,10 @@ public class GUI1v1 extends GUI {
         resourceMeter1.draw(batch);
         mothershipToken1.draw(batch);
         mothershipToken2.draw(batch);
-        if (yardMenu1.isVisible()) { drawYardMenu(yardMenu1, batch); }
-        if (yardMenu2.isVisible()) { drawYardMenu(yardMenu2, batch); }
-        drawHandMenu(handMenu1, batch);
-        drawHandMenu(handMenu2, batch);
+        if (yardMenu1.isVisible()) { drawTokenMenu(yardMenu1, batch); }
+        if (yardMenu2.isVisible()) { drawTokenMenu(yardMenu2, batch); }
+        drawTokenMenu(handMenu1, batch);
+        drawTokenMenu(handMenu2, batch);
     }
 
     @Override

@@ -31,8 +31,8 @@ public class Hand extends CardList{
         for (int i = 0; i < howMany && getCards().size() < Battle.MAX_IN_HAND; i++) {
             Card card = deck.drawCard();
             getCards().add(card);
-            if (handMenu != null) {
-                handMenu.generateNewCard(card);
+            if (getTokenMenu() != null) {
+                ((HandMenu) getTokenMenu()).generateNewToken(card);
             }
         }
     }
