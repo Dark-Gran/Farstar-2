@@ -22,7 +22,7 @@ public class HandMenu extends SimpleVector2 {
         layout.setText(new BitmapFont(), res);
         offsetX = layout.width*3/2;
         generateCards();
-        hand.receiveHandMenu(this); //because Hand-menu is created after the Hand
+        hand.receiveHandMenu(this);
     }
 
     private void generateCards() {
