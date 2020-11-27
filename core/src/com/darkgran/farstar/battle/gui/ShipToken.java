@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.darkgran.farstar.battle.players.Card;
+import com.darkgran.farstar.util.TextFont;
 
 public class ShipToken extends TextFont {
     private Card card;

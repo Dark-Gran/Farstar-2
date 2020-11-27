@@ -1,7 +1,6 @@
-package com.darkgran.farstar.battle.gui;
+package com.darkgran.farstar.util;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.darkgran.farstar.util.SimpleBox2;
 
 public abstract class TextFont extends SimpleBox2 {
     private BitmapFont font = new BitmapFont();
