@@ -29,21 +29,21 @@ public class GUI1v1 extends GUI {
         resourceMeter1 = new ResourceMeter(player1, true, Farstar.STAGE_WIDTH, 0f);
         resourceMeter2 = new ResourceMeter(player2, false, Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT);
         //Motherships
-        mothershipToken1 = new MothershipToken(player1.getMs(), Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*1/4);
-        mothershipToken2 = new MothershipToken(player2.getMs(), Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*3/4);
+        mothershipToken1 = new MothershipToken(player1.getMs(), Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*1/4, this);
+        mothershipToken2 = new MothershipToken(player2.getMs(), Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*3/4, this);
         //Buttons
         turnButton.setBounds(Farstar.STAGE_WIDTH*6/7, Farstar.STAGE_HEIGHT/2, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
         this.addActor(turnButton);
         //Shipyards
-        yardMenu1 = new YardMenu(player1.getShipyard(), false, Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*1/5);
+        yardMenu1 = new YardMenu(player1.getShipyard(), false, Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*1/5, this);
         yardButton1.setBounds(Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*1/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
         this.addActor(yardButton1);
-        yardMenu2 = new YardMenu(player2.getShipyard(), true, Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*4/5);
+        yardMenu2 = new YardMenu(player2.getShipyard(), true, Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*4/5, this);
         yardButton2.setBounds(Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*4/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
         this.addActor(yardButton2);
         //Hands
-        handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/8);
-        handMenu2 = new HandMenu(player2.getHand(),Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*7/8);
+        handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/8, this);
+        handMenu2 = new HandMenu(player2.getHand(),Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*7/8, this);
         //Finish
         setupListeners();
     }
