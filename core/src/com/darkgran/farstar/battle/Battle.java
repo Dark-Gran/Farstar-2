@@ -3,7 +3,7 @@ package com.darkgran.farstar.battle;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.battle.gui.GUI;
+import com.darkgran.farstar.battle.gui.BattleStage;
 
 public abstract class Battle implements BattleSettings {
     public final static CardLibrary CARD_LIBRARY = new CardLibrary();
@@ -17,7 +17,7 @@ public abstract class Battle implements BattleSettings {
 
     public void loadLibrary() { CARD_LIBRARY.loadLocal("content/cards.json"); }
 
-    public GUI createGUI(Farstar game, Viewport viewport, BattleScreen battleScreen) {
+    public BattleStage createBattleStage(Farstar game, Viewport viewport, BattleScreen battleScreen) {
         return null;
     }
 

@@ -21,7 +21,7 @@ public class IntroScreen extends SuperScreen { //Animation used only once on app
     private void endIntro() {
         Gdx.input.setInputProcessor(getGame().getInputMultiplexer());
         this.dispose();
-        getGame().setScreen(new MenuScreen(getGame(), new TableMenu(getGame(), getViewport())));
+        getGame().setScreen(new MainScreen(getGame(), new TableStage(getGame(), getViewport())));
     }
 
     private void updateAlpha(float delta) { //rework? (like time-steps)?

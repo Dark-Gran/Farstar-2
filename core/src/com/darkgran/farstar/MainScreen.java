@@ -2,10 +2,10 @@ package com.darkgran.farstar;
 
 import com.badlogic.gdx.Gdx;
 
-public class MenuScreen extends SuperScreen {
-    private final MainMenu menu = new MainMenu(getGame(), getViewport());
+public class MainScreen extends SuperScreen {
+    private final MainScreenStage menu = new MainScreenStage(getGame(), getViewport());
 
-    public MenuScreen(final Farstar game, TableMenu tableMenu) {
+    public MainScreen(final Farstar game, TableStage tableMenu) {
         super(game);
         setTableMenu(tableMenu);
         game.getInputMultiplexer().addProcessor(menu);

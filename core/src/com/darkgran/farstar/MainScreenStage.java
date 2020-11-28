@@ -10,11 +10,11 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.battle.Battle1v1;
 import com.darkgran.farstar.battle.BattleScreen;
 
-public class MainMenu extends ListeningMenu {
+public class MainScreenStage extends ListeningStage {
     private final Texture start = new Texture("images/start.png");
     private final ImageButton startButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(start)));
 
-    public MainMenu(final Farstar game, Viewport viewport) {
+    public MainScreenStage(final Farstar game, Viewport viewport) {
         super(game, viewport);
         startButton.setPosition((float) (Farstar.STAGE_WIDTH/2-start.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-start.getHeight()/2));
         this.addActor(startButton);
@@ -28,7 +28,7 @@ public class MainMenu extends ListeningMenu {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                final TableMenu tableMenu =  getGame().getSuperScreen().getTableMenu();
+                final TableStage tableMenu =  getGame().getSuperScreen().getTableMenu();
                 getGame().getScreen().dispose();
                 getGame().setScreen(new BattleScreen(getGame(), tableMenu, new Battle1v1()));
                 //startButton.removeListener(this);

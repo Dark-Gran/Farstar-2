@@ -3,8 +3,8 @@ package com.darkgran.farstar.battle;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.*;
-import com.darkgran.farstar.battle.gui.GUI;
-import com.darkgran.farstar.battle.gui.GUI1v1;
+import com.darkgran.farstar.battle.gui.BattleStage;
+import com.darkgran.farstar.battle.gui.BattleStage1V1;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -20,8 +20,8 @@ public class Battle1v1 extends Battle {
     }
 
     @Override
-    public GUI createGUI(Farstar game, Viewport viewport, BattleScreen battleScreen) {
-        return new GUI1v1(game, viewport, battleScreen, player1, player2);
+    public BattleStage createBattleStage(Farstar game, Viewport viewport, BattleScreen battleScreen) {
+        return new BattleStage1V1(game, viewport, battleScreen, player1, player2);
     }
 
     @Override

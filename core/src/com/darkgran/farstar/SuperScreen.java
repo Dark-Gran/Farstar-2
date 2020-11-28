@@ -12,7 +12,7 @@ public abstract class SuperScreen implements Screen {
     private Farstar game;
     private OrthographicCamera camera = new OrthographicCamera();
     private Viewport viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);
-    private TableMenu tableMenu;
+    private TableStage tableStage;
 
     public SuperScreen(final Farstar game) {
         this.game = game;
@@ -21,10 +21,10 @@ public abstract class SuperScreen implements Screen {
         camera.position.set((float) Farstar.STAGE_WIDTH/2,(float) Farstar.STAGE_HEIGHT/2,0);
     }
 
-    public void setTableMenu(TableMenu tableMenu) {
-        this.tableMenu = tableMenu;
-        if (!game.getInputMultiplexer().getProcessors().contains(tableMenu, true)) {
-            game.getInputMultiplexer().addProcessor(tableMenu);
+    public void setTableMenu(TableStage tableStage) {
+        this.tableStage = tableStage;
+        if (!game.getInputMultiplexer().getProcessors().contains(tableStage, true)) {
+            game.getInputMultiplexer().addProcessor(tableStage);
         }
     }
 
@@ -38,8 +38,8 @@ public abstract class SuperScreen implements Screen {
 
     public Viewport getViewport() { return viewport; }
 
-    public TableMenu getTableMenu() {
-        return tableMenu;
+    public TableStage getTableMenu() {
+        return tableStage;
     }
 
     @Override
@@ -49,9 +49,9 @@ public abstract class SuperScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
-        if (tableMenu != null) { //should persist over all screens
-            tableMenu.act(delta);
-            tableMenu.draw();
+        if (tableStage != null) { //should persist over all screens
+            tableStage.act(delta);
+            tableStage.draw();
         }
 
         drawMenus(delta);

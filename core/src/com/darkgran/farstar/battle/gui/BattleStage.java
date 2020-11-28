@@ -9,21 +9,21 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.ListeningMenu;
+import com.darkgran.farstar.ListeningStage;
 import com.darkgran.farstar.battle.BattleScreen;
 
-public abstract class GUI extends ListeningMenu {
+public abstract class BattleStage extends ListeningStage {
     private final BattleScreen battleScreen;
     private final Texture turn = new Texture("images/turn.png");
     public final ImageButton turnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(turn)));
     private final Texture yardPic = new Texture("images/yard.png");
 
-    public GUI(final Farstar game, Viewport viewport, BattleScreen battleScreen) {
+    public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen) {
         super(game, viewport);
         this.battleScreen = battleScreen;
     }
 
-    public abstract void drawGUI(float delta, Batch batch);
+    public abstract void drawBattleStage(float delta, Batch batch);
 
     @Override
     public void setupListeners() {

@@ -5,38 +5,38 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.*;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
-import com.darkgran.farstar.TableMenu;
-import com.darkgran.farstar.battle.gui.GUI;
+import com.darkgran.farstar.TableStage;
+import com.darkgran.farstar.battle.gui.BattleStage;
 
 public class BattleScreen extends SuperScreen {
     private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
     private final WorldManager worldManager = new WorldManager();
     private final Battle battle;
-    private final GUI gui;
+    private final BattleStage battleStage;
 
-    public BattleScreen(final Farstar game, TableMenu tableMenu, Battle battle)
+    public BattleScreen(final Farstar game, TableStage tableStage, Battle battle)
     {
         super(game);
-        setTableMenu(tableMenu);
+        setTableMenu(tableStage);
         Box2D.init();
         this.battle = battle;
-        gui = battle.createGUI(game, getViewport(), this);
-        game.getInputMultiplexer().addProcessor(gui);
+        battleStage = battle.createBattleStage(game, getViewport(), this);
+        game.getInputMultiplexer().addProcessor(battleStage);
         battle.launchBattle(new RoundManager(battle));
     }
 
     @Override
     public void drawContent(float delta, Batch batch) {
-        gui.drawGUI(delta, batch);
+        battleStage.drawBattleStage(delta, batch);
         //drawBox2DDebug(); //draws boundaries of world-bodies but disables fonts
         worldManager.worldTimer(delta); //world stepping
     }
 
     @Override
     public void drawMenus(float delta) { //Stage-menus use their own Batch
-        if (gui != null) {
-            gui.act(delta);
-            gui.draw();
+        if (battleStage != null) {
+            battleStage.act(delta);
+            battleStage.draw();
         }
     }
 
@@ -50,11 +50,11 @@ public class BattleScreen extends SuperScreen {
     @Override
     public void dispose() {
         worldManager.disposeWorld();
-        getGame().getInputMultiplexer().removeProcessor(gui);
-        gui.dispose();
+        getGame().getInputMultiplexer().removeProcessor(battleStage);
+        battleStage.dispose();
     }
 
-    public GUI getGUI() { return gui; }
+    public BattleStage getGUI() { return battleStage; }
 
     public Battle getBattle() { return battle; }
 

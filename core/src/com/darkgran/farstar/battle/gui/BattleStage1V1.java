@@ -11,7 +11,7 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.Player;
 
-public class GUI1v1 extends GUI {
+public class BattleStage1V1 extends BattleStage {
     private final ResourceMeter resourceMeter1;
     private final ResourceMeter resourceMeter2;
     private final MothershipToken mothershipToken1;
@@ -23,7 +23,7 @@ public class GUI1v1 extends GUI {
     private final HandMenu handMenu1;
     private final HandMenu handMenu2;
 
-    public GUI1v1(Farstar game, Viewport viewport, BattleScreen battleScreen, Player player1, Player player2) {
+    public BattleStage1V1(Farstar game, Viewport viewport, BattleScreen battleScreen, Player player1, Player player2) {
         super(game, viewport, battleScreen);
         //Resources
         resourceMeter1 = new ResourceMeter(player1, true, Farstar.STAGE_WIDTH, 0f);
@@ -49,7 +49,7 @@ public class GUI1v1 extends GUI {
     }
 
     @Override
-    public void drawGUI(float delta, Batch batch) {
+    public void drawBattleStage(float delta, Batch batch) {
         resourceMeter2.draw(batch);
         resourceMeter1.draw(batch);
         mothershipToken1.draw(batch);
