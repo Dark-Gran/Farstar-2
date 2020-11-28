@@ -3,7 +3,9 @@ package com.darkgran.farstar.battle.gui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.util.TextFont;
 
@@ -23,6 +25,18 @@ public class ShipToken extends TextFont {
         setX(x);
         setY(y);
         stage.addActor(this);
+        setupListener();
+    }
+
+    private void setupListener() {
+        this.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+               System.out.println("OK!"); //TODO
+            }
+        });
     }
 
     public void draw(Batch batch) {
