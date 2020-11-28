@@ -9,7 +9,7 @@ public class FleetMenu extends SimpleVector2 { //not a TokenMenu (Array vs Array
     private GlyphLayout layout = new GlyphLayout();
     private float offset;
     private final Fleet fleet;
-    private ShipToken[] ships = new ShipToken[7];
+    private Token[] ships = new Token[7];
 
     public FleetMenu(Fleet fleet, float x, float y) {
         setX(x);
@@ -25,7 +25,7 @@ public class FleetMenu extends SimpleVector2 { //not a TokenMenu (Array vs Array
         offset = layout.width;
     }
 
-    public void addShip(ShipToken ship, int position) {
+    public void addShip(Token ship, int position) {
         ships[position] = ship;
     }
 

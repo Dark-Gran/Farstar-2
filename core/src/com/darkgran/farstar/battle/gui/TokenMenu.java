@@ -9,7 +9,7 @@ import com.darkgran.farstar.util.SimpleVector2;
 import java.util.ArrayList;
 
 public abstract class TokenMenu extends SimpleVector2 {
-    private ArrayList<ShipToken> tokens = new ArrayList<>();
+    private ArrayList<Token> tokens = new ArrayList<>();
     private final CardList cardList;
     private GlyphLayout layout = new GlyphLayout();
     private float offset;
@@ -37,17 +37,17 @@ public abstract class TokenMenu extends SimpleVector2 {
     public void generateTokens() {
         tokens.clear();
         for (int i = 0; i < cardList.getCards().size(); i++) {
-            tokens.add(new ShipToken(cardList.getCards().get(i), getX() + offset*i, getY(), battleStage));
+            tokens.add(new Token(cardList.getCards().get(i), getX() + offset*i, getY(), battleStage, this));
         }
     }
 
     public void generateNewToken(Card card) {
-        tokens.add(new ShipToken(card, getX() + offset*tokens.size()-1, getY(), battleStage));
+        tokens.add(new Token(card, getX() + offset*tokens.size()-1, getY(), battleStage, this));
     }
 
-    public ArrayList<ShipToken> getTokens() { return tokens; }
+    public ArrayList<Token> getTokens() { return tokens; }
 
-    public void setTokens(ArrayList<ShipToken> tokens) { this.tokens = tokens; }
+    public void setTokens(ArrayList<Token> tokens) { this.tokens = tokens; }
 
     public float getOffset() { return offset; }
 

@@ -3,19 +3,18 @@ package com.darkgran.farstar.battle.gui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.util.TextFont;
 
-public class ShipToken extends TextFont {
+public class Token extends TextFont {
     private Card card;
     private final CardName cardName = new CardName();
     private final CardOffense cardOffense = new CardOffense();
     private final CardDefense cardDefense = new CardDefense();
     private final BattleStage battleStage;
+    private final TokenMenu tokenMenu;
 
-    public ShipToken(Card card, float x, float y, BattleStage battleStage){
+    public Token(Card card, float x, float y, BattleStage battleStage, TokenMenu tokenMenu){
         setCard(card);
         String res = "Battlestation";
         GlyphLayout layout = new GlyphLayout();
@@ -24,21 +23,13 @@ public class ShipToken extends TextFont {
         setHeight(layout.height);
         setX(x);
         setY(y);
+        this.tokenMenu = tokenMenu;
         this.battleStage = battleStage;
         battleStage.addActor(this);
         setupListener();
     }
 
-    public void setupListener() {
-        this.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y)
-            {
-
-            }
-        });
-    }
+    public void setupListener() { }
 
     public void draw(Batch batch) {
         cardName.draw(getFont(), batch, getX()-getWidth()/2, getY()+getHeight()*3, card.getCardInfo().getName());
@@ -51,5 +42,7 @@ public class ShipToken extends TextFont {
     public void setCard(Card card) { this.card = card; }
 
     public BattleStage getBattleStage() { return battleStage; }
+
+    public TokenMenu getTokenMenu() { return tokenMenu; }
 
 }

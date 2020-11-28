@@ -19,13 +19,13 @@ public class HandMenu extends TokenMenu {
     public void generateTokens() {
         getTokens().clear();
         for (int i = 0; i < getCardList().getCards().size(); i++) {
-            getTokens().add(new HandCard(getCardList().getCards().get(i), getX() + getOffset()*i, getY(), getBattleStage()));
+            getTokens().add(new HandToken(getCardList().getCards().get(i), getX() + getOffset()*i, getY(), getBattleStage(), this));
         }
     }
 
     @Override
     public void generateNewToken(Card card) {
-        getTokens().add(new HandCard(card, getX() + getOffset()*getTokens().size()-1, getY(), getBattleStage()));
+        getTokens().add(new HandToken(card, getX() + getOffset()*getTokens().size()-1, getY(), getBattleStage(), this));
     }
 
 }

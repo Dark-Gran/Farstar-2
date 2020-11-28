@@ -59,6 +59,10 @@ public abstract class BattleStage extends ListeningStage {
 
     public FakeToken getFakeToken() { return fakeToken; }
 
-    public void setFakeToken(FakeToken fakeToken) { this.fakeToken = fakeToken; }
+    public void setFakeToken(FakeToken fakeToken) {
+        if (this.fakeToken != null) { this.fakeToken.remove(); }
+        this.fakeToken = fakeToken;
+        if (fakeToken != null) { this.addActor(fakeToken); }
+    }
 
 }
