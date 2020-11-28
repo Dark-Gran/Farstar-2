@@ -7,5 +7,5 @@ public class FakeToken extends ShipToken {
         super(card, x, y, battleStage);
     }
 
-    //TODO DragNDrop (starts dragged on creation)
+    //TODO DragNDrop (starts dragged on creation, destroyed when dropped anyway)
 }
