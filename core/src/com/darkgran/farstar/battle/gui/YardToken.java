@@ -16,7 +16,7 @@ public class YardToken extends ShipToken {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-
+                getBattleStage().setFakeToken(new FakeToken(getCard(), getX(), getY(), getBattleStage()));
             }
         });
     }

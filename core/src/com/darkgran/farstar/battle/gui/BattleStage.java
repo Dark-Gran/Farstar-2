@@ -57,4 +57,8 @@ public abstract class BattleStage extends ListeningStage {
 
     public BattleScreen getBattleScreen() { return battleScreen; }
 
+    public FakeToken getFakeToken() { return fakeToken; }
+
+    public void setFakeToken(FakeToken fakeToken) { this.fakeToken = fakeToken; }
+
 }

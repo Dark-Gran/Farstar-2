@@ -13,6 +13,7 @@ public class ShipToken extends TextFont {
     private final CardName cardName = new CardName();
     private final CardOffense cardOffense = new CardOffense();
     private final CardDefense cardDefense = new CardDefense();
+    private final BattleStage battleStage;
 
     public ShipToken(Card card, float x, float y, BattleStage battleStage){
         setCard(card);
@@ -23,6 +24,7 @@ public class ShipToken extends TextFont {
         setHeight(layout.height);
         setX(x);
         setY(y);
+        this.battleStage = battleStage;
         battleStage.addActor(this);
         setupListener();
     }
@@ -47,5 +49,7 @@ public class ShipToken extends TextFont {
     public Card getCard() { return card; }
 
     public void setCard(Card card) { this.card = card; }
+
+    public BattleStage getBattleStage() { return battleStage; }
 
 }
