@@ -50,6 +50,7 @@ public class BattleStage1V1 extends BattleStage {
 
     @Override
     public void drawBattleStage(float delta, Batch batch) {
+        super.drawBattleStage(delta, batch);
         resourceMeter2.draw(batch);
         resourceMeter1.draw(batch);
         mothershipToken1.draw(batch);

@@ -2,7 +2,6 @@ package com.darkgran.farstar.battle.gui;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.CardList;
 import com.darkgran.farstar.util.SimpleVector2;
@@ -15,16 +14,16 @@ public abstract class TokenMenu extends SimpleVector2 {
     private GlyphLayout layout = new GlyphLayout();
     private float offset;
     private boolean negativeOffset;
-    private final Stage stage;
+    private final BattleStage battleStage;
 
-    public TokenMenu(CardList cardList, float x, float y, boolean negativeOffset, Stage stage) {
+    public TokenMenu(CardList cardList, float x, float y, boolean negativeOffset, BattleStage battleStage) {
         setX(x);
         setY(y);
         this.cardList = cardList;
         cardList.receiveTokenMenu(this);
         this.negativeOffset = negativeOffset;
         setupOffset();
-        this.stage = stage;
+        this.battleStage = battleStage;
         generateTokens();
     }
 
@@ -38,12 +37,12 @@ public abstract class TokenMenu extends SimpleVector2 {
     public void generateTokens() {
         tokens.clear();
         for (int i = 0; i < cardList.getCards().size(); i++) {
-            tokens.add(new ShipToken(cardList.getCards().get(i), getX() + offset*i, getY(), stage));
+            tokens.add(new ShipToken(cardList.getCards().get(i), getX() + offset*i, getY(), battleStage));
         }
     }
 
     public void generateNewToken(Card card) {
-        tokens.add(new ShipToken(card, getX() + offset*tokens.size()-1, getY(), stage));
+        tokens.add(new ShipToken(card, getX() + offset*tokens.size()-1, getY(), battleStage));
     }
 
     public ArrayList<ShipToken> getTokens() { return tokens; }
@@ -62,6 +61,6 @@ public abstract class TokenMenu extends SimpleVector2 {
 
     public void setNegativeOffset(boolean negativeOffset) { this.negativeOffset = negativeOffset; }
 
-    public Stage getStage() { return stage; }
+    public BattleStage getBattleStage() { return battleStage; }
 
 }

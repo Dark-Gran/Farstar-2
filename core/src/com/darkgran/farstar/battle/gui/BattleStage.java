@@ -17,13 +17,16 @@ public abstract class BattleStage extends ListeningStage {
     private final Texture turn = new Texture("images/turn.png");
     public final ImageButton turnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(turn)));
     private final Texture yardPic = new Texture("images/yard.png");
+    private FakeToken fakeToken;
 
     public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen) {
         super(game, viewport);
         this.battleScreen = battleScreen;
     }
 
-    public abstract void drawBattleStage(float delta, Batch batch);
+    public void drawBattleStage(float delta, Batch batch) {
+        if (fakeToken != null) { fakeToken.draw(batch); }
+    }
 
     @Override
     public void setupListeners() {
