@@ -30,7 +30,7 @@ public abstract class BattleStage extends ListeningStage {
         this.battleScreen = battleScreen;
     }
 
-    public void processDrop(float x, float y, Token token) { //TODO debug
+    public void processDrop(float x, float y, Token token) {
         CombatManager combatManager = getBattleScreen().getBattle().getCombatManager();
         DropTarget targetHit = returnDropTarget(x, y);
         if (targetHit != null) {
