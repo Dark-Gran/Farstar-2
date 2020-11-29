@@ -1,5 +1,8 @@
 package com.darkgran.farstar.battle;
 
+import com.darkgran.farstar.battle.gui.TokenMenu;
+import com.darkgran.farstar.battle.players.Card;
+import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.battle.players.Player;
 
 public class RoundManager {
@@ -40,6 +43,10 @@ public class RoundManager {
         } else {
             newRound();
         }
+    }
+
+    public void fleetDeployment(Card card, TokenMenu tokenMenu, Fleet fleet) { //TODO
+        System.out.println("OK");
     }
 
     public int getRoundNum() { return roundNum; }

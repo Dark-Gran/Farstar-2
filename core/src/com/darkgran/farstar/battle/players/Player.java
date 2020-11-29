@@ -42,4 +42,6 @@ public class Player {
 
     public Shipyard getShipyard() { return shipyard; }
 
+    public Fleet getFleet() { return fleet; }
+
 }

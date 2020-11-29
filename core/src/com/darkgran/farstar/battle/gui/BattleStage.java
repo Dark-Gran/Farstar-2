@@ -10,7 +10,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.ListeningStage;
+import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.BattleScreen;
+import com.darkgran.farstar.battle.players.Card;
+import com.darkgran.farstar.battle.players.Fleet;
+import com.darkgran.farstar.util.SimpleBox2;
+
+import java.awt.*;
 
 public abstract class BattleStage extends ListeningStage {
     private final BattleScreen battleScreen;
@@ -22,6 +28,10 @@ public abstract class BattleStage extends ListeningStage {
     public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen) {
         super(game, viewport);
         this.battleScreen = battleScreen;
+    }
+
+    public void processDrop(float x, float y, Card card, TokenMenu tokenMenu) {
+
     }
 
     public void drawBattleStage(float delta, Batch batch) {
@@ -51,6 +61,15 @@ public abstract class BattleStage extends ListeningStage {
         for (int i = 0; i < tokenMenu.getTokens().size(); i++) {
             tokenMenu.getTokens().get(i).draw(batch);
         }
+    }
+
+    public void drawFleet(Fleet fleet, Batch batch) {
+        //TODO
+    }
+
+    public boolean isInBox(SimpleBox2 simpleBox2, float x, float y) {
+        Rectangle rectangle = new Rectangle((int) simpleBox2.getX(), (int) simpleBox2.getY(), (int) simpleBox2.getWidth(), (int) simpleBox2.getHeight());
+        return rectangle.contains(x, y);
     }
 
     public Texture getYardPic() { return yardPic; }

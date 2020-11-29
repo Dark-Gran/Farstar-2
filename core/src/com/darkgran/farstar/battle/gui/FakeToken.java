@@ -6,13 +6,13 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.Card;
 
-public class FakeToken extends Token {
+public class FakeToken extends Token { //temporary token for targeted deployment from shipyard
     private final InputListener inputListener = new InputListener() {
         @Override
         public void touchDragged (InputEvent event, float x, float y, int pointer) { drag(x, y); }
 
         @Override
-        public void touchUp (InputEvent event, float x, float y, int pointer, int button) { drop(); }
+        public void touchUp (InputEvent event, float x, float y, int pointer, int button) { drop(x, y); }
     };
 
     public FakeToken(Card card, float x, float y, BattleStage battleStage, TokenMenu tokenMenu) {
@@ -24,8 +24,8 @@ public class FakeToken extends Token {
         setPosition(Gdx.input.getX(), Farstar.STAGE_HEIGHT-Gdx.input.getY());
     }
 
-    private void drop() {
-        System.out.println("Dropped!"); //TODO deployment
+    private void drop(float x, float y) {
+        getBattleStage().processDrop(Gdx.input.getX(), Farstar.STAGE_HEIGHT-Gdx.input.getY(), getCard(), getTokenMenu());
         destroy();
     }
 

@@ -9,7 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.BattleScreen;
+import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.Player;
+import com.darkgran.farstar.util.SimpleBox2;
 
 public class BattleStage1V1 extends BattleStage {
     private final ResourceMeter resourceMeter1;
@@ -22,6 +24,8 @@ public class BattleStage1V1 extends BattleStage {
     private final YardMenu yardMenu2;
     private final HandMenu handMenu1;
     private final HandMenu handMenu2;
+    private final FleetMenu fleetMenu1;
+    private final FleetMenu fleetMenu2;
 
     public BattleStage1V1(Farstar game, Viewport viewport, BattleScreen battleScreen, Player player1, Player player2) {
         super(game, viewport, battleScreen);
@@ -44,8 +48,20 @@ public class BattleStage1V1 extends BattleStage {
         //Hands
         handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/8, this);
         handMenu2 = new HandMenu(player2.getHand(),Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*7/8, this);
+        //Fleets
+        fleetMenu1 = new FleetMenu(player1.getFleet(), Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/3, Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT/5);
+        fleetMenu2 = new FleetMenu(player2.getFleet(), Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*2/3, Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT/5);
         //Finish
         setupListeners();
+    }
+
+    @Override
+    public void processDrop(float x, float y, Card card, TokenMenu tokenMenu) {
+        if (isInBox(fleetMenu1, x, y)) {
+            getBattleScreen().getBattle().getRoundManager().fleetDeployment(card, tokenMenu, fleetMenu1.getFleet());
+        } else if (isInBox(fleetMenu2, x, y)) {
+            getBattleScreen().getBattle().getRoundManager().fleetDeployment(card, tokenMenu, fleetMenu2.getFleet());
+        }
     }
 
     @Override

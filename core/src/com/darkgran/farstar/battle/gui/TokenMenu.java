@@ -4,11 +4,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.CardList;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.util.SimpleBox2;
 
 import java.util.ArrayList;
 
-public abstract class TokenMenu extends SimpleVector2 {
+public abstract class TokenMenu extends SimpleBox2 {
     private ArrayList<Token> tokens = new ArrayList<>();
     private final CardList cardList;
     private GlyphLayout layout = new GlyphLayout();
