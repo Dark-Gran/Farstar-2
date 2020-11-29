@@ -63,8 +63,12 @@ public abstract class BattleStage extends ListeningStage {
         }
     }
 
-    public void drawFleet(Fleet fleet, Batch batch) {
-        //TODO
+    public void drawFleet(FleetMenu fleetMenu, Batch batch) {
+        for (int i = 0; i < fleetMenu.getShips().length; i++) {
+            if (fleetMenu.getShips()[i] != null) {
+                fleetMenu.getShips()[i].draw(batch);
+            }
+        }
     }
 
     public boolean isInBox(SimpleBox2 simpleBox2, float x, float y) {

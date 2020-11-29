@@ -4,6 +4,9 @@ import com.darkgran.farstar.battle.gui.FleetMenu;
 
 public class Fleet { //not a CardList to keep the positioning
     private Card[] cards = new Card[7];
+
+
+
     private FleetMenu fleetMenu;
 
     public boolean addCard(Card card, int position) {
@@ -36,6 +39,8 @@ public class Fleet { //not a CardList to keep the positioning
     }
 
     public void receiveFleetMenu(FleetMenu fleetMenu) { this.fleetMenu = fleetMenu; }
+
+    public FleetMenu getFleetMenu() { return fleetMenu; }
 
     public Card[] getCards() { return cards; }
 }
