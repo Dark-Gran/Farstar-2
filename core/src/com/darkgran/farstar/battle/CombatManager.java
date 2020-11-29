@@ -12,6 +12,10 @@ public class CombatManager {
         active = true;
     }
 
+    public void duel() {
+
+    }
+
     public void endCombat() {
         active = false;
         battle.getRoundManager().afterCombat();
