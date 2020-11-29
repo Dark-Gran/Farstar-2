@@ -6,7 +6,7 @@ import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.util.SimpleBox2;
 
-public class FleetMenu extends SimpleBox2 { //not a TokenMenu (Array vs ArrayList)
+public class FleetMenu extends SimpleBox2 implements DropTarget { //not a TokenMenu (Array vs ArrayList)
     private final BattleStage battleStage;
     private GlyphLayout layout = new GlyphLayout();
     private float offset;

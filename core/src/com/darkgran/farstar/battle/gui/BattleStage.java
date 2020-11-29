@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.ListeningStage;
 import com.darkgran.farstar.battle.BattleScreen;
+import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.util.SimpleBox2;
 
 import java.awt.*;
@@ -22,19 +23,34 @@ public abstract class BattleStage extends ListeningStage {
     private final Texture yardPic = new Texture("images/yard.png");
     private FakeToken fakeToken;
 
+    public final int tokenWidth = 78; //future: (re)move
+
     public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen) {
         super(game, viewport);
         this.battleScreen = battleScreen;
     }
 
     public void processDrop(float x, float y, Token token) {
-        if (token instanceof AnchoredToken) {
+        CombatManager combatManager = getBattleScreen().getBattle().getCombatManager();
+        DropTarget targetHit = returnDropTarget(x, y);
+        if (targetHit != null) {
+            if (targetHit instanceof FleetMenu) {
+                FleetMenu fleetMenu = (FleetMenu) targetHit;
+                if (combatManager.isActive()) {
+                    combatManager.combatTarget(token, fleetMenu.getFleet(), getDropTarget(x, y, fleetMenu));
+                } else {
+                    getBattleScreen().getBattle().getRoundManager().fleetDeployment(token, fleetMenu.getFleet(), getDropPosition(x, y, fleetMenu));
+                }
+            }
+        } else  if (token instanceof AnchoredToken) {
             ((AnchoredToken) token).resetPosition();
         }
         if (token instanceof FakeToken) {
             token.destroy();
         }
     }
+
+    public DropTarget returnDropTarget(float x, float y) { return null; }
 
     public void drawBattleStage(float delta, Batch batch) {
         if (fakeToken != null) { fakeToken.draw(batch); }
@@ -78,9 +94,18 @@ public abstract class BattleStage extends ListeningStage {
         return rectangle.contains(x, y);
     }
 
+    public int getDropTarget(float x, float y, FleetMenu fleetMenu) {
+        Token[] ships = fleetMenu.getShips();
+        for (int i = 0; i < ships.length; i++) {
+            if (x > fleetMenu.getX()+(tokenWidth*i) && x < fleetMenu.getX()+(tokenWidth*(i+1))) {
+                return i;
+            }
+        }
+        return 7;
+    }
+
     public int getDropPosition(float x, float y, FleetMenu fleetMenu) {
         Token[] ships = fleetMenu.getShips();
-        int tokenWidth = 78;
         if (ships[3] == null) { //middle token empty
             return 3;
         } else {

@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.BattleScreen;
-import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.Player;
 
 public class BattleStage1V1 extends BattleStage {
@@ -55,17 +54,10 @@ public class BattleStage1V1 extends BattleStage {
     }
 
     @Override
-    public void processDrop(float x, float y, Token token) { //TODO
-        if (isInBox(fleetMenu1, x, y)) {
-            getBattleScreen().getBattle().getRoundManager().fleetDeployment(token, fleetMenu1.getFleet(), getDropPosition(x, y, fleetMenu1));
-        } else if (isInBox(fleetMenu2, x, y)) {
-            getBattleScreen().getBattle().getRoundManager().fleetDeployment(token, fleetMenu2.getFleet(), getDropPosition(x, y, fleetMenu2));
-        } else  if (token instanceof AnchoredToken) {
-            ((AnchoredToken) token).resetPosition();
-        }
-        if (token instanceof FakeToken) {
-            token.destroy();
-        }
+    public DropTarget returnDropTarget(float x, float y) {
+        if (isInBox(fleetMenu1, x, y)) { return  fleetMenu1; }
+        else if (isInBox(fleetMenu2, x, y)) { return fleetMenu2; }
+        else { return null; }
     }
 
     @Override
