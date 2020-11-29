@@ -7,7 +7,6 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.TableStage;
 import com.darkgran.farstar.battle.gui.BattleStage;
-import com.darkgran.farstar.battle.players.CombatManager;
 
 public class BattleScreen extends SuperScreen {
     private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();

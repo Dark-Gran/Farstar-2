@@ -1,6 +1,4 @@
-package com.darkgran.farstar.battle.players;
-
-import com.darkgran.farstar.battle.Battle;
+package com.darkgran.farstar.battle;
 
 public class CombatManager {
     private final Battle battle;
@@ -9,8 +7,6 @@ public class CombatManager {
     public CombatManager(Battle battle) {
         this.battle = battle;
     }
-
-    public Battle getBattle() { return battle; }
 
     public void launchCombat() {
         active = true;
@@ -25,5 +21,6 @@ public class CombatManager {
 
     public boolean isActive() { return active; }
 
-    public void setActive(boolean active) { this.active = active; }
+    public Battle getBattle() { return battle; }
+
 }
