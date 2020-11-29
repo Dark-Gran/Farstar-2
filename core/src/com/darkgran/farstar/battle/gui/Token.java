@@ -7,6 +7,7 @@ import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.util.TextFont;
 
 public class Token extends TextFont {
+    private Dragger dragger;
     private Card card;
     private final CardName cardName = new CardName();
     private final CardOffense cardOffense = new CardOffense();
@@ -37,6 +38,17 @@ public class Token extends TextFont {
         cardDefense.draw(getFont(), batch, getX()-getWidth()/10+getWidth()/2, getY(), String.valueOf(card.getCardInfo().getDefense()));
     }
 
+    public void destroy() {
+        remove();
+        if (this instanceof FakeToken) { battleStage.setFakeToken(null); }
+        else {
+            if (tokenMenu!=null) {
+                tokenMenu.getTokens().remove(this);
+                tokenMenu.getCardList().getCards().remove(getCard());
+            }
+        }
+    }
+
     public Card getCard() { return card; }
 
     public void setCard(Card card) { this.card = card; }
@@ -45,13 +57,8 @@ public class Token extends TextFont {
 
     public TokenMenu getTokenMenu() { return tokenMenu; }
 
-    public void destroy() {
-        remove();
-        if (this instanceof FakeToken) { getBattleStage().setFakeToken(null); }
-        else {
-            getTokenMenu().getTokens().remove(this);
-            getTokenMenu().getCardList().getCards().remove(getCard());
-        }
-    }
+    public Dragger getDragger() { return dragger; }
+
+    public void setDragger(Dragger dragger) { this.dragger = dragger; }
 
 }

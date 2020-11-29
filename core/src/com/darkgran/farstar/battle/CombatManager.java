@@ -8,10 +8,8 @@ public class CombatManager {
         this.battle = battle;
     }
 
-    public void launchCombat() {
+    public void launchCombat() { //TODO
         active = true;
-
-        endCombat();
     }
 
     public void endCombat() {

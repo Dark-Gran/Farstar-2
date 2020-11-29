@@ -3,7 +3,6 @@ package com.darkgran.farstar.battle.gui;
 import com.darkgran.farstar.battle.players.Card;
 
 public class HandToken extends Token {
-    private final Dragger dragger = new Dragger(this);
     private final float originX;
     private final float originY;
 
@@ -11,7 +10,8 @@ public class HandToken extends Token {
         super(card, x, y, battleStage, tokenMenu);
         this.originX = x;
         this.originY = y;
-        this.addListener(dragger.getInputListener());
+        setDragger(new Dragger(this));
+        this.addListener(getDragger().getInputListener());
     }
 
     public void resetPosition() {
