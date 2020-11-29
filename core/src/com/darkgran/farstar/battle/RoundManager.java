@@ -30,7 +30,8 @@ public class RoundManager {
         if (income > battle.MAX_TECH_INCOME) {
             income = battle.MAX_TECH_INCOME;
         }
-        player.setEnergy(income);
+        //player.setEnergy(income);
+        player.addEnergy(income);
         player.addMatter(income);
     }
 
@@ -51,6 +52,7 @@ public class RoundManager {
 
     public void fleetDeployment(Token token, Fleet fleet, int position) {
         if (token.getTokenMenu() != null && !battle.getCombatManager().isActive()) {
+            System.out.println("OK");
             Player whoseTurn = battle.getWhoseTurn();
             boolean success = false;
             if (fleet == whoseTurn.getFleet() && token.getTokenMenu().getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard())) {
