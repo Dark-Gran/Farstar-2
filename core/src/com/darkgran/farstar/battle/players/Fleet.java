@@ -8,36 +8,37 @@ public class Fleet { //not a CardList to keep the positioning
 
     public boolean addCard(Card card, int position) {
         boolean success = false;
-        if (position == 3) {
-            if (cards[3] == null) {
-                setCard(card, position);
-                success = true;
-            }
-        } else { //TODO: shifting the whole fleet to one side when the targeted side is full
-            Card cardToSet = card;
-            if (position < 3) {
-                for (int i = 2; i >= 0; i--) {
-                    if (cards[i] != null) {
-                        if (i == position) {
-                            cardToSet = cards[i];
-                            setCard(card, i);
-                            success = true;
-                            position--;
-                        }
-                    } else {
-                        setCard(cardToSet, i);
-                        success = true;
+        if (hasSpace() && position <= 6) {
+            if (position == 3) {
+                if (cards[3] == null) {
+                    setCard(card, position);
+                    success = true;
+                }
+            } else {
+                boolean side = position < 3;
+                int start = side ? 2 : 4;
+                int end = side ? -1 : 7;
+                int change = side ? -1 : 1;
+                Card cardToSet = card;
+                int i;
+                boolean sideHasSpace = false;
+                for (i = start; i != end; i += change) {
+                    if (cards[i] == null) {
+                        sideHasSpace = true;
                         break;
                     }
                 }
-            } else {
-                for (int i = 4; i <= 6; i++) {
+                if (!sideHasSpace) {
+                    shiftAllCards(side);
+                }
+                for (i = start; i != end; i += change) {
                     if (cards[i] != null) {
                         if (i == position) {
-                            cardToSet = cards[i];
-                            setCard(card, i);
+                            Card holder = cards[i];
+                            setCard(cardToSet, i);
+                            cardToSet = holder;
                             success = true;
-                            position++;
+                            position += change;
                         }
                     } else {
                         setCard(cardToSet, i);
@@ -48,6 +49,18 @@ public class Fleet { //not a CardList to keep the positioning
             }
         }
         return success;
+    }
+
+    private void shiftAllCards(boolean fromSide) {
+        int start = fromSide ? 6 : 0;
+        int end = fromSide ? 0 : 6;
+        int change = fromSide ? -1 : 1;
+        for (int i = start; i != end; i+=change) {
+            if (cards[i+change] != null) {
+                setCard(cards[i+change], i);
+                removeCard(i+change);
+            }
+        }
     }
 
     public boolean hasSpace() {

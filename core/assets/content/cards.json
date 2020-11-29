@@ -19,11 +19,11 @@
   },
   {
     "id": 2,
-    "name": "Tactical Advantage",
+    "name": "Heavy Bomber",
     "source": "HAND",
-    "energy": 0,
-    "matter": 0,
-    "offense": 0,
-    "defense": 0
+    "energy": 2,
+    "matter": 2,
+    "offense": 2,
+    "defense": 2
   }
 ]

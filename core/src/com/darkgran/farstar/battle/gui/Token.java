@@ -45,4 +45,13 @@ public class Token extends TextFont {
 
     public TokenMenu getTokenMenu() { return tokenMenu; }
 
+    public void destroy() {
+        remove();
+        if (this instanceof FakeToken) { getBattleStage().setFakeToken(null); }
+        else {
+            getTokenMenu().getTokens().remove(this);
+            getTokenMenu().getCardList().getCards().remove(getCard());
+        }
+    }
+
 }

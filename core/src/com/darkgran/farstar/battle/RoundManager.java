@@ -1,9 +1,8 @@
 package com.darkgran.farstar.battle;
 
-import com.darkgran.farstar.battle.gui.TokenMenu;
-import com.darkgran.farstar.battle.players.Card;
-import com.darkgran.farstar.battle.players.Fleet;
-import com.darkgran.farstar.battle.players.Player;
+import com.darkgran.farstar.battle.gui.HandToken;
+import com.darkgran.farstar.battle.gui.Token;
+import com.darkgran.farstar.battle.players.*;
 
 public class RoundManager {
     private final Battle battle;
@@ -45,10 +44,12 @@ public class RoundManager {
         }
     }
 
-    public void fleetDeployment(Card card, TokenMenu tokenMenu, Fleet fleet, int position) {
-        if (tokenMenu != null && position <= 6 && fleet.hasSpace()) {
-            if (fleet.addCard(card, position)) {
-                //TODO payment
+    public void fleetDeployment(Token token, Fleet fleet, int position) {
+        if (token.getTokenMenu() != null) {
+            boolean success = fleet.addCard(token.getCard(), position);
+            if (token instanceof HandToken) {
+                if (success) { token.destroy();
+                } else { ((HandToken) token).resetPosition(); }
             }
         }
     }

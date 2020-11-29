@@ -30,8 +30,13 @@ public abstract class BattleStage extends ListeningStage {
         this.battleScreen = battleScreen;
     }
 
-    public void processDrop(float x, float y, Card card, TokenMenu tokenMenu) {
-
+    public void processDrop(float x, float y, Token token) {
+        if (token instanceof HandToken) {
+            ((HandToken) token).resetPosition();
+        }
+        if (token instanceof FakeToken) {
+            token.destroy();
+        }
     }
 
     public void drawBattleStage(float delta, Batch batch) {

@@ -22,11 +22,6 @@ public class Hand extends CardList{
         super(cards);
     }
 
-    @Override
-    public void setupSize() {
-        setMaxSize(BattleSettings.MAX_IN_HAND);
-    }
-
     public void drawCards(Deck deck, int howMany) {
         for (int i = 0; i < howMany && getCards().size() < Battle.MAX_IN_HAND; i++) {
             Card card = deck.drawCard();
@@ -35,6 +30,11 @@ public class Hand extends CardList{
                 ((HandMenu) getTokenMenu()).generateNewToken(card);
             }
         }
+    }
+
+    @Override
+    public void setupSize() {
+        setMaxSize(BattleSettings.MAX_IN_HAND);
     }
 
     public void receiveHandMenu(HandMenu handMenu) {
