@@ -31,7 +31,11 @@ public class FleetMenu extends SimpleBox2 { //not a TokenMenu (Array vs ArrayLis
     }
 
     public void addShip(Card card, int position) {
-        ships[position] = new Token(card, getX(), getY(), battleStage, null);
+        ships[position] = new Token(card, getX()+offset*(position+1), getY(), battleStage, null);
+    }
+
+    public void removeShip(int position) {
+        ships[position] = null;
     }
 
     public float getOffset() { return offset; }

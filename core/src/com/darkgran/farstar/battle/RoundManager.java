@@ -45,15 +45,11 @@ public class RoundManager {
         }
     }
 
-    public void fleetDeployment(Card card, TokenMenu tokenMenu, Fleet fleet) {
-        if (tokenMenu != null) {
-            deploy(card, fleet, 3); //TODO
-        }
-    }
-
-    private void deploy(Card card, Fleet fleet, int position) {
-        if (fleet.addCard(card, position)) {
-            fleet.getFleetMenu().addShip(card, position);
+    public void fleetDeployment(Card card, TokenMenu tokenMenu, Fleet fleet, int position) {
+        if (tokenMenu != null && position <= 6 && fleet.hasSpace()) {
+            if (fleet.addCard(card, position)) {
+                //TODO payment
+            }
         }
     }
 

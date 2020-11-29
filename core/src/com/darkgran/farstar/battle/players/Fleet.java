@@ -4,38 +4,65 @@ import com.darkgran.farstar.battle.gui.FleetMenu;
 
 public class Fleet { //not a CardList to keep the positioning
     private Card[] cards = new Card[7];
-
-
-
     private FleetMenu fleetMenu;
 
     public boolean addCard(Card card, int position) {
-        if (cards[position] == null) {
-            cards[position] = card;
-            return true;
-        } else {
-            return false;
+        boolean success = false;
+        if (position == 3) {
+            if (cards[3] == null) {
+                setCard(card, position);
+                success = true;
+            }
+        } else { //TODO: shifting the whole fleet to one side when the targeted side is full
+            Card cardToSet = card;
+            if (position < 3) {
+                for (int i = 2; i >= 0; i--) {
+                    if (cards[i] != null) {
+                        if (i == position) {
+                            cardToSet = cards[i];
+                            setCard(card, i);
+                            success = true;
+                            position--;
+                        }
+                    } else {
+                        setCard(cardToSet, i);
+                        success = true;
+                        break;
+                    }
+                }
+            } else {
+                for (int i = 4; i <= 6; i++) {
+                    if (cards[i] != null) {
+                        if (i == position) {
+                            cardToSet = cards[i];
+                            setCard(card, i);
+                            success = true;
+                            position++;
+                        }
+                    } else {
+                        setCard(cardToSet, i);
+                        success = true;
+                        break;
+                    }
+                }
+            }
         }
+        return success;
     }
 
-    private int getFreePosition() {
-        /*if (ships[3] == null) {
-            return 3;
-        } else if (ships[2] == null) {
-            return 2;
-        } else if (ships[4] == null) {
-            return 4;
-        } else if (ships[1] == null) {
-            return 1;
-        } else if (ships[5] == null) {
-            return 5;
-        } else if (ships[0] == null) {
-            return 0;
-        } else if (ships[6] == null) {
-            return 6;
-        } else {*/
-            return 7;
-        //}
+    public boolean hasSpace() {
+        for (Card card : cards) { if (card == null) { return true; } }
+        return false;
+    }
+
+    private void removeCard(int position) {
+        cards[position] = null;
+        getFleetMenu().removeShip(position);
+    }
+
+    private void setCard(Card card, int position) {
+        cards[position] = card;
+        getFleetMenu().addShip(card, position);
     }
 
     public void receiveFleetMenu(FleetMenu fleetMenu) { this.fleetMenu = fleetMenu; }
