@@ -10,10 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.ListeningStage;
-import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.Card;
-import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.util.SimpleBox2;
 
 import java.awt.*;

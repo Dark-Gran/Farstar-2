@@ -11,7 +11,6 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.util.SimpleBox2;
 
 public class BattleStage1V1 extends BattleStage {
     private final ResourceMeter resourceMeter1;

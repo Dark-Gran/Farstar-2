@@ -1,6 +1,5 @@
 package com.darkgran.farstar.battle;
 
-import com.darkgran.farstar.battle.gui.Token;
 import com.darkgran.farstar.battle.gui.TokenMenu;
 import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.Fleet;
@@ -46,9 +45,9 @@ public class RoundManager {
         }
     }
 
-    public void fleetDeployment(Card card, TokenMenu tokenMenu, Fleet fleet) { //TODO
+    public void fleetDeployment(Card card, TokenMenu tokenMenu, Fleet fleet) {
         if (tokenMenu != null) {
-            deploy(card, fleet, 3);
+            deploy(card, fleet, 3); //TODO
         }
     }
 
