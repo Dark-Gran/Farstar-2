@@ -7,7 +7,8 @@ public class FleetToken extends AnchoredToken {
 
     public FleetToken(Card card, float x, float y, BattleStage battleStage, TokenMenu tokenMenu) {
         super(card, x, y, battleStage, tokenMenu);
-        setDragger(new Dragger(this));
+        setDragger(new Dragger(this)); //TODO
+        //setDragger(new CombatDragger(this, battleStage.getBattleScreen().getBattle().getCombatManager()));
         this.addListener(getDragger().getInputListener());
     }
 

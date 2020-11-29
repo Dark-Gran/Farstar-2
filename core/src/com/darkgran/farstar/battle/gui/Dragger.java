@@ -24,11 +24,11 @@ public class Dragger {
         this.token = token;
     }
 
-    private void drag(float x, float y) {
+    public void drag(float x, float y) {
         token.setPosition(Gdx.input.getX(), Farstar.STAGE_HEIGHT-Gdx.input.getY());
     }
 
-    private void drop(float x, float y) {
+    public void drop(float x, float y) {
         token.getBattleStage().processDrop(Gdx.input.getX(), Farstar.STAGE_HEIGHT-Gdx.input.getY(), token);
     }
 

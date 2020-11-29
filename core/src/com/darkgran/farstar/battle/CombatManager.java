@@ -19,7 +19,7 @@ public class CombatManager {
 
     public void combatTarget(Token token, Fleet fleet, int position) { //TODO
         if (active && !inDuel && token.getTokenMenu() != null) {
-
+            System.out.println("Picked target for duel.");
         }
     }
 
