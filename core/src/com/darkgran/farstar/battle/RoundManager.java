@@ -54,7 +54,6 @@ public class RoundManager {
 
     public void fleetDeployment(Token token, Fleet fleet, int position) {
         if (token.getTokenMenu() != null && !battle.getCombatManager().isActive()) {
-            System.out.println("OK");
             Player whoseTurn = battle.getWhoseTurn();
             boolean success = false;
             if (fleet == whoseTurn.getFleet() && token.getTokenMenu().getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard())) {
