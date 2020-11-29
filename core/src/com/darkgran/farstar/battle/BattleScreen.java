@@ -7,6 +7,7 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.TableStage;
 import com.darkgran.farstar.battle.gui.BattleStage;
+import com.darkgran.farstar.battle.players.CombatManager;
 
 public class BattleScreen extends SuperScreen {
     private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
@@ -22,7 +23,7 @@ public class BattleScreen extends SuperScreen {
         this.battle = battle;
         battleStage = battle.createBattleStage(game, getViewport(), this);
         game.getInputMultiplexer().addProcessor(battleStage);
-        battle.launchBattle(new RoundManager(battle));
+        battle.launchBattle(new RoundManager(battle), new CombatManager(battle));
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle;
 
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.battle.players.CombatManager;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.gui.BattleStage;
 
@@ -9,6 +10,7 @@ public abstract class Battle implements BattleSettings {
     public final static CardLibrary CARD_LIBRARY = new CardLibrary();
     private Player whoseTurn;
     private RoundManager roundManager;
+    private CombatManager combatManager;
 
     public Battle() {
         System.out.println("Launching Battle...");
@@ -21,10 +23,13 @@ public abstract class Battle implements BattleSettings {
         return null;
     }
 
-    public void launchBattle(RoundManager roundManager) {
+    public void closeYards() { }
+
+    public void launchBattle(RoundManager roundManager, CombatManager combatManager) {
         coinToss();
         startingCards();
         this.roundManager = roundManager;
+        this.combatManager = combatManager;
         roundManager.newRound();
     }
 
@@ -39,5 +44,7 @@ public abstract class Battle implements BattleSettings {
     public void passTurn() { } //setWhoseTurn to next player
 
     public RoundManager getRoundManager() { return roundManager; }
+
+    public CombatManager getCombatManager() { return combatManager; }
 
 }

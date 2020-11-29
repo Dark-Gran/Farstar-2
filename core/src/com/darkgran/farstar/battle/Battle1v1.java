@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle;
 
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.battle.gui.YardMenu;
 import com.darkgran.farstar.battle.players.*;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.BattleStage1V1;
@@ -32,6 +33,12 @@ public class Battle1v1 extends Battle {
     @Override
     public void passTurn() {
         setWhoseTurn(player1 == getWhoseTurn() ? player2 : player1);
+    }
+
+    @Override
+    public void closeYards() {
+        ((YardMenu) (player1.getShipyard().getTokenMenu())).setVisible(false);
+        ((YardMenu) (player2.getShipyard().getTokenMenu())).setVisible(false);
     }
 
     @Override
