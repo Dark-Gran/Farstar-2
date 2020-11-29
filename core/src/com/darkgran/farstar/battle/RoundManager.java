@@ -36,8 +36,10 @@ public class RoundManager {
     }
 
     public void endTurn() {
-        battle.closeYards();
-        battle.getCombatManager().launchCombat();
+        if (!battle.getCombatManager().isActive()) {
+            battle.closeYards();
+            battle.getCombatManager().launchCombat();
+        }
     }
 
     public void afterCombat() {
