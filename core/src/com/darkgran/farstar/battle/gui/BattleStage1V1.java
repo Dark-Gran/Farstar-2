@@ -55,13 +55,13 @@ public class BattleStage1V1 extends BattleStage {
     }
 
     @Override
-    public void processDrop(float x, float y, Token token) {
+    public void processDrop(float x, float y, Token token) { //TODO
         if (isInBox(fleetMenu1, x, y)) {
             getBattleScreen().getBattle().getRoundManager().fleetDeployment(token, fleetMenu1.getFleet(), getDropPosition(x, y, fleetMenu1));
         } else if (isInBox(fleetMenu2, x, y)) {
             getBattleScreen().getBattle().getRoundManager().fleetDeployment(token, fleetMenu2.getFleet(), getDropPosition(x, y, fleetMenu2));
-        } else  if (token instanceof HandToken) {
-            ((HandToken) token).resetPosition();
+        } else  if (token instanceof AnchoredToken) {
+            ((AnchoredToken) token).resetPosition();
         }
         if (token instanceof FakeToken) {
             token.destroy();

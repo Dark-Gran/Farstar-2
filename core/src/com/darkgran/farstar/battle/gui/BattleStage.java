@@ -2,8 +2,6 @@ package com.darkgran.farstar.battle.gui;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -13,7 +11,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.ListeningStage;
 import com.darkgran.farstar.battle.BattleScreen;
-import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.util.SimpleBox2;
 
 import java.awt.*;
@@ -31,8 +28,8 @@ public abstract class BattleStage extends ListeningStage {
     }
 
     public void processDrop(float x, float y, Token token) {
-        if (token instanceof HandToken) {
-            ((HandToken) token).resetPosition();
+        if (token instanceof AnchoredToken) {
+            ((AnchoredToken) token).resetPosition();
         }
         if (token instanceof FakeToken) {
             token.destroy();
