@@ -1,12 +1,13 @@
 package com.darkgran.farstar.battle.gui;
 
+import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.players.Shipyard;
 
 public class YardMenu extends TokenMenu {
     private boolean visible = false;
 
-    public YardMenu(Shipyard shipyard, boolean onTop, float x, float y, BattleStage battleStage) {
-        super(shipyard, x, y, onTop, battleStage);
+    public YardMenu(Shipyard shipyard, boolean onTop, float x, float y, BattleStage battleStage, Player player) {
+        super(shipyard, x, y, onTop, battleStage, player);
     }
 
     @Override

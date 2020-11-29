@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.CardList;
+import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.util.SimpleBox2;
 
 import java.util.ArrayList;
@@ -15,10 +16,12 @@ public abstract class TokenMenu extends SimpleBox2 {
     private float offset;
     private boolean negativeOffset;
     private final BattleStage battleStage;
+    private final Player player;
 
-    public TokenMenu(CardList cardList, float x, float y, boolean negativeOffset, BattleStage battleStage) {
+    public TokenMenu(CardList cardList, float x, float y, boolean negativeOffset, BattleStage battleStage, Player player) {
         setX(x);
         setY(y);
+        this.player = player;
         this.cardList = cardList;
         cardList.receiveTokenMenu(this);
         this.negativeOffset = negativeOffset;
@@ -62,5 +65,7 @@ public abstract class TokenMenu extends SimpleBox2 {
     public void setNegativeOffset(boolean negativeOffset) { this.negativeOffset = negativeOffset; }
 
     public BattleStage getBattleStage() { return battleStage; }
+
+    public Player getPlayer() { return player; }
 
 }

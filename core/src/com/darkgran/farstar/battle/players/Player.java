@@ -20,6 +20,15 @@ public class Player {
         fleet = new Fleet();
     }
 
+    public boolean canAfford(Card card) {
+        return (energy>=card.getCardInfo().getEnergy() && matter>=card.getCardInfo().getMatter());
+    }
+
+    public void payday(Card card) {
+        setEnergy(energy-card.getCardInfo().getEnergy());
+        setMatter(matter-card.getCardInfo().getMatter());
+    }
+
     public void setEnergy(int energy) { this.energy = energy; }
 
     public void setMatter(int matter) { this.matter = matter; }
