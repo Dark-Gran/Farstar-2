@@ -41,4 +41,6 @@ public class CombatManager {
 
     public Battle getBattle() { return battle; }
 
+    public boolean isInDuel() { return inDuel; }
+
 }
