@@ -25,8 +25,8 @@ public class BattleStage1V1 extends BattleStage {
     private final FleetMenu fleetMenu1;
     private final FleetMenu fleetMenu2;
 
-    public BattleStage1V1(Farstar game, Viewport viewport, BattleScreen battleScreen, Player player1, Player player2) {
-        super(game, viewport, battleScreen);
+    public BattleStage1V1(Farstar game, Viewport viewport, BattleScreen battleScreen, DuelMenu duelMenu, Player player1, Player player2) {
+        super(game, viewport, battleScreen, duelMenu);
         //Resources
         resourceMeter1 = new ResourceMeter(player1, true, Farstar.STAGE_WIDTH, 0f);
         resourceMeter2 = new ResourceMeter(player2, false, Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT);

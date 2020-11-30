@@ -7,11 +7,12 @@ import com.darkgran.farstar.battle.players.Fleet;
 
 public class CombatManager {
     private final Battle battle;
+    private final DuelManager duelManager;
     private boolean active = false;
-    private boolean inDuel = false;
 
-    public CombatManager(Battle battle) {
+    public CombatManager(Battle battle, DuelManager duelManager) {
         this.battle = battle;
+        this.duelManager = duelManager;
     }
 
     public void launchCombat()
@@ -21,24 +22,15 @@ public class CombatManager {
     }
 
     public void combatTarget(Token token, Fleet fleet, int position) {
-        if (active && !inDuel && token instanceof FleetToken) {
+        if (active && !duelManager.isActive() && token instanceof FleetToken) {
             FleetToken fleetToken = (FleetToken) token;
             FleetMenu fleetMenu = fleetToken.getFleetMenu();
-
-            if (fleet.getFleetMenu() != fleetMenu) { //TODO
+            fleetToken.resetPosition();
+            if (fleet.getFleetMenu() != fleetMenu) {
 
             }
 
-            fleetToken.resetPosition();
         }
-    }
-
-    public void duel() {
-        inDuel = true;
-    }
-
-    public void duelEnd() {
-        inDuel = false;
     }
 
     public void endCombat() {
@@ -50,6 +42,6 @@ public class CombatManager {
 
     public Battle getBattle() { return battle; }
 
-    public boolean isInDuel() { return inDuel; }
+    public DuelManager getDuelManager() { return duelManager; }
 
 }

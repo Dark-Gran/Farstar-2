@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle;
 
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.battle.gui.DuelMenu;
 import com.darkgran.farstar.battle.gui.YardMenu;
 import com.darkgran.farstar.battle.players.*;
 import com.darkgran.farstar.battle.gui.BattleStage;
@@ -21,8 +22,8 @@ public class Battle1v1 extends Battle {
     }
 
     @Override
-    public BattleStage createBattleStage(Farstar game, Viewport viewport, BattleScreen battleScreen) {
-        return new BattleStage1V1(game, viewport, battleScreen, player1, player2);
+    public BattleStage createBattleStage(Farstar game, Viewport viewport, BattleScreen battleScreen, DuelMenu duelMenu) {
+        return new BattleStage1V1(game, viewport, battleScreen, duelMenu, player1, player2);
     }
 
     @Override

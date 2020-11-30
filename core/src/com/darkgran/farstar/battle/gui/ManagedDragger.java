@@ -15,14 +15,14 @@ public class ManagedDragger extends Dragger {
 
     @Override
     public void drag(float x, float y) {
-        if (forCombat == combatManager.isActive() && !combatManager.isInDuel()) {
+        if (forCombat == combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
             super.drag(x, y);
         }
     }
 
     @Override
     public void drop(float x, float y) {
-        if (forCombat == combatManager.isActive() && !combatManager.isInDuel()) {
+        if (forCombat == combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
             super.drop(x, y);
         }
     }

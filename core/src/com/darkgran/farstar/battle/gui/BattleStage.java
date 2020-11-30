@@ -22,12 +22,14 @@ public abstract class BattleStage extends ListeningStage {
     public final ImageButton turnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(turn)));
     private final Texture yardPic = new Texture("images/yard.png");
     private FakeToken fakeToken;
+    private final DuelMenu duelMenu;
 
     public final int tokenWidth = 78; //future: (re)move
 
-    public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen) {
+    public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen, DuelMenu duelMenu) {
         super(game, viewport);
         this.battleScreen = battleScreen;
+        this.duelMenu = duelMenu;
     }
 
     public void processDrop(float x, float y, Token token) {
@@ -137,5 +139,7 @@ public abstract class BattleStage extends ListeningStage {
         this.fakeToken = fakeToken;
         if (fakeToken != null) { this.addActor(fakeToken); }
     }
+
+    public DuelMenu getDuelMenu() { return duelMenu; }
 
 }
