@@ -1,29 +1,40 @@
 package com.darkgran.farstar.battle.gui;
 
 import com.darkgran.farstar.battle.CombatManager;
+import com.darkgran.farstar.battle.RoundManager;
+import com.darkgran.farstar.battle.players.Player;
 
 public class ManagedDragger extends Dragger {
-    //private final RoundManager roundManager;
+    private final RoundManager roundManager;
     private final CombatManager combatManager;
     private final boolean forCombat;
 
-    public ManagedDragger(Token token, CombatManager combatManager, boolean forCombat) {
+    public ManagedDragger(Token token, RoundManager roundManager, boolean forCombat) {
         super(token);
-        this.combatManager = combatManager;
+        this.roundManager = roundManager;
+        this.combatManager = roundManager.getBattle().getCombatManager();
         this.forCombat = forCombat;
     }
 
     @Override
     public void drag(float x, float y) {
-        if (forCombat == combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
+        if (ownsToken(roundManager.getBattle().getWhoseTurn()) && forCombat == combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
             super.drag(x, y);
         }
     }
 
     @Override
     public void drop(float x, float y) {
-        if (forCombat == combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
+        if (ownsToken(roundManager.getBattle().getWhoseTurn()) && forCombat == combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
             super.drop(x, y);
+        }
+    }
+
+    public boolean ownsToken(Player player) {
+        if (getToken() instanceof FleetToken) {
+            return player == ((FleetToken) getToken()).getFleetMenu().getPlayer();
+        } else {
+            return player == getToken().getTokenMenu().getPlayer();
         }
     }
 
