@@ -1,9 +1,7 @@
 package com.darkgran.farstar.battle;
 
-import com.darkgran.farstar.battle.gui.FleetMenu;
-import com.darkgran.farstar.battle.gui.FleetToken;
-import com.darkgran.farstar.battle.gui.Token;
-import com.darkgran.farstar.battle.players.Fleet;
+import com.darkgran.farstar.battle.gui.*;
+import com.darkgran.farstar.battle.players.Player;
 
 public class CombatManager {
     private final Battle battle;
@@ -24,15 +22,24 @@ public class CombatManager {
         }
     }
 
-    public void combatTarget(Token token, Fleet fleet, int position) {
-        if (active && !duelManager.isActive() && token instanceof FleetToken) {
-            FleetToken fleetToken = (FleetToken) token;
-            FleetMenu fleetMenu = fleetToken.getFleetMenu();
-            fleetToken.resetPosition();
-            if (fleet.getFleetMenu() != fleetMenu) {
-
+    public void processDrop(Token token, DropTarget dropTarget, int position) {
+        if (token instanceof FleetToken) {
+            ((FleetToken) token).resetPosition();
+        }
+        if (active && !duelManager.isActive()) {
+            Player playerA = new Player();
+            if (token instanceof FleetToken) {
+                playerA = ((FleetToken) token).getFleetMenu().getPlayer();
             }
-
+            Player playerD = new Player();
+            if (dropTarget instanceof FleetMenu) {
+                playerD = ((FleetMenu) dropTarget).getPlayer();
+            } else if (dropTarget instanceof MothershipToken) {
+                playerD = ((MothershipToken) dropTarget).getPlayer();
+            }
+            if (playerA.getBattleID() != -1 && playerD.getBattleID() != -1) {
+                //TODO duelManager.launchDuel(token, null, playerA, playerD);
+            }
         }
     }
 

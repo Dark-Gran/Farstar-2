@@ -31,8 +31,8 @@ public class BattleStage1V1 extends BattleStage {
         resourceMeter1 = new ResourceMeter(player1, true, Farstar.STAGE_WIDTH, 0f);
         resourceMeter2 = new ResourceMeter(player2, false, Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT);
         //Motherships
-        mothershipToken1 = new MothershipToken(player1.getMs(), Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*1/4, this, null);
-        mothershipToken2 = new MothershipToken(player2.getMs(), Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*3/4, this, null);
+        mothershipToken1 = new MothershipToken(player1, Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*1/4, this, null);
+        mothershipToken2 = new MothershipToken(player2, Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*3/4, this, null);
         //Buttons
         turnButton.setBounds(Farstar.STAGE_WIDTH*6/7, Farstar.STAGE_HEIGHT/2, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
         this.addActor(turnButton);
@@ -55,8 +55,10 @@ public class BattleStage1V1 extends BattleStage {
 
     @Override
     public DropTarget returnDropTarget(float x, float y) {
-        if (isInBox(fleetMenu1, x, y)) { return  fleetMenu1; }
-        else if (isInBox(fleetMenu2, x, y)) { return fleetMenu2; }
+        if (isInBox(fleetMenu1.getSimpleBox2(), x, y)) { return  fleetMenu1; }
+        else if (isInBox(fleetMenu2.getSimpleBox2(), x, y)) { return fleetMenu2; }
+        else if (isInBox(mothershipToken1.getSimpleBox2(), x, y)) { return mothershipToken1; }
+        else if (isInBox(mothershipToken2.getSimpleBox2(), x, y)) { return mothershipToken2; }
         else { return null; }
     }
 

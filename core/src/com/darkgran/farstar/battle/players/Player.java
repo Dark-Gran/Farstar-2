@@ -1,5 +1,7 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.battle.BattleSettings;
+
 public class Player {
     private final byte battleID;
     private int energy;
@@ -18,6 +20,16 @@ public class Player {
         this.deck = deck;
         this.shipyard = shipyard;
         fleet = new Fleet();
+    }
+
+    public Player() {
+        this.battleID = -1;
+        setEnergy(-1);
+        setMatter(-1);
+        this.ms = null;
+        this.deck = null;
+        this.shipyard = null;
+        fleet = null;
     }
 
     public boolean canAfford(Card card) {

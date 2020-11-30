@@ -3,9 +3,11 @@ package com.darkgran.farstar.battle.gui;
 import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.battle.players.Player;
+import com.darkgran.farstar.util.SimpleBox2;
 
 //uses Array and CardList remains null! (unlike TokenMenu)
 public class FleetMenu extends BaseMenu implements DropTarget {
+    private final SimpleBox2 simpleBox2 = new SimpleBox2();
     private final Fleet fleet;
     private FleetToken[] ships = new FleetToken[7];
 
@@ -15,6 +17,7 @@ public class FleetMenu extends BaseMenu implements DropTarget {
         setY(y);
         setWidth(width);
         setHeight(height);
+        setupSimpleBox2(x, y, height, width);
         this.fleet = fleet;
         fleet.receiveFleetMenu(this);
         setupOffset();
@@ -31,5 +34,16 @@ public class FleetMenu extends BaseMenu implements DropTarget {
     public Fleet getFleet() { return fleet; }
 
     public Token[] getShips() { return ships; }
+
+    @Override
+    public void setupSimpleBox2(float x, float y, float height, float width) {
+        simpleBox2.setX(x);
+        simpleBox2.setY(y);
+        simpleBox2.setHeight(height);
+        simpleBox2.setWidth(width);
+    }
+
+    @Override
+    public SimpleBox2 getSimpleBox2() { return simpleBox2; }
 
 }

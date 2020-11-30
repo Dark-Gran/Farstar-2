@@ -32,17 +32,16 @@ public abstract class BattleStage extends ListeningStage {
         this.duelMenu = duelMenu;
     }
 
+    public DropTarget returnDropTarget(float x, float y) { return null; }
+
     public void processDrop(float x, float y, Token token) {
         CombatManager combatManager = getBattleScreen().getBattle().getCombatManager();
         DropTarget targetHit = returnDropTarget(x, y);
         if (targetHit != null) {
-            if (targetHit instanceof FleetMenu) {
-                FleetMenu fleetMenu = (FleetMenu) targetHit;
-                if (combatManager.isActive()) {
-                    combatManager.combatTarget(token, fleetMenu.getFleet(), getDropTarget(x, y, fleetMenu));
-                } else {
-                    getBattleScreen().getBattle().getRoundManager().fleetDeployment(token, fleetMenu.getFleet(), getDropPosition(x, y, fleetMenu));
-                }
+            if (combatManager.isActive()) {
+                combatManager.processDrop(token, targetHit, getCombatDropPosition(x, y, targetHit));
+            } else {
+                getBattleScreen().getBattle().getRoundManager().processDrop(token, targetHit, getRoundDropPosition(x, y, targetHit));
             }
         } else  if (token instanceof AnchoredToken) {
             ((AnchoredToken) token).resetPosition();
@@ -50,12 +49,6 @@ public abstract class BattleStage extends ListeningStage {
         if (token instanceof FakeToken) {
             token.destroy();
         }
-    }
-
-    public DropTarget returnDropTarget(float x, float y) { return null; }
-
-    public void drawBattleStage(float delta, Batch batch) {
-        if (fakeToken != null) { fakeToken.draw(batch); }
     }
 
     @Override
@@ -70,11 +63,9 @@ public abstract class BattleStage extends ListeningStage {
         });
     }
 
-    @Override
-    public void dispose() {
-        turnButton.removeListener(turnButton.getClickListener());
-        turn.dispose();
-        super.dispose();
+    public void drawBattleStage(float delta, Batch batch) {
+        if (fakeToken != null) { fakeToken.draw(batch); }
+        if (duelMenu != null) {  } //TODO draw
     }
 
     public void drawTokenMenu(TokenMenu tokenMenu, Batch batch) {
@@ -96,36 +87,45 @@ public abstract class BattleStage extends ListeningStage {
         return rectangle.contains(x, y);
     }
 
-    public int getDropTarget(float x, float y, FleetMenu fleetMenu) {
-        Token[] ships = fleetMenu.getShips();
-        for (int i = 0; i < ships.length; i++) {
-            if (x > fleetMenu.getX()+(tokenWidth*i) && x < fleetMenu.getX()+(tokenWidth*(i+1))) {
-                return i;
+    public int getCombatDropPosition(float x, float y, DropTarget dropTarget) {
+        if (dropTarget instanceof FleetMenu) {
+            FleetMenu fleetMenu = (FleetMenu) dropTarget;
+            Token[] ships = fleetMenu.getShips();
+            for (int i = 0; i < ships.length; i++) {
+                if (x > fleetMenu.getX() + (tokenWidth * i) && x < fleetMenu.getX() + (tokenWidth * (i + 1))) {
+                    return i;
+                }
             }
+        } else if (dropTarget instanceof MothershipToken) {
+            return 7;
         }
-        return 7;
+        return -1;
     }
 
-    public int getDropPosition(float x, float y, FleetMenu fleetMenu) {
-        Token[] ships = fleetMenu.getShips();
-        if (ships[3] == null) { //middle token empty
-            return 3;
-        } else {
-            for (int i = 0; i < ships.length; i++) {
-                if (x > fleetMenu.getX()+(tokenWidth*i) && x < fleetMenu.getX()+(tokenWidth*(i+1))) {
-                    if (i != 3) {
-                        return i;
-                    } else { //hit middle token (not empty) - pick left/right
-                        if (x < fleetMenu.getX()+fleetMenu.getWidth()/2) {
-                            return 2;
-                        } else {
-                            return 4;
+    public int getRoundDropPosition(float x, float y, DropTarget dropTarget) {
+        if (dropTarget instanceof FleetMenu) {
+            FleetMenu fleetMenu = (FleetMenu) dropTarget;
+            Token[] ships = fleetMenu.getShips();
+            if (ships[3] == null) { //middle token empty
+                return 3;
+            } else {
+                for (int i = 0; i < ships.length; i++) {
+                    if (x > fleetMenu.getX() + (tokenWidth * i) && x < fleetMenu.getX() + (tokenWidth * (i + 1))) {
+                        if (i != 3) {
+                            return i;
+                        } else { //hit middle token (not empty) - pick left/right
+                            if (x < fleetMenu.getX() + fleetMenu.getWidth() / 2) {
+                                return 2;
+                            } else {
+                                return 4;
+                            }
                         }
                     }
                 }
+                return -1;
             }
-            return 7;
         }
+        return -1;
     }
 
     public Texture getYardPic() { return yardPic; }
@@ -141,5 +141,12 @@ public abstract class BattleStage extends ListeningStage {
     }
 
     public DuelMenu getDuelMenu() { return duelMenu; }
+
+    @Override
+    public void dispose() {
+        turnButton.removeListener(turnButton.getClickListener());
+        turn.dispose();
+        super.dispose();
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.darkgran.farstar.battle;
 
+import com.darkgran.farstar.battle.gui.DropTarget;
+import com.darkgran.farstar.battle.gui.FleetMenu;
 import com.darkgran.farstar.battle.gui.HandToken;
 import com.darkgran.farstar.battle.gui.Token;
 import com.darkgran.farstar.battle.players.*;
@@ -57,8 +59,9 @@ public class RoundManager {
         }
     }
 
-    public void fleetDeployment(Token token, Fleet fleet, int position) {
-        if (token.getTokenMenu() != null && !battle.getCombatManager().isActive()) {
+    public void processDrop(Token token, DropTarget dropTarget, int position) {
+        if (dropTarget instanceof FleetMenu && token.getTokenMenu() != null && !battle.getCombatManager().isActive()) {
+            Fleet fleet = ((FleetMenu) dropTarget).getFleet();
             Player whoseTurn = battle.getWhoseTurn();
             boolean success = false;
             if (fleet == whoseTurn.getFleet() && token.getTokenMenu().getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard())) {

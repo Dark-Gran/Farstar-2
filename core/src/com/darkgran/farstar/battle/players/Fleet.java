@@ -8,7 +8,7 @@ public class Fleet { //not a CardList to keep the positioning
 
     public boolean addCard(Card card, int position) {
         boolean success = false;
-        if (hasSpace() && position <= 6) {
+        if (hasSpace() && position > -1 && position < 7) {
             if (position == 3) {
                 if (cards[3] == null) {
                     setCard(card, position);
