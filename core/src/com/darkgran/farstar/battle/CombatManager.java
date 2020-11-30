@@ -19,6 +19,9 @@ public class CombatManager {
     {
         active = true;
         System.out.println("Combat Phase started.");
+        if (battle.getWhoseTurn().getFleet().noAttackers()) {
+            endCombat();
+        }
     }
 
     public void combatTarget(Token token, Fleet fleet, int position) {
@@ -35,6 +38,7 @@ public class CombatManager {
 
     public void endCombat() {
         active = false;
+        System.out.println("Combat Phase ended.");
         battle.getRoundManager().afterCombat();
     }
 

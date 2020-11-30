@@ -63,6 +63,11 @@ public class Fleet { //not a CardList to keep the positioning
         }
     }
 
+    public boolean noAttackers() {
+        for (Card card : cards) { if (card != null) { return false; } }
+        return true;
+    }
+
     public boolean hasSpace() {
         for (Card card : cards) { if (card == null) { return true; } }
         return false;
