@@ -4,7 +4,8 @@ import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.battle.players.Player;
 
-public class FleetMenu extends BaseMenu implements DropTarget { //uses Array unlike TokenMenu: CardList remains null!
+//uses Array and CardList remains null! (unlike TokenMenu)
+public class FleetMenu extends BaseMenu implements DropTarget {
     private final Fleet fleet;
     private FleetToken[] ships = new FleetToken[7];
 

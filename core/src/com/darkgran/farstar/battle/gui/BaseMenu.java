@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.util.SimpleBox2;
 
+//base for laying out menus
 public abstract class BaseMenu extends SimpleBox2 {
     private GlyphLayout layout = new GlyphLayout();
     private float offset;
