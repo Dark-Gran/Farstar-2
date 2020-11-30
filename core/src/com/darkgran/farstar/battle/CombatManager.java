@@ -1,5 +1,7 @@
 package com.darkgran.farstar.battle;
 
+import com.darkgran.farstar.battle.gui.FleetMenu;
+import com.darkgran.farstar.battle.gui.FleetToken;
 import com.darkgran.farstar.battle.gui.Token;
 import com.darkgran.farstar.battle.players.Fleet;
 
@@ -18,9 +20,16 @@ public class CombatManager {
         System.out.println("Combat Phase started.");
     }
 
-    public void combatTarget(Token token, Fleet fleet, int position) { //TODO
-        if (active && !inDuel && token.getTokenMenu() != null) {
-            System.out.println("Picked target for duel.");
+    public void combatTarget(Token token, Fleet fleet, int position) {
+        if (active && !inDuel && token instanceof FleetToken) {
+            FleetToken fleetToken = (FleetToken) token;
+            FleetMenu fleetMenu = fleetToken.getFleetMenu();
+
+            if (fleet.getFleetMenu() != fleetMenu) { //TODO
+
+            }
+
+            fleetToken.resetPosition();
         }
     }
 

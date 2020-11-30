@@ -31,7 +31,7 @@ public class FleetMenu extends SimpleBox2 implements DropTarget { //not a TokenM
     }
 
     public void addShip(Card card, int position) {
-        ships[position] = new FleetToken(card, getX()+offset*(position+1), getY(), battleStage, null);
+        ships[position] = new FleetToken(card, getX()+offset*(position+1), getY(), battleStage, null, this);
     }
 
     public void removeShip(int position) {
