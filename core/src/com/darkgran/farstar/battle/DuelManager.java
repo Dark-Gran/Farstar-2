@@ -12,7 +12,15 @@ public abstract class DuelManager {
     private Player[] playersA;
     private Player[] playersD;
 
-    public void launchDuel(Token attacker, Token defender, Player[] playersA, Player[] playersD) { }
+    public void launchDuel(Token attacker, Token defender, Player[] playersA, Player[] playersD) {
+        active = true;
+        duelMenu.addActors();
+    }
+
+    public void endDuel() {
+        duelMenu.removeActors();
+        active = false;
+    }
 
     public void receiveDuelMenu(DuelMenu duelMenu) { this.duelMenu = duelMenu; }
 

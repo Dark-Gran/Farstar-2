@@ -7,7 +7,6 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.TableStage;
 import com.darkgran.farstar.battle.gui.BattleStage;
-import com.darkgran.farstar.battle.gui.DuelMenu1v1;
 
 public class BattleScreen extends SuperScreen {
     private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
@@ -21,8 +20,9 @@ public class BattleScreen extends SuperScreen {
         setTableMenu(tableStage);
         Box2D.init();
         this.battle = battle;
-        battle.startingSetup(new RoundManager(battle), new CombatManager(battle, new DuelManager1v1()));
-        battleStage = battle.createBattleStage(game, getViewport(), this, new DuelMenu1v1(battle.getCombatManager().getDuelManager()));
+        battle.startingSetup(new RoundManager(battle), new CombatManager(battle, battle.createDuelManager()));
+        battleStage = battle.createBattleStage(game, getViewport(), this);
+        battle.getCombatManager().getDuelManager().getDuelMenu().setBattleStage(battleStage);
         game.getInputMultiplexer().addProcessor(battleStage);
         battle.getRoundManager().launch();
     }
@@ -61,5 +61,7 @@ public class BattleScreen extends SuperScreen {
     public Battle getBattle() { return battle; }
 
     public WorldManager getWorldManager() { return worldManager; }
+
+    public BattleStage getBattleStage() { return battleStage; }
 
 }

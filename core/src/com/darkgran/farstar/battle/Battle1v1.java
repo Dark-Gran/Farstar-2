@@ -2,11 +2,8 @@ package com.darkgran.farstar.battle;
 
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.battle.gui.DuelMenu;
-import com.darkgran.farstar.battle.gui.YardMenu;
+import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.players.*;
-import com.darkgran.farstar.battle.gui.BattleStage;
-import com.darkgran.farstar.battle.gui.BattleStage1V1;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -22,8 +19,13 @@ public class Battle1v1 extends Battle {
     }
 
     @Override
-    public BattleStage createBattleStage(Farstar game, Viewport viewport, BattleScreen battleScreen, DuelMenu duelMenu) {
-        return new BattleStage1V1(game, viewport, battleScreen, duelMenu, player1, player2);
+    public BattleStage createBattleStage(Farstar game, Viewport viewport, BattleScreen battleScreen) {
+        return new BattleStage1V1(game, viewport, battleScreen, new DuelMenu1v1(getCombatManager().getDuelManager()), player1, player2);
+    }
+
+    @Override
+    public DuelManager createDuelManager() {
+        return new DuelManager1v1();
     }
 
     @Override

@@ -22,7 +22,7 @@ public class CombatManager {
         }
     }
 
-    public void processDrop(Token token, DropTarget dropTarget, int position) {
+    public void processDrop(Token token, DropTarget dropTarget, Token targetToken) {
         if (token instanceof FleetToken) {
             ((FleetToken) token).resetPosition();
         }
@@ -38,7 +38,7 @@ public class CombatManager {
                 playerD = ((MothershipToken) dropTarget).getPlayer();
             }
             if (playerA.getBattleID() != -1 && playerD.getBattleID() != -1) {
-                //TODO duelManager.launchDuel(token, null, playerA, playerD);
+                duelManager.launchDuel(token, targetToken, new Player[]{playerA}, new Player[]{playerD});
             }
         }
     }
