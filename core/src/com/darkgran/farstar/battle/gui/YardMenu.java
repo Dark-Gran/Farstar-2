@@ -28,6 +28,6 @@ public class YardMenu extends TokenMenu {
 
     public boolean isVisible() { return visible; }
 
-    public void setVisible(boolean visibility) { this.visible = visibility; }
+    public void setVisible(boolean visible) { this.visible = visible; }
 
 }
