@@ -24,12 +24,11 @@ public abstract class Battle implements BattleSettings {
 
     public void closeYards() { }
 
-    public void launchBattle(RoundManager roundManager, CombatManager combatManager) {
+    public void startingSetup(RoundManager roundManager, CombatManager combatManager) {
         coinToss();
         startingCards();
         this.roundManager = roundManager;
         this.combatManager = combatManager;
-        roundManager.newRound();
     }
 
     public void coinToss() { } //must setWhoseTurn

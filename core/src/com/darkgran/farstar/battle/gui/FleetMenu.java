@@ -11,7 +11,7 @@ public class FleetMenu extends SimpleBox2 implements DropTarget { //not a TokenM
     private GlyphLayout layout = new GlyphLayout();
     private float offset;
     private final Fleet fleet;
-    private Token[] ships = new Token[7];
+    private FleetToken[] ships = new FleetToken[7];
 
     public FleetMenu(Fleet fleet, float x, float y, float width, float height, BattleStage battleStage) {
         this.battleStage = battleStage;
@@ -31,7 +31,7 @@ public class FleetMenu extends SimpleBox2 implements DropTarget { //not a TokenM
     }
 
     public void addShip(Card card, int position) {
-        ships[position] = new Token(card, getX()+offset*(position+1), getY(), battleStage, null);
+        ships[position] = new FleetToken(card, getX()+offset*(position+1), getY(), battleStage, null);
     }
 
     public void removeShip(int position) {

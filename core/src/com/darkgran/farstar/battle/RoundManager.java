@@ -6,11 +6,16 @@ import com.darkgran.farstar.battle.players.*;
 
 public class RoundManager {
     private final Battle battle;
-    private int roundNum = 0;
+    private int roundNum;
     private boolean firstTurnThisRound;
 
     public RoundManager(Battle battle) {
         this.battle = battle;
+    }
+
+    public void launch() {
+        roundNum = 0;
+        newRound();
     }
 
     public void newRound() {
@@ -69,5 +74,9 @@ public class RoundManager {
     }
 
     public int getRoundNum() { return roundNum; }
+
+    public Battle getBattle() { return battle; }
+
+    public boolean isFirstTurnThisRound() { return firstTurnThisRound; }
 
 }

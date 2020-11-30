@@ -6,7 +6,7 @@ public class HandToken extends AnchoredToken {
 
     public HandToken(Card card, float x, float y, BattleStage battleStage, TokenMenu tokenMenu) {
         super(card, x, y, battleStage, tokenMenu);
-        setDragger(new Dragger(this));
+        setDragger(new TurnDragger(this, battleStage.getBattleScreen().getBattle().getCombatManager()));
         this.addListener(getDragger().getInputListener());
     }
 
