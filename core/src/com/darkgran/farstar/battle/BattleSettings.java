@@ -10,5 +10,5 @@ public interface BattleSettings {
     int MAX_TECH_INCOME = 6;
     int MAX_IN_HAND = 8;
     int DECK_SIZE = 30;
-    int YARD_SIZE = 6;
+    int YARD_SIZE = 5;
 }
