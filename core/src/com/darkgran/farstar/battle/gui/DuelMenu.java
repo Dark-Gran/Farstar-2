@@ -6,14 +6,13 @@ import com.darkgran.farstar.battle.DuelManager;
 public abstract class DuelMenu {
     private final Texture duel = new Texture("images/duel.png");
     private final DuelManager duelManager;
-    private BattleStage battleStage;
+    private BattleStage battleStage;  //must be set after ini - before RM.launch (see BattleScreen constructor)
 
     public DuelMenu(DuelManager duelManager) {
         this.duelManager = duelManager;
         duelManager.receiveDuelMenu(this);
     }
 
-    //must be set before RoundManager.launch()
     public void setBattleStage(BattleStage battleStage) { this.battleStage = battleStage; }
 
     public void addActors() { }

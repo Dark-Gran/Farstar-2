@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.DuelManager;
 
-public class DuelMenu1v1 extends DuelMenu {
+public class DuelMenu1v1 extends DuelMenu { //TODO
     public final ImageButton duelButton1 = new ImageButton(new TextureRegionDrawable(new TextureRegion(getDuel())));
     public final ImageButton duelButton2 = new ImageButton(new TextureRegionDrawable(new TextureRegion(getDuel())));
 

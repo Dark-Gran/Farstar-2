@@ -23,6 +23,8 @@ public abstract class BattleStage extends ListeningStage {
     private final Texture yardPic = new Texture("images/yard.png");
     private FakeToken fakeToken;
     private final DuelMenu duelMenu;
+    private final Texture combatEndPic = new Texture("images/combat_end.png");
+    private final ImageButton combatEndButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(combatEndPic)));
 
     public final static int TOKEN_WIDTH = 78; //future: (re)move
 
@@ -30,6 +32,24 @@ public abstract class BattleStage extends ListeningStage {
         super(game, viewport);
         this.battleScreen = battleScreen;
         this.duelMenu = duelMenu;
+        combatEndButton.setBounds(Farstar.STAGE_WIDTH*3/4, Farstar.STAGE_HEIGHT*1/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
+    }
+
+    public void enableCombatEnd() {
+        addActor(combatEndButton);
+        combatEndButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                battleScreen.getBattle().getCombatManager().endCombat();
+            }
+        });
+    }
+
+    public void disableCombatEnd() {
+        combatEndButton.remove();
+        combatEndButton.removeListener(combatEndButton.getClickListener());
     }
 
     public DropTarget returnDropTarget(float x, float y) { return null; }
@@ -160,6 +180,8 @@ public abstract class BattleStage extends ListeningStage {
     public void dispose() {
         turnButton.removeListener(turnButton.getClickListener());
         turn.dispose();
+        disableCombatEnd();
+        combatEndPic.dispose();
         super.dispose();
     }
 

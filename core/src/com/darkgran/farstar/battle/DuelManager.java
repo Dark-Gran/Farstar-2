@@ -14,6 +14,7 @@ public abstract class DuelManager {
 
     public void launchDuel(Token attacker, Token defender, Player[] playersA, Player[] playersD) {
         active = true;
+
         duelMenu.addActors();
     }
 
@@ -21,6 +22,8 @@ public abstract class DuelManager {
         duelMenu.removeActors();
         active = false;
     }
+
+    //TODO click-responses
 
     public void receiveDuelMenu(DuelMenu duelMenu) { this.duelMenu = duelMenu; }
 

@@ -7,6 +7,7 @@ public class CombatManager {
     private final Battle battle;
     private final DuelManager duelManager;
     private boolean active = false;
+    private BattleStage battleStage; //must be set after ini - before RM.launch (see BattleScreen constructor)
 
     public CombatManager(Battle battle, DuelManager duelManager) {
         this.battle = battle;
@@ -19,6 +20,8 @@ public class CombatManager {
         System.out.println("Combat Phase started.");
         if (battle.getWhoseTurn().getFleet().noAttackers()) {
             endCombat();
+        } else {
+            battleStage.enableCombatEnd();
         }
     }
 
@@ -38,12 +41,18 @@ public class CombatManager {
                 playerD = ((MothershipToken) dropTarget).getPlayer();
             }
             if (playerA.getBattleID() != -1 && playerD.getBattleID() != -1) {
+                battleStage.disableCombatEnd();
                 duelManager.launchDuel(token, targetToken, new Player[]{playerA}, new Player[]{playerD});
             }
         }
     }
 
+    public void afterDuel() {
+        battleStage.enableCombatEnd();
+    }
+
     public void endCombat() {
+        battleStage.disableCombatEnd();
         active = false;
         System.out.println("Combat Phase ended.");
         battle.getRoundManager().afterCombat();
@@ -54,5 +63,9 @@ public class CombatManager {
     public Battle getBattle() { return battle; }
 
     public DuelManager getDuelManager() { return duelManager; }
+
+    public BattleStage getBattleStage() { return battleStage; }
+
+    public void setBattleStage(BattleStage battleStage) { this.battleStage = battleStage; }
 
 }
