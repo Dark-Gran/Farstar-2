@@ -1,7 +1,5 @@
 package com.darkgran.farstar.battle.players;
 
-import com.darkgran.farstar.battle.BattleSettings;
-
 public class Player {
     private final byte battleID;
     private int energy;
@@ -23,7 +21,7 @@ public class Player {
     }
 
     public Player() {
-        this.battleID = -1;
+        this.battleID = (byte) -1;
         setEnergy(-1);
         setMatter(-1);
         this.ms = null;

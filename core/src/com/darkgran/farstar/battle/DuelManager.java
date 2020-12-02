@@ -2,24 +2,33 @@ package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.battle.gui.DuelMenu;
 import com.darkgran.farstar.battle.gui.Token;
-import com.darkgran.farstar.battle.players.Player;
+import com.darkgran.farstar.battle.players.DuelPlayer;
 
 public abstract class DuelManager {
     private DuelMenu duelMenu;
     private boolean active = false;
     private Token attacker;
     private Token defender;
-    private Player[] playersA;
-    private Player[] playersD;
+    private DuelPlayer[] playersA;
+    private DuelPlayer[] playersD;
 
-    public void launchDuel(Token attacker, Token defender, Player[] playersA, Player[] playersD) {
+    public void launchDuel(Token attacker, Token defender, DuelPlayer[] playersA, DuelPlayer[] playersD) {
         active = true;
+        this.attacker = attacker;
+        this.defender = defender;
+        this.playersA = playersA;
+        this.playersD = playersD;
+        preparePlayers();
+        duelMenu.addCancel();
+        duelMenu.addActor(playersA[0].getDuelButton());
+    }
 
-        duelMenu.addActors();
+    public void preparePlayers() {
+        for (DuelPlayer player : playersA) { player.setReady(false); }
+        for (DuelPlayer player : playersD) { player.setReady(false); }
     }
 
     public void endDuel() {
-        duelMenu.removeActors();
         active = false;
     }
 
@@ -37,9 +46,9 @@ public abstract class DuelManager {
 
     public Token getDefender() { return defender; }
 
-    public Player[] getPlayersA() { return playersA; }
+    public DuelPlayer[] getPlayersA() { return playersA; }
 
-    public Player[] getPlayersD() { return playersD; }
+    public DuelPlayer[] getPlayersD() { return playersD; }
 
 
 }

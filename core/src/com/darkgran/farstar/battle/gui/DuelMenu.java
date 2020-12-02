@@ -1,10 +1,16 @@
 package com.darkgran.farstar.battle.gui;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.darkgran.farstar.battle.DuelManager;
 
 public abstract class DuelMenu {
     private final Texture duel = new Texture("images/duel.png");
+    private final Texture duelCancel = new Texture("images/duel_cancel.png");
+    private final ImageButton cancelButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(duelCancel)));
     private final DuelManager duelManager;
     private BattleStage battleStage;  //must be set after ini - before RM.launch (see BattleScreen constructor)
 
@@ -15,12 +21,17 @@ public abstract class DuelMenu {
 
     public void setBattleStage(BattleStage battleStage) { this.battleStage = battleStage; }
 
-    public void addActors() { }
+    public void addActor(Actor actor) { getBattleStage().addActor(actor); }
 
-    public void removeActors() { }
+    public void removeActors(Actor actor) { getBattleStage().addActor(actor); }
+
+    public void addCancel() { getBattleStage().addActor(getCancelButton()); }
+
+    public void removeCancel() { getCancelButton().remove(); }
 
     public void dispose() {
         duel.dispose();
+        duelCancel.dispose();
     }
 
     public Texture getDuel() { return duel; }
@@ -28,6 +39,9 @@ public abstract class DuelMenu {
     public DuelManager getDuelManager() { return duelManager; }
 
     public BattleStage getBattleStage() { return battleStage; }
+
+    public ImageButton getCancelButton() { return cancelButton; }
+
 
 
 }

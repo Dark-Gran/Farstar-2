@@ -1,6 +1,7 @@
 package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.battle.gui.*;
+import com.darkgran.farstar.battle.players.DuelPlayer;
 import com.darkgran.farstar.battle.players.Player;
 
 public class CombatManager {
@@ -42,9 +43,13 @@ public class CombatManager {
             }
             if (playerA.getBattleID() != -1 && playerD.getBattleID() != -1) {
                 battleStage.disableCombatEnd();
-                duelManager.launchDuel(token, targetToken, new Player[]{playerA}, new Player[]{playerD});
+                duelManager.launchDuel(token, targetToken, new DuelPlayer[]{playerToDuelPlayer(playerA)}, new DuelPlayer[]{playerToDuelPlayer(playerD)});
             }
         }
+    }
+
+    private DuelPlayer playerToDuelPlayer(Player player) {
+        return new DuelPlayer((byte) player.getBattleID(), player.getEnergy(), player.getMatter(), player.getMs(), player.getDeck(), player.getShipyard());
     }
 
     public void afterDuel() {
