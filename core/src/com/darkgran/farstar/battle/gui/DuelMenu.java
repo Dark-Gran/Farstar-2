@@ -3,7 +3,9 @@ package com.darkgran.farstar.battle.gui;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.darkgran.farstar.battle.DuelManager;
 
@@ -25,9 +27,22 @@ public abstract class DuelMenu {
 
     public void removeActors(Actor actor) { getBattleStage().addActor(actor); }
 
-    public void addCancel() { getBattleStage().addActor(getCancelButton()); }
+    public void addCancel() {
+        getBattleStage().addActor(cancelButton);
+        cancelButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                getDuelManager().cancelDuel();
+            }
+        });
+    }
 
-    public void removeCancel() { getCancelButton().remove(); }
+    public void removeCancel() {
+        cancelButton.remove();
+        cancelButton.removeListener(cancelButton.getClickListener());
+    }
 
     public void dispose() {
         duel.dispose();

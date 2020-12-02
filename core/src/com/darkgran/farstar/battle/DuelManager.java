@@ -28,6 +28,11 @@ public abstract class DuelManager {
         for (DuelPlayer player : playersD) { player.setReady(false); }
     }
 
+    public void cancelDuel() {
+        System.out.println("OK");
+        duelMenu.removeCancel();
+    }
+
     public void endDuel() {
         active = false;
     }
