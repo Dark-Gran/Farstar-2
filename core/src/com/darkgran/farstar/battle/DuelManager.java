@@ -1,6 +1,7 @@
 package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.battle.gui.DuelMenu;
+import com.darkgran.farstar.battle.gui.DuelOK;
 import com.darkgran.farstar.battle.gui.Token;
 import com.darkgran.farstar.battle.players.DuelPlayer;
 
@@ -22,12 +23,16 @@ public abstract class DuelManager {
         this.playersD = playersD;
         preparePlayers();
         duelMenu.addCancel();
-        duelMenu.addActor(playersA[0].getDuelButton());
+        duelMenu.addOK(this.playersA[0].getDuelButton());
     }
 
     public void preparePlayers() {
         for (DuelPlayer player : playersA) { player.setReady(false); }
         for (DuelPlayer player : playersD) { player.setReady(false); }
+    }
+
+    public void OK(DuelOK duelOK) {
+        System.out.println("OK"); //TODO
     }
 
     public void cancelDuel() {
@@ -39,6 +44,14 @@ public abstract class DuelManager {
         duelMenu.removeAllOKs();
         active = false;
         combatManager.afterDuel();
+    }
+
+    public void setPlayersA_OK(int ix, DuelOK duelOK) {
+        if (playersA[ix] != null) { playersA[ix].setDuelOK(duelOK); }
+    }
+
+    public void setPlayersD_OK(int ix, DuelOK duelOK) {
+        if (playersA[ix] != null) { playersD[ix].setDuelOK(duelOK); }
     }
 
     public void receiveDuelMenu(DuelMenu duelMenu) { this.duelMenu = duelMenu; }

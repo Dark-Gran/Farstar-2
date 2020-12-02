@@ -15,11 +15,15 @@ public class DuelManager1v1 extends DuelManager { //1v1 = each Player[] contains
     public void preparePlayers() {
         super.preparePlayers();
         if (getPlayersA()[0].getBattleID() == 1) {
-            getPlayersA()[0].setDuelButton(((DuelMenu1v1) getDuelMenu()).getDuelButton1());
-            getPlayersD()[0].setDuelButton(((DuelMenu1v1) getDuelMenu()).getDuelButton2());
+            setPlayersA_OK(0, ((DuelMenu1v1) getDuelMenu()).getDuelButton1());
+            ((DuelMenu1v1) getDuelMenu()).getDuelButton1().setDuelPlayer(getPlayersA()[0]);
+            setPlayersD_OK(0, ((DuelMenu1v1) getDuelMenu()).getDuelButton2());
+            ((DuelMenu1v1) getDuelMenu()).getDuelButton2().setDuelPlayer(getPlayersD()[0]);
         } else {
-            getPlayersA()[0].setDuelButton(((DuelMenu1v1) getDuelMenu()).getDuelButton2());
-            getPlayersD()[0].setDuelButton(((DuelMenu1v1) getDuelMenu()).getDuelButton1());
+            setPlayersA_OK(0, ((DuelMenu1v1) getDuelMenu()).getDuelButton2());
+            ((DuelMenu1v1) getDuelMenu()).getDuelButton2().setDuelPlayer(getPlayersA()[0]);
+            setPlayersD_OK(0, ((DuelMenu1v1) getDuelMenu()).getDuelButton1());
+            ((DuelMenu1v1) getDuelMenu()).getDuelButton1().setDuelPlayer(getPlayersD()[0]);
         }
     }
 

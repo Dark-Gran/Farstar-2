@@ -1,14 +1,13 @@
 package com.darkgran.farstar.battle.gui;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.DuelManager;
 
 public class DuelMenu1v1 extends DuelMenu {
-    public final ImageButton duelButton1 = new ImageButton(new TextureRegionDrawable(new TextureRegion(getDuel())));
-    public final ImageButton duelButton2 = new ImageButton(new TextureRegionDrawable(new TextureRegion(getDuel())));
+    public final DuelOK duelButton1 = new DuelOK(new TextureRegionDrawable(new TextureRegion(getDuel())));
+    public final DuelOK duelButton2 = new DuelOK(new TextureRegionDrawable(new TextureRegion(getDuel())));
 
     public DuelMenu1v1(DuelManager duelManager) {
         super(duelManager);
@@ -19,12 +18,12 @@ public class DuelMenu1v1 extends DuelMenu {
 
     @Override
     public void removeAllOKs() {
-        duelButton1.remove();
-        duelButton2.remove();
+        removeOK(duelButton1);
+        removeOK(duelButton2);
     }
 
-    public ImageButton getDuelButton1() { return duelButton1; }
+    public DuelOK getDuelButton1() { return duelButton1; }
 
-    public ImageButton getDuelButton2() { return duelButton2; }
+    public DuelOK getDuelButton2() { return duelButton2; }
 
 }
