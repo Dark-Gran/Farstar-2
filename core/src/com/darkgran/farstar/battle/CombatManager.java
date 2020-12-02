@@ -43,7 +43,7 @@ public class CombatManager {
             }
             if (playerA.getBattleID() != -1 && playerD.getBattleID() != -1) {
                 battleStage.disableCombatEnd();
-                duelManager.launchDuel(token, targetToken, new DuelPlayer[]{playerToDuelPlayer(playerA)}, new DuelPlayer[]{playerToDuelPlayer(playerD)});
+                duelManager.launchDuel(this, token, targetToken, new DuelPlayer[]{playerToDuelPlayer(playerA)}, new DuelPlayer[]{playerToDuelPlayer(playerD)});
             }
         }
     }

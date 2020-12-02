@@ -7,8 +7,8 @@ import com.darkgran.farstar.battle.players.DuelPlayer;
 public class DuelManager1v1 extends DuelManager { //1v1 = each Player[] contains only one attacker/defender
 
     @Override
-    public void launchDuel(Token attacker, Token defender, DuelPlayer[] playersA, DuelPlayer[] playersD) {
-        super.launchDuel(attacker, defender, playersA, playersD);
+    public void launchDuel(CombatManager combatManager, Token attacker, Token defender, DuelPlayer[] playersA, DuelPlayer[] playersD) {
+        super.launchDuel(combatManager, attacker, defender, playersA, playersD);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.darkgran.farstar.battle.gui.Token;
 import com.darkgran.farstar.battle.players.DuelPlayer;
 
 public abstract class DuelManager {
+    private CombatManager combatManager;
     private DuelMenu duelMenu;
     private boolean active = false;
     private Token attacker;
@@ -12,8 +13,9 @@ public abstract class DuelManager {
     private DuelPlayer[] playersA;
     private DuelPlayer[] playersD;
 
-    public void launchDuel(Token attacker, Token defender, DuelPlayer[] playersA, DuelPlayer[] playersD) {
+    public void launchDuel(CombatManager combatManager, Token attacker, Token defender, DuelPlayer[] playersA, DuelPlayer[] playersD) {
         active = true;
+        this.combatManager = combatManager;
         this.attacker = attacker;
         this.defender = defender;
         this.playersA = playersA;
@@ -29,15 +31,15 @@ public abstract class DuelManager {
     }
 
     public void cancelDuel() {
-        System.out.println("OK");
-        duelMenu.removeCancel();
+        endDuel();
     }
 
     public void endDuel() {
+        duelMenu.removeCancel();
+        duelMenu.removeAllOKs();
         active = false;
+        combatManager.afterDuel();
     }
-
-    //TODO click-responses
 
     public void receiveDuelMenu(DuelMenu duelMenu) { this.duelMenu = duelMenu; }
 

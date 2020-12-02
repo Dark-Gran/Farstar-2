@@ -23,6 +23,8 @@ public abstract class DuelMenu {
 
     public void setBattleStage(BattleStage battleStage) { this.battleStage = battleStage; }
 
+    public void removeAllOKs() { }
+
     public void addActor(Actor actor) { getBattleStage().addActor(actor); }
 
     public void removeActors(Actor actor) { getBattleStage().addActor(actor); }

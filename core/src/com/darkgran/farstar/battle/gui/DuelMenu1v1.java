@@ -17,7 +17,14 @@ public class DuelMenu1v1 extends DuelMenu {
         getCancelButton().setBounds(Farstar.STAGE_WIDTH*2/3, Farstar.STAGE_HEIGHT*1/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
     }
 
+    @Override
+    public void removeAllOKs() {
+        duelButton1.remove();
+        duelButton2.remove();
+    }
+
     public ImageButton getDuelButton1() { return duelButton1; }
+
     public ImageButton getDuelButton2() { return duelButton2; }
 
 }
