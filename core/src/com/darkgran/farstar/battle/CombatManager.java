@@ -30,7 +30,7 @@ public class CombatManager {
         if (token instanceof FleetToken) {
             ((FleetToken) token).resetPosition();
         }
-        if (active && !duelManager.isActive()) {
+        if (active && !duelManager.isActive() && token != targetToken) {
             Player playerA = new Player();
             if (token instanceof FleetToken) {
                 playerA = ((FleetToken) token).getFleetMenu().getPlayer();
