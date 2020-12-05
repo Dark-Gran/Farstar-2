@@ -23,10 +23,12 @@ public class CombatManager {
     }
 
     private void fleetCheck() {
-        if (battle.getWhoseTurn().getFleet().noAttackers()) {
-            endCombat();
-        } else {
-            battleStage.enableCombatEnd();
+        if (!battle.isEverythingDisabled()) {
+            if (battle.getWhoseTurn().getFleet().noAttackers()) {
+                endCombat();
+            } else {
+                battleStage.enableCombatEnd();
+            }
         }
     }
 

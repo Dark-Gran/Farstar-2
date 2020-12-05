@@ -1,21 +1,33 @@
 package com.darkgran.farstar.battle.players;
 
-public class Ship extends Card {
+public class Ship extends TokenizedCard {
     private boolean fought = false;
+    private final Fleet fleet;
 
-    public Ship(CardInfo cardInfo) { super(cardInfo); }
+    public Ship(Fleet fleet, CardInfo cardInfo) {
+        super(cardInfo);
+        this.fleet = fleet;
+    }
 
-    public Ship() { }
+    public Ship(Fleet fleet) {
+        this.fleet = fleet;
+    }
 
-    public Ship(int id) { super(id); }
+    public Ship(Fleet fleet, int id) {
+        super(id);
+        this.fleet = fleet;
+    }
 
     @Override
     public void death() {
-        //TODO
+        if (fleet != null) { fleet.removeShip(this); }
+        if (getToken() != null) { getToken().destroy(); }
     }
 
     public boolean haveFought() { return fought; }
 
     public void setFought(boolean fought) { this.fought = fought; }
+
+    public Fleet getFleet() { return fleet; }
 
 }

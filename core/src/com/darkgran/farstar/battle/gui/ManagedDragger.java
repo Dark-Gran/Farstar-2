@@ -19,7 +19,7 @@ public class ManagedDragger extends Dragger {
 
     @Override
     public void drag(float x, float y) {
-        if (ownsToken(roundManager.getBattle().getWhoseTurn()) && forCombat == combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
+        if (ownsToken(roundManager.getBattle().getWhoseTurn()) && forCombat == combatManager.isActive() && !combatManager.getDuelManager().isActive() && !roundManager.getBattle().isEverythingDisabled()) {
             if (!(this.getToken().getCard() instanceof Ship) || !((Ship) this.getToken().getCard()).haveFought()) {
                 super.drag(x, y);
             }
@@ -28,7 +28,7 @@ public class ManagedDragger extends Dragger {
 
     @Override
     public void drop(float x, float y) {
-        if (ownsToken(roundManager.getBattle().getWhoseTurn()) && forCombat == combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
+        if (ownsToken(roundManager.getBattle().getWhoseTurn()) && forCombat == combatManager.isActive() && !combatManager.getDuelManager().isActive() && !roundManager.getBattle().isEverythingDisabled()) {
             if (!(this.getToken().getCard() instanceof Ship) || !((Ship) this.getToken().getCard()).haveFought()) {
                 super.drop(x, y);
             }

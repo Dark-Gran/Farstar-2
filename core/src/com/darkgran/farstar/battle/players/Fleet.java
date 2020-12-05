@@ -1,14 +1,15 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.gui.FleetMenu;
+import com.darkgran.farstar.battle.gui.Token;
 
 public class Fleet {
     private Ship[] ships = new Ship[7];
     private FleetMenu fleetMenu;
 
-    public boolean addShip(Card card, int position) {
+    public boolean addShip(Token token, int position) {
         boolean success = false;
-        Ship ship = new Ship(card.getCardInfo());
+        Ship ship = new Ship(this, token.getCard().getCardInfo());
         if (hasSpace() && position > -1 && position < 7) {
             if (position == 3) {
                 if (ships[3] == null) {
@@ -30,7 +31,7 @@ public class Fleet {
                     }
                 }
                 if (!sideHasSpace) {
-                    shiftAllCards(side);
+                    shiftAllShips(side);
                 }
                 for (i = start; i != end; i += change) {
                     if (ships[i] != null) {
@@ -52,7 +53,7 @@ public class Fleet {
         return success;
     }
 
-    private void shiftAllCards(boolean fromSide) {
+    private void shiftAllShips(boolean fromSide) {
         int start = fromSide ? 6 : 0;
         int end = fromSide ? 0 : 6;
         int change = fromSide ? -1 : 1;
@@ -60,6 +61,20 @@ public class Fleet {
             if (ships[i+change] != null) {
                 setShip(ships[i+change], i);
                 removeShip(i+change);
+            }
+        }
+    }
+
+    private void shiftShipsToBlank(int blankPosition) {
+        if (blankPosition > 0 && blankPosition < 6) {
+            boolean direction = blankPosition < 3;
+            int end = direction ? 0 : 6;
+            int change = direction ? -1 : 1;
+            for (int i = blankPosition; i != end; i += change) {
+                if (ships[i + change] != null) {
+                    setShip(ships[i + change], i);
+                    removeShip(i + change);
+                }
             }
         }
     }
@@ -74,14 +89,23 @@ public class Fleet {
         return false;
     }
 
-    private void removeShip(int position) {
+    public void removeShip(Ship ship) {
+        for (int i = 0; i < ships.length; i++) {
+            if (ships[i] == ship) {
+                removeShip(i);
+                shiftShipsToBlank(i);
+            }
+        }
+    }
+
+    public void removeShip(int position) {
         ships[position] = null;
         getFleetMenu().removeShip(position);
     }
 
     private void setShip(Ship ship, int position) {
         ships[position] = ship;
-        getFleetMenu().addShip(ship, position);
+        ship.setToken(getFleetMenu().addShip(ship, position));
     }
 
     public void receiveFleetMenu(FleetMenu fleetMenu) { this.fleetMenu = fleetMenu; }

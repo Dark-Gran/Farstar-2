@@ -43,19 +43,21 @@ public class RoundManager {
     }
 
     public void endTurn() {
-        if (!battle.getCombatManager().isActive()) {
+        if (!battle.getCombatManager().isActive() && !battle.isEverythingDisabled()) {
             battle.closeYards();
             battle.getCombatManager().launchCombat();
         }
     }
 
     public void afterCombat() {
-        battle.passTurn();
-        if (firstTurnThisRound) {
-            firstTurnThisRound = false;
-            newTurn();
-        } else {
-            newRound();
+        if (!battle.isEverythingDisabled()) {
+            battle.passTurn();
+            if (firstTurnThisRound) {
+                firstTurnThisRound = false;
+                newTurn();
+            } else {
+                newRound();
+            }
         }
     }
 
@@ -65,7 +67,7 @@ public class RoundManager {
             Fleet fleet = ((FleetMenu) dropTarget).getFleet();
             Player whoseTurn = battle.getWhoseTurn();
             if (fleet == whoseTurn.getFleet() && token.getTokenMenu().getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard())) {
-                success = fleet.addShip(token.getCard(), position);
+                success = fleet.addShip(token, position);
             }
             if (success) {
                 whoseTurn.payday(token.getCard());

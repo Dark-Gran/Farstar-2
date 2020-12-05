@@ -11,6 +11,7 @@ public class MothershipToken extends Token implements DropTarget {
         super(player.getMs(), x, y, battleStage, tokenMenu);
         setupSimpleBox2(x, y, getHeight(), getWidth());
         this.player = player;
+        player.getMs().setToken(this);
     }
 
     @Override

@@ -23,8 +23,9 @@ public class FleetMenu extends BaseMenu implements DropTarget {
         setupOffset();
     }
 
-    public void addShip(Card card, int position) {
+    public FleetToken addShip(Card card, int position) {
         ships[position] = new FleetToken(card, getX()+getOffset()*(position+1), getY(), getBattleStage(), null, this);
+        return ships[position];
     }
 
     public void removeShip(int position) {

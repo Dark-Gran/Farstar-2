@@ -12,6 +12,15 @@ public class FleetToken extends AnchoredToken {
         this.addListener(getDragger().getInputListener());
     }
 
+    @Override
+    public void destroy() {
+        remove();
+        if (getTokenMenu()!=null) {
+            getTokenMenu().getTokens().remove(this);
+            getTokenMenu().getCardList().getCards().remove(getCard());
+        }
+    }
+
     public FleetMenu getFleetMenu() { return fleetMenu; }
 
     public void setFleetMenu(FleetMenu fleetMenu) { this.fleetMenu = fleetMenu; }

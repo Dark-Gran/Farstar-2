@@ -1,6 +1,7 @@
 package com.darkgran.farstar.battle.players;
 
-public class Mothership extends Card {
+public class Mothership extends TokenizedCard {
+    private Player player;
 
     public Mothership(CardInfo cardInfo) { super(cardInfo); }
 
@@ -10,7 +11,13 @@ public class Mothership extends Card {
 
     @Override
     public void death() {
-        //TODO
+        if (player != null) {
+            getToken().getBattleStage().getBattleScreen().getBattle().addGameOver(player);
+        }
     }
+
+    public Player getPlayer() { return player; }
+
+    public void setPlayer(Player player) { this.player = player; }
 
 }
