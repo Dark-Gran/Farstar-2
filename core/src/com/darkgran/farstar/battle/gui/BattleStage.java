@@ -16,6 +16,8 @@ import com.darkgran.farstar.util.SimpleBox2;
 
 import java.awt.*;
 
+import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
+
 public abstract class BattleStage extends ListeningStage {
     private final BattleScreen battleScreen;
     private final Texture turn = new Texture("images/turn.png");
@@ -99,6 +101,7 @@ public abstract class BattleStage extends ListeningStage {
                 fleetMenu.getShips()[i].draw(batch);
             }
         }
+        if (DEBUG_RENDER) { getBattleScreen().drawDebugSimpleBox2(fleetMenu.getSimpleBox2(), getBattleScreen().getDebugRenderer(), batch); }
     }
 
     public boolean isInBox(SimpleBox2 simpleBox2, float x, float y) {

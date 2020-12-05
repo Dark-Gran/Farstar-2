@@ -11,8 +11,8 @@ public class FleetMenu extends BaseMenu implements DropTarget {
     private final Fleet fleet;
     private FleetToken[] ships = new FleetToken[7];
 
-    public FleetMenu(Fleet fleet, float x, float y, float width, float height, BattleStage battleStage, Player player) {
-        super(x, y, false, battleStage, player);
+    public FleetMenu(Fleet fleet, float x, float y, float width, float height, BattleStage battleStage, Player player, boolean negativeOffset) {
+        super(x, y, negativeOffset, battleStage, player);
         setX(x);
         setY(y);
         setWidth(width);
@@ -23,8 +23,15 @@ public class FleetMenu extends BaseMenu implements DropTarget {
         setupOffset();
     }
 
+    @Override
+    public void setupOffset() {
+        super.setupOffset();
+        if (isNegativeOffset()) { setOffset(getOffset()*-1); } //switching back, FleetMenu handles offset differently
+    }
+
     public FleetToken addShip(Card card, int position) {
-        ships[position] = new FleetToken(card, getX()+getOffset()*(position+1), getY(), getBattleStage(), null, this);
+        float y = isNegativeOffset() ? getY() : getY()+getHeight()/2;
+        ships[position] = new FleetToken(card, getX()+getOffset()*(position), y, getBattleStage(), null, this);
         return ships[position];
     }
 
