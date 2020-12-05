@@ -4,10 +4,10 @@ public class CardInfo {
     private final byte id;
     private final String name;
     private final CardSource source;
-    private final int energy; //resource-price
-    private final int matter; //resource-price
-    private final int offense;
-    private final int defense;
+    private int energy; //resource-price
+    private int matter; //resource-price
+    private int offense;
+    private int defense;
 
     public CardInfo(byte id, String name, CardSource source, int energy, int matter, int offense, int defense) {
         this.id = id;
@@ -42,5 +42,13 @@ public class CardInfo {
     public int getOffense() { return offense; }
 
     public int getDefense() { return defense; }
+
+    public void setEnergy(int energy) { this.energy = energy; }
+
+    public void setMatter(int matter) { this.matter = matter; }
+
+    public void setOffense(int offense) { this.offense = offense; }
+
+    public void setDefense(int defense) { this.defense = defense; }
 
 }
