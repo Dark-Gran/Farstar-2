@@ -3,6 +3,8 @@ package com.darkgran.farstar.battle;
 import com.darkgran.farstar.battle.gui.DuelMenu;
 import com.darkgran.farstar.battle.gui.DuelOK;
 import com.darkgran.farstar.battle.gui.Token;
+import com.darkgran.farstar.battle.players.Card;
+import com.darkgran.farstar.battle.players.CardInfo;
 import com.darkgran.farstar.battle.players.DuelPlayer;
 
 public abstract class DuelManager {
@@ -43,17 +45,16 @@ public abstract class DuelManager {
     private void engage() {
         if (!engaged) {
             engaged = true;
-            exeDuel();
+            if (attacker != null && defender != null) {
+                exeDuel(attacker.getCard().getCardInfo(), defender.getCard().getCardInfo());
+            }
             endDuel();
         }
     }
 
-    private void exeDuel() {
-        //TODO
-
-
-
-
+    public void exeDuel(CardInfo att, CardInfo def) {
+        att.setDefense(att.getDefense()-def.getOffense());
+        def.setDefense(def.getDefense()-att.getOffense());
     }
 
     public void cancelDuel() {

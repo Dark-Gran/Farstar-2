@@ -14,7 +14,6 @@ public class Card {
     public Card() {
         this.originalInfo = Battle.CARD_LIBRARY.getCard(0);
         this.cardInfo = cardInfoInstance(this.originalInfo);
-
     }
 
     public Card(int id) {
