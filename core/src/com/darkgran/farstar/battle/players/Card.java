@@ -21,6 +21,11 @@ public class Card {
         this.cardInfo = cardInfoInstance(this.originalInfo);
     }
 
+    public boolean receiveDMG(int dmg) { //returns survival
+        this.cardInfo.setDefense(this.cardInfo.getDefense()-dmg);
+        return this.cardInfo.getDefense() > 0;
+    }
+
     private CardInfo cardInfoInstance(CardInfo cardInfo) {
         return new CardInfo(cardInfo.getId(), cardInfo.getName(), cardInfo.getSource(), cardInfo.getEnergy(), cardInfo.getMatter(), cardInfo.getOffense(), cardInfo.getDefense());
     }
