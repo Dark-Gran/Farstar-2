@@ -52,7 +52,7 @@ public class CombatManager {
         return new DuelPlayer((byte) player.getBattleID(), player.getEnergy(), player.getMatter(), player.getMs(), player.getDeck(), player.getShipyard());
     }
 
-    public void afterDuel() {
+    public void afterDuel() { //3. TODO nextDuel/endCombat
         battleStage.enableCombatEnd();
     }
 

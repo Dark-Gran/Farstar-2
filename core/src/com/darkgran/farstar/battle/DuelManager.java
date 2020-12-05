@@ -9,21 +9,24 @@ public abstract class DuelManager {
     private CombatManager combatManager;
     private DuelMenu duelMenu;
     private boolean active = false;
+    private boolean engaged = false;
     private Token attacker;
     private Token defender;
     private DuelPlayer[] playersA;
     private DuelPlayer[] playersD;
 
     public void launchDuel(CombatManager combatManager, Token attacker, Token defender, DuelPlayer[] playersA, DuelPlayer[] playersD) {
-        active = true;
-        this.combatManager = combatManager;
-        this.attacker = attacker;
-        this.defender = defender;
-        this.playersA = playersA;
-        this.playersD = playersD;
-        preparePlayers();
-        duelMenu.addCancel();
-        duelMenu.addOK(this.playersA[0].getDuelButton());
+        if (!engaged) {
+            active = true;
+            this.combatManager = combatManager;
+            this.attacker = attacker;
+            this.defender = defender;
+            this.playersA = playersA;
+            this.playersD = playersD;
+            preparePlayers();
+            duelMenu.addCancel();
+            duelMenu.addOK(this.playersA[0].getDuelButton());
+        }
     }
 
     public void preparePlayers() {
@@ -32,7 +35,20 @@ public abstract class DuelManager {
     }
 
     public void OK(DuelOK duelOK) {
-        System.out.println("OK"); //TODO
+        //1. TODO multiple oks
+        engage();
+    }
+
+    private void engage() {
+        if (!engaged) {
+            engaged = true;
+            exeDuel();
+            endDuel();
+        }
+    }
+
+    private void exeDuel() {
+        //2. TODO calc and affect att+def
     }
 
     public void cancelDuel() {
@@ -40,6 +56,7 @@ public abstract class DuelManager {
     }
 
     public void endDuel() {
+        engaged = false;
         duelMenu.removeCancel();
         duelMenu.removeAllOKs();
         active = false;
