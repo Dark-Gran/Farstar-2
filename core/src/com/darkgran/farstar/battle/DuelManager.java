@@ -56,9 +56,9 @@ public abstract class DuelManager {
         exeOneSide(def, att);
     }
 
-    public void exeOneSide(Card att, Card def) {
+    public boolean exeOneSide(Card att, Card def) { //returns survival
         int dmg = def.getCardInfo().getOffense();
-        att.receiveDMG(dmg);
+        return att.receiveDMG(dmg);
     }
 
     public void cancelDuel() {
