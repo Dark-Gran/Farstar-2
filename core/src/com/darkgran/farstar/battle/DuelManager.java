@@ -5,6 +5,7 @@ import com.darkgran.farstar.battle.gui.DuelOK;
 import com.darkgran.farstar.battle.gui.Token;
 import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.DuelPlayer;
+import com.darkgran.farstar.battle.players.Ship;
 
 public abstract class DuelManager {
     private CombatManager combatManager;
@@ -53,13 +54,18 @@ public abstract class DuelManager {
     }
 
     public void exeDuel(Card att, Card def) {
-        exeOneSide(att, def);
-        exeOneSide(def, att);
+        if (!exeOneSide(att, def)) {
+            def.death();
+        }
+        if (!exeOneSide(def, att)) {
+            att.death();
+        }
+        if (att instanceof Ship) { ((Ship) att).setFought(true); }
     }
 
     public boolean exeOneSide(Card att, Card def) { //returns survival
-        int dmg = def.getCardInfo().getOffense();
-        return att.receiveDMG(dmg);
+        int dmg = att.getCardInfo().getOffense();
+        return def.receiveDMG(dmg);
     }
 
     public void cancelDuel() {

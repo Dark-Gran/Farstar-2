@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.darkgran.farstar.battle.players.Card;
+import com.darkgran.farstar.battle.players.Ship;
 import com.darkgran.farstar.util.TextFont;
 
 public class Token extends TextFont {
@@ -38,6 +39,7 @@ public class Token extends TextFont {
         Color color = new Color();
         if (isInDuel()) { color.set(0, 1, 0, 1); }
         else { color.set(1, 1, 1, 1); }
+        if (this.card instanceof Ship) { if (((Ship) this.card).haveFought()) { color.set(1, 0, 0, 1); } }
         cardName.draw(getFont(), batch, getX()-getWidth()/2, getY()+getHeight()*3, card.getCardInfo().getName(), color);
         cardOffense.draw(getFont(), batch, getX()-getWidth()/10-getWidth()/2, getY(), String.valueOf(card.getCardInfo().getOffense()));
         cardDefense.draw(getFont(), batch, getX()-getWidth()/10+getWidth()/2, getY(), String.valueOf(card.getCardInfo().getDefense()));

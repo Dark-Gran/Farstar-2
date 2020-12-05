@@ -6,8 +6,8 @@ public class DuelPlayer extends Player {
     private DuelOK duelOK;
     private boolean ready;
 
-    public DuelPlayer(byte battleID, int energy, int matter, Mothership ms, Deck deck, Shipyard shipyard) {
-        super(battleID, energy, matter, ms, deck, shipyard);
+    public DuelPlayer(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard) {
+        super(battleID, energy, matter, ms, deck, yard);
     }
 
     public DuelOK getDuelButton() {

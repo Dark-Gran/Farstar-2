@@ -60,20 +60,19 @@ public class RoundManager {
     }
 
     public void processDrop(Token token, DropTarget dropTarget, int position) {
+        boolean success = false;
         if (dropTarget instanceof FleetMenu && token.getTokenMenu() != null && !battle.getCombatManager().isActive() && !battle.getCombatManager().getDuelManager().isActive()) {
             Fleet fleet = ((FleetMenu) dropTarget).getFleet();
             Player whoseTurn = battle.getWhoseTurn();
-            boolean success = false;
             if (fleet == whoseTurn.getFleet() && token.getTokenMenu().getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard())) {
-                success = fleet.addCard(token.getCard(), position);
+                success = fleet.addShip(token.getCard(), position);
             }
             if (success) {
                 whoseTurn.payday(token.getCard());
                 if (token instanceof HandToken) { token.destroy(); }
-            } else {
-                if (token instanceof HandToken) { ((HandToken) token).resetPosition(); }
             }
         }
+        if (!success && token instanceof HandToken) { ((HandToken) token).resetPosition(); }
     }
 
     public int getRoundNum() { return roundNum; }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.gui.BattleStage;
+import com.darkgran.farstar.battle.players.Ship;
 
 public abstract class Battle implements BattleSettings {
     public final static CardLibrary CARD_LIBRARY = new CardLibrary();
@@ -38,6 +39,12 @@ public abstract class Battle implements BattleSettings {
     public void coinToss() { } //must setWhoseTurn
 
     public void startingCards() { }
+
+    public void setUsedForAllFleets(boolean used) { }
+
+    public void setUsedForFleet(Player player, boolean used) {
+        for (Ship ship : player.getFleet().getShips()) { if (ship != null) { ship.setFought(used); } }
+    }
 
     public Player getWhoseTurn() { return whoseTurn; }
 

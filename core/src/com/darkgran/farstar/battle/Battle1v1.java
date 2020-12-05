@@ -14,8 +14,8 @@ public class Battle1v1 extends Battle {
     public Battle1v1() {
         super();
         //in future: pass the Players in parameters
-        player1 = new Player((byte) 1, STARTING_ENERGY, STARTING_MATTER, new Mothership(0), new Deck(2), new Shipyard(1));
-        player2 = new Player((byte) 2, STARTING_ENERGY, STARTING_MATTER, new Mothership(0), new Deck(2), new Shipyard(1));
+        player1 = new Player((byte) 1, STARTING_ENERGY, STARTING_MATTER, new Mothership(0), new Deck(2), new Yard(1));
+        player2 = new Player((byte) 2, STARTING_ENERGY, STARTING_MATTER, new Mothership(0), new Deck(2), new Yard(1));
     }
 
     @Override
@@ -53,6 +53,12 @@ public class Battle1v1 extends Battle {
             player1.getHand().drawCards(player1.getDeck(), STARTING_CARDS_DEF);
             player2.getHand().drawCards(player2.getDeck(), STARTING_CARDS_ATT);
         }
+    }
+
+    @Override
+    public void setUsedForAllFleets(boolean used) {
+        setUsedForFleet(player1, used);
+        setUsedForFleet(player2, used);
     }
 
 }

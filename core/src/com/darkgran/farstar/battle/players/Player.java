@@ -6,17 +6,17 @@ public class Player {
     private int matter;
     private Mothership ms; //MotherShip
     private final Deck deck;
-    private final Shipyard shipyard;
+    private final Yard yard;
     private final Hand hand = new Hand();
     private final Fleet fleet;
 
-    public Player(byte battleID, int energy, int matter, Mothership ms, Deck deck, Shipyard shipyard) {
+    public Player(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard) {
         this.battleID = battleID;
         setEnergy(energy);
         setMatter(matter);
         this.ms = ms;
         this.deck = deck;
-        this.shipyard = shipyard;
+        this.yard = yard;
         fleet = new Fleet();
     }
 
@@ -26,7 +26,7 @@ public class Player {
         setMatter(-1);
         this.ms = null;
         this.deck = null;
-        this.shipyard = null;
+        this.yard = null;
         fleet = null;
     }
 
@@ -59,7 +59,7 @@ public class Player {
 
     public Deck getDeck() { return deck; }
 
-    public Shipyard getShipyard() { return shipyard; }
+    public Yard getShipyard() { return yard; }
 
     public Fleet getFleet() { return fleet; }
 

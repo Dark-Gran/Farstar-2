@@ -4,17 +4,17 @@ import com.darkgran.farstar.battle.BattleSettings;
 
 import java.util.ArrayList;
 
-public class Shipyard extends CardList {
+public class Yard extends CardList {
 
-    public Shipyard(ArrayList<Card> cards) {
+    public Yard(ArrayList<Card> cards) {
         super(cards);
     }
 
-    public Shipyard() {
+    public Yard() {
         super();
     }
 
-    public Shipyard(int id) {
+    public Yard(int id) {
         super(id);
     }
 

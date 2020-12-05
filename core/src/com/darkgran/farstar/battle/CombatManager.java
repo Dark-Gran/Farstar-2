@@ -19,6 +19,10 @@ public class CombatManager {
     {
         active = true;
         System.out.println("Combat Phase started.");
+        fleetCheck();
+    }
+
+    private void fleetCheck() {
         if (battle.getWhoseTurn().getFleet().noAttackers()) {
             endCombat();
         } else {
@@ -41,8 +45,8 @@ public class CombatManager {
             } else if (dropTarget instanceof MothershipToken) {
                 playerD = ((MothershipToken) dropTarget).getPlayer();
             }
-            if (playerA.getBattleID() != -1 && playerD.getBattleID() != -1) {
-                duelManager.launchDuel(this, token, targetToken, new DuelPlayer[]{playerToDuelPlayer(playerA)}, new DuelPlayer[]{playerToDuelPlayer(playerD)});
+            if (playerA.getBattleID() != -1 && playerD.getBattleID() != -1 && playerA != playerD) {
+                duelManager.launchDuel(this, token, targetToken, new DuelPlayer[]{playerToDuelPlayer(playerA)}, new DuelPlayer[]{playerToDuelPlayer(playerD)}); //in future: needs upgrade for other mods than 1v1
             }
         }
     }
@@ -51,12 +55,13 @@ public class CombatManager {
         return new DuelPlayer((byte) player.getBattleID(), player.getEnergy(), player.getMatter(), player.getMs(), player.getDeck(), player.getShipyard());
     }
 
-    public void afterDuel() { //TODO nextDuel/endCombat
-        battleStage.enableCombatEnd();
+    public void afterDuel() {
+        fleetCheck();
     }
 
     public void endCombat() {
         battleStage.disableCombatEnd();
+        battle.setUsedForAllFleets(false);
         active = false;
         System.out.println("Combat Phase ended.");
         battle.getRoundManager().afterCombat();

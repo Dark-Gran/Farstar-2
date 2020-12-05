@@ -26,6 +26,8 @@ public class Card {
         return this.cardInfo.getDefense() > 0;
     }
 
+    public void death() { }
+
     private CardInfo cardInfoInstance(CardInfo cardInfo) {
         return new CardInfo(cardInfo.getId(), cardInfo.getName(), cardInfo.getSource(), cardInfo.getEnergy(), cardInfo.getMatter(), cardInfo.getOffense(), cardInfo.getDefense());
     }
