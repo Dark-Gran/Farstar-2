@@ -6,7 +6,7 @@
     "energy": 0,
     "matter": 0,
     "offense": 0,
-    "defense": 2
+    "defense": 5
   },
   {
     "id": 1,
@@ -24,6 +24,6 @@
     "energy": 2,
     "matter": 2,
     "offense": 2,
-    "defense": 2
+    "defense": 3
   }
 ]
