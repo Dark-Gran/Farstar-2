@@ -4,7 +4,6 @@ import com.darkgran.farstar.battle.gui.DuelMenu;
 import com.darkgran.farstar.battle.gui.DuelOK;
 import com.darkgran.farstar.battle.gui.Token;
 import com.darkgran.farstar.battle.players.Card;
-import com.darkgran.farstar.battle.players.CardInfo;
 import com.darkgran.farstar.battle.players.DuelPlayer;
 
 public abstract class DuelManager {
@@ -18,11 +17,13 @@ public abstract class DuelManager {
     private DuelPlayer[] playersD;
 
     public void launchDuel(CombatManager combatManager, Token attacker, Token defender, DuelPlayer[] playersA, DuelPlayer[] playersD) {
-        if (!engaged) {
+        if (!engaged && attacker != null && defender != null) {
             active = true;
             this.combatManager = combatManager;
             this.attacker = attacker;
             this.defender = defender;
+            attacker.setInDuel(true);
+            defender.setInDuel(true);
             this.playersA = playersA;
             this.playersD = playersD;
             preparePlayers();
@@ -45,16 +46,19 @@ public abstract class DuelManager {
     private void engage() {
         if (!engaged) {
             engaged = true;
-            if (attacker != null && defender != null) {
-                exeDuel(attacker.getCard().getCardInfo(), defender.getCard().getCardInfo());
-            }
+            if (attacker != null && defender != null) { exeDuel(attacker.getCard(), defender.getCard()); }
             endDuel();
         }
     }
 
-    public void exeDuel(CardInfo att, CardInfo def) {
-        att.setDefense(att.getDefense()-def.getOffense());
-        def.setDefense(def.getDefense()-att.getOffense());
+    public void exeDuel(Card att, Card def) {
+        exeOneSide(att, def);
+        exeOneSide(def, att);
+    }
+
+    public void exeOneSide(Card att, Card def) {
+        int dmg = def.getCardInfo().getOffense();
+        att.receiveDMG(dmg);
     }
 
     public void cancelDuel() {
@@ -65,6 +69,8 @@ public abstract class DuelManager {
     public void endDuel() {
         engaged = false;
         duelMenu.removeAllOKs();
+        attacker.setInDuel(false);
+        defender.setInDuel(false);
         active = false;
         combatManager.afterDuel();
     }
