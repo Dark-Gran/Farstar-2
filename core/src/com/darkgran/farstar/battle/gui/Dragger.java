@@ -25,7 +25,7 @@ public class Dragger {
     }
 
     public void drag(float x, float y) {
-        token.setPosition(Gdx.input.getX(), Farstar.STAGE_HEIGHT-Gdx.input.getY());
+        token.setPosition(Gdx.input.getX()-token.getWidth()/2, Farstar.STAGE_HEIGHT-(Gdx.input.getY()+token.getHeight()/2));
     }
 
     public void drop(float x, float y) {
