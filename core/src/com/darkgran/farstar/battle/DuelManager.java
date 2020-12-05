@@ -35,8 +35,9 @@ public abstract class DuelManager {
     }
 
     public void OK(DuelOK duelOK) {
-        //1. TODO multiple oks
-        engage();
+        duelMenu.removeCancel();
+        nextOK(duelOK);
+        if (areAllReady()) { engage(); }
     }
 
     private void engage() {
@@ -48,19 +49,80 @@ public abstract class DuelManager {
     }
 
     private void exeDuel() {
-        //2. TODO calc and affect att+def
+        //TODO
+
+
+
+
     }
 
     public void cancelDuel() {
+        duelMenu.removeCancel();
         endDuel();
     }
 
     public void endDuel() {
         engaged = false;
-        duelMenu.removeCancel();
         duelMenu.removeAllOKs();
         active = false;
         combatManager.afterDuel();
+    }
+
+    private void nextOK(DuelOK duelOK) {
+        boolean next = false;
+        boolean done = false;
+        for (DuelPlayer player : playersA) {
+            if (!player.isReady() && player == duelOK.getDuelPlayer() || next) {
+                if (!next) {
+                    player.setReady(true);
+                    duelMenu.removeOK(duelOK);
+                    next = true;
+                } else {
+                    duelMenu.addOK(player.getDuelButton());
+                    done = true;
+                    break;
+                }
+            }
+        }
+        if (!done) {
+            for (DuelPlayer player : playersD) {
+                if (!player.isReady() && player == duelOK.getDuelPlayer() || next) {
+                    if (!next) {
+                        player.setReady(true);
+                        duelMenu.removeOK(duelOK);
+                        next = true;
+                    } else {
+                        duelMenu.addOK(player.getDuelButton());
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean areAllReady() {
+        for (DuelPlayer player : playersA) {
+            if (!player.isReady()) { return false; }
+        }
+        for (DuelPlayer player : playersD) {
+            if (!player.isReady()) { return false; }
+        }
+        return true;
+    }
+
+    private void changeReady(DuelPlayer whom, boolean toWhat) {
+        for (DuelPlayer player : playersA) {
+            if (player == whom) {
+                player.setReady(toWhat);
+                break;
+            }
+        }
+        for (DuelPlayer player : playersD) {
+            if (player == whom) {
+                player.setReady(toWhat);
+                break;
+            }
+        }
     }
 
     public void setPlayersA_OK(int ix, DuelOK duelOK) {
