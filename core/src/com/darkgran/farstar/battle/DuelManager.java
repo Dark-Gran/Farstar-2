@@ -18,6 +18,7 @@ public abstract class DuelManager {
 
     public void launchDuel(CombatManager combatManager, Token attacker, Token defender, DuelPlayer[] playersA, DuelPlayer[] playersD) {
         if (!engaged && attacker != null && defender != null) {
+            combatManager.getBattleStage().disableCombatEnd();
             active = true;
             this.combatManager = combatManager;
             this.attacker = attacker;

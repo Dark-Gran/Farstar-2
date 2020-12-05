@@ -42,7 +42,6 @@ public class CombatManager {
                 playerD = ((MothershipToken) dropTarget).getPlayer();
             }
             if (playerA.getBattleID() != -1 && playerD.getBattleID() != -1) {
-                battleStage.disableCombatEnd();
                 duelManager.launchDuel(this, token, targetToken, new DuelPlayer[]{playerToDuelPlayer(playerA)}, new DuelPlayer[]{playerToDuelPlayer(playerD)});
             }
         }
