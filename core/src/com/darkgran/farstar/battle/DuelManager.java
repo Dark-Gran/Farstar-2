@@ -117,21 +117,6 @@ public abstract class DuelManager {
         return true;
     }
 
-    private void changeReady(DuelPlayer whom, boolean toWhat) {
-        for (DuelPlayer player : playersA) {
-            if (player == whom) {
-                player.setReady(toWhat);
-                break;
-            }
-        }
-        for (DuelPlayer player : playersD) {
-            if (player == whom) {
-                player.setReady(toWhat);
-                break;
-            }
-        }
-    }
-
     public void setPlayersA_OK(int ix, DuelOK duelOK) {
         if (playersA[ix] != null) { playersA[ix].setDuelOK(duelOK); }
     }
