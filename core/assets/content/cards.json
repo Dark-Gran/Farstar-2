@@ -6,7 +6,9 @@
     "energy": 0,
     "matter": 0,
     "offense": 0,
-    "defense": 5
+    "defense": 5,
+    "offenseType": "KINETIC",
+    "defenseType": "KINETIC"
   },
   {
     "id": 1,
@@ -15,7 +17,9 @@
     "energy": 1,
     "matter": 1,
     "offense": 1,
-    "defense": 1
+    "defense": 1,
+    "offenseType": "KINETIC",
+    "defenseType": "KINETIC"
   },
   {
     "id": 2,
@@ -24,6 +28,8 @@
     "energy": 2,
     "matter": 2,
     "offense": 2,
-    "defense": 3
+    "defense": 3,
+    "offenseType": "PARTICLE",
+    "defenseType": "KINETIC"
   }
 ]

@@ -8,7 +8,7 @@ import com.darkgran.farstar.battle.players.*;
 
 public class RoundManager {
     private final Battle battle;
-    private int roundNum;
+    private int roundNum = 0;
     private boolean firstTurnThisRound;
 
     public RoundManager(Battle battle) {
@@ -16,7 +16,6 @@ public class RoundManager {
     }
 
     public void launch() {
-        roundNum = 0;
         newRound();
     }
 

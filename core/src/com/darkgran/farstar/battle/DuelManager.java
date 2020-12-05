@@ -6,6 +6,7 @@ import com.darkgran.farstar.battle.gui.Token;
 import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.DuelPlayer;
 import com.darkgran.farstar.battle.players.Ship;
+import com.darkgran.farstar.battle.players.TechType;
 
 public abstract class DuelManager {
     private CombatManager combatManager;
@@ -64,8 +65,15 @@ public abstract class DuelManager {
     }
 
     public boolean exeOneSide(Card att, Card def) { //returns survival
-        int dmg = att.getCardInfo().getOffense();
+        int dmg = getDmgAgainstShields(att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
         return def.receiveDMG(dmg);
+    }
+
+    public int getDmgAgainstShields(int dmg, TechType dmgType, TechType shieldType) {
+        if ((shieldType == TechType.SUPERIOR && dmgType != TechType.SUPERIOR) || (shieldType != TechType.INFERIOR && (dmgType == TechType.INFERIOR || dmgType == shieldType))) {
+            return 1;
+        }
+        return dmg;
     }
 
     public void cancelDuel() {

@@ -8,8 +8,10 @@ public class CardInfo {
     private int matter; //resource-price
     private int offense;
     private int defense;
+    private TechType offenseType;
+    private TechType defenseType;
 
-    public CardInfo(byte id, String name, CardSource source, int energy, int matter, int offense, int defense) {
+    public CardInfo(byte id, String name, CardSource source, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType) {
         this.id = id;
         this.name = name;
         this.source = source;
@@ -17,6 +19,8 @@ public class CardInfo {
         this.matter = matter;
         this.offense = offense;
         this.defense = defense;
+        this.offenseType = offenseType;
+        this.defenseType = defenseType;
     }
 
     public CardInfo() {
@@ -27,6 +31,8 @@ public class CardInfo {
         this.matter = 0;
         this.offense = 0;
         this.defense = 0;
+        this.offenseType = TechType.INFERIOR;
+        this.defenseType = TechType.INFERIOR;
     }
 
     public byte getId() { return id; }
@@ -50,5 +56,13 @@ public class CardInfo {
     public void setOffense(int offense) { this.offense = offense; }
 
     public void setDefense(int defense) { this.defense = defense; }
+
+    public TechType getOffenseType() { return offenseType; }
+
+    public void setOffenseType(TechType offenseType) { this.offenseType = offenseType; }
+
+    public TechType getDefenseType() { return defenseType; }
+
+    public void setDefenseType(TechType defenseType) { this.defenseType = defenseType; }
 
 }
