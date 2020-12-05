@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.Ship;
-import com.darkgran.farstar.battle.players.TechType;
 import com.darkgran.farstar.util.SimpleBox2;
 import com.darkgran.farstar.util.TextFont;
 
