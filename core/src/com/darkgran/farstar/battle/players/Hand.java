@@ -14,14 +14,6 @@ public class Hand extends CardList{
         setCards(new ArrayList<Card>());
     }
 
-    public Hand(int id) {
-        super(id);
-    }
-
-    public Hand(ArrayList<Card> cards) {
-        super(cards);
-    }
-
     public void drawCards(Deck deck, int howMany) {
         for (int i = 0; i < howMany && getCards().size() < Battle.MAX_IN_HAND; i++) {
             Card card = deck.drawCard();

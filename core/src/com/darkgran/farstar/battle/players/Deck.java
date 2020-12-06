@@ -1,19 +1,8 @@
 package com.darkgran.farstar.battle.players;
 
-import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.BattleSettings;
 
-import java.util.ArrayList;
-
 public class Deck extends CardList {
-
-    public Deck(ArrayList<Card> cards) {
-        super(cards);
-    }
-
-    public Deck() {
-        super();
-    }
 
     public Deck(int id) {
         super(id);

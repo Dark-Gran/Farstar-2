@@ -9,10 +9,6 @@ public class Ship extends TokenizedCard {
         this.fleet = fleet;
     }
 
-    public Ship(Fleet fleet) {
-        this.fleet = fleet;
-    }
-
     public Ship(Fleet fleet, int id) {
         super(id);
         this.fleet = fleet;
