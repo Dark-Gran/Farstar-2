@@ -19,7 +19,6 @@ public class Junkpile extends CardList {
 
     public void addCard(Card card) {
         getCards().add(card);
-        System.out.println(getCards());
     }
 
 }
