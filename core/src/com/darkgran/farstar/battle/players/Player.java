@@ -57,6 +57,8 @@ public class Player {
 
     public int getBattleID() { return battleID; }
 
+    public Yard getYard() { return yard; }
+
     public Mothership getMs() { return ms; }
 
     public Hand getHand() { return hand; }
@@ -66,5 +68,8 @@ public class Player {
     public Yard getShipyard() { return yard; }
 
     public Fleet getFleet() { return fleet; }
+
+    public Junkpile getJunkpile() { return junkpile; }
+
 
 }

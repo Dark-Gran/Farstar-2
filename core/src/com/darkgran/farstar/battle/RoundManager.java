@@ -1,9 +1,6 @@
 package com.darkgran.farstar.battle;
 
-import com.darkgran.farstar.battle.gui.DropTarget;
-import com.darkgran.farstar.battle.gui.FleetMenu;
-import com.darkgran.farstar.battle.gui.HandToken;
-import com.darkgran.farstar.battle.gui.Token;
+import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.players.*;
 
 public class RoundManager {
@@ -60,20 +57,30 @@ public class RoundManager {
         }
     }
 
-    public void processDrop(Token token, DropTarget dropTarget, int position) { //TODO junkpile 8
+    public void processDrop(Token token, DropTarget dropTarget, int position) {
         boolean success = false;
-        if (dropTarget instanceof FleetMenu && token.getTokenMenu() != null && !battle.getCombatManager().isActive() && !battle.getCombatManager().getDuelManager().isActive()) {
-            Fleet fleet = ((FleetMenu) dropTarget).getFleet();
+        if (token.getTokenMenu() != null && !battle.getCombatManager().isActive() && !battle.getCombatManager().getDuelManager().isActive()) {
             Player whoseTurn = battle.getWhoseTurn();
-            if (fleet == whoseTurn.getFleet() && token.getTokenMenu().getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard())) {
-                success = fleet.addShip(token, position);
-            }
-            if (success) {
-                whoseTurn.payday(token.getCard());
-                if (token instanceof HandToken) { token.destroy(); }
+            if (token.getTokenMenu().getPlayer() == whoseTurn) {
+                if (dropTarget instanceof FleetMenu) { //Fleet Deploy
+                    Fleet fleet = ((FleetMenu) dropTarget).getFleet();
+                    if (fleet == whoseTurn.getFleet() && whoseTurn.canAfford(token.getCard())) {
+                        success = fleet.addShip(token, position);
+                    }
+                    if (success) { whoseTurn.payday(token.getCard()); }
+                } else if (dropTarget instanceof JunkButton && token instanceof HandToken) { //Discard
+                    Junkpile junkpile = ((JunkButton) dropTarget).getPlayer().getJunkpile();
+                    if (junkpile == whoseTurn.getJunkpile()) {
+                        junkpile.addCard(token.getCard());
+                        success = true;
+                    }
+                }
             }
         }
-        if (!success && token instanceof HandToken) { ((HandToken) token).resetPosition(); }
+        if (token instanceof HandToken) {
+            if (!success) { ((HandToken) token).resetPosition(); }
+            else { token.destroy(); }
+        }
     }
 
     public int getRoundNum() { return roundNum; }
