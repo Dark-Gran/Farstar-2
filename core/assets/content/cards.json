@@ -2,7 +2,7 @@
   {
     "id": 0,
     "name": "Battlestation",
-    "type": "MS",
+    "cardType": "MS",
     "energy": 0,
     "matter": 0,
     "offense": 0,
@@ -13,7 +13,7 @@
   {
     "id": 1,
     "name": "Fighter",
-    "type": "YARD",
+    "cardType": "YARD",
     "energy": 1,
     "matter": 1,
     "offense": 1,
@@ -24,11 +24,11 @@
   {
     "id": 2,
     "name": "Phion Weapons",
-    "type": "UPGRADE",
+    "cardType": "BLUEPRINT",
     "energy": 1,
     "matter": 0,
     "offense": 1,
-    "defense": 0,
+    "defense": 1,
     "offenseType": "PARTICLE",
     "defenseType": "KINETIC"
   }

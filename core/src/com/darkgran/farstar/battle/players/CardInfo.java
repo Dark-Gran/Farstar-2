@@ -3,7 +3,7 @@ package com.darkgran.farstar.battle.players;
 public class CardInfo {
     private final byte id;
     private final String name;
-    private final CardType source;
+    private final CardType cardType;
     private int energy; //resource-price
     private int matter; //resource-price
     private int offense;
@@ -11,10 +11,10 @@ public class CardInfo {
     private TechType offenseType;
     private TechType defenseType;
 
-    public CardInfo(byte id, String name, CardType source, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType) {
+    public CardInfo(byte id, String name, CardType cardType, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType) {
         this.id = id;
         this.name = name;
-        this.source = source;
+        this.cardType = cardType;
         this.energy = energy;
         this.matter = matter;
         this.offense = offense;
@@ -26,7 +26,7 @@ public class CardInfo {
     public CardInfo() {
         this.id = 0;
         this.name = "X";
-        this.source = CardType.UPGRADE;
+        this.cardType = CardType.UPGRADE;
         this.energy = 0;
         this.matter = 0;
         this.offense = 0;
@@ -39,7 +39,7 @@ public class CardInfo {
 
     public String getName() { return name; }
 
-    public CardType getSource() { return source; }
+    public CardType getCardType() { return cardType; }
 
     public int getEnergy() { return energy; }
 

@@ -29,7 +29,7 @@ public class Card {
     public void death() { }
 
     private CardInfo cardInfoInstance(CardInfo cardInfo) {
-        return new CardInfo(cardInfo.getId(), cardInfo.getName(), cardInfo.getSource(), cardInfo.getEnergy(), cardInfo.getMatter(), cardInfo.getOffense(), cardInfo.getDefense(), cardInfo.getOffenseType(), cardInfo.getDefenseType());
+        return new CardInfo(cardInfo.getId(), cardInfo.getName(), cardInfo.getCardType(), cardInfo.getEnergy(), cardInfo.getMatter(), cardInfo.getOffense(), cardInfo.getDefense(), cardInfo.getOffenseType(), cardInfo.getDefenseType());
     }
 
     public CardInfo getCardInfo() { return cardInfo; }
