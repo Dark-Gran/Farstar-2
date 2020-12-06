@@ -30,6 +30,6 @@
     "offense": 1,
     "defense": 0,
     "offenseType": "PARTICLE",
-    "defenseType": "KINETIC"
+    "defenseType": "NONE"
   }
 ]

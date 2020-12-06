@@ -55,6 +55,10 @@ public class CardInfo {
 
     public void setOffense(int offense) { this.offense = offense; }
 
+    public void changeOffense(int change) { this.offense += change; }
+
+    public void changeDefense(int change) { this.defense += change; }
+
     public void setDefense(int defense) { this.defense = defense; }
 
     public TechType getOffenseType() { return offenseType; }

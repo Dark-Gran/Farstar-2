@@ -15,8 +15,8 @@ public abstract class ColorPalette {
             case PARTICLE:
                 return Color.SKY;
             case SUPERIOR:
-                return Color.WHITE;
+                return Color.PURPLE;
         }
-        return Color.PURPLE;
+        return Color.WHITE;
     }
 }

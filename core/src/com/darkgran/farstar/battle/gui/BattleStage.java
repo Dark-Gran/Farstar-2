@@ -12,6 +12,7 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.ListeningStage;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.CombatManager;
+import com.darkgran.farstar.battle.players.CardType;
 import com.darkgran.farstar.util.SimpleBox2;
 
 import java.awt.*;
@@ -63,7 +64,7 @@ public abstract class BattleStage extends ListeningStage {
             if (combatManager.isActive()) {
                 combatManager.processDrop(token, targetHit, getCombatDropToken(x, y, targetHit));
             } else {
-                getBattleScreen().getBattle().getRoundManager().processDrop(token, targetHit, getRoundDropPosition(x, y, targetHit));
+                getBattleScreen().getBattle().getRoundManager().processDrop(token, targetHit, getRoundDropPosition(x, y, targetHit, token.getCard().getCardInfo().getCardType()!=CardType.BLUEPRINT));
             }
         } else  if (token instanceof AnchoredToken) {
             ((AnchoredToken) token).resetPosition();
@@ -139,16 +140,16 @@ public abstract class BattleStage extends ListeningStage {
         return -1;
     }
 
-    public int getRoundDropPosition(float x, float y, DropTarget dropTarget) {
+    public int getRoundDropPosition(float x, float y, DropTarget dropTarget, boolean shipUpgrade) {
         if (dropTarget instanceof FleetMenu) {
             FleetMenu fleetMenu = (FleetMenu) dropTarget;
             Token[] ships = fleetMenu.getShips();
-            if (ships[3] == null) { //middle token empty
+            if (!shipUpgrade && ships[3] == null) { //middle token empty
                 return 3;
             } else {
                 for (int i = 0; i < ships.length; i++) {
                     if (x > fleetMenu.getX() + (TOKEN_WIDTH * i) && x < fleetMenu.getX() + (TOKEN_WIDTH * (i + 1))) {
-                        if (i != 3) {
+                        if (i != 3 || shipUpgrade) {
                             return i;
                         } else { //hit middle token (not empty) - pick left/right
                             if (x < fleetMenu.getX() + fleetMenu.getWidth() / 2) {

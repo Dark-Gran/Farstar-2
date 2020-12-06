@@ -2,9 +2,13 @@ package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.Battle;
 
+import java.util.ArrayList;
+
 public class Card {
     private final CardInfo cardInfo;
     private final CardInfo originalInfo;
+    private final ArrayList<Card> receivedCards = new ArrayList<Card>();
+
 
     public Card(CardInfo cardInfo) {
         this.originalInfo = cardInfo;
@@ -24,6 +28,20 @@ public class Card {
     public boolean receiveDMG(int dmg) { //returns survival
         this.cardInfo.setDefense(this.cardInfo.getDefense()-dmg);
         return this.cardInfo.getDefense() > 0;
+    }
+
+    public boolean applyUpgrade(Card card) {
+        boolean success = false;
+        CardInfo upgradeInfo = card.getCardInfo();
+        if (upgradeInfo.getCardType() == CardType.UPGRADE) {
+            cardInfo.changeOffense(upgradeInfo.getOffense());
+            cardInfo.changeDefense(upgradeInfo.getDefense());
+            if (upgradeInfo.getOffenseType() != TechType.NONE) { cardInfo.setOffenseType(upgradeInfo.getOffenseType()); }
+            if (upgradeInfo.getDefenseType() != TechType.NONE) { cardInfo.setDefenseType(upgradeInfo.getDefenseType()); }
+            receivedCards.add(card);
+            success = true;
+        }
+        return success;
     }
 
     public void death() { }
