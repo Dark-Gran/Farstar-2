@@ -17,9 +17,11 @@ public class Hand extends CardList{
     public void drawCards(Deck deck, int howMany) {
         for (int i = 0; i < howMany && getCards().size() < Battle.MAX_IN_HAND; i++) {
             Card card = deck.drawCard();
-            getCards().add(card);
-            if (getTokenMenu() != null) {
-                ((HandMenu) getTokenMenu()).generateNewToken(card);
+            if (card != null) {
+                getCards().add(card);
+                if (getTokenMenu() != null) {
+                    ((HandMenu) getTokenMenu()).generateNewToken(card);
+                }
             }
         }
     }
