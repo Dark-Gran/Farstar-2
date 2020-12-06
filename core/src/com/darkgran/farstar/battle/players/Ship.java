@@ -15,7 +15,7 @@ public class Ship extends TokenizedCard {
     }
 
     @Override
-    public void death() {
+    public void death() { //TODO end in junkpile (only if source is HAND?)
         if (fleet != null) { fleet.removeShip(this); }
         if (getToken() != null) { getToken().destroy(); }
     }

@@ -25,7 +25,7 @@ public class RoundManager {
         newTurn();
     }
 
-    public void newTurn() {
+    public void newTurn() { //TODO shuffle on last card drawn
         battle.getWhoseTurn().getHand().drawCards(battle.getWhoseTurn().getDeck(), battle.CARDS_PER_TURN);
         resourceIncomes(battle.getWhoseTurn());
         System.out.println("Player #"+battle.getWhoseTurn().getBattleID()+" may play his cards.");
