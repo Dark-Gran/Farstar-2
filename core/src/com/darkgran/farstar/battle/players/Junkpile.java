@@ -1,5 +1,7 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.battle.BattleSettings;
+
 import java.util.ArrayList;
 
 //"Junkyard"/"Scrapyard"
@@ -12,7 +14,7 @@ public class Junkpile extends CardList {
 
     @Override
     public void setupSize() {
-        setMaxSize(0); //TODO
+        setMaxSize(BattleSettings.DECK_SIZE*2);
     }
 
 }
