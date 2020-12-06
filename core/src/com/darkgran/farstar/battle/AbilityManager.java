@@ -43,10 +43,8 @@ public class AbilityManager {
         return success;
     }
 
-    private boolean add_stats(Token caster, Token target) {
-        boolean success = false;
-        success = target.getCard().applyUpgrade(caster.getCard());
-        return success;
+    private boolean add_stats(Token caster, Token target) { //todo: permanent vs x turns
+        return target.getCard().applyUpgrade(caster.getCard());
     }
 
     public Battle getBattle() { return battle; }
