@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.battle.gui.Token;
 import com.darkgran.farstar.battle.players.AbilityInfo;
+import com.darkgran.farstar.battle.players.EffectType;
 
 public class AbilityManager {
     private final Battle battle;
@@ -27,29 +28,27 @@ public class AbilityManager {
         return success;
     }
 
-    public boolean executeEffect(Token caster, Token target, int ix) {
+    public boolean executeEffect(Token caster, Token target, EffectType effectType) {
         boolean success = false;
-
-        switch (ix) {
-            case 0:
-                //NO ABILITY
-                success = true;
-                break;
-            case 1:
-                //"OLD" STAT UPGRADE
-                //TODO
-                break;
+        if (caster.getCard() != null && target.getCard() != null && effectType != null) {
+            switch (effectType) {
+                case NONE:
+                    success = true;
+                    break;
+                case ADD_STATS:
+                    success = add_stats(caster, target);
+                    break;
+            }
         }
         return success;
     }
 
-    /*public boolean upgradeShip(Token token, int position) {
+    private boolean add_stats(Token caster, Token target) {
         boolean success = false;
-        if (ships[position] != null && token.getCard() != null) {
-            success = ships[position].applyUpgrade(token.getCard());
-            if (success) { junkpile.addCard(token.getCard()); }
-        }
+        success = target.getCard().applyUpgrade(caster.getCard());
         return success;
-    }*/
+    }
+
+    public Battle getBattle() { return battle; }
 
 }

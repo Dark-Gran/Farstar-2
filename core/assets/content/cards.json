@@ -41,7 +41,7 @@
     "defenseType": "NONE",
     "ability": {
       "starter": "DEPLOY",
-      "effects": [1]
+      "effects": ["ADD_STATS"]
     }
   }
 ]
