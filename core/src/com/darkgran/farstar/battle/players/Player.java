@@ -9,6 +9,7 @@ public class Player {
     private final Yard yard;
     private final Hand hand = new Hand();
     private final Fleet fleet;
+    private final Junkpile junkpile;
 
     public Player(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard) {
         this.battleID = battleID;
@@ -18,9 +19,10 @@ public class Player {
         this.deck = deck;
         this.yard = yard;
         fleet = new Fleet();
+        junkpile = new Junkpile();
     }
 
-    public Player() {
+    public Player() { //must be set-up if constructed this way
         this.battleID = (byte) -1;
         setEnergy(-1);
         setMatter(-1);
@@ -28,6 +30,7 @@ public class Player {
         this.deck = null;
         this.yard = null;
         fleet = null;
+        junkpile = null;
     }
 
     public boolean canAfford(Card card) {
