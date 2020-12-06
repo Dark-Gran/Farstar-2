@@ -5,7 +5,7 @@ import com.darkgran.farstar.battle.BattleSettings;
 import java.util.ArrayList;
 
 //"Junkyard"/"Scrapyard"
-public class Junkpile extends CardList {
+public class Junkpile extends CardList { //TODO add gui counterpart
 
     public Junkpile() {
         setupSize();
