@@ -3,12 +3,24 @@ package com.darkgran.farstar.battle.players;
 import com.darkgran.farstar.battle.BattleSettings;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Deck extends CardList {
     private Player player;
 
+    public Deck(ArrayList<Card> cards) {
+        super(cards);
+        shuffle();
+    }
+
+    public Deck() {
+        super();
+        shuffle();
+    }
+
     public Deck(int id) {
         super(id);
+        shuffle();
     }
 
     @Override
@@ -17,7 +29,10 @@ public class Deck extends CardList {
     }
 
     public Card drawCard() {
-        if (getCards().size() == 0) { eatJunk(); }
+        if (getCards().size() == 0) {
+            eatJunk();
+            shuffle();
+        }
         if (getCards().size() > 0) {
             Card card = getCards().get(0);
             getCards().remove(0);
@@ -25,10 +40,16 @@ public class Deck extends CardList {
         } else { return null; }
     }
 
-    public void eatJunk() { //in future: add shuffle
+    public void eatJunk() {
         ArrayList<Card> junkCards = player.getJunkpile().getCards();
         for (Card junk : junkCards) { getCards().add(junk); }
         player.getJunkpile().setCards(new ArrayList<Card>());
+    }
+
+    private void shuffle() {
+        ArrayList<Card> list = getCards();
+        Collections.shuffle(list);
+        setCards(list);
     }
 
     public Player getPlayer() { return player; }
