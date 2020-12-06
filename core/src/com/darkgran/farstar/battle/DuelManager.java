@@ -70,10 +70,17 @@ public abstract class DuelManager {
     }
 
     public int getDmgAgainstShields(int dmg, TechType dmgType, TechType shieldType) {
+        dmgType = noneToInferior(dmgType);
+        shieldType = noneToInferior(shieldType);
         if ((shieldType == TechType.SUPERIOR && dmgType != TechType.SUPERIOR) || (shieldType != TechType.INFERIOR && (dmgType == TechType.INFERIOR || dmgType == shieldType))) {
             return 1;
         }
         return dmg;
+    }
+
+    private TechType noneToInferior(TechType techType) {
+        if (techType == TechType.NONE) { techType = TechType.INFERIOR; }
+        return techType;
     }
 
     public void cancelDuel() {
