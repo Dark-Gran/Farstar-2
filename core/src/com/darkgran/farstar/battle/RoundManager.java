@@ -64,10 +64,17 @@ public class RoundManager {
             if (token.getTokenMenu().getPlayer() == whoseTurn) {
                 if (dropTarget instanceof FleetMenu) { //Fleet Deploy
                     Fleet fleet = ((FleetMenu) dropTarget).getFleet();
-                    if (fleet == whoseTurn.getFleet() && whoseTurn.canAfford(token.getCard())) {
-                        success = fleet.addShip(token, position);
+                    CardType cardType = token.getCard().getCardInfo().getCardType();
+                    if (cardType == CardType.BLUEPRINT || cardType == CardType.YARD) { //ships
+                        if (fleet == whoseTurn.getFleet() && whoseTurn.canAfford(token.getCard())) {
+                            success = fleet.addShip(token, position);
+                        }
+                    } else if (cardType == CardType.UPGRADE) {
+                        //TODO
                     }
-                    if (success) { whoseTurn.payday(token.getCard()); }
+                    if (success) {
+                        whoseTurn.payday(token.getCard());
+                    }
                 } else if (dropTarget instanceof JunkButton && token instanceof HandToken) { //Discard
                     Junkpile junkpile = ((JunkButton) dropTarget).getPlayer().getJunkpile();
                     if (junkpile == whoseTurn.getJunkpile()) {

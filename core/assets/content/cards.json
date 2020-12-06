@@ -24,11 +24,11 @@
   {
     "id": 2,
     "name": "Phion Weapons",
-    "cardType": "BLUEPRINT",
+    "cardType": "UPGRADE",
     "energy": 1,
     "matter": 0,
     "offense": 1,
-    "defense": 1,
+    "defense": 0,
     "offenseType": "PARTICLE",
     "defenseType": "KINETIC"
   }
