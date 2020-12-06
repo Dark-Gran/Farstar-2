@@ -4,8 +4,11 @@ import com.darkgran.farstar.battle.gui.FleetMenu;
 import com.darkgran.farstar.battle.gui.Token;
 
 public class Fleet {
+    private final Junkpile junkpile;
     private Ship[] ships = new Ship[7];
     private FleetMenu fleetMenu;
+
+    public Fleet(Junkpile junkpile) { this.junkpile = junkpile; }
 
     public boolean addShip(Token token, int position) {
         boolean success = false;
@@ -113,4 +116,6 @@ public class Fleet {
     public FleetMenu getFleetMenu() { return fleetMenu; }
 
     public Ship[] getShips() { return ships; }
+
+    public Junkpile getJunkpile() { return junkpile; }
 }

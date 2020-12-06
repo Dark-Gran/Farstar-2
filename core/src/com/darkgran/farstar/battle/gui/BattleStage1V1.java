@@ -24,6 +24,8 @@ public class BattleStage1V1 extends BattleStage {
     private final HandMenu handMenu2;
     private final FleetMenu fleetMenu1;
     private final FleetMenu fleetMenu2;
+    private final JunkButton junkButton1;
+    private final JunkButton junkButton2;
 
     public BattleStage1V1(Farstar game, Viewport viewport, BattleScreen battleScreen, DuelMenu duelMenu, Player player1, Player player2) {
         super(game, viewport, battleScreen, duelMenu);
@@ -49,6 +51,9 @@ public class BattleStage1V1 extends BattleStage {
         //Fleets
         fleetMenu1 = new FleetMenu(player1.getFleet(), Farstar.STAGE_WIDTH*1/3, Farstar.STAGE_HEIGHT*1/3, Farstar.STAGE_WIDTH*3/7, Farstar.STAGE_HEIGHT/7, this, player1, false);
         fleetMenu2 = new FleetMenu(player2.getFleet(), Farstar.STAGE_WIDTH*1/3, Farstar.STAGE_HEIGHT/2, Farstar.STAGE_WIDTH*3/7, Farstar.STAGE_HEIGHT/7, this, player2, true);
+        //Discards / Junkpiles
+        junkButton1 = new JunkButton(Farstar.STAGE_WIDTH*6/7, Farstar.STAGE_HEIGHT*1/3, this, player1);
+        junkButton2 = new JunkButton(Farstar.STAGE_WIDTH*6/7, Farstar.STAGE_HEIGHT*2/3, this, player2);
         //Finish
         setupListeners();
     }
@@ -59,6 +64,8 @@ public class BattleStage1V1 extends BattleStage {
         else if (isInBox(fleetMenu2.getSimpleBox2(), x, y)) { return fleetMenu2; }
         else if (isInBox(mothershipToken1.getSimpleBox2(), x, y)) { return mothershipToken1; }
         else if (isInBox(mothershipToken2.getSimpleBox2(), x, y)) { return mothershipToken2; }
+        else if (isInBox(junkButton1, x, y)) { return junkButton1; }
+        else if (isInBox(junkButton2, x, y)) { return junkButton2; }
         else { return null; }
     }
 
@@ -75,6 +82,8 @@ public class BattleStage1V1 extends BattleStage {
         drawTokenMenu(handMenu2, batch);
         drawFleet(fleetMenu1, batch);
         drawFleet(fleetMenu2, batch);
+        junkButton1.draw(batch);
+        junkButton2.draw(batch);
     }
 
     @Override

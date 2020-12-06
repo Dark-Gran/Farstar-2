@@ -60,7 +60,7 @@ public class RoundManager {
         }
     }
 
-    public void processDrop(Token token, DropTarget dropTarget, int position) {
+    public void processDrop(Token token, DropTarget dropTarget, int position) { //TODO junkpile 8
         boolean success = false;
         if (dropTarget instanceof FleetMenu && token.getTokenMenu() != null && !battle.getCombatManager().isActive() && !battle.getCombatManager().getDuelManager().isActive()) {
             Fleet fleet = ((FleetMenu) dropTarget).getFleet();

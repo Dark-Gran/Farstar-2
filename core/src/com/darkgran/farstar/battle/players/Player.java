@@ -18,8 +18,9 @@ public class Player {
         this.ms = ms;
         this.deck = deck;
         this.yard = yard;
-        fleet = new Fleet();
         junkpile = new Junkpile();
+        fleet = new Fleet(junkpile);
+
     }
 
     public Player() { //must be set-up if constructed this way

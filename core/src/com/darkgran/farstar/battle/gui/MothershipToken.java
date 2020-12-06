@@ -19,7 +19,7 @@ public class MothershipToken extends Token implements DropTarget {
 
     public void draw(Batch batch) {
         super.draw(batch);
-        //draws DropTarget SimpleBox2
+        //Draws DropTarget SimpleBox2
         //if (DEBUG_RENDER) { getBattleStage().getBattleScreen().drawDebugSimpleBox2(getSimpleBox2(), getBattleStage().getBattleScreen().getDebugRenderer(), batch); }
     }
 

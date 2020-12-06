@@ -161,6 +161,8 @@ public abstract class BattleStage extends ListeningStage {
                 }
                 return -1;
             }
+        } else if (dropTarget instanceof JunkButton) {
+            return 8;
         }
         return -1;
     }
