@@ -1,17 +1,15 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.BattleSettings;
-import com.darkgran.farstar.battle.gui.JunkButton;
 
 import java.util.ArrayList;
 
 //"Junkyard"/"Scrapyard"
-public class Junkpile extends CardList { //TODO add gui counterpart
+public class Junkpile extends CardList {
 
     public Junkpile() {
         setupSize();
         setCards(new ArrayList<Card>());
-
     }
 
     @Override
