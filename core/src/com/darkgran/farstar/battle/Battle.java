@@ -13,6 +13,7 @@ public abstract class Battle implements BattleSettings {
     private Player whoseTurn;
     private RoundManager roundManager;
     private CombatManager combatManager;
+    private AbilityManager abilityManager;
     private boolean everythingDisabled = false;
     private ArrayList<Player> gameOvers = new ArrayList<Player>();
 
@@ -33,11 +34,12 @@ public abstract class Battle implements BattleSettings {
 
     public void closeYards() { }
 
-    public void startingSetup(RoundManager roundManager, CombatManager combatManager) {
+    public void startingSetup(RoundManager roundManager, CombatManager combatManager, AbilityManager abilityManager) {
         coinToss();
         startingCards();
         this.roundManager = roundManager;
         this.combatManager = combatManager;
+        this.abilityManager = abilityManager;
     }
 
     public void coinToss() { } //must setWhoseTurn
@@ -69,12 +71,12 @@ public abstract class Battle implements BattleSettings {
 
     public CombatManager getCombatManager() { return combatManager; }
 
+    public AbilityManager getAbilityManager() { return abilityManager; }
+
     public boolean isEverythingDisabled() { return everythingDisabled; }
 
     public void setEverythingDisabled(boolean everythingDisabled) { this.everythingDisabled = everythingDisabled; }
 
     public ArrayList<Player> getGameOvers() { return gameOvers; }
-
-    public void setGameOvers(ArrayList<Player> gameOvers) { this.gameOvers = gameOvers; }
 
 }

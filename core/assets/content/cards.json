@@ -8,7 +8,11 @@
     "offense": 0,
     "defense": 5,
     "offenseType": "KINETIC",
-    "defenseType": "KINETIC"
+    "defenseType": "KINETIC",
+    "ability": {
+      "starter": "DEPLOY",
+      "effects": []
+    }
   },
   {
     "id": 1,
@@ -19,7 +23,11 @@
     "offense": 1,
     "defense": 1,
     "offenseType": "KINETIC",
-    "defenseType": "KINETIC"
+    "defenseType": "KINETIC",
+    "ability": {
+      "starter": "DEPLOY",
+      "effects": []
+    }
   },
   {
     "id": 2,
@@ -30,6 +38,10 @@
     "offense": 1,
     "defense": 0,
     "offenseType": "PARTICLE",
-    "defenseType": "NONE"
+    "defenseType": "NONE",
+    "ability": {
+      "starter": "DEPLOY",
+      "effects": [1]
+    }
   }
 ]

@@ -23,7 +23,7 @@ public class BattleScreen extends SuperScreen {
         setTableMenu(tableStage);
         Box2D.init();
         this.battle = battle;
-        battle.startingSetup(new RoundManager(battle), new CombatManager(battle, battle.createDuelManager()));
+        battle.startingSetup(new RoundManager(battle), new CombatManager(battle, battle.createDuelManager()), new AbilityManager(battle));
         battleStage = battle.createBattleStage(game, getViewport(), this);
         battle.getCombatManager().setBattleStage(battleStage);
         battle.getCombatManager().getDuelManager().getDuelMenu().setBattleStage(battleStage);

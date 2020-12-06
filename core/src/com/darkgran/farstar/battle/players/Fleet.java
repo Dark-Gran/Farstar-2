@@ -10,15 +10,6 @@ public class Fleet {
 
     public Fleet(Junkpile junkpile) { this.junkpile = junkpile; }
 
-    public boolean upgradeShip(Token token, int position) {
-        boolean success = false;
-        if (ships[position] != null && token.getCard() != null) {
-            success = ships[position].applyUpgrade(token.getCard());
-            if (success) { junkpile.addCard(token.getCard()); }
-        }
-        return success;
-    }
-
     public boolean addShip(Token token, int position) {
         boolean success = false;
         Ship ship = new Ship(this, token.getCard().getCardInfo());
