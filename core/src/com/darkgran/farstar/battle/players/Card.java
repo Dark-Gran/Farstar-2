@@ -4,7 +4,7 @@ import com.darkgran.farstar.battle.Battle;
 
 import java.util.ArrayList;
 
-public class Card {
+public class Card { //TODO check/undoEffects, AbilityInfo on CardInfo rework (multiple starters (incl. "attributes"))
     private final CardInfo cardInfo;
     private final CardInfo originalInfo;
     private final ArrayList<Card> permanents = new ArrayList<Card>();
@@ -36,7 +36,7 @@ public class Card {
         for (Effect effect : temps) {
             effect.setDuration(effect.getDuration()-1);
             if (effect.getDuration() <= 0) {
-                //TODO undoEffect
+
             }
         }
     }

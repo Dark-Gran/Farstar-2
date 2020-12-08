@@ -4,7 +4,7 @@ import com.darkgran.farstar.battle.gui.Token;
 import com.darkgran.farstar.battle.players.AbilityInfo;
 import com.darkgran.farstar.battle.players.Effect;
 
-public class AbilityManager {
+public class AbilityManager { //TODO remove statics, move abilities from Card to here, undoEffects
     private final Battle battle;
 
     public AbilityManager(Battle battle) {

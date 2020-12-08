@@ -69,7 +69,7 @@ public class RoundManager {
                     Fleet fleet = ((FleetMenu) dropTarget).getFleet();
                     if (fleet == whoseTurn.getFleet() && whoseTurn.canAfford(token.getCard())) {
                         if (cardType == CardType.BLUEPRINT || cardType == CardType.YARD) {
-                            success = fleet.addShip(token, position);
+                            success = fleet.addShip(token, position); //TODO move to after the ability handle
                         }
                         if (cardType == CardType.UPGRADE || (success && token.getCard().getCardInfo().getAbility().getStarter() == AbilityStarter.DEPLOY)) {
                             success = battle.getAbilityManager().playAbility(token, fleet.getShips()[position].getToken());
