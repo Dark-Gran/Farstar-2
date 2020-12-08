@@ -54,7 +54,7 @@ public abstract class DuelManager {
         }
     }
 
-    public void exeDuel(Card att, Card def) {
+    public static void exeDuel(Card att, Card def) {
         if (!exeOneSide(att, def)) {
             def.death();
         }
@@ -64,12 +64,12 @@ public abstract class DuelManager {
         if (att instanceof Ship) { ((Ship) att).setFought(true); }
     }
 
-    public boolean exeOneSide(Card att, Card def) { //returns survival
+    public static boolean exeOneSide(Card att, Card def) { //returns survival
         int dmg = getDmgAgainstShields(att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
         return def.receiveDMG(dmg);
     }
 
-    public int getDmgAgainstShields(int dmg, TechType dmgType, TechType shieldType) {
+    public static int getDmgAgainstShields(int dmg, TechType dmgType, TechType shieldType) {
         dmgType = noneToInferior(dmgType);
         shieldType = noneToInferior(shieldType);
         if ((shieldType == TechType.SUPERIOR && dmgType != TechType.SUPERIOR) || (shieldType != TechType.INFERIOR && (dmgType == TechType.INFERIOR || dmgType == shieldType))) {
@@ -78,7 +78,7 @@ public abstract class DuelManager {
         return dmg;
     }
 
-    private TechType noneToInferior(TechType techType) {
+    private static TechType noneToInferior(TechType techType) {
         if (techType == TechType.NONE) { techType = TechType.INFERIOR; }
         return techType;
     }
