@@ -10,7 +10,7 @@
     "offenseType": "KINETIC",
     "defenseType": "KINETIC",
     "ability": {
-      "starter": "DEPLOY",
+      "starter": "NONE",
       "effects": []
     }
   },
@@ -25,7 +25,7 @@
     "offenseType": "KINETIC",
     "defenseType": "KINETIC",
     "ability": {
-      "starter": "DEPLOY",
+      "starter": "NONE",
       "effects": []
     }
   },
