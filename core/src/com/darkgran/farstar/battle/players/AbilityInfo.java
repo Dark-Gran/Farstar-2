@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class AbilityInfo {
     private final AbilityStarter starter;
-    private final ArrayList<EffectType> effects;
+    private final ArrayList<Effect> effects;
 
-    public AbilityInfo(AbilityStarter starter, ArrayList<EffectType> effects) {
+    public AbilityInfo(AbilityStarter starter, ArrayList<Effect> effects) {
         this.starter = starter;
         this.effects = effects;
     }
@@ -18,6 +18,6 @@ public class AbilityInfo {
 
     public AbilityStarter getStarter() { return starter; }
 
-    public ArrayList<EffectType> getEffects() { return effects; }
+    public ArrayList<Effect> getEffects() { return effects; }
 
 }

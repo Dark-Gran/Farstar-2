@@ -7,7 +7,9 @@ import java.util.ArrayList;
 public class Card {
     private final CardInfo cardInfo;
     private final CardInfo originalInfo;
-    private final ArrayList<Card> receivedCards = new ArrayList<Card>();
+    private final ArrayList<Card> permanents = new ArrayList<Card>();
+    private final ArrayList<Effect> temps = new ArrayList<Effect>();
+    private final ArrayList<Card> history = new ArrayList<Card>();
 
 
     public Card(CardInfo cardInfo) {
@@ -30,7 +32,16 @@ public class Card {
         return this.cardInfo.getDefense() > 0;
     }
 
-    public boolean applyUpgrade(Card card) {
+    public void checkEffects() {
+        for (Effect effect : temps) {
+            effect.setDuration(effect.getDuration()-1);
+            if (effect.getDuration() <= 0) {
+                //TODO undoEffect
+            }
+        }
+    }
+
+    public boolean applyUpgrade(Card card, Effect effect) {
         boolean success = false;
         CardInfo upgradeInfo = card.getCardInfo();
         if (upgradeInfo.getCardType() == CardType.UPGRADE) {
@@ -38,7 +49,12 @@ public class Card {
             cardInfo.changeDefense(upgradeInfo.getDefense());
             if (upgradeInfo.getOffenseType() != TechType.NONE) { cardInfo.setOffenseType(upgradeInfo.getOffenseType()); }
             if (upgradeInfo.getDefenseType() != TechType.NONE) { cardInfo.setDefenseType(upgradeInfo.getDefenseType()); }
-            receivedCards.add(card);
+            if (effect.getDuration() > 0) {
+                temps.add(effect);
+            } else {
+                permanents.add(card);
+            }
+            history.add(card);
             success = true;
         }
         return success;

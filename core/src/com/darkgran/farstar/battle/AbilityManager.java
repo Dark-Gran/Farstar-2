@@ -2,16 +2,16 @@ package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.battle.gui.Token;
 import com.darkgran.farstar.battle.players.AbilityInfo;
-import com.darkgran.farstar.battle.players.EffectType;
+import com.darkgran.farstar.battle.players.Effect;
 
-public class AbilityManager {
+public class AbilityManager { //TODO: turn abstract?
     private final Battle battle;
 
     public AbilityManager(Battle battle) {
         this.battle = battle;
     }
 
-    public boolean playAbility(Token caster, Token target) {
+    public static boolean playAbility(Token caster, Token target) {
         boolean success = false;
         if (caster != null && target != null) {
             AbilityInfo ability = caster.getCard().getCardInfo().getAbility();
@@ -28,23 +28,23 @@ public class AbilityManager {
         return success;
     }
 
-    public boolean executeEffect(Token caster, Token target, EffectType effectType) {
+    public static boolean executeEffect(Token caster, Token target, Effect effect) {
         boolean success = false;
-        if (caster.getCard() != null && target.getCard() != null && effectType != null) {
-            switch (effectType) {
+        if (caster.getCard() != null && target.getCard() != null && effect.getEffectType() != null) {
+            switch (effect.getEffectType()) {
                 case NONE:
                     success = true;
                     break;
                 case ADD_STATS:
-                    success = add_stats(caster, target);
+                    success = add_stats(caster, target, effect);
                     break;
             }
         }
         return success;
     }
 
-    private boolean add_stats(Token caster, Token target) { //todo: permanent vs x turns
-        return target.getCard().applyUpgrade(caster.getCard());
+    private static boolean add_stats(Token caster, Token target, Effect effect) {
+        return target.getCard().applyUpgrade(caster.getCard(), effect);
     }
 
     public Battle getBattle() { return battle; }

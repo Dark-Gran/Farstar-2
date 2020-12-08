@@ -82,6 +82,10 @@ public class Fleet {
         }
     }
 
+    public void checkEffectsOnAll() {
+        for (Ship ship : ships) { ship.checkEffects(); }
+    }
+
     public boolean noAttackers() {
         for (Ship ship : ships) { if (ship != null && !ship.haveFought()) { return false; } }
         return true;

@@ -5,6 +5,8 @@ import com.darkgran.farstar.battle.gui.TokenMenu;
 
 import java.util.ArrayList;
 
+//in-future: cardList could handle using abilities on shipyard/deck/hand (if ever to be added),
+//(simply call "checkEffects()" on its Cards (see Fleet/Card))
 public abstract class CardList {
     private ArrayList<Card> cards;
     private int maxSize;

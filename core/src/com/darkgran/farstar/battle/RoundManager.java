@@ -47,6 +47,8 @@ public class RoundManager {
 
     public void afterCombat() {
         if (!battle.isEverythingDisabled()) {
+            battle.getWhoseTurn().getMs().checkEffects();
+            battle.getWhoseTurn().getFleet().checkEffectsOnAll();
             battle.passTurn();
             if (firstTurnThisRound) {
                 firstTurnThisRound = false;
