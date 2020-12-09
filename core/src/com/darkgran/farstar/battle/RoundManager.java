@@ -83,11 +83,11 @@ public class RoundManager {
                 }
                 if (success) {
                     whoseTurn.payday(token.getCard());
-                    token.addToJunk();
+                    token.addCardToJunk();
                 } else if (dropTarget instanceof JunkButton && token instanceof HandToken) { //Target: Discard
                     Junkpile junkpile = ((JunkButton) dropTarget).getPlayer().getJunkpile();
                     if (junkpile == whoseTurn.getJunkpile()) {
-                        token.addToJunk();
+                        token.addCardToJunk();
                         success = true;
                     }
                 }

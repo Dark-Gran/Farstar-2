@@ -63,7 +63,7 @@ public class Token extends TextFont {
         }
     }
 
-    public void addToJunk() {
+    public void addCardToJunk() {
         if (getCard().getCardInfo().getCardType()!= CardType.YARD) {
             this.getTokenMenu().getPlayer().getJunkpile().addCard(this.getCard());
         }
