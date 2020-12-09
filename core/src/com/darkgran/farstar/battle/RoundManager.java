@@ -68,11 +68,11 @@ public class RoundManager {
                 if (dropTarget instanceof FleetMenu) { //Target: Fleet
                     Fleet fleet = ((FleetMenu) dropTarget).getFleet();
                     if (fleet == whoseTurn.getFleet() && whoseTurn.canAfford(token.getCard())) {
-                        if (cardType == CardType.BLUEPRINT || cardType == CardType.YARD) {
-                            success = fleet.addShip(token, position); //TODO fix deploy ability fail
-                        }
-                        if (cardType == CardType.UPGRADE || (success && token.getCard().getCardInfo().getAbility().getStarter() == AbilityStarter.DEPLOY)) {
+                        if (cardType == CardType.UPGRADE || token.getCard().getCardInfo().getAbility().getStarter() == AbilityStarter.DEPLOY) {
                             success = battle.getAbilityManager().playAbility(token, fleet.getShips()[position].getToken());
+                        }
+                        if ((cardType == CardType.BLUEPRINT || cardType == CardType.YARD) && (success || token.getCard().getCardInfo().getAbility().getStarter() == AbilityStarter.NONE)) {
+                            success = fleet.addShip(token, position);
                         }
                     }
                 } else if (dropTarget instanceof MothershipToken) { //Target: MS
