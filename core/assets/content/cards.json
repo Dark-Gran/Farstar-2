@@ -54,5 +54,26 @@
         }
       ]
     }
+  },
+  {
+    "id": 3,
+    "name": "Phion Aasd",
+    "cardType": "UPGRADE",
+    "energy": 1,
+    "matter": 0,
+    "offense": 1,
+    "defense": 0,
+    "offenseType": "PARTICLE",
+    "defenseType": "NONE",
+    "ability": {
+      "starter": "DEPLOY",
+      "effects": [
+        {
+          "effectType": "CHANGE_STAT",
+          "duration": 0,
+          "effectInfo": ["OFFENSE_TYPE", "PARTICLE"]
+        }
+      ]
+    }
   }
 ]
