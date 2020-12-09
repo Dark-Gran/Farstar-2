@@ -35,18 +35,30 @@ public class AbilityManager {
                     success = true;
                     break;
                 case ADD_STATS:
-                    success = add_stats(caster, target, effect);
+                    success = add_stats(caster, target);
                     break;
             }
+            if (success) { saveToCard(caster.getCard(), target.getCard(), effect); }
         }
         return success;
     }
 
-    private boolean add_stats(Token caster, Token target, Effect effect) {
-        return applyUpgrade(caster.getCard(), target.getCard(), effect);
+    private void saveToCard(Card card, Card target, Effect effect) {
+        if (effect.getDuration() > 0) {
+            target.addToTemps(effect);
+        } else {
+            target.addToPermanents(card);
+        }
+        target.addToHistory(card);
     }
 
-    public boolean applyUpgrade(Card card, Card target, Effect effect) {
+    public Battle getBattle() { return battle; }
+
+    private boolean add_stats(Token caster, Token target) {
+        return applyUpgrade(caster.getCard(), target.getCard());
+    }
+
+    private boolean applyUpgrade(Card card, Card target) {
         boolean success = false;
         CardInfo upgradeInfo = card.getCardInfo();
         if (upgradeInfo.getCardType() == CardType.UPGRADE) {
@@ -54,17 +66,11 @@ public class AbilityManager {
             target.getCardInfo().changeDefense(upgradeInfo.getDefense());
             if (upgradeInfo.getOffenseType() != TechType.NONE) { target.getCardInfo().setOffenseType(upgradeInfo.getOffenseType()); }
             if (upgradeInfo.getDefenseType() != TechType.NONE) { target.getCardInfo().setDefenseType(upgradeInfo.getDefenseType()); }
-            if (effect.getDuration() > 0) {
-                target.addToTemps(effect);
-            } else {
-                target.addToPermanents(card);
-            }
-            target.addToHistory(card);
             success = true;
         }
         return success;
     }
 
-    public Battle getBattle() { return battle; }
+
 
 }
