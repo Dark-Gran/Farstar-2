@@ -31,7 +31,7 @@
   },
   {
     "id": 2,
-    "name": "Phion Weapons",
+    "name": "More Weapons",
     "cardType": "UPGRADE",
     "energy": 1,
     "matter": 0,
@@ -44,7 +44,7 @@
       "effects": [{
         "effectType": "ADD_STATS",
         "duration": 1,
-        "effectInfo": []
+        "effectInfo": ["OFFENSE", 1]
       }]
     }
   }

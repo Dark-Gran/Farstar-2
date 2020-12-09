@@ -33,8 +33,12 @@ public class AbilityManager {
                     success = true;
                     break;
                 case ADD_STATS:
-                    //TODO
-
+                    if (!reverse) { success = addStat(target.getCard(), effect); }
+                    else { success = removeStat(target.getCard(), effect); }
+                    break;
+                case REMOVE_STATS:
+                    if (!reverse) { success = removeStat(target.getCard(), effect); }
+                    else { success = addStat(target.getCard(), effect); }
                     break;
             }
             if (effect.getDuration() > 0) { target.getCard().addToTemps(effect); }
@@ -43,15 +47,31 @@ public class AbilityManager {
         return success;
     }
 
-    private boolean addStats(Effect effect, Card target, boolean reverse) {
+    private boolean addStat(Card target, Effect effect) {
         boolean success = false;
+        if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2) {
+            if (effect.getEffectInfo().get(1) != null) {
+                switch (effect.getEffectInfo().get(0).toString()) {
+                    case "OFFENSE":
+                        target.getCardInfo().changeOffense(floatObjectToInt(effect.getEffectInfo().get(1)));
+                        success = true;
+                        break;
+                }
+            }
 
-        //TODO
-
+            /*target.getCardInfo().changeDefense(0);
+            if (upgradeInfo.getOffenseType() != TechType.NONE) {
+                target.getCardInfo().setOffenseType(TechType.INFERIOR);
+            }
+            if (upgradeInfo.getDefenseType() != TechType.NONE) {
+                target.getCardInfo().setDefenseType(TechType.INFERIOR);
+            }
+            */
+        }
         return success;
     }
 
-    private boolean removeStats(Card card, Card target, boolean reverse) {
+    private boolean removeStat(Card target, Effect effect) {
         boolean success = false;
 
         //TODO
@@ -60,5 +80,10 @@ public class AbilityManager {
     }
 
     public Battle getBattle() { return battle; }
+
+    private static int floatObjectToInt(Object obj) {
+        float f = (Float) obj;
+        return (int) f;
+    }
 
 }
