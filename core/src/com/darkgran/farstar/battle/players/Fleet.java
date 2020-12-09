@@ -1,6 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
-import com.darkgran.farstar.battle.AbilityManager;
+import com.darkgran.farstar.battle.players.abilities.AbilityManager;
 import com.darkgran.farstar.battle.gui.FleetMenu;
 import com.darkgran.farstar.battle.gui.Token;
 

@@ -1,15 +1,15 @@
 package com.darkgran.farstar.battle.players;
 
-import com.darkgran.farstar.battle.AbilityManager;
+import com.darkgran.farstar.battle.players.abilities.AbilityManager;
 import com.darkgran.farstar.battle.Battle;
+import com.darkgran.farstar.battle.players.abilities.Effect;
 
 import java.util.ArrayList;
 
 public class Card {
     private final CardInfo cardInfo;
     private final CardInfo originalInfo;
-    private final ArrayList<Effect> permanents = new ArrayList<Effect>();
-    private final ArrayList<Effect> temps = new ArrayList<Effect>();
+    private final ArrayList<Effect> effects = new ArrayList<Effect>();
     private final ArrayList<Card> history = new ArrayList<Card>();
 
 
@@ -34,10 +34,16 @@ public class Card {
     }
 
     public void checkEffects(AbilityManager abilityManager) {
-        for (Effect effect : temps) {
-            effect.setDuration(effect.getDuration()-1);
-            if (effect.getDuration() <= 0) {
-                //abilityManager.executeEffect()
+        for (int i = 0; i < effects.size(); i++) {
+            Effect effect = effects.get(i);
+            if (effect.getDuration() > 0) {
+                effect.setDuration(effect.getDuration() - 1);
+                if (effect.getDuration() == 0) {
+                    if (abilityManager.executeEffect(this, effect, true)) {
+                        effects.remove(effect);
+                        i--;
+                    }
+                }
             }
         }
     }
@@ -48,19 +54,15 @@ public class Card {
         return new CardInfo(cardInfo.getId(), cardInfo.getName(), cardInfo.getCardType(), cardInfo.getEnergy(), cardInfo.getMatter(), cardInfo.getOffense(), cardInfo.getDefense(), cardInfo.getOffenseType(), cardInfo.getDefenseType(), cardInfo.getAbility());
     }
 
-    public void addToPermanents (Effect effect) { permanents.add(effect); }
-
     public void addToHistory (Card card) { history.add(card);  }
 
-    public void addToTemps (Effect effect) { temps.add(effect); }
+    public void addToEffects (Effect effect) { effects.add(effect); }
 
     public CardInfo getCardInfo() { return cardInfo; }
 
     public CardInfo getOriginalInfo() { return originalInfo; }
 
-    public ArrayList<Effect> getPermanents() { return permanents; }
-
-    public ArrayList<Effect> getTemps() { return temps; }
+    public ArrayList<Effect> getEffects() { return effects; }
 
     public ArrayList<Card> getHistory() { return history; }
 

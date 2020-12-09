@@ -1,4 +1,4 @@
-package com.darkgran.farstar.battle.players;
+package com.darkgran.farstar.battle.players.abilities;
 
 import java.util.ArrayList;
 

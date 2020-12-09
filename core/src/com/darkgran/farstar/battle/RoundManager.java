@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle;
 
+import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.players.*;
 
@@ -47,8 +48,7 @@ public class RoundManager {
 
     public void afterCombat() {
         if (!battle.isEverythingDisabled()) {
-            battle.getWhoseTurn().getMs().checkEffects(battle.getAbilityManager());
-            battle.getWhoseTurn().getFleet().checkEffectsOnAll(battle.getAbilityManager());
+            tickEffects();
             battle.passTurn();
             if (firstTurnThisRound) {
                 firstTurnThisRound = false;
@@ -57,6 +57,11 @@ public class RoundManager {
                 newRound();
             }
         }
+    }
+
+    private void tickEffects() {
+        battle.getWhoseTurn().getMs().checkEffects(battle.getAbilityManager());
+        battle.getWhoseTurn().getFleet().checkEffectsOnAll(battle.getAbilityManager());
     }
 
     public void processDrop(Token token, DropTarget dropTarget, int position) {

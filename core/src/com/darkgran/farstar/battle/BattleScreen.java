@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.TableStage;
+import com.darkgran.farstar.battle.players.abilities.AbilityManager;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.util.SimpleBox2;
 

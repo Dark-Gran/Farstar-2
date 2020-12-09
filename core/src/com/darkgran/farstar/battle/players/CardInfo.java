@@ -1,5 +1,8 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
+import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
+
 import java.util.ArrayList;
 
 public class CardInfo {

@@ -31,20 +31,20 @@
   },
   {
     "id": 2,
-    "name": "More Weapons",
+    "name": "Phion Counter",
     "cardType": "UPGRADE",
     "energy": 1,
     "matter": 0,
-    "offense": 1,
+    "offense": 0,
     "defense": 0,
-    "offenseType": "PARTICLE",
-    "defenseType": "NONE",
+    "offenseType": "NONE",
+    "defenseType": "PARTICLE",
     "ability": {
       "starter": "DEPLOY",
       "effects": [{
-        "effectType": "ADD_STATS",
+        "effectType": "CHANGE_STAT",
         "duration": 1,
-        "effectInfo": ["OFFENSE", 1]
+        "effectInfo": ["DEFENSE_TYPE", "PARTICLE"]
       }]
     }
   }
