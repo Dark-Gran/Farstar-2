@@ -71,7 +71,7 @@ public class RoundManager {
                         if (cardType == CardType.UPGRADE || token.getCard().getCardInfo().getAbility().getStarter() == AbilityStarter.DEPLOY) {
                             success = battle.getAbilityManager().playAbility(token, fleet.getShips()[position].getToken());
                         }
-                        if ((cardType == CardType.BLUEPRINT || cardType == CardType.YARD) && (success || token.getCard().getCardInfo().getAbility().getStarter() == AbilityStarter.NONE)) {
+                        if ((cardType == CardType.BLUEPRINT || cardType == CardType.YARD) && (success || token.getCard().getCardInfo().getAbility().getStarter() != AbilityStarter.DEPLOY)) {
                             success = fleet.addShip(token, position);
                         }
                     }
