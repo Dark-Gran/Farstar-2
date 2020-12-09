@@ -17,8 +17,8 @@ public class Ship extends TokenizedCard {
     @Override
     public void death() {
         if (getToken() != null) {
+            getToken().addCardToJunk();
             getToken().destroy();
-            getToken().addToJunk();
         }
         if (fleet != null) { fleet.removeShip(this); }
     }
