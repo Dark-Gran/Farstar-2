@@ -4,7 +4,7 @@ import com.darkgran.farstar.battle.Battle;
 
 import java.util.ArrayList;
 
-public class Card { //TODO check/undoEffects, AbilityInfo on CardInfo rework (multiple starters (incl. "attributes"))
+public class Card {
     private final CardInfo cardInfo;
     private final CardInfo originalInfo;
     private final ArrayList<Card> permanents = new ArrayList<Card>();
@@ -41,33 +41,26 @@ public class Card { //TODO check/undoEffects, AbilityInfo on CardInfo rework (mu
         }
     }
 
-    public boolean applyUpgrade(Card card, Effect effect) {
-        boolean success = false;
-        CardInfo upgradeInfo = card.getCardInfo();
-        if (upgradeInfo.getCardType() == CardType.UPGRADE) {
-            cardInfo.changeOffense(upgradeInfo.getOffense());
-            cardInfo.changeDefense(upgradeInfo.getDefense());
-            if (upgradeInfo.getOffenseType() != TechType.NONE) { cardInfo.setOffenseType(upgradeInfo.getOffenseType()); }
-            if (upgradeInfo.getDefenseType() != TechType.NONE) { cardInfo.setDefenseType(upgradeInfo.getDefenseType()); }
-            if (effect.getDuration() > 0) {
-                temps.add(effect);
-            } else {
-                permanents.add(card);
-            }
-            history.add(card);
-            success = true;
-        }
-        return success;
-    }
-
     public void death() { }
 
     private CardInfo cardInfoInstance(CardInfo cardInfo) {
         return new CardInfo(cardInfo.getId(), cardInfo.getName(), cardInfo.getCardType(), cardInfo.getEnergy(), cardInfo.getMatter(), cardInfo.getOffense(), cardInfo.getDefense(), cardInfo.getOffenseType(), cardInfo.getDefenseType(), cardInfo.getAbility());
     }
 
+    public void addToPermanents (Card card) { permanents.add(card); }
+
+    public void addToHistory (Card card) { history.add(card);  }
+
+    public void addToTemps (Effect effect) { temps.add(effect); }
+
     public CardInfo getCardInfo() { return cardInfo; }
 
     public CardInfo getOriginalInfo() { return originalInfo; }
+
+    public ArrayList<Card> getPermanents() { return permanents; }
+
+    public ArrayList<Effect> getTemps() { return temps; }
+
+    public ArrayList<Card> getHistory() { return history; }
 
 }

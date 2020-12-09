@@ -1,17 +1,16 @@
 package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.battle.gui.Token;
-import com.darkgran.farstar.battle.players.AbilityInfo;
-import com.darkgran.farstar.battle.players.Effect;
+import com.darkgran.farstar.battle.players.*;
 
-public class AbilityManager { //TODO remove statics, move abilities from Card to here, undoEffects
+public class AbilityManager {
     private final Battle battle;
 
     public AbilityManager(Battle battle) {
         this.battle = battle;
     }
 
-    public static boolean playAbility(Token caster, Token target) {
+    public boolean playAbility(Token caster, Token target) {
         boolean success = false;
         if (caster != null && target != null) {
             AbilityInfo ability = caster.getCard().getCardInfo().getAbility();
@@ -28,7 +27,7 @@ public class AbilityManager { //TODO remove statics, move abilities from Card to
         return success;
     }
 
-    public static boolean executeEffect(Token caster, Token target, Effect effect) {
+    public boolean executeEffect(Token caster, Token target, Effect effect) {
         boolean success = false;
         if (caster.getCard() != null && target.getCard() != null && effect.getEffectType() != null) {
             switch (effect.getEffectType()) {
@@ -43,8 +42,27 @@ public class AbilityManager { //TODO remove statics, move abilities from Card to
         return success;
     }
 
-    private static boolean add_stats(Token caster, Token target, Effect effect) {
-        return target.getCard().applyUpgrade(caster.getCard(), effect);
+    private boolean add_stats(Token caster, Token target, Effect effect) {
+        return applyUpgrade(caster.getCard(), target.getCard(), effect);
+    }
+
+    public boolean applyUpgrade(Card card, Card target, Effect effect) {
+        boolean success = false;
+        CardInfo upgradeInfo = card.getCardInfo();
+        if (upgradeInfo.getCardType() == CardType.UPGRADE) {
+            target.getCardInfo().changeOffense(upgradeInfo.getOffense());
+            target.getCardInfo().changeDefense(upgradeInfo.getDefense());
+            if (upgradeInfo.getOffenseType() != TechType.NONE) { target.getCardInfo().setOffenseType(upgradeInfo.getOffenseType()); }
+            if (upgradeInfo.getDefenseType() != TechType.NONE) { target.getCardInfo().setDefenseType(upgradeInfo.getDefenseType()); }
+            if (effect.getDuration() > 0) {
+                target.addToTemps(effect);
+            } else {
+                target.addToPermanents(card);
+            }
+            target.addToHistory(card);
+            success = true;
+        }
+        return success;
     }
 
     public Battle getBattle() { return battle; }
