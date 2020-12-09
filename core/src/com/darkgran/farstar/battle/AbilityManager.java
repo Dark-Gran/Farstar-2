@@ -35,7 +35,7 @@ public class AbilityManager {
                     success = true;
                     break;
                 case ADD_STATS:
-                    success = add_stats(caster, target);
+                    success = applyUpgrade(caster.getCard(), target.getCard());
                     break;
             }
             if (success) { saveToCard(caster.getCard(), target.getCard(), effect); }
@@ -52,12 +52,6 @@ public class AbilityManager {
         target.addToHistory(card);
     }
 
-    public Battle getBattle() { return battle; }
-
-    private boolean add_stats(Token caster, Token target) {
-        return applyUpgrade(caster.getCard(), target.getCard());
-    }
-
     private boolean applyUpgrade(Card card, Card target) {
         boolean success = false;
         CardInfo upgradeInfo = card.getCardInfo();
@@ -71,6 +65,6 @@ public class AbilityManager {
         return success;
     }
 
-
+    public Battle getBattle() { return battle; }
 
 }
