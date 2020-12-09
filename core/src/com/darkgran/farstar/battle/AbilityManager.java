@@ -16,52 +16,46 @@ public class AbilityManager {
             AbilityInfo ability = caster.getCard().getCardInfo().getAbility();
             if (ability != null && ability.getEffects() != null) {
                 for (int i = 0; i < ability.getEffects().size(); i++) {
-                    if (!success) {
-                        success = executeEffect(caster, target, ability.getEffects().get(i));
-                    } else {
-                        executeEffect(caster, target, ability.getEffects().get(i));
-                    }
+                    if (!success) { success = executeEffect(target, ability.getEffects().get(i), false); }
+                    else { executeEffect(target, ability.getEffects().get(i), false); }
                 }
+                if (success) { target.getCard().addToHistory(caster.getCard()); }
             }
         }
         return success;
     }
 
-    public boolean executeEffect(Token caster, Token target, Effect effect) {
+    public boolean executeEffect(Token target, Effect effect, boolean reverse) {
         boolean success = false;
-        if (caster.getCard() != null && target.getCard() != null && effect.getEffectType() != null) {
+        if (target.getCard() != null && effect.getEffectType() != null) {
             switch (effect.getEffectType()) {
                 case NONE:
                     success = true;
                     break;
                 case ADD_STATS:
-                    success = applyUpgrade(caster.getCard(), target.getCard());
+                    //TODO
+
                     break;
             }
-            if (success) { saveToCard(caster.getCard(), target.getCard(), effect); }
+            if (effect.getDuration() > 0) { target.getCard().addToTemps(effect); }
+            else { target.getCard().addToPermanents(effect); }
         }
         return success;
     }
 
-    private void saveToCard(Card card, Card target, Effect effect) {
-        if (effect.getDuration() > 0) {
-            target.addToTemps(effect);
-        } else {
-            target.addToPermanents(card);
-        }
-        target.addToHistory(card);
+    private boolean addStats(Effect effect, Card target, boolean reverse) {
+        boolean success = false;
+
+        //TODO
+
+        return success;
     }
 
-    private boolean applyUpgrade(Card card, Card target) {
+    private boolean removeStats(Card card, Card target, boolean reverse) {
         boolean success = false;
-        CardInfo upgradeInfo = card.getCardInfo();
-        if (upgradeInfo.getCardType() == CardType.UPGRADE) {
-            target.getCardInfo().changeOffense(upgradeInfo.getOffense());
-            target.getCardInfo().changeDefense(upgradeInfo.getDefense());
-            if (upgradeInfo.getOffenseType() != TechType.NONE) { target.getCardInfo().setOffenseType(upgradeInfo.getOffenseType()); }
-            if (upgradeInfo.getDefenseType() != TechType.NONE) { target.getCardInfo().setDefenseType(upgradeInfo.getDefenseType()); }
-            success = true;
-        }
+
+        //TODO
+
         return success;
     }
 

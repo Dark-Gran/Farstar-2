@@ -43,7 +43,8 @@
       "starter": "DEPLOY",
       "effects": [{
         "effectType": "ADD_STATS",
-        "duration": 1
+        "duration": 1,
+        "effectInfo": []
       }]
     }
   }

@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.gui.FleetMenu;
 import com.darkgran.farstar.battle.gui.Token;
 
@@ -82,8 +83,8 @@ public class Fleet {
         }
     }
 
-    public void checkEffectsOnAll() {
-        for (Ship ship : ships) { if (ship != null) { ship.checkEffects(); } }
+    public void checkEffectsOnAll(AbilityManager abilityManager) {
+        for (Ship ship : ships) { if (ship != null) { ship.checkEffects(abilityManager); } }
     }
 
     public boolean noAttackers() {

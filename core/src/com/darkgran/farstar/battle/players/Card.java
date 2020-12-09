@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.Battle;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 public class Card {
     private final CardInfo cardInfo;
     private final CardInfo originalInfo;
-    private final ArrayList<Card> permanents = new ArrayList<Card>();
+    private final ArrayList<Effect> permanents = new ArrayList<Effect>();
     private final ArrayList<Effect> temps = new ArrayList<Effect>();
     private final ArrayList<Card> history = new ArrayList<Card>();
 
@@ -32,11 +33,11 @@ public class Card {
         return this.cardInfo.getDefense() > 0;
     }
 
-    public void checkEffects() {
+    public void checkEffects(AbilityManager abilityManager) {
         for (Effect effect : temps) {
             effect.setDuration(effect.getDuration()-1);
             if (effect.getDuration() <= 0) {
-
+                //abilityManager.executeEffect()
             }
         }
     }
@@ -47,7 +48,7 @@ public class Card {
         return new CardInfo(cardInfo.getId(), cardInfo.getName(), cardInfo.getCardType(), cardInfo.getEnergy(), cardInfo.getMatter(), cardInfo.getOffense(), cardInfo.getDefense(), cardInfo.getOffenseType(), cardInfo.getDefenseType(), cardInfo.getAbility());
     }
 
-    public void addToPermanents (Card card) { permanents.add(card); }
+    public void addToPermanents (Effect effect) { permanents.add(effect); }
 
     public void addToHistory (Card card) { history.add(card);  }
 
@@ -57,7 +58,7 @@ public class Card {
 
     public CardInfo getOriginalInfo() { return originalInfo; }
 
-    public ArrayList<Card> getPermanents() { return permanents; }
+    public ArrayList<Effect> getPermanents() { return permanents; }
 
     public ArrayList<Effect> getTemps() { return temps; }
 

@@ -1,7 +1,10 @@
 package com.darkgran.farstar.battle.players;
 
+import java.util.ArrayList;
+
 public class Effect {
     private EffectType effectType;
+    private ArrayList effectInfo;
     private int duration;
 
     public Effect() {
@@ -14,10 +17,14 @@ public class Effect {
 
     public void setDuration(int duration) { this.duration = duration; }
 
-    public EffectType getEffectType() { return effectType; }
-
     public int getDuration() { return duration; }
 
+    public EffectType getEffectType() { return effectType; }
+
     public void setEffectType(EffectType effectType) { this.effectType = effectType; }
+
+    public ArrayList getEffectInfo() { return effectInfo; }
+
+    public void setEffectInfo(ArrayList effectInfo) { this.effectInfo = effectInfo; }
 
 }
