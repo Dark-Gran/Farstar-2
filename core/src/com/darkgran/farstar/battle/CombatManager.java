@@ -7,6 +7,8 @@ import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.players.Ship;
 import com.darkgran.farstar.battle.players.abilities.EffectType;
 
+import java.util.ArrayList;
+
 public class CombatManager {
     private final Battle battle;
     private final DuelManager duelManager;
@@ -72,7 +74,7 @@ public class CombatManager {
         if (enemyGuards == 0) {
             return true;
         } else {
-            int reach = 0;
+            int reach = AbilityManager.getReach(attacker.getCard());
             return reach >= enemyGuards;
         }
     }

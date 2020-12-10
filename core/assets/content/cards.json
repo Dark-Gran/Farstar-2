@@ -13,7 +13,7 @@
   },
   {
     "id": 1,
-    "name": "Fighter",
+    "name": "Scout",
     "cardType": "YARD",
     "energy": 1,
     "matter": 0,
@@ -21,7 +21,16 @@
     "defense": 1,
     "offenseType": "KINETIC",
     "defenseType": "KINETIC",
-    "abilities": []
+    "abilities": [{
+      "starter": "NONE",
+      "effects": [
+        {
+          "effectType": "REACH",
+          "effectInfo": [1],
+          "duration": -1
+        }
+      ]
+    }]
   },
   {
     "id": 2,

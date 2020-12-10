@@ -154,6 +154,21 @@ public class AbilityManager { //TODO 1. guard 2. reach
         return false;
     }
 
+    public static int getReach(Card card) {
+        for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
+            if (abilityInfo.getStarter() == AbilityStarter.NONE) {
+                for (Effect effect : abilityInfo.getEffects()) {
+                    if (effect.getEffectType() == EffectType.REACH) {
+                        if (effect.getEffectInfo().size() > 0 && effect.getEffectInfo().get(0) != null) {
+                            return floatObjectToInt(effect.getEffectInfo().get(0));
+                        }
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
     public boolean isTheSameAbility(AbilityInfo abilityA, AbilityInfo abilityB) {
         if (abilityA != null && abilityB != null) {
             return (abilityA.getStarter() == abilityB.getStarter()) && isTheSameEffectsList(abilityA.getEffects(), abilityB.getEffects());
