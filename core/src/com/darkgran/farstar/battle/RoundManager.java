@@ -95,6 +95,9 @@ public class RoundManager {
                     }
                     //PAYMENT + DISCARD (incl. targeting discard)
                     if (success) {
+                        if (cardType == CardType.TACTIC && battle.getCombatManager().getDuelManager().isActive()) {
+                            battle.getCombatManager().getDuelManager().setLastTactic(token.getCard());
+                        }
                         whoseTurn.payday(token.getCard());
                         token.addCardToJunk();
                     } else if (dropTarget instanceof JunkButton && token instanceof HandToken) { //Target: Discard

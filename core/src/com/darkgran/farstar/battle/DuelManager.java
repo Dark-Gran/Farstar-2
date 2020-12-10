@@ -8,7 +8,7 @@ import com.darkgran.farstar.battle.players.DuelPlayer;
 import com.darkgran.farstar.battle.players.Ship;
 import com.darkgran.farstar.battle.players.TechType;
 
-public abstract class DuelManager { //TODO 1. save last played tactic, 2. require another round of OKs on each tactic
+public abstract class DuelManager { //TODO require another round of OKs on each tactic
     private CombatManager combatManager;
     private DuelMenu duelMenu;
     private boolean active = false;
@@ -32,6 +32,7 @@ public abstract class DuelManager { //TODO 1. save last played tactic, 2. requir
             this.playersA = playersA;
             this.playersD = playersD;
             preparePlayers();
+            lastTactic = null;
             duelMenu.addCancel();
             duelMenu.addOK(this.playersA[0].getDuelButton());
             activePlayer = this.playersA[0];
@@ -169,6 +170,10 @@ public abstract class DuelManager { //TODO 1. save last played tactic, 2. requir
     public DuelPlayer[] getPlayersD() { return playersD; }
 
     public DuelPlayer getActivePlayer() { return activePlayer; }
+
+    public Card getLastTactic() { return lastTactic; }
+
+    public void setLastTactic(Card lastTactic) { this.lastTactic = lastTactic; }
 
 
 }
