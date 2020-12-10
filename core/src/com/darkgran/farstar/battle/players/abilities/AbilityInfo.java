@@ -23,6 +23,8 @@ public class AbilityInfo {
 
     public AbilityStarter getStarter() { return starter; }
 
+    public ResourcePrice getResourcePrice() { return resourcePrice; }
+
     public ArrayList<Effect> getEffects() { return effects; }
 
 }

@@ -128,7 +128,7 @@ public class RoundManager {
     public void processClick(Card card) { //TODO
         for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
             if (abilityInfo.getStarter() == AbilityStarter.USE) {
-
+                
                 /*if (battle.getWhoseTurn().canAfford(token.getCard()) && tierAllowed(card.getCardInfo().getTier())) {
 
                 }*/
