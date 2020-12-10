@@ -34,16 +34,22 @@ public class Card {
         return this.cardInfo.getDefense() > 0;
     }
 
-    public void checkEffects(AbilityManager abilityManager) {
+    public void tickEffects(AbilityManager abilityManager) { //does not remove
         for (int i = 0; i < effects.size(); i++) {
             Effect effect = effects.get(i);
             if (effect.getDuration() > 0) {
                 effect.setDuration(effect.getDuration() - 1);
-                if (effect.getDuration() == 0) {
-                    if (abilityManager.executeEffect(this, effect, true)) {
-                        effects.remove(effect);
-                        i--;
-                    }
+            }
+        }
+    }
+
+    public void checkEffects(AbilityManager abilityManager) { //does not tick
+        for (int i = 0; i < effects.size(); i++) {
+            Effect effect = effects.get(i);
+            if (effect.getDuration() == 0) {
+                if (abilityManager.executeEffect(this, effect, true)) {
+                    effects.remove(effect);
+                    i--;
                 }
             }
         }

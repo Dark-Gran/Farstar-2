@@ -84,4 +84,14 @@ public class Battle1v1 extends Battle {
             return player1.getBattleID();
         }
     }
+
+    @Override
+    public void tickEffects() {
+        super.tickEffects();
+        player1.getMs().checkEffects(getAbilityManager());
+        player1.getFleet().checkEffectsOnAll(getAbilityManager());
+        player2.getMs().checkEffects(getAbilityManager());
+        player2.getFleet().checkEffectsOnAll(getAbilityManager());
+    }
+
 }

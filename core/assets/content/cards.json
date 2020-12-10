@@ -39,12 +39,12 @@
         {
           "effectType": "CHANGE_STAT",
           "effectInfo": ["OFFENSE_TYPE", "PARTICLE"],
-          "duration": 0
+          "duration": -1
         },
         {
           "effectType": "CHANGE_STAT",
           "effectInfo": ["OFFENSE", 1],
-          "duration": 0
+          "duration": -1
         }
       ]
     }]

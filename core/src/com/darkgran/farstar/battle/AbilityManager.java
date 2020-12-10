@@ -92,10 +92,17 @@ public class AbilityManager { //TODO 1. guard 2. reach
                     break;
             }
             if (!reverse && !dontSaveEffect) {
-                target.addToEffects(InstanceFactory.instanceEffect(effect));
+                saveEffect(target, InstanceFactory.instanceEffect(effect));
             }
         }
         return success;
+    }
+
+    private void saveEffect(Card target, Effect effect) {
+        if (getBattle().getCombatManager().getDuelManager().isActive()) {
+            effect.setDuration(effect.getDuration()-1);
+        }
+        target.addToEffects(effect);
     }
 
     private boolean reverseStat(Card target, Effect effect, boolean reverse) {
@@ -128,7 +135,7 @@ public class AbilityManager { //TODO 1. guard 2. reach
                     break;
             }
             if (!reverse) {
-                target.addToEffects(InstanceFactory.instanceEffect(effect));
+                saveEffect(target, InstanceFactory.instanceEffect(effect));
             }
         }
         return success;

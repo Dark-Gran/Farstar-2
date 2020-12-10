@@ -61,6 +61,11 @@ public abstract class Battle implements BattleSettings {
         setEverythingDisabled(true);
     }
 
+    public void tickEffects() {
+        whoseTurn.getMs().tickEffects(abilityManager);
+        whoseTurn.getFleet().tickEffectsOnAll(abilityManager);
+    }
+
     public Player getWhoseTurn() { return whoseTurn; }
 
     public void setWhoseTurn(Player whoseTurn) { this.whoseTurn = whoseTurn; }

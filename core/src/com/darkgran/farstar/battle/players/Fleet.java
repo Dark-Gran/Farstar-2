@@ -83,6 +83,10 @@ public class Fleet {
         }
     }
 
+    public void tickEffectsOnAll(AbilityManager abilityManager) {
+        for (Ship ship : ships) { if (ship != null) { ship.tickEffects(abilityManager); } }
+    }
+
     public void checkEffectsOnAll(AbilityManager abilityManager) {
         for (Ship ship : ships) { if (ship != null) { ship.checkEffects(abilityManager); } }
     }
