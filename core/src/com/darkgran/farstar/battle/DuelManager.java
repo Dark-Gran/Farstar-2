@@ -8,7 +8,7 @@ import com.darkgran.farstar.battle.players.DuelPlayer;
 import com.darkgran.farstar.battle.players.Ship;
 import com.darkgran.farstar.battle.players.TechType;
 
-public abstract class DuelManager {
+public abstract class DuelManager { //TODO 1. save last played tactic, 2. require another round of OKs on each tactic
     private CombatManager combatManager;
     private DuelMenu duelMenu;
     private boolean active = false;
