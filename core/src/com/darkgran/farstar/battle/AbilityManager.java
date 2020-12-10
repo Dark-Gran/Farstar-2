@@ -24,11 +24,9 @@ public class AbilityManager {
             AbilityInfo ability = caster.getCardInfo().getAbilities().get(abilityIX);
             if (ability != null && ability.getEffects() != null) {
                 for (int i = 0; i < ability.getEffects().size(); i++) {
-                    Effect effect = ability.getEffects().get(i);
-                    if (effect != null) {
-                        if (caster.getCardInfo().getCardType() == CardType.TACTIC) { effect.setDuration(1); }
-                        if (!success) { success = executeEffect(target, effect, false); }
-                        else { executeEffect(target, effect, false); }
+                    if (ability.getEffects().get(i) != null) {
+                        if (!success) { success = executeEffect(target, ability.getEffects().get(i), false); }
+                        else { executeEffect(target, ability.getEffects().get(i), false); }
                     }
                 }
                 if (success) { target.addToHistory(caster, abilityIX); }
