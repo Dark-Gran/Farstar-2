@@ -8,7 +8,7 @@ import com.darkgran.farstar.battle.players.DuelPlayer;
 import com.darkgran.farstar.battle.players.Ship;
 import com.darkgran.farstar.battle.players.TechType;
 
-public abstract class DuelManager { //TODO require another round of OKs on each tactic
+public abstract class DuelManager {
     private CombatManager combatManager;
     private DuelMenu duelMenu;
     private boolean active = false;
@@ -39,7 +39,9 @@ public abstract class DuelManager { //TODO require another round of OKs on each 
         }
     }
 
-    public void preparePlayers() {
+    public void preparePlayers() { resetAllPlayersReady(); }
+
+    public void resetAllPlayersReady() {
         for (DuelPlayer player : playersA) { player.setReady(false); }
         for (DuelPlayer player : playersD) { player.setReady(false); }
     }
@@ -103,34 +105,35 @@ public abstract class DuelManager { //TODO require another round of OKs on each 
 
     private void nextOK(DuelOK duelOK) {
         boolean next = false;
-        boolean done = false;
-        for (DuelPlayer player : playersA) {
-            if (!player.isReady() && player == duelOK.getDuelPlayer() || next) {
-                if (!next) {
-                    player.setReady(true);
-                    duelMenu.removeOK(duelOK);
-                    next = true;
-                } else {
-                    duelMenu.addOK(player.getDuelButton());
-                    activePlayer = player;
-                    done = true;
-                    break;
-                }
+        int i;
+        for (i = 0; i < playersA.length && !next; i++) {
+            if (playersA[i] == activePlayer) {
+                playersA[i].setReady(true);
+                duelMenu.removeOK(duelOK);
+                next = true;
             }
         }
-        if (!done) {
-            for (DuelPlayer player : playersD) {
-                if (!player.isReady() && player == duelOK.getDuelPlayer() || next) {
-                    if (!next) {
-                        player.setReady(true);
-                        duelMenu.removeOK(duelOK);
-                        next = true;
-                    } else {
-                        duelMenu.addOK(player.getDuelButton());
-                        activePlayer = player;
-                        break;
-                    }
+        if (next) {
+            if (i+1 < playersA.length) {
+                duelMenu.addOK(playersA[i+1].getDuelButton());
+                activePlayer = playersA[i+1];
+            } else {
+                duelMenu.addOK(playersD[0].getDuelButton());
+                activePlayer = playersD[0];
+            }
+        } else {
+            for (i = 0; i < playersD.length && !next; i++) {
+                if (playersD[i] == activePlayer) {
+                    playersD[i].setReady(true);
+                    duelMenu.removeOK(duelOK);
                 }
+            }
+            if (i+1 < playersD.length) {
+                duelMenu.addOK(playersD[i+1].getDuelButton());
+                activePlayer = playersD[i+1];
+            } else {
+                duelMenu.addOK(playersA[0].getDuelButton());
+                activePlayer = playersA[0];
             }
         }
     }
