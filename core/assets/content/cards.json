@@ -78,7 +78,7 @@
   {
     "id": 4,
     "name": "Assault Doctrine",
-    "cardType": "UPGRADE",
+    "cardType": "TACTIC",
     "energy": 1,
     "matter": 0,
     "offense": 0,

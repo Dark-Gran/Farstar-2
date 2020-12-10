@@ -74,30 +74,37 @@ public class RoundManager {
                 if (!battle.getCombatManager().getDuelManager().isActive()) { whoseTurn = battle.getWhoseTurn(); }
                 else { whoseTurn = battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer(); }
                 //IS ON TURN
-                if (token.getCardListMenu().getPlayer() == whoseTurn) {
+                if (token.getCardListMenu().getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard())) {
                     //TARGETING FLEET
+                    Card targetCard = null;
                     if (dropTarget instanceof FleetMenu) {
                         Fleet fleet = ((FleetMenu) dropTarget).getFleet();
-                        if (fleet == whoseTurn.getFleet() && whoseTurn.canAfford(token.getCard())) {
+                        if (fleet == whoseTurn.getFleet()) {
                             //ABILITIES
                             success = checkAllAbilities(token.getCard(), fleet.getShips()[position], AbilityStarter.DEPLOY);
-                            //DEPLOYMENT
-                            if ((cardType == CardType.BLUEPRINT || cardType == CardType.YARD) && success) {
-                                success = fleet.addShip(token, position);
+                            if (success) {
+                                if (fleet.getShips()[position] != null) {
+                                    targetCard = fleet.getShips()[position].getToken().getCard();
+                                }
+                                //DEPLOYMENT
+                                if (cardType == CardType.BLUEPRINT || cardType == CardType.YARD) {
+                                    success = fleet.addShip(token, position);
+                                }
                             }
                         }
                         //TARGETING MS
                     } else if (dropTarget instanceof MothershipToken) {
                         MothershipToken ms = (MothershipToken) dropTarget;
                         //ABILITIES
-                        if (ms.getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard()) && (cardType == CardType.UPGRADE || cardType == CardType.TACTIC)) {
+                        if (ms.getPlayer() == whoseTurn && (cardType == CardType.UPGRADE || cardType == CardType.TACTIC)) {
                             success = checkAllAbilities(token.getCard(), ms.getCard(), AbilityStarter.DEPLOY);
+                            if (success) { targetCard = ms.getCard(); }
                         }
                     }
                     //PAYMENT + DISCARD (incl. targeting discard)
                     if (success) {
-                        if (cardType == CardType.TACTIC && battle.getCombatManager().getDuelManager().isActive()) {
-                            battle.getCombatManager().getDuelManager().saveTactic(token.getCard());
+                        if (targetCard != null && cardType == CardType.TACTIC && battle.getCombatManager().getDuelManager().isActive()) {
+                            battle.getCombatManager().getDuelManager().saveTactic(token.getCard(), targetCard);
                         }
                         whoseTurn.payday(token.getCard());
                         token.addCardToJunk();
