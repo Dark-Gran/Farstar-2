@@ -13,12 +13,12 @@
   },
   {
     "id": 1,
-    "name": "Heavy Fighter",
+    "name": "Fighter",
     "cardType": "YARD",
     "energy": 1,
-    "matter": 4,
-    "offense": 2,
-    "defense": 2,
+    "matter": 0,
+    "offense": 1,
+    "defense": 1,
     "offenseType": "KINETIC",
     "defenseType": "KINETIC",
     "abilities": []
@@ -51,13 +51,13 @@
   },
   {
     "id": 3,
-    "name": "Phion Counter",
+    "name": "Phion Switch",
     "cardType": "TACTIC",
     "energy": 0,
     "matter": 0,
     "offense": 0,
     "defense": 0,
-    "offenseType": "NONE",
+    "offenseType": "PARTICLE",
     "defenseType": "PARTICLE",
     "abilities": [{
       "starter": "DEPLOY",
@@ -66,6 +66,32 @@
           "effectType": "CHANGE_STAT",
           "effectInfo": ["DEFENSE_TYPE", "PARTICLE"],
           "duration": 1
+        },
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["OFFENSE_TYPE", "PARTICLE"],
+          "duration": 1
+        }
+      ]
+    }]
+  },
+  {
+    "id": 4,
+    "name": "Assault Fighter",
+    "cardType": "BLUEPRINT",
+    "energy": 1,
+    "matter": 0,
+    "offense": 1,
+    "defense": 1,
+    "offenseType": "THERMAL",
+    "defenseType": "KINETIC",
+    "abilities": [{
+      "starter": "NONE",
+      "effects": [
+        {
+          "effectType": "FIRST_STRIKE",
+          "effectInfo": [],
+          "duration": 0
         }
       ]
     }]
