@@ -1,7 +1,7 @@
 package com.darkgran.farstar.battle.players;
 
 public class Player {
-    private final byte battleID;
+    private final byte battleID; //must be unique for each Player in match
     private int energy;
     private int matter;
     private Mothership ms; //MotherShip
