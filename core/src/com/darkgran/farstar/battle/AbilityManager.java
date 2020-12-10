@@ -41,19 +41,17 @@ public class AbilityManager { //TODO 1. first strike 2. guard 3. reach
                     success = true;
                     break;
                 case CHANGE_STAT:
-                    if (!reverse) { success = changeStat(target, effect); }
-                    else { success = reverseStat(target, effect); }
+                    if (!reverse) { success = changeStat(target, effect, reverse); }
+                    else { success = reverseStat(target, effect, reverse); }
                     break;
-            }
-            if (!reverse) {
-                target.addToEffects(InstanceFactory.instanceEffect(effect));
             }
         }
         return success;
     }
 
-    private boolean changeStat(Card target, Effect effect) {
+    private boolean changeStat(Card target, Effect effect, boolean reverse) {
         boolean success = false;
+        boolean dontSaveEffect = false;
         if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
             Object changeInfo = effect.getEffectInfo().get(1);
             EffectTypeSpecifics.ChangeStatType changeStatType = EffectTypeSpecifics.ChangeStatType.valueOf(effect.getEffectInfo().get(0).toString());
@@ -78,15 +76,23 @@ public class AbilityManager { //TODO 1. first strike 2. guard 3. reach
                     success = true;
                     break;
                 case ABILITY:
-                    target.getCardInfo().addAbility(effectToAttribute(effect.getEffectInfo(), effect.getDuration()));
+                    AbilityInfo newAbility = effectToAttribute(effect.getEffectInfo(), effect.getDuration());
+                    if (!target.getCardInfo().getAbilities().contains(newAbility)) {
+                        target.getCardInfo().addAbility(newAbility);
+                    } else {
+                        dontSaveEffect = true;
+                    }
                     success = true;
                     break;
+            }
+            if (!reverse && !dontSaveEffect) {
+                target.addToEffects(InstanceFactory.instanceEffect(effect));
             }
         }
         return success;
     }
 
-    private boolean reverseStat(Card target, Effect effect) {
+    private boolean reverseStat(Card target, Effect effect, boolean reverse) {
         boolean success = false;
         if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
             Object changeInfo = effect.getEffectInfo().get(1);
@@ -109,6 +115,9 @@ public class AbilityManager { //TODO 1. first strike 2. guard 3. reach
                     target.getCardInfo().getAbilities().remove(effectToAttribute(effect.getEffectInfo(), 0));
                     success = true;
                     break;
+            }
+            if (!reverse) {
+                target.addToEffects(InstanceFactory.instanceEffect(effect));
             }
         }
         return success;
