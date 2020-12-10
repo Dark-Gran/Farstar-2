@@ -2,12 +2,14 @@ package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.gui.DuelOK;
 
-public class DuelPlayer extends Player {
+//wrapper
+public class DuelPlayer {
+    private final Player player;
     private DuelOK duelOK;
     private boolean ready;
 
-    public DuelPlayer(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard) {
-        super(battleID, energy, matter, ms, deck, yard);
+    public DuelPlayer(Player player) {
+        this.player = player;
     }
 
     public DuelOK getDuelButton() {
@@ -25,4 +27,6 @@ public class DuelPlayer extends Player {
     public void setReady(boolean ready) {
         this.ready = ready;
     }
+
+    public Player getPlayer() { return player; }
 }

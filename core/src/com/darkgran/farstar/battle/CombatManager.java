@@ -54,7 +54,7 @@ public class CombatManager {
     }
 
     private static DuelPlayer playerToDuelPlayer(Player player) {
-        return new DuelPlayer((byte) player.getBattleID(), player.getEnergy(), player.getMatter(), player.getMs(), player.getDeck(), player.getShipyard());
+        return new DuelPlayer(player);
     }
 
     public void afterDuel() {

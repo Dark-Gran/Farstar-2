@@ -67,12 +67,13 @@ public class RoundManager {
     public void processDrop(Token token, DropTarget dropTarget, int position) {
         boolean success = false;
         if (token.getTokenMenu() != null) {
-            //OUTSIDE COMBAT
-            if (!battle.getCombatManager().isActive() && !battle.getCombatManager().getDuelManager().isActive()) {
-                Player whoseTurn = battle.getWhoseTurn();
+            CardType cardType = token.getCard().getCardInfo().getCardType();
+            if ((!battle.getCombatManager().isActive() && !battle.getCombatManager().getDuelManager().isActive()) || (cardType == CardType.TACTIC)) {
+                Player whoseTurn;
+                if (!battle.getCombatManager().isActive()) { whoseTurn = battle.getWhoseTurn(); }
+                else { whoseTurn = battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer(); }
                 //IS ON TURN
                 if (token.getTokenMenu().getPlayer() == whoseTurn) {
-                    CardType cardType = token.getCard().getCardInfo().getCardType();
                     //TARGETING FLEET
                     if (dropTarget instanceof FleetMenu) {
                         Fleet fleet = ((FleetMenu) dropTarget).getFleet();
@@ -104,11 +105,6 @@ public class RoundManager {
                         }
                     }
                 }
-            //INSIDE COMBAT/DUEL
-            } else if (battle.getCombatManager().isActive() && battle.getCombatManager().getDuelManager().isActive()) {
-
-                //TODO
-
             }
             //HAND ONLY
             if (token instanceof HandToken) {

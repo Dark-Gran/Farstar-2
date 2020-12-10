@@ -14,7 +14,7 @@ public class DuelManager1v1 extends DuelManager { //1v1 = each Player[] contains
     @Override
     public void preparePlayers() {
         super.preparePlayers();
-        if (getPlayersA()[0].getBattleID() == 1) {
+        if (getPlayersA()[0].getPlayer().getBattleID() == 1) {
             setPlayersA_OK(0, ((DuelMenu1v1) getDuelMenu()).getDuelButton1());
             ((DuelMenu1v1) getDuelMenu()).getDuelButton1().setDuelPlayer(getPlayersA()[0]);
             setPlayersD_OK(0, ((DuelMenu1v1) getDuelMenu()).getDuelButton2());

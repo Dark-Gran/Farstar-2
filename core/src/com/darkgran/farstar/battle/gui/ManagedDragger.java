@@ -37,7 +37,7 @@ public class ManagedDragger extends Dragger {
             if (!(this.getToken().getCard() instanceof Ship) || !((Ship) this.getToken().getCard()).haveFought()) {
                 if (!combatManager.getDuelManager().isActive() && ownsToken(roundManager.getBattle().getWhoseTurn()) && forCombat == combatManager.isActive()) {
                     return true;
-                } else if (this.getToken().getCard().getCardInfo().getCardType() == CardType.TACTIC && combatManager.getDuelManager().isActive() && ownsToken(combatManager.getDuelManager().getActivePlayer())) {
+                } else if (this.getToken().getCard().getCardInfo().getCardType() == CardType.TACTIC && combatManager.getDuelManager().isActive() && ownsToken(combatManager.getDuelManager().getActivePlayer().getPlayer())) {
                     return true;
                 }
             }
@@ -47,9 +47,9 @@ public class ManagedDragger extends Dragger {
 
     public boolean ownsToken(Player player) {
         if (getToken() instanceof FleetToken) {
-            return player.getBattleID() == ((FleetToken) getToken()).getFleetMenu().getPlayer().getBattleID();
+            return player == ((FleetToken) getToken()).getFleetMenu().getPlayer();
         } else {
-            return player.getBattleID() == getToken().getTokenMenu().getPlayer().getBattleID();
+            return player == getToken().getTokenMenu().getPlayer();
         }
     }
 
