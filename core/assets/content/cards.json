@@ -90,7 +90,7 @@
       "effects": [
         {
           "effectType": "CHANGE_STAT",
-          "effectInfo": ["ABILITY", "FIRST_STRIKE"],
+          "effectInfo": ["ABILITY", "FIRST_STRIKE", "NONE"],
           "duration": 0
         }
       ]

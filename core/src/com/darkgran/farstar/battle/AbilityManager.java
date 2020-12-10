@@ -76,11 +76,13 @@ public class AbilityManager { //TODO 1. guard 2. reach
                     success = true;
                     break;
                 case ABILITY:
-                    AbilityInfo newAbility = effectToAttribute(effect.getEffectInfo(), effect.getDuration());
-                    if (!target.getCardInfo().getAbilities().contains(newAbility)) {
-                        target.getCardInfo().addAbility(newAbility);
-                    } else {
-                        dontSaveEffect = true;
+                    if (effect.getEffectInfo().get(2) != null) {
+                        AbilityInfo newAbility = effectToAbility(effect.getEffectInfo(), effect.getDuration());
+                        if (!target.getCardInfo().getAbilities().contains(newAbility)) {
+                            target.getCardInfo().addAbility(newAbility);
+                        } else {
+                            dontSaveEffect = true;
+                        }
                     }
                     success = true;
                     break;
@@ -112,8 +114,10 @@ public class AbilityManager { //TODO 1. guard 2. reach
                     success = true;
                     break;
                 case ABILITY:
-                    target.getCardInfo().getAbilities().remove(effectToAttribute(effect.getEffectInfo(), 0));
-                    success = true;
+                    if (effect.getEffectInfo().get(2) != null) {
+                        target.getCardInfo().getAbilities().remove(effectToAbility(effect.getEffectInfo(), 0));
+                        success = true;
+                    }
                     break;
             }
             if (!reverse) {
@@ -136,7 +140,7 @@ public class AbilityManager { //TODO 1. guard 2. reach
         return false;
     }
 
-    private static AbilityInfo effectToAttribute(ArrayList effectInfo, int effectDuration) { //creates new ability-attribute
+    private static AbilityInfo effectToAbility(ArrayList effectInfo, int effectDuration) { //creates new ability-attribute
         EffectType effectType = EffectType.valueOf(effectInfo.get(1).toString());
         Effect newEffect = new Effect();
         newEffect.setEffectType(effectType);
@@ -144,7 +148,7 @@ public class AbilityManager { //TODO 1. guard 2. reach
         newEffect.setDuration(effectDuration);
         ArrayList<Effect> newAbilityEffects = new ArrayList<>();
         newAbilityEffects.add(newEffect);
-        return new AbilityInfo(AbilityStarter.NONE, newAbilityEffects);
+        return new AbilityInfo(AbilityStarter.valueOf(effectInfo.get(2).toString()), newAbilityEffects);
     }
 
     private void reverseType(Card target, Effect effect, EffectTypeSpecifics.ChangeStatType type) {
