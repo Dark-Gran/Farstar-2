@@ -70,7 +70,7 @@ public class RoundManager {
             CardType cardType = token.getCard().getCardInfo().getCardType();
             if ((!battle.getCombatManager().isActive() && !battle.getCombatManager().getDuelManager().isActive()) || (cardType == CardType.TACTIC)) {
                 Player whoseTurn;
-                if (!battle.getCombatManager().isActive()) { whoseTurn = battle.getWhoseTurn(); }
+                if (!battle.getCombatManager().getDuelManager().isActive()) { whoseTurn = battle.getWhoseTurn(); }
                 else { whoseTurn = battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer(); }
                 //IS ON TURN
                 if (token.getTokenMenu().getPlayer() == whoseTurn) {
