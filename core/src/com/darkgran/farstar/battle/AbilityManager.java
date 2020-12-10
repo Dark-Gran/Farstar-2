@@ -89,9 +89,17 @@ public class AbilityManager { //TODO 1. first strike 2. guard 3. reach
                     target.getCardInfo().setDefenseType(techType);
                     success = true;
                     break;
+                case ABILITY:
+                    addAbility();
+                    break;
             }
         }
         return success;
+    }
+
+    private boolean addAbility() {
+        boolean success = false;
+        return false;
     }
 
     private boolean reverseStat(Card target, Effect effect) {

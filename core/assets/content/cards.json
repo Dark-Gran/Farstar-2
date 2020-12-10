@@ -86,11 +86,11 @@
     "offenseType": "NONE",
     "defenseType": "NONE",
     "abilities": [{
-      "starter": "NONE",
+      "starter": "DEPLOY",
       "effects": [
         {
-          "effectType": "FIRST_STRIKE",
-          "effectInfo": [],
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["ABILITY", "FIRST_STRIKE"],
           "duration": 0
         }
       ]
