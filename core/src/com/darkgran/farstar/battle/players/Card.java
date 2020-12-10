@@ -15,23 +15,23 @@ public class Card {
 
 
     public Card(CardInfo cardInfo) {
-        this.originalInfo = cardInfo;
-        this.cardInfo = InstanceFactory.instanceCardInfo(this.originalInfo);
+        originalInfo = cardInfo;
+        this.cardInfo = InstanceFactory.instanceCardInfo(originalInfo);
     }
 
     public Card() {
-        this.originalInfo = Battle.CARD_LIBRARY.getCard(0);
-        this.cardInfo = InstanceFactory.instanceCardInfo(this.originalInfo);
+        originalInfo = Battle.CARD_LIBRARY.getCard(0);
+        cardInfo = InstanceFactory.instanceCardInfo(originalInfo);
     }
 
     public Card(int id) {
-        this.originalInfo = Battle.CARD_LIBRARY.getCard(id);
-        this.cardInfo = InstanceFactory.instanceCardInfo(this.originalInfo);
+        originalInfo = Battle.CARD_LIBRARY.getCard(id);
+        cardInfo = InstanceFactory.instanceCardInfo(originalInfo);
     }
 
     public boolean receiveDMG(int dmg) { //returns survival
-        this.cardInfo.setDefense(this.cardInfo.getDefense()-dmg);
-        return this.cardInfo.getDefense() > 0;
+        cardInfo.setDefense(cardInfo.getDefense()-dmg);
+        return cardInfo.getDefense() > 0;
     }
 
     public void tickEffects(AbilityManager abilityManager) { //does not remove

@@ -163,6 +163,15 @@ public class AbilityManager {
         target.addToEffects(effect);
     }
 
+    public static boolean hasStarter(Card card, AbilityStarter abilityStarter) {
+        for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
+            if (abilityInfo.getStarter() == abilityStarter) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean hasAttribute(Card card, EffectType effectType) { //checks for abilities with "starter=NONE" (old "attributes")
         for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
             if (abilityInfo.getStarter() == AbilityStarter.NONE) {

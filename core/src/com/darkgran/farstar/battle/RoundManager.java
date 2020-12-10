@@ -122,6 +122,13 @@ public class RoundManager {
         }
     }
 
+    public void processClick(Card card) {
+        System.out.println("CLICK!"); //TODO
+        if (AbilityManager.hasStarter(card, AbilityStarter.USE)) {
+
+        }
+    }
+
     private boolean checkAllAbilities(Card caster, Card target, AbilityStarter abilityStarter) {
         boolean success = true;
         CardType cardType = caster.getCardInfo().getCardType();
