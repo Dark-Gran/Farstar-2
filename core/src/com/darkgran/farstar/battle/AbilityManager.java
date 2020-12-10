@@ -222,6 +222,4 @@ public class AbilityManager { //TODO 1. guard 2. reach
         return (int) f;
     }
 
-
-
 }
