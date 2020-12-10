@@ -11,7 +11,7 @@ import java.util.ListIterator;
 import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE;
 import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE;
 
-public class AbilityManager {
+public class AbilityManager { //TODO 1. first strike 2. guard 3. reach
     private final Battle battle;
 
     public AbilityManager(Battle battle) {
