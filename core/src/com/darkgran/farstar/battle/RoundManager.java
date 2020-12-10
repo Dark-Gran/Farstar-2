@@ -89,7 +89,7 @@ public class RoundManager {
                     } else if (dropTarget instanceof MothershipToken) {
                         MothershipToken ms = (MothershipToken) dropTarget;
                         //ABILITIES
-                        if (ms.getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard()) && cardType == CardType.UPGRADE) {
+                        if (ms.getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard()) && (cardType == CardType.UPGRADE || cardType == CardType.TACTIC)) {
                             success = checkAllAbilities(token.getCard(), ms.getCard(), AbilityStarter.DEPLOY);
                         }
                     }
