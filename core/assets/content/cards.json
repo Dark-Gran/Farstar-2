@@ -10,7 +10,16 @@
     "defense": 5,
     "offenseType": "KINETIC",
     "defenseType": "KINETIC",
-    "abilities": []
+    "abilities": [{
+      "starter": "USE",
+      "effects": [
+        {
+          "effectType": "DEAL_DMG",
+          "effectInfo": [4, "THERMAL"],
+          "duration": -1
+        }
+      ]
+    }]
   },
   {
     "id": 1,

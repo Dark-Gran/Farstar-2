@@ -9,7 +9,7 @@ import java.util.ListIterator;
 import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE;
 import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE;
 
-public class AbilityManager { //todo "Battlestation ability"
+public class AbilityManager {
     private final Battle battle;
 
     public AbilityManager(Battle battle) {
@@ -33,6 +33,10 @@ public class AbilityManager { //todo "Battlestation ability"
         return success;
     }
 
+    //-------------//
+    //-EFFECT-LIST-//
+    //-------------//
+
     public boolean executeEffect(Card target, Effect effect, boolean reverse) {
         boolean success = false;
         if (effect.getEffectType() != null) {
@@ -42,14 +46,17 @@ public class AbilityManager { //todo "Battlestation ability"
                     break;
                 case CHANGE_STAT:
                     if (!reverse) { success = changeStat(target, effect, reverse); }
-                    else { success = reverseStat(target, effect, reverse); }
+                    else { success = reverseStat(target, effect); }
+                    break;
+                case DEAL_DMG:
+                    if (!reverse) { success = dealDmg(target, effect); }
                     break;
             }
         }
         return success;
     }
 
-    private boolean changeStat(Card target, Effect effect, boolean reverse) {
+    private boolean changeStat(Card target, Effect effect, boolean reverse) { //CHANGE_STAT
         boolean success = false;
         boolean dontSaveEffect = false;
         if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
@@ -98,14 +105,7 @@ public class AbilityManager { //todo "Battlestation ability"
         return success;
     }
 
-    private void saveEffect(Card target, Effect effect) {
-        if (getBattle().getCombatManager().getDuelManager().isActive()) {
-            effect.setDuration(effect.getDuration()-1);
-        }
-        target.addToEffects(effect);
-    }
-
-    private boolean reverseStat(Card target, Effect effect, boolean reverse) {
+    private boolean reverseStat(Card target, Effect effect) { //belongs to CHANGE_STAT
         boolean success = false;
         if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
             Object changeInfo = effect.getEffectInfo().get(1);
@@ -134,11 +134,30 @@ public class AbilityManager { //todo "Battlestation ability"
                     success = true;
                     break;
             }
-            if (!reverse) {
-                saveEffect(target, InstanceFactory.instanceEffect(effect));
-            }
         }
         return success;
+    }
+
+    private boolean dealDmg(Card target, Effect effect) { //DEAL_DMG
+        boolean success = false;
+        if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
+            int dmg = floatObjectToInt(effect.getEffectInfo().get(0));
+            TechType techType = TechType.valueOf(effect.getEffectInfo().get(1).toString());
+            dmg = DuelManager.getDmgAgainstShields(dmg, techType, target.getCardInfo().getDefenseType());
+            success = target.receiveDMG(dmg);
+        }
+        return success;
+    }
+
+    //-----------//
+    //-UTILITIES-//
+    //-----------//
+
+    private void saveEffect(Card target, Effect effect) {
+        if (getBattle().getCombatManager().getDuelManager().isActive()) {
+            effect.setDuration(effect.getDuration()-1);
+        }
+        target.addToEffects(effect);
     }
 
     public static boolean hasAttribute(Card card, EffectType effectType) { //checks for abilities with "starter=NONE" (old "attributes")
