@@ -3,8 +3,10 @@ package com.darkgran.farstar.battle.players.abilities;
 import java.util.ArrayList;
 
 public class Effect {
-    private EffectType effectType;
+    //libgdx jsonReader example uses raw type - to apply generics, the jsonReader may need an upgrade
+    //until then, it is mandatory to use only Strings and Floats (in cards.json-effectInfo)
     private ArrayList effectInfo;
+    private EffectType effectType;
     private int duration;
 
     public Effect() {
