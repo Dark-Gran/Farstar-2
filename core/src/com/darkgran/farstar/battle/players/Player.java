@@ -47,6 +47,11 @@ public class Player {
         setMatter(matter-card.getCardInfo().getMatter());
     }
 
+    public void payday(int energy, int matter) {
+        setEnergy(this.energy-energy);
+        setMatter(this.matter-matter);
+    }
+
     public void setEnergy(int energy) { this.energy = energy; }
 
     public void setMatter(int matter) { this.matter = matter; }

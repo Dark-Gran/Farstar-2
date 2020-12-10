@@ -125,13 +125,17 @@ public class RoundManager {
         }
     }
 
-    public void processClick(Card card) { //TODO
-        for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
-            if (abilityInfo.getStarter() == AbilityStarter.USE) {
-                
-                /*if (battle.getWhoseTurn().canAfford(token.getCard()) && tierAllowed(card.getCardInfo().getTier())) {
-
-                }*/
+    public void processClick(Card card, Player owner) { //TODO
+        if (owner == battle.getWhoseTurn()) {
+            for (int i = 0; i < card.getCardInfo().getAbilities().size(); i++) {
+                AbilityInfo abilityInfo = card.getCardInfo().getAbilities().get(i);
+                if (abilityInfo.getStarter() == AbilityStarter.USE && tierAllowed(card.getCardInfo().getTier())) {
+                    if (battle.getWhoseTurn().canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
+                        if (battle.getAbilityManager().playAbility(card, null, i)) {
+                            owner.payday(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter());
+                        }
+                    }
+                }
             }
         }
     }

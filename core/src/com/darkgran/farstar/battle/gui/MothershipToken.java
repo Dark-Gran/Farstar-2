@@ -30,7 +30,7 @@ public class MothershipToken extends Token implements DropTarget {
         {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(getCard());
+                getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(getCard(), getPlayer());
                 return false;
             }
         });
