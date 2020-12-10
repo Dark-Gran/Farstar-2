@@ -78,7 +78,7 @@ public class AbilityManager { //TODO 1. first strike 2. guard 3. reach
                     success = true;
                     break;
                 case ABILITY:
-                    target.getCardInfo().getAbilities().add(effectToAttribute(effect.getEffectInfo(), effect.getDuration()));
+                    target.getCardInfo().addAbility(effectToAttribute(effect.getEffectInfo(), effect.getDuration()));
                     success = true;
                     break;
             }

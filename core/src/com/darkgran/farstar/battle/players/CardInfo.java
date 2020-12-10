@@ -26,7 +26,7 @@ public class CardInfo {
         this.defense = defense;
         this.offenseType = offenseType;
         this.defenseType = defenseType;
-        this.abilities = abilities;
+        this.abilities = instanceAbilities(abilities);
     }
 
     public CardInfo() {
@@ -40,6 +40,14 @@ public class CardInfo {
         this.offenseType = TechType.INFERIOR;
         this.defenseType = TechType.INFERIOR;
         this.abilities = new ArrayList<>();
+    }
+
+    private ArrayList<AbilityInfo> instanceAbilities(ArrayList<AbilityInfo> abilities) {
+        ArrayList<AbilityInfo> newAbilities = new ArrayList<>();
+        for (AbilityInfo abilityInfo : abilities) {
+            newAbilities.add(abilityInfo);
+        }
+        return newAbilities;
     }
 
     public byte getId() { return id; }
@@ -77,5 +85,7 @@ public class CardInfo {
     public void setDefenseType(TechType defenseType) { this.defenseType = defenseType; }
 
     public ArrayList<AbilityInfo> getAbilities() { return abilities; }
+
+    public void addAbility(AbilityInfo abilityInfo) { abilities.add(abilityInfo); }
 
 }
