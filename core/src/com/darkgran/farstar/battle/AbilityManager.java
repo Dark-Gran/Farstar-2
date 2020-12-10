@@ -218,8 +218,11 @@ public class AbilityManager { //TODO 1. guard 2. reach
     public Battle getBattle() { return battle; }
 
     private static int floatObjectToInt(Object obj) {
-        float f = (Float) obj;
-        return (int) f;
+        if (obj instanceof Float) {
+            float f = (Float) obj;
+            return (int) f;
+        }
+        return 0;
     }
 
 }
