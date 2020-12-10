@@ -10,8 +10,9 @@ public class Effect {
     public Effect() {
     }
 
-    public Effect(EffectType effectType, int duration) {
+    public Effect(EffectType effectType, ArrayList effectInfo, int duration) {
         this.effectType = effectType;
+        this.effectInfo = effectInfo;
         this.duration = duration;
     }
 

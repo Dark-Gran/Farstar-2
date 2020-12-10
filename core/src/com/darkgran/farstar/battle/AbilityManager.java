@@ -48,7 +48,7 @@ public class AbilityManager {
                     break;
             }
             if (!reverse) {
-                target.addToEffects(effect);
+                target.addToEffects(instanceEffect(effect));
             }
         }
         return success;
@@ -141,6 +141,10 @@ public class AbilityManager {
     private static int floatObjectToInt(Object obj) {
         float f = (Float) obj;
         return (int) f;
+    }
+
+    private Effect instanceEffect(Effect effect) {
+        return new Effect(effect.getEffectType(), effect.getEffectInfo(), effect.getDuration());
     }
 
 }
