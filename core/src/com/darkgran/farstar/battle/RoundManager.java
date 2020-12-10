@@ -143,7 +143,6 @@ public class RoundManager {
     public boolean isFirstTurnThisRound() { return firstTurnThisRound; }
 
     public boolean tierAllowed(int tier) {
-        System.out.println(tier);
         return tier <= roundNum;
     }
 
