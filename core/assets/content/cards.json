@@ -91,7 +91,7 @@
         {
           "effectType": "CHANGE_STAT",
           "effectInfo": ["ABILITY", "FIRST_STRIKE", "NONE"],
-          "duration": 0
+          "duration": 1
         }
       ]
     }]

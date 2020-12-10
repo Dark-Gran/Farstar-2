@@ -3,6 +3,7 @@ package com.darkgran.farstar.battle;
 import com.darkgran.farstar.battle.players.*;
 import com.darkgran.farstar.battle.players.abilities.*;
 
+import javax.sound.midi.SysexMessage;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
@@ -78,13 +79,17 @@ public class AbilityManager { //TODO 1. guard 2. reach
                 case ABILITY:
                     if (effect.getEffectInfo().get(2) != null) {
                         AbilityInfo newAbility = effectToAbility(effect.getEffectInfo(), effect.getDuration());
-                        if (!target.getCardInfo().getAbilities().contains(newAbility)) {
+                        for (int i = 0; i < target.getCardInfo().getAbilities().size() && !success; i++) {
+                            if (isTheSameAbility(target.getCardInfo().getAbilities().get(i), newAbility)) {
+                                success = true;
+                                dontSaveEffect = true;
+                            }
+                        }
+                        if (!success) {
                             target.getCardInfo().addAbility(newAbility);
-                        } else {
-                            dontSaveEffect = true;
+                            success = true;
                         }
                     }
-                    success = true;
                     break;
             }
             if (!reverse && !dontSaveEffect) {
@@ -114,10 +119,13 @@ public class AbilityManager { //TODO 1. guard 2. reach
                     success = true;
                     break;
                 case ABILITY:
-                    if (effect.getEffectInfo().get(2) != null) {
-                        target.getCardInfo().getAbilities().remove(effectToAbility(effect.getEffectInfo(), 0));
-                        success = true;
+                    for (int i = 0; i < target.getCardInfo().getAbilities().size() && !success; i++) {
+                        if (isTheSameAbility(target.getCardInfo().getAbilities().get(i), effectToAbility(effect.getEffectInfo(), effect.getDuration()))) {
+                            target.getCardInfo().getAbilities().remove(i);
+                            success = true;
+                        }
                     }
+                    success = true;
                     break;
             }
             if (!reverse) {
@@ -140,11 +148,34 @@ public class AbilityManager { //TODO 1. guard 2. reach
         return false;
     }
 
-    private static AbilityInfo effectToAbility(ArrayList effectInfo, int effectDuration) { //creates new ability-attribute
+    public boolean isTheSameAbility(AbilityInfo abilityA, AbilityInfo abilityB) {
+        if (abilityA != null && abilityB != null) {
+            System.out.println(isTheSameEffectsList(abilityA.getEffects(), abilityB.getEffects()));
+            return (abilityA.getStarter() == abilityB.getStarter()) && isTheSameEffectsList(abilityA.getEffects(), abilityB.getEffects());
+        }
+        return (abilityA == abilityB);
+    }
+
+    public boolean isTheSameEffectsList(ArrayList<Effect> effectsA, ArrayList<Effect> effectsB) {
+        if (effectsA != null && effectsB != null) {
+            if (effectsA.size() == effectsB.size()) {
+                for (int i = 0; i < effectsA.size(); i++) {
+                    if ((effectsA.get(i).getEffectType() != effectsB.get(i).getEffectType()) && (effectsA.get(i).getEffectInfo() != effectsB.get(i).getEffectInfo())) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+        return (effectsA == effectsB);
+    }
+
+    public static AbilityInfo effectToAbility(ArrayList effectInfo, int effectDuration) { //creates new ability-attribute
         EffectType effectType = EffectType.valueOf(effectInfo.get(1).toString());
         Effect newEffect = new Effect();
         newEffect.setEffectType(effectType);
-        newEffect.setEffectInfo(null);
+        newEffect.setEffectInfo(effectInfo);
         newEffect.setDuration(effectDuration);
         ArrayList<Effect> newAbilityEffects = new ArrayList<>();
         newAbilityEffects.add(newEffect);
