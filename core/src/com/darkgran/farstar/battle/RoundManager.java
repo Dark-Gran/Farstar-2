@@ -3,6 +3,7 @@ package com.darkgran.farstar.battle;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.players.*;
+import com.darkgran.farstar.battle.players.abilities.EffectType;
 
 public class RoundManager {
     private final Battle battle;
@@ -96,9 +97,7 @@ public class RoundManager {
                     //PAYMENT + DISCARD (incl. targeting discard)
                     if (success) {
                         if (cardType == CardType.TACTIC && battle.getCombatManager().getDuelManager().isActive()) {
-                            battle.getCombatManager().getDuelManager().setLastTactic(token.getCard());
-                            battle.getCombatManager().getDuelManager().resetAllPlayersReady();
-                            //TODO check for fresh first strike
+                            battle.getCombatManager().getDuelManager().saveTactic(token.getCard());
                         }
                         whoseTurn.payday(token.getCard());
                         token.addCardToJunk();

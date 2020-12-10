@@ -53,6 +53,14 @@ public abstract class DuelManager {
         }
     }
 
+    public void saveTactic(Card card) {
+        lastTactic = card;
+        resetAllPlayersReady();
+        /*if (AbilityManager.hasAttribute(card, EffectType.FIRST_STRIKE)) {
+            strikePriority = card;
+        }*/
+    }
+
     public void preparePlayers() { resetAllPlayersReady(); }
 
     public void resetAllPlayersReady() {
@@ -199,8 +207,6 @@ public abstract class DuelManager {
     public DuelPlayer getActivePlayer() { return activePlayer; }
 
     public Card getLastTactic() { return lastTactic; }
-
-    public void setLastTactic(Card lastTactic) { this.lastTactic = lastTactic; }
 
 
 }
