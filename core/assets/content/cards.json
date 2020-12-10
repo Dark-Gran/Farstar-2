@@ -51,32 +51,6 @@
   },
   {
     "id": 3,
-    "name": "Phion Switch",
-    "cardType": "TACTIC",
-    "energy": 0,
-    "matter": 0,
-    "offense": 0,
-    "defense": 0,
-    "offenseType": "PARTICLE",
-    "defenseType": "PARTICLE",
-    "abilities": [{
-      "starter": "DEPLOY",
-      "effects": [
-        {
-          "effectType": "CHANGE_STAT",
-          "effectInfo": ["DEFENSE_TYPE", "PARTICLE"],
-          "duration": 1
-        },
-        {
-          "effectType": "CHANGE_STAT",
-          "effectInfo": ["OFFENSE_TYPE", "PARTICLE"],
-          "duration": 1
-        }
-      ]
-    }]
-  },
-  {
-    "id": 4,
     "name": "Assault Doctrine",
     "cardType": "TACTIC",
     "energy": 1,
@@ -92,6 +66,27 @@
           "effectType": "CHANGE_STAT",
           "effectInfo": ["ABILITY", "FIRST_STRIKE", "NONE"],
           "duration": 1
+        }
+      ]
+    }]
+  },
+  {
+    "id": 4,
+    "name": "Interceptor",
+    "cardType": "BLUEPRINT",
+    "energy": 1,
+    "matter": 0,
+    "offense": 0,
+    "defense": 0,
+    "offenseType": "THERMAL",
+    "defenseType": "THERMAL",
+    "abilities": [{
+      "starter": "NONE",
+      "effects": [
+        {
+          "effectType": "GUARD",
+          "effectInfo": [],
+          "duration": -1
         }
       ]
     }]
