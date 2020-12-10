@@ -3,6 +3,7 @@ package com.darkgran.farstar.battle;
 import com.darkgran.farstar.battle.players.*;
 import com.darkgran.farstar.battle.players.abilities.*;
 
+import java.util.ArrayList;
 import java.util.ListIterator;
 
 import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE;
@@ -90,16 +91,12 @@ public class AbilityManager { //TODO 1. first strike 2. guard 3. reach
                     success = true;
                     break;
                 case ABILITY:
-                    addAbility();
+                    target.getCardInfo().getAbilities().add(effectToAttribute(effect.getEffectInfo(), effect.getDuration()));
+                    success = true;
                     break;
             }
         }
         return success;
-    }
-
-    private boolean addAbility() {
-        boolean success = false;
-        return false;
     }
 
     private boolean reverseStat(Card target, Effect effect) {
@@ -121,9 +118,24 @@ public class AbilityManager { //TODO 1. first strike 2. guard 3. reach
                     reverseType(target, effect, changeStatType);
                     success = true;
                     break;
+                case ABILITY:
+                    target.getCardInfo().getAbilities().remove(effectToAttribute(effect.getEffectInfo(), effect.getDuration()));
+                    success = true;
+                    break;
             }
         }
         return success;
+    }
+
+    private AbilityInfo effectToAttribute(ArrayList effectInfo, int effectDuration) {
+        EffectType effectType = EffectType.valueOf(effectInfo.get(1).toString());
+        Effect newEffect = new Effect();
+        newEffect.setEffectType(effectType);
+        newEffect.setEffectInfo(null);
+        newEffect.setDuration(effectDuration);
+        ArrayList<Effect> newAbilityEffects = new ArrayList<>();
+        newAbilityEffects.add(newEffect);
+        return new AbilityInfo(AbilityStarter.NONE, newAbilityEffects);
     }
 
     private void reverseType(Card target, Effect effect, EffectTypeSpecifics.ChangeStatType type) {
