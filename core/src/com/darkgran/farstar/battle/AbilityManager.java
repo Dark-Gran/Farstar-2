@@ -1,10 +1,7 @@
 package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.battle.players.*;
-import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
-import com.darkgran.farstar.battle.players.abilities.Effect;
-import com.darkgran.farstar.battle.players.abilities.EffectType;
-import com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics;
+import com.darkgran.farstar.battle.players.abilities.*;
 
 import java.util.ListIterator;
 
@@ -52,6 +49,19 @@ public class AbilityManager { //TODO 1. first strike 2. guard 3. reach
             }
         }
         return success;
+    }
+
+    public static boolean hasAttribute(Card card, EffectType effectType) { //checks for abilities with "starter=NONE" (old "attributes")
+        for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
+            if (abilityInfo.getStarter() == AbilityStarter.NONE) {
+                for (Effect effect : abilityInfo.getEffects()) {
+                    if (effect.getEffectType() == effectType) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private boolean changeStat(Card target, Effect effect) {

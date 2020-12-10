@@ -7,6 +7,7 @@ import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.DuelPlayer;
 import com.darkgran.farstar.battle.players.Ship;
 import com.darkgran.farstar.battle.players.TechType;
+import com.darkgran.farstar.battle.players.abilities.EffectType;
 
 public abstract class DuelManager {
     private CombatManager combatManager;
@@ -19,6 +20,7 @@ public abstract class DuelManager {
     private DuelPlayer[] playersD;
     private Card lastTactic;
     private DuelPlayer activePlayer;
+    private Card strikePriority;
 
     public void launchDuel(CombatManager combatManager, Token attacker, Token defender, DuelPlayer[] playersA, DuelPlayer[] playersD) {
         if (!engaged && attacker != null && defender != null) {
@@ -32,10 +34,22 @@ public abstract class DuelManager {
             this.playersA = playersA;
             this.playersD = playersD;
             preparePlayers();
+            iniStrikePriority(this.attacker.getCard(), this.defender.getCard());
             lastTactic = null;
             duelMenu.addCancel();
             duelMenu.addOK(this.playersA[0].getDuelButton());
             activePlayer = this.playersA[0];
+        }
+    }
+
+    private void iniStrikePriority(Card att, Card def) {
+        boolean attShootsFirst = AbilityManager.hasAttribute(att, EffectType.FIRST_STRIKE);
+        boolean defShootsFirst = AbilityManager.hasAttribute(def, EffectType.FIRST_STRIKE);
+        if (attShootsFirst != defShootsFirst) {
+            if (attShootsFirst) { strikePriority = att; }
+            else { strikePriority = def; }
+        } else {
+            strikePriority = null;
         }
     }
 
@@ -60,12 +74,22 @@ public abstract class DuelManager {
         }
     }
 
-    public static void exeDuel(Card att, Card def) {
-        if (!exeOneSide(att, def)) {
-            def.death();
-        }
-        if (!exeOneSide(def, att)) {
-            att.death();
+    public void exeDuel(Card att, Card def) {
+        if (strikePriority != null) {
+            if (strikePriority == att) {
+                if (!exeOneSide(att, def)) { def.death(); }
+                else {
+                    if (!exeOneSide(def, att)) { att.death(); }
+                }
+            } else {
+                if (!exeOneSide(def, att)) { att.death(); }
+                else {
+                    if (!exeOneSide(att, def)) { def.death(); }
+                }
+            }
+        } else {
+            if (!exeOneSide(att, def)) { def.death(); }
+            if (!exeOneSide(def, att)) { att.death(); }
         }
         if (att instanceof Ship) { ((Ship) att).setFought(true); }
     }
