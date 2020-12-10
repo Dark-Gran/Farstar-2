@@ -76,8 +76,8 @@
     "cardType": "BLUEPRINT",
     "energy": 1,
     "matter": 0,
-    "offense": 0,
-    "defense": 0,
+    "offense": 1,
+    "defense": 1,
     "offenseType": "THERMAL",
     "defenseType": "THERMAL",
     "abilities": [{
