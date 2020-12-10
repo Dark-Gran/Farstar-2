@@ -5,7 +5,8 @@ import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.util.SimpleBox2;
 
-//uses Array and CardList remains null! (unlike TokenMenu)
+//The only "Menu" that does NOT extend CardListMenu! (Fleet is not a CardList!)
+//(uses Array instead of ArrayList)
 public class FleetMenu extends BaseMenu implements DropTarget {
     private final SimpleBox2 simpleBox2 = new SimpleBox2();
     private final Fleet fleet;

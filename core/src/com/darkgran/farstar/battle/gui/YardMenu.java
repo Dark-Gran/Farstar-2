@@ -3,7 +3,7 @@ package com.darkgran.farstar.battle.gui;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.players.Yard;
 
-public class YardMenu extends TokenMenu {
+public class YardMenu extends CardListMenu {
     private boolean visible = false;
 
     public YardMenu(Yard yard, boolean onTop, float x, float y, BattleStage battleStage, Player player) {

@@ -1,7 +1,7 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.Battle;
-import com.darkgran.farstar.battle.gui.TokenMenu;
+import com.darkgran.farstar.battle.gui.CardListMenu;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public abstract class CardList {
     private ArrayList<Card> cards;
     private int maxSize;
-    private TokenMenu tokenMenu;
+    private CardListMenu cardListMenu;
 
     public void setupSize() {
         setMaxSize(0);
@@ -37,7 +37,7 @@ public abstract class CardList {
         }
     }
 
-    public void receiveTokenMenu(TokenMenu tokenMenu) { this.tokenMenu = tokenMenu; }
+    public void receiveTokenMenu(CardListMenu cardListMenu) { this.cardListMenu = cardListMenu; }
 
     public ArrayList<Card> getCards() { return cards; }
 
@@ -47,7 +47,7 @@ public abstract class CardList {
 
     public void setMaxSize(int maxSize) { this.maxSize = maxSize; }
 
-    public TokenMenu getTokenMenu() { return tokenMenu; }
+    public CardListMenu getTokenMenu() { return cardListMenu; }
 
 
 }

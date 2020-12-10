@@ -7,11 +7,11 @@ import com.darkgran.farstar.battle.players.Player;
 import java.util.ArrayList;
 
 //is connected to a CardList and uses ArrayList (unlike FleetMenu)
-public abstract class TokenMenu extends BaseMenu {
+public abstract class CardListMenu extends BaseMenu {
     private ArrayList<Token> tokens = new ArrayList<>();
     private final CardList cardList;
 
-    public TokenMenu(CardList cardList, float x, float y, boolean negativeOffset, BattleStage battleStage, Player player) {
+    public CardListMenu(CardList cardList, float x, float y, boolean negativeOffset, BattleStage battleStage, Player player) {
         super(x, y, negativeOffset, battleStage, player);
         this.cardList = cardList;
         cardList.receiveTokenMenu(this);

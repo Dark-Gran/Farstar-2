@@ -49,7 +49,7 @@ public class ManagedDragger extends Dragger {
         if (getToken() instanceof FleetToken) {
             return player == ((FleetToken) getToken()).getFleetMenu().getPlayer();
         } else {
-            return player == getToken().getTokenMenu().getPlayer();
+            return player == getToken().getCardListMenu().getPlayer();
         }
     }
 

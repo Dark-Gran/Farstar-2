@@ -19,10 +19,10 @@ public class Token extends TextFont {
     private final CardOffense cardOffense = new CardOffense();
     private final CardDefense cardDefense = new CardDefense();
     private final BattleStage battleStage;
-    private final TokenMenu tokenMenu;
+    private final CardListMenu cardListMenu;
     private boolean inDuel = false;
 
-    public Token(Card card, float x, float y, BattleStage battleStage, TokenMenu tokenMenu){
+    public Token(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu){
         this.card = card;
         String res = "Battlestation";
         GlyphLayout layout = new GlyphLayout();
@@ -31,7 +31,7 @@ public class Token extends TextFont {
         setHeight(layout.height*4);
         setX(x);
         setY(y);
-        this.tokenMenu = tokenMenu;
+        this.cardListMenu = cardListMenu;
         this.battleStage = battleStage;
         battleStage.addActor(this);
         setupListener();
@@ -56,16 +56,16 @@ public class Token extends TextFont {
         remove();
         if (this instanceof FakeToken) { battleStage.setFakeToken(null); }
         else {
-            if (tokenMenu!=null) {
-                tokenMenu.getTokens().remove(this);
-                tokenMenu.getCardList().getCards().remove(getCard());
+            if (cardListMenu !=null) {
+                cardListMenu.getTokens().remove(this);
+                cardListMenu.getCardList().getCards().remove(getCard());
             }
         }
     }
 
     public void addCardToJunk() {
         if (getCard().getCardInfo().getCardType()!= CardType.YARD) {
-            this.getTokenMenu().getPlayer().getJunkpile().addCard(this.getCard());
+            this.getCardListMenu().getPlayer().getJunkpile().addCard(this.getCard());
         }
     }
 
@@ -73,7 +73,7 @@ public class Token extends TextFont {
 
     public BattleStage getBattleStage() { return battleStage; }
 
-    public TokenMenu getTokenMenu() { return tokenMenu; }
+    public CardListMenu getCardListMenu() { return cardListMenu; }
 
     public Dragger getDragger() { return dragger; }
 

@@ -4,14 +4,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.util.SimpleBox2;
 
-import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
-
 public class MothershipToken extends Token implements DropTarget {
     private final SimpleBox2 simpleBox2 = new SimpleBox2();
     private final Player player;
 
-    public MothershipToken(Player player, float x, float y, BattleStage battleStage, TokenMenu tokenMenu) {
-        super(player.getMs(), x, y, battleStage, tokenMenu);
+    public MothershipToken(Player player, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
+        super(player.getMs(), x, y, battleStage, cardListMenu);
         setupSimpleBox2(x, y, getHeight(), getWidth());
         this.player = player;
         player.getMs().setToken(this);

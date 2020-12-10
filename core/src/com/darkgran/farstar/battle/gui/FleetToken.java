@@ -5,8 +5,8 @@ import com.darkgran.farstar.battle.players.Card;
 public class FleetToken extends AnchoredToken {
     private FleetMenu fleetMenu;
 
-    public FleetToken(Card card, float x, float y, BattleStage battleStage, TokenMenu tokenMenu, FleetMenu fleetMenu) {
-        super(card, x, y, battleStage, tokenMenu);
+    public FleetToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, FleetMenu fleetMenu) {
+        super(card, x, y, battleStage, cardListMenu);
         this.fleetMenu = fleetMenu;
         setDragger(new ManagedDragger(this, battleStage.getBattleScreen().getBattle().getRoundManager(), true));
         this.addListener(getDragger().getInputListener());
@@ -15,9 +15,9 @@ public class FleetToken extends AnchoredToken {
     @Override
     public void destroy() {
         remove();
-        if (getTokenMenu()!=null) {
-            getTokenMenu().getTokens().remove(this);
-            getTokenMenu().getCardList().getCards().remove(getCard());
+        if (getCardListMenu()!=null) {
+            getCardListMenu().getTokens().remove(this);
+            getCardListMenu().getCardList().getCards().remove(getCard());
         }
     }
 

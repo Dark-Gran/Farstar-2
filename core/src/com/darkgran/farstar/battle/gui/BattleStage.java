@@ -90,9 +90,9 @@ public abstract class BattleStage extends ListeningStage {
         if (fakeToken != null) { fakeToken.draw(batch); }
     }
 
-    public void drawTokenMenu(TokenMenu tokenMenu, Batch batch) {
-        for (int i = 0; i < tokenMenu.getTokens().size(); i++) {
-            tokenMenu.getTokens().get(i).draw(batch);
+    public void drawTokenMenu(CardListMenu cardListMenu, Batch batch) {
+        for (int i = 0; i < cardListMenu.getTokens().size(); i++) {
+            cardListMenu.getTokens().get(i).draw(batch);
         }
     }
 
