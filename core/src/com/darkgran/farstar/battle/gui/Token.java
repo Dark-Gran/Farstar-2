@@ -64,8 +64,13 @@ public class Token extends TextFont {
     }
 
     public void addCardToJunk() {
-        if (getCard().getCardInfo().getCardType()!= CardType.YARD) {
-            this.getCardListMenu().getPlayer().getJunkpile().addCard(this.getCard());
+        if (getCardListMenu() != null) {
+            getCardListMenu().getPlayer().getJunkpile().addCard(this.getCard());
+        } else if (this instanceof FleetToken) {
+            FleetToken fleetToken = (FleetToken) this;
+            if (fleetToken.getFleetMenu() != null) {
+                fleetToken.getFleetMenu().getFleet().getJunkpile().addCard(this.getCard());
+            }
         }
     }
 
