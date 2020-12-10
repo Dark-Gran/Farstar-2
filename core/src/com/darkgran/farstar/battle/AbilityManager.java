@@ -195,7 +195,10 @@ public class AbilityManager { //TODO 1. guard 2. reach
         EffectType effectType = EffectType.valueOf(effectInfo.get(1).toString());
         Effect newEffect = new Effect();
         newEffect.setEffectType(effectType);
-        newEffect.setEffectInfo(effectInfo);
+        ArrayList info = new ArrayList();
+        info.addAll(effectInfo);
+        if (info.size() >= 4) { info.set(0, effectInfo.get(4)); }
+        newEffect.setEffectInfo(info);
         newEffect.setDuration(effectDuration);
         ArrayList<Effect> newAbilityEffects = new ArrayList<>();
         newAbilityEffects.add(newEffect);
