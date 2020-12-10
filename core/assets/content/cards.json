@@ -44,13 +44,13 @@
       "effects": [
         {
           "effectType": "CHANGE_STAT",
-          "duration": 0,
-          "effectInfo": ["OFFENSE_TYPE", "PARTICLE"]
+          "effectInfo": ["OFFENSE_TYPE", "PARTICLE"],
+          "duration": 0
         },
         {
           "effectType": "CHANGE_STAT",
-          "duration": 0,
-          "effectInfo": ["OFFENSE", 1]
+          "effectInfo": ["OFFENSE", 1],
+          "duration": 0
         }
       ]
     }
@@ -70,8 +70,8 @@
       "effects": [
         {
           "effectType": "CHANGE_STAT",
-          "duration": 1,
-          "effectInfo": ["DEFENSE_TYPE", "PARTICLE"]
+          "effectInfo": ["DEFENSE_TYPE", "PARTICLE"],
+          "duration": 1
         }
       ]
     }
