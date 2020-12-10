@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.Battle;
+import com.darkgran.farstar.battle.players.abilities.AbilityRecord;
 import com.darkgran.farstar.battle.players.abilities.Effect;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class Card {
     private final CardInfo cardInfo;
     private final CardInfo originalInfo;
     private final ArrayList<Effect> effects = new ArrayList<Effect>();
-    private final ArrayList<Card> history = new ArrayList<Card>();
+    private final ArrayList<AbilityRecord> history = new ArrayList<AbilityRecord>();
 
 
     public Card(CardInfo cardInfo) {
@@ -51,10 +52,10 @@ public class Card {
     public void death() { }
 
     private CardInfo cardInfoInstance(CardInfo cardInfo) {
-        return new CardInfo(cardInfo.getId(), cardInfo.getName(), cardInfo.getCardType(), cardInfo.getEnergy(), cardInfo.getMatter(), cardInfo.getOffense(), cardInfo.getDefense(), cardInfo.getOffenseType(), cardInfo.getDefenseType(), cardInfo.getAbility());
+        return new CardInfo(cardInfo.getId(), cardInfo.getName(), cardInfo.getCardType(), cardInfo.getEnergy(), cardInfo.getMatter(), cardInfo.getOffense(), cardInfo.getDefense(), cardInfo.getOffenseType(), cardInfo.getDefenseType(), cardInfo.getAbilities());
     }
 
-    public void addToHistory (Card card) { history.add(card);  }
+    public void addToHistory (Card card, int abilityIX) { history.add(new AbilityRecord(card, abilityIX));  }
 
     public void addToEffects (Effect effect) { effects.add(effect); }
 
@@ -64,6 +65,6 @@ public class Card {
 
     public ArrayList<Effect> getEffects() { return effects; }
 
-    public ArrayList<Card> getHistory() { return history; }
+    public ArrayList<AbilityRecord> getHistory() { return history; }
 
 }

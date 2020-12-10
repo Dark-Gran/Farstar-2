@@ -1,6 +1,5 @@
 package com.darkgran.farstar.battle;
 
-import com.darkgran.farstar.battle.gui.Token;
 import com.darkgran.farstar.battle.players.*;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.Effect;
@@ -19,16 +18,16 @@ public class AbilityManager {
         this.battle = battle;
     }
 
-    public boolean playAbility(Token caster, Token target) {
+    public boolean playAbility(Card caster, Card target, int abilityIX) {
         boolean success = false;
-        if (caster != null && target != null && target.getCard() != null) {
-            AbilityInfo ability = caster.getCard().getCardInfo().getAbility();
+        if (caster != null && caster.getCardInfo().getAbilities() != null && target != null) {
+            AbilityInfo ability = caster.getCardInfo().getAbilities().get(abilityIX);
             if (ability != null && ability.getEffects() != null) {
                 for (int i = 0; i < ability.getEffects().size(); i++) {
-                    if (!success) { success = executeEffect(target.getCard(), ability.getEffects().get(i), false); }
-                    else { executeEffect(target.getCard(), ability.getEffects().get(i), false); }
+                    if (!success) { success = executeEffect(target, ability.getEffects().get(i), false); }
+                    else { executeEffect(target, ability.getEffects().get(i), false); }
                 }
-                if (success) { target.getCard().addToHistory(caster.getCard()); }
+                if (success) { target.addToHistory(caster, abilityIX); }
             }
         }
         return success;

@@ -1,7 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
-import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 
 import java.util.ArrayList;
 
@@ -15,9 +14,9 @@ public class CardInfo {
     private int defense;
     private TechType offenseType;
     private TechType defenseType;
-    private AbilityInfo ability; //TODO multiple abilities
+    private ArrayList<AbilityInfo> abilities; //TODO multiple abilities
 
-    public CardInfo(byte id, String name, CardType cardType, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType, AbilityInfo ability) {
+    public CardInfo(byte id, String name, CardType cardType, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType, ArrayList<AbilityInfo> abilities) {
         this.id = id;
         this.name = name;
         this.cardType = cardType;
@@ -27,7 +26,7 @@ public class CardInfo {
         this.defense = defense;
         this.offenseType = offenseType;
         this.defenseType = defenseType;
-        this.ability = ability;
+        this.abilities = abilities;
     }
 
     public CardInfo() {
@@ -40,7 +39,7 @@ public class CardInfo {
         this.defense = 0;
         this.offenseType = TechType.INFERIOR;
         this.defenseType = TechType.INFERIOR;
-        this.ability = new AbilityInfo(AbilityStarter.DEPLOY, new ArrayList<>());
+        this.abilities = new ArrayList<>();
     }
 
     public byte getId() { return id; }
@@ -77,6 +76,6 @@ public class CardInfo {
 
     public void setDefenseType(TechType defenseType) { this.defenseType = defenseType; }
 
-    public AbilityInfo getAbility() { return ability; }
+    public ArrayList<AbilityInfo> getAbilities() { return abilities; }
 
 }
