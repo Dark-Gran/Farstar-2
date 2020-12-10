@@ -77,14 +77,14 @@
   },
   {
     "id": 4,
-    "name": "Assault Fighter",
-    "cardType": "BLUEPRINT",
+    "name": "Assault Doctrine",
+    "cardType": "UPGRADE",
     "energy": 1,
     "matter": 0,
-    "offense": 1,
-    "defense": 1,
-    "offenseType": "THERMAL",
-    "defenseType": "KINETIC",
+    "offense": 0,
+    "defense": 0,
+    "offenseType": "NONE",
+    "defenseType": "NONE",
     "abilities": [{
       "starter": "NONE",
       "effects": [
