@@ -8,6 +8,7 @@ public class CardInfo {
     private final byte id;
     private final String name;
     private final CardType cardType;
+    private int tier;
     private int energy; //resource-price
     private int matter; //resource-price
     private int offense;
@@ -16,7 +17,7 @@ public class CardInfo {
     private TechType defenseType;
     private ArrayList<AbilityInfo> abilities;
 
-    public CardInfo(byte id, String name, CardType cardType, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType, ArrayList<AbilityInfo> abilities) {
+    public CardInfo(byte id, String name, CardType cardType, int tier, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType, ArrayList<AbilityInfo> abilities) {
         this.id = id;
         this.name = name;
         this.cardType = cardType;
@@ -27,12 +28,14 @@ public class CardInfo {
         this.offenseType = offenseType;
         this.defenseType = defenseType;
         this.abilities = InstanceFactory.instanceAbilities(abilities);
+        this.tier = tier;
     }
 
     public CardInfo() {
         this.id = 0;
         this.name = "X";
         this.cardType = CardType.UPGRADE;
+        this.tier = 0;
         this.energy = 0;
         this.matter = 0;
         this.offense = 0;
@@ -79,5 +82,7 @@ public class CardInfo {
     public ArrayList<AbilityInfo> getAbilities() { return abilities; }
 
     public void addAbility(AbilityInfo abilityInfo) { abilities.add(abilityInfo); }
+
+    public int getTier() { return tier; }
 
 }

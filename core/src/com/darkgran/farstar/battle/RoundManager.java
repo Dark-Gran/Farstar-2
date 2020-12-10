@@ -59,16 +59,16 @@ public class RoundManager {
         }
     }
 
-    public void processDrop(Token token, DropTarget dropTarget, int position) { //TODO tier check
+    public void processDrop(Token token, DropTarget dropTarget, int position) {
         boolean success = false;
         if (token.getCardListMenu() != null) {
             CardType cardType = token.getCard().getCardInfo().getCardType();
             if ((!battle.getCombatManager().isActive() && !battle.getCombatManager().getDuelManager().isActive()) || (cardType == CardType.TACTIC)) {
+                //OUTSIDE COMBAT OR TACTIC
                 Player whoseTurn;
                 if (!battle.getCombatManager().getDuelManager().isActive()) { whoseTurn = battle.getWhoseTurn(); }
                 else { whoseTurn = battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer(); }
-                //IS ON TURN
-                if (token.getCardListMenu().getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard())) {
+                if (token.getCardListMenu().getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard()) && tierAllowed(token.getCard().getCardInfo().getTier())) {
                     //TARGETING FLEET
                     Card targetCard = null;
                     if (dropTarget instanceof FleetMenu) {
@@ -141,5 +141,10 @@ public class RoundManager {
     public Battle getBattle() { return battle; }
 
     public boolean isFirstTurnThisRound() { return firstTurnThisRound; }
+
+    public boolean tierAllowed(int tier) {
+        System.out.println(tier);
+        return tier <= roundNum;
+    }
 
 }
