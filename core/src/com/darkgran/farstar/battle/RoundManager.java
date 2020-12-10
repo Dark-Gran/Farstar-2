@@ -59,7 +59,7 @@ public class RoundManager {
         }
     }
 
-    public void processDrop(Token token, DropTarget dropTarget, int position) {
+    public void processDrop(Token token, DropTarget dropTarget, int position) { //TODO tier check
         boolean success = false;
         if (token.getCardListMenu() != null) {
             CardType cardType = token.getCard().getCardInfo().getCardType();
