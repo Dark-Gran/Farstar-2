@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Effect {
     //in the case of ArrayLists, libgdx jsonReader example uses raw type
-    //to apply generics, the jsonReader may need an upgrade
+    //to apply generics, the jsonReader may need an upgrade (see CardLibrary.loadLocal())
     //until then, it is mandatory to use only Strings and Floats (in cards.json-effectInfo)
     private ArrayList effectInfo;
     private EffectType effectType;
