@@ -1,6 +1,8 @@
 package com.darkgran.farstar.battle.gui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.util.SimpleBox2;
 
@@ -19,6 +21,19 @@ public class MothershipToken extends Token implements DropTarget {
         super.draw(batch);
         //Draws DropTarget SimpleBox2
         //if (DEBUG_RENDER) { getBattleStage().getBattleScreen().drawDebugSimpleBox2(getSimpleBox2(), getBattleStage().getBattleScreen().getDebugRenderer(), batch); }
+    }
+
+    @Override
+    public void setupListener() {
+        super.setupListener();
+        this.addListener(new InputListener()
+        {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("CLICK!"); //TODO
+                return false;
+            }
+        });
     }
 
     @Override

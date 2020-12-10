@@ -1,5 +1,7 @@
 package com.darkgran.farstar.battle.gui;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.darkgran.farstar.battle.players.Card;
 
 public class FleetToken extends AnchoredToken {
@@ -10,6 +12,19 @@ public class FleetToken extends AnchoredToken {
         this.fleetMenu = fleetMenu;
         setDragger(new ManagedDragger(this, battleStage.getBattleScreen().getBattle().getRoundManager(), true));
         this.addListener(getDragger().getInputListener());
+    }
+
+    @Override
+    public void setupListener() {
+        super.setupListener();
+        this.addListener(new InputListener()
+        {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("CLICK!"); //TODO
+                return false;
+            }
+        });
     }
 
     @Override

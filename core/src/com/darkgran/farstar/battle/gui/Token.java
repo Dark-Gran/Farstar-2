@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.Ship;
 import com.darkgran.farstar.util.SimpleBox2;
@@ -36,9 +38,7 @@ public class Token extends TextFont {
         setupListener();
     }
 
-    public void setupListener() {
-        //TODO
-    }
+    public void setupListener() { }
 
     public void draw(Batch batch) {
         Color color = new Color();
