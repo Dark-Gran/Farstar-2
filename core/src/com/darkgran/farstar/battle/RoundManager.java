@@ -1,8 +1,11 @@
 package com.darkgran.farstar.battle;
 
+import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.players.*;
+
+import java.util.ArrayList;
 
 public class RoundManager {
     private final Battle battle;
@@ -122,10 +125,14 @@ public class RoundManager {
         }
     }
 
-    public void processClick(Card card) {
-        System.out.println("CLICK!"); //TODO
-        if (AbilityManager.hasStarter(card, AbilityStarter.USE)) {
+    public void processClick(Card card) { //TODO
+        for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
+            if (abilityInfo.getStarter() == AbilityStarter.USE) {
 
+                /*if (battle.getWhoseTurn().canAfford(token.getCard()) && tierAllowed(card.getCardInfo().getTier())) {
+
+                }*/
+            }
         }
     }
 

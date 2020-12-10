@@ -143,7 +143,7 @@ public class AbilityManager {
     //DEAL_DMG
     private boolean dealDmg(Card target, Effect effect) {
         boolean success = false;
-        if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
+        if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
             int dmg = floatObjectToInt(effect.getEffectInfo().get(0));
             TechType techType = TechType.valueOf(effect.getEffectInfo().get(1).toString());
             dmg = DuelManager.getDmgAgainstShields(dmg, techType, target.getCardInfo().getDefenseType());
@@ -233,7 +233,7 @@ public class AbilityManager {
         newEffect.setDuration(effectDuration);
         ArrayList<Effect> newAbilityEffects = new ArrayList<>();
         newAbilityEffects.add(newEffect);
-        return new AbilityInfo(AbilityStarter.valueOf(effectInfo.get(2).toString()), newAbilityEffects);
+        return new AbilityInfo(AbilityStarter.valueOf(effectInfo.get(2).toString()), newAbilityEffects, new ResourcePrice());
     }
 
     private void reverseType(Card target, Effect effect, EffectTypeSpecifics.ChangeStatType type) {

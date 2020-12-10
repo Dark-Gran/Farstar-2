@@ -12,6 +12,10 @@
     "defenseType": "KINETIC",
     "abilities": [{
       "starter": "USE",
+      "resourcePrice": {
+        "energy": 1,
+        "matter": 0
+      },
       "effects": [
         {
           "effectType": "DEAL_DMG",
@@ -34,6 +38,7 @@
     "defenseType": "KINETIC",
     "abilities": [{
       "starter": "NONE",
+      "resourcePrice": {},
       "effects": [
         {
           "effectType": "REACH",
@@ -56,6 +61,7 @@
     "defenseType": "NONE",
     "abilities": [{
       "starter": "DEPLOY",
+      "resourcePrice": {},
       "effects": [
         {
           "effectType": "CHANGE_STAT",
@@ -83,6 +89,7 @@
     "defenseType": "NONE",
     "abilities": [{
       "starter": "DEPLOY",
+      "resourcePrice": {},
       "effects": [
         {
           "effectType": "CHANGE_STAT",
@@ -105,6 +112,7 @@
     "defenseType": "THERMAL",
     "abilities": [{
       "starter": "NONE",
+      "resourcePrice": {},
       "effects": [
         {
           "effectType": "GUARD",
