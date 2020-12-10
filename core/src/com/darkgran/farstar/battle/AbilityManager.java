@@ -56,7 +56,8 @@ public class AbilityManager {
         return success;
     }
 
-    private boolean changeStat(Card target, Effect effect, boolean reverse) { //CHANGE_STAT
+    //CHANGE_STAT
+    private boolean changeStat(Card target, Effect effect, boolean reverse) {
         boolean success = false;
         boolean dontSaveEffect = false;
         if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
@@ -105,7 +106,8 @@ public class AbilityManager {
         return success;
     }
 
-    private boolean reverseStat(Card target, Effect effect) { //belongs to CHANGE_STAT
+    //belongs to CHANGE_STAT
+    private boolean reverseStat(Card target, Effect effect) {
         boolean success = false;
         if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
             Object changeInfo = effect.getEffectInfo().get(1);
@@ -138,7 +140,8 @@ public class AbilityManager {
         return success;
     }
 
-    private boolean dealDmg(Card target, Effect effect) { //DEAL_DMG
+    //DEAL_DMG
+    private boolean dealDmg(Card target, Effect effect) {
         boolean success = false;
         if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
             int dmg = floatObjectToInt(effect.getEffectInfo().get(0));
