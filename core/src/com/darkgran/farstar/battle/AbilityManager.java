@@ -46,7 +46,7 @@ public class AbilityManager { //TODO 1. first strike 2. guard 3. reach
                     break;
             }
             if (!reverse) {
-                target.addToEffects(instanceEffect(effect));
+                target.addToEffects(InstanceFactory.instanceEffect(effect));
             }
         }
         return success;
@@ -173,8 +173,6 @@ public class AbilityManager { //TODO 1. first strike 2. guard 3. reach
         return (int) f;
     }
 
-    private Effect instanceEffect(Effect effect) {
-        return new Effect(effect.getEffectType(), effect.getEffectInfo(), effect.getDuration());
-    }
+
 
 }

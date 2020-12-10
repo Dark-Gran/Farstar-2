@@ -16,17 +16,17 @@ public class Card {
 
     public Card(CardInfo cardInfo) {
         this.originalInfo = cardInfo;
-        this.cardInfo = cardInfoInstance(this.originalInfo);
+        this.cardInfo = InstanceFactory.instanceCardInfo(this.originalInfo);
     }
 
     public Card() {
         this.originalInfo = Battle.CARD_LIBRARY.getCard(0);
-        this.cardInfo = cardInfoInstance(this.originalInfo);
+        this.cardInfo = InstanceFactory.instanceCardInfo(this.originalInfo);
     }
 
     public Card(int id) {
         this.originalInfo = Battle.CARD_LIBRARY.getCard(id);
-        this.cardInfo = cardInfoInstance(this.originalInfo);
+        this.cardInfo = InstanceFactory.instanceCardInfo(this.originalInfo);
     }
 
     public boolean receiveDMG(int dmg) { //returns survival
@@ -50,10 +50,6 @@ public class Card {
     }
 
     public void death() { }
-
-    private CardInfo cardInfoInstance(CardInfo cardInfo) {
-        return new CardInfo(cardInfo.getId(), cardInfo.getName(), cardInfo.getCardType(), cardInfo.getEnergy(), cardInfo.getMatter(), cardInfo.getOffense(), cardInfo.getDefense(), cardInfo.getOffenseType(), cardInfo.getDefenseType(), cardInfo.getAbilities());
-    }
 
     public void addToHistory (Card card, int abilityIX) { history.add(new AbilityRecord(card, abilityIX));  }
 
