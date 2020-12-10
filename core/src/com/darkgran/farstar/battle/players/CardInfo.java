@@ -14,7 +14,7 @@ public class CardInfo {
     private int defense;
     private TechType offenseType;
     private TechType defenseType;
-    private ArrayList<AbilityInfo> abilities; //TODO multiple abilities
+    private ArrayList<AbilityInfo> abilities;
 
     public CardInfo(byte id, String name, CardType cardType, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType, ArrayList<AbilityInfo> abilities) {
         this.id = id;
