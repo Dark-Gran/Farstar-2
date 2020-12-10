@@ -66,48 +66,58 @@ public class RoundManager {
 
     public void processDrop(Token token, DropTarget dropTarget, int position) {
         boolean success = false;
-        //OUTSIDE COMBAT
-        if (token.getTokenMenu() != null && !battle.getCombatManager().isActive() && !battle.getCombatManager().getDuelManager().isActive()) {
-            Player whoseTurn = battle.getWhoseTurn();
-            //IS ON TURN
-            if (token.getTokenMenu().getPlayer() == whoseTurn) {
-                CardType cardType = token.getCard().getCardInfo().getCardType();
-                //TARGETING FLEET
-                if (dropTarget instanceof FleetMenu) {
-                    Fleet fleet = ((FleetMenu) dropTarget).getFleet();
-                    if (fleet == whoseTurn.getFleet() && whoseTurn.canAfford(token.getCard())) {
+        if (token.getTokenMenu() != null) {
+            //OUTSIDE COMBAT
+            if (!battle.getCombatManager().isActive() && !battle.getCombatManager().getDuelManager().isActive()) {
+                Player whoseTurn = battle.getWhoseTurn();
+                //IS ON TURN
+                if (token.getTokenMenu().getPlayer() == whoseTurn) {
+                    CardType cardType = token.getCard().getCardInfo().getCardType();
+                    //TARGETING FLEET
+                    if (dropTarget instanceof FleetMenu) {
+                        Fleet fleet = ((FleetMenu) dropTarget).getFleet();
+                        if (fleet == whoseTurn.getFleet() && whoseTurn.canAfford(token.getCard())) {
+                            //ABILITIES
+                            success = checkAllAbilities(token.getCard(), fleet.getShips()[position], AbilityStarter.DEPLOY);
+                            //DEPLOYMENT
+                            if ((cardType == CardType.BLUEPRINT || cardType == CardType.YARD) && success) {
+                                success = fleet.addShip(token, position);
+                            }
+                        }
+                        //TARGETING MS
+                    } else if (dropTarget instanceof MothershipToken) {
+                        MothershipToken ms = (MothershipToken) dropTarget;
                         //ABILITIES
-                        success = checkAllAbilities(token.getCard(), fleet.getShips()[position], AbilityStarter.DEPLOY);
-                        //DEPLOYMENT
-                        if ((cardType == CardType.BLUEPRINT || cardType == CardType.YARD) && success) {
-                            success = fleet.addShip(token, position);
+                        if (ms.getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard()) && cardType == CardType.UPGRADE) {
+                            success = checkAllAbilities(token.getCard(), ms.getCard(), AbilityStarter.DEPLOY);
                         }
                     }
-                //TARGETING MS
-                } else if (dropTarget instanceof MothershipToken) {
-                    MothershipToken ms = (MothershipToken) dropTarget;
-                    //ABILITIES
-                    if (ms.getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard()) && cardType == CardType.UPGRADE) {
-                        success = checkAllAbilities(token.getCard(), ms.getCard(), AbilityStarter.DEPLOY);
+                    //PAYMENT + DISCARD (incl. targeting discard)
+                    if (success) {
+                        whoseTurn.payday(token.getCard());
+                        token.addCardToJunk();
+                    } else if (dropTarget instanceof JunkButton && token instanceof HandToken) { //Target: Discard
+                        Junkpile junkpile = ((JunkButton) dropTarget).getPlayer().getJunkpile();
+                        if (junkpile == whoseTurn.getJunkpile()) {
+                            token.addCardToJunk();
+                            success = true;
+                        }
                     }
                 }
-                //PAYMENT + DISCARD (incl. targeting discard)
-                if (success) {
-                    whoseTurn.payday(token.getCard());
-                    token.addCardToJunk();
-                } else if (dropTarget instanceof JunkButton && token instanceof HandToken) { //Target: Discard
-                    Junkpile junkpile = ((JunkButton) dropTarget).getPlayer().getJunkpile();
-                    if (junkpile == whoseTurn.getJunkpile()) {
-                        token.addCardToJunk();
-                        success = true;
-                    }
+            //INSIDE COMBAT/DUEL
+            } else if (battle.getCombatManager().isActive() && battle.getCombatManager().getDuelManager().isActive()) {
+
+                //TODO
+
+            }
+            //HAND ONLY
+            if (token instanceof HandToken) {
+                if (!success) {
+                    ((HandToken) token).resetPosition();
+                } else {
+                    token.destroy();
                 }
             }
-        }
-        //HAND ONLY
-        if (token instanceof HandToken) {
-            if (!success) { ((HandToken) token).resetPosition(); }
-            else { token.destroy(); }
         }
     }
 

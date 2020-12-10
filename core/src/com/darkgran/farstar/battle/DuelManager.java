@@ -8,7 +8,7 @@ import com.darkgran.farstar.battle.players.DuelPlayer;
 import com.darkgran.farstar.battle.players.Ship;
 import com.darkgran.farstar.battle.players.TechType;
 
-public abstract class DuelManager { //TODO deployment of tactics
+public abstract class DuelManager {
     private CombatManager combatManager;
     private DuelMenu duelMenu;
     private boolean active = false;
@@ -17,6 +17,8 @@ public abstract class DuelManager { //TODO deployment of tactics
     private Token defender;
     private DuelPlayer[] playersA;
     private DuelPlayer[] playersD;
+    private Card lastTactic;
+    private DuelPlayer activePlayer;
 
     public void launchDuel(CombatManager combatManager, Token attacker, Token defender, DuelPlayer[] playersA, DuelPlayer[] playersD) {
         if (!engaged && attacker != null && defender != null) {
@@ -32,6 +34,7 @@ public abstract class DuelManager { //TODO deployment of tactics
             preparePlayers();
             duelMenu.addCancel();
             duelMenu.addOK(this.playersA[0].getDuelButton());
+            activePlayer = this.playersA[0];
         }
     }
 
@@ -108,6 +111,7 @@ public abstract class DuelManager { //TODO deployment of tactics
                     next = true;
                 } else {
                     duelMenu.addOK(player.getDuelButton());
+                    activePlayer = player;
                     done = true;
                     break;
                 }
@@ -122,6 +126,7 @@ public abstract class DuelManager { //TODO deployment of tactics
                         next = true;
                     } else {
                         duelMenu.addOK(player.getDuelButton());
+                        activePlayer = player;
                         break;
                     }
                 }
@@ -162,6 +167,8 @@ public abstract class DuelManager { //TODO deployment of tactics
     public DuelPlayer[] getPlayersA() { return playersA; }
 
     public DuelPlayer[] getPlayersD() { return playersD; }
+
+    public DuelPlayer getActivePlayer() { return activePlayer; }
 
 
 }

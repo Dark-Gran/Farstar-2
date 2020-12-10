@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.gui;
 
 import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.battle.RoundManager;
+import com.darkgran.farstar.battle.players.CardType;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.players.Ship;
 
@@ -19,27 +20,36 @@ public class ManagedDragger extends Dragger {
 
     @Override
     public void drag(float x, float y) {
-        if (ownsToken(roundManager.getBattle().getWhoseTurn()) && forCombat == combatManager.isActive() && !combatManager.getDuelManager().isActive() && !roundManager.getBattle().isEverythingDisabled()) {
-            if (!(this.getToken().getCard() instanceof Ship) || !((Ship) this.getToken().getCard()).haveFought()) {
-                super.drag(x, y);
-            }
+        if (isEnabled()) {
+            super.drag(x, y);
         }
     }
 
     @Override
     public void drop(float x, float y) {
-        if (ownsToken(roundManager.getBattle().getWhoseTurn()) && forCombat == combatManager.isActive() && !combatManager.getDuelManager().isActive() && !roundManager.getBattle().isEverythingDisabled()) {
+        if (isEnabled()) {
+            super.drop(x, y);
+        }
+    }
+
+    private boolean isEnabled() {
+        if (!roundManager.getBattle().isEverythingDisabled()) {
             if (!(this.getToken().getCard() instanceof Ship) || !((Ship) this.getToken().getCard()).haveFought()) {
-                super.drop(x, y);
+                if (!combatManager.getDuelManager().isActive() && ownsToken(roundManager.getBattle().getWhoseTurn()) && forCombat == combatManager.isActive()) {
+                    return true;
+                } else if (this.getToken().getCard().getCardInfo().getCardType() == CardType.TACTIC && combatManager.getDuelManager().isActive() && ownsToken(combatManager.getDuelManager().getActivePlayer())) {
+                    return true;
+                }
             }
         }
+        return false;
     }
 
     public boolean ownsToken(Player player) {
         if (getToken() instanceof FleetToken) {
-            return player == ((FleetToken) getToken()).getFleetMenu().getPlayer();
+            return player.getBattleID() == ((FleetToken) getToken()).getFleetMenu().getPlayer().getBattleID();
         } else {
-            return player == getToken().getTokenMenu().getPlayer();
+            return player.getBattleID() == getToken().getTokenMenu().getPlayer().getBattleID();
         }
     }
 
