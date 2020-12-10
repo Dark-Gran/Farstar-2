@@ -52,19 +52,6 @@ public class AbilityManager { //TODO 1. first strike 2. guard 3. reach
         return success;
     }
 
-    public static boolean hasAttribute(Card card, EffectType effectType) { //checks for abilities with "starter=NONE" (old "attributes")
-        for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
-            if (abilityInfo.getStarter() == AbilityStarter.NONE) {
-                for (Effect effect : abilityInfo.getEffects()) {
-                    if (effect.getEffectType() == effectType) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     private boolean changeStat(Card target, Effect effect) {
         boolean success = false;
         if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
@@ -119,7 +106,7 @@ public class AbilityManager { //TODO 1. first strike 2. guard 3. reach
                     success = true;
                     break;
                 case ABILITY:
-                    target.getCardInfo().getAbilities().remove(effectToAttribute(effect.getEffectInfo(), effect.getDuration()));
+                    target.getCardInfo().getAbilities().remove(effectToAttribute(effect.getEffectInfo(), 0));
                     success = true;
                     break;
             }
@@ -127,7 +114,20 @@ public class AbilityManager { //TODO 1. first strike 2. guard 3. reach
         return success;
     }
 
-    private static AbilityInfo effectToAttribute(ArrayList effectInfo, int effectDuration) {
+    public static boolean hasAttribute(Card card, EffectType effectType) { //checks for abilities with "starter=NONE" (old "attributes")
+        for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
+            if (abilityInfo.getStarter() == AbilityStarter.NONE) {
+                for (Effect effect : abilityInfo.getEffects()) {
+                    if (effect.getEffectType() == effectType) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private static AbilityInfo effectToAttribute(ArrayList effectInfo, int effectDuration) { //creates new ability-attribute
         EffectType effectType = EffectType.valueOf(effectInfo.get(1).toString());
         Effect newEffect = new Effect();
         newEffect.setEffectType(effectType);
