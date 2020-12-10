@@ -57,21 +57,21 @@
   },
   {
     "id": 3,
-    "name": "Phion Aasd",
-    "cardType": "UPGRADE",
-    "energy": 1,
+    "name": "Phion Counter",
+    "cardType": "TACTIC",
+    "energy": 0,
     "matter": 0,
-    "offense": 1,
+    "offense": 0,
     "defense": 0,
-    "offenseType": "PARTICLE",
-    "defenseType": "NONE",
+    "offenseType": "NONE",
+    "defenseType": "PARTICLE",
     "ability": {
       "starter": "DEPLOY",
       "effects": [
         {
           "effectType": "CHANGE_STAT",
-          "duration": 0,
-          "effectInfo": ["OFFENSE_TYPE", "PARTICLE"]
+          "duration": 1,
+          "effectInfo": ["DEFENSE_TYPE", "PARTICLE"]
         }
       ]
     }

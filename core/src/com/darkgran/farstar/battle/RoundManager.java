@@ -73,7 +73,7 @@ public class RoundManager {
                 if (dropTarget instanceof FleetMenu) { //Target: Fleet
                     Fleet fleet = ((FleetMenu) dropTarget).getFleet();
                     if (fleet == whoseTurn.getFleet() && whoseTurn.canAfford(token.getCard())) {
-                        if (cardType == CardType.UPGRADE || token.getCard().getCardInfo().getAbility().getStarter() == AbilityStarter.DEPLOY) {
+                        if (cardType == CardType.UPGRADE || cardType == CardType.TACTIC || token.getCard().getCardInfo().getAbility().getStarter() == AbilityStarter.DEPLOY) {
                             success = battle.getAbilityManager().playAbility(token, fleet.getShips()[position].getToken());
                         }
                         if ((cardType == CardType.BLUEPRINT || cardType == CardType.YARD) && (success || token.getCard().getCardInfo().getAbility().getStarter() != AbilityStarter.DEPLOY)) {
