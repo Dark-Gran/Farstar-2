@@ -14,6 +14,7 @@ public class YardToken extends Token {
 
     @Override
     public void setupListener() {
+        super.setupListener();
         this.addListener(new InputListener()
         {
             @Override
