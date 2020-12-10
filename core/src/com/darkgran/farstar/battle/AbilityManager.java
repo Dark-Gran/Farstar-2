@@ -3,7 +3,6 @@ package com.darkgran.farstar.battle;
 import com.darkgran.farstar.battle.players.*;
 import com.darkgran.farstar.battle.players.abilities.*;
 
-import javax.sound.midi.SysexMessage;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
@@ -150,7 +149,6 @@ public class AbilityManager { //TODO 1. guard 2. reach
 
     public boolean isTheSameAbility(AbilityInfo abilityA, AbilityInfo abilityB) {
         if (abilityA != null && abilityB != null) {
-            System.out.println(isTheSameEffectsList(abilityA.getEffects(), abilityB.getEffects()));
             return (abilityA.getStarter() == abilityB.getStarter()) && isTheSameEffectsList(abilityA.getEffects(), abilityB.getEffects());
         }
         return (abilityA == abilityB);
