@@ -13,9 +13,7 @@ public interface InstanceFactory {
 
     static ArrayList<AbilityInfo> instanceAbilities(ArrayList<AbilityInfo> abilities) {
         ArrayList<AbilityInfo> newAbilities = new ArrayList<>();
-        for (AbilityInfo abilityInfo : abilities) {
-            newAbilities.add(abilityInfo);
-        }
+        newAbilities.addAll(abilities);
         return newAbilities;
     }
 
