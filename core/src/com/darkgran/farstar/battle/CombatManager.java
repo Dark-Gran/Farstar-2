@@ -2,7 +2,10 @@ package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.players.DuelPlayer;
+import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.battle.players.Player;
+import com.darkgran.farstar.battle.players.Ship;
+import com.darkgran.farstar.battle.players.abilities.EffectType;
 
 public class CombatManager {
     private final Battle battle;
@@ -32,6 +35,7 @@ public class CombatManager {
         }
     }
 
+    //in future: needs upgrade for other mods than 1v1
     public void processDrop(Token token, DropTarget dropTarget, Token targetToken) {
         if (token instanceof FleetToken) {
             ((FleetToken) token).resetPosition();
@@ -48,8 +52,28 @@ public class CombatManager {
                 playerD = ((MothershipToken) dropTarget).getPlayer();
             }
             if (playerA.getBattleID() != -1 && playerD.getBattleID() != -1 && playerA != playerD) {
-                duelManager.launchDuel(this, token, targetToken, new DuelPlayer[]{playerToDuelPlayer(playerA)}, new DuelPlayer[]{playerToDuelPlayer(playerD)}); //in future: needs upgrade for other mods than 1v1
+                if (canReach(token, targetToken, playerD.getFleet())) {
+                    duelManager.launchDuel(this, token, targetToken, new DuelPlayer[]{playerToDuelPlayer(playerA)}, new DuelPlayer[]{playerToDuelPlayer(playerD)});
+                }
             }
+        }
+    }
+
+    public static boolean canReach(Token attacker, Token targetToken, Fleet targetFleet) {
+        if (targetToken instanceof FleetToken && AbilityManager.hasAttribute(targetToken.getCard(), EffectType.GUARD)) {
+            return true;
+        }
+        int enemyGuards = 0;
+        for (Ship ship : targetFleet.getShips()) {
+            if (ship != null && AbilityManager.hasAttribute(ship.getToken().getCard(), EffectType.GUARD)) {
+                enemyGuards++;
+            }
+        }
+        if (enemyGuards == 0) {
+            return true;
+        } else {
+            int reach = 0;
+            return reach >= enemyGuards;
         }
     }
 
