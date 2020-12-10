@@ -1,8 +1,11 @@
-package com.darkgran.farstar.battle.players.abilities;
+package com.darkgran.farstar.battle;
 
-import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.gui.Token;
 import com.darkgran.farstar.battle.players.*;
+import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
+import com.darkgran.farstar.battle.players.abilities.Effect;
+import com.darkgran.farstar.battle.players.abilities.EffectType;
+import com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics;
 
 import java.util.ListIterator;
 
