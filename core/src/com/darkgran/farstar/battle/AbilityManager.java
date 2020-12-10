@@ -127,7 +127,7 @@ public class AbilityManager { //TODO 1. first strike 2. guard 3. reach
         return success;
     }
 
-    private AbilityInfo effectToAttribute(ArrayList effectInfo, int effectDuration) {
+    private static AbilityInfo effectToAttribute(ArrayList effectInfo, int effectDuration) {
         EffectType effectType = EffectType.valueOf(effectInfo.get(1).toString());
         Effect newEffect = new Effect();
         newEffect.setEffectType(effectType);
