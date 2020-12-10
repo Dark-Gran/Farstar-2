@@ -125,7 +125,7 @@ public class RoundManager {
         }
     }
 
-    public void processClick(Card card, Player owner) { //TODO
+    public void processClick(Card card, Player owner) { //TODO targeting x not needed
         if (owner == battle.getWhoseTurn()) {
             for (int i = 0; i < card.getCardInfo().getAbilities().size(); i++) {
                 AbilityInfo abilityInfo = card.getCardInfo().getAbilities().get(i);
