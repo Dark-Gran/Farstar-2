@@ -16,12 +16,12 @@
   },
   {
     "id": 1,
-    "name": "Fighter",
+    "name": "Heavy Fighter",
     "cardType": "YARD",
     "energy": 1,
-    "matter": 1,
-    "offense": 1,
-    "defense": 1,
+    "matter": 4,
+    "offense": 2,
+    "defense": 2,
     "offenseType": "KINETIC",
     "defenseType": "KINETIC",
     "ability": {

@@ -72,7 +72,7 @@ public abstract class DuelManager {
     public static int getDmgAgainstShields(int dmg, TechType dmgType, TechType shieldType) {
         dmgType = noneToInferior(dmgType);
         shieldType = noneToInferior(shieldType);
-        if ((shieldType == TechType.SUPERIOR && dmgType != TechType.SUPERIOR) || (shieldType != TechType.INFERIOR && (dmgType == TechType.INFERIOR || dmgType == shieldType))) {
+        if (dmg != 0 && ((shieldType == TechType.SUPERIOR && dmgType != TechType.SUPERIOR) || (shieldType != TechType.INFERIOR && (dmgType == TechType.INFERIOR || dmgType == shieldType)))) {
             return 1;
         }
         return dmg;
