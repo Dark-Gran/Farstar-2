@@ -9,7 +9,7 @@
     "defense": 5,
     "offenseType": "KINETIC",
     "defenseType": "KINETIC",
-    "abilities": [{}]
+    "abilities": []
   },
   {
     "id": 1,
@@ -21,7 +21,7 @@
     "defense": 1,
     "offenseType": "KINETIC",
     "defenseType": "KINETIC",
-    "abilities": [{}]
+    "abilities": []
   },
   {
     "id": 2,
