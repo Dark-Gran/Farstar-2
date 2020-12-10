@@ -98,6 +98,7 @@ public class RoundManager {
                         if (cardType == CardType.TACTIC && battle.getCombatManager().getDuelManager().isActive()) {
                             battle.getCombatManager().getDuelManager().setLastTactic(token.getCard());
                             battle.getCombatManager().getDuelManager().resetAllPlayersReady();
+                            //TODO check for fresh first strike
                         }
                         whoseTurn.payday(token.getCard());
                         token.addCardToJunk();
