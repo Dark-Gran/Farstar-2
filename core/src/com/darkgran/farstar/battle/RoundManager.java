@@ -117,13 +117,13 @@ public class RoundManager {
                     }
                 }
             }
-            //HAND ONLY
-            if (token instanceof HandToken) {
-                if (!success) {
-                    ((HandToken) token).resetPosition();
-                } else {
-                    token.destroy();
-                }
+        }
+        //HAND ONLY
+        if (token instanceof HandToken) {
+            if (!success) {
+                ((HandToken) token).resetPosition();
+            } else {
+                token.destroy();
             }
         }
     }
