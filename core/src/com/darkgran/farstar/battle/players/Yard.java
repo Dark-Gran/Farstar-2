@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class Yard extends CardList {
 
-
     public Yard(int id) {
         super(id);
     }

@@ -21,19 +21,22 @@ public class Card {
     private boolean used; //for AbilityStarter.USE
     private int damage = 0;
 
-    public Card(CardInfo cardInfo) {
+    public Card(CardInfo cardInfo, Player player) {
         originalInfo = cardInfo;
         this.cardInfo = InstanceFactory.instanceCardInfo(originalInfo);
+        this.player = player;
     }
 
     public Card() {
         originalInfo = Battle.CARD_LIBRARY.getCard(0);
         cardInfo = InstanceFactory.instanceCardInfo(originalInfo);
+        player = null;
     }
 
     public Card(int id) {
         originalInfo = Battle.CARD_LIBRARY.getCard(id);
         cardInfo = InstanceFactory.instanceCardInfo(originalInfo);
+        player = null;
     }
 
     public boolean receiveDMG(int dmg) { //returns survival

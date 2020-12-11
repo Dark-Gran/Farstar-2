@@ -14,7 +14,7 @@ public abstract class CardListMenu extends BaseMenu {
     public CardListMenu(CardList cardList, float x, float y, boolean negativeOffset, BattleStage battleStage, Player player) {
         super(x, y, negativeOffset, battleStage, player);
         this.cardList = cardList;
-        cardList.receiveTokenMenu(this);
+        cardList.receiveCardListMenu(this);
         generateTokens();
     }
 

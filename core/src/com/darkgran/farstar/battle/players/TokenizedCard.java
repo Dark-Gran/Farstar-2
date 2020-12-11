@@ -5,7 +5,7 @@ import com.darkgran.farstar.battle.gui.Token;
 public abstract class TokenizedCard extends Card {
     private Token token;
 
-    public TokenizedCard(CardInfo cardInfo) { super(cardInfo); }
+    public TokenizedCard(CardInfo cardInfo, Player player) { super(cardInfo, player); }
 
     public TokenizedCard() { super(); }
 

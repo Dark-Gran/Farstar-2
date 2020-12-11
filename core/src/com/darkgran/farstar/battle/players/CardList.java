@@ -8,6 +8,7 @@ import java.util.ArrayList;
 //in-future: cardList could handle using abilities on shipyard/deck/hand (if ever to be added),
 //(simply call "checkEffects()" on its Cards (see Fleet/Card))
 public abstract class CardList {
+    private Player player;
     private ArrayList<Card> cards;
     private int maxSize;
     private CardListMenu cardListMenu;
@@ -25,7 +26,7 @@ public abstract class CardList {
         setupSize();
         cards = new ArrayList<Card>();
         for (int i = 0; i < maxSize; i++) {
-            cards.add(new Card(Battle.CARD_LIBRARY.getCard(2)));
+            cards.add(new Card(Battle.CARD_LIBRARY.getCard(2), null));
         }
     }
 
@@ -33,11 +34,11 @@ public abstract class CardList {
         setupSize();
         cards = new ArrayList<Card>();
         for (int i = 0; i < maxSize; i++) {
-            cards.add(new Card(Battle.CARD_LIBRARY.getCard(id)));
+            cards.add(new Card(Battle.CARD_LIBRARY.getCard(id), null));
         }
     }
 
-    public void receiveTokenMenu(CardListMenu cardListMenu) { this.cardListMenu = cardListMenu; }
+    public void receiveCardListMenu(CardListMenu cardListMenu) { this.cardListMenu = cardListMenu; }
 
     public ArrayList<Card> getCards() { return cards; }
 
@@ -47,7 +48,10 @@ public abstract class CardList {
 
     public void setMaxSize(int maxSize) { this.maxSize = maxSize; }
 
-    public CardListMenu getTokenMenu() { return cardListMenu; }
+    public CardListMenu getCardListMenu() { return cardListMenu; }
 
+    public Player getPlayer() { return player; }
+
+    public void setPlayer(Player player) { this.player = player; }
 
 }

@@ -44,8 +44,8 @@ public class Battle1v1 extends Battle {
 
     @Override
     public void closeYards() {
-        ((YardMenu) (player1.getShipyard().getTokenMenu())).setVisible(false);
-        ((YardMenu) (player2.getShipyard().getTokenMenu())).setVisible(false);
+        ((YardMenu) (player1.getShipyard().getCardListMenu())).setVisible(false);
+        ((YardMenu) (player2.getShipyard().getCardListMenu())).setVisible(false);
     }
 
     @Override

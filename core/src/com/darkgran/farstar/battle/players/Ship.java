@@ -4,8 +4,8 @@ public class Ship extends TokenizedCard {
     private boolean fought = false;
     private final Fleet fleet;
 
-    public Ship(Fleet fleet, CardInfo cardInfo) {
-        super(cardInfo);
+    public Ship(Fleet fleet, CardInfo cardInfo, Player player) {
+        super(cardInfo, player);
         this.fleet = fleet;
     }
 

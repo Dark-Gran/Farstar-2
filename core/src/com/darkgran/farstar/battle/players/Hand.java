@@ -19,8 +19,8 @@ public class Hand extends CardList{
             Card card = deck.drawCard();
             if (card != null) {
                 getCards().add(card);
-                if (getTokenMenu() != null) {
-                    ((HandMenu) getTokenMenu()).generateNewToken(card);
+                if (getCardListMenu() != null) {
+                    ((HandMenu) getCardListMenu()).generateNewToken(card);
                 }
             }
         }

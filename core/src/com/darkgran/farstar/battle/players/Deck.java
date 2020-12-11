@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Deck extends CardList {
-    private Player player;
 
     public Deck(ArrayList<Card> cards) {
         super(cards);
@@ -41,9 +40,9 @@ public class Deck extends CardList {
     }
 
     public void eatJunk() {
-        ArrayList<Card> junkCards = player.getJunkpile().getCards();
+        ArrayList<Card> junkCards = getPlayer().getJunkpile().getCards();
         for (Card junk : junkCards) { getCards().add(junk); }
-        player.getJunkpile().setCards(new ArrayList<Card>());
+        getPlayer().getJunkpile().setCards(new ArrayList<Card>());
     }
 
     private void shuffle() {
@@ -51,9 +50,5 @@ public class Deck extends CardList {
         Collections.shuffle(list);
         setCards(list);
     }
-
-    public Player getPlayer() { return player; }
-
-    public void setPlayer(Player player) { this.player = player; }
 
 }
