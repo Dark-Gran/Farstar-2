@@ -3,6 +3,7 @@ package com.darkgran.farstar.battle.gui;
 import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.CardList;
 import com.darkgran.farstar.battle.players.Player;
+import com.darkgran.farstar.battle.players.Support;
 import com.darkgran.farstar.util.SimpleBox2;
 
 public class SupportMenu extends CardListMenu implements DropTarget {
@@ -25,7 +26,12 @@ public class SupportMenu extends CardListMenu implements DropTarget {
 
     @Override
     public void generateNewToken(Card card) {
-        getTokens().add(new SupportToken(card, getX() + getOffset()*translatePosition(getTokens().size()), getY(), getBattleStage(), this));
+        if (card instanceof Support) {
+            Support support = (Support) card;
+            SupportToken supportToken = new SupportToken(support, getX() + getOffset()*translatePosition(getTokens().size()), getY(), getBattleStage(), this);
+            getTokens().add(supportToken);
+            ((Support) card).setToken(supportToken);
+        }
     }
 
     public static int translatePosition(int position) {

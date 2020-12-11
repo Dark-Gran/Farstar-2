@@ -1,6 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
-public class Ship extends TokenizedCard {
+public class Ship extends JunkableCard {
     private boolean fought = false;
     private final Fleet fleet;
 
@@ -9,17 +9,9 @@ public class Ship extends TokenizedCard {
         this.fleet = fleet;
     }
 
-    public Ship(Fleet fleet, int id) {
-        super(id);
-        this.fleet = fleet;
-    }
-
     @Override
     public void death() {
-        if (getToken() != null && getCardInfo().getCardType()!= CardType.YARD) {
-            getToken().addCardToJunk();
-            getToken().destroy();
-        }
+        super.death();
         if (fleet != null) { fleet.removeShip(this); }
     }
 

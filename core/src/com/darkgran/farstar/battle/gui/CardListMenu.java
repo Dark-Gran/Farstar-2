@@ -29,6 +29,10 @@ public abstract class CardListMenu extends BaseMenu {
         tokens.add(new Token(card, getX() + getOffset()*tokens.size()-1, getY(), getBattleStage(), this));
     }
 
+    public void removeToken(Card card) {
+        tokens.remove(card);
+    }
+
     public ArrayList<Token> getTokens() { return tokens; }
 
     public void setTokens(ArrayList<Token> tokens) { this.tokens = tokens; }

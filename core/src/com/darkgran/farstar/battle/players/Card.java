@@ -9,11 +9,6 @@ import java.util.ArrayList;
 
 public class Card {
     private Player player;
-
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
-
     private final CardInfo cardInfo;
     private final CardInfo originalInfo;
     private final ArrayList<Effect> effects = new ArrayList<Effect>();
@@ -91,6 +86,8 @@ public class Card {
     public void setUsed(boolean used) { this.used = used; }
 
     public int getDamage() { return damage; }
+
+    public void setDamage(int damage) { this.damage = damage; }
 
     public Player getPlayer() { return player; }
 
