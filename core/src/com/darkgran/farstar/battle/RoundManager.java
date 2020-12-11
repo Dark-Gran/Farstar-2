@@ -122,6 +122,7 @@ public class RoundManager {
                     }
                     //PAYMENT + DISCARD (incl. targeting discard)
                     if (success || postAbility) {
+                        System.out.println("Drop Success.");
                         if (targetCard != null && cardType == CardType.TACTIC && battle.getCombatManager().getDuelManager().isActive()) {
                             battle.getCombatManager().getDuelManager().saveTactic(token.getCard(), targetCard);
                         }
@@ -194,8 +195,8 @@ public class RoundManager {
                     System.out.println("Ability Success!");
                     if (abilityInfo.getStarter() == AbilityStarter.USE) {
                         battle.getWhoseTurn().payday(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter());
-                    }
-                    if (dropInDeployment != null) {
+                        System.out.println("Ability price paid.");
+                    } else if (dropInDeployment != null) {
                         System.out.println("Reprocessing original drop...");
                         processDrop(tokenInDeployment, dropInDeployment, positionInDeployment, true);
                     }
