@@ -96,4 +96,12 @@ public class Battle1v1 extends Battle {
         player2.getFleet().checkEffectsOnAll(getAbilityManager());
     }
 
+    @Override
+    public Player[] getEnemies(Player player) {
+        if (player == player1) {
+            return new Player[]{player2};
+        } else {
+            return new Player[]{player1};
+        }
+    }
 }

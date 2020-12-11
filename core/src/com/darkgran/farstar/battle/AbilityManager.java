@@ -25,12 +25,13 @@ public class AbilityManager {
             AbilityInfo ability = caster.getCardInfo().getAbilities().get(abilityIx);
             if (ability != null && ability.getEffects() != null) {
                 //TARGETING
+                ArrayList<Card> targets = new ArrayList<>();
                 if (target == null) {
                     AbilityTargets abilityTargets = ability.getTargets();
                     switch (abilityTargets) {
                         case NONE:
                         case SELF:
-                            target = casterToken.getCard();
+                            targets.add(casterToken.getCard());
                             break;
                         case ANY:
                         case ANY_ALLY:
@@ -42,25 +43,42 @@ public class AbilityManager {
                             getBattle().getRoundManager().askForTargets(casterToken, abilityIx, dropTarget);
                             break;
                         case ENTIRE_ENEMY_FLEET:
-                            //TODO
+                            Player[] enemies = getBattle().getEnemies(caster.getPlayer());
+                            for (Player enemy : enemies) {
+                                for (int i = 0; i < enemy.getFleet().getShips().length; i++) {
+                                    if (enemy.getFleet().getShips()[i] != null) {
+                                        targets.add(enemy.getFleet().getShips()[i]);
+                                    }
+                                }
+                            }
                             break;
                         case ENTIRE_ALLIED_FLEET:
-
+                            for (int i = 0; i < caster.getPlayer().getFleet().getShips().length; i++) {
+                                if (caster.getPlayer().getFleet().getShips()[i] != null) {
+                                    targets.add(caster.getPlayer().getFleet().getShips()[i]);
+                                }
+                            }
                             break;
                     }
+                } else {
+                    targets.add(target);
                 }
                 //EXECUTION
-                if (target != null) {
-                    for (int i = 0; i < ability.getEffects().size(); i++) {
-                        if (ability.getEffects().get(i) != null) {
-                            if (!success) {
-                                success = executeEffect(target, ability.getEffects().get(i), false);
-                            } else {
-                                executeEffect(target, ability.getEffects().get(i), false);
+                for (Card currentTarget : targets) {
+                    if (currentTarget != null) {
+                        for (int i = 0; i < ability.getEffects().size(); i++) {
+                            if (ability.getEffects().get(i) != null) {
+                                if (!success) {
+                                    success = executeEffect(currentTarget, ability.getEffects().get(i), false);
+                                } else {
+                                    executeEffect(currentTarget, ability.getEffects().get(i), false);
+                                }
                             }
                         }
+                        if (success) {
+                            currentTarget.addToHistory(caster, abilityIx);
+                        }
                     }
-                    if (success) { target.addToHistory(caster, abilityIx); }
                 }
             }
         }
