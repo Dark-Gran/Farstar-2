@@ -5,11 +5,12 @@ public class Player {
     private int energy;
     private int matter;
     private Mothership ms; //MotherShip
-    private final Deck deck;
-    private final Yard yard;
-    private final Hand hand = new Hand();
-    private final Fleet fleet;
-    private final Junkpile junkpile;
+    private Deck deck;
+    private Yard yard;
+    private Hand hand = new Hand();
+    private Fleet fleet;
+    private Junkpile junkpile;
+    private Supports supports;
 
     public Player(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard) {
         this.battleID = battleID;
@@ -20,7 +21,7 @@ public class Player {
         this.yard = yard;
         junkpile = new Junkpile();
         fleet = new Fleet(junkpile);
-
+        this.supports = new Supports();
     }
 
     public Player() { //must be set-up if constructed this way
@@ -32,6 +33,7 @@ public class Player {
         this.yard = null;
         fleet = null;
         junkpile = null;
+        supports = null;
     }
 
     public boolean canAfford(Card card) {
@@ -51,10 +53,6 @@ public class Player {
         setEnergy(this.energy-energy);
         setMatter(this.matter-matter);
     }
-
-    public void setEnergy(int energy) { this.energy = energy; }
-
-    public void setMatter(int matter) { this.matter = matter; }
 
     public void addEnergy(int energy) { this.energy += energy; }
 
@@ -79,6 +77,26 @@ public class Player {
     public Fleet getFleet() { return fleet; }
 
     public Junkpile getJunkpile() { return junkpile; }
+
+    public Supports getSupports() { return supports; }
+
+    public void setEnergy(int energy) { this.energy = energy; }
+
+    public void setMatter(int matter) { this.matter = matter; }
+
+    public void setMs(Mothership ms) { this.ms = ms; }
+
+    public void setDeck(Deck deck) { this.deck = deck; }
+
+    public void setYard(Yard yard) { this.yard = yard; }
+
+    public void setHand(Hand hand) { this.hand = hand; }
+
+    public void setFleet(Fleet fleet) { this.fleet = fleet; }
+
+    public void setJunkpile(Junkpile junkpile) { this.junkpile = junkpile; }
+
+    public void setSupports(Supports supports) { this.supports = supports; }
 
 
 }

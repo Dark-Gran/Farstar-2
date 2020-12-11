@@ -90,9 +90,12 @@ public class RoundManager {
                 else { whoseTurn = battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer(); }
                 if (token.getCardListMenu().getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard()) && tierAllowed(token.getCard().getCardInfo().getTier())) {
                     Card targetCard = null;
-                    //TARGETING ANYWHERE FOR ACTIONS
+                    //TARGETING ANYWHERE FOR ACTION-CARDS
                     if (cardType == CardType.ACTION) {
                         success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, true, dropTarget);
+                    //TARGETING SUPPORTS FOR SUPPORT-CARDS
+                    } else if (cardType == CardType.SUPPORT) {
+                        //TODO
                     //TARGETING FLEET
                     } else if (dropTarget instanceof FleetMenu) {
                         Fleet fleet = ((FleetMenu) dropTarget).getFleet();
