@@ -13,7 +13,7 @@ public class YardToken extends Token {
     }
 
     @Override
-    public void setupListener() {
+    public void setupListener() { //TODO drag cancel fix
         super.setupListener();
         this.addListener(new InputListener()
         {
@@ -23,6 +23,7 @@ public class YardToken extends Token {
                     getBattleStage().setFakeToken(new FakeToken(getCard(), getX(), getY(), getBattleStage(), getCardListMenu()));
                     event.setRelatedActor(getBattleStage().getFakeToken());
                     event.getStage().addTouchFocus(getBattleStage().getFakeToken().getDragger(), getBattleStage().getFakeToken(), getBattleStage().getFakeToken(), event.getPointer(), event.getButton());
+                    //getBattleStage().getFakeToken().getDragger().touchDown()
                 }
                 return false;
             }
