@@ -13,7 +13,7 @@ public class YardToken extends Token {
     }
 
     @Override
-    public void setupListener() { //TODO drag cancel fix
+    public void setupListener() {
         super.setupListener();
         this.addListener(new InputListener()
         {
