@@ -4,7 +4,7 @@ import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.gui.FleetMenu;
 import com.darkgran.farstar.battle.gui.Token;
 
-public class Fleet {
+public class Fleet implements BattleTicks {
     private final Junkpile junkpile;
     private Ship[] ships = new Ship[7];
     private FleetMenu fleetMenu;
@@ -83,14 +83,17 @@ public class Fleet {
         }
     }
 
-    public void tickEffectsOnAll(AbilityManager abilityManager) {
-        for (Ship ship : ships) { if (ship != null) { ship.tickEffects(abilityManager); } }
-    }
-
+    @Override
     public void setUsedOnAll(boolean used) {
         for (Ship ship : ships) { if (ship != null) { ship.setUsed(used); } }
     }
 
+    @Override
+    public void tickEffectsOnAll(AbilityManager abilityManager) {
+        for (Ship ship : ships) { if (ship != null) { ship.tickEffects(abilityManager); } }
+    }
+
+    @Override
     public void checkEffectsOnAll(AbilityManager abilityManager) {
         for (Ship ship : ships) { if (ship != null) { ship.checkEffects(abilityManager); } }
     }

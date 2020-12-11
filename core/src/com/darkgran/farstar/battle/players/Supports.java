@@ -1,8 +1,10 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.battle.AbilityManager;
+
 import java.util.ArrayList;
 
-public class Supports extends CardList {
+public class Supports extends CardList implements BattleTicks {
 
     public Supports() {
         setupSize();
@@ -23,6 +25,21 @@ public class Supports extends CardList {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void setUsedOnAll(boolean used) {
+        for (Card card : getCards()) { if (card != null) { card.setUsed(used); } }
+    }
+
+    @Override
+    public void tickEffectsOnAll(AbilityManager abilityManager) {
+        for (Card card : getCards()) { if (card != null) { card.tickEffects(abilityManager); } }
+    }
+
+    @Override
+    public void checkEffectsOnAll(AbilityManager abilityManager) {
+        for (Card card : getCards()) { if (card != null) { card.checkEffects(abilityManager); } }
     }
 
 

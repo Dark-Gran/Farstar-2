@@ -64,11 +64,13 @@ public abstract class Battle implements BattleSettings {
     public void tickEffects() {
         whoseTurn.getMs().tickEffects(abilityManager);
         whoseTurn.getFleet().tickEffectsOnAll(abilityManager);
+        whoseTurn.getSupports().tickEffectsOnAll(abilityManager);
     }
 
     public void refreshUsedShips() { //for AbilityStarter.USE
         whoseTurn.getMs().setUsed(false);
         whoseTurn.getFleet().setUsedOnAll(false);
+        whoseTurn.getSupports().setUsedOnAll(false);
     }
 
     public boolean activeCombatOrDuel() {

@@ -190,6 +190,9 @@ public class RoundManager {
                             success = battle.getAbilityManager().playAbility(caster, target, i, dropTarget);
                             if (payPrice && success) {
                                 owner.payday(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter());
+                                if (abilityStarter == AbilityStarter.USE) {
+                                    caster.getCard().setUsed(true);
+                                }
                             }
                             break; //in-future: support multiple abilities with the same starter
                         }

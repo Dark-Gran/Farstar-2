@@ -92,8 +92,10 @@ public class Battle1v1 extends Battle {
         super.tickEffects();
         player1.getMs().checkEffects(getAbilityManager());
         player1.getFleet().checkEffectsOnAll(getAbilityManager());
+        player1.getSupports().checkEffectsOnAll(getAbilityManager());
         player2.getMs().checkEffects(getAbilityManager());
         player2.getFleet().checkEffectsOnAll(getAbilityManager());
+        player2.getSupports().checkEffectsOnAll(getAbilityManager());
     }
 
     @Override
