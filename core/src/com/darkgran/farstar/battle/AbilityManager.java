@@ -218,7 +218,7 @@ public class AbilityManager {
     //-UTILITIES-//
     //-----------//
 
-    public static boolean validAbilityTarget(AbilityInfo abilityInfo, Card caster, Card target) {
+    public static boolean validAbilityTarget(AbilityInfo abilityInfo, Card caster, Card target) { //in-future: support for other modes than 1v1
         switch (abilityInfo.getTargets()) {
             default:
                 return false;
@@ -229,6 +229,8 @@ public class AbilityManager {
                 return caster==target;
             case ANY_ALLY:
                 return caster.getPlayer()==target.getPlayer();
+            case ANY_ENEMY:
+                return caster.getPlayer()!=target.getPlayer();
         }
     }
 

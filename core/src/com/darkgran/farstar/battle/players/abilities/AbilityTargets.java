@@ -1,5 +1,5 @@
 package com.darkgran.farstar.battle.players.abilities;
 
 public enum AbilityTargets {
-    NONE, ANY, SELF, ANY_ALLY
+    NONE, ANY, SELF, ANY_ALLY, ANY_ENEMY
 }
