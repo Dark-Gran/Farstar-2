@@ -179,10 +179,12 @@ public class RoundManager {
     }
 
     public void processClick(Token token, Player owner) {
-        if (targetingActive) {
-            processTarget(token);
-        } else if (owner == battle.getWhoseTurn() && tierAllowed(token.getCard().getCardInfo().getTier())) {
-            checkAllAbilities(token, null, AbilityStarter.USE, owner, true, null);
+        if (!battle.isEverythingDisabled()) {
+            if (targetingActive) {
+                processTarget(token);
+            } else if (owner == battle.getWhoseTurn() && tierAllowed(token.getCard().getCardInfo().getTier())) {
+                checkAllAbilities(token, null, AbilityStarter.USE, owner, true, null);
+            }
         }
     }
 
