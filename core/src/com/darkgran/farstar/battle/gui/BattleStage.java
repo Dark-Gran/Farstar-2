@@ -60,7 +60,7 @@ public abstract class BattleStage extends ListeningStage {
     public void processDrop(float x, float y, Token token) {
         CombatManager combatManager = getBattleScreen().getBattle().getCombatManager();
         DropTarget targetHit = returnDropTarget(x, y);
-        if (targetHit != null) {
+        if (targetHit != null || token.getCard().getCardInfo().getCardType() == CardType.ACTION) {
             if (token.getCard().getCardInfo().getCardType() != CardType.TACTIC && combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
                 combatManager.processDrop(token, targetHit, getCombatDropToken(x, y, targetHit));
             } else {

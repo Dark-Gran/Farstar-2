@@ -89,9 +89,12 @@ public class RoundManager {
                 if (!battle.getCombatManager().getDuelManager().isActive()) { whoseTurn = battle.getWhoseTurn(); }
                 else { whoseTurn = battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer(); }
                 if (token.getCardListMenu().getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard()) && tierAllowed(token.getCard().getCardInfo().getTier())) {
-                    //TARGETING FLEET
                     Card targetCard = null;
-                    if (dropTarget instanceof FleetMenu) {
+                    //TARGETING ANYWHERE FOR ACTIONS
+                    if (cardType == CardType.ACTION) {
+                        success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, true, dropTarget);
+                    //TARGETING FLEET
+                    } else if (dropTarget instanceof FleetMenu) {
                         Fleet fleet = ((FleetMenu) dropTarget).getFleet();
                         if (fleet == whoseTurn.getFleet()) {
                             if (!battle.getCombatManager().getDuelManager().isActive() || (fleet.getShips()[position].getToken() != null && fleet.getShips()[position].getToken().isInDuel())) {

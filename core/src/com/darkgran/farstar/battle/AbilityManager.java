@@ -76,12 +76,18 @@ public class AbilityManager {
                 case REPAIR:
                     if (!reverse) { success = repair(target, effect); }
                     break;
-                case CHANGE_RESOURCE: //TODO
-                    /*if (!reverse) { success = changeResource(target, effect, reverse); }
-                    else { success = reverseStat(target, effect); }*/
+                case CHANGE_RESOURCE:
+                    success = changeResource(target, effect, reverse);
                     break;
             }
         }
+        return success;
+    }
+
+    private boolean changeResource(Card target, Effect effect, boolean reverse) {
+        boolean success = false;
+        //TODO
+        success = true;
         return success;
     }
 
