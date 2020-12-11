@@ -10,9 +10,11 @@ public class RoundManager {
     private boolean firstTurnThisRound;
     private int roundNum = 0;
     private boolean targetingActive;
+    //following keeps info for postponed processDrop()
     private Token tokenInDeployment;
     private DropTarget dropInDeployment;
     private int abilityIxInDeployment = 0;
+    private int positionInDeployment = 0; //the only one saved on each fleet-drop
 
     public RoundManager(Battle battle) {
         this.battle = battle;
@@ -93,8 +95,11 @@ public class RoundManager {
                         Fleet fleet = ((FleetMenu) dropTarget).getFleet();
                         if (fleet == whoseTurn.getFleet()) {
                             //ABILITIES
-                            success = checkAllAbilities(token, fleet.getShips()[position], AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
-                            if (success) {
+                            positionInDeployment = position;
+                            if (!postAbility) {
+                                success = checkAllAbilities(token, fleet.getShips()[position], AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
+                            }
+                            if (postAbility || success) {
                                 if (fleet.getShips()[position] != null) {
                                     targetCard = fleet.getShips()[position].getToken().getCard();
                                 }
@@ -109,12 +114,14 @@ public class RoundManager {
                         MothershipToken ms = (MothershipToken) dropTarget;
                         //ABILITIES
                         if (ms.getPlayer() == whoseTurn && (cardType == CardType.UPGRADE || cardType == CardType.TACTIC)) {
-                            success = checkAllAbilities(token, ms.getCard(), AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
-                            if (success) { targetCard = ms.getCard(); }
+                            if (!postAbility) {
+                                success = checkAllAbilities(token, ms.getCard(), AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
+                            }
+                            if (postAbility || success) { targetCard = ms.getCard(); }
                         }
                     }
                     //PAYMENT + DISCARD (incl. targeting discard)
-                    if (success) {
+                    if (success || postAbility) {
                         if (targetCard != null && cardType == CardType.TACTIC && battle.getCombatManager().getDuelManager().isActive()) {
                             battle.getCombatManager().getDuelManager().saveTactic(token.getCard(), targetCard);
                         }
@@ -132,7 +139,7 @@ public class RoundManager {
         }
         //HAND ONLY
         if (token instanceof HandToken) {
-            if (!success) {
+            if (!success && !postAbility) {
                 ((HandToken) token).resetPosition();
             } else {
                 token.destroy();
@@ -175,7 +182,7 @@ public class RoundManager {
         dropInDeployment = dropTarget;
     }
 
-    private void processTarget(Token target) { //TODO
+    private void processTarget(Token target) {
         if (targetingActive && tokenInDeployment != null && tokenInDeployment.getCard().getCardInfo().getAbilities().size() <= abilityIxInDeployment) {
             AbilityInfo abilityInfo = tokenInDeployment.getCard().getCardInfo().getAbilities().get(abilityIxInDeployment);
             if (AbilityManager.validAbilityTarget(abilityInfo, target.getCard())) {
@@ -187,7 +194,7 @@ public class RoundManager {
                     }
                     if (dropInDeployment != null) {
                         System.out.println("Reprocessing original drop...");
-                        //processDrop(tokenInDeployment);
+                        processDrop(tokenInDeployment, dropInDeployment, positionInDeployment, true); //TODO
                     }
                 }
             }
