@@ -14,8 +14,6 @@ public class FleetMenu extends BaseMenu implements DropTarget {
 
     public FleetMenu(Fleet fleet, float x, float y, float width, float height, BattleStage battleStage, Player player, boolean negativeOffset) {
         super(x, y, negativeOffset, battleStage, player);
-        setX(x);
-        setY(y);
         setWidth(width);
         setHeight(height);
         setupSimpleBox2(x, y, height, width);

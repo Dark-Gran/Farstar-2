@@ -2,7 +2,6 @@ package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.BattleSettings;
-import com.darkgran.farstar.battle.gui.HandMenu;
 
 import java.util.ArrayList;
 
@@ -10,7 +9,7 @@ public class Hand extends CardList{
 
     public Hand() {
         setupSize();
-        setCards(new ArrayList<Card>());
+        setCards(new ArrayList<>());
     }
 
     public void drawCards(Deck deck, int howMany) {
@@ -19,7 +18,7 @@ public class Hand extends CardList{
             if (card != null) {
                 getCards().add(card);
                 if (getCardListMenu() != null) {
-                    ((HandMenu) getCardListMenu()).generateNewToken(card);
+                    getCardListMenu().generateNewToken(card);
                 }
             }
         }

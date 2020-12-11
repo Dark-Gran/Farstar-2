@@ -16,6 +16,7 @@ import com.darkgran.farstar.battle.players.CardType;
 import com.darkgran.farstar.util.SimpleBox2;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 
@@ -28,6 +29,7 @@ public abstract class BattleStage extends ListeningStage {
     private final DuelMenu duelMenu;
     private final Texture combatEndPic = new Texture("images/combat_end.png");
     private final ImageButton combatEndButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(combatEndPic)));
+    private ArrayList<DropTarget> dropTargets = new ArrayList<>();
 
     public final static int TOKEN_WIDTH = 78; //future: (re)move
 
@@ -55,7 +57,16 @@ public abstract class BattleStage extends ListeningStage {
         combatEndButton.removeListener(combatEndButton.getClickListener());
     }
 
-    public DropTarget returnDropTarget(float x, float y) { return null; }
+    public DropTarget returnDropTarget(float x, float y) {
+        for (DropTarget dropTarget : dropTargets) {
+            if (isInBox(dropTarget.getSimpleBox2(), x, y)) { return dropTarget; }
+        }
+        return null;
+    }
+
+    public void addDropTarget(DropTarget dropTarget) {
+        dropTargets.add(dropTarget);
+    }
 
     public void processDrop(float x, float y, Token token) {
         CombatManager combatManager = getBattleScreen().getBattle().getCombatManager();

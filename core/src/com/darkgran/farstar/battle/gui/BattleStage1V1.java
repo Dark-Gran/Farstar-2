@@ -11,6 +11,8 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.Player;
 
+import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
+
 public class BattleStage1V1 extends BattleStage {
     private final ResourceMeter resourceMeter1;
     private final ResourceMeter resourceMeter2;
@@ -26,6 +28,8 @@ public class BattleStage1V1 extends BattleStage {
     private final FleetMenu fleetMenu2;
     private final JunkButton junkButton1;
     private final JunkButton junkButton2;
+    private final SupportMenu supportMenu1;
+    private final SupportMenu supportMenu2;
 
     public BattleStage1V1(Farstar game, Viewport viewport, BattleScreen battleScreen, DuelMenu duelMenu, Player player1, Player player2) {
         super(game, viewport, battleScreen, duelMenu);
@@ -35,6 +39,8 @@ public class BattleStage1V1 extends BattleStage {
         //Motherships
         mothershipToken1 = new MothershipToken(player1.getMs(), Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*1/4, this, null);
         mothershipToken2 = new MothershipToken(player2.getMs(), Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*3/4, this, null);
+        addDropTarget(mothershipToken1);
+        addDropTarget(mothershipToken2);
         //Buttons
         turnButton.setBounds(Farstar.STAGE_WIDTH*6/7, Farstar.STAGE_HEIGHT/2, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
         this.addActor(turnButton);
@@ -46,27 +52,23 @@ public class BattleStage1V1 extends BattleStage {
         yardButton2.setBounds(Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*4/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
         this.addActor(yardButton2);
         //Hands
-        handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/8, this, player1);
+        handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/12, this, player1);
         handMenu2 = new HandMenu(player2.getHand(),Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*7/8, this, player2);
         //Fleets
         fleetMenu1 = new FleetMenu(player1.getFleet(), Farstar.STAGE_WIDTH*1/3, Farstar.STAGE_HEIGHT*1/3, Farstar.STAGE_WIDTH*3/7, Farstar.STAGE_HEIGHT/7, this, player1, false);
         fleetMenu2 = new FleetMenu(player2.getFleet(), Farstar.STAGE_WIDTH*1/3, Farstar.STAGE_HEIGHT/2, Farstar.STAGE_WIDTH*3/7, Farstar.STAGE_HEIGHT/7, this, player2, true);
+        addDropTarget(fleetMenu1);
+        addDropTarget(fleetMenu2);
         //Discards / Junkpiles
         junkButton1 = new JunkButton(Farstar.STAGE_WIDTH*6/7, Farstar.STAGE_HEIGHT*1/3, this, player1);
         junkButton2 = new JunkButton(Farstar.STAGE_WIDTH*6/7, Farstar.STAGE_HEIGHT*2/3, this, player2);
+        //Supports
+        supportMenu1 = new SupportMenu(player1.getSupports(), Farstar.STAGE_WIDTH*1/3, Farstar.STAGE_HEIGHT*1/6, Farstar.STAGE_WIDTH*3/7, Farstar.STAGE_HEIGHT/7, false, this, player1);
+        supportMenu2 = new SupportMenu(player2.getSupports(), Farstar.STAGE_WIDTH*1/3, Farstar.STAGE_HEIGHT*4/6, Farstar.STAGE_WIDTH*3/7, Farstar.STAGE_HEIGHT/7, true, this, player2);
+        addDropTarget(supportMenu1);
+        addDropTarget(supportMenu2);
         //Finish
         setupListeners();
-    }
-
-    @Override
-    public DropTarget returnDropTarget(float x, float y) {
-        if (isInBox(fleetMenu1.getSimpleBox2(), x, y)) { return  fleetMenu1; }
-        else if (isInBox(fleetMenu2.getSimpleBox2(), x, y)) { return fleetMenu2; }
-        else if (isInBox(mothershipToken1.getSimpleBox2(), x, y)) { return mothershipToken1; }
-        else if (isInBox(mothershipToken2.getSimpleBox2(), x, y)) { return mothershipToken2; }
-        else if (isInBox(junkButton1, x, y)) { return junkButton1; }
-        else if (isInBox(junkButton2, x, y)) { return junkButton2; }
-        else { return null; }
     }
 
     @Override
@@ -76,14 +78,18 @@ public class BattleStage1V1 extends BattleStage {
         resourceMeter1.draw(batch);
         mothershipToken1.draw(batch);
         mothershipToken2.draw(batch);
-        if (yardMenu1.isVisible()) { drawTokenMenu(yardMenu1, batch); }
-        if (yardMenu2.isVisible()) { drawTokenMenu(yardMenu2, batch); }
-        drawTokenMenu(handMenu1, batch);
-        drawTokenMenu(handMenu2, batch);
-        drawFleet(fleetMenu1, batch);
-        drawFleet(fleetMenu2, batch);
         junkButton1.draw(batch);
         junkButton2.draw(batch);
+        drawFleet(fleetMenu1, batch);
+        drawFleet(fleetMenu2, batch);
+        drawTokenMenu(handMenu1, batch);
+        drawTokenMenu(handMenu2, batch);
+        if (yardMenu1.isVisible()) { drawTokenMenu(yardMenu1, batch); }
+        if (yardMenu2.isVisible()) { drawTokenMenu(yardMenu2, batch); }
+        drawTokenMenu(supportMenu1, batch);
+        drawTokenMenu(supportMenu2, batch);
+        if (DEBUG_RENDER) { getBattleScreen().drawDebugSimpleBox2(supportMenu1.getSimpleBox2(), getBattleScreen().getDebugRenderer(), batch); }
+        if (DEBUG_RENDER) { getBattleScreen().drawDebugSimpleBox2(supportMenu2.getSimpleBox2(), getBattleScreen().getDebugRenderer(), batch); }
     }
 
     @Override
