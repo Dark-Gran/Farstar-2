@@ -37,7 +37,7 @@ public class CombatManager {
         }
     }
 
-    //in future: needs upgrade for other mods than 1v1
+    //in future: needs upgrade for other mods than 1v1 (use battle.getEnemies)
     public void processDrop(Token token, DropTarget dropTarget, Token targetToken) {
         if (token instanceof FleetToken) {
             ((FleetToken) token).resetPosition();
