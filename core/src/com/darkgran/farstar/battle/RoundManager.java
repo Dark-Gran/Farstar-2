@@ -83,7 +83,7 @@ public class RoundManager {
         boolean success = false;
         if (!targetingActive && token.getCardListMenu() != null) {
             CardType cardType = token.getCard().getCardInfo().getCardType();
-            if ((!battle.getCombatManager().isActive() && !battle.getCombatManager().getDuelManager().isActive()) || (cardType == CardType.TACTIC)) {
+            if (!activeCombat() || cardType == CardType.TACTIC) {
                 //OUTSIDE COMBAT OR TACTIC
                 Player whoseTurn;
                 if (!battle.getCombatManager().getDuelManager().isActive()) { whoseTurn = battle.getWhoseTurn(); }
@@ -94,30 +94,36 @@ public class RoundManager {
                     if (dropTarget instanceof FleetMenu) {
                         Fleet fleet = ((FleetMenu) dropTarget).getFleet();
                         if (fleet == whoseTurn.getFleet()) {
-                            //ABILITIES
-                            positionInDeployment = position;
-                            if (!postAbility) {
-                                success = checkAllAbilities(token, fleet.getShips()[position], AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
-                            }
-                            if (postAbility || success) {
-                                if (fleet.getShips()[position] != null) {
-                                    targetCard = fleet.getShips()[position].getToken().getCard();
+                            if (!activeCombat() || (fleet.getShips()[position].getToken() != null && fleet.getShips()[position].getToken().isInDuel())) {
+                                //ABILITIES
+                                positionInDeployment = position;
+                                if (!postAbility) {
+                                    success = checkAllAbilities(token, fleet.getShips()[position], AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
                                 }
-                                //DEPLOYMENT
-                                if (cardType == CardType.BLUEPRINT || cardType == CardType.YARD) {
-                                    success = fleet.addShip(token, position);
+                                if (postAbility || success) {
+                                    if (fleet.getShips()[position] != null) {
+                                        targetCard = fleet.getShips()[position].getToken().getCard();
+                                    }
+                                    //DEPLOYMENT
+                                    if (cardType == CardType.BLUEPRINT || cardType == CardType.YARD) {
+                                        success = fleet.addShip(token, position);
+                                    }
                                 }
                             }
                         }
                     //TARGETING MS
                     } else if (dropTarget instanceof MothershipToken) {
                         MothershipToken ms = (MothershipToken) dropTarget;
-                        //ABILITIES
-                        if (ms.getPlayer() == whoseTurn && (cardType == CardType.UPGRADE || cardType == CardType.TACTIC)) {
-                            if (!postAbility) {
-                                success = checkAllAbilities(token, ms.getCard(), AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
+                        if (!activeCombat() || ms.isInDuel()) {
+                            //ABILITIES
+                            if (ms.getPlayer() == whoseTurn && (cardType == CardType.UPGRADE || cardType == CardType.TACTIC)) {
+                                if (!postAbility) {
+                                    success = checkAllAbilities(token, ms.getCard(), AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
+                                }
+                                if (postAbility || success) {
+                                    targetCard = ms.getCard();
+                                }
                             }
-                            if (postAbility || success) { targetCard = ms.getCard(); }
                         }
                     }
                     //PAYMENT + DISCARD (incl. targeting discard)
@@ -146,6 +152,10 @@ public class RoundManager {
                 token.destroy();
             }
         }
+    }
+
+    private boolean activeCombat() {
+        return battle.getCombatManager().isActive() && battle.getCombatManager().getDuelManager().isActive();
     }
 
     private boolean checkAllAbilities(Token caster, Card target, AbilityStarter abilityStarter, Player owner, boolean payPrice, DropTarget dropTarget) {
