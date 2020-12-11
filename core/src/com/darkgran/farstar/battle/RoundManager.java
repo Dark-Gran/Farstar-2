@@ -83,7 +83,7 @@ public class RoundManager {
         boolean success = false;
         if (!targetingActive && token.getCardListMenu() != null) {
             CardType cardType = token.getCard().getCardInfo().getCardType();
-            if (!activeCombat() || cardType == CardType.TACTIC) {
+            if (!battle.activeCombat() || cardType == CardType.TACTIC) {
                 //OUTSIDE COMBAT OR TACTIC
                 Player whoseTurn;
                 if (!battle.getCombatManager().getDuelManager().isActive()) { whoseTurn = battle.getWhoseTurn(); }
@@ -94,7 +94,7 @@ public class RoundManager {
                     if (dropTarget instanceof FleetMenu) {
                         Fleet fleet = ((FleetMenu) dropTarget).getFleet();
                         if (fleet == whoseTurn.getFleet()) {
-                            if (!activeCombat() || (fleet.getShips()[position].getToken() != null && fleet.getShips()[position].getToken().isInDuel())) {
+                            if (!battle.activeCombat() || (fleet.getShips()[position].getToken() != null && fleet.getShips()[position].getToken().isInDuel())) {
                                 //ABILITIES
                                 positionInDeployment = position;
                                 if (!postAbility) {
@@ -114,7 +114,7 @@ public class RoundManager {
                     //TARGETING MS
                     } else if (dropTarget instanceof MothershipToken) {
                         MothershipToken ms = (MothershipToken) dropTarget;
-                        if (!activeCombat() || ms.isInDuel()) {
+                        if (!battle.activeCombat() || ms.isInDuel()) {
                             //ABILITIES
                             if (ms.getPlayer() == whoseTurn && (cardType == CardType.UPGRADE || cardType == CardType.TACTIC)) {
                                 if (!postAbility) {
@@ -152,10 +152,6 @@ public class RoundManager {
                 token.destroy();
             }
         }
-    }
-
-    private boolean activeCombat() {
-        return battle.getCombatManager().isActive() && battle.getCombatManager().getDuelManager().isActive();
     }
 
     private boolean checkAllAbilities(Token caster, Card target, AbilityStarter abilityStarter, Player owner, boolean payPrice, DropTarget dropTarget) {
