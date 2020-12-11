@@ -279,7 +279,9 @@ public class AbilityManager {
         newEffect.setDuration(effectDuration);
         ArrayList<Effect> newAbilityEffects = new ArrayList<>();
         newAbilityEffects.add(newEffect);
-        return new AbilityInfo(AbilityStarter.valueOf(effectInfo.get(2).toString()), newAbilityEffects, new ResourcePrice(), AbilityTargets.NONE); //todo targets
+        AbilityTargets abilityTargets = AbilityTargets.NONE;
+        if (info.size() >= 5) { abilityTargets = AbilityTargets.valueOf(effectInfo.get(5).toString()); }
+        return new AbilityInfo(AbilityStarter.valueOf(effectInfo.get(2).toString()), newAbilityEffects, new ResourcePrice(), abilityTargets);
     }
 
     private void reverseType(Card target, Effect effect, EffectTypeSpecifics.ChangeStatType type) {
