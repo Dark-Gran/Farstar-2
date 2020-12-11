@@ -17,6 +17,10 @@ public class RoundManager {
         this.battle = battle;
     }
 
+    //-------------//
+    //-ROUND-FRAME-//
+    //-------------//
+
     public void launch() {
         roundNum = 0;
         targetingActive = false;
@@ -67,6 +71,10 @@ public class RoundManager {
         }
     }
 
+    //---------------//
+    //-PLAYING-CARDS-//
+    //---------------//
+
     public void processDrop(Token token, DropTarget dropTarget, int position) {
         boolean success = false;
         if (!targetingActive && token.getCardListMenu() != null) {
@@ -83,7 +91,7 @@ public class RoundManager {
                         Fleet fleet = ((FleetMenu) dropTarget).getFleet();
                         if (fleet == whoseTurn.getFleet()) {
                             //ABILITIES
-                            success = checkAllAbilities(token.getCard(), fleet.getShips()[position], AbilityStarter.DEPLOY);
+                            success = checkAllAbilities(token.getCard(), fleet.getShips()[position], AbilityStarter.DEPLOY, whoseTurn, false);
                             if (success) {
                                 if (fleet.getShips()[position] != null) {
                                     targetCard = fleet.getShips()[position].getToken().getCard();
@@ -99,7 +107,7 @@ public class RoundManager {
                         MothershipToken ms = (MothershipToken) dropTarget;
                         //ABILITIES
                         if (ms.getPlayer() == whoseTurn && (cardType == CardType.UPGRADE || cardType == CardType.TACTIC)) {
-                            success = checkAllAbilities(token.getCard(), ms.getCard(), AbilityStarter.DEPLOY);
+                            success = checkAllAbilities(token.getCard(), ms.getCard(), AbilityStarter.DEPLOY, whoseTurn, false);
                             if (success) { targetCard = ms.getCard(); }
                         }
                     }
@@ -132,19 +140,30 @@ public class RoundManager {
 
     public void processClick(Card card, Player owner) {
         if (targetingActive) {
-            System.out.println("Target received!"); //TODO
-        } else if (owner == battle.getWhoseTurn()) {
-            for (int i = 0; i < card.getCardInfo().getAbilities().size(); i++) {
-                AbilityInfo abilityInfo = card.getCardInfo().getAbilities().get(i);
-                if (abilityInfo.getStarter() == AbilityStarter.USE && tierAllowed(card.getCardInfo().getTier())) {
-                    if (battle.getWhoseTurn().canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
-                        if (battle.getAbilityManager().playAbility(card, null, i)) {
+            processTarget(card);
+        } else if (owner == battle.getWhoseTurn() && tierAllowed(card.getCardInfo().getTier())) {
+            checkAllAbilities(card, null, AbilityStarter.USE, owner, true);
+        }
+    }
+
+    private boolean checkAllAbilities(Card caster, Card target, AbilityStarter abilityStarter, Player owner, boolean payPrice) {
+        boolean success = true;
+        CardType cardType = caster.getCardInfo().getCardType();
+        for (int i = 0; i < caster.getCardInfo().getAbilities().size(); i++) {
+            if (caster.getCardInfo().getAbilities().get(i) != null) {
+                if (caster.getCardInfo().getAbilities().get(i).getStarter() == abilityStarter) { //cardType == CardType.UPGRADE || cardType == CardType.TACTIC ||
+                    AbilityInfo abilityInfo = caster.getCardInfo().getAbilities().get(i);
+                    if (!payPrice || owner.canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
+                        success = battle.getAbilityManager().playAbility(caster, target, i);
+                        if (payPrice && success) {
                             owner.payday(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter());
                         }
+                        break; //in-future: support multiple abilities with the same starter
                     }
                 }
             }
         }
+        return success;
     }
 
     public void askForTargets(Card card, int abilityIx) {
@@ -154,19 +173,13 @@ public class RoundManager {
         System.out.println("CardInDeployment saved.");
     }
 
-    private boolean checkAllAbilities(Card caster, Card target, AbilityStarter abilityStarter) {
-        boolean success = true;
-        CardType cardType = caster.getCardInfo().getCardType();
-        for (int i = 0; i < caster.getCardInfo().getAbilities().size(); i++) {
-            if (caster.getCardInfo().getAbilities().get(i) != null) {
-                if (caster.getCardInfo().getAbilities().get(i).getStarter() == abilityStarter) { //cardType == CardType.UPGRADE || cardType == CardType.TACTIC ||
-                    success = battle.getAbilityManager().playAbility(caster, target, i);
-                    if (!success) { break; }
-                }
-            }
-        }
-        return success;
+    private void processTarget(Card card) {
+
     }
+
+    //-----------//
+    //-UTILITIES-//
+    //-----------//
 
     public static boolean ownsToken(Player player, Token token) {
         if (token instanceof FleetToken) {
