@@ -17,8 +17,10 @@ public class Junkpile extends CardList {
         setMaxSize(BattleSettings.DECK_SIZE*2);
     }
 
-    public void addCard(Card card) {
+    @Override
+    public boolean addCard(Card card) {
         getCards().add(card);
+        return true;
     }
 
 }

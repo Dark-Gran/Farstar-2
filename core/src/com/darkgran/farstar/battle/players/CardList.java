@@ -45,6 +45,15 @@ public abstract class CardList {
         }
     }
 
+    public boolean addCard(Card card) {
+        if (cards != null && cardListMenu != null) {
+            cards.add(card);
+            cardListMenu.generateNewToken(card);
+            return true;
+        }
+        return false;
+    }
+
     public void receiveCardListMenu(CardListMenu cardListMenu) { this.cardListMenu = cardListMenu; }
 
     public ArrayList<Card> getCards() { return cards; }

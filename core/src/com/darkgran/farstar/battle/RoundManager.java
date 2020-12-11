@@ -93,11 +93,20 @@ public class RoundManager {
                     //TARGETING ANYWHERE FOR ACTION-CARDS
                     if (cardType == CardType.ACTION) {
                         success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, true, dropTarget);
-                    //TARGETING SUPPORTS FOR SUPPORT-CARDS
-                    } else if (cardType == CardType.SUPPORT) {
-                        if (dropTarget instanceof SupportMenu) { //TODO
-
-
+                    //TARGETING SUPPORTS
+                    } else if (dropTarget instanceof SupportMenu) {
+                        if (((SupportMenu) dropTarget).getCardList() instanceof Supports) {
+                            Supports supports = (Supports) ((SupportMenu) dropTarget).getCardList();
+                            if (cardType == CardType.SUPPORT) {
+                                if (supports == whoseTurn.getSupports() && !battle.activeCombatOrDuel()) {
+                                    if (!postAbility) {
+                                        success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
+                                    }
+                                    if (postAbility || success) {
+                                        success = supports.addCard(token.getCard());
+                                    }
+                                }
+                            }
                         }
                     //TARGETING FLEET
                     } else if (dropTarget instanceof FleetMenu) {
