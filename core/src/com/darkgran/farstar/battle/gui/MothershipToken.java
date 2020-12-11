@@ -1,12 +1,10 @@
 package com.darkgran.farstar.battle.gui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.util.SimpleBox2;
 
-public class MothershipToken extends Token implements DropTarget {
+public class MothershipToken extends ClickToken implements DropTarget {
     private final SimpleBox2 simpleBox2 = new SimpleBox2();
 
     public MothershipToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
@@ -22,18 +20,10 @@ public class MothershipToken extends Token implements DropTarget {
     }
 
     @Override
-    public void setupListener() {
-        super.setupListener();
-        this.addListener(new InputListener()
-        {
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                if (button == 0) {
-                    getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(getThis(), getCard().getPlayer());
-                }
-                return false;
-            }
-        });
+    public void click(int button) {
+        if (button == 0) {
+            getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(getThis(), getCard().getPlayer());
+        }
     }
 
     @Override

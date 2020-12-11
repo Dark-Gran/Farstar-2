@@ -19,13 +19,13 @@ public class SupportMenu extends CardListMenu implements DropTarget {
     public void generateTokens() {
         getTokens().clear();
         for (int i = 0; i < getCardList().getCards().size(); i++) {
-            getTokens().add(new Token(getCardList().getCards().get(i), getX() + getOffset()*translatePosition(i), getY(), getBattleStage(), this));
+            getTokens().add(new SupportToken(getCardList().getCards().get(i), getX() + getOffset()*translatePosition(i), getY(), getBattleStage(), this));
         }
     }
 
     @Override
     public void generateNewToken(Card card) {
-        getTokens().add(new Token(card, getX() + getOffset()*translatePosition(getTokens().size()), getY(), getBattleStage(), this));
+        getTokens().add(new SupportToken(card, getX() + getOffset()*translatePosition(getTokens().size()), getY(), getBattleStage(), this));
     }
 
     public static int translatePosition(int position) {

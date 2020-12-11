@@ -2,7 +2,7 @@ package com.darkgran.farstar.battle.gui;
 
 import com.darkgran.farstar.battle.players.Card;
 
-public class AnchoredToken extends Token {
+public abstract class AnchoredToken extends ClickToken {
     private final float originX;
     private final float originY;
 
