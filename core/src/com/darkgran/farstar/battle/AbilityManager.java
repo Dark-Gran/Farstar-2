@@ -193,18 +193,20 @@ public class AbilityManager {
     }
 
     //CHANGE_RESOURCE
-    private boolean changeResource(Card target, Effect effect, boolean reverse) { //TODO
+    private boolean changeResource(Card target, Effect effect, boolean reverse) {
         boolean success = false;
         if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
             Object changeInfo = effect.getEffectInfo().get(1);
             EffectTypeSpecifics.ChangeResourceType resource = EffectTypeSpecifics.ChangeResourceType.valueOf(effect.getEffectInfo().get(0).toString());
+            int change = floatObjectToInt(changeInfo);
+            if (reverse) { change *= -1; }
             switch (resource) {
                 case ENERGY:
-                    //addEnergy
+                    target.getPlayer().addEnergy(change);
                     success = true;
                     break;
                 case MATTER:
-                    //addMatter
+                    target.getPlayer().addMatter(change);
                     success = true;
                     break;
             }
