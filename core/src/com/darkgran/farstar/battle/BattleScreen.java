@@ -19,28 +19,7 @@ public class BattleScreen extends SuperScreen {
     private final BattleStage battleStage;
     public final static boolean DEBUG_RENDER = true;
 
-    private final InputProcessor generalInputProcessor = new InputProcessor() {
-        @Override
-        public boolean keyDown(int keycode) { return false; }
-
-        @Override
-        public boolean keyUp(int keycode) { return false; }
-
-        @Override
-        public boolean keyTyped(char character) { return false; }
-
-        @Override
-        public boolean touchDown(int screenX, int screenY, int pointer, int button) { return false; }
-
-        @Override
-        public boolean touchDragged(int screenX, int screenY, int pointer) { return false; }
-
-        @Override
-        public boolean mouseMoved(int screenX, int screenY) { return false; }
-
-        @Override
-        public boolean scrolled(int amount) { return false; }
-
+    private final InputAdapter generalInputProcessor = new InputAdapter() {
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             if (button == 1) { //mouse.right
@@ -50,7 +29,6 @@ public class BattleScreen extends SuperScreen {
             }
             return false;
         }
-
     };
 
     public BattleScreen(final Farstar game, TableStage tableStage, Battle battle)
