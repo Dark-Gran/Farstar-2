@@ -38,6 +38,13 @@ public abstract class CardList {
         }
     }
 
+    public void setPlayerOnAll(Player player) {
+        setPlayer(player);
+        for (Card card : cards) {
+            card.setPlayer(player);
+        }
+    }
+
     public void receiveCardListMenu(CardListMenu cardListMenu) { this.cardListMenu = cardListMenu; }
 
     public ArrayList<Card> getCards() { return cards; }
