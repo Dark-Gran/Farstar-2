@@ -7,7 +7,6 @@ import com.darkgran.farstar.battle.gui.HandMenu;
 import java.util.ArrayList;
 
 public class Hand extends CardList{
-    private HandMenu handMenu;
 
     public Hand() {
         setupSize();
@@ -29,10 +28,6 @@ public class Hand extends CardList{
     @Override
     public void setupSize() {
         setMaxSize(BattleSettings.MAX_IN_HAND);
-    }
-
-    public void receiveHandMenu(HandMenu handMenu) {
-        this.handMenu = handMenu;
     }
 
 }
