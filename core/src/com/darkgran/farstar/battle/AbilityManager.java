@@ -11,7 +11,7 @@ import java.util.ListIterator;
 import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE;
 import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE;
 
-public class AbilityManager { //TODO: EffectType.REPAIR
+public class AbilityManager {
     private final Battle battle;
 
     public AbilityManager(Battle battle) {
@@ -75,7 +75,6 @@ public class AbilityManager { //TODO: EffectType.REPAIR
                     break;
                 case REPAIR:
                     if (!reverse) { success = repair(target, effect); }
-                    System.out.println(success);
                     break;
             }
         }
@@ -183,7 +182,8 @@ public class AbilityManager { //TODO: EffectType.REPAIR
     private boolean repair(Card target, Effect effect) {
         boolean success = false;
         if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 1 && effect.getEffectInfo().get(0) != null) {
-            //TODO
+            int dmg = floatObjectToInt(effect.getEffectInfo().get(0));
+            target.repairDMG(dmg);
             success = true;
         }
         return success;

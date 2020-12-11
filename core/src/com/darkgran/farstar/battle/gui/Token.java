@@ -47,7 +47,7 @@ public class Token extends TextFont {
         color = ColorPalette.getTypeColor(card.getCardInfo().getOffenseType());
         cardOffense.draw(getFont(), batch, getX(), getY()+getHeight()/3, String.valueOf(card.getCardInfo().getOffense()), color);
         color = ColorPalette.getTypeColor(card.getCardInfo().getDefenseType());
-        cardDefense.draw(getFont(), batch, getX()+getWidth()*5/6, getY()+getHeight()/3, String.valueOf(card.getCardInfo().getDefense()), color);
+        cardDefense.draw(getFont(), batch, getX()+getWidth()*5/6, getY()+getHeight()/3, String.valueOf(card.getHealth()), color);
         if (DEBUG_RENDER) { battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getDebugRenderer(), batch); }
     }
 

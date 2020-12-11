@@ -7,12 +7,13 @@ import com.darkgran.farstar.battle.players.abilities.Effect;
 
 import java.util.ArrayList;
 
-public class Card { //TODO rework dmg to support repairing
+public class Card {
     private final CardInfo cardInfo;
     private final CardInfo originalInfo;
     private final ArrayList<Effect> effects = new ArrayList<Effect>();
     private final ArrayList<AbilityRecord> history = new ArrayList<AbilityRecord>();
     private boolean used; //for AbilityStarter.USE
+    private int damage = 0;
 
     public Card(CardInfo cardInfo) {
         originalInfo = cardInfo;
@@ -30,9 +31,16 @@ public class Card { //TODO rework dmg to support repairing
     }
 
     public boolean receiveDMG(int dmg) { //returns survival
-        cardInfo.setDefense(cardInfo.getDefense()-dmg);
-        return cardInfo.getDefense() > 0;
+        damage += dmg;
+        return getHealth() > 0;
     }
+
+    public void repairDMG(int dmg) {
+        damage -= dmg;
+        if (damage < 0) { damage = 0; }
+    }
+
+    public int getHealth() { return cardInfo.getDefense()-damage; }
 
     public void tickEffects(AbilityManager abilityManager) { //does not remove
         for (int i = 0; i < effects.size(); i++) {
@@ -72,5 +80,7 @@ public class Card { //TODO rework dmg to support repairing
     public boolean isUsed() { return used; }
 
     public void setUsed(boolean used) { this.used = used; }
+
+    public int getDamage() { return damage; }
 
 }
