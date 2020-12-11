@@ -1,5 +1,7 @@
 package com.darkgran.farstar.battle;
 
+import com.darkgran.farstar.battle.gui.DropTarget;
+import com.darkgran.farstar.battle.gui.Token;
 import com.darkgran.farstar.battle.players.*;
 import com.darkgran.farstar.battle.players.abilities.*;
 
@@ -16,8 +18,9 @@ public class AbilityManager {
         this.battle = battle;
     }
 
-    public boolean playAbility(Card caster, Card target, int abilityIx) {
+    public boolean playAbility(Token casterToken, Card target, int abilityIx, DropTarget dropTarget) {
         boolean success = false;
+        Card caster = casterToken.getCard();
         if (caster != null && caster.getCardInfo().getAbilities() != null) {
             AbilityInfo ability = caster.getCardInfo().getAbilities().get(abilityIx);
             if (ability != null && ability.getEffects() != null) {
@@ -26,10 +29,10 @@ public class AbilityManager {
                     AbilityTargets abilityTargets = ability.getTargets();
                     switch (abilityTargets) {
                         case SELF:
-                            target = caster;
+                            target = casterToken.getCard();
                             break;
                         case ANY:
-                            getBattle().getRoundManager().askForTargets(caster, abilityIx);
+                            getBattle().getRoundManager().askForTargets(casterToken, abilityIx, dropTarget);
                             break;
                     }
                 }
@@ -174,11 +177,8 @@ public class AbilityManager {
     //-UTILITIES-//
     //-----------//
 
-    private void saveEffect(Card target, Effect effect) {
-        if (getBattle().getCombatManager().getDuelManager().isActive()) {
-            effect.setDuration(effect.getDuration()-1);
-        }
-        target.addToEffects(effect);
+    public static boolean validAbilityTarget(AbilityInfo abilityInfo, Card target) {
+        return true;
     }
 
     public static boolean hasStarter(Card card, AbilityStarter abilityStarter) {
@@ -240,6 +240,13 @@ public class AbilityManager {
         return (effectsA == effectsB);
     }
 
+    private void saveEffect(Card target, Effect effect) {
+        if (getBattle().getCombatManager().getDuelManager().isActive()) {
+            effect.setDuration(effect.getDuration()-1);
+        }
+        target.addToEffects(effect);
+    }
+
     public static AbilityInfo effectToAbility(ArrayList effectInfo, int effectDuration) { //creates new ability-attribute
         EffectType effectType = EffectType.valueOf(effectInfo.get(1).toString());
         Effect newEffect = new Effect();
@@ -282,8 +289,6 @@ public class AbilityManager {
         }
     }
 
-    public Battle getBattle() { return battle; }
-
     private static int floatObjectToInt(Object obj) {
         if (obj instanceof Float) {
             float f = (Float) obj;
@@ -291,5 +296,7 @@ public class AbilityManager {
         }
         return 0;
     }
+
+    public Battle getBattle() { return battle; }
 
 }

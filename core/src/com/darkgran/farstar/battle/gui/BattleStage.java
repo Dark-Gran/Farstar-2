@@ -64,7 +64,7 @@ public abstract class BattleStage extends ListeningStage {
             if (token.getCard().getCardInfo().getCardType() != CardType.TACTIC && combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
                 combatManager.processDrop(token, targetHit, getCombatDropToken(x, y, targetHit));
             } else {
-                getBattleScreen().getBattle().getRoundManager().processDrop(token, targetHit, getRoundDropPosition(x, y, targetHit, token.getCard().getCardInfo().getCardType()));
+                getBattleScreen().getBattle().getRoundManager().processDrop(token, targetHit, getRoundDropPosition(x, y, targetHit, token.getCard().getCardInfo().getCardType()), false);
             }
         } else if (token instanceof AnchoredToken) {
             ((AnchoredToken) token).resetPosition();

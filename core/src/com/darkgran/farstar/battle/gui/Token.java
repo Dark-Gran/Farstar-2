@@ -87,4 +87,6 @@ public class Token extends TextFont {
 
     public void setInDuel(boolean inDuel) { this.inDuel = inDuel; }
 
+    public Token getThis() { return this; }
+
 }

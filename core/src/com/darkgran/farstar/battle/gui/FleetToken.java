@@ -21,7 +21,7 @@ public class FleetToken extends AnchoredToken {
         {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(getCard(), getFleetMenu().getPlayer());
+                getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(getThis(), getFleetMenu().getPlayer());
                 return false;
             }
         });
