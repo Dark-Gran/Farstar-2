@@ -69,7 +69,7 @@ public class AbilityManager {
                     if (!reverse) { success = changeStat(target, effect, reverse); }
                     else { success = reverseStat(target, effect); }
                     break;
-                case DEAL_DMG:
+                case DEAL_DMG: //TODO debug
                     if (!reverse) { success = dealDmg(target, effect); }
                     break;
             }
@@ -178,7 +178,7 @@ public class AbilityManager {
     //-----------//
 
     public static boolean validAbilityTarget(AbilityInfo abilityInfo, Card target) {
-        return true;
+        return true; //TODO
     }
 
     public static boolean hasStarter(Card card, AbilityStarter abilityStarter) {

@@ -175,15 +175,18 @@ public class RoundManager {
         return success;
     }
 
-    public void askForTargets(Token token, int abilityIx, DropTarget dropTarget) {
+    public void askForTargets(Token token, int abilityIx, DropTarget dropTarget) { //TODO debug starter.use
         targetingActive = true;
         tokenInDeployment = token;
         abilityIxInDeployment = abilityIx;
         dropInDeployment = dropTarget;
+        System.out.println("Need a Target.");
     }
 
     private void processTarget(Token target) {
+        System.out.println("Processing click...");
         if (targetingActive && tokenInDeployment != null && tokenInDeployment.getCard().getCardInfo().getAbilities().size() <= abilityIxInDeployment) {
+            System.out.println("Valid Save.");
             AbilityInfo abilityInfo = tokenInDeployment.getCard().getCardInfo().getAbilities().get(abilityIxInDeployment);
             if (AbilityManager.validAbilityTarget(abilityInfo, target.getCard())) {
                 System.out.println("Valid Target.");
