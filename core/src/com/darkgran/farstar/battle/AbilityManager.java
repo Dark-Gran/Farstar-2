@@ -11,7 +11,7 @@ import java.util.ListIterator;
 import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE;
 import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE;
 
-public class AbilityManager { //TODO: 1.death on dealDmg, 2.cancel abilityTargeting, 3. use only once per turn
+public class AbilityManager { //TODO: cancel abilityTargeting
     private final Battle battle;
 
     public AbilityManager(Battle battle) {
@@ -168,7 +168,7 @@ public class AbilityManager { //TODO: 1.death on dealDmg, 2.cancel abilityTarget
             int dmg = floatObjectToInt(effect.getEffectInfo().get(0));
             TechType techType = TechType.valueOf(effect.getEffectInfo().get(1).toString());
             dmg = DuelManager.getDmgAgainstShields(dmg, techType, target.getCardInfo().getDefenseType());
-            target.receiveDMG(dmg);
+            if (!target.receiveDMG(dmg)) { target.death(); }
             success = true;
         }
         return success;

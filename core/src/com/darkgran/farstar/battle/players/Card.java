@@ -12,7 +12,7 @@ public class Card {
     private final CardInfo originalInfo;
     private final ArrayList<Effect> effects = new ArrayList<Effect>();
     private final ArrayList<AbilityRecord> history = new ArrayList<AbilityRecord>();
-
+    private boolean used; //for AbilityStarter.USE
 
     public Card(CardInfo cardInfo) {
         originalInfo = cardInfo;
@@ -68,5 +68,9 @@ public class Card {
     public ArrayList<Effect> getEffects() { return effects; }
 
     public ArrayList<AbilityRecord> getHistory() { return history; }
+
+    public boolean isUsed() { return used; }
+
+    public void setUsed(boolean used) { this.used = used; }
 
 }

@@ -66,6 +66,11 @@ public abstract class Battle implements BattleSettings {
         whoseTurn.getFleet().tickEffectsOnAll(abilityManager);
     }
 
+    public void refreshUsedShips() { //for AbilityStarter.USE
+        whoseTurn.getMs().setUsed(false);
+        whoseTurn.getFleet().setUsedOnAll(false);
+    }
+
     public Player getWhoseTurn() { return whoseTurn; }
 
     public void setWhoseTurn(Player whoseTurn) { this.whoseTurn = whoseTurn; }

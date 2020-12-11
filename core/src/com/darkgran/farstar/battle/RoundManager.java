@@ -62,6 +62,7 @@ public class RoundManager {
     public void afterCombat() {
         if (!battle.isEverythingDisabled()) {
             battle.tickEffects();
+            battle.refreshUsedShips();
             battle.passTurn();
             if (firstTurnThisRound) {
                 firstTurnThisRound = false;
@@ -147,17 +148,19 @@ public class RoundManager {
 
     private boolean checkAllAbilities(Token caster, Card target, AbilityStarter abilityStarter, Player owner, boolean payPrice, DropTarget dropTarget) {
         boolean success = true;
-        CardInfo cardInfo = caster.getCard().getCardInfo();
-        for (int i = 0; i < cardInfo.getAbilities().size(); i++) {
-            if (cardInfo.getAbilities().get(i) != null) {
-                if (cardInfo.getAbilities().get(i).getStarter() == abilityStarter) { //cardType == CardType.UPGRADE || cardType == CardType.TACTIC ||
-                    AbilityInfo abilityInfo = cardInfo.getAbilities().get(i);
-                    if (!payPrice || owner.canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
-                        success = battle.getAbilityManager().playAbility(caster, target, i, dropTarget);
-                        if (payPrice && success) {
-                            owner.payday(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter());
+        if (abilityStarter != AbilityStarter.USE || !caster.getCard().isUsed()) {
+            CardInfo cardInfo = caster.getCard().getCardInfo();
+            for (int i = 0; i < cardInfo.getAbilities().size(); i++) {
+                if (cardInfo.getAbilities().get(i) != null) {
+                    if (cardInfo.getAbilities().get(i).getStarter() == abilityStarter) { //cardType == CardType.UPGRADE || cardType == CardType.TACTIC ||
+                        AbilityInfo abilityInfo = cardInfo.getAbilities().get(i);
+                        if (!payPrice || owner.canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
+                            success = battle.getAbilityManager().playAbility(caster, target, i, dropTarget);
+                            if (payPrice && success) {
+                                owner.payday(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter());
+                            }
+                            break; //in-future: support multiple abilities with the same starter
                         }
-                        break; //in-future: support multiple abilities with the same starter
                     }
                 }
             }
@@ -190,6 +193,7 @@ public class RoundManager {
                     //System.out.println("Ability Success!");
                     if (abilityInfo.getStarter() == AbilityStarter.USE) {
                         battle.getWhoseTurn().payday(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter());
+                        tokenInDeployment.getCard().setUsed(true);
                         //System.out.println("Ability price paid.");
                     } else if (dropInDeployment != null) {
                         //System.out.println("Reprocessing original drop...");

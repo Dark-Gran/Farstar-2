@@ -87,6 +87,10 @@ public class Fleet {
         for (Ship ship : ships) { if (ship != null) { ship.tickEffects(abilityManager); } }
     }
 
+    public void setUsedOnAll(boolean used) {
+        for (Ship ship : ships) { if (ship != null) { ship.setUsed(used); } }
+    }
+
     public void checkEffectsOnAll(AbilityManager abilityManager) {
         for (Ship ship : ships) { if (ship != null) { ship.checkEffects(abilityManager); } }
     }
