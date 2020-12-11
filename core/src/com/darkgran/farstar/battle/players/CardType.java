@@ -1,5 +1,5 @@
 package com.darkgran.farstar.battle.players;
 
 public enum CardType {
-    MS, YARD, BLUEPRINT, UPGRADE, TACTIC
+    MS, YARD, BLUEPRINT, UPGRADE, TACTIC, ACTION
 }

@@ -67,7 +67,7 @@ public class AbilityManager {
                     success = true;
                     break;
                 case CHANGE_STAT:
-                    if (!reverse) { success = changeStat(target, effect, reverse); }
+                    if (!reverse) { success = changeStat(target, effect); }
                     else { success = reverseStat(target, effect); }
                     break;
                 case DEAL_DMG:
@@ -76,13 +76,17 @@ public class AbilityManager {
                 case REPAIR:
                     if (!reverse) { success = repair(target, effect); }
                     break;
+                case CHANGE_RESOURCE: //TODO
+                    /*if (!reverse) { success = changeResource(target, effect, reverse); }
+                    else { success = reverseStat(target, effect); }*/
+                    break;
             }
         }
         return success;
     }
 
     //CHANGE_STAT
-    private boolean changeStat(Card target, Effect effect, boolean reverse) {
+    private boolean changeStat(Card target, Effect effect) {
         boolean success = false;
         boolean dontSaveEffect = false;
         if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
@@ -124,7 +128,7 @@ public class AbilityManager {
                     }
                     break;
             }
-            if (!reverse && !dontSaveEffect) {
+            if (!dontSaveEffect) {
                 saveEffect(target, InstanceFactory.instanceEffect(effect));
             }
         }

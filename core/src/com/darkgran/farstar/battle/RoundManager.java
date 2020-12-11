@@ -116,7 +116,7 @@ public class RoundManager {
                         MothershipToken ms = (MothershipToken) dropTarget;
                         if (!battle.activeCombatOrDuel() || ms.isInDuel()) {
                             //ABILITIES
-                            if (ms.getPlayer() == whoseTurn && (cardType == CardType.UPGRADE || cardType == CardType.TACTIC)) {
+                            if (ms.getPlayer() == whoseTurn && (cardType == CardType.ACTION || cardType == CardType.UPGRADE || cardType == CardType.TACTIC)) {
                                 if (!postAbility) {
                                     success = checkAllAbilities(token, ms.getCard(), AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
                                 }
