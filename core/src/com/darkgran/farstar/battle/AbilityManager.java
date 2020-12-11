@@ -11,7 +11,7 @@ import java.util.ListIterator;
 import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE;
 import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE;
 
-public class AbilityManager { //TODO: 1.valid target, 2.death on dealDmg, 3. use only once per turn
+public class AbilityManager { //TODO: 1.death on dealDmg, 2.cancel abilityTargeting, 3. use only once per turn
     private final Battle battle;
 
     public AbilityManager(Battle battle) {
@@ -178,8 +178,13 @@ public class AbilityManager { //TODO: 1.valid target, 2.death on dealDmg, 3. use
     //-UTILITIES-//
     //-----------//
 
-    public static boolean validAbilityTarget(AbilityInfo abilityInfo, Card target) {
-        return true; //TODO
+    public static boolean validAbilityTarget(AbilityInfo abilityInfo, Card caster, Card target) {
+        switch (abilityInfo.getTargets()) {
+            default:
+                return true;
+            case SELF:
+                return caster==target;
+        }
     }
 
     public static boolean hasStarter(Card card, AbilityStarter abilityStarter) {

@@ -184,7 +184,7 @@ public class RoundManager {
     private void processTarget(Token target) {
         if (targetingActive && tokenInDeployment != null && abilityIxInDeployment < tokenInDeployment.getCard().getCardInfo().getAbilities().size()) {
             AbilityInfo abilityInfo = tokenInDeployment.getCard().getCardInfo().getAbilities().get(abilityIxInDeployment);
-            if (AbilityManager.validAbilityTarget(abilityInfo, target.getCard())) {
+            if (AbilityManager.validAbilityTarget(abilityInfo, tokenInDeployment.getCard(), target.getCard())) {
                 //System.out.println("Playing ability...");
                 if (battle.getAbilityManager().playAbility(tokenInDeployment, target.getCard(), abilityIxInDeployment, dropInDeployment)) {
                     //System.out.println("Ability Success!");
