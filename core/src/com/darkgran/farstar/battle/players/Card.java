@@ -7,7 +7,7 @@ import com.darkgran.farstar.battle.players.abilities.Effect;
 
 import java.util.ArrayList;
 
-public class Card {
+public class Card { //TODO rework dmg to support repairing
     private final CardInfo cardInfo;
     private final CardInfo originalInfo;
     private final ArrayList<Effect> effects = new ArrayList<Effect>();
