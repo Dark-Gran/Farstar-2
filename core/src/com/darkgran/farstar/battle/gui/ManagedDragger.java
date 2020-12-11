@@ -33,7 +33,7 @@ public class ManagedDragger extends Dragger {
     }
 
     private boolean isEnabled() {
-        if (!roundManager.getBattle().isEverythingDisabled()) {
+        if (!roundManager.getBattle().isEverythingDisabled() && !roundManager.isTargetingActive()) {
             if (!(this.getToken().getCard() instanceof Ship) || !((Ship) this.getToken().getCard()).haveFought()) {
                 if (!combatManager.getDuelManager().isActive() && ownsToken(roundManager.getBattle().getWhoseTurn()) && (forCombat == combatManager.isActive() || (combatManager.isActive() && this.getToken().getCard().getCardInfo().getCardType() == CardType.TACTIC))) {
                     return true;

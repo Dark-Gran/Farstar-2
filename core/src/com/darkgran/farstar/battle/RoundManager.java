@@ -7,9 +7,11 @@ import com.darkgran.farstar.battle.players.*;
 
 public class RoundManager {
     private final Battle battle;
-    private int roundNum = 0;
     private boolean firstTurnThisRound;
-    private boolean activeTargeting;
+    private int roundNum = 0;
+    private boolean targetingActive;
+    private Card cardInDeployment;
+    private int abilityIxInDeployment = 0;
 
     public RoundManager(Battle battle) {
         this.battle = battle;
@@ -17,7 +19,9 @@ public class RoundManager {
 
     public void launch() {
         roundNum = 0;
-        activeTargeting = false;
+        targetingActive = false;
+        cardInDeployment = null;
+        abilityIxInDeployment = 0;
         newRound();
     }
 
@@ -127,8 +131,8 @@ public class RoundManager {
     }
 
     public void processClick(Card card, Player owner) {
-        if (activeTargeting) {
-
+        if (targetingActive) {
+            System.out.println("Target received!"); //TODO
         } else if (owner == battle.getWhoseTurn()) {
             for (int i = 0; i < card.getCardInfo().getAbilities().size(); i++) {
                 AbilityInfo abilityInfo = card.getCardInfo().getAbilities().get(i);
@@ -143,12 +147,19 @@ public class RoundManager {
         }
     }
 
+    public void askForTargets(Card card, int abilityIx) {
+        targetingActive = true;
+        cardInDeployment = card;
+        abilityIxInDeployment = abilityIx;
+        System.out.println("CardInDeployment saved.");
+    }
+
     private boolean checkAllAbilities(Card caster, Card target, AbilityStarter abilityStarter) {
         boolean success = true;
         CardType cardType = caster.getCardInfo().getCardType();
         for (int i = 0; i < caster.getCardInfo().getAbilities().size(); i++) {
             if (caster.getCardInfo().getAbilities().get(i) != null) {
-                if (cardType == CardType.UPGRADE || cardType == CardType.TACTIC || caster.getCardInfo().getAbilities().get(i).getStarter() == abilityStarter) {
+                if (caster.getCardInfo().getAbilities().get(i).getStarter() == abilityStarter) { //cardType == CardType.UPGRADE || cardType == CardType.TACTIC ||
                     success = battle.getAbilityManager().playAbility(caster, target, i);
                     if (!success) { break; }
                 }
@@ -157,14 +168,16 @@ public class RoundManager {
         return success;
     }
 
+    public boolean tierAllowed(int tier) { return tier <= roundNum; }
+
     public int getRoundNum() { return roundNum; }
 
     public Battle getBattle() { return battle; }
 
     public boolean isFirstTurnThisRound() { return firstTurnThisRound; }
 
-    public boolean tierAllowed(int tier) {
-        return tier <= roundNum;
-    }
+    public Card getCardInDeployment() { return cardInDeployment; }
+
+    public boolean isTargetingActive() { return targetingActive; }
 
 }

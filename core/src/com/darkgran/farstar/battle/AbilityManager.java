@@ -9,25 +9,43 @@ import java.util.ListIterator;
 import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE;
 import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE;
 
-public class AbilityManager { //TODO Targeting
+public class AbilityManager {
     private final Battle battle;
 
     public AbilityManager(Battle battle) {
         this.battle = battle;
     }
 
-    public boolean playAbility(Card caster, Card target, int abilityIX) {
+    public boolean playAbility(Card caster, Card target, int abilityIx) {
         boolean success = false;
-        if (caster != null && caster.getCardInfo().getAbilities() != null && target != null) {
-            AbilityInfo ability = caster.getCardInfo().getAbilities().get(abilityIX);
+        if (caster != null && caster.getCardInfo().getAbilities() != null) {
+            AbilityInfo ability = caster.getCardInfo().getAbilities().get(abilityIx);
             if (ability != null && ability.getEffects() != null) {
-                for (int i = 0; i < ability.getEffects().size(); i++) {
-                    if (ability.getEffects().get(i) != null) {
-                        if (!success) { success = executeEffect(target, ability.getEffects().get(i), false); }
-                        else { executeEffect(target, ability.getEffects().get(i), false); }
+                //TARGETING
+                if (target == null) {
+                    AbilityTargets abilityTargets = ability.getTargets();
+                    switch (abilityTargets) {
+                        case SELF:
+                            target = caster;
+                            break;
+                        case ANY:
+                            getBattle().getRoundManager().askForTargets(caster, abilityIx);
+                            break;
                     }
                 }
-                if (success) { target.addToHistory(caster, abilityIX); }
+                //EXECUTION
+                if (target != null) {
+                    for (int i = 0; i < ability.getEffects().size(); i++) {
+                        if (ability.getEffects().get(i) != null) {
+                            if (!success) {
+                                success = executeEffect(target, ability.getEffects().get(i), false);
+                            } else {
+                                executeEffect(target, ability.getEffects().get(i), false);
+                            }
+                        }
+                    }
+                    if (success) { target.addToHistory(caster, abilityIx); }
+                }
             }
         }
         return success;
