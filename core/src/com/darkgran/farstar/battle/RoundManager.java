@@ -26,10 +26,7 @@ public class RoundManager {
 
     public void launch() {
         roundNum = 0;
-        targetingActive = false;
-        tokenInDeployment = null;
-        dropInDeployment = null;
-        abilityIxInDeployment = 0;
+        resetInDeployment();
         newRound();
     }
 
@@ -122,7 +119,7 @@ public class RoundManager {
                     }
                     //PAYMENT + DISCARD (incl. targeting discard)
                     if (success || postAbility) {
-                        System.out.println("Drop Success.");
+                        //System.out.println("Drop Success.");
                         if (targetCard != null && cardType == CardType.TACTIC && battle.getCombatManager().getDuelManager().isActive()) {
                             battle.getCombatManager().getDuelManager().saveTactic(token.getCard(), targetCard);
                         }
@@ -148,14 +145,6 @@ public class RoundManager {
         }
     }
 
-    public void processClick(Token token, Player owner) {
-        if (targetingActive) {
-            processTarget(token);
-        } else if (owner == battle.getWhoseTurn() && tierAllowed(token.getCard().getCardInfo().getTier())) {
-            checkAllAbilities(token, null, AbilityStarter.USE, owner, true, null);
-        }
-    }
-
     private boolean checkAllAbilities(Token caster, Card target, AbilityStarter abilityStarter, Player owner, boolean payPrice, DropTarget dropTarget) {
         boolean success = true;
         CardInfo cardInfo = caster.getCard().getCardInfo();
@@ -176,7 +165,7 @@ public class RoundManager {
         return success;
     }
 
-    public void askForTargets(Token token, int abilityIx, DropTarget dropTarget) { //TODO debug starter.use
+    public void askForTargets(Token token, int abilityIx, DropTarget dropTarget) {
         targetingActive = true;
         tokenInDeployment = token;
         abilityIxInDeployment = abilityIx;
@@ -184,25 +173,42 @@ public class RoundManager {
         System.out.println("Need a Target.");
     }
 
+    public void processClick(Token token, Player owner) {
+        if (targetingActive) {
+            processTarget(token);
+        } else if (owner == battle.getWhoseTurn() && tierAllowed(token.getCard().getCardInfo().getTier())) {
+            checkAllAbilities(token, null, AbilityStarter.USE, owner, true, null);
+        }
+    }
+
     private void processTarget(Token target) {
-        System.out.println("Processing click...");
-        if (targetingActive && tokenInDeployment != null && tokenInDeployment.getCard().getCardInfo().getAbilities().size() <= abilityIxInDeployment) {
-            System.out.println("Valid Save.");
+        if (targetingActive && tokenInDeployment != null && abilityIxInDeployment < tokenInDeployment.getCard().getCardInfo().getAbilities().size()) {
             AbilityInfo abilityInfo = tokenInDeployment.getCard().getCardInfo().getAbilities().get(abilityIxInDeployment);
             if (AbilityManager.validAbilityTarget(abilityInfo, target.getCard())) {
-                System.out.println("Valid Target.");
-                if (battle.getAbilityManager().playAbility(tokenInDeployment, target.getCard(), abilityIxInDeployment, null)) {
-                    System.out.println("Ability Success!");
+                //System.out.println("Playing ability...");
+                if (battle.getAbilityManager().playAbility(tokenInDeployment, target.getCard(), abilityIxInDeployment, dropInDeployment)) {
+                    //System.out.println("Ability Success!");
                     if (abilityInfo.getStarter() == AbilityStarter.USE) {
                         battle.getWhoseTurn().payday(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter());
-                        System.out.println("Ability price paid.");
+                        //System.out.println("Ability price paid.");
                     } else if (dropInDeployment != null) {
-                        System.out.println("Reprocessing original drop...");
+                        //System.out.println("Reprocessing original drop...");
                         processDrop(tokenInDeployment, dropInDeployment, positionInDeployment, true);
                     }
+                    resetInDeployment();
                 }
+            } else {
+                System.out.println("Invalid Target.");
             }
         }
+    }
+
+    private void resetInDeployment() {
+        targetingActive = false;
+        tokenInDeployment = null;
+        abilityIxInDeployment = 0;
+        dropInDeployment = null;
+        //positionInDeployment = 0;
     }
 
     //-----------//

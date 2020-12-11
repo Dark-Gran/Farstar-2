@@ -69,7 +69,7 @@ public class AbilityManager {
                     if (!reverse) { success = changeStat(target, effect, reverse); }
                     else { success = reverseStat(target, effect); }
                     break;
-                case DEAL_DMG: //TODO debug
+                case DEAL_DMG:
                     if (!reverse) { success = dealDmg(target, effect); }
                     break;
             }
@@ -168,7 +168,8 @@ public class AbilityManager {
             int dmg = floatObjectToInt(effect.getEffectInfo().get(0));
             TechType techType = TechType.valueOf(effect.getEffectInfo().get(1).toString());
             dmg = DuelManager.getDmgAgainstShields(dmg, techType, target.getCardInfo().getDefenseType());
-            success = target.receiveDMG(dmg);
+            target.receiveDMG(dmg);
+            success = true;
         }
         return success;
     }
