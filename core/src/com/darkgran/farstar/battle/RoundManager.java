@@ -95,7 +95,10 @@ public class RoundManager {
                         success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, true, dropTarget);
                     //TARGETING SUPPORTS FOR SUPPORT-CARDS
                     } else if (cardType == CardType.SUPPORT) {
-                        //TODO
+                        if (dropTarget instanceof SupportMenu) { //TODO
+
+
+                        }
                     //TARGETING FLEET
                     } else if (dropTarget instanceof FleetMenu) {
                         Fleet fleet = ((FleetMenu) dropTarget).getFleet();
