@@ -12,6 +12,7 @@
     "defenseType": "KINETIC",
     "abilities": [{
       "starter": "USE",
+      "targets": "ANY",
       "resourcePrice": {
         "energy": 1,
         "matter": 0
@@ -38,6 +39,7 @@
     "defenseType": "KINETIC",
     "abilities": [{
       "starter": "NONE",
+      "targets": "NONE",
       "resourcePrice": {},
       "effects": [
         {
@@ -61,6 +63,7 @@
     "defenseType": "NONE",
     "abilities": [{
       "starter": "DEPLOY",
+      "targets": "NONE",
       "resourcePrice": {},
       "effects": [
         {
@@ -89,6 +92,7 @@
     "defenseType": "NONE",
     "abilities": [{
       "starter": "DEPLOY",
+      "targets": "NONE",
       "resourcePrice": {},
       "effects": [
         {
@@ -112,6 +116,7 @@
     "defenseType": "THERMAL",
     "abilities": [{
       "starter": "NONE",
+      "targets": "NONE",
       "resourcePrice": {},
       "effects": [
         {

@@ -5,18 +5,19 @@ import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.players.*;
 
-import java.util.ArrayList;
-
 public class RoundManager {
     private final Battle battle;
     private int roundNum = 0;
     private boolean firstTurnThisRound;
+    private boolean activeTargeting;
 
     public RoundManager(Battle battle) {
         this.battle = battle;
     }
 
     public void launch() {
+        roundNum = 0;
+        activeTargeting = false;
         newRound();
     }
 
@@ -125,8 +126,10 @@ public class RoundManager {
         }
     }
 
-    public void processClick(Card card, Player owner) { //TODO targeting x not needed
-        if (owner == battle.getWhoseTurn()) {
+    public void processClick(Card card, Player owner) {
+        if (activeTargeting) {
+
+        } else if (owner == battle.getWhoseTurn()) {
             for (int i = 0; i < card.getCardInfo().getAbilities().size(); i++) {
                 AbilityInfo abilityInfo = card.getCardInfo().getAbilities().get(i);
                 if (abilityInfo.getStarter() == AbilityStarter.USE && tierAllowed(card.getCardInfo().getTier())) {

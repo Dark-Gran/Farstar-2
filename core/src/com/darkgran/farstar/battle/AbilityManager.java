@@ -9,7 +9,7 @@ import java.util.ListIterator;
 import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE;
 import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE;
 
-public class AbilityManager {
+public class AbilityManager { //Targeting
     private final Battle battle;
 
     public AbilityManager(Battle battle) {
@@ -233,7 +233,7 @@ public class AbilityManager {
         newEffect.setDuration(effectDuration);
         ArrayList<Effect> newAbilityEffects = new ArrayList<>();
         newAbilityEffects.add(newEffect);
-        return new AbilityInfo(AbilityStarter.valueOf(effectInfo.get(2).toString()), newAbilityEffects, new ResourcePrice());
+        return new AbilityInfo(AbilityStarter.valueOf(effectInfo.get(2).toString()), newAbilityEffects, new ResourcePrice(), AbilityTargets.NONE); //todo targets
     }
 
     private void reverseType(Card target, Effect effect, EffectTypeSpecifics.ChangeStatType type) {
