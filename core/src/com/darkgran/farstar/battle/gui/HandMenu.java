@@ -4,7 +4,7 @@ import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.Hand;
 import com.darkgran.farstar.battle.players.Player;
 
-public class HandMenu extends CardListMenu {
+public class HandMenu extends CardListMenu { //in-future: rearrangement of cards
 
     public HandMenu(Hand hand, float x, float y, BattleStage battleStage, Player player) {
         super(hand, x, y, false, battleStage, player);
