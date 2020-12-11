@@ -28,12 +28,24 @@ public class AbilityManager {
                 if (target == null) {
                     AbilityTargets abilityTargets = ability.getTargets();
                     switch (abilityTargets) {
+                        case NONE:
                         case SELF:
                             target = casterToken.getCard();
                             break;
                         case ANY:
                         case ANY_ALLY:
+                        case ALLIED_FLEET:
+                        case ALLIED_MS:
+                        case ANY_ENEMY:
+                        case ENEMY_MS:
+                        case ENEMY_FLEET:
                             getBattle().getRoundManager().askForTargets(casterToken, abilityIx, dropTarget);
+                            break;
+                        case ENTIRE_ENEMY_FLEET:
+                            //TODO
+                            break;
+                        case ENTIRE_ALLIED_FLEET:
+
                             break;
                     }
                 }
@@ -228,9 +240,20 @@ public class AbilityManager {
             case SELF:
                 return caster==target;
             case ANY_ALLY:
+            case ENTIRE_ALLIED_FLEET:
                 return caster.getPlayer()==target.getPlayer();
             case ANY_ENEMY:
+            case ENTIRE_ENEMY_FLEET:
                 return caster.getPlayer()!=target.getPlayer();
+            case ALLIED_FLEET:
+                return caster.getPlayer()==target.getPlayer() && !(target instanceof Mothership);
+            case ENEMY_FLEET:
+                return caster.getPlayer()!=target.getPlayer() && !(target instanceof Mothership);
+            case ALLIED_MS:
+                return caster.getPlayer()==target.getPlayer() && target instanceof Mothership;
+            case ENEMY_MS:
+                return caster.getPlayer()!=target.getPlayer() && target instanceof Mothership;
+
         }
     }
 
