@@ -56,7 +56,7 @@ public class RoundManager {
     }
 
     public void endTurn() {
-        if (!battle.getCombatManager().isActive() && !battle.isEverythingDisabled()) {
+        if (!battle.getCombatManager().isActive() && !battle.isEverythingDisabled() && !targetingActive) {
             battle.closeYards();
             battle.getCombatManager().launchCombat();
         }
