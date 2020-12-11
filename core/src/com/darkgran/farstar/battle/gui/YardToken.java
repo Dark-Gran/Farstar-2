@@ -23,7 +23,7 @@ public class YardToken extends Token {
                     getBattleStage().setFakeToken(new FakeToken(getCard(), getX(), getY(), getBattleStage(), getCardListMenu()));
                     event.setRelatedActor(getBattleStage().getFakeToken());
                     event.getStage().addTouchFocus(getBattleStage().getFakeToken().getDragger(), getBattleStage().getFakeToken(), getBattleStage().getFakeToken(), event.getPointer(), event.getButton());
-                    //getBattleStage().getFakeToken().getDragger().touchDown()
+                    getBattleStage().getFakeToken().getDragger().touchDown(event, x, y, pointer, button);
                 }
                 return false;
             }

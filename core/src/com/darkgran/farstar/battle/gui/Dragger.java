@@ -15,7 +15,7 @@ public class Dragger extends InputListener {
             event.getStage().removeTouchFocus(this, event.getListenerActor(), event.getTarget(), event.getPointer(), event.getButton());
             if (token instanceof AnchoredToken) { ((AnchoredToken) token).resetPosition(); }
             canceled = true;
-            return false;
+            return token instanceof FakeToken;
         } else {
             canceled = false;
         }
@@ -31,7 +31,7 @@ public class Dragger extends InputListener {
     public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
         if (button == 0 && !canceled) {
             drop(x, y);
-        }
+        } else { if (token instanceof FakeToken) { token.destroy(); } }
     }
 
     public Dragger(Token token) {
