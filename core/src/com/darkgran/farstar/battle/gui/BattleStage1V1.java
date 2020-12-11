@@ -33,8 +33,8 @@ public class BattleStage1V1 extends BattleStage {
         resourceMeter1 = new ResourceMeter(player1, true, Farstar.STAGE_WIDTH, 0f);
         resourceMeter2 = new ResourceMeter(player2, false, Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT);
         //Motherships
-        mothershipToken1 = new MothershipToken(player1, Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*1/4, this, null);
-        mothershipToken2 = new MothershipToken(player2, Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*3/4, this, null);
+        mothershipToken1 = new MothershipToken(player1.getMs(), Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*1/4, this, null);
+        mothershipToken2 = new MothershipToken(player2.getMs(), Farstar.STAGE_WIDTH/2, Farstar.STAGE_HEIGHT*3/4, this, null);
         //Buttons
         turnButton.setBounds(Farstar.STAGE_WIDTH*6/7, Farstar.STAGE_HEIGHT/2, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
         this.addActor(turnButton);

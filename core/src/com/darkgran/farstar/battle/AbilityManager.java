@@ -84,13 +84,6 @@ public class AbilityManager {
         return success;
     }
 
-    private boolean changeResource(Card target, Effect effect, boolean reverse) {
-        boolean success = false;
-        //TODO
-        success = true;
-        return success;
-    }
-
     //CHANGE_STAT
     private boolean changeStat(Card target, Effect effect) {
         boolean success = false;
@@ -199,6 +192,26 @@ public class AbilityManager {
         return success;
     }
 
+    //CHANGE_RESOURCE
+    private boolean changeResource(Card target, Effect effect, boolean reverse) { //TODO
+        boolean success = false;
+        if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
+            Object changeInfo = effect.getEffectInfo().get(1);
+            EffectTypeSpecifics.ChangeResourceType resource = EffectTypeSpecifics.ChangeResourceType.valueOf(effect.getEffectInfo().get(0).toString());
+            switch (resource) {
+                case ENERGY:
+                    //addEnergy
+                    success = true;
+                    break;
+                case MATTER:
+                    //addMatter
+                    success = true;
+                    break;
+            }
+        }
+        return success;
+    }
+
     //-----------//
     //-UTILITIES-//
     //-----------//
@@ -208,7 +221,7 @@ public class AbilityManager {
             default:
                 return true;
             case SELF:
-                return caster==target;
+                return caster==target; //todo ANY_ALLY
         }
     }
 

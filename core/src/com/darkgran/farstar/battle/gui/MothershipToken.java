@@ -3,18 +3,16 @@ package com.darkgran.farstar.battle.gui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.darkgran.farstar.battle.players.Player;
+import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.util.SimpleBox2;
 
 public class MothershipToken extends Token implements DropTarget {
     private final SimpleBox2 simpleBox2 = new SimpleBox2();
-    private final Player player;
 
-    public MothershipToken(Player player, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
-        super(player.getMs(), x, y, battleStage, cardListMenu);
+    public MothershipToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
+        super(card, x, y, battleStage, cardListMenu);
         setupSimpleBox2(x, y, getHeight(), getWidth());
-        this.player = player;
-        player.getMs().setToken(this);
+        getCard().getPlayer().getMs().setToken(this);
     }
 
     public void draw(Batch batch) {
@@ -31,7 +29,7 @@ public class MothershipToken extends Token implements DropTarget {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 if (button == 0) {
-                    getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(getThis(), getPlayer());
+                    getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(getThis(), getCard().getPlayer());
                 }
                 return false;
             }
@@ -48,7 +46,5 @@ public class MothershipToken extends Token implements DropTarget {
 
     @Override
     public SimpleBox2 getSimpleBox2() { return simpleBox2; }
-
-    public Player getPlayer() { return player; }
 
 }

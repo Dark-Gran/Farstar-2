@@ -51,7 +51,7 @@ public class CombatManager {
             if (dropTarget instanceof FleetMenu) {
                 playerD = ((FleetMenu) dropTarget).getPlayer();
             } else if (dropTarget instanceof MothershipToken) {
-                playerD = ((MothershipToken) dropTarget).getPlayer();
+                playerD = ((MothershipToken) dropTarget).getCard().getPlayer();
             }
             if (playerA.getBattleID() != -1 && playerD.getBattleID() != -1 && playerA != playerD) {
                 if (canReach(token, targetToken, playerD.getFleet())) {
