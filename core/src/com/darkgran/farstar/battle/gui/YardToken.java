@@ -22,7 +22,7 @@ public class YardToken extends Token {
                 if (yardMenu.isVisible() && !yardMenu.getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
                     getBattleStage().setFakeToken(new FakeToken(getCard(), getX(), getY(), getBattleStage(), getCardListMenu()));
                     event.setRelatedActor(getBattleStage().getFakeToken());
-                    event.getStage().addTouchFocus(getBattleStage().getFakeToken().getDragger().getInputListener(), getBattleStage().getFakeToken(), getBattleStage().getFakeToken(), event.getPointer(), event.getButton());
+                    event.getStage().addTouchFocus(getBattleStage().getFakeToken().getDragger(), getBattleStage().getFakeToken(), getBattleStage().getFakeToken(), event.getPointer(), event.getButton());
                 }
                 return false;
             }

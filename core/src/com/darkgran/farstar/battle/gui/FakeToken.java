@@ -7,7 +7,7 @@ public class FakeToken extends Token { //temporary token for targeted deployment
     public FakeToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
         super(card, x, y, battleStage, cardListMenu);
         setDragger(new Dragger(this));
-        this.addListener(getDragger().getInputListener());
+        this.addListener(getDragger());
     }
 
 }
