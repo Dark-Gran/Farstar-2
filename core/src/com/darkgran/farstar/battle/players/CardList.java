@@ -46,7 +46,7 @@ public abstract class CardList {
     }
 
     public boolean addCard(Card card) {
-        if (cards != null && cardListMenu != null) {
+        if (cards != null && cardListMenu != null && cards.size() < maxSize) {
             cards.add(card);
             cardListMenu.generateNewToken(card);
             return true;

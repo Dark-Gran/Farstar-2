@@ -60,7 +60,7 @@ public class AbilityManager {
                             }
                             break;
                     }
-                } else {
+                } else if (validAbilityTarget(ability, caster, target)) {
                     targets.add(target);
                 }
                 //EXECUTION

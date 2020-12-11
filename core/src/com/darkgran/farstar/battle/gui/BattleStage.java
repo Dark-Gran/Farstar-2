@@ -152,7 +152,7 @@ public abstract class BattleStage extends ListeningStage {
     }
 
     public int getRoundDropPosition(float x, float y, DropTarget dropTarget, CardType cardType) {
-        boolean shipUpgrade = (cardType != CardType.BLUEPRINT && cardType != CardType.YARD);
+        boolean shipUpgrade = !CardType.isShip(cardType);
         if (dropTarget instanceof FleetMenu) {
             FleetMenu fleetMenu = (FleetMenu) dropTarget;
             Token[] ships = fleetMenu.getShips();
@@ -174,6 +174,22 @@ public abstract class BattleStage extends ListeningStage {
                 }
                 return -1;
             }
+        } else if (dropTarget instanceof SupportMenu) {
+            SupportMenu supportMenu = (SupportMenu) dropTarget;
+            for (int i = 0; i < 7; i++) {
+                if (x > supportMenu.getX() + (TOKEN_WIDTH * i) && x < supportMenu.getX() + (TOKEN_WIDTH * (i + 1))) {
+                    if (i != 3) {
+                        return i;
+                    } else {
+                        if (x < supportMenu.getX() + supportMenu.getWidth() / 2) {
+                            return 2;
+                        } else {
+                            return 4;
+                        }
+                    }
+                }
+            }
+            return -1;
         } else if (dropTarget instanceof JunkButton) {
             return 8;
         }

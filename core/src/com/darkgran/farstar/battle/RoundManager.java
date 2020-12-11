@@ -81,7 +81,7 @@ public class RoundManager {
 
     public void processDrop(Token token, DropTarget dropTarget, int position, boolean postAbility) {
         boolean success = false;
-        if (!targetingActive && token.getCardListMenu() != null) {
+        if (!targetingActive && token.getCardListMenu() != null && position != -1) {
             CardType cardType = token.getCard().getCardInfo().getCardType();
             if (!battle.activeCombatOrDuel() || cardType == CardType.TACTIC) {
                 //OUTSIDE COMBAT OR TACTIC
@@ -97,13 +97,19 @@ public class RoundManager {
                     } else if (dropTarget instanceof SupportMenu) {
                         if (((SupportMenu) dropTarget).getCardList() instanceof Supports) {
                             Supports supports = (Supports) ((SupportMenu) dropTarget).getCardList();
-                            if (cardType == CardType.SUPPORT) { //TODO other cardTypes
-                                if (supports == whoseTurn.getSupports() && !battle.activeCombatOrDuel()) {
+                            if ((cardType == CardType.SUPPORT && supports == whoseTurn.getSupports()) || CardType.isSpell(cardType)) {
+                                if (!battle.activeCombatOrDuel()) {
                                     if (!postAbility) {
-                                        success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
+                                        Card target = null;
+                                        if (supports.getCards().size() > SupportMenu.unTranslatePosition(position)) {
+                                            target = supports.getCards().get(SupportMenu.unTranslatePosition(position));
+                                        }
+                                        success = checkAllAbilities(token, target, AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
                                     }
-                                    if (postAbility || success) {
-                                        success = supports.addCard(token.getCard());
+                                    if (cardType == CardType.SUPPORT) {
+                                        if (postAbility || success) {
+                                            success = supports.addCard(token.getCard());
+                                        }
                                     }
                                 }
                             }
@@ -111,7 +117,7 @@ public class RoundManager {
                     //TARGETING FLEET
                     } else if (dropTarget instanceof FleetMenu) {
                         Fleet fleet = ((FleetMenu) dropTarget).getFleet();
-                        if (fleet == whoseTurn.getFleet()) {
+                        if (fleet == whoseTurn.getFleet() || !CardType.isShip(cardType)) {
                             if (!battle.getCombatManager().getDuelManager().isActive() || (fleet.getShips()[position].getToken() != null && fleet.getShips()[position].getToken().isInDuel())) {
                                 //ABILITIES
                                 positionInDeployment = position;
@@ -123,7 +129,7 @@ public class RoundManager {
                                         targetCard = fleet.getShips()[position].getToken().getCard();
                                     }
                                     //DEPLOYMENT
-                                    if (cardType == CardType.BLUEPRINT || cardType == CardType.YARD) {
+                                    if (CardType.isShip(cardType)) {
                                         success = fleet.addShip(token, position);
                                     }
                                 }
@@ -134,7 +140,7 @@ public class RoundManager {
                         MothershipToken ms = (MothershipToken) dropTarget;
                         if (!battle.activeCombatOrDuel() || ms.isInDuel()) {
                             //ABILITIES
-                            if (ms.getCard().getPlayer() == whoseTurn && (cardType == CardType.ACTION || cardType == CardType.UPGRADE || cardType == CardType.TACTIC)) {
+                            if (CardType.isSpell(cardType)) { //&& ms.getCard().getPlayer() == whoseTurn
                                 if (!postAbility) {
                                     success = checkAllAbilities(token, ms.getCard(), AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
                                 }
