@@ -11,17 +11,25 @@ public class Dragger extends InputListener {
 
     @Override
     public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+        if (button == 1) {
+            event.getStage().removeTouchFocus(this, event.getListenerActor(), event.getTarget(), event.getPointer(), event.getButton());
+            if (token instanceof AnchoredToken) { ((AnchoredToken) token).resetPosition(); }
+            canceled = true;
+            return false;
+        } else {
+            canceled = false;
+        }
         return true;
     }
 
     @Override
     public void touchDragged (InputEvent event, float x, float y, int pointer) {
-        if (true) { drag(x, y); }
+        if (!canceled) { drag(x, y); }
     }
 
     @Override
     public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-        if (button == 0 && true) {
+        if (button == 0 && !canceled) {
             drop(x, y);
         }
     }
