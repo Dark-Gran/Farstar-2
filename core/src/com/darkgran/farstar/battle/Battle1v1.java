@@ -14,9 +14,8 @@ public class Battle1v1 extends Battle {
     public Battle1v1() {
         super();
         //in future: pass the Players in parameters
-        //TODO-next: basic decks
         player1 = new Player((byte) 1, STARTING_ENERGY, STARTING_MATTER, new Mothership(0), new Deck(3), new Yard(1));
-        player2 = new Player((byte) 2, STARTING_ENERGY, STARTING_MATTER, new Mothership(0), new Deck(3), new Yard(1));
+        player2 = new Player((byte) 2, STARTING_ENERGY, STARTING_MATTER, new Mothership(15), new Deck(3), new Yard(1));
         player1.getMs().setPlayer(player1);
         player1.getDeck().setPlayer(player1);
         player2.getMs().setPlayer(player2);
