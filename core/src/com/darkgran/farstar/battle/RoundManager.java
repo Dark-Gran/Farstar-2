@@ -97,7 +97,7 @@ public class RoundManager {
                     } else if (dropTarget instanceof SupportMenu) {
                         if (((SupportMenu) dropTarget).getCardList() instanceof Supports) {
                             Supports supports = (Supports) ((SupportMenu) dropTarget).getCardList();
-                            if (cardType == CardType.SUPPORT) {
+                            if (cardType == CardType.SUPPORT) { //TODO other cardTypes
                                 if (supports == whoseTurn.getSupports() && !battle.activeCombatOrDuel()) {
                                     if (!postAbility) {
                                         success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);

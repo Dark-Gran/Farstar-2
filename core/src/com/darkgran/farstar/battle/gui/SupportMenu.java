@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.gui;
 
+import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.battle.players.CardList;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.util.SimpleBox2;
@@ -12,6 +13,11 @@ public class SupportMenu extends CardListMenu implements DropTarget {
         setWidth(width);
         setHeight(height);
         setupSimpleBox2(x, y, height, width);
+    }
+
+    @Override
+    public void generateNewToken(Card card) { //TODO
+        getTokens().add(new Token(card, getX() + getOffset()*getTokens().size()-1, getY(), getBattleStage(), this));
     }
 
     @Override
