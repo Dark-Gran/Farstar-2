@@ -71,8 +71,8 @@ public abstract class Battle implements BattleSettings {
         whoseTurn.getFleet().setUsedOnAll(false);
     }
 
-    public boolean activeCombat() {
-        return combatManager.isActive() && combatManager.getDuelManager().isActive();
+    public boolean activeCombatOrDuel() {
+        return combatManager.isActive() || combatManager.getDuelManager().isActive();
     }
 
     public Player getWhoseTurn() { return whoseTurn; }
