@@ -194,7 +194,7 @@ public class RoundManager {
                                     caster.getCard().setUsed(true);
                                 }
                             }
-                            break; //in-future: support multiple abilities with the same starter
+                            break; //TODO: detect abilities with same Starter and let player pick (old "Hybrid")
                         }
                     }
                 }
