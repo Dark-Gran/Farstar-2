@@ -168,6 +168,14 @@ public class RoundManager {
         return success;
     }
 
+    public static boolean ownsToken(Player player, Token token) {
+        if (token instanceof FleetToken) {
+            return player == ((FleetToken) token).getFleetMenu().getPlayer();
+        } else {
+            return player == token.getCardListMenu().getPlayer();
+        }
+    }
+
     public boolean tierAllowed(int tier) { return tier <= roundNum; }
 
     public int getRoundNum() { return roundNum; }

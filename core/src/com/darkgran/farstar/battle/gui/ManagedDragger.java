@@ -35,22 +35,14 @@ public class ManagedDragger extends Dragger {
     private boolean isEnabled() {
         if (!roundManager.getBattle().isEverythingDisabled() && !roundManager.isTargetingActive()) {
             if (!(this.getToken().getCard() instanceof Ship) || !((Ship) this.getToken().getCard()).haveFought()) {
-                if (!combatManager.getDuelManager().isActive() && ownsToken(roundManager.getBattle().getWhoseTurn()) && (forCombat == combatManager.isActive() || (combatManager.isActive() && this.getToken().getCard().getCardInfo().getCardType() == CardType.TACTIC))) {
+                if (!combatManager.getDuelManager().isActive() && RoundManager.ownsToken(roundManager.getBattle().getWhoseTurn(), getToken()) && (forCombat == combatManager.isActive() || (combatManager.isActive() && this.getToken().getCard().getCardInfo().getCardType() == CardType.TACTIC))) {
                     return true;
-                } else if (this.getToken().getCard().getCardInfo().getCardType() == CardType.TACTIC && combatManager.getDuelManager().isActive() && ownsToken(combatManager.getDuelManager().getActivePlayer().getPlayer())) {
+                } else if (this.getToken().getCard().getCardInfo().getCardType() == CardType.TACTIC && combatManager.getDuelManager().isActive() && RoundManager.ownsToken(combatManager.getDuelManager().getActivePlayer().getPlayer(), getToken())) {
                     return true;
                 }
             }
         }
         return false;
-    }
-
-    public boolean ownsToken(Player player) {
-        if (getToken() instanceof FleetToken) {
-            return player == ((FleetToken) getToken()).getFleetMenu().getPlayer();
-        } else {
-            return player == getToken().getCardListMenu().getPlayer();
-        }
     }
 
     public CombatManager getCombatManager() { return combatManager; }
