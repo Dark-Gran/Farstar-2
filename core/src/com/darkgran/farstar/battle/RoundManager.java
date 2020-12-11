@@ -69,7 +69,7 @@ public class RoundManager {
 
     public void processDrop(Token token, DropTarget dropTarget, int position) {
         boolean success = false;
-        if (token.getCardListMenu() != null) {
+        if (!targetingActive && token.getCardListMenu() != null) {
             CardType cardType = token.getCard().getCardInfo().getCardType();
             if ((!battle.getCombatManager().isActive() && !battle.getCombatManager().getDuelManager().isActive()) || (cardType == CardType.TACTIC)) {
                 //OUTSIDE COMBAT OR TACTIC
