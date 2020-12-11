@@ -1,5 +1,7 @@
 package com.darkgran.farstar.battle;
 
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
@@ -17,6 +19,40 @@ public class BattleScreen extends SuperScreen {
     private final BattleStage battleStage;
     public final static boolean DEBUG_RENDER = true;
 
+    private final InputProcessor generalInputProcessor = new InputProcessor() {
+        @Override
+        public boolean keyDown(int keycode) { return false; }
+
+        @Override
+        public boolean keyUp(int keycode) { return false; }
+
+        @Override
+        public boolean keyTyped(char character) { return false; }
+
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) { return false; }
+
+        @Override
+        public boolean touchDragged(int screenX, int screenY, int pointer) { return false; }
+
+        @Override
+        public boolean mouseMoved(int screenX, int screenY) { return false; }
+
+        @Override
+        public boolean scrolled(int amount) { return false; }
+
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            if (button == 1) { //mouse.right
+                if (battle.getRoundManager().isLaunched()) {
+                    battle.getRoundManager().tryCancel();
+                }
+            }
+            return false;
+        }
+
+    };
+
     public BattleScreen(final Farstar game, TableStage tableStage, Battle battle)
     {
         super(game);
@@ -27,6 +63,7 @@ public class BattleScreen extends SuperScreen {
         battleStage = battle.createBattleStage(game, getViewport(), this);
         battle.getCombatManager().setBattleStage(battleStage);
         battle.getCombatManager().getDuelManager().getDuelMenu().setBattleStage(battleStage);
+        game.getInputMultiplexer().addProcessor(generalInputProcessor);
         game.getInputMultiplexer().addProcessor(battleStage);
         battle.getRoundManager().launch();
     }
@@ -67,6 +104,7 @@ public class BattleScreen extends SuperScreen {
     @Override
     public void dispose() {
         worldManager.disposeWorld();
+        getGame().getInputMultiplexer().removeProcessor(generalInputProcessor);
         getGame().getInputMultiplexer().removeProcessor(battleStage);
         battleStage.dispose();
     }

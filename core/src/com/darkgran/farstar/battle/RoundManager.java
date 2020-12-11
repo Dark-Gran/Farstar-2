@@ -7,6 +7,7 @@ import com.darkgran.farstar.battle.players.*;
 
 public class RoundManager {
     private final Battle battle;
+    private boolean launched = false;
     private boolean firstTurnThisRound;
     private int roundNum = 0;
     private boolean targetingActive;
@@ -27,6 +28,7 @@ public class RoundManager {
     public void launch() {
         roundNum = 0;
         resetInDeployment();
+        launched = true;
         newRound();
     }
 
@@ -184,13 +186,20 @@ public class RoundManager {
         }
     }
 
+    public void tryCancel() {
+        if (targetingActive) {
+            resetInDeployment();
+            System.out.println("Targeting Cancelled.");
+        }
+    }
+
     private void processTarget(Token target) {
         if (targetingActive && tokenInDeployment != null && abilityIxInDeployment < tokenInDeployment.getCard().getCardInfo().getAbilities().size()) {
             AbilityInfo abilityInfo = tokenInDeployment.getCard().getCardInfo().getAbilities().get(abilityIxInDeployment);
             if (AbilityManager.validAbilityTarget(abilityInfo, tokenInDeployment.getCard(), target.getCard())) {
                 //System.out.println("Playing ability...");
                 if (battle.getAbilityManager().playAbility(tokenInDeployment, target.getCard(), abilityIxInDeployment, dropInDeployment)) {
-                    //System.out.println("Ability Success!");
+                    System.out.println("Targeted-Ability Success!");
                     if (abilityInfo.getStarter() == AbilityStarter.USE) {
                         battle.getWhoseTurn().payday(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter());
                         tokenInDeployment.getCard().setUsed(true);
@@ -238,5 +247,7 @@ public class RoundManager {
     public Token getTokenInDeployment() { return tokenInDeployment; }
 
     public boolean isTargetingActive() { return targetingActive; }
+
+    public boolean isLaunched() { return launched; }
 
 }
