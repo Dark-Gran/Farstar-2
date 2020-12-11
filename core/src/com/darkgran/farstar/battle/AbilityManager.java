@@ -32,6 +32,7 @@ public class AbilityManager { //TODO: EffectType.REPAIR
                             target = casterToken.getCard();
                             break;
                         case ANY:
+                        case ANY_ALLY:
                             getBattle().getRoundManager().askForTargets(casterToken, abilityIx, dropTarget);
                             break;
                     }
@@ -71,6 +72,10 @@ public class AbilityManager { //TODO: EffectType.REPAIR
                     break;
                 case DEAL_DMG:
                     if (!reverse) { success = dealDmg(target, effect); }
+                    break;
+                case REPAIR:
+                    if (!reverse) { success = repair(target, effect); }
+                    System.out.println(success);
                     break;
             }
         }
@@ -169,6 +174,16 @@ public class AbilityManager { //TODO: EffectType.REPAIR
             TechType techType = TechType.valueOf(effect.getEffectInfo().get(1).toString());
             dmg = DuelManager.getDmgAgainstShields(dmg, techType, target.getCardInfo().getDefenseType());
             if (!target.receiveDMG(dmg)) { target.death(); }
+            success = true;
+        }
+        return success;
+    }
+
+    //REPAIR
+    private boolean repair(Card target, Effect effect) {
+        boolean success = false;
+        if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 1 && effect.getEffectInfo().get(0) != null) {
+            //TODO
             success = true;
         }
         return success;
