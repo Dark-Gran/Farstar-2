@@ -3,7 +3,6 @@ package com.darkgran.farstar.battle.gui;
 import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.battle.RoundManager;
 import com.darkgran.farstar.battle.players.CardType;
-import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.players.Ship;
 
 public class ManagedDragger extends Dragger {
