@@ -194,7 +194,7 @@ public class RoundManager {
                     }
                     if (dropInDeployment != null) {
                         System.out.println("Reprocessing original drop...");
-                        processDrop(tokenInDeployment, dropInDeployment, positionInDeployment, true); //TODO
+                        processDrop(tokenInDeployment, dropInDeployment, positionInDeployment, true);
                     }
                 }
             }
