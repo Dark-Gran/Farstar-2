@@ -221,9 +221,14 @@ public class AbilityManager {
     public static boolean validAbilityTarget(AbilityInfo abilityInfo, Card caster, Card target) {
         switch (abilityInfo.getTargets()) {
             default:
+                return false;
+            case NONE:
+            case ANY:
                 return true;
             case SELF:
-                return caster==target; //todo ANY_ALLY
+                return caster==target;
+            case ANY_ALLY:
+                return caster.getPlayer()==target.getPlayer();
         }
     }
 
