@@ -42,7 +42,7 @@ public class HandMenu extends CardListMenu { //in-future: rearrangement of cards
 
     @Override
     public void generateNewToken(Card card) {
-        getTokens().add(new HandToken(card, getX() + getOffset()*getTokens().size()-1, getY(), getBattleStage(), this));
+        getTokens().add(new HandToken(card, getX() + getOffset()*getTokens().size(), getY(), getBattleStage(), this));
     }
 
 }
