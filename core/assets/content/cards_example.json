@@ -7,20 +7,20 @@
     "energy": 0,
     "matter": 0,
     "offense": 0,
-    "defense": 5,
-    "offenseType": "KINETIC",
+    "defense": 20,
+    "offenseType": "NONE",
     "defenseType": "KINETIC",
     "abilities": [{
       "starter": "USE",
       "targets": "ANY",
       "resourcePrice": {
-        "energy": 1,
+        "energy": 2,
         "matter": 0
       },
       "effects": [
         {
           "effectType": "DEAL_DMG",
-          "effectInfo": [4, "THERMAL"],
+          "effectInfo": [1, "KINETIC"],
           "duration": -1
         }
       ]
@@ -28,14 +28,77 @@
   },
   {
     "id": 1,
-    "name": "Scout",
+    "name": "Fighter",
     "cardType": "YARD",
     "tier": 1,
     "energy": 1,
-    "matter": 0,
+    "matter": 1,
     "offense": 1,
     "defense": 1,
     "offenseType": "KINETIC",
+    "defenseType": "KINETIC",
+    "abilities": []
+  },
+  {
+    "id": 2,
+    "name": "Corvette",
+    "cardType": "YARD",
+    "tier": 2,
+    "energy": 2,
+    "matter": 3,
+    "offense": 2,
+    "defense": 2,
+    "offenseType": "KINETIC",
+    "defenseType": "PARTICLE",
+    "abilities": []
+  },
+  {
+    "id": 3,
+    "name": "Frigate",
+    "cardType": "YARD",
+    "tier": 3,
+    "energy": 3,
+    "matter": 4,
+    "offense": 3,
+    "defense": 3,
+    "offenseType": "THERMAL",
+    "defenseType": "KINETIC",
+    "abilities": []
+  },
+  {
+    "id": 4,
+    "name": "Cruiser",
+    "cardType": "YARD",
+    "tier": 4,
+    "energy": 4,
+    "matter": 7,
+    "offense": 4,
+    "defense": 4,
+    "offenseType": "KINETIC",
+    "defenseType": "PARTICLE",
+    "abilities": [{
+      "starter": "NONE",
+      "targets": "NONE",
+      "resourcePrice": {},
+      "effects": [
+        {
+          "effectType": "GUARD",
+          "effectInfo": [],
+          "duration": -1
+        }
+      ]
+    }]
+  },
+  {
+    "id": 5,
+    "name": "Battleship",
+    "cardType": "YARD",
+    "tier": 5,
+    "energy": 4,
+    "matter": 11,
+    "offense": 5,
+    "defense": 5,
+    "offenseType": "THERMAL",
     "defenseType": "KINETIC",
     "abilities": [{
       "starter": "NONE",
@@ -51,19 +114,164 @@
     }]
   },
   {
-    "id": 2,
-    "name": "Phion Weapons",
+    "id": 6,
+    "name": "Kinetic Shield",
     "cardType": "UPGRADE",
     "tier": 1,
-    "energy": 1,
-    "matter": 0,
-    "offense": 1,
+    "energy": 0,
+    "matter": 2,
+    "offense": 0,
+    "defense": 2,
+    "offenseType": "NONE",
+    "defenseType": "KINETIC",
+    "abilities": [{
+      "starter": "DEPLOY",
+      "targets": "ANY_ALLY",
+      "resourcePrice": {},
+      "effects": [
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["DEFENSE_TYPE", "KINETIC"],
+          "duration": -1
+        },
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["DEFENSE", 2],
+          "duration": -1
+        }
+      ]
+    }]
+  },
+  {
+    "id": 7,
+    "name": "Thermal Shield",
+    "cardType": "UPGRADE",
+    "tier": 1,
+    "energy": 0,
+    "matter": 2,
+    "offense": 0,
+    "defense": 2,
+    "offenseType": "NONE",
+    "defenseType": "THERMAL",
+    "abilities": [{
+      "starter": "DEPLOY",
+      "targets": "ANY_ALLY",
+      "resourcePrice": {},
+      "effects": [
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["DEFENSE_TYPE", "THERMAL"],
+          "duration": -1
+        },
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["DEFENSE", 2],
+          "duration": -1
+        }
+      ]
+    }]
+  },
+  {
+    "id": 8,
+    "name": "Particle Shield",
+    "cardType": "UPGRADE",
+    "tier": 1,
+    "energy": 0,
+    "matter": 2,
+    "offense": 0,
+    "defense": 2,
+    "offenseType": "NONE",
+    "defenseType": "PARTICLE",
+    "abilities": [{
+      "starter": "DEPLOY",
+      "targets": "ANY_ALLY",
+      "resourcePrice": {},
+      "effects": [
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["DEFENSE_TYPE", "PARTICLE"],
+          "duration": -1
+        },
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["DEFENSE", 2],
+          "duration": -1
+        }
+      ]
+    }]
+  },
+  {
+    "id": 9,
+    "name": "Kinetic Weapons",
+    "cardType": "UPGRADE",
+    "tier": 1,
+    "energy": 0,
+    "matter": 2,
+    "offense": 2,
+    "defense": 0,
+    "offenseType": "KINETIC",
+    "defenseType": "NONE",
+    "abilities": [{
+      "starter": "DEPLOY",
+      "targets": "ANY_ALLY",
+      "resourcePrice": {},
+      "effects": [
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["OFFENSE_TYPE", "KINETIC"],
+          "duration": -1
+        },
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["OFFENSE", 2],
+          "duration": -1
+        }
+      ]
+    }]
+  },
+  {
+    "id": 10,
+    "name": "Thermal Weapons",
+    "cardType": "UPGRADE",
+    "tier": 1,
+    "energy": 0,
+    "matter": 2,
+    "offense": 2,
+    "defense": 0,
+    "offenseType": "THERMAL",
+    "defenseType": "NONE",
+    "abilities": [{
+      "starter": "DEPLOY",
+      "targets": "ANY_ALLY",
+      "resourcePrice": {},
+      "effects": [
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["OFFENSE_TYPE", "THERMAL"],
+          "duration": -1
+        },
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["OFFENSE", 2],
+          "duration": -1
+        }
+      ]
+    }]
+  },
+  {
+    "id": 11,
+    "name": "Particle Weapons",
+    "cardType": "UPGRADE",
+    "tier": 1,
+    "energy": 0,
+    "matter": 2,
+    "offense": 2,
     "defense": 0,
     "offenseType": "PARTICLE",
     "defenseType": "NONE",
     "abilities": [{
       "starter": "DEPLOY",
-      "targets": "NONE",
+      "targets": "ANY_ALLY",
       "resourcePrice": {},
       "effects": [
         {
@@ -73,18 +281,234 @@
         },
         {
           "effectType": "CHANGE_STAT",
-          "effectInfo": ["OFFENSE", 1],
+          "effectInfo": ["OFFENSE", 2],
           "duration": -1
         }
       ]
     }]
   },
   {
-    "id": 3,
-    "name": "Assault Doctrine",
+    "id": 12,
+    "name": "Kinetic Switch",
     "cardType": "TACTIC",
     "tier": 1,
     "energy": 1,
+    "matter": 0,
+    "offense": 1,
+    "defense": 1,
+    "offenseType": "KINETIC",
+    "defenseType": "KINETIC",
+    "abilities": [{
+      "starter": "DEPLOY",
+      "targets": "ANY_ALLY",
+      "resourcePrice": {},
+      "effects": [
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["OFFENSE_TYPE", "KINETIC"],
+          "duration": 1
+        },
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["OFFENSE", 1],
+          "duration": 1
+        },
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["DEFENSE_TYPE", "KINETIC"],
+          "duration": 1
+        },
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["DEFENSE", 1],
+          "duration": 1
+        }
+      ]
+    }]
+  },
+  {
+    "id": 13,
+    "name": "Thermal Switch",
+    "cardType": "TACTIC",
+    "tier": 1,
+    "energy": 1,
+    "matter": 0,
+    "offense": 1,
+    "defense": 1,
+    "offenseType": "THERMAL",
+    "defenseType": "THERMAL",
+    "abilities": [{
+      "starter": "DEPLOY",
+      "targets": "ANY_ALLY",
+      "resourcePrice": {},
+      "effects": [
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["OFFENSE_TYPE", "THERMAL"],
+          "duration": 1
+        },
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["OFFENSE", 1],
+          "duration": 1
+        },
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["DEFENSE_TYPE", "THERMAL"],
+          "duration": 1
+        },
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["DEFENSE", 1],
+          "duration": 1
+        }
+      ]
+    }]
+  },
+  {
+    "id": 14,
+    "name": "Particle Switch",
+    "cardType": "TACTIC",
+    "tier": 1,
+    "energy": 1,
+    "matter": 0,
+    "offense": 1,
+    "defense": 1,
+    "offenseType": "PARTICLE",
+    "defenseType": "PARTICLE",
+    "abilities": [{
+      "starter": "DEPLOY",
+      "targets": "ANY_ALLY",
+      "resourcePrice": {},
+      "effects": [
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["OFFENSE_TYPE", "PARTICLE"],
+          "duration": 1
+        },
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["OFFENSE", 1],
+          "duration": 1
+        },
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["DEFENSE_TYPE", "PARTICLE"],
+          "duration": 1
+        },
+        {
+          "effectType": "CHANGE_STAT",
+          "effectInfo": ["DEFENSE", 1],
+          "duration": 1
+        }
+      ]
+    }]
+  },
+  {
+    "id": 15,
+    "name": "Motherstation",
+    "cardType": "MS",
+    "tier": 0,
+    "energy": 0,
+    "matter": 0,
+    "offense": 0,
+    "defense": 20,
+    "offenseType": "NONE",
+    "defenseType": "KINETIC",
+    "abilities": [{
+      "starter": "USE",
+      "targets": "ANY_ALLY",
+      "resourcePrice": {
+        "energy": 2,
+        "matter": 0
+      },
+      "effects": [
+        {
+          "effectType": "REPAIR",
+          "effectInfo": [2],
+          "duration": -1
+        }
+      ]
+    }]
+  },
+  {
+    "id": 16,
+    "name": "Furnace",
+    "cardType": "ACTION",
+    "tier": 1,
+    "energy": 0,
+    "matter": 4,
+    "offense": 0,
+    "defense": 0,
+    "offenseType": "NONE",
+    "defenseType": "NONE",
+    "abilities": [{
+      "starter": "DEPLOY",
+      "targets": "SELF",
+      "resourcePrice": {},
+      "effects": [
+        {
+          "effectType": "CHANGE_RESOURCE",
+          "effectInfo": ["ENERGY", 3],
+          "duration": -1
+        }
+      ]
+    }]
+  },
+  {
+    "id": 17,
+    "name": "Gauss Shot",
+    "cardType": "ACTION",
+    "tier": 1,
+    "energy": 4,
+    "matter": 0,
+    "offense": 5,
+    "defense": 0,
+    "offenseType": "KINETIC",
+    "defenseType": "NONE",
+    "abilities": [{
+      "starter": "DEPLOY",
+      "targets": "ANY",
+      "resourcePrice": {},
+      "effects": [
+        {
+          "effectType": "DEAL_DMG",
+          "effectInfo": [5, "KINETIC"],
+          "duration": -1
+        }
+      ]
+    }]
+  },
+  {
+    "id": 18,
+    "name": "Plasblast",
+    "cardType": "ACTION",
+    "tier": 1,
+    "energy": 1,
+    "matter": 1,
+    "offense": 2,
+    "defense": 0,
+    "offenseType": "THERMAL",
+    "defenseType": "NONE",
+    "abilities": [{
+      "starter": "DEPLOY",
+      "targets": "ENTIRE_ENEMY_FLEET",
+      "resourcePrice": {},
+      "effects": [
+        {
+          "effectType": "DEAL_DMG",
+          "effectInfo": [2, "THERMAL"],
+          "duration": -1
+        }
+      ]
+    }]
+  },
+  {
+    "id": 19,
+    "name": "Upper Hand",
+    "cardType": "TACTIC",
+    "tier": 1,
+    "energy": 0,
     "matter": 0,
     "offense": 0,
     "defense": 0,
@@ -92,7 +516,7 @@
     "defenseType": "NONE",
     "abilities": [{
       "starter": "DEPLOY",
-      "targets": "NONE",
+      "targets": "ANY_ALLY",
       "resourcePrice": {},
       "effects": [
         {
@@ -104,27 +528,81 @@
     }]
   },
   {
-    "id": 4,
-    "name": "Interceptor",
-    "cardType": "BLUEPRINT",
-    "tier": 2,
+    "id": 20,
+    "name": "Labour Deck",
+    "cardType": "SUPPORT",
+    "tier": 1,
     "energy": 1,
-    "matter": 0,
-    "offense": 2,
-    "defense": 2,
-    "offenseType": "THERMAL",
-    "defenseType": "THERMAL",
+    "matter": 1,
+    "offense": 0,
+    "defense": 3,
+    "offenseType": "NONE",
+    "defenseType": "KINETIC",
     "abilities": [{
-      "starter": "NONE",
-      "targets": "NONE",
-      "resourcePrice": {},
+      "starter": "USE",
+      "targets": "SELF",
+      "resourcePrice": {
+        "energy": 0,
+        "matter": 0
+      },
       "effects": [
         {
-          "effectType": "GUARD",
-          "effectInfo": [],
+          "effectType": "CHANGE_RESOURCE",
+          "effectInfo": ["ENERGY", 1],
           "duration": -1
         }
       ]
-    }]
+    },
+      {
+        "starter": "USE",
+        "targets": "SELF",
+        "resourcePrice": {
+          "energy": 0,
+          "matter": 0
+        },
+        "effects": [
+          {
+            "effectType": "CHANGE_RESOURCE",
+            "effectInfo": ["MATTER", 2],
+            "duration": -1
+          }
+        ]
+      }]
+  },
+  {
+    "id": 21,
+    "name": "Spare Resources",
+    "cardType": "ACTION",
+    "tier": 1,
+    "energy": 0,
+    "matter": 0,
+    "offense": 0,
+    "defense": 0,
+    "offenseType": "NONE",
+    "defenseType": "NONE",
+    "abilities": [{
+      "starter": "DEPLOY",
+      "targets": "SELF",
+      "resourcePrice": {},
+      "effects": [
+        {
+          "effectType": "CHANGE_RESOURCE",
+          "effectInfo": ["ENERGY", 1],
+          "duration": -1
+        }
+      ]
+    },
+      {
+        "starter": "DEPLOY",
+        "targets": "SELF",
+        "resourcePrice": {},
+        "effects": [
+          {
+            "effectType": "CHANGE_RESOURCE",
+            "effectInfo": ["MATTER", 2],
+            "duration": -1
+          }
+        ]
+      }]
   }
 ]
