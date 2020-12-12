@@ -186,6 +186,7 @@ public class RoundManager {
                 if (cardInfo.getAbilities().get(i) != null) {
                     if (cardInfo.getAbilities().get(i).getStarter() == abilityStarter) { //cardType == CardType.UPGRADE || cardType == CardType.TACTIC ||
                         AbilityInfo abilityInfo = cardInfo.getAbilities().get(i);
+                        //TODO
                         if (!payPrice || owner.canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
                             success = battle.getAbilityManager().playAbility(caster, target, i, dropTarget);
                             if (payPrice && success) {
