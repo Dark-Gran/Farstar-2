@@ -4,8 +4,8 @@ public interface BattleSettings {
     //Cards.json setup
     int BONUS_CARD_ID = 21;
     //Battle
-    int STARTING_ENERGY = 10;
-    int STARTING_MATTER = 10;
+    int STARTING_ENERGY = 1;
+    int STARTING_MATTER = 2;
     int STARTING_CARDS_ATT = 1;
     int STARTING_CARDS_DEF = 2;
     int CARDS_PER_TURN = 1;
