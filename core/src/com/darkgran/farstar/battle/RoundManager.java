@@ -91,8 +91,8 @@ public class RoundManager {
                     if (whoseTurn.canAfford(token.getCard()) && tierAllowed(token.getCard().getCardInfo().getTier())) {
                         //TARGETING ANYWHERE FOR ACTION-CARDS
                         if (cardType == CardType.ACTION) {
-                            success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, true, dropTarget);
-                            //TARGETING SUPPORTS
+                            success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
+                        //TARGETING SUPPORTS
                         } else if (dropTarget instanceof SupportMenu) {
                             if (((SupportMenu) dropTarget).getCardList() instanceof Supports && position != -1) {
                                 Supports supports = (Supports) ((SupportMenu) dropTarget).getCardList();
@@ -103,7 +103,7 @@ public class RoundManager {
                                             if (supports.getCards().size() > SupportMenu.unTranslatePosition(position)) {
                                                 target = supports.getCards().get(SupportMenu.unTranslatePosition(position));
                                             }
-                                            success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
+                                            success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
                                         }
                                         if (cardType == CardType.SUPPORT) {
                                             if (postAbility || success) {
@@ -122,7 +122,7 @@ public class RoundManager {
                                         //ABILITIES
                                         postponedDeploy.setPosition(position);
                                         if (!postAbility) {
-                                            success = checkAllAbilities(token, (fleet.getShips()[position] != null) ? fleet.getShips()[position].getToken() : null, AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
+                                            success = checkAllAbilities(token, (fleet.getShips()[position] != null) ? fleet.getShips()[position].getToken() : null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
                                         }
                                         if (postAbility || success) {
                                             if (fleet.getShips()[position] != null) {
@@ -143,7 +143,7 @@ public class RoundManager {
                                 //ABILITIES
                                 if (CardType.isSpell(cardType)) { //&& ms.getCard().getPlayer() == whoseTurn
                                     if (!postAbility) {
-                                        success = checkAllAbilities(token, ms, AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
+                                        success = checkAllAbilities(token, ms, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
                                     }
                                     if (postAbility || success) {
                                         targetCard = ms.getCard();
@@ -158,7 +158,7 @@ public class RoundManager {
                         if (targetCard != null && cardType == CardType.TACTIC && battle.getCombatManager().getDuelManager().isActive()) {
                             battle.getCombatManager().getDuelManager().saveTactic(token.getCard(), targetCard);
                         }
-                        if (!postAbility) { whoseTurn.payday(token.getCard()); }
+                        whoseTurn.payday(token.getCard());
                         token.addCardToJunk();
                     } else if (dropTarget instanceof JunkButton && token instanceof HandToken) { //Target: Discard
                         Junkpile junkpile = ((JunkButton) dropTarget).getPlayer().getJunkpile();
@@ -180,7 +180,7 @@ public class RoundManager {
         }
     }
 
-    private boolean checkAllAbilities(Token caster, Token target, AbilityStarter abilityStarter, Player owner, boolean payPrice, DropTarget dropTarget) {
+    private boolean checkAllAbilities(Token caster, Token target, AbilityStarter abilityStarter, Player owner, DropTarget dropTarget) {
         if (abilityStarter != AbilityStarter.USE || !caster.getCard().isUsed()) {
             CardInfo cardInfo = caster.getCard().getCardInfo();
             ArrayList<AbilityInfo> options = new ArrayList<>();
@@ -188,14 +188,14 @@ public class RoundManager {
                 if (cardInfo.getAbilities().get(i) != null) {
                     if (cardInfo.getAbilities().get(i).getStarter() == abilityStarter) { //cardType == CardType.UPGRADE || cardType == CardType.TACTIC ||
                         AbilityInfo abilityInfo = cardInfo.getAbilities().get(i);
-                        if (!payPrice || owner.canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
+                        if (owner.canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
                             options.add(abilityInfo);
                         }
                     }
                 }
             }
             if (options.size() == 1) {
-                return playAbility(caster, (target!=null) ? target.getCard() : null, abilityStarter, owner, payPrice, dropTarget, options.get(0));
+                return playAbility(caster, (target!=null) ? target.getCard() : null, abilityStarter, owner, dropTarget, options.get(0));
             } else if (options.size() > 1) {
                 askForAbility(caster, target, dropTarget, options);
                 return false;
@@ -216,11 +216,11 @@ public class RoundManager {
         }
     }
 
-    public boolean playAbility(Token caster, Card target, AbilityStarter abilityStarter, Player owner, boolean payPrice, DropTarget dropTarget, AbilityInfo ability) {
+    public boolean playAbility(Token caster, Card target, AbilityStarter abilityStarter, Player owner, DropTarget dropTarget, AbilityInfo ability) {
         boolean success = false;
         if (owner != null) {
             success = battle.getAbilityManager().playAbility(caster, target, ability, dropTarget);
-            if (payPrice && success) {
+            if (success) {
                 owner.payday(ability.getResourcePrice().getEnergy(), ability.getResourcePrice().getMatter());
                 if (abilityStarter == AbilityStarter.USE) {
                     caster.getCard().setUsed(true);
@@ -231,10 +231,9 @@ public class RoundManager {
     }
 
     public void processPick(AbilityInfo ability) {
-        if (!battle.isEverythingDisabled()) {
-            postponedDeploy.setAbility(ability);
+        if (!battle.isEverythingDisabled() && postponedDeploy.getCaster() != null) {
             if (abilityPicker != null) { abilityPicker.disable(); }
-            if (playAbility(postponedDeploy.getCaster(), (postponedDeploy.getTarget()!=null) ? postponedDeploy.getTarget().getCard() : null, ability.getStarter(), postponedDeploy.getCaster().getCard().getPlayer(), true, postponedDeploy.getDrop(), ability)) {
+            if (playAbility(postponedDeploy.getCaster(), (postponedDeploy.getTarget()!=null) ? postponedDeploy.getTarget().getCard() : null, ability.getStarter(), postponedDeploy.getCaster().getCard().getPlayer(), postponedDeploy.getDrop(), ability)) {
                 processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true);
                 postponedDeploy.resetInDeployment();
             }
@@ -252,7 +251,7 @@ public class RoundManager {
             if (targetingActive) {
                 processTarget(token);
             } else if (owner == battle.getWhoseTurn() && tierAllowed(token.getCard().getCardInfo().getTier())) {
-                checkAllAbilities(token, null, AbilityStarter.USE, owner, true, null);
+                checkAllAbilities(token, null, AbilityStarter.USE, owner, null);
             }
         }
     }
