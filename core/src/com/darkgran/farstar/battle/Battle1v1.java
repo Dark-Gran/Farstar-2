@@ -55,8 +55,10 @@ public class Battle1v1 extends Battle {
         if (getWhoseTurn() == player1) {
             player1.getHand().drawCards(player1.getDeck(), STARTING_CARDS_ATT);
             player2.getHand().drawCards(player2.getDeck(), STARTING_CARDS_DEF);
+            player2.getHand().drawCards(BattleSettings.BONUS_CARD_ID, 1);
         } else {
             player1.getHand().drawCards(player1.getDeck(), STARTING_CARDS_DEF);
+            player1.getHand().drawCards(BattleSettings.BONUS_CARD_ID, 1);
             player2.getHand().drawCards(player2.getDeck(), STARTING_CARDS_ATT);
         }
     }

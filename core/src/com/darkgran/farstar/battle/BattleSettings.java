@@ -1,6 +1,8 @@
 package com.darkgran.farstar.battle;
 
 public interface BattleSettings {
+    //Cards.json setup
+    int BONUS_CARD_ID = 21;
     //Battle
     int STARTING_ENERGY = 10;
     int STARTING_MATTER = 10;

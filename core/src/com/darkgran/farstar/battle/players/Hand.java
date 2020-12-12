@@ -24,6 +24,18 @@ public class Hand extends CardList{
         }
     }
 
+    public void drawCards(int id, int howMany) {
+        for (int i = 0; i < howMany && getCards().size() < Battle.MAX_IN_HAND; i++) {
+            Card card = new Card(Battle.CARD_LIBRARY.getCard(id), null);
+            if (card != null) {
+                getCards().add(card);
+                if (getCardListMenu() != null) {
+                    getCardListMenu().generateNewToken(card);
+                }
+            }
+        }
+    }
+
     @Override
     public void setupSize() {
         setMaxSize(BattleSettings.MAX_IN_HAND);
