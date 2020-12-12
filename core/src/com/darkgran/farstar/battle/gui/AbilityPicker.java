@@ -32,14 +32,9 @@ public class AbilityPicker extends BaseMenu {
     }
 
     public void refreshOptions() {
-        for (int i = 0; i < abilityInfos.size(); i++) {
-            if (i >= abilityGraphics.size()) {
-                abilityGraphics.add(createOption(abilityInfos.get(i)));
-            }
-        }
-        if (abilityGraphics.size() > abilityInfos.size()) {
-            removeActors(abilityInfos.size(), abilityGraphics.size());
-            abilityGraphics.subList(abilityInfos.size(), abilityGraphics.size()).clear();
+        abilityGraphics = new ArrayList<>();
+        for (AbilityInfo abilityInfo : abilityInfos) {
+            abilityGraphics.add(createOption(abilityInfo));
         }
     }
 

@@ -77,7 +77,7 @@ public class RoundManager {
     //-PLAYING-CARDS-//
     //---------------//
 
-    public void processDrop(Token token, DropTarget dropTarget, int position, boolean postAbility) {
+    public void processDrop(Token token, DropTarget dropTarget, int position, boolean postAbility, boolean payPrice) {
         boolean success = false;
         if (!targetingActive && token.getCardListMenu() != null) {
             CardType cardType = token.getCard().getCardInfo().getCardType();
@@ -91,7 +91,7 @@ public class RoundManager {
                     if (whoseTurn.canAfford(token.getCard()) && tierAllowed(token.getCard().getCardInfo().getTier())) {
                         //TARGETING ANYWHERE FOR ACTION-CARDS
                         if (cardType == CardType.ACTION) {
-                            success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
+                            if (!postAbility) { success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget); }
                         //TARGETING SUPPORTS
                         } else if (dropTarget instanceof SupportMenu) {
                             if (((SupportMenu) dropTarget).getCardList() instanceof Supports && position != -1) {
@@ -158,7 +158,7 @@ public class RoundManager {
                         if (targetCard != null && cardType == CardType.TACTIC && battle.getCombatManager().getDuelManager().isActive()) {
                             battle.getCombatManager().getDuelManager().saveTactic(token.getCard(), targetCard);
                         }
-                        whoseTurn.payday(token.getCard());
+                        if (payPrice) { whoseTurn.payday(token.getCard()); }
                         token.addCardToJunk();
                     } else if (dropTarget instanceof JunkButton && token instanceof HandToken) { //Target: Discard
                         Junkpile junkpile = ((JunkButton) dropTarget).getPlayer().getJunkpile();
@@ -210,7 +210,6 @@ public class RoundManager {
             for (AbilityInfo option : options) {
                 abilityPicker.getAbilityInfos().add(option);
             }
-            abilityPicker.refreshOptions();
             abilityPicker.enable();
             postponedDeploy.saveInDeployment(caster, null, dropTarget, target);
         }
@@ -234,7 +233,7 @@ public class RoundManager {
         if (!battle.isEverythingDisabled() && postponedDeploy.getCaster() != null) {
             if (abilityPicker != null) { abilityPicker.disable(); }
             if (playAbility(postponedDeploy.getCaster(), (postponedDeploy.getTarget()!=null) ? postponedDeploy.getTarget().getCard() : null, ability.getStarter(), postponedDeploy.getCaster().getCard().getPlayer(), postponedDeploy.getDrop(), ability)) {
-                processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true);
+                processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, ability.getStarter()==AbilityStarter.DEPLOY);
                 postponedDeploy.resetInDeployment();
             }
         }
@@ -275,7 +274,7 @@ public class RoundManager {
                         //System.out.println("Ability price paid.");
                     } else if (postponedDeploy.getDrop() != null) {
                         //System.out.println("Reprocessing original drop...");
-                        processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true);
+                        processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, postponedDeploy.getAbility().getStarter()==AbilityStarter.DEPLOY);
                     }
                     endTargeting();
                 }
@@ -289,8 +288,6 @@ public class RoundManager {
         targetingActive = false;
         postponedDeploy.resetInDeployment();
     }
-
-
 
     //-----------//
     //-UTILITIES-//
