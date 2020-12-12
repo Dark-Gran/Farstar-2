@@ -86,64 +86,68 @@ public class RoundManager {
                 Player whoseTurn;
                 if (!battle.getCombatManager().getDuelManager().isActive()) { whoseTurn = battle.getWhoseTurn(); }
                 else { whoseTurn = battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer(); }
-                if (token.getCardListMenu().getPlayer() == whoseTurn && whoseTurn.canAfford(token.getCard()) && tierAllowed(token.getCard().getCardInfo().getTier())) {
+                if (token.getCardListMenu().getPlayer() == whoseTurn) {
                     Card targetCard = null;
-                    //TARGETING ANYWHERE FOR ACTION-CARDS
-                    if (cardType == CardType.ACTION) {
-                        success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, true, dropTarget);
-                    //TARGETING SUPPORTS
-                    } else if (dropTarget instanceof SupportMenu) { //TODO no upgrades into empty support vs actually, upgrades everywhere if the targeting works? + dont allow support elsewhere lol
-                        if (((SupportMenu) dropTarget).getCardList() instanceof Supports && position != -1) {
-                            Supports supports = (Supports) ((SupportMenu) dropTarget).getCardList();
-                            if ((cardType == CardType.SUPPORT && supports == whoseTurn.getSupports()) || CardType.isSpell(cardType)) {
-                                if (!battle.activeCombatOrDuel()) {
-                                    if (!postAbility) {
-                                        Card target = null;
-                                        if (supports.getCards().size() > SupportMenu.unTranslatePosition(position)) {
-                                            target = supports.getCards().get(SupportMenu.unTranslatePosition(position));
+                    if (whoseTurn.canAfford(token.getCard()) && tierAllowed(token.getCard().getCardInfo().getTier())) {
+                        //TARGETING ANYWHERE FOR ACTION-CARDS
+                        if (cardType == CardType.ACTION) {
+                            success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, true, dropTarget);
+                            //TARGETING SUPPORTS
+                        } else if (dropTarget instanceof SupportMenu) {
+                            if (((SupportMenu) dropTarget).getCardList() instanceof Supports && position != -1) {
+                                Supports supports = (Supports) ((SupportMenu) dropTarget).getCardList();
+                                if ((cardType == CardType.SUPPORT && supports == whoseTurn.getSupports()) || CardType.isSpell(cardType)) {
+                                    if (!battle.activeCombatOrDuel()) {
+                                        if (!postAbility) {
+                                            Card target = null;
+                                            if (supports.getCards().size() > SupportMenu.unTranslatePosition(position)) {
+                                                target = supports.getCards().get(SupportMenu.unTranslatePosition(position));
+                                            }
+                                            success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
                                         }
-                                        success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
+                                        if (cardType == CardType.SUPPORT) {
+                                            if (postAbility || success) {
+                                                success = supports.addCard(token.getCard());
+                                            }
+                                        }
                                     }
-                                    if (cardType == CardType.SUPPORT) {
+                                }
+                            }
+                            //TARGETING FLEET
+                        } else if (dropTarget instanceof FleetMenu) {
+                            if (cardType != CardType.SUPPORT) {
+                                Fleet fleet = ((FleetMenu) dropTarget).getFleet();
+                                if ((fleet == whoseTurn.getFleet() || !CardType.isShip(cardType)) && position != -1) {
+                                    if (!battle.getCombatManager().getDuelManager().isActive() || (fleet.getShips()[position].getToken() != null && fleet.getShips()[position].getToken().isInDuel())) {
+                                        //ABILITIES
+                                        postponedDeploy.setPosition(position);
+                                        if (!postAbility) {
+                                            success = checkAllAbilities(token, (fleet.getShips()[position] != null) ? fleet.getShips()[position].getToken() : null, AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
+                                        }
                                         if (postAbility || success) {
-                                            success = supports.addCard(token.getCard());
+                                            if (fleet.getShips()[position] != null) {
+                                                targetCard = fleet.getShips()[position].getToken().getCard();
+                                            }
+                                            //DEPLOYMENT
+                                            if (CardType.isShip(cardType)) {
+                                                success = fleet.addShip(token, position);
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                    //TARGETING FLEET
-                    } else if (dropTarget instanceof FleetMenu) {
-                        Fleet fleet = ((FleetMenu) dropTarget).getFleet();
-                        if ((fleet == whoseTurn.getFleet() || !CardType.isShip(cardType)) && position != -1) {
-                            if (!battle.getCombatManager().getDuelManager().isActive() || (fleet.getShips()[position].getToken() != null && fleet.getShips()[position].getToken().isInDuel())) {
+                            //TARGETING MS
+                        } else if (dropTarget instanceof MothershipToken) {
+                            MothershipToken ms = (MothershipToken) dropTarget;
+                            if (!battle.activeCombatOrDuel() || ms.isInDuel()) {
                                 //ABILITIES
-                                postponedDeploy.setPosition(position);
-                                if (!postAbility) {
-                                    success = checkAllAbilities(token, (fleet.getShips()[position] != null) ? fleet.getShips()[position].getToken() : null, AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
-                                }
-                                if (postAbility || success) {
-                                    if (fleet.getShips()[position] != null) {
-                                        targetCard = fleet.getShips()[position].getToken().getCard();
+                                if (CardType.isSpell(cardType)) { //&& ms.getCard().getPlayer() == whoseTurn
+                                    if (!postAbility) {
+                                        success = checkAllAbilities(token, ms, AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
                                     }
-                                    //DEPLOYMENT
-                                    if (CardType.isShip(cardType)) {
-                                        success = fleet.addShip(token, position);
+                                    if (postAbility || success) {
+                                        targetCard = ms.getCard();
                                     }
-                                }
-                            }
-                        }
-                    //TARGETING MS
-                    } else if (dropTarget instanceof MothershipToken) {
-                        MothershipToken ms = (MothershipToken) dropTarget;
-                        if (!battle.activeCombatOrDuel() || ms.isInDuel()) {
-                            //ABILITIES
-                            if (CardType.isSpell(cardType)) { //&& ms.getCard().getPlayer() == whoseTurn
-                                if (!postAbility) {
-                                    success = checkAllAbilities(token, ms, AbilityStarter.DEPLOY, whoseTurn, false, dropTarget);
-                                }
-                                if (postAbility || success) {
-                                    targetCard = ms.getCard();
                                 }
                             }
                         }
