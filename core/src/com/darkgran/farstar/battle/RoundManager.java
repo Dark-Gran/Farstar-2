@@ -186,8 +186,8 @@ public class RoundManager {
                 if (cardInfo.getAbilities().get(i) != null) {
                     if (cardInfo.getAbilities().get(i).getStarter() == abilityStarter) { //cardType == CardType.UPGRADE || cardType == CardType.TACTIC ||
                         AbilityInfo abilityInfo = cardInfo.getAbilities().get(i);
-                        //TODO
                         if (!payPrice || owner.canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
+                            //TODO - check for others with same starter and play this one only if none are present, otherwise hold til picked (use/split askForTargets)
                             success = battle.getAbilityManager().playAbility(caster, target, i, dropTarget);
                             if (payPrice && success) {
                                 owner.payday(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter());
@@ -195,7 +195,7 @@ public class RoundManager {
                                     caster.getCard().setUsed(true);
                                 }
                             }
-                            break; //TODO: detect abilities with same Starter and let player pick (old "Hybrid")
+                            break;
                         }
                     }
                 }
@@ -205,7 +205,7 @@ public class RoundManager {
     }
 
     public void abilityPick(AbilityInfo abilityInfo) {
-        //TODO
+        //TODO - select for play
     }
 
     public void askForTargets(Token token, int abilityIx, DropTarget dropTarget) {
