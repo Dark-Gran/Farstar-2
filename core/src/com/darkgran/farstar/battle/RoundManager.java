@@ -260,6 +260,10 @@ public class RoundManager {
             endTargeting();
             System.out.println("Targeting Cancelled.");
         }
+        if (abilityPicker.isActive()) {
+            abilityPicker.disable();
+            postponedDeploy.resetInDeployment();
+        }
     }
 
     private void processTarget(Token target) {
