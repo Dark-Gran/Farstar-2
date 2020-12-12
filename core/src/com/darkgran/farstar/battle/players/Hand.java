@@ -24,9 +24,9 @@ public class Hand extends CardList{
         }
     }
 
-    public void drawCards(int id, int howMany) {
+    public void drawCards(int id, int howMany, Player player) {
         for (int i = 0; i < howMany && getCards().size() < Battle.MAX_IN_HAND; i++) {
-            Card card = new Card(Battle.CARD_LIBRARY.getCard(id), null);
+            Card card = new Card(Battle.CARD_LIBRARY.getCard(id), player);
             if (card != null) {
                 getCards().add(card);
                 if (getCardListMenu() != null) {

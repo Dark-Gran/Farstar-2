@@ -215,14 +215,11 @@ public class RoundManager {
     }
 
     public boolean playAbility(Token caster, Card target, AbilityStarter abilityStarter, Player owner, DropTarget dropTarget, AbilityInfo ability) {
-        boolean success = false;
-        if (owner != null) {
-            success = battle.getAbilityManager().playAbility(caster, target, ability, dropTarget);
-            if (success) {
-                owner.payday(ability.getResourcePrice().getEnergy(), ability.getResourcePrice().getMatter());
-                if (abilityStarter == AbilityStarter.USE) {
-                    caster.getCard().setUsed(true);
-                }
+        boolean success = battle.getAbilityManager().playAbility(caster, target, ability, dropTarget);
+        if (success) {
+            if (owner != null) { owner.payday(ability.getResourcePrice().getEnergy(), ability.getResourcePrice().getMatter()); }
+            if (abilityStarter == AbilityStarter.USE) {
+                caster.getCard().setUsed(true);
             }
         }
         return success;
@@ -231,7 +228,9 @@ public class RoundManager {
     public void processPick(AbilityInfo ability) {
         if (!battle.isEverythingDisabled() && postponedDeploy.getCaster() != null) {
             if (abilityPicker != null) { abilityPicker.disable(); }
+            System.out.println("OK0");
             if (playAbility(postponedDeploy.getCaster(), (postponedDeploy.getTarget()!=null) ? postponedDeploy.getTarget().getCard() : null, ability.getStarter(), postponedDeploy.getCaster().getCard().getPlayer(), postponedDeploy.getDrop(), ability)) {
+                System.out.println("OK1");
                 processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, ability.getStarter()==AbilityStarter.DEPLOY);
                 postponedDeploy.resetInDeployment();
             }
@@ -275,7 +274,7 @@ public class RoundManager {
                         battle.getWhoseTurn().payday(postponedDeploy.getAbility().getResourcePrice().getEnergy(), postponedDeploy.getAbility().getResourcePrice().getMatter());
                         postponedDeploy.getCaster().getCard().setUsed(true);
                         //System.out.println("Ability price paid.");
-                    } else if (postponedDeploy.getDrop() != null) {
+                    } else {
                         //System.out.println("Reprocessing original drop...");
                         processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, postponedDeploy.getAbility().getStarter()==AbilityStarter.DEPLOY);
                     }
