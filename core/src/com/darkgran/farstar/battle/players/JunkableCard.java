@@ -15,9 +15,6 @@ public abstract class JunkableCard extends TokenizedCard {
                 getToken().addCardToJunk();
                 getToken().destroy();
             }
-            /*if (getToken().getCardListMenu() != null) {
-                getToken().getCardListMenu().removeToken(this);
-            }*/
         }
     }
 
