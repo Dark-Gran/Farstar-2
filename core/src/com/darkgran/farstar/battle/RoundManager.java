@@ -203,6 +203,10 @@ public class RoundManager {
         return success;
     }
 
+    public void abilityPick(AbilityInfo abilityInfo) {
+        //TODO
+    }
+
     public void askForTargets(Token token, int abilityIx, DropTarget dropTarget) {
         targetingActive = true;
         tokenInDeployment = token;

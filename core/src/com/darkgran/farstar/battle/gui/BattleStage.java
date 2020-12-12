@@ -213,9 +213,10 @@ public abstract class BattleStage extends ListeningStage {
     @Override
     public void dispose() {
         turnButton.removeListener(turnButton.getClickListener());
-        turn.dispose();
         disableCombatEnd();
+        turn.dispose();
         combatEndPic.dispose();
+        yardPic.dispose();
         super.dispose();
     }
 

@@ -11,7 +11,7 @@ public abstract class BaseMenu extends SimpleBox2 {
     private float offset;
     private boolean negativeOffset;
     private final BattleStage battleStage;
-    private final Player player;
+    private Player player;
 
     public BaseMenu(float x, float y, boolean negativeOffset, BattleStage battleStage, Player player) {
         setX(x);
@@ -42,4 +42,6 @@ public abstract class BaseMenu extends SimpleBox2 {
     public BattleStage getBattleStage() { return battleStage; }
 
     public Player getPlayer() { return player; }
+
+    public void setPlayer(Player player) { this.player = player; }
 }
