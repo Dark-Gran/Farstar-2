@@ -19,7 +19,9 @@ public class HandMenu extends CardListMenu { //in-future: rearrangement of cards
                 i--;
                 found = true;
             } else {
-                getTokens().get(i).setX(getX() + getOffset()*i);
+                Token nextToken = getTokens().get(i);
+                nextToken.setX(getX() + getOffset()*i);
+                if (nextToken instanceof AnchoredToken) { ((AnchoredToken) nextToken).setAnchorX(nextToken.getX()); }
             }
         }
     }
