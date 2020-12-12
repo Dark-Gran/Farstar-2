@@ -11,6 +11,20 @@ public class HandMenu extends CardListMenu { //in-future: rearrangement of cards
     }
 
     @Override
+    public void removeToken(Token token) {
+        boolean found = false;
+        for (int i = 0; i < getTokens().size(); i++) {
+            if (!found && getTokens().get(i) == token) {
+                getTokens().remove(token);
+                i--;
+                found = true;
+            } else {
+                getTokens().get(i).setX(getX() + getOffset()*i);
+            }
+        }
+    }
+
+    @Override
     public void setupOffset() {
         super.setupOffset();
         setOffset(getOffset()*3/2);

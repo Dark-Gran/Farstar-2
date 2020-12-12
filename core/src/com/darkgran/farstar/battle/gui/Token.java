@@ -56,7 +56,7 @@ public class Token extends TextFont {
         if (this instanceof FakeToken) { battleStage.setFakeToken(null); }
         else {
             if (cardListMenu !=null) {
-                cardListMenu.getTokens().remove(this);
+                cardListMenu.removeToken(this);
                 cardListMenu.getCardList().getCards().remove(getCard());
             }
         }
