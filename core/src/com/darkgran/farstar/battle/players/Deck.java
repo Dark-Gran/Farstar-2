@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.BattleSettings;
 
 import java.util.ArrayList;
@@ -13,7 +14,16 @@ public class Deck extends CardList {
     }
 
     public Deck() {
-        super();
+        setupSize();
+        setCards(new ArrayList<>());
+        int[] ids = new int[]{
+                6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20,
+                6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20,
+                18 ,18
+        };
+        for (int i = 0; i < getMaxSize(); i++) {
+            getCards().add(new Card(Battle.CARD_LIBRARY.getCard(ids[i]), null));
+        }
         shuffle();
     }
 
