@@ -39,7 +39,7 @@ public class AbilityPicker extends BaseMenu {
     }
 
     public void removeActors(int fromIndex, int toIndex) {
-        for (int i = fromIndex; i < toIndex; i++) {
+        for (int i = fromIndex; i <= toIndex && i < abilityGraphics.size(); i++) {
             abilityGraphics.get(i).remove();
         }
     }
