@@ -22,7 +22,7 @@ public class AbilityPickerOption extends ImageButton {
 
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                battle.getRoundManager().abilityPick(abilityInfo);
+                battle.getRoundManager().processPick(abilityInfo);
             }
         });
     }

@@ -70,6 +70,7 @@ public class BattleStage1V1 extends BattleStage {
         addDropTarget(supportMenu2);
         //AbilityPicker ("Hybrid")
         abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/3, this, null, getYardPic());
+        getBattleScreen().getBattle().getRoundManager().setAbilityPicker(abilityPicker);
         //Finish
         setupListeners();
     }

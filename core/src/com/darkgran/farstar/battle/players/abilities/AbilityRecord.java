@@ -4,18 +4,18 @@ import com.darkgran.farstar.battle.players.Card;
 
 public class AbilityRecord {
     private final Card card;
-    private final int abilityIX;
+    private final AbilityInfo ability;
 
-    public AbilityRecord(Card card, int abilityIX) {
+    public AbilityRecord(Card card, AbilityInfo ability) {
         this.card = card;
-        this.abilityIX = abilityIX;
+        this.ability = ability;
     }
 
     public Card getCard() {
         return card;
     }
 
-    public int getAbilityID() {
-        return abilityIX;
+    public AbilityInfo getAbility() {
+        return ability;
     }
 }

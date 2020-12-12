@@ -1,6 +1,7 @@
 package com.darkgran.farstar.battle.gui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.Card;
 import com.darkgran.farstar.util.SimpleBox2;
 
@@ -16,7 +17,7 @@ public class MothershipToken extends ClickToken implements DropTarget {
     public void draw(Batch batch) {
         super.draw(batch);
         //Draws DropTarget SimpleBox2
-        //if (DEBUG_RENDER) { getBattleStage().getBattleScreen().drawDebugSimpleBox2(getSimpleBox2(), getBattleStage().getBattleScreen().getDebugRenderer(), batch); }
+        //if (BattleScreen.DEBUG_RENDER) { getBattleStage().getBattleScreen().drawDebugSimpleBox2(getSimpleBox2(), getBattleStage().getBattleScreen().getDebugRenderer(), batch); }
     }
 
     @Override
