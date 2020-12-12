@@ -11,7 +11,7 @@ public class Battle1v1 extends Battle {
     private final Player player1;
     private final Player player2;
 
-    public Battle1v1() {
+    public Battle1v1() { //TODO Prototype Decks
         super();
         //in future: pass the Players in parameters
         player1 = new Player((byte) 1, STARTING_ENERGY, STARTING_MATTER, new Mothership(0), new Deck(21), new Yard(1));
