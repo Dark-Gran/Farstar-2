@@ -228,9 +228,7 @@ public class RoundManager {
     public void processPick(AbilityInfo ability) {
         if (!battle.isEverythingDisabled() && postponedDeploy.getCaster() != null) {
             if (abilityPicker != null) { abilityPicker.disable(); }
-            System.out.println("OK0");
             if (playAbility(postponedDeploy.getCaster(), (postponedDeploy.getTarget()!=null) ? postponedDeploy.getTarget().getCard() : null, ability.getStarter(), postponedDeploy.getCaster().getCard().getPlayer(), postponedDeploy.getDrop(), ability)) {
-                System.out.println("OK1");
                 processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, ability.getStarter()==AbilityStarter.DEPLOY);
                 postponedDeploy.resetInDeployment();
             }
