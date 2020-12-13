@@ -21,7 +21,7 @@ public class Battle1v1 extends Battle {
         player1.getYard().setPlayerOnAll(player1);
         player2.getMs().setPlayer(player2);
         player2.getDeck().setPlayerOnAll(player2);
-        player2.getYard().setPlayerOnAll(player1);
+        player2.getYard().setPlayerOnAll(player2);
     }
 
     @Override
