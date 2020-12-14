@@ -1,4 +1,4 @@
 package com.darkgran.farstar.battle.gui.tokens;
 
-public class CardOffense extends CardPart {
+public class TokenName extends TokenPart {
 }
