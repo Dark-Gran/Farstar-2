@@ -15,6 +15,8 @@ public class Fleet implements BattleTicks {
     public boolean addShip(Token token, int position) {
         boolean success = false;
         Ship ship = new Ship(this, token.getCard().getCardInfo(), token.getCard().getPlayer());
+        ship.setFought(true);
+        ship.setUsed(true);
         if (hasSpace() && position > -1 && position < 7) {
             if (position == 3) {
                 if (ships[3] == null) {
