@@ -204,7 +204,7 @@ public class AbilityManager {
         if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
             int dmg = floatObjectToInt(effect.getEffectInfo().get(0));
             TechType techType = TechType.valueOf(effect.getEffectInfo().get(1).toString());
-            dmg = DuelManager.getDmgAgainstShields(dmg, techType, target.getCardInfo().getDefenseType());
+            dmg = DuelManager.getDmgAgainstShields(dmg, target.getHealth(), techType, target.getCardInfo().getDefenseType());
             if (!target.receiveDMG(dmg)) { target.death(); }
             return true;
         }

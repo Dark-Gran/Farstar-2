@@ -103,18 +103,17 @@ public abstract class DuelManager {
     }
 
     public static boolean exeOneSide(Card att, Card def) { //returns survival
-        int dmg = att.getCardInfo().getOffense();
-        if (dmg < def.getHealth()) {
-            dmg = getDmgAgainstShields(att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
-        }
+        int dmg = getDmgAgainstShields(att.getCardInfo().getOffense(), def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
         return def.receiveDMG(dmg);
     }
 
-    public static int getDmgAgainstShields(int dmg, TechType dmgType, TechType shieldType) {
-        dmgType = noneToInferior(dmgType);
-        shieldType = noneToInferior(shieldType);
-        if (dmg != 0 && ((shieldType == TechType.SUPERIOR && dmgType != TechType.SUPERIOR) || (shieldType != TechType.INFERIOR && (dmgType == TechType.INFERIOR || dmgType == shieldType)))) {
-            return 1;
+    public static int getDmgAgainstShields(int dmg, int health, TechType dmgType, TechType shieldType) {
+        if (dmg <= health) {
+            dmgType = noneToInferior(dmgType);
+            shieldType = noneToInferior(shieldType);
+            if (dmg != 0 && ((shieldType == TechType.SUPERIOR && dmgType != TechType.SUPERIOR) || (shieldType != TechType.INFERIOR && (dmgType == TechType.INFERIOR || dmgType == shieldType)))) {
+                return 1;
+            }
         }
         return dmg;
     }
