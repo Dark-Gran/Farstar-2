@@ -30,7 +30,7 @@ public class CombatManager {
 
     private void fleetCheck() {
         if (!battle.isEverythingDisabled()) {
-            if (battle.getWhoseTurn().getFleet().noAttackers() || (battle.getRoundManager().getRoundNum()==1 && battle.getRoundManager().isFirstTurnThisRound())) {
+            if (battle.getWhoseTurn().getFleet().noAttackers()) {
                 endCombat();
             } else {
                 battleStage.enableCombatEnd();
