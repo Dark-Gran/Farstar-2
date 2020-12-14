@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.Effect;
+import com.darkgran.farstar.battle.players.cards.CardInfo;
 
 import java.util.ArrayList;
 

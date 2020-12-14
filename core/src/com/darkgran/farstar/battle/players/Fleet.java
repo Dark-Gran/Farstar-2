@@ -2,7 +2,8 @@ package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.gui.FleetMenu;
-import com.darkgran.farstar.battle.gui.Token;
+import com.darkgran.farstar.battle.gui.tokens.Token;
+import com.darkgran.farstar.battle.players.cards.Ship;
 
 public class Fleet implements BattleTicks {
     private final Junkpile junkpile;

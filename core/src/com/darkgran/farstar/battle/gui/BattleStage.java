@@ -12,7 +12,11 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.ListeningStage;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.CombatManager;
-import com.darkgran.farstar.battle.players.CardType;
+import com.darkgran.farstar.battle.gui.tokens.AnchoredToken;
+import com.darkgran.farstar.battle.gui.tokens.FakeToken;
+import com.darkgran.farstar.battle.gui.tokens.MothershipToken;
+import com.darkgran.farstar.battle.gui.tokens.Token;
+import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.util.SimpleBox2;
 
 import java.awt.*;

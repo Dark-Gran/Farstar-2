@@ -1,6 +1,6 @@
 package com.darkgran.farstar.battle.players.abilities;
 
-import com.darkgran.farstar.battle.players.Card;
+import com.darkgran.farstar.battle.players.cards.Card;
 
 public class AbilityRecord {
     private final Card card;

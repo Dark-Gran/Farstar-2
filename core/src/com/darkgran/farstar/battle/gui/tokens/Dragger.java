@@ -1,4 +1,4 @@
-package com.darkgran.farstar.battle.gui;
+package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;

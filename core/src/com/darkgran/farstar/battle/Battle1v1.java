@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.players.*;
+import com.darkgran.farstar.battle.players.cards.Mothership;
 
 import java.util.concurrent.ThreadLocalRandom;
 

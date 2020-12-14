@@ -1,7 +1,8 @@
-package com.darkgran.farstar.battle.players;
+package com.darkgran.farstar.battle.players.cards;
 
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.gui.CardListMenu;
+import com.darkgran.farstar.battle.players.Player;
 
 import java.util.ArrayList;
 

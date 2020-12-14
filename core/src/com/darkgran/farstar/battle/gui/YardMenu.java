@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.gui;
 
+import com.darkgran.farstar.battle.gui.tokens.YardToken;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.players.Yard;
 

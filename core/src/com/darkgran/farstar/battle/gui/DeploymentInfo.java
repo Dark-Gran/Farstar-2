@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.gui;
 
+import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 
 public class DeploymentInfo {

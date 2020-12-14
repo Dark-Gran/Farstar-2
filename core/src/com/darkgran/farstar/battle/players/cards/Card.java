@@ -1,7 +1,9 @@
-package com.darkgran.farstar.battle.players;
+package com.darkgran.farstar.battle.players.cards;
 
 import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.Battle;
+import com.darkgran.farstar.battle.players.InstanceFactory;
+import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityRecord;
 import com.darkgran.farstar.battle.players.abilities.Effect;

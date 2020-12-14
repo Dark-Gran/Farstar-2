@@ -1,4 +1,7 @@
-package com.darkgran.farstar.battle.players;
+package com.darkgran.farstar.battle.players.cards;
+
+import com.darkgran.farstar.battle.players.Fleet;
+import com.darkgran.farstar.battle.players.Player;
 
 public class Ship extends JunkableCard {
     private boolean fought = false;

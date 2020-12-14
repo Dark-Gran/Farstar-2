@@ -3,7 +3,7 @@ package com.darkgran.farstar.battle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
-import com.darkgran.farstar.battle.players.CardInfo;
+import com.darkgran.farstar.battle.players.cards.CardInfo;
 
 public class CardLibrary {
     private Array<CardInfo> cards;

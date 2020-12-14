@@ -1,6 +1,9 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.AbilityManager;
+import com.darkgran.farstar.battle.players.cards.Card;
+import com.darkgran.farstar.battle.players.cards.CardList;
+import com.darkgran.farstar.battle.players.cards.Support;
 
 import java.util.ArrayList;
 

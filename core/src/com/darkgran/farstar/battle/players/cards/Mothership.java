@@ -1,4 +1,4 @@
-package com.darkgran.farstar.battle.players;
+package com.darkgran.farstar.battle.players.cards;
 
 public class Mothership extends TokenizedCard {
 

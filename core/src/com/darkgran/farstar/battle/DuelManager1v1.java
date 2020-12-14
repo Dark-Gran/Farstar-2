@@ -1,7 +1,7 @@
 package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.battle.gui.DuelMenu1v1;
-import com.darkgran.farstar.battle.gui.Token;
+import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.DuelPlayer;
 
 public class DuelManager1v1 extends DuelManager { //1v1 = each Player[] contains only one attacker/defender

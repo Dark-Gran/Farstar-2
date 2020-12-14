@@ -1,8 +1,10 @@
-package com.darkgran.farstar.battle.gui;
+package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.darkgran.farstar.battle.BattleScreen;
-import com.darkgran.farstar.battle.players.Card;
+import com.darkgran.farstar.battle.gui.BattleStage;
+import com.darkgran.farstar.battle.gui.CardListMenu;
+import com.darkgran.farstar.battle.gui.DropTarget;
+import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.util.SimpleBox2;
 
 public class MothershipToken extends ClickToken implements DropTarget {

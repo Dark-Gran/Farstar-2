@@ -1,5 +1,8 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.battle.players.cards.Card;
+import com.darkgran.farstar.battle.players.cards.Mothership;
+
 public class Player {
     private final byte battleID; //must be unique for each Player in match
     private int energy;

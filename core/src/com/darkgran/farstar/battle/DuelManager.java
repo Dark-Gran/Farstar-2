@@ -2,10 +2,10 @@ package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.battle.gui.DuelMenu;
 import com.darkgran.farstar.battle.gui.DuelOK;
-import com.darkgran.farstar.battle.gui.Token;
-import com.darkgran.farstar.battle.players.Card;
+import com.darkgran.farstar.battle.gui.tokens.Token;
+import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.DuelPlayer;
-import com.darkgran.farstar.battle.players.Ship;
+import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.battle.players.TechType;
 import com.darkgran.farstar.battle.players.abilities.EffectType;
 

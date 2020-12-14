@@ -1,8 +1,10 @@
-package com.darkgran.farstar.battle.gui;
+package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.darkgran.farstar.battle.players.Card;
+import com.darkgran.farstar.battle.gui.BattleStage;
+import com.darkgran.farstar.battle.gui.YardMenu;
+import com.darkgran.farstar.battle.players.cards.Card;
 
 public class YardToken extends Token {
     private final YardMenu yardMenu;

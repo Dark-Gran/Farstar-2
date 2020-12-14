@@ -1,9 +1,11 @@
 package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.battle.gui.DropTarget;
-import com.darkgran.farstar.battle.gui.Token;
+import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.*;
 import com.darkgran.farstar.battle.players.abilities.*;
+import com.darkgran.farstar.battle.players.cards.Card;
+import com.darkgran.farstar.battle.players.cards.Mothership;
 
 import java.util.ArrayList;
 import java.util.ListIterator;

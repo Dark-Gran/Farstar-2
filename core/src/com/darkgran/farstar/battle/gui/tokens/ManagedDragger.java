@@ -1,9 +1,9 @@
-package com.darkgran.farstar.battle.gui;
+package com.darkgran.farstar.battle.gui.tokens;
 
 import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.battle.RoundManager;
-import com.darkgran.farstar.battle.players.CardType;
-import com.darkgran.farstar.battle.players.Ship;
+import com.darkgran.farstar.battle.players.cards.CardType;
+import com.darkgran.farstar.battle.players.cards.Ship;
 
 public class ManagedDragger extends Dragger {
     private final RoundManager roundManager;

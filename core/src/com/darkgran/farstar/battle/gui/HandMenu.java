@@ -1,6 +1,9 @@
 package com.darkgran.farstar.battle.gui;
 
-import com.darkgran.farstar.battle.players.Card;
+import com.darkgran.farstar.battle.gui.tokens.AnchoredToken;
+import com.darkgran.farstar.battle.gui.tokens.HandToken;
+import com.darkgran.farstar.battle.gui.tokens.Token;
+import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.Hand;
 import com.darkgran.farstar.battle.players.Player;
 

@@ -1,4 +1,4 @@
-package com.darkgran.farstar.battle.gui;
+package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;

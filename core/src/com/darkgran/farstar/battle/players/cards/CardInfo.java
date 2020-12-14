@@ -1,5 +1,7 @@
-package com.darkgran.farstar.battle.players;
+package com.darkgran.farstar.battle.players.cards;
 
+import com.darkgran.farstar.battle.players.InstanceFactory;
+import com.darkgran.farstar.battle.players.TechType;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 
 import java.util.ArrayList;

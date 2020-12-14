@@ -2,6 +2,8 @@ package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.BattleSettings;
+import com.darkgran.farstar.battle.players.cards.Card;
+import com.darkgran.farstar.battle.players.cards.CardList;
 
 import java.util.ArrayList;
 import java.util.Collections;

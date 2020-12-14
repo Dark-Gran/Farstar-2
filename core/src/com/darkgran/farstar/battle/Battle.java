@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.gui.BattleStage;
-import com.darkgran.farstar.battle.players.Ship;
+import com.darkgran.farstar.battle.players.cards.Ship;
 
 import java.util.ArrayList;
 

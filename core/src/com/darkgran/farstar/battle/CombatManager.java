@@ -1,13 +1,14 @@
 package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.battle.gui.*;
+import com.darkgran.farstar.battle.gui.tokens.FleetToken;
+import com.darkgran.farstar.battle.gui.tokens.MothershipToken;
+import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.DuelPlayer;
 import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.battle.players.Ship;
+import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.battle.players.abilities.EffectType;
-
-import java.util.ArrayList;
 
 public class CombatManager {
     private final Battle battle;

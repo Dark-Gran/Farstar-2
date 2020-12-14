@@ -1,6 +1,7 @@
-package com.darkgran.farstar.battle.players;
+package com.darkgran.farstar.battle.players.cards;
 
-import com.darkgran.farstar.battle.gui.Token;
+import com.darkgran.farstar.battle.gui.tokens.Token;
+import com.darkgran.farstar.battle.players.Player;
 
 public abstract class TokenizedCard extends Card {
     private Token token;

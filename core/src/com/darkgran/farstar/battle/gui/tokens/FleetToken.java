@@ -1,6 +1,9 @@
-package com.darkgran.farstar.battle.gui;
+package com.darkgran.farstar.battle.gui.tokens;
 
-import com.darkgran.farstar.battle.players.Card;
+import com.darkgran.farstar.battle.gui.BattleStage;
+import com.darkgran.farstar.battle.gui.CardListMenu;
+import com.darkgran.farstar.battle.gui.FleetMenu;
+import com.darkgran.farstar.battle.players.cards.Card;
 
 public class FleetToken extends AnchoredToken {
     private FleetMenu fleetMenu;
