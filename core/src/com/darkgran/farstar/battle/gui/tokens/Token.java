@@ -43,15 +43,21 @@ public class Token extends TextFont {
 
     public void draw(Batch batch) {
         Color color = new Color();
+        //Price
         color.set(1, 1, 1, 1);
+        if (this instanceof YardToken || this instanceof HandToken || this instanceof FakeToken) {
+            //TODO
+        }
+        //Offense+Defense
         color = ColorPalette.getTypeColor(card.getCardInfo().getOffenseType());
         cardOffense.draw(getFont(), batch, getX(), getY()+getHeight()/3, String.valueOf(card.getCardInfo().getOffense()), color);
         color = ColorPalette.getTypeColor(card.getCardInfo().getDefenseType());
         cardDefense.draw(getFont(), batch, getX()+getWidth()*5/6, getY()+getHeight()/3, String.valueOf(card.getHealth()), color);
+        //Name
         if (card instanceof Ship) { if (((Ship) card).haveFought()) { color.set(1, 0, 0, 1); } }
         else if (isInDuel()) { color.set(0, 1, 0, 1); }
         cardName.draw(getFont(), batch, getX(), getY()+getHeight(), card.getCardInfo().getName(), color);
-        //debug
+        //Debug
         if (DEBUG_RENDER) { battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getDebugRenderer(), batch); }
     }
 
