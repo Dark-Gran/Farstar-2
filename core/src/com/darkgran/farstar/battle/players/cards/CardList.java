@@ -1,6 +1,6 @@
 package com.darkgran.farstar.battle.players.cards;
 
-import com.darkgran.farstar.battle.Battle;
+import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.players.Player;
 
@@ -27,7 +27,7 @@ public abstract class CardList {
         setupSize();
         cards = new ArrayList<Card>();
         for (int i = 0; i < maxSize; i++) {
-            cards.add(new Card(Battle.CARD_LIBRARY.getCard(2), null));
+            cards.add(new Card(Farstar.CARD_LIBRARY.getCard(2), null));
         }
     }
 
@@ -35,7 +35,7 @@ public abstract class CardList {
         setupSize();
         cards = new ArrayList<Card>();
         for (int i = 0; i < maxSize; i++) {
-            cards.add(new Card(Battle.CARD_LIBRARY.getCard(id), null));
+            cards.add(new Card(Farstar.CARD_LIBRARY.getCard(id), null));
         }
     }
 

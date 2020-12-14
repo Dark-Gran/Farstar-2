@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.BattleSettings;
 import com.darkgran.farstar.battle.players.cards.Card;
@@ -28,7 +29,7 @@ public class Hand extends CardList {
 
     public void drawCards(int id, int howMany, Player player) {
         for (int i = 0; i < howMany && getCards().size() < Battle.MAX_IN_HAND; i++) {
-            Card card = new Card(Battle.CARD_LIBRARY.getCard(id), player);
+            Card card = new Card(Farstar.CARD_LIBRARY.getCard(id), player);
             if (card != null) {
                 getCards().add(card);
                 if (getCardListMenu() != null) {

@@ -9,7 +9,6 @@ import com.darkgran.farstar.battle.players.cards.Ship;
 import java.util.ArrayList;
 
 public abstract class Battle implements BattleSettings {
-    public final static CardLibrary CARD_LIBRARY = new CardLibrary();
     private Player whoseTurn;
     private RoundManager roundManager;
     private CombatManager combatManager;
@@ -19,10 +18,7 @@ public abstract class Battle implements BattleSettings {
 
     public Battle() {
         System.out.println("Launching Battle...");
-        loadLibrary();
     }
-
-    public void loadLibrary() { CARD_LIBRARY.loadLocal("content/cards.json"); }
 
     public BattleStage createBattleStage(Farstar game, Viewport viewport, BattleScreen battleScreen) {
         return null;

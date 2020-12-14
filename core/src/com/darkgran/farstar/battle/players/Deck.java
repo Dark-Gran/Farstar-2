@@ -1,6 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
-import com.darkgran.farstar.battle.Battle;
+import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.BattleSettings;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardList;
@@ -24,7 +24,7 @@ public class Deck extends CardList {
                 18 ,18
         };
         for (int i = 0; i < getMaxSize(); i++) {
-            getCards().add(new Card(Battle.CARD_LIBRARY.getCard(ids[i]), null));
+            getCards().add(new Card(Farstar.CARD_LIBRARY.getCard(ids[i]), null));
         }
         shuffle();
     }

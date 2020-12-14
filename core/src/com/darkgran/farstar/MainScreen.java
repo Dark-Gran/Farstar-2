@@ -8,6 +8,7 @@ public class MainScreen extends SuperScreen {
     public MainScreen(final Farstar game, TableStage tableMenu) {
         super(game);
         setTableMenu(tableMenu);
+        game.loadLibrary();
         game.getInputMultiplexer().addProcessor(menu);
         Gdx.input.setCursorCatched(false);
     }

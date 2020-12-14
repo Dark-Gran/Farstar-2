@@ -4,7 +4,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.players.*;
-import com.darkgran.farstar.battle.players.cards.Mothership;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -12,17 +11,17 @@ public class Battle1v1 extends Battle {
     private final Player player1;
     private final Player player2;
 
-    public Battle1v1() {
+    public Battle1v1(Player player1, Player player2) {
         super();
         //in future: pass the Players in parameters
-        player1 = new Player((byte) 1, STARTING_ENERGY, STARTING_MATTER, new Mothership(0), new Deck(), new Yard());
-        player2 = new Player((byte) 2, STARTING_ENERGY, STARTING_MATTER, new Mothership(15), new Deck(), new Yard());
-        player1.getMs().setPlayer(player1);
-        player1.getDeck().setPlayerOnAll(player1);
-        player1.getYard().setPlayerOnAll(player1);
-        player2.getMs().setPlayer(player2);
-        player2.getDeck().setPlayerOnAll(player2);
-        player2.getYard().setPlayerOnAll(player2);
+        this.player1 = player1;
+        this.player2 = player2;
+        this.player1.getMs().setPlayer(player1);
+        this.player1.getDeck().setPlayerOnAll(player1);
+        this.player1.getYard().setPlayerOnAll(player1);
+        this.player2.getMs().setPlayer(player2);
+        this.player2.getDeck().setPlayerOnAll(player2);
+        this.player2.getYard().setPlayerOnAll(player2);
     }
 
     @Override

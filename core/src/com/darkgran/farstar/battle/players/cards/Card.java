@@ -1,7 +1,7 @@
 package com.darkgran.farstar.battle.players.cards;
 
+import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.AbilityManager;
-import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.players.InstanceFactory;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
@@ -26,13 +26,13 @@ public class Card {
     }
 
     public Card() {
-        originalInfo = Battle.CARD_LIBRARY.getCard(0);
+        originalInfo = Farstar.CARD_LIBRARY.getCard(0);
         cardInfo = InstanceFactory.instanceCardInfo(originalInfo);
         player = null;
     }
 
     public Card(int id) {
-        originalInfo = Battle.CARD_LIBRARY.getCard(id);
+        originalInfo = Farstar.CARD_LIBRARY.getCard(id);
         cardInfo = InstanceFactory.instanceCardInfo(originalInfo);
         player = null;
     }

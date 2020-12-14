@@ -4,16 +4,17 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.darkgran.farstar.battle.CardLibrary;
 
 public class Farstar extends Game {
 	public static final int STAGE_WIDTH = 1280;
 	public static final int STAGE_HEIGHT = 640;
+	public static final CardLibrary CARD_LIBRARY = new CardLibrary();
 	private final InputMultiplexer inputMultiplexer = new InputMultiplexer();
-
 	protected SuperScreen superScreen;
 	SpriteBatch batch;
 
-	public InputMultiplexer getInputMultiplexer() { return inputMultiplexer; }
+	public void loadLibrary() { CARD_LIBRARY.loadLocal("content/cards.json"); }
 
 	@Override
 	public void create () {
@@ -27,10 +28,6 @@ public class Farstar extends Game {
 		this.superScreen = (SuperScreen) screen;
 	}
 
-	public SuperScreen getSuperScreen () {
-		return superScreen;
-	}
-
 	@Override
 	public void render () {
 		super.render();
@@ -40,4 +37,11 @@ public class Farstar extends Game {
 	public void dispose () {
 		batch.dispose();
 	}
+
+	public SuperScreen getSuperScreen () {
+		return superScreen;
+	}
+
+	public InputMultiplexer getInputMultiplexer() { return inputMultiplexer; }
+
 }

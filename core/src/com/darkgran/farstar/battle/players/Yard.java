@@ -1,6 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
-import com.darkgran.farstar.battle.Battle;
+import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.BattleSettings;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardList;
@@ -16,11 +16,11 @@ public class Yard extends CardList {
     public Yard() { //default
         setupSize();
         setCards(new ArrayList<>());
-        getCards().add(new Card(Battle.CARD_LIBRARY.getCard(1), null));
-        getCards().add(new Card(Battle.CARD_LIBRARY.getCard(2), null));
-        getCards().add(new Card(Battle.CARD_LIBRARY.getCard(3), null));
-        getCards().add(new Card(Battle.CARD_LIBRARY.getCard(4), null));
-        getCards().add(new Card(Battle.CARD_LIBRARY.getCard(5), null));
+        getCards().add(new Card(Farstar.CARD_LIBRARY.getCard(1), null));
+        getCards().add(new Card(Farstar.CARD_LIBRARY.getCard(2), null));
+        getCards().add(new Card(Farstar.CARD_LIBRARY.getCard(3), null));
+        getCards().add(new Card(Farstar.CARD_LIBRARY.getCard(4), null));
+        getCards().add(new Card(Farstar.CARD_LIBRARY.getCard(5), null));
     }
 
     @Override
