@@ -33,7 +33,7 @@ public class MainScreenStage extends ListeningStage {
             public void clicked(InputEvent event, float x, float y)
             {
                 getGame().getScreen().dispose();
-                getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(InstanceFactory.createDefaultPlayer(1, 0), InstanceFactory.createDefaultPlayer(2, 15))));
+                getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(InstanceFactory.createLocalPlayer(1, 0), InstanceFactory.createLocalPlayer(2, 15))));
             }
         });
         botButton.addListener(new ClickListener()
@@ -42,7 +42,7 @@ public class MainScreenStage extends ListeningStage {
             public void clicked(InputEvent event, float x, float y)
             {
                 getGame().getScreen().dispose();
-                getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(InstanceFactory.createDefaultPlayer(1, 0), InstanceFactory.createDefaultPlayer(2, 15))));
+                getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(InstanceFactory.createLocalPlayer(1, 0), InstanceFactory.createAutomaton(2, 15))));
             }
         });
     }
