@@ -103,7 +103,10 @@ public abstract class DuelManager {
     }
 
     public static boolean exeOneSide(Card att, Card def) { //returns survival
-        int dmg = getDmgAgainstShields(att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
+        int dmg = att.getCardInfo().getOffense();
+        if (dmg < def.getHealth()) {
+            dmg = getDmgAgainstShields(att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
+        }
         return def.receiveDMG(dmg);
     }
 
