@@ -31,7 +31,7 @@ public class Automaton extends Player {
 
     private void turn() {
         deploy(getYard().getCards().get(0), getYard().getCardListMenu());
-        //battle.getRoundManager().endTurn();
+        battle.getRoundManager().endTurn();
     }
 
     private void deploy(Card card, CardListMenu cardListMenu) {
