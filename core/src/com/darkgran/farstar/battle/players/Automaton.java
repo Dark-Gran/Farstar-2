@@ -11,7 +11,7 @@ import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Mothership;
 
-public class Automaton extends Player {
+public class Automaton extends Player { //TODO "possibility-sensor" (for non-ai use too)
     private final BotTier botTier;
     private Battle battle;
     private float timerDelay = 1f;
