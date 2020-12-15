@@ -1,7 +1,6 @@
 package com.darkgran.farstar.battle;
 
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
@@ -10,6 +9,7 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.TableStage;
 import com.darkgran.farstar.battle.gui.BattleStage;
+import com.darkgran.farstar.battle.players.LocalPlayer;
 import com.darkgran.farstar.util.SimpleBox2;
 
 public class BattleScreen extends SuperScreen {
@@ -23,7 +23,7 @@ public class BattleScreen extends SuperScreen {
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             if (button == 1) { //mouse.right
-                if (battle.getRoundManager().isLaunched()) {
+                if (battle.getRoundManager().isLaunched() && battle.getWhoseTurn() instanceof LocalPlayer) {
                     battle.getRoundManager().tryCancel();
                 }
             }
