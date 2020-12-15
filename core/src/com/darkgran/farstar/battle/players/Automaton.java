@@ -35,7 +35,8 @@ public class Automaton extends Player {
     }
 
     private void deploy(Card card, CardListMenu cardListMenu) {
-        Token token = new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), cardListMenu);        CardType cardType = token.getCard().getCardInfo().getCardType();
+        Token token = new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), cardListMenu);
+        CardType cardType = token.getCard().getCardInfo().getCardType();
         DropTarget dropTarget;
         if (cardType == CardType.SUPPORT) {
             dropTarget = (SupportMenu) getSupports().getCardListMenu();
