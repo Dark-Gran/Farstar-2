@@ -45,6 +45,20 @@ public abstract class BattleStage extends ListeningStage {
         combatEndButton.setBounds(Farstar.STAGE_WIDTH*3/4, Farstar.STAGE_HEIGHT*1/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
     }
 
+    @Override
+    public void setupListeners() {
+        turnButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                if (battleScreen.getBattle().getWhoseTurn() instanceof LocalPlayer) {
+                    battleScreen.getBattle().getRoundManager().endTurn();
+                }
+            }
+        });
+    }
+
     public void enableCombatEnd() {
         if (battleScreen.getBattle().getWhoseTurn() instanceof LocalPlayer) {
             addActor(combatEndButton);
@@ -90,18 +104,6 @@ public abstract class BattleStage extends ListeningStage {
         if (token instanceof FakeToken) {
             token.destroy();
         }
-    }
-
-    @Override
-    public void setupListeners() {
-        turnButton.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y)
-            {
-               battleScreen.getBattle().getRoundManager().endTurn();
-            }
-        });
     }
 
     public void drawBattleStage(float delta, Batch batch) {
