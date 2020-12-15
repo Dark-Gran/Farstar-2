@@ -16,6 +16,7 @@ import com.darkgran.farstar.battle.gui.tokens.AnchoredToken;
 import com.darkgran.farstar.battle.gui.tokens.FakeToken;
 import com.darkgran.farstar.battle.gui.tokens.MothershipToken;
 import com.darkgran.farstar.battle.gui.tokens.Token;
+import com.darkgran.farstar.battle.players.LocalPlayer;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.util.SimpleBox2;
 
@@ -45,15 +46,17 @@ public abstract class BattleStage extends ListeningStage {
     }
 
     public void enableCombatEnd() {
-        addActor(combatEndButton);
-        combatEndButton.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y)
-            {
-                battleScreen.getBattle().getCombatManager().endCombat();
-            }
-        });
+        if (battleScreen.getBattle().getWhoseTurn() instanceof LocalPlayer) {
+            addActor(combatEndButton);
+            combatEndButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+
+                    battleScreen.getBattle().getCombatManager().endCombat();
+
+                }
+            });
+        }
     }
 
     public void disableCombatEnd() {

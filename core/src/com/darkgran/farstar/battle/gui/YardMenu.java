@@ -1,6 +1,7 @@
 package com.darkgran.farstar.battle.gui;
 
 import com.darkgran.farstar.battle.gui.tokens.YardToken;
+import com.darkgran.farstar.battle.players.LocalPlayer;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.players.Yard;
 
@@ -25,7 +26,11 @@ public class YardMenu extends CardListMenu {
         }
     }
 
-    public void switchVisibility() { visible = !visible; }
+    public void switchVisibility() {
+        if (getPlayer() instanceof LocalPlayer) {
+            visible = !visible;
+        }
+    }
 
     public boolean isVisible() { return visible; }
 

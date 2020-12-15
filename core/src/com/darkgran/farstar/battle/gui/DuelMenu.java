@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.darkgran.farstar.battle.DuelManager;
+import com.darkgran.farstar.battle.players.LocalPlayer;
 
 public abstract class DuelMenu {
     private final Texture duel = new Texture("images/duel.png");
@@ -25,15 +26,15 @@ public abstract class DuelMenu {
     public void removeAllOKs() { }
 
     public void addOK(DuelOK duelOK) {
-        getBattleStage().addActor(duelOK);
-        duelOK.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y)
-            {
-                getDuelManager().OK(duelOK);
-            }
-        });
+        if (duelOK.getDuelPlayer().getPlayer() instanceof LocalPlayer) {
+            getBattleStage().addActor(duelOK);
+            duelOK.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    getDuelManager().OK(duelOK);
+                }
+            });
+        }
     }
 
     public void removeOK(DuelOK duelOK) {

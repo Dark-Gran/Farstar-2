@@ -249,7 +249,7 @@ public class RoundManager {
     }
 
     public void processClick(Token token, Player owner) {
-        if (!battle.isEverythingDisabled() && !battle.activeCombatOrDuel()) {
+        if (!battle.isEverythingDisabled() && !battle.activeCombatOrDuel() && getBattle().getWhoseTurn() instanceof LocalPlayer) {
             if (targetingActive) {
                 processTarget(token);
             } else if (owner == battle.getWhoseTurn() && tierAllowed(token.getCard().getCardInfo().getTier())) {

@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.battle.RoundManager;
+import com.darkgran.farstar.battle.players.LocalPlayer;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Ship;
 
@@ -32,7 +33,7 @@ public class ManagedDragger extends Dragger {
     }
 
     private boolean isEnabled() {
-        if (!roundManager.getBattle().isEverythingDisabled() && !roundManager.isTargetingActive() && !roundManager.getAbilityPicker().isActive()) {
+        if (getToken().getCard().getPlayer() instanceof LocalPlayer && !roundManager.getBattle().isEverythingDisabled() && !roundManager.isTargetingActive() && !roundManager.getAbilityPicker().isActive()) {
             if (!(this.getToken().getCard() instanceof Ship) || !((Ship) this.getToken().getCard()).haveFought()) {
                 if (!combatManager.getDuelManager().isActive() && RoundManager.ownsToken(roundManager.getBattle().getWhoseTurn(), getToken()) && (forCombat == combatManager.isActive() || (combatManager.isActive() && this.getToken().getCard().getCardInfo().getCardType() == CardType.TACTIC))) {
                     return true;
