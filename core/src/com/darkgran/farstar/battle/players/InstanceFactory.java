@@ -4,6 +4,7 @@ import com.darkgran.farstar.battle.BattleSettings;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.Effect;
 import com.darkgran.farstar.battle.players.ai.Automaton;
+import com.darkgran.farstar.battle.players.ai.BotTier;
 import com.darkgran.farstar.battle.players.cards.CardInfo;
 import com.darkgran.farstar.battle.players.cards.Mothership;
 
@@ -17,7 +18,7 @@ public interface InstanceFactory {
     }
 
     static Player createAutomaton(int playerID, int mothershipId) {
-        return new Automaton((byte) playerID, BattleSettings.STARTING_ENERGY, BattleSettings.STARTING_MATTER, new Mothership(mothershipId), new Deck(), new Yard());
+        return new Automaton((byte) playerID, BattleSettings.STARTING_ENERGY, BattleSettings.STARTING_MATTER, new Mothership(mothershipId), new Deck(), new Yard(), BotTier.AUTOMATON);
     }
 
     //Copycats

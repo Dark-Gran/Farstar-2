@@ -7,6 +7,7 @@ import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.DuelPlayer;
 import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.battle.players.Player;
+import com.darkgran.farstar.battle.players.ai.Automaton;
 import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.battle.players.abilities.EffectType;
 
@@ -32,6 +33,8 @@ public class CombatManager {
         if (!battle.isEverythingDisabled()) {
             if (battle.getWhoseTurn().getFleet().noAttackers()) {
                 endCombat();
+            } else if (battle.getWhoseTurn() instanceof Automaton) {
+                ((Automaton) battle.getWhoseTurn()).newCombat();
             } else {
                 battleStage.enableCombatEnd();
             }

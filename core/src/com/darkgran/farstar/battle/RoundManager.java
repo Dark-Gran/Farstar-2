@@ -8,6 +8,7 @@ import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.players.*;
+import com.darkgran.farstar.battle.players.ai.Automaton;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardInfo;
 import com.darkgran.farstar.battle.players.cards.CardType;
@@ -47,6 +48,9 @@ public class RoundManager {
         battle.getWhoseTurn().getHand().drawCards(battle.getWhoseTurn().getDeck(), battle.CARDS_PER_TURN);
         resourceIncomes(battle.getWhoseTurn());
         System.out.println("Player #"+battle.getWhoseTurn().getBattleID()+" may play his cards.");
+        if (battle.getWhoseTurn() instanceof Automaton) {
+            ((Automaton) battle.getWhoseTurn()).newTurn();
+        }
     }
 
     public void resourceIncomes(Player player) {
