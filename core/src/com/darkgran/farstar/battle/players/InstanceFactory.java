@@ -3,8 +3,6 @@ package com.darkgran.farstar.battle.players;
 import com.darkgran.farstar.battle.BattleSettings;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.Effect;
-import com.darkgran.farstar.battle.players.ai.Automaton;
-import com.darkgran.farstar.battle.players.ai.BotTier;
 import com.darkgran.farstar.battle.players.cards.CardInfo;
 import com.darkgran.farstar.battle.players.cards.Mothership;
 

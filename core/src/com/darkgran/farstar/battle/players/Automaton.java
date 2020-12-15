@@ -1,9 +1,6 @@
-package com.darkgran.farstar.battle.players.ai;
+package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.Battle;
-import com.darkgran.farstar.battle.players.Deck;
-import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.battle.players.Yard;
 import com.darkgran.farstar.battle.players.cards.Mothership;
 
 public class Automaton extends Player { //TODO

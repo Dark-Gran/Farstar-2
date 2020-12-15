@@ -7,7 +7,7 @@ import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.DuelPlayer;
 import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.battle.players.ai.Automaton;
+import com.darkgran.farstar.battle.players.Automaton;
 import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.battle.players.abilities.EffectType;
 
