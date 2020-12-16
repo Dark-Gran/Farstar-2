@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *  -- No sensors beyond PossibilityAdvisor
  *  -- No planning
  */
-public class Automaton extends Bot { //TODO
+public class Automaton extends Bot {
 
     public Automaton(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard, BotTier botTier) {
         super(battleID, energy, matter, ms, deck, yard, botTier);
@@ -21,7 +21,7 @@ public class Automaton extends Bot { //TODO
         if (bestPossibility != null) {
             report("Playing card.");
             if (deploy(bestPossibility.getCard(), bestPossibility.getMenu())) {
-                delayAction(this::turn);
+                delayAction(this::turn); //= repeat until no possibilities
             } else {
                 report("Move failed!");
                 delayAction(getBattle().getRoundManager()::endTurn);
@@ -34,8 +34,14 @@ public class Automaton extends Bot { //TODO
 
     public PossibilityInfo getBestPossibility() {
         ArrayList<PossibilityInfo> possibilities = getBattle().getRoundManager().getPossibilityAdvisor().getPossibilities(this, getBattle());
-        if (possibilities.size() > 0) {
-            return possibilities.get(0);
+        if (possibilities.size() > 0) { //TODO
+
+            
+
+
+
+
+
         }
         return null;
     }
