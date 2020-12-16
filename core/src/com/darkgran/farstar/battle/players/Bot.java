@@ -63,13 +63,19 @@ public abstract class Bot extends Player implements BotSettings {
         } else {
             dropTarget = getFleet().getFleetMenu() ;
         }
+        Token token = new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (baseMenu instanceof CardListMenu) ? (CardListMenu) baseMenu : null);
         if (baseMenu instanceof HandMenu) {
-            HandToken handToken = new HandToken(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (baseMenu instanceof CardListMenu) ? (CardListMenu) baseMenu : null);
-            return getBattle().getRoundManager().processDrop(handToken, dropTarget, position, false, true);
-        } else {
-            Token token = new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (baseMenu instanceof CardListMenu) ? (CardListMenu) baseMenu : null);
-            return getBattle().getRoundManager().processDrop(token, dropTarget, position, false, true);
+            for (Token tokenInHand : ((HandMenu) baseMenu).getTokens()) {
+                if (tokenInHand instanceof HandToken && tokenInHand.getCard() == card) {
+                    token = tokenInHand;
+                    break;
+                }
+            }
+            if (!(token instanceof HandToken)) {
+                return false;
+            }
         }
+        return getBattle().getRoundManager().processDrop(token, dropTarget, position, false, true);
     }
 
     public void report(String message) {
