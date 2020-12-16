@@ -54,12 +54,14 @@ public class PossibilityAdvisor {
     }
 
     public boolean hasPossibleAbility(Player player, Card card) {
-        for (int i = 0; i < card.getCardInfo().getAbilities().size(); i++) {
-            if (card.getCardInfo().getAbilities().get(i) != null) {
-                if (card.getCardInfo().getAbilities().get(i).getStarter() == AbilityStarter.USE) {
-                    AbilityInfo abilityInfo = card.getCardInfo().getAbilities().get(i);
-                    if (player.canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
-                        return true;
+        if (card != null) {
+            for (int i = 0; i < card.getCardInfo().getAbilities().size(); i++) {
+                if (card.getCardInfo().getAbilities().get(i) != null) {
+                    if (card.getCardInfo().getAbilities().get(i).getStarter() == AbilityStarter.USE) {
+                        AbilityInfo abilityInfo = card.getCardInfo().getAbilities().get(i);
+                        if (player.canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
+                            return true;
+                        }
                     }
                 }
             }
