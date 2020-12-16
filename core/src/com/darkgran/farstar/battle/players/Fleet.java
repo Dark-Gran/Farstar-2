@@ -3,6 +3,7 @@ package com.darkgran.farstar.battle.players;
 import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.gui.FleetMenu;
 import com.darkgran.farstar.battle.gui.tokens.Token;
+import com.darkgran.farstar.battle.players.cards.CardList;
 import com.darkgran.farstar.battle.players.cards.Ship;
 
 public class Fleet implements BattleTicks {
@@ -85,6 +86,9 @@ public class Fleet implements BattleTicks {
             }
         }
     }
+
+    @Override
+    public CardList getCardList() { return null; }
 
     @Override
     public void setUsedOnAll(boolean used) {
