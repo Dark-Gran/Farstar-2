@@ -15,7 +15,7 @@ import com.darkgran.farstar.battle.players.cards.CardType;
 
 import java.util.ArrayList;
 
-public class RoundManager { //TODO unMarkAll after every move (= just paydays?)
+public class RoundManager {
     private final Battle battle;
     private final PossibilityAdvisor possibilityAdvisor;
     private boolean launched = false;
@@ -176,6 +176,7 @@ public class RoundManager { //TODO unMarkAll after every move (= just paydays?)
                         }
                         if (payPrice) { whoseTurn.payday(token.getCard()); }
                         token.addCardToJunk();
+                        possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
                     } else if (dropTarget instanceof JunkButton && token instanceof HandToken) { //Target: Discard
                         Junkpile junkpile = ((JunkButton) dropTarget).getPlayer().getJunkpile();
                         if (junkpile == whoseTurn.getJunkpile()) {
@@ -238,6 +239,7 @@ public class RoundManager { //TODO unMarkAll after every move (= just paydays?)
             if (abilityStarter == AbilityStarter.USE) {
                 caster.getCard().setUsed(true);
             }
+            possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
         }
         return success;
     }
@@ -277,6 +279,7 @@ public class RoundManager { //TODO unMarkAll after every move (= just paydays?)
                     if (postponedDeploy.getAbility().getStarter() == AbilityStarter.USE) {
                         battle.getWhoseTurn().payday(postponedDeploy.getAbility().getResourcePrice().getEnergy(), postponedDeploy.getAbility().getResourcePrice().getMatter());
                         postponedDeploy.getCaster().getCard().setUsed(true);
+                        possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
                         //System.out.println("Ability price paid.");
                     } else {
                         //System.out.println("Reprocessing original drop...");

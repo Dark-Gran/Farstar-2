@@ -10,6 +10,11 @@ import java.util.ArrayList;
 
 public class PossibilityAdvisor {
 
+    public void refresh(Player currentPlayer, Battle battle) {
+        battle.unMarkAllPossibilities();
+        markPossibilities(currentPlayer, battle);
+    }
+
     public void markPossibilities(Player player, Battle battle) {
         ArrayList<PossibilityInfo> possibilities = getPossibilities(player, battle);
         for (PossibilityInfo possibility : possibilities) {
