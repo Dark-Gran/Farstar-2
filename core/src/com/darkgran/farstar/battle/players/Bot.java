@@ -21,9 +21,7 @@ public abstract class Bot extends Player implements BotSettings {
 
     public void newTurn() {
         report("My Turn Began!");
-        Timer.schedule(new Timer.Task(){
-            public void run () { Gdx.app.postRunnable(() -> { turn(); }); }
-        }, timerDelay);
+        delayAction(this::turn);
     }
 
     public void turn() { }
@@ -31,6 +29,14 @@ public abstract class Bot extends Player implements BotSettings {
     public void deploy(Card card, CardListMenu cardListMenu) { }
 
     public void newCombat() { }
+
+    public void newDuelOK() { }
+
+    public void delayAction(Runnable runnable) {
+        Timer.schedule(new Timer.Task(){
+            public void run () { Gdx.app.postRunnable(runnable); }
+        }, timerDelay);
+    }
 
     public void report(String message) {
         System.out.println(botTier+": "+message);

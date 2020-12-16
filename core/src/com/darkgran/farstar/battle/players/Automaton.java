@@ -22,7 +22,7 @@ public class Automaton extends Bot {
     @Override
     public void turn() {
         deploy(getYard().get(0), getYard().getCardListMenu());
-        getBattle().getRoundManager().endTurn();
+        delayAction(getBattle().getRoundManager()::endTurn);
     }
 
     @Override
