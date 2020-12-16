@@ -18,6 +18,7 @@ public class Card {
     private final ArrayList<AbilityRecord> history = new ArrayList<AbilityRecord>();
     private boolean used; //for AbilityStarter.USE
     private int damage = 0;
+    private boolean possible = false;
 
     public Card(CardInfo cardInfo, Player player) {
         originalInfo = cardInfo;
@@ -95,5 +96,10 @@ public class Card {
     public Player getPlayer() { return player; }
 
     public void setPlayer(Player player) { this.player = player; }
+
+    public boolean isPossible() { return possible; }
+
+    public void setPossible(boolean possibility) { this.possible = possible; }
+
 
 }
