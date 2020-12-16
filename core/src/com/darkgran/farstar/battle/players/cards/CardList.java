@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public abstract class CardList extends ArrayList<Card> {
     private Player player;
-    //private ArrayList<Card> cards;
     private int maxSize;
     private CardListMenu cardListMenu;
 
