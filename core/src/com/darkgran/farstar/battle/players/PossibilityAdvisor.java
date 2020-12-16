@@ -12,7 +12,9 @@ public class PossibilityAdvisor {
 
     public void refresh(Player currentPlayer, Battle battle) {
         battle.unMarkAllPossibilities();
-        markPossibilities(currentPlayer, battle);
+        if (!(currentPlayer instanceof Automaton)) {
+            markPossibilities(currentPlayer, battle);
+        }
     }
 
     public void markPossibilities(Player player, Battle battle) {
