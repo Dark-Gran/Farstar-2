@@ -17,6 +17,7 @@ public class MainScreenStage extends ListeningStage {
     private final Texture start = new Texture("images/start.png");
     private final ImageButton startButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(start)));
     private final ImageButton botButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(start)));
+    private final PlayerFactory playerFactory = new PlayerFactory();
 
     public MainScreenStage(final Farstar game, Viewport viewport) {
         super(game, viewport);
@@ -36,7 +37,7 @@ public class MainScreenStage extends ListeningStage {
             {
                 System.out.println("Starting Solitary.");
                 getGame().getScreen().dispose();
-                getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(createLocalPlayer(1, 0), createLocalPlayer(2, 15))));
+                getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0), playerFactory.getPlayer("LOCAL", 2, 15))));
             }
         });
         botButton.addListener(new ClickListener()
@@ -46,17 +47,9 @@ public class MainScreenStage extends ListeningStage {
             {
                 System.out.println("Starting Skirmish.");
                 getGame().getScreen().dispose();
-                getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(createLocalPlayer(1, 0), createAutomaton(2, 15))));
+                getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0), playerFactory.getPlayer("AUTO", 2, 15))));
             }
         });
-    }
-
-    private Player createLocalPlayer(int playerID, int mothershipId) {
-        return new LocalPlayer((byte) playerID, BattleSettings.STARTING_ENERGY, BattleSettings.STARTING_MATTER, new Mothership(mothershipId), new Deck(), new Yard());
-    }
-
-    private Player createAutomaton(int playerID, int mothershipId) {
-        return new Automaton((byte) playerID, BattleSettings.STARTING_ENERGY, BattleSettings.STARTING_MATTER, new Mothership(mothershipId), new Deck(), new Yard(), BotTier.AUTOMATON);
     }
 
     @Override
