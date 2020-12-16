@@ -1,6 +1,7 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.Battle;
+import com.darkgran.farstar.battle.gui.BaseMenu;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.battle.players.cards.Card;
@@ -74,7 +75,7 @@ public class PossibilityAdvisor {
 
     public boolean isPossibleToDeploy(Player player, Card card, boolean checkSpace, Battle battle) {
         if (player == battle.getWhoseTurn() && player.canAfford(card) && tierAllowed(card.getCardInfo().getTier(), battle)) {
-            return !checkSpace || ((player.getSupports().hasSpace() || card.getCardInfo().getCardType() != CardType.SUPPORT) || (player.getFleet().hasSpace() || card.getCardInfo().getCardType() != CardType.YARDPRINT));
+            return !checkSpace || ((player.getSupports().hasSpace() || card.getCardInfo().getCardType() != CardType.SUPPORT) && (player.getFleet().hasSpace() || card.getCardInfo().getCardType() != CardType.YARDPRINT));
         }
         return false;
     }
@@ -97,6 +98,14 @@ public class PossibilityAdvisor {
             card.setPossible(false);
         }
         player.getMs().setPossible(false);
+    }
+
+    public BaseMenu getTargetMenu(Card card, Player player) {
+        if (card.getCardInfo().getCardType() == CardType.SUPPORT) {
+            return player.getSupports().getCardListMenu();
+        } else {
+            return player.getFleet().getFleetMenu();
+        }
     }
 
 }

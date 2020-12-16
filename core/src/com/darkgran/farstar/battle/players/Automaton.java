@@ -1,5 +1,7 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.battle.gui.BaseMenu;
+import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Mothership;
 
@@ -21,11 +23,13 @@ public class Automaton extends Bot {
         PossibilityInfo bestPossibility = getBestPossibility();
         if (bestPossibility != null) {
             report("Playing a card: "+bestPossibility.getCard().getCardInfo().getName());
-            System.out.println(bestPossibility.getMenu());
-            if (deploy(bestPossibility.getCard(), bestPossibility.getMenu(), 3)) {
+            int position = getBestPosition(bestPossibility.getCard(), getBattle().getRoundManager().getPossibilityAdvisor().getTargetMenu(bestPossibility.getCard(), this));
+            //TODO non-deploys
+            if (deploy(bestPossibility.getCard(), bestPossibility.getMenu(), position)) {
                 delayAction(this::turn); //= repeat until no possibilities
             } else {
                 report("Move failed!");
+                getBattle().getRoundManager().tryCancel();
                 delayAction(getBattle().getRoundManager()::endTurn);
             }
         } else {
@@ -34,9 +38,21 @@ public class Automaton extends Bot {
         }
     }
 
+    public int getBestPosition(Card card, BaseMenu targetMenu) {
+        if (CardType.isShip(card.getCardInfo().getCardType())) {
+            if (targetMenu.isEmpty()) {
+                return 3;
+            } else {
+                return 2;
+            }
+        } else {
+            return 3;
+        }
+    }
+
     public PossibilityInfo getBestPossibility() {
         ArrayList<PossibilityInfo> possibilities = getBattle().getRoundManager().getPossibilityAdvisor().getPossibilities(this, getBattle());
-        if (possibilities.size() > 0) { //TODO
+        if (possibilities.size() > 0) {
             //1. Have at least one defender
             if (getFleet().isEmpty()) {
                 for (PossibilityInfo possibilityInfo : possibilities) {
@@ -55,8 +71,8 @@ public class Automaton extends Bot {
         return null;
     }
 
-    private boolean isNonsense(PossibilityInfo possibilityInfo) {
-        return false;
+    public boolean isNonsense(PossibilityInfo possibilityInfo) {
+        return false; //in-future: TechType checks etc.
     }
 
     @Override
