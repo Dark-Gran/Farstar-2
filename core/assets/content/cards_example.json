@@ -29,7 +29,7 @@
   {
     "id": 1,
     "name": "Fighter",
-    "cardType": "YARD",
+    "cardType": "YARDPRINT",
     "tier": 1,
     "energy": 1,
     "matter": 1,
@@ -42,7 +42,7 @@
   {
     "id": 2,
     "name": "Corvette",
-    "cardType": "YARD",
+    "cardType": "YARDPRINT",
     "tier": 2,
     "energy": 2,
     "matter": 3,
@@ -55,7 +55,7 @@
   {
     "id": 3,
     "name": "Frigate",
-    "cardType": "YARD",
+    "cardType": "YARDPRINT",
     "tier": 3,
     "energy": 3,
     "matter": 4,
@@ -68,7 +68,7 @@
   {
     "id": 4,
     "name": "Cruiser",
-    "cardType": "YARD",
+    "cardType": "YARDPRINT",
     "tier": 4,
     "energy": 4,
     "matter": 7,
@@ -92,7 +92,7 @@
   {
     "id": 5,
     "name": "Battleship",
-    "cardType": "YARD",
+    "cardType": "YARDPRINT",
     "tier": 5,
     "energy": 4,
     "matter": 11,
