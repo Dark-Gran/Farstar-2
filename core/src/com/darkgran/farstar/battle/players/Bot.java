@@ -3,6 +3,7 @@ package com.darkgran.farstar.battle.players;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
 import com.darkgran.farstar.battle.Battle;
+import com.darkgran.farstar.battle.gui.BaseMenu;
 import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.gui.DropTarget;
 import com.darkgran.farstar.battle.gui.SupportMenu;
@@ -40,8 +41,8 @@ public abstract class Bot extends Player implements BotSettings {
         }, timerDelay);
     }
 
-    public void deploy(Card card, CardListMenu cardListMenu) {
-        Token token = new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), cardListMenu);
+    public boolean deploy(Card card, BaseMenu baseMenu) {
+        Token token = new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (baseMenu instanceof CardListMenu) ? (CardListMenu) baseMenu : null);
         CardType cardType = token.getCard().getCardInfo().getCardType();
         DropTarget dropTarget;
         if (cardType == CardType.SUPPORT) {
@@ -50,7 +51,7 @@ public abstract class Bot extends Player implements BotSettings {
             dropTarget = getFleet().getFleetMenu() ;
         }
         int position = getHand().getCardListMenu().getBattleStage().getRoundDropPosition(dropTarget.getSimpleBox2().getX()+dropTarget.getSimpleBox2().getWidth()/2-1, dropTarget.getSimpleBox2().getY()+1, dropTarget, cardType);
-        getBattle().getRoundManager().processDrop(token, getFleet().getFleetMenu(), position, false, true);
+        return getBattle().getRoundManager().processDrop(token, getFleet().getFleetMenu(), position, false, true);
     }
 
     public void report(String message) {

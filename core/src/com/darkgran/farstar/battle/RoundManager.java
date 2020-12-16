@@ -93,7 +93,7 @@ public class RoundManager {
     //-PLAYING-CARDS-//
     //---------------//
 
-    public void processDrop(Token token, DropTarget dropTarget, int position, boolean postAbility, boolean payPrice) {
+    public boolean processDrop(Token token, DropTarget dropTarget, int position, boolean postAbility, boolean payPrice) {
         boolean success = false;
         if (!targetingActive && !abilityPicker.isActive() && token.getCardListMenu() != null) {
             CardType cardType = token.getCard().getCardInfo().getCardType();
@@ -195,6 +195,7 @@ public class RoundManager {
                 token.destroy();
             }
         }
+        return success;
     }
 
     private boolean checkAllAbilities(Token caster, Token target, AbilityStarter abilityStarter, Player owner, DropTarget dropTarget) {
