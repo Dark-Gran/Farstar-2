@@ -98,6 +98,7 @@ public class RoundManager {
 
     public boolean processDrop(Token token, DropTarget dropTarget, int position, boolean postAbility, boolean payPrice) {
         boolean success = false;
+        System.out.println();
         if (!targetingActive && !abilityPicker.isActive() && token.getCardListMenu() != null) {
             CardType cardType = token.getCard().getCardInfo().getCardType();
             if (!battle.activeCombatOrDuel() || cardType == CardType.TACTIC) {

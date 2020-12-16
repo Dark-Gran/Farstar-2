@@ -3,6 +3,7 @@ package com.darkgran.farstar.battle.gui;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.darkgran.farstar.battle.players.Player;
+import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.util.SimpleBox2;
 
 //base for laying out menus
@@ -29,6 +30,8 @@ public abstract class BaseMenu extends SimpleBox2 {
         if (negativeOffset) { offset *= -1; }
     }
 
+    public boolean isEmpty() { return true; }
+
     public float getOffset() { return offset; }
 
     public void setOffset(float offset) { this.offset = offset; }
@@ -44,4 +47,5 @@ public abstract class BaseMenu extends SimpleBox2 {
     public Player getPlayer() { return player; }
 
     public void setPlayer(Player player) { this.player = player; }
+
 }

@@ -110,6 +110,11 @@ public class Fleet implements BattleTicks {
         return true;
     }
 
+    public boolean isEmpty() {
+        for (Ship ship : ships) { if (ship != null) { return false; } }
+        return true;
+    }
+
     public boolean hasSpace() {
         for (Ship ship : ships) { if (ship == null) { return true; } }
         return false;

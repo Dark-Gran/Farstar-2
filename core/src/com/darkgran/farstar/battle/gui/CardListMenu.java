@@ -4,6 +4,7 @@ import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardList;
 import com.darkgran.farstar.battle.players.Player;
+import com.darkgran.farstar.battle.players.cards.Ship;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,9 @@ public abstract class CardListMenu extends BaseMenu {
     public void generateNewToken(Card card) {
         tokens.add(new Token(card, getX() + getOffset()*tokens.size()-1, getY(), getBattleStage(), this));
     }
+
+    @Override
+    public boolean isEmpty() { return cardList.size() <= 0; }
 
     public void removeToken(Token token) {
         tokens.remove(token);

@@ -30,11 +30,18 @@ public class FleetMenu extends BaseMenu implements DropTarget {
         if (isNegativeOffset()) { setOffset(getOffset()*-1); } //switching back, FleetMenu handles offset differently
     }
 
+    @Override
+    public boolean isEmpty() {
+        for (FleetToken ship : ships) { if (ship != null) { return false; } }
+        return true;
+    }
+
     public FleetToken addShip(Card card, int position) {
         float y = isNegativeOffset() ? getY() : getY()+getHeight()/2;
         ships[position] = new FleetToken(card, getX()+getOffset()*(position), y, getBattleStage(), null, this);
         return ships[position];
     }
+
 
     public void removeShip(int position) {
         ships[position] = null;

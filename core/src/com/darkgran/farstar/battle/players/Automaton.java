@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Mothership;
 
 import java.util.ArrayList;
@@ -19,8 +20,9 @@ public class Automaton extends Bot {
     public void turn() {
         PossibilityInfo bestPossibility = getBestPossibility();
         if (bestPossibility != null) {
-            report("Playing card.");
-            if (deploy(bestPossibility.getCard(), bestPossibility.getMenu())) {
+            report("Playing a card: "+bestPossibility.getCard().getCardInfo().getName());
+            System.out.println(bestPossibility.getMenu());
+            if (deploy(bestPossibility.getCard(), bestPossibility.getMenu(), 3)) {
                 delayAction(this::turn); //= repeat until no possibilities
             } else {
                 report("Move failed!");
@@ -35,15 +37,26 @@ public class Automaton extends Bot {
     public PossibilityInfo getBestPossibility() {
         ArrayList<PossibilityInfo> possibilities = getBattle().getRoundManager().getPossibilityAdvisor().getPossibilities(this, getBattle());
         if (possibilities.size() > 0) { //TODO
-
-            
-
-
-
-
-
+            //1. Have at least one defender
+            if (getFleet().isEmpty()) {
+                for (PossibilityInfo possibilityInfo : possibilities) {
+                    if (CardType.isShip(possibilityInfo.getCard().getCardInfo().getCardType())) {
+                        return possibilityInfo;
+                    }
+                }
+            }
+            //2. Play the first playable thing that's not "nonsense"
+            for (PossibilityInfo possibilityInfo : possibilities) {
+                if (!isNonsense(possibilityInfo)) {
+                    return possibilityInfo;
+                }
+            }
         }
         return null;
+    }
+
+    private boolean isNonsense(PossibilityInfo possibilityInfo) {
+        return false;
     }
 
     @Override

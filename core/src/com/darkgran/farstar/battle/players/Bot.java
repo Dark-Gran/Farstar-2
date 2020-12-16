@@ -41,7 +41,7 @@ public abstract class Bot extends Player implements BotSettings {
         }, timerDelay);
     }
 
-    public boolean deploy(Card card, BaseMenu baseMenu) {
+    public boolean deploy(Card card, BaseMenu baseMenu, int position) {
         Token token = new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (baseMenu instanceof CardListMenu) ? (CardListMenu) baseMenu : null);
         CardType cardType = token.getCard().getCardInfo().getCardType();
         DropTarget dropTarget;
@@ -50,8 +50,7 @@ public abstract class Bot extends Player implements BotSettings {
         } else {
             dropTarget = getFleet().getFleetMenu() ;
         }
-        int position = getHand().getCardListMenu().getBattleStage().getRoundDropPosition(dropTarget.getSimpleBox2().getX()+dropTarget.getSimpleBox2().getWidth()/2-1, dropTarget.getSimpleBox2().getY()+1, dropTarget, cardType);
-        return getBattle().getRoundManager().processDrop(token, getFleet().getFleetMenu(), position, false, true);
+        return getBattle().getRoundManager().processDrop(token, dropTarget, position, false, true);
     }
 
     public void report(String message) {
