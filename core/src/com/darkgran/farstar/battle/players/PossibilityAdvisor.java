@@ -74,7 +74,7 @@ public class PossibilityAdvisor {
 
     public boolean tierAllowed(int tier, Battle battle) { return tier <= battle.getRoundManager().getRoundNum(); }
 
-    public void unmarkAll(Player player, Battle battle) {
+    public void unMarkAll(Player player, Battle battle) {
         //Deployment
         for (Card card : player.getYard()) {
             card.setPossible(false);
@@ -84,7 +84,7 @@ public class PossibilityAdvisor {
         }
         //Abilities
         for (Card card : player.getFleet().getShips()) {
-            card.setPossible(false);
+            if (card != null) { card.setPossible(false); }
         }
         for (Card card : player.getSupports()) {
             card.setPossible(false);

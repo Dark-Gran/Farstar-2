@@ -70,6 +70,7 @@ public class RoundManager {
     public void endTurn() {
         if (!battle.getCombatManager().isActive() && !battle.isEverythingDisabled() && !targetingActive) {
             battle.closeYards();
+            battle.unMarkAllPossibilities();
             battle.getCombatManager().launchCombat();
         }
     }
@@ -305,12 +306,6 @@ public class RoundManager {
         postponedDeploy.resetInDeployment();
     }
 
-    //-----------------//
-    //-PLAYER-ADVISORS-//
-    //-----------------//
-
-
-
     //-----------//
     //-UTILITIES-//
     //-----------//
@@ -336,5 +331,7 @@ public class RoundManager {
     public AbilityPicker getAbilityPicker() { return abilityPicker; }
 
     public void setAbilityPicker(AbilityPicker abilityPicker) { this.abilityPicker = abilityPicker; }
+
+    public PossibilityAdvisor getPossibilityAdvisor() { return possibilityAdvisor; }
 
 }

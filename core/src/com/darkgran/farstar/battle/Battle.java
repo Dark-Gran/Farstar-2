@@ -30,6 +30,10 @@ public abstract class Battle implements BattleSettings {
 
     public void closeYards() { }
 
+    public void unMarkAllPossibilities() {
+        getRoundManager().getPossibilityAdvisor().unMarkAll(whoseTurn, this);
+    }
+
     public void startingSetup(RoundManager roundManager, CombatManager combatManager, AbilityManager abilityManager) {
         coinToss();
         startingCards();

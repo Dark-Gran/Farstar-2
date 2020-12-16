@@ -54,6 +54,12 @@ public class Battle1v1 extends Battle {
     }
 
     @Override
+    public void unMarkAllPossibilities() {
+        getRoundManager().getPossibilityAdvisor().unMarkAll(player1, this);
+        getRoundManager().getPossibilityAdvisor().unMarkAll(player2, this);
+    }
+
+    @Override
     public void startingCards() {
         if (getWhoseTurn() == player1) {
             player1.getHand().drawCards(player1.getDeck(), STARTING_CARDS_ATT);
