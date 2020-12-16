@@ -10,11 +10,11 @@ import com.darkgran.farstar.battle.gui.ColorPalette;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.util.SimpleBox2;
-import com.darkgran.farstar.util.TextFont;
+import com.darkgran.farstar.util.FontActor;
 
 import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 
-public class Token extends TextFont {
+public class Token extends FontActor {
     private Dragger dragger;
     private final Card card;
     private final TokenPrice tokenPrice = new TokenPrice();

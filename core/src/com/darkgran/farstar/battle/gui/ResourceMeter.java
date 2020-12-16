@@ -4,9 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.util.TextFont;
+import com.darkgran.farstar.util.FontActor;
 
-public class ResourceMeter extends TextFont {
+public class ResourceMeter extends FontActor {
     private final Player player;
     private final boolean onBottom;
 
