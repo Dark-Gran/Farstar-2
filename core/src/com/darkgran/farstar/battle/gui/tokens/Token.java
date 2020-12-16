@@ -77,6 +77,7 @@ public class Token extends FontActor {
         if (getCardListMenu() != null) {
             getCardListMenu().getPlayer().getJunkpile().addCard(this.getCard());
         } else if (this instanceof FleetToken) {
+            System.out.println("OK2");
             FleetToken fleetToken = (FleetToken) this;
             if (fleetToken.getFleetMenu() != null) {
                 fleetToken.getFleetMenu().getFleet().getJunkpile().addCard(this.getCard());

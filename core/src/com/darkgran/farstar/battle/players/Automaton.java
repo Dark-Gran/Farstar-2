@@ -26,7 +26,9 @@ public class Automaton extends Bot {
             int position = getBestPosition(bestPossibility.getCard(), getBattle().getRoundManager().getPossibilityAdvisor().getTargetMenu(bestPossibility.getCard(), this));
             //TODO non-deploys
             if (deploy(bestPossibility.getCard(), bestPossibility.getMenu(), position)) {
-                delayAction(this::turn); //= repeat until no possibilities
+                if (!getBattle().getRoundManager().isTargetingActive() && !getBattle().getRoundManager().getAbilityPicker().isActive()) {
+                    delayAction(this::turn); //= repeat until no possibilities (TODO: kill on escape)
+                }
             } else {
                 report("Move failed!");
                 getBattle().getRoundManager().tryCancel();

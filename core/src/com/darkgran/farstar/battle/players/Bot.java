@@ -3,10 +3,8 @@ package com.darkgran.farstar.battle.players;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
 import com.darkgran.farstar.battle.Battle;
-import com.darkgran.farstar.battle.gui.BaseMenu;
-import com.darkgran.farstar.battle.gui.CardListMenu;
-import com.darkgran.farstar.battle.gui.DropTarget;
-import com.darkgran.farstar.battle.gui.SupportMenu;
+import com.darkgran.farstar.battle.gui.*;
+import com.darkgran.farstar.battle.gui.tokens.HandToken;
 import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
@@ -42,15 +40,21 @@ public abstract class Bot extends Player implements BotSettings {
     }
 
     public boolean deploy(Card card, BaseMenu baseMenu, int position) {
-        Token token = new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (baseMenu instanceof CardListMenu) ? (CardListMenu) baseMenu : null);
-        CardType cardType = token.getCard().getCardInfo().getCardType();
+        CardType cardType = card.getCardInfo().getCardType();
         DropTarget dropTarget;
         if (cardType == CardType.SUPPORT) {
             dropTarget = (SupportMenu) getSupports().getCardListMenu();
         } else {
             dropTarget = getFleet().getFleetMenu() ;
         }
-        return getBattle().getRoundManager().processDrop(token, dropTarget, position, false, true);
+        if (baseMenu instanceof HandMenu) {
+            HandToken handToken = new HandToken(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (baseMenu instanceof CardListMenu) ? (CardListMenu) baseMenu : null);
+            return getBattle().getRoundManager().processDrop(handToken, dropTarget, position, false, true);
+        } else {
+            Token token = new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (baseMenu instanceof CardListMenu) ? (CardListMenu) baseMenu : null);
+            return getBattle().getRoundManager().processDrop(token, dropTarget, position, false, true);
+        }
+
     }
 
     public void report(String message) {
