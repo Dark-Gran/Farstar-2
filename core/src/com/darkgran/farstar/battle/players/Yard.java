@@ -5,8 +5,6 @@ import com.darkgran.farstar.battle.BattleSettings;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardList;
 
-import java.util.ArrayList;
-
 public class Yard extends CardList {
 
     public Yard(int id) {

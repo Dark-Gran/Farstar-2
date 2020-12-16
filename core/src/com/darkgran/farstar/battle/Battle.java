@@ -8,7 +8,7 @@ import com.darkgran.farstar.battle.players.cards.Ship;
 
 import java.util.ArrayList;
 
-public abstract class Battle implements BattleSettings {
+public abstract class Battle {
     private Player whoseTurn;
     private RoundManager roundManager;
     private CombatManager combatManager;

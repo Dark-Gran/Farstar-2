@@ -8,6 +8,9 @@ import com.darkgran.farstar.battle.players.Automaton;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import static com.darkgran.farstar.battle.BattleSettings.STARTING_CARDS_ATT;
+import static com.darkgran.farstar.battle.BattleSettings.STARTING_CARDS_DEF;
+
 public class Battle1v1 extends Battle {
     private final Player player1;
     private final Player player2;

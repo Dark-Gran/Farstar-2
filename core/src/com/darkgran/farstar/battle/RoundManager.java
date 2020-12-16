@@ -15,6 +15,9 @@ import com.darkgran.farstar.battle.players.cards.CardType;
 
 import java.util.ArrayList;
 
+import static com.darkgran.farstar.battle.BattleSettings.CARDS_PER_TURN;
+import static com.darkgran.farstar.battle.BattleSettings.MAX_TECH_INCOME;
+
 public class RoundManager {
     private final Battle battle;
     private final PossibilityAdvisor possibilityAdvisor;
@@ -48,7 +51,7 @@ public class RoundManager {
     }
 
     public void newTurn() {
-        battle.getWhoseTurn().getHand().drawCards(battle.getWhoseTurn().getDeck(), battle.CARDS_PER_TURN);
+        battle.getWhoseTurn().getHand().drawCards(battle.getWhoseTurn().getDeck(), CARDS_PER_TURN);
         resourceIncomes(battle.getWhoseTurn());
         System.out.println("Player #"+battle.getWhoseTurn().getBattleID()+" may play his cards.");
         if (battle.getWhoseTurn() instanceof Automaton) {
@@ -60,8 +63,8 @@ public class RoundManager {
 
     public void resourceIncomes(Player player) {
         int income = roundNum;
-        if (income > battle.MAX_TECH_INCOME) {
-            income = battle.MAX_TECH_INCOME;
+        if (income > MAX_TECH_INCOME) {
+            income = MAX_TECH_INCOME;
         }
         player.setEnergy(income);
         player.addMatter(income);
