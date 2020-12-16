@@ -41,8 +41,10 @@ public abstract class Bot extends Player implements BotSettings {
     public void newDuelOK() { }
 
     public void delayAction(Runnable runnable) {
-        Timer.schedule(new Timer.Task(){
-            public void run () { Gdx.app.postRunnable(runnable); }
+        Timer.schedule(new Timer.Task() {
+            public void run() {
+                if (runnable != null) { Gdx.app.postRunnable(runnable); }
+            }
         }, timerDelay);
     }
 
