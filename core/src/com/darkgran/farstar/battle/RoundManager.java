@@ -15,7 +15,7 @@ import com.darkgran.farstar.battle.players.cards.CardType;
 
 import java.util.ArrayList;
 
-public class RoundManager {
+public class RoundManager { //TODO unMarkAll after every move (= just paydays?)
     private final Battle battle;
     private final PossibilityAdvisor possibilityAdvisor;
     private boolean launched = false;
