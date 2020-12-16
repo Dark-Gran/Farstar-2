@@ -7,15 +7,18 @@ import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Mothership;
+import com.darkgran.farstar.battle.players.cards.Ship;
 
 import java.util.ArrayList;
+
+import static com.darkgran.farstar.battle.BattleSettings.BONUS_CARD_ID;
 
 /**
  *  "Just Play Something":
  *  -- No sensors beyond PossibilityAdvisor
- *  -- No planning
+ *  -- No planning (atm not even the frame for it)
  */
-public class Automaton extends Bot {
+public class Automaton extends Bot { //TODO hand-deploy fix + starter.use + kill on escape
 
     public Automaton(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard, BotTier botTier) {
         super(battleID, energy, matter, ms, deck, yard, botTier);
@@ -23,24 +26,29 @@ public class Automaton extends Bot {
 
     @Override
     public void turn() {
+        setPickingAbility(false);
         PossibilityInfo bestPossibility = getBestPossibility();
         if (bestPossibility != null) {
             report("Playing a card: "+bestPossibility.getCard().getCardInfo().getName());
             int position = getBestPosition(bestPossibility.getCard(), getBattle().getRoundManager().getPossibilityAdvisor().getTargetMenu(bestPossibility.getCard(), this));
-            //TODO non-deploys
             if (deploy(bestPossibility.getCard(), bestPossibility.getMenu(), position)) {
-                if (!getBattle().getRoundManager().isTargetingActive() && !getBattle().getRoundManager().getAbilityPicker().isActive()) {
-                    delayAction(this::turn); //= repeat until no possibilities (TODO: kill on escape)
+                if (!getBattle().getRoundManager().isTargetingActive() && !isPickingAbility()) {
+                    turnContinue();
                 }
+            } else if (!isPickingAbility()) {
+                report("turn() failed!");
+                cancelTurn();
             } else {
-                report("Move failed!");
-                getBattle().getRoundManager().tryCancel();
-                delayAction(getBattle().getRoundManager()::endTurn);
+                turnContinue();
             }
         } else {
             report("No possibilities.");
             delayAction(getBattle().getRoundManager()::endTurn);
         }
+    }
+
+    public void turnContinue() {
+        delayAction(this::turn);
     }
 
     public int getBestPosition(Card card, BaseMenu targetMenu) {
@@ -81,13 +89,86 @@ public class Automaton extends Bot {
     }
 
     @Override
-    public void chooseTargets(Token token, AbilityInfo ability, DropTarget dropTarget) {
+    public void chooseTargets(Token token, AbilityInfo ability) {
+        if (ability != null && ability.getTargets() != null) {
+            switch (ability.getTargets()) {
+                case ANY_ALLY:
+                case ALLIED_FLEET:
+                    getAlliedTarget(token, ability);
+                    break;
+                case ANY_ENEMY:
+                case ENEMY_FLEET:
+                    getEnemyTarget(token, ability);
+                    break;
+            }
+        } else {
+            report("chooseTargets() failed!");
+            cancelTurn();
+        }
+    }
 
+    public void getAlliedTarget(Token token, AbilityInfo ability) {
+        if (getFleet().isEmpty()) {
+            getBattle().getRoundManager().processTarget(getMs().getToken());
+        } else if (getFleet().getShips().length == 1) {
+            getBattle().getRoundManager().processTarget(getFleet().getShips()[3].getToken());
+        } else {
+            Ship strongestShip = null;
+            for (Ship ship : getFleet().getShips()) {
+                if (strongestShip == null || (ship.getCardInfo().getEnergy()+ship.getCardInfo().getMatter()*2-ship.getDamage()) > (strongestShip.getCardInfo().getEnergy()+strongestShip.getCardInfo().getMatter()*2-strongestShip.getDamage())) {
+                    strongestShip = ship;
+                }
+            }
+            if (strongestShip != null) {
+                getBattle().getRoundManager().processTarget(strongestShip.getToken());
+            } else {
+                report("getAlliedTarget() failed!");
+                cancelTurn();
+            }
+        }
+    }
+
+    public void getEnemyTarget(Token token, AbilityInfo ability) {
+        Player[] enemies = getBattle().getEnemies(this);
+        if (enemies.length > 0) { //atm works only in 1V1
+            Player enemy = enemies[0];
+            if (enemy.getFleet().isEmpty()) {
+                getBattle().getRoundManager().processTarget(enemy.getMs().getToken());
+            } else if (enemy.getFleet().getShips().length == 1) {
+                getBattle().getRoundManager().processTarget(enemy.getFleet().getShips()[3].getToken());
+            } else {
+                Ship weakestShip = null;
+                for (Ship ship : enemy.getFleet().getShips()) {
+                    if (weakestShip == null || (ship.getCardInfo().getEnergy() + ship.getCardInfo().getMatter() * 2 - ship.getDamage()) < (weakestShip.getCardInfo().getEnergy() + weakestShip.getCardInfo().getMatter() * 2 - weakestShip.getDamage())) {
+                        weakestShip = ship;
+                    }
+                }
+                if (weakestShip != null) {
+                    getBattle().getRoundManager().processTarget(weakestShip.getToken());
+                } else {
+                    report("getAlliedTarget() failed!");
+                    cancelTurn();
+                }
+            }
+        } else {
+            report("getAlliedTarget() (enemies.length) failed!");
+            cancelTurn();
+        }
     }
 
     @Override
     public void pickAbility(Token caster, Token target, DropTarget dropTarget, ArrayList<AbilityInfo> options) {
-
+        if (options.size() > 0) {
+            if (caster.getCard().getCardInfo().getId() == BONUS_CARD_ID) {
+                getBattle().getRoundManager().processPick(options.get(1)); //atm always picks the matter
+            } else {
+                getBattle().getRoundManager().processPick(options.get(0)); //atm always picks the first one
+            }
+            setPickingAbility(true);
+        } else {
+            report("pickAbility() failed!");
+            cancelTurn();
+        }
     }
 
     @Override

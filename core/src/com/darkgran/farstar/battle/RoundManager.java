@@ -97,7 +97,6 @@ public class RoundManager {
 
     public boolean processDrop(Token token, DropTarget dropTarget, int position, boolean postAbility, boolean payPrice) {
         boolean success = false;
-        System.out.println();
         if (!targetingActive && !abilityPicker.isActive() && token.getCardListMenu() != null) {
             CardType cardType = token.getCard().getCardInfo().getCardType();
             if (!battle.activeCombatOrDuel() || cardType == CardType.TACTIC) {
@@ -110,7 +109,9 @@ public class RoundManager {
                     if (possibilityAdvisor.isPossibleToDeploy(whoseTurn, token.getCard(), false, battle)) {
                         //TARGETING ANYWHERE FOR ACTION-CARDS
                         if (cardType == CardType.ACTION) {
-                            if (!postAbility) { success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget); }
+                            if (!postAbility) {
+                                success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
+                            }
                         //TARGETING SUPPORTS
                         } else if (dropTarget instanceof SupportMenu) {
                             if (((SupportMenu) dropTarget).getCardList() instanceof Supports && position != -1) {
@@ -226,6 +227,7 @@ public class RoundManager {
     }
 
     public void askForAbility(Token caster, Token target, DropTarget dropTarget, ArrayList<AbilityInfo> options) {
+        postponedDeploy.saveInDeployment(caster, null, dropTarget, target);
         if (battle.getWhoseTurn() instanceof Bot) {
             ((Bot) battle.getWhoseTurn()).pickAbility(caster, target, dropTarget, options);
         } else if (abilityPicker != null) {
@@ -234,7 +236,6 @@ public class RoundManager {
                 abilityPicker.getAbilityInfos().add(option);
             }
             abilityPicker.enable();
-            postponedDeploy.saveInDeployment(caster, null, dropTarget, target);
         }
     }
 
@@ -265,7 +266,7 @@ public class RoundManager {
         postponedDeploy.saveInDeployment(token, ability, dropTarget, null);
         System.out.println("Need a Target.");
         if (battle.getWhoseTurn() instanceof Bot) {
-            ((Bot) battle.getWhoseTurn()).chooseTargets(token, ability, dropTarget);
+            ((Bot) battle.getWhoseTurn()).chooseTargets(token, ability);
         }
     }
 
@@ -279,7 +280,7 @@ public class RoundManager {
         }
     }
 
-    private void processTarget(Token target) {
+    public void processTarget(Token target) {
         if (targetingActive && postponedDeploy.getCaster() != null) {
             if (battle.getAbilityManager().validAbilityTarget(postponedDeploy.getAbility(), postponedDeploy.getCaster().getCard(), target.getCard())) {
                 //System.out.println("Playing ability...");

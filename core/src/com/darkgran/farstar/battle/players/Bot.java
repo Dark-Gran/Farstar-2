@@ -17,6 +17,7 @@ public abstract class Bot extends Player implements BotSettings {
     private Battle battle;
     private final BotTier botTier;
     private final float timerDelay;
+    private boolean pickingAbility = false;
 
     public Bot(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard, BotTier botTier) {
         super(battleID, energy, matter, ms, deck, yard);
@@ -32,7 +33,7 @@ public abstract class Bot extends Player implements BotSettings {
 
     public void turn() { }
 
-    public void chooseTargets(Token token, AbilityInfo ability, DropTarget dropTarget) { }
+    public void chooseTargets(Token token, AbilityInfo ability) { }
 
     public void pickAbility(Token caster, Token target, DropTarget dropTarget, ArrayList<AbilityInfo> options) { }
 
@@ -46,6 +47,12 @@ public abstract class Bot extends Player implements BotSettings {
                 if (runnable != null) { Gdx.app.postRunnable(runnable); }
             }
         }, timerDelay);
+    }
+
+    public void cancelTurn() {
+        setPickingAbility(false);
+        getBattle().getRoundManager().tryCancel();
+        getBattle().getRoundManager().endTurn();
     }
 
     public boolean deploy(Card card, BaseMenu baseMenu, int position) {
@@ -63,11 +70,10 @@ public abstract class Bot extends Player implements BotSettings {
             Token token = new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (baseMenu instanceof CardListMenu) ? (CardListMenu) baseMenu : null);
             return getBattle().getRoundManager().processDrop(token, dropTarget, position, false, true);
         }
-
     }
 
     public void report(String message) {
-        System.out.println(botTier+": "+message);
+        System.out.println(botTier+"(PLR"+getBattleID()+"): "+message);
     }
 
     public void setBattle(Battle battle) { this.battle = battle; }
@@ -75,5 +81,9 @@ public abstract class Bot extends Player implements BotSettings {
     public Battle getBattle() { return battle; }
 
     public BotTier getBotTier() { return botTier; }
+
+    public boolean isPickingAbility() { return pickingAbility; }
+
+    public void setPickingAbility(boolean pickingAbility) { this.pickingAbility = pickingAbility; }
 
 }
