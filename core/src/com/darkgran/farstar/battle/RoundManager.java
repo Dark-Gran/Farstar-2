@@ -8,7 +8,6 @@ import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.players.*;
-import com.darkgran.farstar.battle.players.Automaton;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardInfo;
 import com.darkgran.farstar.battle.players.cards.CardType;
@@ -54,8 +53,8 @@ public class RoundManager {
         battle.getWhoseTurn().getHand().drawCards(battle.getWhoseTurn().getDeck(), CARDS_PER_TURN);
         resourceIncomes(battle.getWhoseTurn());
         System.out.println("Player #"+battle.getWhoseTurn().getBattleID()+" may play his cards.");
-        if (battle.getWhoseTurn() instanceof Automaton) {
-            ((Automaton) battle.getWhoseTurn()).newTurn();
+        if (battle.getWhoseTurn() instanceof Bot) {
+            ((Bot) battle.getWhoseTurn()).newTurn();
         } else {
             possibilityAdvisor.markPossibilities(battle.getWhoseTurn(), battle);
         }
@@ -227,7 +226,9 @@ public class RoundManager {
     }
 
     public void askForAbility(Token caster, Token target, DropTarget dropTarget, ArrayList<AbilityInfo> options) {
-        if (abilityPicker != null) {
+        if (battle.getWhoseTurn() instanceof Bot) {
+            ((Bot) battle.getWhoseTurn()).pickAbility(caster, target, dropTarget, options);
+        } else if (abilityPicker != null) {
             abilityPicker.setAbilityInfos(new ArrayList<>());
             for (AbilityInfo option : options) {
                 abilityPicker.getAbilityInfos().add(option);
@@ -263,6 +264,9 @@ public class RoundManager {
         targetingActive = true;
         postponedDeploy.saveInDeployment(token, ability, dropTarget, null);
         System.out.println("Need a Target.");
+        if (battle.getWhoseTurn() instanceof Bot) {
+            ((Bot) battle.getWhoseTurn()).chooseTargets(token, ability, dropTarget);
+        }
     }
 
     public void processClick(Token token, Player owner) {

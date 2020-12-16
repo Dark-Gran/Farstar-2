@@ -13,7 +13,7 @@ public class PossibilityAdvisor {
 
     public void refresh(Player currentPlayer, Battle battle) {
         battle.unMarkAllPossibilities();
-        if (!(currentPlayer instanceof Automaton)) {
+        if (!(currentPlayer instanceof Bot)) {
             markPossibilities(currentPlayer, battle);
         }
     }

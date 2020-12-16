@@ -1,6 +1,9 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.gui.BaseMenu;
+import com.darkgran.farstar.battle.gui.DropTarget;
+import com.darkgran.farstar.battle.gui.tokens.Token;
+import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Mothership;
@@ -75,6 +78,16 @@ public class Automaton extends Bot {
 
     public boolean isNonsense(PossibilityInfo possibilityInfo) {
         return false; //in-future: TechType checks etc.
+    }
+
+    @Override
+    public void chooseTargets(Token token, AbilityInfo ability, DropTarget dropTarget) {
+
+    }
+
+    @Override
+    public void pickAbility(Token caster, Token target, DropTarget dropTarget, ArrayList<AbilityInfo> options) {
+
     }
 
     @Override

@@ -6,9 +6,12 @@ import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.gui.tokens.HandToken;
 import com.darkgran.farstar.battle.gui.tokens.Token;
+import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Mothership;
+
+import java.util.ArrayList;
 
 public abstract class Bot extends Player implements BotSettings {
     private Battle battle;
@@ -28,6 +31,10 @@ public abstract class Bot extends Player implements BotSettings {
     }
 
     public void turn() { }
+
+    public void chooseTargets(Token token, AbilityInfo ability, DropTarget dropTarget) { }
+
+    public void pickAbility(Token caster, Token target, DropTarget dropTarget, ArrayList<AbilityInfo> options) { }
 
     public void newCombat() { }
 

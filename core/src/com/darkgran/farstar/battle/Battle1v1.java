@@ -4,7 +4,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.players.*;
-import com.darkgran.farstar.battle.players.Automaton;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -26,8 +25,8 @@ public class Battle1v1 extends Battle {
         this.player2.getMs().setPlayer(player2);
         this.player2.getDeck().setPlayerOnAll(player2);
         this.player2.getYard().setPlayerOnAll(player2);
-        if (this.player1 instanceof Automaton) { ((Automaton) this.player1).setBattle(this); }
-        if (this.player2 instanceof Automaton) { ((Automaton) this.player2).setBattle(this); }
+        if (this.player1 instanceof Bot) { ((Bot) this.player1).setBattle(this); }
+        if (this.player2 instanceof Bot) { ((Bot) this.player2).setBattle(this); }
     }
 
     @Override
