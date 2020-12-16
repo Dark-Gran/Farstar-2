@@ -17,20 +17,16 @@ public class PossibilityAdvisor {
         }
     }
 
-    public void unmarkAll(Player player, Battle battle) {
-        //TODO
-    }
-
     public ArrayList<PossibilityInfo> getPossibilities(Player player, Battle battle) {
         ArrayList<PossibilityInfo> possibilities = new ArrayList<>();
         if (player == battle.getWhoseTurn()) {
             //Deployment
-            for (Card card : player.getYard().getCards()) {
+            for (Card card : player.getYard()) {
                 if (isPossibleToDeploy(player, card, true, battle)) {
                     possibilities.add(new PossibilityInfo(card, player.getYard().getCardListMenu()));
                 }
             }
-            for (Card card : player.getHand().getCards()) {
+            for (Card card : player.getHand()) {
                 if (isPossibleToDeploy(player, card, true, battle)) {
                     possibilities.add(new PossibilityInfo(card, player.getHand().getCardListMenu()));
                 }
@@ -41,7 +37,7 @@ public class PossibilityAdvisor {
                     possibilities.add(new PossibilityInfo(card, player.getFleet().getFleetMenu()));
                 }
             }
-            for (Card card : player.getSupports().getCards()) {
+            for (Card card : player.getSupports()) {
                 if (hasPossibleAbility(player, card)) {
                     possibilities.add(new PossibilityInfo(card, player.getSupports().getCardListMenu()));
                 }
@@ -77,5 +73,23 @@ public class PossibilityAdvisor {
     }
 
     public boolean tierAllowed(int tier, Battle battle) { return tier <= battle.getRoundManager().getRoundNum(); }
+
+    public void unmarkAll(Player player, Battle battle) {
+        //Deployment
+        for (Card card : player.getYard()) {
+            card.setPossible(false);
+        }
+        for (Card card : player.getHand()) {
+            card.setPossible(false);
+        }
+        //Abilities
+        for (Card card : player.getFleet().getShips()) {
+            card.setPossible(false);
+        }
+        for (Card card : player.getSupports()) {
+            card.setPossible(false);
+        }
+        player.getMs().setPossible(false);
+    }
 
 }

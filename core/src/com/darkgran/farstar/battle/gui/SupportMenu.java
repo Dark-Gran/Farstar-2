@@ -20,8 +20,8 @@ public class SupportMenu extends CardListMenu implements DropTarget {
     @Override
     public void generateTokens() {
         getTokens().clear();
-        for (int i = 0; i < getCardList().getCards().size(); i++) {
-            getTokens().add(new SupportToken(getCardList().getCards().get(i), getX() + getOffset()*translatePosition(i), getY(), getBattleStage(), this));
+        for (int i = 0; i < getCardList().size(); i++) {
+            getTokens().add(new SupportToken(getCardList().get(i), getX() + getOffset()*translatePosition(i), getY(), getBattleStage(), this));
         }
     }
 

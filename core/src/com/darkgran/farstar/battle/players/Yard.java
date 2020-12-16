@@ -14,13 +14,14 @@ public class Yard extends CardList {
     }
 
     public Yard() { //default
+        super();
         setupSize();
-        setCards(new ArrayList<>());
-        getCards().add(new Card(Farstar.CARD_LIBRARY.getCard(1), null));
-        getCards().add(new Card(Farstar.CARD_LIBRARY.getCard(2), null));
-        getCards().add(new Card(Farstar.CARD_LIBRARY.getCard(3), null));
-        getCards().add(new Card(Farstar.CARD_LIBRARY.getCard(4), null));
-        getCards().add(new Card(Farstar.CARD_LIBRARY.getCard(5), null));
+        clear();
+        add(new Card(Farstar.CARD_LIBRARY.getCard(1), null));
+        add(new Card(Farstar.CARD_LIBRARY.getCard(2), null));
+        add(new Card(Farstar.CARD_LIBRARY.getCard(3), null));
+        add(new Card(Farstar.CARD_LIBRARY.getCard(4), null));
+        add(new Card(Farstar.CARD_LIBRARY.getCard(5), null));
     }
 
     @Override

@@ -30,7 +30,7 @@ public class Automaton extends Player { //TODO "possibility-sensor" (for non-ai 
     }
 
     private void turn() {
-        deploy(getYard().getCards().get(0), getYard().getCardListMenu());
+        deploy(getYard().get(0), getYard().getCardListMenu());
         battle.getRoundManager().endTurn();
     }
 

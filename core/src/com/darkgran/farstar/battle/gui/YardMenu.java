@@ -21,8 +21,8 @@ public class YardMenu extends CardListMenu {
     @Override
     public void generateTokens() {
         getTokens().clear();
-        for (int i = 0; i < getCardList().getCards().size(); i++) {
-            getTokens().add(new YardToken(getCardList().getCards().get(i), getX(), getY()+ getOffset()*(i+1), getBattleStage(), this));
+        for (int i = 0; i < getCardList().size(); i++) {
+            getTokens().add(new YardToken(getCardList().get(i), getX(), getY()+ getOffset()*(i+1), getBattleStage(), this));
         }
     }
 

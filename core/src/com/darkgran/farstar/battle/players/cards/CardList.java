@@ -6,9 +6,9 @@ import com.darkgran.farstar.battle.players.Player;
 
 import java.util.ArrayList;
 
-public abstract class CardList {
+public abstract class CardList extends ArrayList<Card> {
     private Player player;
-    private ArrayList<Card> cards;
+    //private ArrayList<Card> cards;
     private int maxSize;
     private CardListMenu cardListMenu;
 
@@ -17,36 +17,39 @@ public abstract class CardList {
     }
 
     public CardList(ArrayList<Card> cards) {
+        super();
         setupSize();
-        this.cards = cards;
+        addAll(cards);
     }
 
     public CardList() {
+        super();
         setupSize();
-        cards = new ArrayList<Card>();
+        clear();
         for (int i = 0; i < maxSize; i++) {
-            cards.add(new Card(Farstar.CARD_LIBRARY.getCard(2), null));
+            add(new Card(Farstar.CARD_LIBRARY.getCard(2), null));
         }
     }
 
     public CardList(int id) {
+        super();
         setupSize();
-        cards = new ArrayList<Card>();
+        clear();
         for (int i = 0; i < maxSize; i++) {
-            cards.add(new Card(Farstar.CARD_LIBRARY.getCard(id), null));
+            add(new Card(Farstar.CARD_LIBRARY.getCard(id), null));
         }
     }
 
     public void setPlayerOnAll(Player player) {
         setPlayer(player);
-        for (Card card : cards) {
+        for (Card card : this) {
             card.setPlayer(player);
         }
     }
 
     public boolean addCard(Card card) {
-        if (cards != null && cardListMenu != null && cards.size() < maxSize) {
-            cards.add(card);
+        if (cardListMenu != null && size() < maxSize) {
+            add(card);
             cardListMenu.generateNewToken(card);
             return true;
         }
@@ -58,12 +61,8 @@ public abstract class CardList {
     }
 
     public boolean hasSpace() {
-        return getCards().size() < getMaxSize();
+        return size() < getMaxSize();
     }
-
-    public ArrayList<Card> getCards() { return cards; }
-
-    public void setCards(ArrayList<Card> cards) { this.cards = cards; }
 
     public int getMaxSize() { return maxSize; }
 

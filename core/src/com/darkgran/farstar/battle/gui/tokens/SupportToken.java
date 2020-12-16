@@ -19,7 +19,7 @@ public class SupportToken extends ClickToken {
         remove();
         if (getCardListMenu()!=null) {
             getCardListMenu().getTokens().remove(this);
-            getCardListMenu().getCardList().getCards().remove(getCard());
+            getCardListMenu().getCardList().remove(getCard());
         }
     }
 }

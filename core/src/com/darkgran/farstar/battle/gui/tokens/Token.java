@@ -68,7 +68,7 @@ public class Token extends TextFont {
         else {
             if (cardListMenu !=null) {
                 cardListMenu.removeToken(this);
-                cardListMenu.getCardList().getCards().remove(getCard());
+                cardListMenu.getCardList().remove(getCard());
             }
         }
     }

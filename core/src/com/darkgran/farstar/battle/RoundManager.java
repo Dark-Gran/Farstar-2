@@ -115,8 +115,8 @@ public class RoundManager {
                                     if (!battle.activeCombatOrDuel()) {
                                         if (!postAbility) {
                                             Card target = null;
-                                            if (supports.getCards().size() > SupportMenu.unTranslatePosition(position)) {
-                                                target = supports.getCards().get(SupportMenu.unTranslatePosition(position));
+                                            if (supports.size() > SupportMenu.unTranslatePosition(position)) {
+                                                target = supports.get(SupportMenu.unTranslatePosition(position));
                                             }
                                             success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
                                         }

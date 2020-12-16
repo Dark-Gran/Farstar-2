@@ -11,8 +11,9 @@ import java.util.ArrayList;
 public class Supports extends CardList implements BattleTicks {
 
     public Supports() {
+        super();
         setupSize();
-        setCards(new ArrayList<>());
+        clear();
     }
 
     @Override
@@ -22,10 +23,10 @@ public class Supports extends CardList implements BattleTicks {
 
     @Override
     public boolean addCard(Card card) {
-        if (getCards() != null && getCardListMenu() != null && getCards().size() < getMaxSize()) {
+        if (getCardListMenu() != null && size() < getMaxSize()) {
             Support support = new Support(card.getCardInfo(), card.getPlayer());
             support.setUsed(true);
-            getCards().add(support);
+            add(support);
             getCardListMenu().generateNewToken(support);
             return true;
         }
@@ -35,17 +36,17 @@ public class Supports extends CardList implements BattleTicks {
     //TODO: move as default to BattleTicks?
     @Override
     public void setUsedOnAll(boolean used) {
-        for (Card card : getCards()) { if (card != null) { card.setUsed(used); } }
+        for (Card card : this) { if (card != null) { card.setUsed(used); } }
     }
 
     @Override
     public void tickEffectsOnAll(AbilityManager abilityManager) {
-        for (Card card : getCards()) { if (card != null) { card.tickEffects(abilityManager); } }
+        for (Card card : this) { if (card != null) { card.tickEffects(abilityManager); } }
     }
 
     @Override
     public void checkEffectsOnAll(AbilityManager abilityManager) {
-        for (Card card : getCards()) { if (card != null) { card.checkEffects(abilityManager); } }
+        for (Card card : this) { if (card != null) { card.checkEffects(abilityManager); } }
     }
 
 }

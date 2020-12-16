@@ -10,8 +10,9 @@ import java.util.ArrayList;
 public class Junkpile extends CardList {
 
     public Junkpile() {
+        super();
         setupSize();
-        setCards(new ArrayList<Card>());
+        clear();
     }
 
     @Override
@@ -21,7 +22,7 @@ public class Junkpile extends CardList {
 
     @Override
     public boolean addCard(Card card) {
-        getCards().add(card);
+        add(card);
         return true;
     }
 

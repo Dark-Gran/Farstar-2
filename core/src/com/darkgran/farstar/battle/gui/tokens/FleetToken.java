@@ -25,7 +25,7 @@ public class FleetToken extends AnchoredToken {
         remove();
         if (getCardListMenu()!=null) {
             getCardListMenu().getTokens().remove(this);
-            getCardListMenu().getCardList().getCards().remove(getCard());
+            getCardListMenu().getCardList().remove(getCard());
         }
     }
 

@@ -11,15 +11,16 @@ import java.util.ArrayList;
 public class Hand extends CardList {
 
     public Hand() {
+        super();
         setupSize();
-        setCards(new ArrayList<>());
+        clear();
     }
 
     public void drawCards(Deck deck, int howMany) {
-        for (int i = 0; i < howMany && getCards().size() < Battle.MAX_IN_HAND; i++) {
+        for (int i = 0; i < howMany && size() < Battle.MAX_IN_HAND; i++) {
             Card card = deck.drawCard();
             if (card != null) {
-                getCards().add(card);
+                add(card);
                 if (getCardListMenu() != null) {
                     getCardListMenu().generateNewToken(card);
                 }
@@ -28,10 +29,10 @@ public class Hand extends CardList {
     }
 
     public void drawCards(int id, int howMany, Player player) {
-        for (int i = 0; i < howMany && getCards().size() < Battle.MAX_IN_HAND; i++) {
+        for (int i = 0; i < howMany && size() < Battle.MAX_IN_HAND; i++) {
             Card card = new Card(Farstar.CARD_LIBRARY.getCard(id), player);
             if (card != null) {
-                getCards().add(card);
+                add(card);
                 if (getCardListMenu() != null) {
                     getCardListMenu().generateNewToken(card);
                 }
