@@ -1,6 +1,6 @@
 package com.darkgran.farstar.battle;
 
-public interface WorldSettings {
+public interface WorldSettings { //TODO avoid Constant Interface Antipattern
     //Technical
     float FPS = 60.0f;
     float STEP_TIME = 1f / FPS;
