@@ -159,7 +159,7 @@ public class AbilityManager {
                     break;
             }
             if (!dontSaveEffect) {
-                saveEffect(target, InstanceFactory.instanceEffect(effect));
+                saveEffect(target, instanceEffect(effect));
             }
         }
         return success;
@@ -244,7 +244,7 @@ public class AbilityManager {
     //-UTILITIES-//
     //-----------//
 
-    public static boolean validAbilityTarget(AbilityInfo abilityInfo, Card caster, Card target) { //in-future: support for other modes than 1v1
+    public boolean validAbilityTarget(AbilityInfo abilityInfo, Card caster, Card target) { //in-future: support for other modes than 1v1
         switch (abilityInfo.getTargets()) {
             default:
                 return false;
@@ -271,7 +271,7 @@ public class AbilityManager {
         }
     }
 
-    public static boolean hasStarter(Card card, AbilityStarter abilityStarter) {
+    public boolean hasStarter(Card card, AbilityStarter abilityStarter) {
         for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
             if (abilityInfo.getStarter() == abilityStarter) {
                 return true;
@@ -280,7 +280,7 @@ public class AbilityManager {
         return false;
     }
 
-    public static boolean hasAttribute(Card card, EffectType effectType) { //checks for abilities with "starter=NONE" (old "attributes")
+    public boolean hasAttribute(Card card, EffectType effectType) { //checks for abilities with "starter=NONE" (old "attributes")
         for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
             if (abilityInfo.getStarter() == AbilityStarter.NONE) {
                 for (Effect effect : abilityInfo.getEffects()) {
@@ -293,7 +293,7 @@ public class AbilityManager {
         return false;
     }
 
-    public static int getReach(Card card) {
+    public int getReach(Card card) {
         for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
             if (abilityInfo.getStarter() == AbilityStarter.NONE) {
                 for (Effect effect : abilityInfo.getEffects()) {
@@ -308,14 +308,14 @@ public class AbilityManager {
         return 0;
     }
 
-    public boolean isTheSameAbility(AbilityInfo abilityA, AbilityInfo abilityB) {
+    private boolean isTheSameAbility(AbilityInfo abilityA, AbilityInfo abilityB) {
         if (abilityA != null && abilityB != null) {
             return (abilityA.getStarter() == abilityB.getStarter()) && isTheSameEffectsList(abilityA.getEffects(), abilityB.getEffects());
         }
         return (abilityA == abilityB);
     }
 
-    public boolean isTheSameEffectsList(ArrayList<Effect> effectsA, ArrayList<Effect> effectsB) {
+    private boolean isTheSameEffectsList(ArrayList<Effect> effectsA, ArrayList<Effect> effectsB) {
         if (effectsA != null && effectsB != null) {
             if (effectsA.size() == effectsB.size()) {
                 for (int i = 0; i < effectsA.size(); i++) {
@@ -337,7 +337,7 @@ public class AbilityManager {
         target.addToEffects(effect);
     }
 
-    public static AbilityInfo effectToAbility(ArrayList effectInfo, int effectDuration) { //creates new ability-attribute
+    private AbilityInfo effectToAbility(ArrayList effectInfo, int effectDuration) { //creates new ability-attribute
         EffectType effectType = EffectType.valueOf(effectInfo.get(1).toString());
         Effect newEffect = new Effect();
         newEffect.setEffectType(effectType);
@@ -381,7 +381,11 @@ public class AbilityManager {
         }
     }
 
-    private static int floatObjectToInt(Object obj) {
+    private Effect instanceEffect(Effect effect) {
+        return new Effect(effect.getEffectType(), effect.getEffectInfo(), effect.getDuration());
+    }
+
+    private int floatObjectToInt(Object obj) {
         if (obj instanceof Float) {
             float f = (Float) obj;
             return (int) f;

@@ -1,6 +1,5 @@
 package com.darkgran.farstar.battle.players.cards;
 
-import com.darkgran.farstar.battle.players.InstanceFactory;
 import com.darkgran.farstar.battle.players.TechType;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 
@@ -29,7 +28,7 @@ public class CardInfo {
         this.defense = defense;
         this.offenseType = offenseType;
         this.defenseType = defenseType;
-        this.abilities = InstanceFactory.instanceAbilities(abilities);
+        this.abilities = instanceAbilities(abilities);
         this.tier = tier;
     }
 
@@ -45,6 +44,12 @@ public class CardInfo {
         this.offenseType = TechType.INFERIOR;
         this.defenseType = TechType.INFERIOR;
         this.abilities = new ArrayList<>();
+    }
+
+    private ArrayList<AbilityInfo> instanceAbilities(ArrayList<AbilityInfo> abilities) {
+        ArrayList<AbilityInfo> newAbilities = new ArrayList<>();
+        newAbilities.addAll(abilities);
+        return newAbilities;
     }
 
     public byte getId() { return id; }

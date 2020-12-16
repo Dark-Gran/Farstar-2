@@ -43,8 +43,8 @@ public abstract class DuelManager {
     }
 
     private void iniStrikePriority(Card att, Card def) {
-        boolean attShootsFirst = AbilityManager.hasAttribute(att, EffectType.FIRST_STRIKE);
-        boolean defShootsFirst = AbilityManager.hasAttribute(def, EffectType.FIRST_STRIKE);
+        boolean attShootsFirst = combatManager.getBattle().getAbilityManager().hasAttribute(att, EffectType.FIRST_STRIKE);
+        boolean defShootsFirst = combatManager.getBattle().getAbilityManager().hasAttribute(def, EffectType.FIRST_STRIKE);
         if (attShootsFirst != defShootsFirst) {
             if (attShootsFirst) { strikePriority = att; }
             else { strikePriority = def; }
@@ -56,7 +56,7 @@ public abstract class DuelManager {
     public void saveTactic(Card card, Card target) {
         lastTactic = card;
         resetAllPlayersReady();
-        if (AbilityManager.hasAttribute(target, EffectType.FIRST_STRIKE)) {
+        if (combatManager.getBattle().getAbilityManager().hasAttribute(target, EffectType.FIRST_STRIKE)) {
             strikePriority = target;
         }
     }

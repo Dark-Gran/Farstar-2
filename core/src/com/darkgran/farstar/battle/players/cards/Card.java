@@ -2,7 +2,6 @@ package com.darkgran.farstar.battle.players.cards;
 
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.AbilityManager;
-import com.darkgran.farstar.battle.players.InstanceFactory;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityRecord;
@@ -22,19 +21,19 @@ public class Card {
 
     public Card(CardInfo cardInfo, Player player) {
         originalInfo = cardInfo;
-        this.cardInfo = InstanceFactory.instanceCardInfo(originalInfo);
+        this.cardInfo = instanceCardInfo(originalInfo);
         this.player = player;
     }
 
     public Card() {
         originalInfo = Farstar.CARD_LIBRARY.getCard(0);
-        cardInfo = InstanceFactory.instanceCardInfo(originalInfo);
+        cardInfo = instanceCardInfo(originalInfo);
         player = null;
     }
 
     public Card(int id) {
         originalInfo = Farstar.CARD_LIBRARY.getCard(id);
-        cardInfo = InstanceFactory.instanceCardInfo(originalInfo);
+        cardInfo = instanceCardInfo(originalInfo);
         player = null;
     }
 
@@ -69,6 +68,10 @@ public class Card {
                 }
             }
         }
+    }
+
+    private CardInfo instanceCardInfo(CardInfo cardInfo) {
+        return new CardInfo(cardInfo.getId(), cardInfo.getName(), cardInfo.getCardType(), cardInfo.getTier(), cardInfo.getEnergy(), cardInfo.getMatter(), cardInfo.getOffense(), cardInfo.getDefense(), cardInfo.getOffenseType(), cardInfo.getDefenseType(), cardInfo.getAbilities());
     }
 
     public void death() { }

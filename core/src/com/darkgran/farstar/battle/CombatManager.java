@@ -65,25 +65,25 @@ public class CombatManager {
         }
     }
 
-    public static boolean canReach(Token attacker, Token targetToken, Fleet targetFleet) {
-        if (targetToken instanceof FleetToken && AbilityManager.hasAttribute(targetToken.getCard(), EffectType.GUARD)) {
+    public boolean canReach(Token attacker, Token targetToken, Fleet targetFleet) {
+        if (targetToken instanceof FleetToken && battle.getAbilityManager().hasAttribute(targetToken.getCard(), EffectType.GUARD)) {
             return true;
         }
         int enemyGuards = 0;
         for (Ship ship : targetFleet.getShips()) {
-            if (ship != null && AbilityManager.hasAttribute(ship.getToken().getCard(), EffectType.GUARD)) {
+            if (ship != null && battle.getAbilityManager().hasAttribute(ship.getToken().getCard(), EffectType.GUARD)) {
                 enemyGuards++;
             }
         }
         if (enemyGuards == 0) {
             return true;
         } else {
-            int reach = AbilityManager.getReach(attacker.getCard());
+            int reach = battle.getAbilityManager().getReach(attacker.getCard());
             return reach >= enemyGuards;
         }
     }
 
-    private static DuelPlayer playerToDuelPlayer(Player player) {
+    private DuelPlayer playerToDuelPlayer(Player player) {
         return new DuelPlayer(player);
     }
 

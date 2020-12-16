@@ -269,7 +269,7 @@ public class RoundManager {
 
     private void processTarget(Token target) {
         if (targetingActive && postponedDeploy.getCaster() != null) {
-            if (AbilityManager.validAbilityTarget(postponedDeploy.getAbility(), postponedDeploy.getCaster().getCard(), target.getCard())) {
+            if (battle.getAbilityManager().validAbilityTarget(postponedDeploy.getAbility(), postponedDeploy.getCaster().getCard(), target.getCard())) {
                 //System.out.println("Playing ability...");
                 if (battle.getAbilityManager().playAbility(postponedDeploy.getCaster(), target.getCard(), postponedDeploy.getAbility(), postponedDeploy.getDrop())) {
                     System.out.println("Targeted-Ability Success!");
