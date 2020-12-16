@@ -7,7 +7,6 @@ import com.darkgran.farstar.Farstar;
 import java.util.ArrayList;
 
 public class WorldManager {
-    //Technical
     public static float FPS = 60.0f;
     public static float STEP_TIME = 1f / FPS;
     public static int VELOCITY_ITERATIONS = 15;
