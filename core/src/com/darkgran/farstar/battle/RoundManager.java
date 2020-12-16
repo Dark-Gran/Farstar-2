@@ -17,14 +17,17 @@ import java.util.ArrayList;
 
 public class RoundManager {
     private final Battle battle;
+    private final PossibilityAdvisor possibilityAdvisor;
     private boolean launched = false;
     private boolean firstTurnThisRound;
     private int roundNum = 0;
     private boolean targetingActive;
     private DeploymentInfo postponedDeploy = new DeploymentInfo();
     private AbilityPicker abilityPicker;
-    public RoundManager(Battle battle) {
+
+    public RoundManager(Battle battle, PossibilityAdvisor possibilityAdvisor) {
         this.battle = battle;
+        this.possibilityAdvisor = possibilityAdvisor;
     }
 
     //-------------//
@@ -51,7 +54,7 @@ public class RoundManager {
         if (battle.getWhoseTurn() instanceof Automaton) {
             ((Automaton) battle.getWhoseTurn()).newTurn();
         } else {
-            PossibilityAdvisor.markPossibilities(battle.getWhoseTurn(), battle);
+            possibilityAdvisor.markPossibilities(battle.getWhoseTurn(), battle);
         }
     }
 
@@ -100,7 +103,7 @@ public class RoundManager {
                 else { whoseTurn = battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer(); }
                 if (token.getCardListMenu().getPlayer() == whoseTurn) {
                     Card targetCard = null;
-                    if (PossibilityAdvisor.isPossibleToDeploy(whoseTurn, token.getCard(), false, battle)) {
+                    if (possibilityAdvisor.isPossibleToDeploy(whoseTurn, token.getCard(), false, battle)) {
                         //TARGETING ANYWHERE FOR ACTION-CARDS
                         if (cardType == CardType.ACTION) {
                             if (!postAbility) { success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget); }
@@ -258,7 +261,7 @@ public class RoundManager {
         if (!battle.isEverythingDisabled() && !battle.activeCombatOrDuel() && getBattle().getWhoseTurn() instanceof LocalPlayer) {
             if (targetingActive) {
                 processTarget(token);
-            } else if (PossibilityAdvisor.isPossibleToDeploy(owner, token.getCard(), false, battle)) {
+            } else if (possibilityAdvisor.isPossibleToDeploy(owner, token.getCard(), false, battle)) {
                 checkAllAbilities(token, null, AbilityStarter.USE, owner, null);
             }
         }

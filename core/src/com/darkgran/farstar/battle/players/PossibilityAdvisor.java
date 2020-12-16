@@ -8,20 +8,20 @@ import com.darkgran.farstar.battle.players.cards.CardType;
 
 import java.util.ArrayList;
 
-public interface PossibilityAdvisor {
+public class PossibilityAdvisor {
 
-    static void markPossibilities(Player player, Battle battle) {
+    public void markPossibilities(Player player, Battle battle) {
         ArrayList<PossibilityInfo> possibilities = getPossibilities(player, battle);
         for (PossibilityInfo possibility : possibilities) {
             possibility.getCard().setPossible(true);
         }
     }
 
-    static void unmarkAll(Player player, Battle battle) {
+    public void unmarkAll(Player player, Battle battle) {
         //TODO
     }
 
-    static ArrayList<PossibilityInfo> getPossibilities(Player player, Battle battle) {
+    public ArrayList<PossibilityInfo> getPossibilities(Player player, Battle battle) {
         ArrayList<PossibilityInfo> possibilities = new ArrayList<>();
         if (player == battle.getWhoseTurn()) {
             //Deployment
@@ -53,7 +53,7 @@ public interface PossibilityAdvisor {
         return possibilities;
     }
 
-    static boolean hasPossibleAbility(Player player, Card card) {
+    public boolean hasPossibleAbility(Player player, Card card) {
         for (int i = 0; i < card.getCardInfo().getAbilities().size(); i++) {
             if (card.getCardInfo().getAbilities().get(i) != null) {
                 if (card.getCardInfo().getAbilities().get(i).getStarter() == AbilityStarter.USE) {
@@ -67,13 +67,13 @@ public interface PossibilityAdvisor {
         return false;
     }
 
-    static boolean isPossibleToDeploy(Player player, Card card, boolean checkSpace, Battle battle) {
+    public boolean isPossibleToDeploy(Player player, Card card, boolean checkSpace, Battle battle) {
         if (player == battle.getWhoseTurn() && player.canAfford(card) && tierAllowed(card.getCardInfo().getTier(), battle)) {
             return !checkSpace || ((player.getSupports().hasSpace() || card.getCardInfo().getCardType() != CardType.SUPPORT) || (player.getFleet().hasSpace() || card.getCardInfo().getCardType() != CardType.YARDPRINT));
         }
         return false;
     }
 
-    static boolean tierAllowed(int tier, Battle battle) { return tier <= battle.getRoundManager().getRoundNum(); }
+    public boolean tierAllowed(int tier, Battle battle) { return tier <= battle.getRoundManager().getRoundNum(); }
 
 }

@@ -10,6 +10,7 @@ import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.TableStage;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.players.LocalPlayer;
+import com.darkgran.farstar.battle.players.PossibilityAdvisor;
 import com.darkgran.farstar.util.SimpleBox2;
 
 public class BattleScreen extends SuperScreen {
@@ -37,7 +38,11 @@ public class BattleScreen extends SuperScreen {
         setTableMenu(tableStage);
         Box2D.init();
         this.battle = battle;
-        battle.startingSetup(new RoundManager(battle), new CombatManager(battle, battle.createDuelManager()), new AbilityManager(battle));
+        battle.startingSetup(
+                new RoundManager(battle, new PossibilityAdvisor()),
+                new CombatManager(battle, battle.createDuelManager()),
+                new AbilityManager(battle)
+        );
         battleStage = battle.createBattleStage(game, getViewport(), this);
         battle.getCombatManager().setBattleStage(battleStage);
         battle.getCombatManager().getDuelManager().getDuelMenu().setBattleStage(battleStage);
