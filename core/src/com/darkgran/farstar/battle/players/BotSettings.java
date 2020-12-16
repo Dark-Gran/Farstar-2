@@ -5,7 +5,7 @@ public interface BotSettings {
         AUTOMATON;
     }
 
-    static float getTimerDelay(BotTier botTier) {
+    default float getTimerDelay(BotTier botTier) {
         return 1f;
     }
 

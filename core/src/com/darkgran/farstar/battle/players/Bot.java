@@ -15,7 +15,7 @@ public abstract class Bot extends Player implements BotSettings {
     public Bot(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard, BotTier botTier) {
         super(battleID, energy, matter, ms, deck, yard);
         this.botTier = botTier;
-        this.timerDelay = getTimerDelay();
+        this.timerDelay = getTimerDelay(botTier);
         report("Hello Universe!");
     }
 
@@ -41,7 +41,5 @@ public abstract class Bot extends Player implements BotSettings {
     public Battle getBattle() { return battle; }
 
     public BotTier getBotTier() { return botTier; }
-
-    public float getTimerDelay() { return timerDelay; }
 
 }
