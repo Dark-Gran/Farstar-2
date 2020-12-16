@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.battle.Battle1v1;
 import com.darkgran.farstar.battle.BattleScreen;
-import com.darkgran.farstar.battle.players.*;
+import com.darkgran.farstar.battle.players.PlayerFactory;
 
 public class MainScreenStage extends ListeningStage {
     private final Texture start = new Texture("images/start.png");
