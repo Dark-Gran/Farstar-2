@@ -13,7 +13,7 @@ public abstract class JunkableCard extends TokenizedCard {
     @Override
     public void death() {
         if (getToken() != null) {
-            if (getCardInfo().getCardType() != CardType.YARD) {
+            if (getCardInfo().getCardType() != CardType.YARDPRINT) {
                 getToken().addCardToJunk();
                 getToken().destroy();
             }

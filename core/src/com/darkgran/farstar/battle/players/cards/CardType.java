@@ -3,14 +3,14 @@ package com.darkgran.farstar.battle.players.cards;
 public enum CardType {
     MS,
     SUPPORT,
-    YARD,
+    YARDPRINT,
     BLUEPRINT,
     UPGRADE,
     TACTIC,
     ACTION;
 
     public static boolean isShip(CardType cardType) {
-        return cardType == CardType.YARD || cardType == CardType.BLUEPRINT;
+        return cardType == CardType.YARDPRINT || cardType == CardType.BLUEPRINT;
     }
 
     public static boolean isSpell(CardType cardType) {

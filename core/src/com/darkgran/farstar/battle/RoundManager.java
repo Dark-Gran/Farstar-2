@@ -98,7 +98,7 @@ public class RoundManager {
                 else { whoseTurn = battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer(); }
                 if (token.getCardListMenu().getPlayer() == whoseTurn) {
                     Card targetCard = null;
-                    if (whoseTurn.canAfford(token.getCard()) && tierAllowed(token.getCard().getCardInfo().getTier())) {
+                    if (isPossibleToDeploy(whoseTurn, token.getCard(), false)) {
                         //TARGETING ANYWHERE FOR ACTION-CARDS
                         if (cardType == CardType.ACTION) {
                             if (!postAbility) { success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget); }
@@ -256,20 +256,9 @@ public class RoundManager {
         if (!battle.isEverythingDisabled() && !battle.activeCombatOrDuel() && getBattle().getWhoseTurn() instanceof LocalPlayer) {
             if (targetingActive) {
                 processTarget(token);
-            } else if (owner == battle.getWhoseTurn() && tierAllowed(token.getCard().getCardInfo().getTier())) {
+            } else if (isPossibleToDeploy(owner, token.getCard(), false)) {
                 checkAllAbilities(token, null, AbilityStarter.USE, owner, null);
             }
-        }
-    }
-
-    public void tryCancel() {
-        if (targetingActive) {
-            endTargeting();
-            System.out.println("Targeting Cancelled.");
-        }
-        if (abilityPicker.isActive()) {
-            abilityPicker.disable();
-            postponedDeploy.resetInDeployment();
         }
     }
 
@@ -295,9 +284,77 @@ public class RoundManager {
         }
     }
 
+    public void tryCancel() {
+        if (targetingActive) {
+            endTargeting();
+            System.out.println("Targeting Cancelled.");
+        }
+        if (abilityPicker.isActive()) {
+            abilityPicker.disable();
+            postponedDeploy.resetInDeployment();
+        }
+    }
+
     private void endTargeting() {
         targetingActive = false;
         postponedDeploy.resetInDeployment();
+    }
+
+    //-----------------//
+    //-PLAYER-ADVISORS-//
+    //-----------------//
+
+    public ArrayList<PossibilityInfo> getPossibilities(Player player) {
+        ArrayList<PossibilityInfo> possibilities = new ArrayList<>();
+        if (player == battle.getWhoseTurn()) {
+            //Deployment
+            for (Card card : player.getYard().getCards()) {
+                if (isPossibleToDeploy(player, card, true)) {
+                    possibilities.add(new PossibilityInfo(card, player.getYard().getCardListMenu()));
+                }
+            }
+            for (Card card : player.getHand().getCards()) {
+                if (isPossibleToDeploy(player, card, true)) {
+                    possibilities.add(new PossibilityInfo(card, player.getHand().getCardListMenu()));
+                }
+            }
+            //Abilities
+            for (Card card : player.getFleet().getShips()) {
+                if (hasPossibleAbility(player, card)) {
+                    possibilities.add(new PossibilityInfo(card, player.getFleet().getFleetMenu()));
+                }
+            }
+            for (Card card : player.getSupports().getCards()) {
+                if (hasPossibleAbility(player, card)) {
+                    possibilities.add(new PossibilityInfo(card, player.getSupports().getCardListMenu()));
+                }
+            }
+            if (hasPossibleAbility(player, player.getMs())) {
+                possibilities.add(new PossibilityInfo(player.getMs(), null));
+            }
+        }
+        return possibilities;
+    }
+
+    private boolean hasPossibleAbility(Player player, Card card) {
+        for (int i = 0; i < card.getCardInfo().getAbilities().size(); i++) {
+            if (card.getCardInfo().getAbilities().get(i) != null) {
+                if (card.getCardInfo().getAbilities().get(i).getStarter() == AbilityStarter.USE) {
+                    AbilityInfo abilityInfo = card.getCardInfo().getAbilities().get(i);
+                    if (player.canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isPossibleToDeploy(Player player, Card card, boolean checkSpace) {
+        if (player == battle.getWhoseTurn() && player.canAfford(card) && tierAllowed(card.getCardInfo().getTier())) {
+            return !checkSpace || ((player.getSupports().hasSpace() || card.getCardInfo().getCardType() != CardType.SUPPORT) || (player.getFleet().hasSpace() || card.getCardInfo().getCardType() != CardType.YARDPRINT));
+        }
+        return false;
     }
 
     //-----------//

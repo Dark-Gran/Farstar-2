@@ -6,8 +6,6 @@ import com.darkgran.farstar.battle.players.Player;
 
 import java.util.ArrayList;
 
-//in-future: cardList could handle using abilities on shipyard/deck/hand (if ever to be added),
-//(simply call "checkEffects()" on its Cards (see Fleet/Card))
 public abstract class CardList {
     private Player player;
     private ArrayList<Card> cards;
@@ -55,7 +53,13 @@ public abstract class CardList {
         return false;
     }
 
-    public void receiveCardListMenu(CardListMenu cardListMenu) { this.cardListMenu = cardListMenu; }
+    public void receiveCardListMenu(CardListMenu cardListMenu) {
+        this.cardListMenu = cardListMenu;
+    }
+
+    public boolean hasSpace() {
+        return getCards().size() < getMaxSize();
+    }
 
     public ArrayList<Card> getCards() { return cards; }
 
