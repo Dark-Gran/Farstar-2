@@ -18,7 +18,7 @@ import static com.darkgran.farstar.battle.BattleSettings.BONUS_CARD_ID;
  *  -- No sensors beyond PossibilityAdvisor
  *  -- No planning (atm not even the frame for it)
  */
-public class Automaton extends Bot { //TODO starter.use + kill on escape
+public class Automaton extends Bot { //TODO check supports + kill on escape
 
     public Automaton(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard, BotTier botTier) {
         super(battleID, energy, matter, ms, deck, yard, botTier);
@@ -30,8 +30,7 @@ public class Automaton extends Bot { //TODO starter.use + kill on escape
         PossibilityInfo bestPossibility = getBestPossibility();
         if (bestPossibility != null) {
             report("Playing a card: "+bestPossibility.getCard().getCardInfo().getName());
-            int position = getBestPosition(bestPossibility.getCard(), getBattle().getRoundManager().getPossibilityAdvisor().getTargetMenu(bestPossibility.getCard(), this));
-            if (deploy(bestPossibility.getCard(), bestPossibility.getMenu(), position)) {
+            if (((isDeploymentMenu(bestPossibility.getMenu()) || bestPossibility.getCard().getCardInfo().getCardType() == CardType.MS) && useAbility(bestPossibility.getCard(), bestPossibility.getMenu())) || deploy(bestPossibility.getCard(), bestPossibility.getMenu(), getBestPosition(bestPossibility.getCard(), getBattle().getRoundManager().getPossibilityAdvisor().getTargetMenu(bestPossibility.getCard(), this)))) {
                 if (!getBattle().getRoundManager().isTargetingActive() && !isPickingAbility()) {
                     turnContinue();
                 }

@@ -202,7 +202,7 @@ public class RoundManager {
         return success;
     }
 
-    private boolean checkAllAbilities(Token caster, Token target, AbilityStarter abilityStarter, Player owner, DropTarget dropTarget) {
+    public boolean checkAllAbilities(Token caster, Token target, AbilityStarter abilityStarter, Player owner, DropTarget dropTarget) {
         if (abilityStarter != AbilityStarter.USE || !caster.getCard().isUsed()) {
             CardInfo cardInfo = caster.getCard().getCardInfo();
             ArrayList<AbilityInfo> options = new ArrayList<>();

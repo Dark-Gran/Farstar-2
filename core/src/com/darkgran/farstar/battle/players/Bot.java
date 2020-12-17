@@ -7,6 +7,7 @@ import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.gui.tokens.HandToken;
 import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
+import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Mothership;
@@ -63,7 +64,7 @@ public abstract class Bot extends Player implements BotSettings {
         } else {
             dropTarget = getFleet().getFleetMenu() ;
         }
-        Token token = new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (baseMenu instanceof CardListMenu) ? (CardListMenu) baseMenu : null);
+        Token token = cardToToken(card, baseMenu);
         if (baseMenu instanceof HandMenu) {
             for (Token tokenInHand : ((HandMenu) baseMenu).getTokens()) {
                 if (tokenInHand instanceof HandToken && tokenInHand.getCard() == card) {
@@ -78,8 +79,22 @@ public abstract class Bot extends Player implements BotSettings {
         return getBattle().getRoundManager().processDrop(token, dropTarget, position, false, true);
     }
 
+    public boolean useAbility(Card card, BaseMenu baseMenu) {
+        Token token = cardToToken(card, baseMenu);
+        getBattle().getRoundManager().checkAllAbilities(token, null, AbilityStarter.USE, this, null);
+        return true;
+    }
+
+    public Token cardToToken(Card card, BaseMenu baseMenu) {
+        return new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (baseMenu instanceof CardListMenu) ? (CardListMenu) baseMenu : null);
+    }
+
     public void report(String message) {
         System.out.println(botTier+"(PLR"+getBattleID()+"): "+message);
+    }
+
+    public boolean isDeploymentMenu(BaseMenu baseMenu) {
+        return (baseMenu instanceof FleetMenu || baseMenu instanceof SupportMenu);
     }
 
     public void setBattle(Battle battle) { this.battle = battle; }
