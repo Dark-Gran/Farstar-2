@@ -15,7 +15,7 @@ public class IntroScreen extends SuperScreen { //Animation used only once on app
     public IntroScreen(final Farstar game) {
         super(game);
         Gdx.input.setCursorCatched(true);
-        try { Thread.sleep(500); } catch(InterruptedException ignored) { }
+        try { Thread.sleep(500); } catch(InterruptedException ignored) { } //TODO: use timer instead
     }
 
     private void endIntro() {
