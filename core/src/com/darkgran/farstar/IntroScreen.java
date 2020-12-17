@@ -4,9 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Timer;
 
 public class IntroScreen extends SuperScreen { //Animation used only once on app-launch
     private final Texture logo = new Texture("images/logo.jpg");
+    private boolean active = false;
     private float alpha = 0;
     private boolean fadeDirection = true; //true in, false out
 
@@ -15,8 +17,10 @@ public class IntroScreen extends SuperScreen { //Animation used only once on app
     public IntroScreen(final Farstar game) {
         super(game);
         Gdx.input.setCursorCatched(true);
-        try { Thread.sleep(500); } catch(InterruptedException ignored) { } //TODO: use timer instead
+        delayAction(this::activate, 0.5f);
     }
+
+    private void activate() { active = true; }
 
     private void endIntro() {
         Gdx.input.setInputProcessor(getGame().getInputMultiplexer());
@@ -24,41 +28,55 @@ public class IntroScreen extends SuperScreen { //Animation used only once on app
         getGame().setScreen(new MainScreen(getGame(), new TableStage(getGame(), getViewport())));
     }
 
-    private void updateAlpha(float delta) { //rework? (like time-steps)?
-        if (delta > 0.03f) { delta = 0.03f; }
+    private void updateAlpha(float delta) {
+        //if (delta > 0.03f) { delta = 0.03f; }
+        alpha += fadeDirection ? (INTRO_SPEED *delta) : -(INTRO_SPEED *delta)*4;
         if (alpha >= 1) {
             fadeDirection = false;
-            try { Thread.sleep(900); } catch(InterruptedException ignored) { }
+            active = false;
+            delayAction(this::activate, 0.9f);
         }
-        alpha += fadeDirection ? (INTRO_SPEED *delta) : -(INTRO_SPEED *delta)*4;
     }
 
     @Override
     public void render(float delta) {
-
         //control
-        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){ endIntro(); }
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+            endIntro();
+        }
 
         //INTRO ANIMATION
-        if (alpha < 0 && !fadeDirection) { //animation over
-            try { Thread.sleep(900); } catch (InterruptedException ignored) { }
-            endIntro();
-        } else {
 
-            Gdx.gl.glClearColor(0, 0, 0, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            getCamera().update();
-            getGame().batch.setProjectionMatrix(getCamera().combined);
-            getGame().batch.begin();
-            getGame().batch.setColor(1, 1, 1, alpha);
-
-            getGame().batch.draw(logo, (float) (Farstar.STAGE_WIDTH/2-logo.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-logo.getHeight()/2));
-
-            getGame().batch.end();
-
-            updateAlpha(delta);
-
+        if (active) {
+            if (alpha < 0 && !fadeDirection) { //animation over
+                active = false;
+                fadeDirection = true;
+                delayAction(this::endIntro, 0.5f);
+            } else {
+                updateAlpha(delta);
+            }
         }
+
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        getCamera().update();
+        getGame().batch.setProjectionMatrix(getCamera().combined);
+        getGame().batch.begin();
+        getGame().batch.setColor(1, 1, 1, (active || !fadeDirection) ? alpha : 0);
+
+        getGame().batch.draw(logo, (float) (Farstar.STAGE_WIDTH / 2 - logo.getWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - logo.getHeight() / 2));
+
+        getGame().batch.end();
+
+
+    }
+
+    private void delayAction(Runnable runnable, float timerDelay) {
+        Timer.schedule(new Timer.Task() {
+            public void run() {
+                if (runnable != null) { Gdx.app.postRunnable(runnable); }
+            }
+        }, timerDelay);
     }
 
     @Override
