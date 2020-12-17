@@ -30,6 +30,8 @@ public abstract class Battle {
 
     public void closeYards() { }
 
+    public void dispose() {}
+
     public void unMarkAllPossibilities() {
         getRoundManager().getPossibilityAdvisor().unMarkAll(whoseTurn, this);
     }

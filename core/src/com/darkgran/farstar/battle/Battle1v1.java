@@ -119,4 +119,10 @@ public class Battle1v1 extends Battle {
             return new Player[]{player1};
         }
     }
+
+    @Override
+    public void dispose() {
+        if (player1 instanceof Bot) { ((Bot) player1).dispose(); }
+        if (player2 instanceof Bot) { ((Bot) player2).dispose(); }
+    }
 }

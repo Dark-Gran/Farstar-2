@@ -26,25 +26,27 @@ public class Automaton extends Bot { //TODO kill on escape
 
     @Override
     public void turn() {
-        super.turn();
-        PossibilityInfo bestPossibility = getBestPossibility();
-        if (bestPossibility != null) {
-            report("Playing a card: "+bestPossibility.getCard().getCardInfo().getName());
-            boolean success;
-            if (isDeploymentMenu(bestPossibility.getMenu()) || bestPossibility.getCard().getCardInfo().getCardType() == CardType.MS) {
-                success = useAbility(bestPossibility.getCard(), bestPossibility.getMenu());
+        if (!isDisposed()) {
+            super.turn();
+            PossibilityInfo bestPossibility = getBestPossibility();
+            if (bestPossibility != null) {
+                report("Playing a card: " + bestPossibility.getCard().getCardInfo().getName());
+                boolean success;
+                if (isDeploymentMenu(bestPossibility.getMenu()) || bestPossibility.getCard().getCardInfo().getCardType() == CardType.MS) {
+                    success = useAbility(bestPossibility.getCard(), bestPossibility.getMenu());
+                } else {
+                    success = deploy(bestPossibility.getCard(), bestPossibility.getMenu(), getBestPosition(bestPossibility.getCard(), getBattle().getRoundManager().getPossibilityAdvisor().getTargetMenu(bestPossibility.getCard(), this)));
+                }
+                if (!success && !isPickingAbility() && !isPickingTarget()) {
+                    report("turn() failed!");
+                    cancelTurn();
+                } else {
+                    turnContinue();
+                }
             } else {
-                success = deploy(bestPossibility.getCard(), bestPossibility.getMenu(), getBestPosition(bestPossibility.getCard(), getBattle().getRoundManager().getPossibilityAdvisor().getTargetMenu(bestPossibility.getCard(), this)));
+                report("No possibilities.");
+                delayAction(this::endTurn);
             }
-            if (!success && !isPickingAbility() && !isPickingTarget()) {
-                report("turn() failed!");
-                cancelTurn();
-            } else {
-                turnContinue();
-            }
-        } else {
-            report("No possibilities.");
-            delayAction(getBattle().getRoundManager()::endTurn);
         }
     }
 

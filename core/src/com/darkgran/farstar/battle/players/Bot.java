@@ -20,6 +20,7 @@ public abstract class Bot extends Player implements BotSettings {
     private final float timerDelay;
     private boolean pickingTarget = false;
     private boolean pickingAbility = false;
+    private boolean disposed = false;
 
     public Bot(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard, BotTier botTier) {
         super(battleID, energy, matter, ms, deck, yard);
@@ -31,6 +32,12 @@ public abstract class Bot extends Player implements BotSettings {
     public void newTurn() {
         report("My Turn Began!");
         delayAction(this::turn);
+    }
+
+    public void endTurn() {
+        if (!disposed) {
+            getBattle().getRoundManager().endTurn();
+        }
     }
 
     public void turn() {
@@ -105,6 +112,11 @@ public abstract class Bot extends Player implements BotSettings {
         return (baseMenu instanceof FleetMenu || baseMenu instanceof SupportMenu);
     }
 
+    public void dispose() {
+        disposed = true;
+        //battle.getRoundManager().tryCancel();
+    }
+
     public void setBattle(Battle battle) { this.battle = battle; }
 
     public Battle getBattle() { return battle; }
@@ -118,5 +130,7 @@ public abstract class Bot extends Player implements BotSettings {
     public boolean isPickingTarget() { return pickingTarget; }
 
     public void setPickingTarget(boolean pickingTarget) { this.pickingTarget = pickingTarget; }
+
+    public boolean isDisposed() { return disposed; }
 
 }
