@@ -18,7 +18,7 @@ import static com.darkgran.farstar.battle.BattleSettings.BONUS_CARD_ID;
  *  -- No sensors beyond PossibilityAdvisor
  *  -- No planning (atm not even the frame for it)
  */
-public class Automaton extends Bot { //TODO check supports + kill on escape
+public class Automaton extends Bot { //TODO kill on escape
 
     public Automaton(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard, BotTier botTier) {
         super(battleID, energy, matter, ms, deck, yard, botTier);
@@ -26,15 +26,17 @@ public class Automaton extends Bot { //TODO check supports + kill on escape
 
     @Override
     public void turn() {
-        setPickingAbility(false);
+        super.turn();
         PossibilityInfo bestPossibility = getBestPossibility();
         if (bestPossibility != null) {
             report("Playing a card: "+bestPossibility.getCard().getCardInfo().getName());
-            if (((isDeploymentMenu(bestPossibility.getMenu()) || bestPossibility.getCard().getCardInfo().getCardType() == CardType.MS) && useAbility(bestPossibility.getCard(), bestPossibility.getMenu())) || deploy(bestPossibility.getCard(), bestPossibility.getMenu(), getBestPosition(bestPossibility.getCard(), getBattle().getRoundManager().getPossibilityAdvisor().getTargetMenu(bestPossibility.getCard(), this)))) {
-                if (!getBattle().getRoundManager().isTargetingActive() && !isPickingAbility()) {
-                    turnContinue();
-                }
-            } else if (!isPickingAbility()) {
+            boolean success;
+            if (isDeploymentMenu(bestPossibility.getMenu()) || bestPossibility.getCard().getCardInfo().getCardType() == CardType.MS) {
+                success = useAbility(bestPossibility.getCard(), bestPossibility.getMenu());
+            } else {
+                success = deploy(bestPossibility.getCard(), bestPossibility.getMenu(), getBestPosition(bestPossibility.getCard(), getBattle().getRoundManager().getPossibilityAdvisor().getTargetMenu(bestPossibility.getCard(), this)));
+            }
+            if (!success && !isPickingAbility() && !isPickingTarget()) {
                 report("turn() failed!");
                 cancelTurn();
             } else {
@@ -90,6 +92,7 @@ public class Automaton extends Bot { //TODO check supports + kill on escape
     @Override
     public void chooseTargets(Token token, AbilityInfo ability) {
         if (ability != null && ability.getTargets() != null) {
+            setPickingTarget(true);
             switch (ability.getTargets()) {
                 case ANY_ALLY:
                 case ALLIED_FLEET:
@@ -158,12 +161,12 @@ public class Automaton extends Bot { //TODO check supports + kill on escape
     @Override
     public void pickAbility(Token caster, Token target, DropTarget dropTarget, ArrayList<AbilityInfo> options) {
         if (options.size() > 0) {
+            setPickingAbility(true);
             if (caster.getCard().getCardInfo().getId() == BONUS_CARD_ID) {
                 getBattle().getRoundManager().processPick(options.get(1)); //atm always picks the matter
             } else {
                 getBattle().getRoundManager().processPick(options.get(0)); //atm always picks the first one
             }
-            setPickingAbility(true);
         } else {
             report("pickAbility() failed!");
             cancelTurn();

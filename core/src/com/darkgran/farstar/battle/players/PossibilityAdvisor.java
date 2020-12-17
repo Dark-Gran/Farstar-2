@@ -58,7 +58,7 @@ public class PossibilityAdvisor {
     }
 
     public boolean hasPossibleAbility(Player player, Card card) {
-        if (card != null) {
+        if (card != null && !card.isUsed()) {
             for (int i = 0; i < card.getCardInfo().getAbilities().size(); i++) {
                 if (card.getCardInfo().getAbilities().get(i) != null) {
                     if (card.getCardInfo().getAbilities().get(i).getStarter() == AbilityStarter.USE) {

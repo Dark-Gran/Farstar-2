@@ -18,6 +18,7 @@ public abstract class Bot extends Player implements BotSettings {
     private Battle battle;
     private final BotTier botTier;
     private final float timerDelay;
+    private boolean pickingTarget = false;
     private boolean pickingAbility = false;
 
     public Bot(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard, BotTier botTier) {
@@ -32,11 +33,18 @@ public abstract class Bot extends Player implements BotSettings {
         delayAction(this::turn);
     }
 
-    public void turn() { }
+    public void turn() {
+        setPickingTarget(false);
+        setPickingAbility(false);
+    }
 
-    public void chooseTargets(Token token, AbilityInfo ability) { }
+    public void chooseTargets(Token token, AbilityInfo ability) {
+        setPickingTarget(true);
+    }
 
-    public void pickAbility(Token caster, Token target, DropTarget dropTarget, ArrayList<AbilityInfo> options) { }
+    public void pickAbility(Token caster, Token target, DropTarget dropTarget, ArrayList<AbilityInfo> options) {
+        setPickingAbility(true);
+    }
 
     public void newCombat() { }
 
@@ -106,5 +114,9 @@ public abstract class Bot extends Player implements BotSettings {
     public boolean isPickingAbility() { return pickingAbility; }
 
     public void setPickingAbility(boolean pickingAbility) { this.pickingAbility = pickingAbility; }
+
+    public boolean isPickingTarget() { return pickingTarget; }
+
+    public void setPickingTarget(boolean pickingTarget) { this.pickingTarget = pickingTarget; }
 
 }
