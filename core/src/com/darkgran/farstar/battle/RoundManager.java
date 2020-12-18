@@ -293,6 +293,7 @@ public class RoundManager {
                         //System.out.println("Ability price paid.");
                     } else {
                         //System.out.println("Reprocessing original drop...");
+                        targetingActive = false;
                         processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, postponedDeploy.getAbility().getStarter()==AbilityStarter.DEPLOY);
                     }
                     endTargeting();

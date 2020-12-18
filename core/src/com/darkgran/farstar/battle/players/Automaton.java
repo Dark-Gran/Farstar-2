@@ -100,6 +100,7 @@ public class Automaton extends Bot { //TODO debug with all cards
                 case ALLIED_FLEET:
                     getAlliedTarget(token, ability);
                     break;
+                case ANY: //expects that Upgrades cannot be used on enemies, ergo ANY must mean ANY_ENEMY (and it allows both only for the human player)
                 case ANY_ENEMY:
                 case ENEMY_FLEET:
                     getEnemyTarget(token, ability);
@@ -111,7 +112,7 @@ public class Automaton extends Bot { //TODO debug with all cards
         }
     }
 
-    public void getAlliedTarget(Token token, AbilityInfo ability) {
+    public void getAlliedTarget(Token token, AbilityInfo ability) { //TODO rework for reuse
         if (getFleet().isEmpty()) {
             getBattle().getRoundManager().processTarget(getMs().getToken());
         } else if (getFleet().getShips().length == 1) {
