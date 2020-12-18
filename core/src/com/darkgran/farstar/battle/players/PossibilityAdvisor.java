@@ -73,7 +73,7 @@ public class PossibilityAdvisor {
         return false;
     }
 
-    public boolean isPossibleToDeploy(Player player, Card card, boolean checkSpace, Battle battle) {
+    public boolean isPossibleToDeploy(Player player, Card card, boolean checkSpace, Battle battle) { //TODO "Plasblast check"
         if (player == battle.getWhoseTurn() && player.canAfford(card) && tierAllowed(card.getCardInfo().getTier(), battle)) {
             return !checkSpace || ((player.getSupports().hasSpace() || card.getCardInfo().getCardType() != CardType.SUPPORT) && (player.getFleet().hasSpace() || card.getCardInfo().getCardType() != CardType.YARDPRINT));
         }
