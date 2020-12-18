@@ -32,7 +32,7 @@ public abstract class Bot extends Player implements BotSettings {
 
     public void newTurn() {
         report("My Turn Began!");
-        delayAction(this::turn);
+        delayedTurn();
     }
 
     public void endTurn() {
@@ -54,9 +54,24 @@ public abstract class Bot extends Player implements BotSettings {
         setPickingAbility(true);
     }
 
-    public void newCombat() { }
+    public void newCombat() {
+        report("Time for my attack!");
+        combat();
+    }
 
-    public void newDuelOK(DuelOK duelOK) { }
+    public void combat() {
+        setPickingTarget(false);
+        setPickingAbility(false);
+    }
+
+    public void newDuelOK(DuelOK duelOK) {
+        delayedDuel(duelOK);
+    }
+
+    public void duel(DuelOK duelOK) {
+        setPickingTarget(false);
+        setPickingAbility(false);
+    }
 
     public Token getEnemyTarget(Token attacker, boolean checkReach) { return null; }
 
@@ -90,8 +105,16 @@ public abstract class Bot extends Player implements BotSettings {
         delayAction(this::endCombat);
     }
 
+    public void delayedCombat() {
+        delayAction(this::combat);
+    }
+
     public void delayedLaunchDuel(Ship ship) {
         delayAction(()->launchDuel(ship));
+    }
+
+    public void delayedDuel(DuelOK duelOK) {
+        delayAction(()->duel(duelOK));
     }
 
     public void delayedDuelReady(DuelOK duelOK) {

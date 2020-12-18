@@ -7,7 +7,6 @@ import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Mothership;
 import com.darkgran.farstar.battle.players.cards.Ship;
-import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 
@@ -209,7 +208,8 @@ public class Automaton extends Bot {
     //--------//
 
     @Override
-    public void newCombat() {
+    public void combat() {
+        super.combat();
         if (getBattle().getCombatManager().isActive()) {
             for (Ship ship : getFleet().getShips()) {
                 if (ship != null && !ship.haveFought()) {
@@ -221,8 +221,10 @@ public class Automaton extends Bot {
     }
 
     @Override
-    public void newDuelOK(DuelOK duelOK) { //atm expects all Tactics to be meant for allies
-        PossibilityInfo bestPossibility = getDuelPossibility(); //TODO debug
+    public void duel(DuelOK duelOK) { //atm expects all Tactics to be meant for allies
+        super.duel(duelOK);
+        boolean success = false;
+        PossibilityInfo bestPossibility = getDuelPossibility();
         if (bestPossibility != null) {
             report("Playing a tactic: " + bestPossibility.getCard().getCardInfo().getName());
             int position = -1;
@@ -234,11 +236,17 @@ public class Automaton extends Bot {
                     }
                 }
             }
-            deploy(bestPossibility.getCard(), bestPossibility.getMenu(), position);
+            if (deploy(bestPossibility.getCard(), bestPossibility.getMenu(), position)) {
+                success = true;
+                delayedDuel(duelOK);
+            } else {
+                report("Failed to deploy the tactic!");
+                success = false;
+            }
         } else {
             report("No duel possibilities.");
         }
-        delayedDuelReady(duelOK);
+        if (!success) { delayedDuelReady(duelOK); }
     }
 
     public PossibilityInfo getDuelPossibility() {
