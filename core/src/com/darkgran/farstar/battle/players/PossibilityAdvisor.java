@@ -29,7 +29,11 @@ public class PossibilityAdvisor {
     public ArrayList<PossibilityInfo> getPossibilities(Player player, Battle battle) {
         ArrayList<PossibilityInfo> possibilities = new ArrayList<>();
         if (player == battle.getWhoseTurn()) {
-            //Deployment
+            for (Card card : player.getSupports()) {
+                if (hasPossibleAbility(player, card)) {
+                    possibilities.add(new PossibilityInfo(card, player.getSupports().getCardListMenu()));
+                }
+            }
             for (Card card : player.getHand()) {
                 if (isPossibleToDeploy(player, card, true, battle)) {
                     possibilities.add(new PossibilityInfo(card, player.getHand().getCardListMenu()));
@@ -40,15 +44,9 @@ public class PossibilityAdvisor {
                     possibilities.add(new PossibilityInfo(card, player.getYard().getCardListMenu()));
                 }
             }
-            //Abilities
             for (Card card : player.getFleet().getShips()) {
                 if (hasPossibleAbility(player, card)) {
                     possibilities.add(new PossibilityInfo(card, player.getFleet().getFleetMenu()));
-                }
-            }
-            for (Card card : player.getSupports()) {
-                if (hasPossibleAbility(player, card)) {
-                    possibilities.add(new PossibilityInfo(card, player.getSupports().getCardListMenu()));
                 }
             }
             if (hasPossibleAbility(player, player.getMs())) {
