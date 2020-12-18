@@ -17,7 +17,7 @@ import static com.darkgran.farstar.battle.BattleSettings.BONUS_CARD_ID;
  *  -- No sensors beyond PossibilityAdvisor
  *  -- No planning (atm not even the frame for it)
  */
-public class Automaton extends Bot { //TODO save tactics for duel + stop basic "nonsense" (eg. "wrong color")
+public class Automaton extends Bot {
 
     public Automaton(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard, BotTier botTier) {
         super(battleID, energy, matter, ms, deck, yard, botTier);
@@ -110,8 +110,8 @@ public class Automaton extends Bot { //TODO save tactics for duel + stop basic "
         return null;
     }
 
-    public boolean isNonsense(PossibilityInfo possibilityInfo) {
-        return false; //in-future: TechType checks etc.
+    public boolean isNonsense(PossibilityInfo possibilityInfo) { //TODO colors
+        return (possibilityInfo.getCard().getCardInfo().getCardType() == CardType.TACTIC && !getBattle().getCombatManager().isActive());
     }
 
     @Override
