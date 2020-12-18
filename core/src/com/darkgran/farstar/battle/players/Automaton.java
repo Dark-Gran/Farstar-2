@@ -110,7 +110,7 @@ public class Automaton extends Bot {
         return null;
     }
 
-    public boolean isNonsense(PossibilityInfo possibilityInfo) { //TODO colors
+    public boolean isNonsense(PossibilityInfo possibilityInfo) { //TODO colors + first strike
         return (possibilityInfo.getCard().isTactic() && !getBattle().getCombatManager().isActive());
     }
 
