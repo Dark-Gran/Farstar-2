@@ -91,6 +91,8 @@ public class Battle1v1 extends Battle {
     public void battleEnd() {
         super.battleEnd();
         System.out.println("Player #"+getWinnerID()+" wins!");
+        if (player1 instanceof Bot) { ((Bot) player1).gameOver(getWinnerID()); }
+        if (player2 instanceof Bot) { ((Bot) player2).gameOver(getWinnerID()); }
     }
 
     private int getWinnerID() {

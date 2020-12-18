@@ -206,4 +206,16 @@ public class Automaton extends Bot { //TODO tactics
         delayedDuelReady(duelOK);
     }
 
+    //------//
+    //-MISC-//
+    //------//
+
+    @Override
+    public void gameOver(int winnerID) {
+        if (winnerID == getBattleID()) {
+            report("Wow, I've won! How did I do that?");
+        }
+        super.gameOver(winnerID);
+    }
+
 }

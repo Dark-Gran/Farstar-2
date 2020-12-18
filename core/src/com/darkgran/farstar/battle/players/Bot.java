@@ -66,6 +66,8 @@ public abstract class Bot extends Player implements BotSettings {
 
     //EXECUTIONS + UTILITIES
 
+    public void gameOver(int winnerID) { report("GG"); }
+
     public void cancelTurn() {
         setPickingAbility(false);
         getBattle().getRoundManager().tryCancel();
