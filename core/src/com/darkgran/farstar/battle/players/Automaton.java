@@ -130,7 +130,11 @@ public class Automaton extends Bot { //TODO debug with all cards
                     }
                 }
             }
-            return strongestShip.getToken();
+            if (strongestShip != null) {
+                return strongestShip.getToken();
+            } else {
+                return null;
+            }
         }
     }
 
