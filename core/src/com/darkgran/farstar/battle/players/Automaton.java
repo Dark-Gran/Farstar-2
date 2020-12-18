@@ -146,7 +146,7 @@ public class Automaton extends Bot {
     }
 
     public boolean techTypeNonsense(Card ally, Card enemy, EffectTypeSpecifics.ChangeStatType changeStatType, Object changeInfo) {
-        return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && DuelManager.noneToInferior(ally.getCardInfo().getOffenseType()) != TechType.INFERIOR && ally.getCardInfo().getOffenseType() != enemy.getCardInfo().getDefenseType()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && DuelManager.noneToInferior(ally.getCardInfo().getDefenseType()) != TechType.INFERIOR && ally.getCardInfo().getDefenseType() == enemy.getCardInfo().getOffenseType());
+        return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && DuelManager.noneToInferior(ally.getCardInfo().getOffenseType()) != TechType.INFERIOR && ally.getCardInfo().getOffenseType() != enemy.getCardInfo().getDefenseType()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && (DuelManager.noneToInferior(enemy.getCardInfo().getOffenseType()) == TechType.INFERIOR || ally.getCardInfo().getDefenseType() == enemy.getCardInfo().getOffenseType()));
     }
 
     @Override
