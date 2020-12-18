@@ -4,6 +4,7 @@ import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.gui.BaseMenu;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
+import com.darkgran.farstar.battle.players.abilities.AbilityTargets;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 
@@ -73,11 +74,26 @@ public class PossibilityAdvisor {
         return false;
     }
 
-    public boolean isPossibleToDeploy(Player player, Card card, boolean checkSpace, Battle battle) { //TODO "Plasblast check"
-        if (player == battle.getWhoseTurn() && player.canAfford(card) && tierAllowed(card.getCardInfo().getTier(), battle)) {
+    public boolean isPossibleToDeploy(Player player, Card card, boolean checkSpace, Battle battle) {
+        if (player == battle.getWhoseTurn() && player.canAfford(card) && tierAllowed(card.getCardInfo().getTier(), battle) && allowedAoE(player, card, battle)) {
             return !checkSpace || ((player.getSupports().hasSpace() || card.getCardInfo().getCardType() != CardType.SUPPORT) && (player.getFleet().hasSpace() || card.getCardInfo().getCardType() != CardType.YARDPRINT));
         }
         return false;
+    }
+
+    public boolean allowedAoE (Player player, Card card, Battle battle) {
+        for (AbilityInfo ability : card.getCardInfo().getAbilities()) {
+            if (AbilityTargets.isAoE(ability.getTargets())) {
+                Player[] enemies = battle.getEnemies(player);
+                for (Player enemy : enemies) {
+                    if (!enemy.getFleet().isEmpty()) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean tierAllowed(int tier, Battle battle) { return tier <= battle.getRoundManager().getRoundNum(); }

@@ -11,5 +11,18 @@ public enum AbilityTargets {
     ANY_ENEMY,
     ENEMY_FLEET,
     ENEMY_MS,
-    ENTIRE_ENEMY_FLEET
+    ENTIRE_ENEMY_FLEET;
+
+    public static boolean isAoE(AbilityTargets targets) {
+        switch (targets) {
+            case ALLIED_FLEET:
+            case ENEMY_FLEET:
+            case ENTIRE_ALLIED_FLEET:
+            case ENTIRE_ENEMY_FLEET:
+                return true;
+            default:
+                return false;
+        }
+    }
+
 }
