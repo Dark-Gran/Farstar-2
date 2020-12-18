@@ -81,6 +81,18 @@ public class Card {
 
     public void addToEffects (Effect effect) { effects.add(effect); }
 
+    public boolean isPureOffenseChanger() {
+        boolean foundOffense = false;
+        for (AbilityInfo ability : cardInfo.getAbilities()) {
+            if (ability.isPureOffenseChanger()) {
+                foundOffense = true;
+            } else {
+                return false;
+            }
+        }
+        return foundOffense;
+    }
+
     public boolean isTactic() { return cardInfo.getCardType() == CardType.TACTIC; }
 
     public boolean isMS() { return cardInfo.getCardType() == CardType.MS; }

@@ -61,7 +61,7 @@ public class PossibilityAdvisor {
     }
 
     public boolean isPossibleToDeploy(Player player, Player whoseTurn, Card card, boolean checkSpace, Battle battle) {
-        if (player == whoseTurn && player.canAfford(card) && tierAllowed(card.getCardInfo().getTier(), battle) && allowedAoE(player, card, battle)) {
+        if (player == whoseTurn && player.canAfford(card) && tierAllowed(card.getCardInfo().getTier(), battle) && allowedAoE(player, card, battle) && (!player.getFleet().isEmpty() || !card.isPureOffenseChanger())) {
             return !checkSpace || ((player.getSupports().hasSpace() || card.getCardInfo().getCardType() != CardType.SUPPORT) && (player.getFleet().hasSpace() || card.getCardInfo().getCardType() != CardType.YARDPRINT));
         }
         return false;
