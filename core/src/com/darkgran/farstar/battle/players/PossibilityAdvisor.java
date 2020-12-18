@@ -21,12 +21,12 @@ public class PossibilityAdvisor {
                 }
             }
             for (Card card : player.getHand()) {
-                if (isPossibleToDeploy(player, card, true, battle)) {
+                if (isPossibleToDeploy(player, battle.getWhoseTurn(), card, true, battle)) {
                     possibilities.add(new PossibilityInfo(card, player.getHand().getCardListMenu()));
                 }
             }
             for (Card card : player.getYard()) {
-                if (isPossibleToDeploy(player, card, true, battle)) {
+                if (isPossibleToDeploy(player, battle.getWhoseTurn(), card, true, battle)) {
                     possibilities.add(new PossibilityInfo(card, player.getYard().getCardListMenu()));
                 }
             }
@@ -58,8 +58,8 @@ public class PossibilityAdvisor {
         return false;
     }
 
-    public boolean isPossibleToDeploy(Player player, Card card, boolean checkSpace, Battle battle) {
-        if (player == battle.getWhoseTurn() && player.canAfford(card) && tierAllowed(card.getCardInfo().getTier(), battle) && allowedAoE(player, card, battle)) {
+    public boolean isPossibleToDeploy(Player player, Player whoseTurn, Card card, boolean checkSpace, Battle battle) {
+        if (player == whoseTurn && player.canAfford(card) && tierAllowed(card.getCardInfo().getTier(), battle) && allowedAoE(player, card, battle)) {
             return !checkSpace || ((player.getSupports().hasSpace() || card.getCardInfo().getCardType() != CardType.SUPPORT) && (player.getFleet().hasSpace() || card.getCardInfo().getCardType() != CardType.YARDPRINT));
         }
         return false;

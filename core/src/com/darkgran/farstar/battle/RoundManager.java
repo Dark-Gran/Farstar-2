@@ -106,7 +106,7 @@ public class RoundManager {
                 else { whoseTurn = battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer(); }
                 if (token.getCardListMenu().getPlayer() == whoseTurn) {
                     Card targetCard = null;
-                    if (possibilityAdvisor.isPossibleToDeploy(whoseTurn, token.getCard(), false, battle)) {
+                    if (possibilityAdvisor.isPossibleToDeploy(whoseTurn, whoseTurn, token.getCard(), false, battle)) {
                         //TARGETING ANYWHERE FOR ACTION-CARDS
                         if (cardType == CardType.ACTION) {
                             if (!postAbility) {
@@ -160,7 +160,6 @@ public class RoundManager {
                         } else if (dropTarget instanceof MothershipToken) {
                             MothershipToken ms = (MothershipToken) dropTarget;
                             if (!battle.activeCombatOrDuel() || ms.getCard().isInDuel()) {
-                                System.out.println("OK"); //todo
                                 //ABILITIES
                                 if (CardType.isSpell(cardType)) {
                                     if (!postAbility) {
@@ -275,7 +274,7 @@ public class RoundManager {
         if (!battle.isEverythingDisabled() && !battle.activeCombatOrDuel() && getBattle().getWhoseTurn() instanceof LocalPlayer) {
             if (targetingActive) {
                 processTarget(token);
-            } else if (possibilityAdvisor.isPossibleToDeploy(owner, token.getCard(), false, battle)) {
+            } else if (possibilityAdvisor.isPossibleToDeploy(owner, battle.getWhoseTurn(), token.getCard(), false, battle)) {
                 checkAllAbilities(token, null, AbilityStarter.USE, owner, null);
             }
         }
