@@ -119,10 +119,6 @@ public class RoundManager {
                                 if ((cardType == CardType.SUPPORT && supports == whoseTurn.getSupports()) || CardType.isSpell(cardType)) {
                                     if (!battle.activeCombatOrDuel()) {
                                         if (!postAbility) {
-                                            Card target = null; //todo
-                                            if (supports.size() > SupportMenu.unTranslatePosition(position)) {
-                                                target = supports.get(SupportMenu.unTranslatePosition(position));
-                                            }
                                             success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
                                         }
                                         if (cardType == CardType.SUPPORT) {
