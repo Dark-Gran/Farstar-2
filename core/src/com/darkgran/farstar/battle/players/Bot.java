@@ -112,7 +112,7 @@ public abstract class Bot extends Player implements BotSettings {
         return (baseMenu instanceof FleetMenu || baseMenu instanceof SupportMenu);
     }
 
-    public void delayAction(Runnable runnable) {
+    public void delayAction(Runnable runnable) { //use delayedTurn() etc. (above) for "recommended delays"
         Timer.schedule(new Timer.Task() {
             public void run() {
                 if (runnable != null) { Gdx.app.postRunnable(runnable); }
