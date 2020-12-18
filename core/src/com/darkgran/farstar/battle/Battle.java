@@ -5,6 +5,7 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.players.cards.Ship;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ public abstract class Battle {
         System.out.println("Launching Battle...");
     }
 
-    public BattleStage createBattleStage(Farstar game, Viewport viewport, BattleScreen battleScreen) {
+    public BattleStage createBattleStage(@NotNull Farstar game, @NotNull Viewport viewport, @NotNull BattleScreen battleScreen) {
         return null;
     }
 
@@ -36,7 +37,7 @@ public abstract class Battle {
         getRoundManager().getPossibilityAdvisor().unMarkAll(whoseTurn, this);
     }
 
-    public void startingSetup(RoundManager roundManager, CombatManager combatManager, AbilityManager abilityManager) {
+    public void startingSetup(@NotNull RoundManager roundManager, @NotNull CombatManager combatManager, @NotNull AbilityManager abilityManager) {
         coinToss();
         startingCards();
         this.roundManager = roundManager;
