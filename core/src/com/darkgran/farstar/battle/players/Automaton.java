@@ -195,7 +195,7 @@ public class Automaton extends Bot { //TODO combat + duel
     }
 
     @Override
-    public void newDuelOK() {
+    public void newDuelOK() { //TODO 1. just oks 2. tactics
         report("My Time to Duel!");
     }
 
