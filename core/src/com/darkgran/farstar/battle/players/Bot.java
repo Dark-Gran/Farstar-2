@@ -56,17 +56,17 @@ public abstract class Bot extends Player implements BotSettings {
 
     public void newCombat() { }
 
-    public void newDuelOK(DuelOK duelOK) {
-        delayedDuelReady(duelOK);
-    }
+    public void newDuelOK(DuelOK duelOK) { }
 
     public Token getEnemyTarget(Token attacker, boolean checkReach) { return null; }
 
     public Token getAlliedTarget(Token caster) { return null; }
 
-    //EXECUTIONS + UTILITIES
+    public DropTarget getDropTarget(CardType cardType) { return null; }
 
     public void gameOver(int winnerID) { report("GG"); }
+
+    //EXECUTIONS + UTILITIES
 
     public void cancelTurn() {
         setPickingAbility(false);
@@ -99,13 +99,7 @@ public abstract class Bot extends Player implements BotSettings {
     }
 
     public boolean deploy(Card card, BaseMenu baseMenu, int position) {
-        CardType cardType = card.getCardInfo().getCardType();
-        DropTarget dropTarget;
-        if (cardType == CardType.SUPPORT) {
-            dropTarget = (SupportMenu) getSupports().getCardListMenu();
-        } else {
-            dropTarget = getFleet().getFleetMenu() ;
-        }
+        DropTarget dropTarget = getDropTarget(card.getCardInfo().getCardType());
         Token token = cardToToken(card, baseMenu);
         if (baseMenu instanceof HandMenu) {
             for (Token tokenInHand : ((HandMenu) baseMenu).getTokens()) {

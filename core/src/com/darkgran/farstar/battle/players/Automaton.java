@@ -1,8 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
-import com.darkgran.farstar.battle.gui.BaseMenu;
-import com.darkgran.farstar.battle.gui.DropTarget;
-import com.darkgran.farstar.battle.gui.DuelOK;
+import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.cards.Card;
@@ -40,7 +38,7 @@ public class Automaton extends Bot { //TODO save tactics for duel + stop basic "
                 if (isDeploymentMenu(bestPossibility.getMenu()) || bestPossibility.getCard().getCardInfo().getCardType() == CardType.MS) {
                     success = useAbility(bestPossibility.getCard(), bestPossibility.getMenu());
                 } else {
-                    success = deploy(bestPossibility.getCard(), bestPossibility.getMenu(), getBestPosition(bestPossibility.getCard(), getBattle().getRoundManager().getPossibilityAdvisor().getTargetMenu(bestPossibility.getCard(), this)));
+                    success = deploy(bestPossibility.getCard(), bestPossibility.getMenu(), getBestPosition(bestPossibility.getCard(), bestPossibility.getMenu(), getBattle().getRoundManager().getPossibilityAdvisor().getTargetMenu(bestPossibility.getCard(), this)));
                 }
                 if (!success && !isPickingAbility() && !isPickingTarget()) {
                     report("turn() failed!");
@@ -55,13 +53,37 @@ public class Automaton extends Bot { //TODO save tactics for duel + stop basic "
         }
     }
 
-    public int getBestPosition(Card card, BaseMenu targetMenu) {
+    @Override
+    public DropTarget getDropTarget(CardType cardType) {
+        if (cardType == CardType.SUPPORT) {
+            return (SupportMenu) getSupports().getCardListMenu();
+        } else {
+            if (!CardType.isShip(cardType) && getFleet().isEmpty()) {
+                return (DropTarget) getMs().getToken();
+            } else {
+                return getFleet().getFleetMenu();
+            }
+        }
+    }
+
+    public int getBestPosition(Card card, BaseMenu sourceMenu, BaseMenu targetMenu) {
         if (CardType.isShip(card.getCardInfo().getCardType())) {
             if (targetMenu.isEmpty()) {
                 return 3;
             } else {
                 return 2;
             }
+        } else if (targetMenu instanceof FleetMenu && (card.getCardInfo().getCardType() == CardType.UPGRADE || card.getCardInfo().getCardType() == CardType.TACTIC)){
+            FleetMenu fleetMenu = (FleetMenu) targetMenu;
+            Token ally = getAlliedTarget(cardToToken(card, sourceMenu));
+            for (int i = 0; i < fleetMenu.getShips().length; i++) {
+                if (fleetMenu.getShips()[i] != null) {
+                    if (fleetMenu.getShips()[i].getCard() == ally.getCard()) {
+                        return i;
+                    }
+                }
+            }
+            return -1;
         } else {
             return 3;
         }
@@ -119,11 +141,9 @@ public class Automaton extends Bot { //TODO save tactics for duel + stop basic "
     }
 
     @Override
-    public Token getAlliedTarget(Token caster) { //todo debug
+    public Token getAlliedTarget(Token caster) {
         if (getFleet().isEmpty()) {
             return getMs().getToken();
-        } else if (getFleet().getShips().length == 1) {
-            return getFleet().getShips()[3].getToken();
         } else {
             Ship strongestShip = null;
             for (Ship ship : getFleet().getShips()) {
@@ -149,8 +169,6 @@ public class Automaton extends Bot { //TODO save tactics for duel + stop basic "
         for (Player enemy : enemies) {
             if (picked == null && enemy.getFleet().isEmpty()) {
                 picked = enemy.getMs().getToken();
-            } else if (picked == null && enemy.getFleet().getShips().length == 1) {
-                picked = enemy.getFleet().getShips()[3].getToken();
             } else {
                 for (Ship ship : enemy.getFleet().getShips()) {
                     if (ship != null) {
@@ -165,8 +183,8 @@ public class Automaton extends Bot { //TODO save tactics for duel + stop basic "
         return picked;
     }
 
-    private boolean isBiggerShip(Ship A, Ship B) { //return A>B
-        return A.getCardInfo().getEnergy() + A.getCardInfo().getMatter() * 2 - A.getDamage() > B.getCardInfo().getEnergy() + B.getCardInfo().getMatter() * 2 - B.getDamage();
+    private boolean isBiggerShip(Ship A, Ship B) { //return A>B (in-future: consider abilities)
+        return A.getCardInfo().getOffense() + A.getCardInfo().getDefense() - A.getDamage() > B.getCardInfo().getOffense() + B.getCardInfo().getDefense() - B.getDamage();
     }
 
     @Override
