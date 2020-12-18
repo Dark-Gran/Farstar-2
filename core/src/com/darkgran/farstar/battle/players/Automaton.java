@@ -41,17 +41,13 @@ public class Automaton extends Bot { //TODO combat + duel
                     report("turn() failed!");
                     cancelTurn();
                 } else {
-                    turnContinue();
+                    delayedTurn();
                 }
             } else {
                 report("No possibilities.");
                 delayAction(this::endTurn);
             }
         }
-    }
-
-    public void turnContinue() {
-        delayAction(this::turn);
     }
 
     public int getBestPosition(Card card, BaseMenu targetMenu) {

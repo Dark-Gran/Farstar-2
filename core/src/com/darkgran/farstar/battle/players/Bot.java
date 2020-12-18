@@ -57,18 +57,14 @@ public abstract class Bot extends Player implements BotSettings {
 
     public void newDuelOK() { }
 
-    public void delayAction(Runnable runnable) {
-        Timer.schedule(new Timer.Task() {
-            public void run() {
-                if (runnable != null) { Gdx.app.postRunnable(runnable); }
-            }
-        }, timerDelay);
-    }
-
     public void cancelTurn() {
         setPickingAbility(false);
         getBattle().getRoundManager().tryCancel();
         getBattle().getRoundManager().endTurn();
+    }
+
+    public void delayedTurn() {
+        delayAction(this::turn);
     }
 
     public boolean deploy(Card card, BaseMenu baseMenu, int position) {
@@ -112,9 +108,16 @@ public abstract class Bot extends Player implements BotSettings {
         return (baseMenu instanceof FleetMenu || baseMenu instanceof SupportMenu);
     }
 
+    public void delayAction(Runnable runnable) {
+        Timer.schedule(new Timer.Task() {
+            public void run() {
+                if (runnable != null) { Gdx.app.postRunnable(runnable); }
+            }
+        }, timerDelay);
+    }
+
     public void dispose() {
         disposed = true;
-        //battle.getRoundManager().tryCancel();
     }
 
     public void setBattle(Battle battle) { this.battle = battle; }
