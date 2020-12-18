@@ -60,9 +60,9 @@ public abstract class Bot extends Player implements BotSettings {
         delayedDuelReady(duelOK);
     }
 
-    public Token getEnemyTarget() { return null; }
+    public Token getEnemyTarget(Token attacker, boolean checkReach) { return null; }
 
-    public Token getAlliedTarget() { return null; }
+    public Token getAlliedTarget(Token caster) { return null; }
 
     //EXECUTIONS + UTILITIES
 
@@ -126,12 +126,12 @@ public abstract class Bot extends Player implements BotSettings {
     }
 
     public void launchDuel(Ship ship) {
-        Token enemy = getEnemyTarget(); //TODO move canReach
+        Token enemy = getEnemyTarget(ship.getToken(), true);
         if (enemy != null && getBattle().getCombatManager().canReach(ship.getToken(), enemy, this.getFleet())) {
             getBattle().getCombatManager().getDuelManager().launchDuel(getBattle().getCombatManager(), ship.getToken(), enemy, new DuelPlayer[]{getBattle().getCombatManager().playerToDuelPlayer(ship.getPlayer())}, new DuelPlayer[]{getBattle().getCombatManager().playerToDuelPlayer(enemy.getCard().getPlayer())});
         } else {
-            report("launchDuel() failed!");
-            endCombat();
+            report("getEnemyTarget() for Duel failed! (Probably Reach.) Ending Combat.");
+            delayedCombatEnd();
         }
     }
 

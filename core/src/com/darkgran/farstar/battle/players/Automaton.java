@@ -93,6 +93,7 @@ public class Automaton extends Bot { //TODO tactics
     }
 
     @Override
+    //asked to pick Target for ability
     public void chooseTargets(Token token, AbilityInfo ability) {
         Token target = null;
         if (ability != null && ability.getTargets() != null) {
@@ -100,12 +101,12 @@ public class Automaton extends Bot { //TODO tactics
             switch (ability.getTargets()) {
                 case ANY_ALLY:
                 case ALLIED_FLEET:
-                    target = getAlliedTarget();
+                    target = getAlliedTarget(token);
                     break;
                 case ANY: //expects that Upgrades cannot be used on enemies, ergo ANY must mean ANY_ENEMY (and it allows both only for the human player)
                 case ANY_ENEMY:
                 case ENEMY_FLEET:
-                    target = getEnemyTarget();
+                    target = getEnemyTarget(token, false);
                     break;
             }
         }
@@ -118,7 +119,7 @@ public class Automaton extends Bot { //TODO tactics
     }
 
     @Override
-    public Token getAlliedTarget() {
+    public Token getAlliedTarget(Token caster) {
         if (getFleet().isEmpty()) {
             return getMs().getToken();
         } else if (getFleet().getShips().length == 1) {
@@ -127,7 +128,7 @@ public class Automaton extends Bot { //TODO tactics
             Ship strongestShip = null;
             for (Ship ship : getFleet().getShips()) {
                 if (ship != null) {
-                    if (strongestShip == null || (ship.getCardInfo().getEnergy() + ship.getCardInfo().getMatter() * 2 - ship.getDamage()) > (strongestShip.getCardInfo().getEnergy() + strongestShip.getCardInfo().getMatter() * 2 - strongestShip.getDamage())) {
+                    if (strongestShip == null || isBiggerShip(ship, strongestShip)) {
                         strongestShip = ship;
                     }
                 }
@@ -141,7 +142,7 @@ public class Automaton extends Bot { //TODO tactics
     }
 
     @Override
-    public Token getEnemyTarget() {
+    public Token getEnemyTarget(Token attacker, boolean checkReach) {
         Player[] enemies = getBattle().getEnemies(this);
         Token picked = null;
         Ship weakestShip = null;
@@ -153,7 +154,7 @@ public class Automaton extends Bot { //TODO tactics
             } else {
                 for (Ship ship : enemy.getFleet().getShips()) {
                     if (ship != null) {
-                        if (weakestShip == null || (ship.getCardInfo().getEnergy() + ship.getCardInfo().getMatter() * 2 - ship.getDamage()) < (weakestShip.getCardInfo().getEnergy() + weakestShip.getCardInfo().getMatter() * 2 - weakestShip.getDamage())) {
+                        if ((weakestShip == null || isBiggerShip(weakestShip, ship)) && (!checkReach || getBattle().getCombatManager().canReach(attacker, ship.getToken(), this.getFleet()))) {
                             weakestShip = ship;
                             picked = ship.getToken();
                         }
@@ -164,7 +165,12 @@ public class Automaton extends Bot { //TODO tactics
         return picked;
     }
 
+    private boolean isBiggerShip(Ship A, Ship B) { //return A>B
+        return A.getCardInfo().getEnergy() + A.getCardInfo().getMatter() * 2 - A.getDamage() > B.getCardInfo().getEnergy() + B.getCardInfo().getMatter() * 2 - B.getDamage();
+    }
+
     @Override
+    //asked to pick an ability
     public void pickAbility(Token caster, Token target, DropTarget dropTarget, ArrayList<AbilityInfo> options) {
         if (options.size() > 0) {
             setPickingAbility(true);
