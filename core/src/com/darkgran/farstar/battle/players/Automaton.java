@@ -120,8 +120,10 @@ public class Automaton extends Bot { //TODO debug with all cards
         } else {
             Ship strongestShip = null;
             for (Ship ship : getFleet().getShips()) {
-                if (strongestShip == null || (ship.getCardInfo().getEnergy()+ship.getCardInfo().getMatter()*2-ship.getDamage()) > (strongestShip.getCardInfo().getEnergy()+strongestShip.getCardInfo().getMatter()*2-strongestShip.getDamage())) {
-                    strongestShip = ship;
+                if (ship != null) {
+                    if (strongestShip == null || (ship.getCardInfo().getEnergy() + ship.getCardInfo().getMatter() * 2 - ship.getDamage()) > (strongestShip.getCardInfo().getEnergy() + strongestShip.getCardInfo().getMatter() * 2 - strongestShip.getDamage())) {
+                        strongestShip = ship;
+                    }
                 }
             }
             if (strongestShip != null) {
@@ -143,9 +145,12 @@ public class Automaton extends Bot { //TODO debug with all cards
                 getBattle().getRoundManager().processTarget(enemy.getFleet().getShips()[3].getToken());
             } else {
                 Ship weakestShip = null;
+
                 for (Ship ship : enemy.getFleet().getShips()) {
-                    if (weakestShip == null || (ship.getCardInfo().getEnergy() + ship.getCardInfo().getMatter() * 2 - ship.getDamage()) < (weakestShip.getCardInfo().getEnergy() + weakestShip.getCardInfo().getMatter() * 2 - weakestShip.getDamage())) {
-                        weakestShip = ship;
+                    if (ship != null) {
+                        if (weakestShip == null || (ship.getCardInfo().getEnergy() + ship.getCardInfo().getMatter() * 2 - ship.getDamage()) < (weakestShip.getCardInfo().getEnergy() + weakestShip.getCardInfo().getMatter() * 2 - weakestShip.getDamage())) {
+                            weakestShip = ship;
+                        }
                     }
                 }
                 if (weakestShip != null) {
