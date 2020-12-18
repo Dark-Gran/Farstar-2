@@ -1,12 +1,12 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.battle.DuelManager;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
-import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.cards.CardType;
-import com.darkgran.farstar.battle.players.cards.Mothership;
-import com.darkgran.farstar.battle.players.cards.Ship;
+import com.darkgran.farstar.battle.players.abilities.Effect;
+import com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics;
+import com.darkgran.farstar.battle.players.cards.*;
 
 import java.util.ArrayList;
 
@@ -110,8 +110,41 @@ public class Automaton extends Bot {
         return null;
     }
 
-    public boolean isNonsense(PossibilityInfo possibilityInfo) { //TODO colors + first strike
-        return (possibilityInfo.getCard().isTactic() && !getBattle().getCombatManager().isActive());
+    public boolean isNonsense(PossibilityInfo possibilityInfo) {
+        return (possibilityInfo.getCard().isTactic() != getBattle().getCombatManager().isActive()) || abilityNonsense(possibilityInfo.getCard());
+    }
+
+    public boolean abilityNonsense(Card card) {
+        for (AbilityInfo ability : card.getCardInfo().getAbilities()) {
+            for (Effect effect : ability.getEffects()) {
+                if (effect != null && effect.getEffectType() != null) {
+                    switch (effect.getEffectType()) {
+                        case CHANGE_STAT:
+                            if (getBattle().getCombatManager().isActive()) { //in-duel
+                                Card attacker = getBattle().getCombatManager().getDuelManager().getAttacker().getCard();
+                                Card defender = getBattle().getCombatManager().getDuelManager().getDefender().getCard();
+                                if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
+                                    Object changeInfo = effect.getEffectInfo().get(1);
+                                    EffectTypeSpecifics.ChangeStatType changeStatType = EffectTypeSpecifics.ChangeStatType.valueOf(effect.getEffectInfo().get(0).toString());
+                                    //validate change of type
+                                    if ((attacker.getPlayer() == this && techTypeNonsense(attacker, defender, changeStatType, changeInfo)) || (defender.getPlayer() == this && techTypeNonsense(defender, attacker, changeStatType, changeInfo))) {
+                                        if (ability.isPurelyTypeChange()) {
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        case REPAIR:
+                            //TODO
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean techTypeNonsense(Card ally, Card enemy, EffectTypeSpecifics.ChangeStatType changeStatType, Object changeInfo) {
+        return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && DuelManager.noneToInferior(ally.getCardInfo().getOffenseType()) != TechType.INFERIOR && ally.getCardInfo().getOffenseType() != enemy.getCardInfo().getDefenseType()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && DuelManager.noneToInferior(ally.getCardInfo().getDefenseType()) != TechType.INFERIOR && ally.getCardInfo().getDefenseType() == enemy.getCardInfo().getOffenseType());
     }
 
     @Override

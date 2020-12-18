@@ -6,7 +6,6 @@ import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.Bot;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.DuelPlayer;
-import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.battle.players.TechType;
 import com.darkgran.farstar.battle.players.abilities.EffectType;
@@ -123,7 +122,7 @@ public abstract class DuelManager {
         if (att instanceof Ship) { ((Ship) att).setFought(true); }
     }
 
-    public static boolean exeOneSide(Card att, Card def) { //returns survival
+    public boolean exeOneSide(Card att, Card def) { //returns survival
         int dmg = getDmgAgainstShields(att.getCardInfo().getOffense(), def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
         return def.receiveDMG(dmg);
     }
@@ -139,7 +138,7 @@ public abstract class DuelManager {
         return dmg;
     }
 
-    private static TechType noneToInferior(TechType techType) {
+    public static TechType noneToInferior(TechType techType) {
         if (techType == TechType.NONE) { techType = TechType.INFERIOR; }
         return techType;
     }
@@ -201,6 +200,22 @@ public abstract class DuelManager {
             if (!player.isReady()) { return false; }
         }
         return true;
+    }
+
+    public Token getOpponent(Token token) {
+        if (token == attacker) {
+            return defender;
+        } else {
+            return attacker;
+        }
+    }
+
+    public Token getOpponent(Card card) {
+        if (card == attacker.getCard()) {
+            return defender;
+        } else {
+            return attacker;
+        }
     }
 
     public void setPlayersA_OK(int ix, DuelOK duelOK) {

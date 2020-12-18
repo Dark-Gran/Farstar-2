@@ -44,6 +44,21 @@ public class AbilityInfo {
         return effectType == EffectType.FIRST_STRIKE || effectType == EffectType.REACH || effectType == EffectType.GUARD;
     }
 
+    public boolean isPurelyTypeChange() {
+        boolean typeChange = false;
+        for (Effect effect : effects) {
+            if (effect.getEffectType() != null && effect.getEffectType() == EffectType.CHANGE_STAT && effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 1 && effect.getEffectInfo().get(0) != null) {
+                EffectTypeSpecifics.ChangeStatType changeStatType = EffectTypeSpecifics.ChangeStatType.valueOf(effect.getEffectInfo().get(0).toString());
+                if (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE || changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE) {
+                    typeChange = true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return typeChange;
+    }
+
     public AbilityStarter getStarter() { return starter; }
 
     public ResourcePrice getResourcePrice() { return resourcePrice; }
