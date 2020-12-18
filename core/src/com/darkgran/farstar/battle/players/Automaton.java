@@ -186,7 +186,7 @@ public class Automaton extends Bot { //TODO combat + duel
     public void newCombat() {
         if (getBattle().getCombatManager().isActive()) {
             for (Ship ship : getFleet().getShips()) {
-                if (ship != null) {
+                if (ship != null && !ship.haveFought()) {
                     delayedLaunchDuel(ship);
                     break;
                 }
