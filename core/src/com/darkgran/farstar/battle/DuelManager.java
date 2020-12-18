@@ -41,6 +41,7 @@ public abstract class DuelManager {
             if (!(this.playersA[0].getPlayer() instanceof Bot)) {
                 duelMenu.addCancel();
                 duelMenu.addOK(this.playersA[0].getDuelButton());
+                this.combatManager.getBattle().getRoundManager().getPossibilityAdvisor().refresh(this.combatManager.getDuelManager().getActivePlayer().getPlayer(), this.combatManager.getBattle());
             } else {
                 ((Bot) this.playersA[0].getPlayer()).newDuelOK(this.playersA[0].getDuelButton());
             }
@@ -80,6 +81,8 @@ public abstract class DuelManager {
             engage();
         } else if (activePlayer.getPlayer() instanceof Bot) {
             ((Bot) activePlayer.getPlayer()).newDuelOK(activePlayer.getDuelButton());
+        } else {
+            combatManager.getBattle().getRoundManager().getPossibilityAdvisor().refresh(combatManager.getDuelManager().getActivePlayer().getPlayer(), combatManager.getBattle());
         }
     }
 

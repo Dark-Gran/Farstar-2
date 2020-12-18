@@ -73,7 +73,7 @@ public class Automaton extends Bot {
             } else {
                 return 2;
             }
-        } else if (targetMenu instanceof FleetMenu && (card.getCardInfo().getCardType() == CardType.UPGRADE || card.getCardInfo().getCardType() == CardType.TACTIC)){
+        } else if (targetMenu instanceof FleetMenu && (card.getCardInfo().getCardType() == CardType.UPGRADE || card.isTactic())){
             FleetMenu fleetMenu = (FleetMenu) targetMenu;
             Token ally = getAlliedTarget(cardToToken(card, sourceMenu));
             for (int i = 0; i < fleetMenu.getShips().length; i++) {
@@ -111,7 +111,7 @@ public class Automaton extends Bot {
     }
 
     public boolean isNonsense(PossibilityInfo possibilityInfo) { //TODO colors
-        return (possibilityInfo.getCard().getCardInfo().getCardType() == CardType.TACTIC && !getBattle().getCombatManager().isActive());
+        return (possibilityInfo.getCard().isTactic() && !getBattle().getCombatManager().isActive());
     }
 
     @Override

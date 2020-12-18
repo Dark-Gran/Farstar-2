@@ -35,9 +35,9 @@ public class ManagedDragger extends Dragger {
     private boolean isEnabled() {
         if (getToken().getCard().getPlayer() instanceof LocalPlayer && !roundManager.getBattle().isEverythingDisabled() && !roundManager.isTargetingActive() && !roundManager.getAbilityPicker().isActive()) {
             if (!(this.getToken().getCard() instanceof Ship) || !((Ship) this.getToken().getCard()).haveFought()) {
-                if (!combatManager.getDuelManager().isActive() && RoundManager.ownsToken(roundManager.getBattle().getWhoseTurn(), getToken()) && (forCombat == combatManager.isActive() || (combatManager.isActive() && this.getToken().getCard().getCardInfo().getCardType() == CardType.TACTIC))) {
+                if (!combatManager.getDuelManager().isActive() && RoundManager.ownsToken(roundManager.getBattle().getWhoseTurn(), getToken()) && (forCombat == combatManager.isActive() || (combatManager.isActive() && this.getToken().getCard().isTactic()))) {
                     return true;
-                } else if (this.getToken().getCard().getCardInfo().getCardType() == CardType.TACTIC && combatManager.getDuelManager().isActive() && RoundManager.ownsToken(combatManager.getDuelManager().getActivePlayer().getPlayer(), getToken())) {
+                } else if (this.getToken().getCard().isTactic() && combatManager.getDuelManager().isActive() && RoundManager.ownsToken(combatManager.getDuelManager().getActivePlayer().getPlayer(), getToken())) {
                     return true;
                 }
             }

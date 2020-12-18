@@ -14,28 +14,30 @@ public class PossibilityAdvisor {
 
     public ArrayList<PossibilityInfo> getPossibilities(Player player, Battle battle) { //also used by Automaton
         ArrayList<PossibilityInfo> possibilities = new ArrayList<>();
-        if (player == battle.getWhoseTurn()) {
+        boolean activeDuel = battle.getCombatManager().getDuelManager().isActive();
+        Player whoseTurn = !activeDuel ? battle.getWhoseTurn() : battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer();
+        if (player == whoseTurn) {
             for (Card card : player.getSupports()) {
-                if (hasPossibleAbility(player, card)) {
+                if (!activeDuel && hasPossibleAbility(player, card)) {
                     possibilities.add(new PossibilityInfo(card, player.getSupports().getCardListMenu()));
                 }
             }
             for (Card card : player.getHand()) {
-                if (isPossibleToDeploy(player, battle.getWhoseTurn(), card, true, battle)) {
+                if ((!activeDuel || card.isTactic()) && isPossibleToDeploy(player, whoseTurn, card, true, battle)) {
                     possibilities.add(new PossibilityInfo(card, player.getHand().getCardListMenu()));
                 }
             }
             for (Card card : player.getYard()) {
-                if (isPossibleToDeploy(player, battle.getWhoseTurn(), card, true, battle)) {
+                if ((!activeDuel || card.isTactic()) && isPossibleToDeploy(player, whoseTurn, card, true, battle)) {
                     possibilities.add(new PossibilityInfo(card, player.getYard().getCardListMenu()));
                 }
             }
             for (Card card : player.getFleet().getShips()) {
-                if (hasPossibleAbility(player, card)) {
+                if (!activeDuel && hasPossibleAbility(player, card)) {
                     possibilities.add(new PossibilityInfo(card, player.getFleet().getFleetMenu()));
                 }
             }
-            if (hasPossibleAbility(player, player.getMs())) {
+            if (!activeDuel && hasPossibleAbility(player, player.getMs())) {
                 possibilities.add(new PossibilityInfo(player.getMs(), null));
             }
         }

@@ -81,6 +81,8 @@ public class Card {
 
     public void addToEffects (Effect effect) { effects.add(effect); }
 
+    public boolean isTactic() { return cardInfo.getCardType() == CardType.TACTIC; }
+
     public CardInfo getCardInfo() { return cardInfo; }
 
     public CardInfo getOriginalInfo() { return originalInfo; }
