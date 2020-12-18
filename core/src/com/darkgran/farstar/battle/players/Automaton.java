@@ -228,7 +228,7 @@ public class Automaton extends Bot {
         if (bestPossibility != null) {
             report("Playing a tactic: " + bestPossibility.getCard().getCardInfo().getName());
             int position = -1;
-            for (int i = 0; i < getFleet().getFleetMenu().getShips().length; i++) { //TODO defending-MS-duel
+            for (int i = 0; i < getFleet().getFleetMenu().getShips().length; i++) {
                 if (getFleet().getFleetMenu().getShips()[i] != null) {
                     if (getFleet().getFleetMenu().getShips()[i].getCard().isInDuel()) {
                         position = i;
@@ -246,7 +246,7 @@ public class Automaton extends Bot {
         } else {
             report("No duel possibilities.");
         }
-        if (!success) { delayedDuelReady(duelOK); }
+        if (!success) { duelReady(duelOK); }
     }
 
     public PossibilityInfo getDuelPossibility() {
