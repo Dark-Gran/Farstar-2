@@ -11,6 +11,7 @@ import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Mothership;
+import com.darkgran.farstar.battle.players.cards.Ship;
 
 import java.util.ArrayList;
 
@@ -57,6 +58,12 @@ public abstract class Bot extends Player implements BotSettings {
 
     public void newDuelOK() { }
 
+    public Token getEnemyTarget() { return null; }
+
+    public Token getAlliedTarget() { return null; }
+
+    //EXECUTIONS + UTILITIES
+
     public void cancelTurn() {
         setPickingAbility(false);
         getBattle().getRoundManager().tryCancel();
@@ -77,6 +84,10 @@ public abstract class Bot extends Player implements BotSettings {
 
     public void delayedCombatEnd() {
         delayAction(this::endCombat);
+    }
+
+    public void delayedLaunchDuel(Ship ship) {
+        delayAction(()->launchDuel(ship));
     }
 
     public boolean deploy(Card card, BaseMenu baseMenu, int position) {
@@ -106,6 +117,13 @@ public abstract class Bot extends Player implements BotSettings {
         Token token = cardToToken(card, baseMenu);
         getBattle().getRoundManager().checkAllAbilities(token, null, AbilityStarter.USE, this, null);
         return true;
+    }
+
+    public void launchDuel(Ship ship) {
+        Token enemy = getEnemyTarget();
+        if (enemy != null && getBattle().getCombatManager().canReach(ship.getToken(), enemy, this.getFleet())) {
+            getBattle().getCombatManager().getDuelManager().launchDuel(getBattle().getCombatManager(), ship.getToken(), enemy, new DuelPlayer[]{getBattle().getCombatManager().playerToDuelPlayer(ship.getPlayer())}, new DuelPlayer[]{getBattle().getCombatManager().playerToDuelPlayer(enemy.getCard().getPlayer())});
+        }
     }
 
     public Token cardToToken(Card card, BaseMenu baseMenu) {

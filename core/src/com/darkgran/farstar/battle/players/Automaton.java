@@ -99,12 +99,12 @@ public class Automaton extends Bot { //TODO combat + duel
             switch (ability.getTargets()) {
                 case ANY_ALLY:
                 case ALLIED_FLEET:
-                    target = getAlliedTarget(token, ability);
+                    target = getAlliedTarget();
                     break;
                 case ANY: //expects that Upgrades cannot be used on enemies, ergo ANY must mean ANY_ENEMY (and it allows both only for the human player)
                 case ANY_ENEMY:
                 case ENEMY_FLEET:
-                    target = getEnemyTarget(token, ability);
+                    target = getEnemyTarget();
                     break;
             }
         }
@@ -116,7 +116,8 @@ public class Automaton extends Bot { //TODO combat + duel
         }
     }
 
-    public Token getAlliedTarget(Token token, AbilityInfo ability) {
+    @Override
+    public Token getAlliedTarget() {
         if (getFleet().isEmpty()) {
             return getMs().getToken();
         } else if (getFleet().getShips().length == 1) {
@@ -138,7 +139,8 @@ public class Automaton extends Bot { //TODO combat + duel
         }
     }
 
-    public Token getEnemyTarget(Token token, AbilityInfo ability) {
+    @Override
+    public Token getEnemyTarget() {
         Player[] enemies = getBattle().getEnemies(this);
         Token picked = null;
         Ship weakestShip = null;
@@ -182,7 +184,14 @@ public class Automaton extends Bot { //TODO combat + duel
 
     @Override
     public void newCombat() {
-        delayedCombatEnd();
+        if (getBattle().getCombatManager().isActive()) {
+            for (Ship ship : getFleet().getShips()) {
+                if (ship != null) {
+                    launchDuel(ship);
+                    break;
+                }
+            }
+        }
     }
 
 }

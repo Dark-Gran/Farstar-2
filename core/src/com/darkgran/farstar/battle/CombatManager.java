@@ -80,7 +80,7 @@ public class CombatManager {
         }
     }
 
-    private DuelPlayer playerToDuelPlayer(Player player) {
+    public DuelPlayer playerToDuelPlayer(Player player) {
         return new DuelPlayer(player);
     }
 
