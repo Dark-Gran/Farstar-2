@@ -360,7 +360,7 @@ public class AbilityManager {
         while (!success && li.hasPrevious()) {
             otherEffect = li.previous();
             if (otherEffect != effect && otherEffect.getEffectType() == EffectType.CHANGE_STAT) {
-                if (otherEffect.getEffectInfo().get(0) == effect.getEffectInfo().get(0)) {
+                if (EffectTypeSpecifics.ChangeStatType.valueOf(otherEffect.getEffectInfo().get(0).toString()) == type) {
                     Object changeInfo = otherEffect.getEffectInfo().get(1);
                     TechType techType = TechType.valueOf(changeInfo.toString());
                     if (type == OFFENSE_TYPE) {

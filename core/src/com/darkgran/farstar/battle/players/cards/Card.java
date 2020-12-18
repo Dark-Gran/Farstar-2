@@ -49,7 +49,6 @@ public class Card {
 
     public int getHealth() { return cardInfo.getDefense()-damage; }
 
-    //TODO debug
     public void tickEffects(AbilityManager abilityManager) { //does not remove
         for (int i = 0; i < effects.size(); i++) {
             Effect effect = effects.get(i);
