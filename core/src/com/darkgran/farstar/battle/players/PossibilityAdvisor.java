@@ -34,7 +34,7 @@ public class PossibilityAdvisor {
                     possibilities.add(new PossibilityInfo(card, player.getHand().getCardListMenu()));
                 }
             }
-            /*for (Card card : player.getYard()) {
+            for (Card card : player.getYard()) {
                 if (isPossibleToDeploy(player, card, true, battle)) {
                     possibilities.add(new PossibilityInfo(card, player.getYard().getCardListMenu()));
                 }
@@ -52,7 +52,7 @@ public class PossibilityAdvisor {
             }
             if (hasPossibleAbility(player, player.getMs())) {
                 possibilities.add(new PossibilityInfo(player.getMs(), null));
-            }*/
+            }
         }
         return possibilities;
     }
