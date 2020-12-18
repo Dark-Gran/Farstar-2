@@ -45,7 +45,7 @@ public class Automaton extends Bot { //TODO combat + duel
                 }
             } else {
                 report("No possibilities.");
-                delayAction(this::endTurn);
+                delayedEndTurn();
             }
         }
     }

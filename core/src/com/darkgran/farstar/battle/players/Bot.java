@@ -67,6 +67,10 @@ public abstract class Bot extends Player implements BotSettings {
         delayAction(this::turn);
     }
 
+    public void delayedEndTurn() {
+        delayAction(this::turn);
+    }
+
     public boolean deploy(Card card, BaseMenu baseMenu, int position) {
         CardType cardType = card.getCardInfo().getCardType();
         DropTarget dropTarget;
