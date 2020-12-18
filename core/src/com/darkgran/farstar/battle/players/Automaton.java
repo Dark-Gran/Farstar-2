@@ -19,7 +19,7 @@ import static com.darkgran.farstar.battle.BattleSettings.BONUS_CARD_ID;
  *  -- No sensors beyond PossibilityAdvisor
  *  -- No planning (atm not even the frame for it)
  */
-public class Automaton extends Bot { //TODO tactics
+public class Automaton extends Bot { //TODO save tactics for duel + stop basic "nonsense" (eg. "wrong color")
 
     public Automaton(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard, BotTier botTier) {
         super(battleID, energy, matter, ms, deck, yard, botTier);
@@ -119,7 +119,7 @@ public class Automaton extends Bot { //TODO tactics
     }
 
     @Override
-    public Token getAlliedTarget(Token caster) {
+    public Token getAlliedTarget(Token caster) { //todo debug
         if (getFleet().isEmpty()) {
             return getMs().getToken();
         } else if (getFleet().getShips().length == 1) {
