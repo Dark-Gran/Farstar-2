@@ -120,7 +120,7 @@ public class Automaton extends Bot {
                 if (effect != null && effect.getEffectType() != null) {
                     switch (effect.getEffectType()) {
                         case CHANGE_STAT:
-                            if (getBattle().getCombatManager().isActive()) { //in-duel
+                            if (getBattle().getCombatManager().isActive()) { //COMBAT ONLY
                                 Card attacker = getBattle().getCombatManager().getDuelManager().getAttacker().getCard();
                                 Card defender = getBattle().getCombatManager().getDuelManager().getDefender().getCard();
                                 if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
