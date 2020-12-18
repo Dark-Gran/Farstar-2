@@ -129,7 +129,7 @@ public class Automaton extends Bot {
                                     //validate change of type
                                     if ((attacker.getPlayer() == this && techTypeNonsense(attacker, defender, changeStatType, changeInfo)) || (defender.getPlayer() == this && techTypeNonsense(defender, attacker, changeStatType, changeInfo))) {
                                         if (ability.isPurelyTypeChange()) {
-                                            return true;
+                                            return true; //TODO dont use on ships with 1/1 stats
                                         }
                                     }
                                 }
