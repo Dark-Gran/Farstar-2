@@ -50,7 +50,8 @@ public class Token extends FontActor {
         }
         //Name
         if (card instanceof Ship) { if (((Ship) card).haveFought()) { color.set(1, 0, 0, 1); } }
-        if (getCard().isInDuel() || getCard().isPossible()) { color.set(0, 1, 0, 1); }
+        if (getCard().isPossible()) { color.set(0, 1, 0, 1); }
+        else if (getCard().isInDuel()) { color.set(1, 1, 0, 1); }
         tokenName.draw(getFont(), batch, getX(), getY()+getHeight(), card.getCardInfo().getName(), color);
         //Offense+Defense
         color = ColorPalette.getTypeColor(card.getCardInfo().getOffenseType());
