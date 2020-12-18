@@ -18,7 +18,7 @@ import static com.darkgran.farstar.battle.BattleSettings.BONUS_CARD_ID;
  *  -- No sensors beyond PossibilityAdvisor
  *  -- No planning (atm not even the frame for it)
  */
-public class Automaton extends Bot { //TODO debug with all cards
+public class Automaton extends Bot { //TODO combat + duel
 
     public Automaton(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard, BotTier botTier) {
         super(battleID, energy, matter, ms, deck, yard, botTier);
