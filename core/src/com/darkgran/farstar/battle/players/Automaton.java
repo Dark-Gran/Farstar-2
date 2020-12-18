@@ -7,6 +7,7 @@ import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Mothership;
 import com.darkgran.farstar.battle.players.cards.Ship;
+import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,7 @@ public class Automaton extends Bot {
     public void turn() {
         if (!isDisposed()) {
             super.turn();
-            PossibilityInfo bestPossibility = getBestPossibility();
+            PossibilityInfo bestPossibility = getTurnPossibility();
             if (bestPossibility != null) {
                 report("Playing a card: " + bestPossibility.getCard().getCardInfo().getName());
                 boolean success;
@@ -89,7 +90,7 @@ public class Automaton extends Bot {
         }
     }
 
-    public PossibilityInfo getBestPossibility() {
+    public PossibilityInfo getTurnPossibility() {
         ArrayList<PossibilityInfo> possibilities = getBattle().getRoundManager().getPossibilityAdvisor().getPossibilities(this, getBattle());
         if (possibilities.size() > 0) {
             //1. Have at least one defender
@@ -220,8 +221,37 @@ public class Automaton extends Bot {
     }
 
     @Override
-    public void newDuelOK(DuelOK duelOK) {
+    public void newDuelOK(DuelOK duelOK) { //atm expects all Tactics to be meant for allies
+        PossibilityInfo bestPossibility = getDuelPossibility(); //TODO debug
+        if (bestPossibility != null) {
+            report("Playing a tactic: " + bestPossibility.getCard().getCardInfo().getName());
+            int position = -1;
+            for (int i = 0; i < getFleet().getFleetMenu().getShips().length; i++) { //TODO defending-MS-duel
+                if (getFleet().getFleetMenu().getShips()[i] != null) {
+                    if (getFleet().getFleetMenu().getShips()[i].getCard().isInDuel()) {
+                        position = i;
+                        break;
+                    }
+                }
+            }
+            deploy(bestPossibility.getCard(), bestPossibility.getMenu(), position);
+        } else {
+            report("No duel possibilities.");
+        }
         delayedDuelReady(duelOK);
+    }
+
+    public PossibilityInfo getDuelPossibility() {
+        ArrayList<PossibilityInfo> possibilities = getBattle().getRoundManager().getPossibilityAdvisor().getPossibilities(this, getBattle());
+        if (possibilities.size() > 0) {
+            //1. Play the first playable thing that's not "nonsense"
+            for (PossibilityInfo possibilityInfo : possibilities) {
+                if (!isNonsense(possibilityInfo)) {
+                    return possibilityInfo;
+                }
+            }
+        }
+        return null;
     }
 
     //------//
