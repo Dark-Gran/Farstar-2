@@ -12,20 +12,6 @@ import java.util.ArrayList;
 
 public class PossibilityAdvisor {
 
-    public void refresh(Player currentPlayer, Battle battle) {
-        battle.unMarkAllPossibilities();
-        if (!(currentPlayer instanceof Bot)) {
-            markPossibilities(currentPlayer, battle);
-        }
-    }
-
-    public void markPossibilities(Player player, Battle battle) {
-        ArrayList<PossibilityInfo> possibilities = getPossibilities(player, battle);
-        for (PossibilityInfo possibility : possibilities) {
-            possibility.getCard().setPossible(true);
-        }
-    }
-
     public ArrayList<PossibilityInfo> getPossibilities(Player player, Battle battle) { //also used by Automaton
         ArrayList<PossibilityInfo> possibilities = new ArrayList<>();
         if (player == battle.getWhoseTurn()) {
@@ -94,7 +80,33 @@ public class PossibilityAdvisor {
         return true;
     }
 
-    public boolean tierAllowed(int tier, Battle battle) { return tier <= battle.getRoundManager().getRoundNum(); }
+    public boolean tierAllowed(int tier, Battle battle) {
+        return tier <= battle.getRoundManager().getRoundNum();
+    }
+
+    public BaseMenu getTargetMenu(Card card, Player player) {
+        if (card.getCardInfo().getCardType() == CardType.SUPPORT) {
+            return player.getSupports().getCardListMenu();
+        } else {
+            return player.getFleet().getFleetMenu();
+        }
+    }
+
+    //GUI CALLS TO PRESENT THE POSSIBILITIES
+
+    public void refresh(Player currentPlayer, Battle battle) {
+        battle.unMarkAllPossibilities();
+        if (!(currentPlayer instanceof Bot)) {
+            markPossibilities(currentPlayer, battle);
+        }
+    }
+
+    public void markPossibilities(Player player, Battle battle) {
+        ArrayList<PossibilityInfo> possibilities = getPossibilities(player, battle);
+        for (PossibilityInfo possibility : possibilities) {
+            possibility.getCard().setPossible(true);
+        }
+    }
 
     public void unMarkAll(Player player, Battle battle) {
         //Deployment
@@ -114,12 +126,6 @@ public class PossibilityAdvisor {
         player.getMs().setPossible(false);
     }
 
-    public BaseMenu getTargetMenu(Card card, Player player) {
-        if (card.getCardInfo().getCardType() == CardType.SUPPORT) {
-            return player.getSupports().getCardListMenu();
-        } else {
-            return player.getFleet().getFleetMenu();
-        }
-    }
+
 
 }
