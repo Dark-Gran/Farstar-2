@@ -119,7 +119,7 @@ public class RoundManager {
                                 if ((cardType == CardType.SUPPORT && supports == whoseTurn.getSupports()) || CardType.isSpell(cardType)) {
                                     if (!battle.activeCombatOrDuel()) {
                                         if (!postAbility) {
-                                            Card target = null;
+                                            Card target = null; //todo
                                             if (supports.size() > SupportMenu.unTranslatePosition(position)) {
                                                 target = supports.get(SupportMenu.unTranslatePosition(position));
                                             }
@@ -160,8 +160,9 @@ public class RoundManager {
                         } else if (dropTarget instanceof MothershipToken) {
                             MothershipToken ms = (MothershipToken) dropTarget;
                             if (!battle.activeCombatOrDuel() || ms.getCard().isInDuel()) {
+                                System.out.println("OK"); //todo
                                 //ABILITIES
-                                if (CardType.isSpell(cardType)) { //&& ms.getCard().getPlayer() == whoseTurn
+                                if (CardType.isSpell(cardType)) {
                                     if (!postAbility) {
                                         success = checkAllAbilities(token, ms, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
                                     }
