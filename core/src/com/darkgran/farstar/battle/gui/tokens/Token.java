@@ -55,7 +55,7 @@ public class Token extends FontActor {
         tokenName.draw(getFont(), batch, getX(), getY()+getHeight(), card.getCardInfo().getName(), color);
         //Offense+Defense
         color = ColorPalette.getTypeColor(card.getCardInfo().getOffenseType());
-        tokenOffense.draw(getFont(), batch, getX(), getY()+getHeight()/3, String.valueOf(card.getCardInfo().getOffense()), color);
+        if (!getCard().isMS()) { tokenOffense.draw(getFont(), batch, getX(), getY()+getHeight()/3, String.valueOf(card.getCardInfo().getOffense()), color); }
         color = ColorPalette.getTypeColor(card.getCardInfo().getDefenseType());
         tokenDefense.draw(getFont(), batch, getX()+getWidth()*5/6, getY()+getHeight()/3, String.valueOf(card.getHealth()), color);
         //Debug
