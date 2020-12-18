@@ -56,7 +56,9 @@ public abstract class Bot extends Player implements BotSettings {
 
     public void newCombat() { }
 
-    public void newDuelOK(DuelOK duelOK) { }
+    public void newDuelOK(DuelOK duelOK) {
+        delayedDuelReady(duelOK);
+    }
 
     public Token getEnemyTarget() { return null; }
 
