@@ -93,30 +93,34 @@ public class Automaton extends Bot { //TODO debug with all cards
 
     @Override
     public void chooseTargets(Token token, AbilityInfo ability) {
+        Token target = null;
         if (ability != null && ability.getTargets() != null) {
             setPickingTarget(true);
             switch (ability.getTargets()) {
                 case ANY_ALLY:
                 case ALLIED_FLEET:
-                    getAlliedTarget(token, ability);
+                    target = getAlliedTarget(token, ability);
                     break;
                 case ANY: //expects that Upgrades cannot be used on enemies, ergo ANY must mean ANY_ENEMY (and it allows both only for the human player)
                 case ANY_ENEMY:
                 case ENEMY_FLEET:
-                    getEnemyTarget(token, ability);
+                    target = getEnemyTarget(token, ability);
                     break;
             }
+        }
+        if (target != null) {
+            getBattle().getRoundManager().processTarget(target);
         } else {
             report("chooseTargets() failed!");
             cancelTurn();
         }
     }
 
-    public void getAlliedTarget(Token token, AbilityInfo ability) { //TODO rework for reuse
+    public Token getAlliedTarget(Token token, AbilityInfo ability) {
         if (getFleet().isEmpty()) {
-            getBattle().getRoundManager().processTarget(getMs().getToken());
+            return getMs().getToken();
         } else if (getFleet().getShips().length == 1) {
-            getBattle().getRoundManager().processTarget(getFleet().getShips()[3].getToken());
+            return getFleet().getShips()[3].getToken();
         } else {
             Ship strongestShip = null;
             for (Ship ship : getFleet().getShips()) {
@@ -126,44 +130,31 @@ public class Automaton extends Bot { //TODO debug with all cards
                     }
                 }
             }
-            if (strongestShip != null) {
-                getBattle().getRoundManager().processTarget(strongestShip.getToken());
-            } else {
-                report("getAlliedTarget() failed!");
-                cancelTurn();
-            }
+            return strongestShip.getToken();
         }
     }
 
-    public void getEnemyTarget(Token token, AbilityInfo ability) {
+    public Token getEnemyTarget(Token token, AbilityInfo ability) {
         Player[] enemies = getBattle().getEnemies(this);
-        if (enemies.length > 0) { //atm works only in 1V1
-            Player enemy = enemies[0];
-            if (enemy.getFleet().isEmpty()) {
-                getBattle().getRoundManager().processTarget(enemy.getMs().getToken());
-            } else if (enemy.getFleet().getShips().length == 1) {
-                getBattle().getRoundManager().processTarget(enemy.getFleet().getShips()[3].getToken());
+        Token picked = null;
+        Ship weakestShip = null;
+        for (Player enemy : enemies) {
+            if (picked == null && enemy.getFleet().isEmpty()) {
+                picked = enemy.getMs().getToken();
+            } else if (picked == null && enemy.getFleet().getShips().length == 1) {
+                picked = enemy.getFleet().getShips()[3].getToken();
             } else {
-                Ship weakestShip = null;
-
                 for (Ship ship : enemy.getFleet().getShips()) {
                     if (ship != null) {
                         if (weakestShip == null || (ship.getCardInfo().getEnergy() + ship.getCardInfo().getMatter() * 2 - ship.getDamage()) < (weakestShip.getCardInfo().getEnergy() + weakestShip.getCardInfo().getMatter() * 2 - weakestShip.getDamage())) {
                             weakestShip = ship;
+                            picked = ship.getToken();
                         }
                     }
                 }
-                if (weakestShip != null) {
-                    getBattle().getRoundManager().processTarget(weakestShip.getToken());
-                } else {
-                    report("getAlliedTarget() failed!");
-                    cancelTurn();
-                }
             }
-        } else {
-            report("getAlliedTarget() (enemies.length) failed!");
-            cancelTurn();
         }
+        return picked;
     }
 
     @Override
