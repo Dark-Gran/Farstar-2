@@ -92,7 +92,7 @@ public class PossibilityAdvisor {
         }
     }
 
-    //GUI CALLS TO PRESENT THE POSSIBILITIES
+    //POSSIBILITY SETTERS FOR CARDS
 
     public void refresh(Player currentPlayer, Battle battle) {
         battle.unMarkAllPossibilities();
