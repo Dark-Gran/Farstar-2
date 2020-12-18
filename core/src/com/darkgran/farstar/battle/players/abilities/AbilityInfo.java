@@ -24,7 +24,8 @@ public class AbilityInfo {
         this.targets = AbilityTargets.NONE;
     }
 
-    public boolean isPureOffenseChanger() { //for disabling upgrading Offense on motherships
+    //TODO count First-strike etc. as well
+    public boolean isPurelyOffensiveChange() { //for disabling upgrading Offense on motherships
         boolean foundOffense = false;
         for (Effect effect : effects) {
             if (effect.getEffectType() != null && effect.getEffectType() == EffectType.CHANGE_STAT && effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {

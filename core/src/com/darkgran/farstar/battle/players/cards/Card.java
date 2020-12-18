@@ -81,10 +81,10 @@ public class Card {
 
     public void addToEffects (Effect effect) { effects.add(effect); }
 
-    public boolean isPureOffenseChanger() {
+    public boolean isPurelyOffensiveChange() {
         boolean foundOffense = false;
         for (AbilityInfo ability : cardInfo.getAbilities()) {
-            if (ability.isPureOffenseChanger()) {
+            if (ability.isPurelyOffensiveChange()) {
                 foundOffense = true;
             } else {
                 return false;

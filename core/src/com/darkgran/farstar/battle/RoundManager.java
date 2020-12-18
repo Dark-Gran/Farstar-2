@@ -213,12 +213,12 @@ public class RoundManager {
                 }
             }
             if (options.size() > 0) {
-                if (options.size() == 1 && (!options.get(0).isPureOffenseChanger() || (target == null || !target.getCard().isMS()))) {
+                if (options.size() == 1 && (!options.get(0).isPurelyOffensiveChange() || (target == null || !target.getCard().isMS()))) {
                     return playAbility(caster, (target != null) ? target.getCard() : null, abilityStarter, owner, dropTarget, options.get(0));
                 } else if (options.size() > 1) {
                     if (target != null && target.getCard().isMS()) {
                         for (AbilityInfo option : options) {
-                            if (option.isPureOffenseChanger()) {
+                            if (option.isPurelyOffensiveChange()) {
                                 return false;
                             }
                         }
