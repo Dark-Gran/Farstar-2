@@ -27,9 +27,9 @@ public class PossibilityAdvisor {
                     possibilities.add(new PossibilityInfo(card, player.getHand().getCardListMenu()));
                 }
             }
-            for (Card card : player.getYard()) {
-                if ((!activeDuel || card.isTactic()) && isPossibleToDeploy(player, whoseTurn, card, true, battle)) {
-                    possibilities.add(new PossibilityInfo(card, player.getYard().getCardListMenu()));
+            for (int i = player.getYard().size()-1; i >= 0; i--) {
+                if ((!activeDuel || player.getYard().get(i).isTactic()) && isPossibleToDeploy(player, whoseTurn, player.getYard().get(i), true, battle)) {
+                    possibilities.add(new PossibilityInfo(player.getYard().get(i), player.getYard().getCardListMenu()));
                 }
             }
             for (Card card : player.getFleet().getShips()) {
