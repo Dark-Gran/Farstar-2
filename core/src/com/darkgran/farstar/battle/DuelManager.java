@@ -6,6 +6,7 @@ import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.Bot;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.DuelPlayer;
+import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.battle.players.TechType;
 import com.darkgran.farstar.battle.players.abilities.EffectType;
@@ -96,10 +97,14 @@ public abstract class DuelManager {
 
     public void exeDuel(Card att, Card def) {
         if (strikePriority != null) {
-            if (strikePriority == att) {
+            if (strikePriority == att || def.isMS()) {
                 if (!exeOneSide(att, def)) { def.death(); }
                 else {
-                    if (!exeOneSide(def, att)) { att.death(); }
+                    if (!def.isMS()) {
+                        if (!exeOneSide(def, att)) {
+                            att.death();
+                        }
+                    }
                 }
             } else {
                 if (!exeOneSide(def, att)) { att.death(); }
@@ -109,7 +114,11 @@ public abstract class DuelManager {
             }
         } else {
             if (!exeOneSide(att, def)) { def.death(); }
-            if (!exeOneSide(def, att)) { att.death(); }
+            if (!def.isMS()) {
+                if (!exeOneSide(def, att)) {
+                    att.death();
+                }
+            }
         }
         if (att instanceof Ship) { ((Ship) att).setFought(true); }
     }

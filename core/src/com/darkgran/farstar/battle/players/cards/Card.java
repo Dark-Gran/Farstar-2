@@ -83,6 +83,8 @@ public class Card {
 
     public boolean isTactic() { return cardInfo.getCardType() == CardType.TACTIC; }
 
+    public boolean isMS() { return cardInfo.getCardType() == CardType.MS; }
+
     public CardInfo getCardInfo() { return cardInfo; }
 
     public CardInfo getOriginalInfo() { return originalInfo; }
