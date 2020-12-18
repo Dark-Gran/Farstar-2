@@ -24,6 +24,21 @@ public class AbilityInfo {
         this.targets = AbilityTargets.NONE;
     }
 
+    public boolean isPureOffenseChanger() { //for disabling upgrading Offense on motherships
+        boolean foundOffense = false;
+        for (Effect effect : effects) {
+            if (effect.getEffectType() != null && effect.getEffectType() == EffectType.CHANGE_STAT && effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
+                EffectTypeSpecifics.ChangeStatType changeStatType = EffectTypeSpecifics.ChangeStatType.valueOf(effect.getEffectInfo().get(0).toString());
+                if (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE || changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE) {
+                    foundOffense = true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return foundOffense;
+    }
+
     public AbilityStarter getStarter() { return starter; }
 
     public ResourcePrice getResourcePrice() { return resourcePrice; }
