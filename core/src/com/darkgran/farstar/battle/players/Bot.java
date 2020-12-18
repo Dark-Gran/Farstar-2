@@ -63,12 +63,20 @@ public abstract class Bot extends Player implements BotSettings {
         getBattle().getRoundManager().endTurn();
     }
 
+    public void endCombat() {
+        getBattle().getCombatManager().endCombat();
+    }
+
     public void delayedTurn() {
         delayAction(this::turn);
     }
 
     public void delayedEndTurn() {
-        delayAction(this::turn);
+        delayAction(this::endTurn);
+    }
+
+    public void delayedCombatEnd() {
+        delayAction(this::endCombat);
     }
 
     public boolean deploy(Card card, BaseMenu baseMenu, int position) {

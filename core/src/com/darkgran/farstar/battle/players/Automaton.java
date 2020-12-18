@@ -24,6 +24,10 @@ public class Automaton extends Bot { //TODO combat + duel
         super(battleID, energy, matter, ms, deck, yard, botTier);
     }
 
+    //---------------//
+    //-PLAYING-CARDS-//
+    //---------------//
+
     @Override
     public void turn() {
         if (!isDisposed()) {
@@ -172,9 +176,13 @@ public class Automaton extends Bot { //TODO combat + duel
         }
     }
 
+    //--------//
+    //-COMBAT-//
+    //--------//
+
     @Override
     public void newCombat() {
-        getBattle().getCombatManager().endCombat();
+        delayedCombatEnd();
     }
 
 }
