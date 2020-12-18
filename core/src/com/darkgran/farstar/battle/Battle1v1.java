@@ -15,7 +15,7 @@ public class Battle1v1 extends Battle {
     private final Player player1;
     private final Player player2;
 
-    public Battle1v1(Player player1, Player player2) {
+    public Battle1v1(@NotNull Player player1, @NotNull Player player2) {
         super();
         //in future: pass the Players in parameters
         this.player1 = player1;
