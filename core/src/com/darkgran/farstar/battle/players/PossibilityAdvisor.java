@@ -26,7 +26,7 @@ public class PossibilityAdvisor {
         }
     }
 
-    public ArrayList<PossibilityInfo> getPossibilities(Player player, Battle battle) {
+    public ArrayList<PossibilityInfo> getPossibilities(Player player, Battle battle) { //also used by Automaton
         ArrayList<PossibilityInfo> possibilities = new ArrayList<>();
         if (player == battle.getWhoseTurn()) {
             for (Card card : player.getSupports()) {
