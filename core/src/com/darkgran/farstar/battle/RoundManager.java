@@ -138,7 +138,7 @@ public class RoundManager {
                             if (cardType != CardType.SUPPORT) {
                                 Fleet fleet = ((FleetMenu) dropTarget).getFleet();
                                 if ((fleet == whoseTurn.getFleet() || !CardType.isShip(cardType)) && position != -1) {
-                                    if (!battle.getCombatManager().getDuelManager().isActive() || (fleet.getShips()[position].getToken() != null && fleet.getShips()[position].getToken().isInDuel())) {
+                                    if (!battle.getCombatManager().getDuelManager().isActive() || (fleet.getShips()[position].getToken() != null && fleet.getShips()[position].isInDuel())) {
                                         //ABILITIES
                                         postponedDeploy.setPosition(position);
                                         if (!postAbility) {
@@ -159,7 +159,7 @@ public class RoundManager {
                             //TARGETING MS
                         } else if (dropTarget instanceof MothershipToken) {
                             MothershipToken ms = (MothershipToken) dropTarget;
-                            if (!battle.activeCombatOrDuel() || ms.isInDuel()) {
+                            if (!battle.activeCombatOrDuel() || ms.getCard().isInDuel()) {
                                 //ABILITIES
                                 if (CardType.isSpell(cardType)) { //&& ms.getCard().getPlayer() == whoseTurn
                                     if (!postAbility) {

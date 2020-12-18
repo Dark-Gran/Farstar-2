@@ -18,6 +18,7 @@ public class Card {
     private boolean used; //for AbilityStarter.USE
     private int damage = 0;
     private boolean possible; //for PossibilityAdvisor
+    private boolean inDuel = false;
 
     public Card(CardInfo cardInfo, Player player) {
         originalInfo = cardInfo;
@@ -104,5 +105,8 @@ public class Card {
 
     public void setPossible(boolean possible) { this.possible = possible; }
 
+    public boolean isInDuel() { return inDuel; }
+
+    public void setInDuel(boolean inDuel) { this.inDuel = inDuel; }
 
 }

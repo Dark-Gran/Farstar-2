@@ -30,8 +30,8 @@ public abstract class DuelManager {
             this.combatManager = combatManager;
             this.attacker = attacker;
             this.defender = defender;
-            attacker.setInDuel(true);
-            defender.setInDuel(true);
+            attacker.getCard().setInDuel(true);
+            defender.getCard().setInDuel(true);
             this.playersA = playersA;
             this.playersD = playersD;
             preparePlayers();
@@ -140,8 +140,8 @@ public abstract class DuelManager {
     public void endDuel() {
         engaged = false;
         duelMenu.removeAllOKs();
-        attacker.setInDuel(false);
-        defender.setInDuel(false);
+        attacker.getCard().setInDuel(false);
+        defender.getCard().setInDuel(false);
         active = false;
         combatManager.afterDuel();
     }

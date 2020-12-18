@@ -23,7 +23,6 @@ public class Token extends FontActor {
     private final TokenDefense tokenDefense = new TokenDefense();
     private final BattleStage battleStage;
     private final CardListMenu cardListMenu;
-    private boolean inDuel = false;
 
     public Token(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu){
         this.card = card;
@@ -51,7 +50,7 @@ public class Token extends FontActor {
         }
         //Name
         if (card instanceof Ship) { if (((Ship) card).haveFought()) { color.set(1, 0, 0, 1); } }
-        if (isInDuel() || getCard().isPossible()) { color.set(0, 1, 0, 1); }
+        if (getCard().isInDuel() || getCard().isPossible()) { color.set(0, 1, 0, 1); }
         tokenName.draw(getFont(), batch, getX(), getY()+getHeight(), card.getCardInfo().getName(), color);
         //Offense+Defense
         color = ColorPalette.getTypeColor(card.getCardInfo().getOffenseType());
@@ -94,10 +93,6 @@ public class Token extends FontActor {
     public Dragger getDragger() { return dragger; }
 
     public void setDragger(Dragger dragger) { this.dragger = dragger; }
-
-    public boolean isInDuel() { return inDuel; }
-
-    public void setInDuel(boolean inDuel) { this.inDuel = inDuel; }
 
     public Token getThis() { return this; }
 
