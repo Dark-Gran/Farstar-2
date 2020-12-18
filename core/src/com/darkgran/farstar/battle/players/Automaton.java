@@ -136,6 +136,8 @@ public class Automaton extends Bot {
                             }
                         case REPAIR:
                             //TODO
+                        case FIRST_STRIKE:
+                            //TODO
                     }
                 }
             }
