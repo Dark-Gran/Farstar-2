@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.gui.BaseMenu;
 import com.darkgran.farstar.battle.gui.DropTarget;
+import com.darkgran.farstar.battle.gui.DuelOK;
 import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.cards.Card;
@@ -195,8 +196,8 @@ public class Automaton extends Bot { //TODO combat + duel
     }
 
     @Override
-    public void newDuelOK() { //TODO 1. just oks 2. tactics
-        report("My Time to Duel!");
+    public void newDuelOK(DuelOK duelOK) {
+        delayedDuelReady(duelOK);
     }
 
 }

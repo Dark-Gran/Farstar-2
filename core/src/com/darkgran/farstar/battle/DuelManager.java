@@ -40,8 +40,10 @@ public abstract class DuelManager {
             activePlayer = this.playersA[0];
             if (!(this.playersA[0].getPlayer() instanceof Bot)) {
                 duelMenu.addCancel();
+                duelMenu.addOK(this.playersA[0].getDuelButton());
+            } else {
+                ((Bot) this.playersA[0].getPlayer()).newDuelOK(this.playersA[0].getDuelButton());
             }
-            addOK(this.playersA[0].getDuelButton());
         }
     }
 
@@ -74,7 +76,11 @@ public abstract class DuelManager {
     public void OK(DuelOK duelOK) {
         duelMenu.removeCancel();
         nextOK(duelOK);
-        if (areAllReady()) { engage(); }
+        if (areAllReady()) {
+            engage();
+        } else if (activePlayer.getPlayer() instanceof Bot) {
+            ((Bot) activePlayer.getPlayer()).newDuelOK(activePlayer.getDuelButton());
+        }
     }
 
     private void engage() {
@@ -152,10 +158,10 @@ public abstract class DuelManager {
         }
         if (next) {
             if (i+1 < playersA.length) {
-                addOK(playersA[i+1].getDuelButton());
+                duelMenu.addOK(playersA[i+1].getDuelButton());
                 activePlayer = playersA[i+1];
             } else {
-                addOK(playersD[0].getDuelButton());
+                duelMenu.addOK(playersD[0].getDuelButton());
                 activePlayer = playersD[0];
             }
         } else {
@@ -166,20 +172,12 @@ public abstract class DuelManager {
                 }
             }
             if (i+1 < playersD.length) {
-                addOK(playersD[i+1].getDuelButton());
+                duelMenu.addOK(playersD[i+1].getDuelButton());
                 activePlayer = playersD[i+1];
             } else {
-                addOK(playersA[0].getDuelButton());
+                duelMenu.addOK(playersA[0].getDuelButton());
                 activePlayer = playersA[0];
             }
-        }
-    }
-
-    public void addOK(DuelOK duelOK) {
-        if (duelOK.getDuelPlayer().getPlayer() instanceof Bot) {
-            ((Bot) duelOK.getDuelPlayer().getPlayer()).newDuelOK();
-        } else {
-            duelMenu.addOK(duelOK);
         }
     }
 

@@ -56,7 +56,7 @@ public abstract class Bot extends Player implements BotSettings {
 
     public void newCombat() { }
 
-    public void newDuelOK() { }
+    public void newDuelOK(DuelOK duelOK) { }
 
     public Token getEnemyTarget() { return null; }
 
@@ -88,6 +88,10 @@ public abstract class Bot extends Player implements BotSettings {
 
     public void delayedLaunchDuel(Ship ship) {
         delayAction(()->launchDuel(ship));
+    }
+
+    public void delayedDuelReady(DuelOK duelOK) {
+        delayAction(()->duelReady(duelOK));
     }
 
     public boolean deploy(Card card, BaseMenu baseMenu, int position) {
@@ -127,6 +131,10 @@ public abstract class Bot extends Player implements BotSettings {
             report("launchDuel() failed!");
             endCombat();
         }
+    }
+
+    public void duelReady(DuelOK duelOK) {
+        getBattle().getCombatManager().getDuelManager().OK(duelOK);
     }
 
     public Token cardToToken(Card card, BaseMenu baseMenu) {
