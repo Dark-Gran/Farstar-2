@@ -114,7 +114,7 @@ public class Automaton extends Bot {
         return (possibilityInfo.getCard().isTactic() != getBattle().getCombatManager().isActive()) || abilityNonsense(possibilityInfo.getCard());
     }
 
-    public boolean abilityNonsense(Card card) {
+    public boolean abilityNonsense(Card card) { //TODO furnace
         for (AbilityInfo ability : card.getCardInfo().getAbilities()) {
             for (Effect effect : ability.getEffects()) {
                 if (effect != null && effect.getEffectType() != null) {
@@ -123,21 +123,34 @@ public class Automaton extends Bot {
                             if (getBattle().getCombatManager().isActive()) { //COMBAT ONLY
                                 Card attacker = getBattle().getCombatManager().getDuelManager().getAttacker().getCard();
                                 Card defender = getBattle().getCombatManager().getDuelManager().getDefender().getCard();
+                                Card ally;
+                                Card enemy;
+                                if (attacker.getPlayer() == this) {
+                                    ally = attacker;
+                                    enemy = defender;
+                                } else {
+                                    ally = defender;
+                                    enemy = attacker;
+                                }
                                 if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
                                     Object changeInfo = effect.getEffectInfo().get(1);
                                     EffectTypeSpecifics.ChangeStatType changeStatType = EffectTypeSpecifics.ChangeStatType.valueOf(effect.getEffectInfo().get(0).toString());
                                     //validate change of type
-                                    if ((attacker.getPlayer() == this && techTypeNonsense(attacker, defender, changeStatType, changeInfo)) || (defender.getPlayer() == this && techTypeNonsense(defender, attacker, changeStatType, changeInfo))) {
-                                        if (ability.isPurelyTypeChange()) {
-                                            return true; //TODO dont use on ships with stat 1
-                                        }
+                                    if (techTypeNonsense(ally, enemy, changeStatType, changeInfo)) {
+                                        return true;
+                                    }
+                                    if (ability.isPurelyTypeChange()) {
+                                        return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && (ally.getCardInfo().getOffense() <= 1 || enemy.getCardInfo().getDefense() < ally.getCardInfo().getOffense())) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && (enemy.getCardInfo().getOffense() <= 1 || ally.getCardInfo().getDefense() < enemy.getCardInfo().getOffense()));
                                     }
                                 }
                             }
-                        case REPAIR:
-                            //TODO
+                            break;
                         case FIRST_STRIKE:
                             //TODO
+                            break;
+                        case REPAIR:
+                            //TODO
+                            break;
                     }
                 }
             }
@@ -146,7 +159,7 @@ public class Automaton extends Bot {
     }
 
     public boolean techTypeNonsense(Card ally, Card enemy, EffectTypeSpecifics.ChangeStatType changeStatType, Object changeInfo) {
-        return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && DuelManager.noneToInferior(ally.getCardInfo().getOffenseType()) != TechType.INFERIOR && ally.getCardInfo().getOffenseType() != enemy.getCardInfo().getDefenseType()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && (DuelManager.noneToInferior(enemy.getCardInfo().getOffenseType()) == TechType.INFERIOR || ally.getCardInfo().getDefenseType() == enemy.getCardInfo().getOffenseType()));
+        return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && DuelManager.noneToInferior(ally.getCardInfo().getOffenseType()) != TechType.INFERIOR && ally.getCardInfo().getOffenseType() != enemy.getCardInfo().getDefenseType()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && ally.getCardInfo().getDefenseType() == enemy.getCardInfo().getOffenseType());
     }
 
     @Override
