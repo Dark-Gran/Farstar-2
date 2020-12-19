@@ -67,7 +67,7 @@ public class CombatManager {
             return true;
         }
         int enemyGuards = 0;
-        for (Ship ship : targetFleet.getShips()) {
+        for (Ship ship : targetFleet.getShips()) { //in-future: rework for more than 1v1
             if (ship != null && battle.getAbilityManager().hasAttribute(ship.getToken().getCard(), EffectType.GUARD)) {
                 enemyGuards++;
             }
