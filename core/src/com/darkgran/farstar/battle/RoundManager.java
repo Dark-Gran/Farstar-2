@@ -45,6 +45,7 @@ public class RoundManager {
 
     public void newRound() {
         roundNum++;
+        System.out.println("R#"+roundNum);
         firstTurnThisRound = true;
         newTurn();
     }
