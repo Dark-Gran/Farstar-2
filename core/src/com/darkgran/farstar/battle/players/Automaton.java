@@ -95,7 +95,7 @@ public class Automaton extends Bot {
             //1. Have at least one defender
             if (getFleet().isEmpty()) {
                 for (PossibilityInfo possibilityInfo : possibilities) {
-                    if (CardType.isShip(possibilityInfo.getCard().getCardInfo().getCardType())) {
+                    if (CardType.isShip(possibilityInfo.getCard().getCardInfo().getCardType())) { //TODO prefer Guard
                         return possibilityInfo;
                     }
                 }
@@ -129,7 +129,7 @@ public class Automaton extends Bot {
                                     //validate change of type
                                     if ((attacker.getPlayer() == this && techTypeNonsense(attacker, defender, changeStatType, changeInfo)) || (defender.getPlayer() == this && techTypeNonsense(defender, attacker, changeStatType, changeInfo))) {
                                         if (ability.isPurelyTypeChange()) {
-                                            return true; //TODO dont use on ships with 1/1 stats
+                                            return true; //TODO dont use on ships with stat 1
                                         }
                                     }
                                 }
