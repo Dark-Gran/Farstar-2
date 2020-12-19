@@ -1,12 +1,15 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.DuelManager;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.Effect;
+import com.darkgran.farstar.battle.players.abilities.EffectType;
 import com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics;
 import com.darkgran.farstar.battle.players.cards.*;
+import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 
@@ -94,10 +97,17 @@ public class Automaton extends Bot {
         if (possibilities.size() > 0) {
             //1. Have at least one defender
             if (getFleet().isEmpty()) {
+                PossibilityInfo ship = null;
                 for (PossibilityInfo possibilityInfo : possibilities) {
-                    if (CardType.isShip(possibilityInfo.getCard().getCardInfo().getCardType())) { //TODO prefer Guard
-                        return possibilityInfo;
+                    if (CardType.isShip(possibilityInfo.getCard().getCardInfo().getCardType())) {
+                        if (ship == null) { ship = possibilityInfo; }
+                        if (getBattle().getAbilityManager().hasAttribute(possibilityInfo.getCard(), EffectType.GUARD)) { //Guard Preference
+                            return possibilityInfo;
+                        }
                     }
+                }
+                if (ship != null) {
+                    return ship;
                 }
             }
             //2. Play the first playable thing that's not "nonsense"
@@ -114,7 +124,7 @@ public class Automaton extends Bot {
         return (possibilityInfo.getCard().isTactic() != getBattle().getCombatManager().isActive()) || abilityNonsense(possibilityInfo.getCard());
     }
 
-    public boolean abilityNonsense(Card card) { //TODO furnace
+    public boolean abilityNonsense(Card card) {
         for (AbilityInfo ability : card.getCardInfo().getAbilities()) {
             for (Effect effect : ability.getEffects()) {
                 if (effect != null && effect.getEffectType() != null) {
@@ -149,6 +159,9 @@ public class Automaton extends Bot {
                             //TODO
                             break;
                         case REPAIR:
+                            //TODO
+                            break;
+                        case CHANGE_RESOURCE:
                             //TODO
                             break;
                     }
