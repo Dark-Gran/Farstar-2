@@ -1,6 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
-public interface BotSettings {
+public interface BotSettings { //in-future: rework so the enum holds timerDelay?
     enum BotTier {
         AUTOMATON;
     }
