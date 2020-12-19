@@ -320,11 +320,11 @@ public class Automaton extends Bot {
     public void pickAbility(Token caster, Token target, DropTarget dropTarget, ArrayList<AbilityInfo> options) {
         if (options.size() > 0) {
             setPickingAbility(true);
-            //if (caster.getCard().getCardInfo().getId() == BONUS_CARD_ID) {
+            if (caster.getCard().getCardInfo().getId() == BONUS_CARD_ID) {
                 getBattle().getRoundManager().processPick(options.get(1));
-            //} else {
-            //    getBattle().getRoundManager().processPick(options.get(0));
-            //}
+            } else { //atm there is only Labour Deck
+                getBattle().getRoundManager().processPick(options.get(0));
+            }
         } else {
             report("pickAbility() failed!");
             cancelTurn();
