@@ -125,46 +125,49 @@ public class Automaton extends Bot {
                 if (effect != null && effect.getEffectType() != null) {
                     switch (effect.getEffectType()) {
                         case CHANGE_STAT:
-                            if (getBattle().getCombatManager().isActive()) { //COMBAT ONLY
-                                Card attacker = getBattle().getCombatManager().getDuelManager().getAttacker().getCard();
-                                Card defender = getBattle().getCombatManager().getDuelManager().getDefender().getCard();
+                            if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
+                                Object changeInfo = effect.getEffectInfo().get(1);
+                                EffectTypeSpecifics.ChangeStatType changeStatType = EffectTypeSpecifics.ChangeStatType.valueOf(effect.getEffectInfo().get(0).toString());
+                                Token allyToken;
                                 Card ally;
-                                Card enemy;
-                                if (attacker.getPlayer() == this) {
-                                    ally = attacker;
-                                    enemy = defender;
-                                } else {
-                                    ally = defender;
-                                    enemy = attacker;
-                                }
-                                if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
-                                    Object changeInfo = effect.getEffectInfo().get(1);
-                                    EffectTypeSpecifics.ChangeStatType changeStatType = EffectTypeSpecifics.ChangeStatType.valueOf(effect.getEffectInfo().get(0).toString());
-                                    //validate change of type
-                                    if (techTypeNonsense(ally, enemy, changeStatType, changeInfo)) {
-                                        return true;
+                                //Validate change of Type (color)
+                                if (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE || changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE) {
+                                    if (getBattle().getCombatManager().isActive()) { //COMBAT ONLY
+                                        allyToken = getAllyInDuel();
+                                        ally = allyToken.getCard();
+                                        Card enemy = getBattle().getCombatManager().getDuelManager().getOpponent(allyToken).getCard();
+                                        if (techTypeNonsense(ally, enemy, changeStatType, changeInfo)) {
+                                            return true;
+                                        }
+                                        if (ability.isPurelyTypeChange()) {
+                                            return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && (ally.getCardInfo().getOffense() <= 1 || enemy.getCardInfo().getDefense() < ally.getCardInfo().getOffense())) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && (enemy.getCardInfo().getOffense() <= 1 || ally.getCardInfo().getDefense() < enemy.getCardInfo().getOffense()));
+                                        }
+                                    } else { //OUTSIDE COMBAT
+                                        //in-future: don't allow Upgrades to certain Types (= based on what the enemy has the most)
                                     }
-                                    if (ability.isPurelyTypeChange()) {
-                                        return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && (ally.getCardInfo().getOffense() <= 1 || enemy.getCardInfo().getDefense() < ally.getCardInfo().getOffense())) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && (enemy.getCardInfo().getOffense() <= 1 || ally.getCardInfo().getDefense() < enemy.getCardInfo().getOffense()));
+                                //Validate Ability change
+                                } else if (changeStatType == EffectTypeSpecifics.ChangeStatType.ABILITY){
+                                    EffectType effectType = EffectType.valueOf(changeInfo.toString());
+                                    switch (effectType) {
+                                        case FIRST_STRIKE:
+                                            if (getBattle().getCombatManager().isActive()) { //COMBAT ONLY
+                                                allyToken = getAllyInDuel();
+                                                ally = allyToken.getCard();
+                                                if (getBattle().getCombatManager().getDuelManager().getStrikePriority() != null && getBattle().getCombatManager().getDuelManager().getStrikePriority() == ally) {
+                                                    return true;
+                                                }
+                                            } else { //OUTSIDE COMBAT
+                                                for (Ship ship : getFleet().getShips()) {
+                                                    if (ship != null && !getBattle().getAbilityManager().hasAttribute(ship, EffectType.FIRST_STRIKE)) {
+                                                        return false;
+                                                    }
+                                                }
+                                                return true;
+                                            }
+                                            break;
+                                        }
                                     }
                                 }
-                            } else { //OUTSIDE COMBAT
-                                //in-future: don't allow Upgrades to certain Types (= based on what the enemy has the most)
-                            }
-                            break;
-                        case FIRST_STRIKE:
-                            if (getBattle().getCombatManager().isActive()) { //COMBAT ONLY
-                                if (getBattle().getCombatManager().getDuelManager().getStrikePriority() != null && getBattle().getCombatManager().getDuelManager().getStrikePriority().getPlayer() == this) {
-                                    return true;
-                                }
-                            } else {
-                                for (Ship ship : getFleet().getShips()) {
-                                    if (ship != null && !getBattle().getAbilityManager().hasAttribute(ship, EffectType.FIRST_STRIKE)) {
-                                        return false;
-                                    }
-                                }
-                                return true;
-                            }
                             break;
                         case REPAIR:
                             //TODO findWounded
@@ -178,6 +181,19 @@ public class Automaton extends Bot {
             }
         }
         return false;
+    }
+
+    private Token getAllyInDuel() {
+        if (getBattle().getCombatManager().getDuelManager().isActive()) {
+            Token attacker = getBattle().getCombatManager().getDuelManager().getAttacker();
+            Token defender = getBattle().getCombatManager().getDuelManager().getDefender();
+            if (attacker.getCard().getPlayer() == this) {
+                return attacker;
+            } else {
+                return defender;
+            }
+        }
+        return null;
     }
 
     public boolean techTypeNonsense(Card ally, Card enemy, EffectTypeSpecifics.ChangeStatType changeStatType, Object changeInfo) {
