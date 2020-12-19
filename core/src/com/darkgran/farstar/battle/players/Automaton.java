@@ -236,7 +236,7 @@ public class Automaton extends Bot {
     }
 
     @Override
-    public Token getAlliedTarget(Token caster, EffectType effectType) { //todo
+    public Token getAlliedTarget(Token caster, EffectType effectType) {
         if (getFleet().isEmpty()) {
             if (!getBattle().getAbilityManager().hasAttribute(getMs(), effectType)) {
                 return getMs().getToken();
