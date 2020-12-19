@@ -145,7 +145,7 @@ public class Automaton extends Bot {
                                                 return true;
                                             } else {
                                                 TechType techType = TechType.valueOf(changeInfo.toString()); //in-future: debug invalidating "switches" (changing both types at the same time)
-                                                return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && techType == ally.getCardInfo().getOffenseType()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && techType == ally.getCardInfo().getDefenseType());
+                                                return ((changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && techType == ally.getCardInfo().getDefenseType() || changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && techType == ally.getCardInfo().getOffenseType()));
                                             }
                                         }
                                     } else { //OUTSIDE COMBAT
