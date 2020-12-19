@@ -141,7 +141,12 @@ public class Automaton extends Bot {
                                             return true;
                                         }
                                         if (ability.isPurelyTypeChange()) {
-                                            return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && (ally.getCardInfo().getOffense() <= 1 || enemy.getCardInfo().getDefense() < ally.getCardInfo().getOffense())) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && (enemy.getCardInfo().getOffense() <= 1 || ally.getCardInfo().getDefense() < enemy.getCardInfo().getOffense()));
+                                            if ((changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && (ally.getCardInfo().getOffense() <= 1 || enemy.getCardInfo().getDefense() < ally.getCardInfo().getOffense())) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && (enemy.getCardInfo().getOffense() <= 1 || ally.getCardInfo().getDefense() < enemy.getCardInfo().getOffense()))) {
+                                                return true;
+                                            } else {
+                                                TechType techType = TechType.valueOf(changeInfo.toString()); //in-future: debug invalidating "switches" (changing both types at the same time)
+                                                return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && techType == ally.getCardInfo().getOffenseType()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && techType == ally.getCardInfo().getDefenseType());
+                                            }
                                         }
                                     } else { //OUTSIDE COMBAT
                                         //in-future: don't allow Upgrades to certain Types (= based on what the enemy has the most)
