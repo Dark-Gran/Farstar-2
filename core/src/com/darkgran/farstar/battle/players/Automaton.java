@@ -13,7 +13,8 @@ import static com.darkgran.farstar.battle.BattleSettings.BONUS_CARD_ID;
 /**
  *  "Just Play Something":
  *  -- No sensors beyond PossibilityAdvisor
- *  -- No planning (atm not even the frame for it)
+ *  -- No planning (atm not even the frame for it - both turn and combat work with "what comes first")
+ *  -- Possibility "nonsense"-filter to substitute planning (ie. filters out some "typical bad moves")
  */
 public class Automaton extends Bot {
 
