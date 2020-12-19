@@ -280,6 +280,19 @@ public class AbilityManager {
         return false;
     }
 
+    public boolean hasEffectType(Card card, EffectType effectType) {
+        if (effectType != null) {
+            for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
+                for (Effect effect : abilityInfo.getEffects()) {
+                    if (effect.getEffectType() == effectType) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean hasAttribute(Card card, EffectType effectType) { //checks for abilities with "starter=NONE" (old "attributes")
         if (effectType != null) {
             for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
