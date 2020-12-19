@@ -213,11 +213,12 @@ public class Automaton extends Bot {
                     if (ability.getStarter() == AbilityStarter.NONE) { //in-future: check for changing all abilities (no ability givers in game atm except the ones with Attribute)
                         for (Effect effect : ability.getEffects()) {
                             if (effect.getEffectType() != null && effect.getEffectType() == EffectType.FIRST_STRIKE && effect.getEffectType() == EffectType.GUARD) {
-
+                                attribute = effect.getEffectType();
+                                break;
                             }
                         }
                     }
-                    target = getAlliedTarget(token, attribute);
+                    target = getAlliedTarget(token, attribute); //in-future: check against field of attributes instead of the first attribute (again, does not matter with "prototype cards")
                     break;
                 case ANY: //expects that Upgrades cannot be used on enemies, ergo ANY must mean ANY_ENEMY (it's "ANY" only for the whims of human player)
                 case ANY_ENEMY:
