@@ -246,5 +246,6 @@ public abstract class DuelManager {
 
     public Card getLastTactic() { return lastTactic; }
 
+    public Card getStrikePriority() { return strikePriority; }
 
 }

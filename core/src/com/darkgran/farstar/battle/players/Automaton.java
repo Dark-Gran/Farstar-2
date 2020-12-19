@@ -151,15 +151,22 @@ public class Automaton extends Bot {
                                         return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && (ally.getCardInfo().getOffense() <= 1 || enemy.getCardInfo().getDefense() < ally.getCardInfo().getOffense())) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && (enemy.getCardInfo().getOffense() <= 1 || ally.getCardInfo().getDefense() < enemy.getCardInfo().getOffense()));
                                     }
                                 }
-                            } else {
+                            } else { //OUTSIDE COMBAT
                                 //in-future: don't allow Upgrades to certain Types (= based on what the enemy has the most)
                             }
                             break;
                         case FIRST_STRIKE:
                             if (getBattle().getCombatManager().isActive()) { //COMBAT ONLY
-                                //TODO strikePriority check
+                                if (getBattle().getCombatManager().getDuelManager().getStrikePriority() != null && getBattle().getCombatManager().getDuelManager().getStrikePriority().getPlayer() == this) {
+                                    return true;
+                                }
                             } else {
-                                //TODO dont upgrade who hasAttribute() already
+                                for (Ship ship : getFleet().getShips()) {
+                                    if (ship != null && !getBattle().getAbilityManager().hasAttribute(ship, EffectType.FIRST_STRIKE)) {
+                                        return false;
+                                    }
+                                }
+                                return true;
                             }
                             break;
                         case REPAIR:
@@ -258,12 +265,11 @@ public class Automaton extends Bot {
     public void pickAbility(Token caster, Token target, DropTarget dropTarget, ArrayList<AbilityInfo> options) {
         if (options.size() > 0) {
             setPickingAbility(true);
-            //TODO: "rework"? (if there's only SR and LD, use only the second option for now?)
-            if (caster.getCard().getCardInfo().getId() == BONUS_CARD_ID) {
-                getBattle().getRoundManager().processPick(options.get(1)); //atm always picks the matter
-            } else {
-                getBattle().getRoundManager().processPick(options.get(0)); //atm always picks the first one
-            }
+            //if (caster.getCard().getCardInfo().getId() == BONUS_CARD_ID) {
+                getBattle().getRoundManager().processPick(options.get(1));
+            //} else {
+            //    getBattle().getRoundManager().processPick(options.get(0));
+            //}
         } else {
             report("pickAbility() failed!");
             cancelTurn();
