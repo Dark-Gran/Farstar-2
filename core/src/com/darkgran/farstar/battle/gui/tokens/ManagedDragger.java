@@ -19,14 +19,14 @@ public class ManagedDragger extends Dragger {
     }
 
     @Override
-    public void drag(float x, float y) {
+    protected void drag(float x, float y) {
         if (isEnabled()) {
             super.drag(x, y);
         }
     }
 
     @Override
-    public void drop(float x, float y) {
+    protected void drop(float x, float y) {
         if (isEnabled()) {
             super.drop(x, y);
         }

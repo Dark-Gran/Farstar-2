@@ -13,13 +13,13 @@ public class YardMenu extends CardListMenu {
     }
 
     @Override
-    public void setupOffset() {
+    protected void setupOffset() {
         super.setupOffset();
         setOffset(getOffset()*3/4);
     }
 
     @Override
-    public void generateTokens() {
+    protected void generateTokens() {
         getTokens().clear();
         for (int i = 0; i < getCardList().size(); i++) {
             getTokens().add(new YardToken(getCardList().get(i), getX(), getY()+ getOffset()*(i+1), getBattleStage(), this));

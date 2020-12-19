@@ -3,7 +3,6 @@ package com.darkgran.farstar.battle.players;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.BattleSettings;
 import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.cards.CardList;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,7 +34,7 @@ public class Deck extends CardList {
     }
 
     @Override
-    public void setupSize() {
+    protected void setupSize() {
         setMaxSize(BattleSettings.DECK_SIZE);
     }
 

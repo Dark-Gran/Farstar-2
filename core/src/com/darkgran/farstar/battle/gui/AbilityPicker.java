@@ -31,32 +31,32 @@ public class AbilityPicker extends BaseMenu {
         active = false;
     }
 
-    public void refreshOptions() {
+    private void refreshOptions() {
         abilityGraphics = new ArrayList<>();
         for (AbilityInfo abilityInfo : abilityInfos) {
             abilityGraphics.add(createOption(abilityInfo));
         }
     }
 
-    public void removeActors(int fromIndex, int toIndex) {
+    private void removeActors(int fromIndex, int toIndex) {
         for (int i = fromIndex; i <= toIndex && i < abilityGraphics.size(); i++) {
             abilityGraphics.get(i).remove();
         }
     }
 
-    public void removeActors() {
+    private void removeActors() {
         for (AbilityPickerOption abilityPickerOption : abilityGraphics) {
             abilityPickerOption.remove();
         }
     }
 
-    public void addActors() {
+    private void addActors() {
         for (AbilityPickerOption abilityPickerOption : abilityGraphics) {
             getBattleStage().addActor(abilityPickerOption);
         }
     }
 
-    public AbilityPickerOption createOption(AbilityInfo abilityInfo) {
+    private AbilityPickerOption createOption(AbilityInfo abilityInfo) {
         AbilityPickerOption abilityPickerOption = new AbilityPickerOption(texture, getBattleStage().getBattleScreen().getBattle(), abilityInfo);
         abilityPickerOption.setBounds(getX()+((abilityGraphics.size())*(float) Farstar.STAGE_WIDTH/20), getY(), (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
         return abilityPickerOption;

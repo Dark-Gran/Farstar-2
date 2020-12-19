@@ -2,7 +2,6 @@ package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.cards.CardList;
 
 public interface BattleTicks {
     CardList getCardList();

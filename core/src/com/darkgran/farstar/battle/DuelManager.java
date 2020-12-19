@@ -59,7 +59,7 @@ public abstract class DuelManager {
         }
     }
 
-    public void saveTactic(Card card, Card target) {
+    void saveTactic(Card card, Card target) {
         lastTactic = card;
         resetAllPlayersReady();
         if (combatManager.getBattle().getAbilityManager().hasAttribute(target, EffectType.FIRST_STRIKE)) {
@@ -67,9 +67,9 @@ public abstract class DuelManager {
         }
     }
 
-    public void preparePlayers() { resetAllPlayersReady(); }
+    protected void preparePlayers() { resetAllPlayersReady(); }
 
-    public void resetAllPlayersReady() {
+    void resetAllPlayersReady() {
         for (DuelPlayer player : playersA) { player.setReady(false); }
         for (DuelPlayer player : playersD) { player.setReady(false); }
     }
@@ -94,7 +94,7 @@ public abstract class DuelManager {
         }
     }
 
-    public void exeDuel(Card att, Card def) {
+    protected void exeDuel(Card att, Card def) {
         if (strikePriority != null) {
             if (strikePriority == att || def.isMS()) {
                 if (!exeOneSide(att, def)) { def.death(); }
@@ -122,7 +122,7 @@ public abstract class DuelManager {
         if (att instanceof Ship) { ((Ship) att).setFought(true); }
     }
 
-    public boolean exeOneSide(Card att, Card def) { //returns survival
+    protected boolean exeOneSide(Card att, Card def) { //returns survival
         int dmg = getDmgAgainstShields(att.getCardInfo().getOffense(), def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
         return def.receiveDMG(dmg);
     }

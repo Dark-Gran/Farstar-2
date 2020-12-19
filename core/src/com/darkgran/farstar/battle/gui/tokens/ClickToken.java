@@ -12,7 +12,7 @@ public abstract class ClickToken extends Token {
     }
 
     @Override
-    public void setupListener() {
+    protected void setupListener() {
         super.setupListener();
         this.addListener(new InputListener()
         {

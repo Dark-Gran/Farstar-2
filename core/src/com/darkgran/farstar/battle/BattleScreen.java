@@ -52,14 +52,14 @@ public class BattleScreen extends SuperScreen {
     }
 
     @Override
-    public void drawContent(float delta, Batch batch) {
+    protected void drawContent(float delta, Batch batch) {
         battleStage.drawBattleStage(delta, batch);
         //if (DEBUG_RENDER) { drawBox2DDebug(batch); } //draws boundaries of world-bodies
         worldManager.worldTimer(delta); //world stepping
     }
 
     @Override
-    public void drawMenus(float delta) { //Stage-menus use their own Batch
+    protected void drawMenus(float delta) { //Stage-menus use their own Batch
         if (battleStage != null) {
             battleStage.act(delta);
             battleStage.draw();

@@ -23,7 +23,7 @@ public abstract class BaseMenu extends SimpleBox2 {
         this.battleStage = battleStage;
     }
 
-    public void setupOffset() {
+    protected void setupOffset() {
         String res = "Battlestation";
         layout.setText(new BitmapFont(), res);
         offset = layout.width;

@@ -14,7 +14,7 @@ public class MainScreen extends SuperScreen {
     }
 
     @Override
-    public void drawMenus(float delta) {
+    protected void drawMenus(float delta) {
         menu.act(delta);
         menu.draw();
     }

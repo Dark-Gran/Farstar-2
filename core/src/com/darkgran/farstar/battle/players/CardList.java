@@ -1,8 +1,8 @@
-package com.darkgran.farstar.battle.players.cards;
+package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.CardListMenu;
-import com.darkgran.farstar.battle.players.Player;
+import com.darkgran.farstar.battle.players.cards.Card;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ public abstract class CardList extends ArrayList<Card> {
     private int maxSize;
     private CardListMenu cardListMenu;
 
-    public void setupSize() {
+    protected void setupSize() {
         setMaxSize(0);
     }
 

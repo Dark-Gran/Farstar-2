@@ -1,7 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.cards.CardList;
 import com.darkgran.farstar.battle.players.cards.Support;
 
 public class Supports extends CardList implements BattleTicks {
@@ -13,7 +12,7 @@ public class Supports extends CardList implements BattleTicks {
     }
 
     @Override
-    public void setupSize() {
+    protected void setupSize() {
         setMaxSize(6);
     }
 

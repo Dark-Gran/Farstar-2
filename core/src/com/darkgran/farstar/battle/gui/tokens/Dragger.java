@@ -38,11 +38,11 @@ public class Dragger extends InputListener {
         this.token = token;
     }
 
-    public void drag(float x, float y) {
+    protected void drag(float x, float y) {
         token.setPosition(Gdx.input.getX()-token.getWidth()/2, Farstar.STAGE_HEIGHT-(Gdx.input.getY()+token.getHeight()/2));
     }
 
-    public void drop(float x, float y) {
+    protected void drop(float x, float y) {
         token.getBattleStage().processDrop(Gdx.input.getX(), Farstar.STAGE_HEIGHT-Gdx.input.getY(), token);
     }
 

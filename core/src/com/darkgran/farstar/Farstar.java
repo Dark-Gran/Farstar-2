@@ -14,7 +14,7 @@ public class Farstar extends Game {
 	protected SuperScreen superScreen;
 	SpriteBatch batch;
 
-	public void loadLibrary() { CARD_LIBRARY.loadLocal("content/cards.json"); }
+	protected void loadLibrary() { CARD_LIBRARY.loadLocal("content/cards.json"); }
 
 	@Override
 	public void create () {

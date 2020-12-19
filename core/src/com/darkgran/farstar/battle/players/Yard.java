@@ -3,7 +3,6 @@ package com.darkgran.farstar.battle.players;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.BattleSettings;
 import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.cards.CardList;
 
 public class Yard extends CardList {
 
@@ -23,7 +22,7 @@ public class Yard extends CardList {
     }
 
     @Override
-    public void setupSize() {
+    protected void setupSize() {
         setMaxSize(BattleSettings.YARD_SIZE);
     }
 

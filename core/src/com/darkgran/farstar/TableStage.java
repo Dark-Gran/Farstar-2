@@ -21,7 +21,7 @@ public class TableStage extends ListeningStage {
     }
 
     @Override
-    public void setupListeners() {
+    protected void setupListeners() {
         exitButton.addListener(new ClickListener()
         {
             @Override

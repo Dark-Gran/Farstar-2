@@ -29,7 +29,7 @@ public abstract class Battle {
         return null;
     }
 
-    public void closeYards() { }
+    protected void closeYards() { }
 
     public void dispose() {}
 
@@ -45,9 +45,9 @@ public abstract class Battle {
         this.abilityManager = abilityManager;
     }
 
-    public void coinToss() { } //must setWhoseTurn
+    protected void coinToss() { } //must setWhoseTurn
 
-    public void startingCards() { }
+    protected void startingCards() { }
 
     public void setUsedForAllFleets(boolean used) { }
 

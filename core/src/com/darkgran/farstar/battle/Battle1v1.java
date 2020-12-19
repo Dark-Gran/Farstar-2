@@ -41,7 +41,7 @@ public class Battle1v1 extends Battle {
     }
 
     @Override
-    public void coinToss() {
+    protected void coinToss() {
         setWhoseTurn((ThreadLocalRandom.current().nextInt(0, 2) == 0) ? player1 : player2);
     }
 
@@ -51,7 +51,7 @@ public class Battle1v1 extends Battle {
     }
 
     @Override
-    public void closeYards() {
+    protected void closeYards() {
         ((YardMenu) (player1.getShipyard().getCardListMenu())).setVisible(false);
         ((YardMenu) (player2.getShipyard().getCardListMenu())).setVisible(false);
     }
@@ -63,7 +63,7 @@ public class Battle1v1 extends Battle {
     }
 
     @Override
-    public void startingCards() {
+    protected void startingCards() {
         if (getWhoseTurn() == player1) {
             player1.getHand().drawCards(player1.getDeck(), STARTING_CARDS_ATT);
             player2.getHand().drawCards(player2.getDeck(), STARTING_CARDS_DEF);

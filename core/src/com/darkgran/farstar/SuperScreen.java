@@ -23,16 +23,16 @@ public abstract class SuperScreen implements Screen {
         camera.position.set((float) Farstar.STAGE_WIDTH/2,(float) Farstar.STAGE_HEIGHT/2,0);
     }
 
-    public void setTableMenu(TableStage tableStage) {
+    protected void setTableMenu(TableStage tableStage) {
         this.tableStage = tableStage;
         if (!game.getInputMultiplexer().getProcessors().contains(tableStage, true)) {
             game.getInputMultiplexer().addProcessor(tableStage);
         }
     }
 
-    public void drawContent(float delta, Batch batch) { }//for all screens except intro
+    protected void drawContent(float delta, Batch batch) { }//for all screens except intro
 
-    public void drawMenus(float delta) { }//for all screens except intro
+    protected void drawMenus(float delta) { }//for all screens except intro
 
     public Farstar getGame() { return game; }
 

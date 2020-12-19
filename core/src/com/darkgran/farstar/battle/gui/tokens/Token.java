@@ -39,7 +39,7 @@ public class Token extends FontActor {
         setupListener();
     }
 
-    public void setupListener() { }
+    protected void setupListener() { }
 
     public void draw(Batch batch) {
         Color color = new Color();

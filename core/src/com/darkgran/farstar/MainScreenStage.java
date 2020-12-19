@@ -27,7 +27,7 @@ public class MainScreenStage extends ListeningStage {
     }
 
     @Override
-    public void setupListeners() {
+    protected void setupListeners() {
         startButton.addListener(new ClickListener()
         {
             @Override

@@ -13,7 +13,7 @@ public abstract class ListeningStage extends Stage {
 
     public Farstar getGame() { return game; }
 
-    public void setupListeners() {
+    protected void setupListeners() {
 
     }
 

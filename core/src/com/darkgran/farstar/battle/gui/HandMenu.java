@@ -30,13 +30,13 @@ public class HandMenu extends CardListMenu { //in-future: rearrangement of cards
     }
 
     @Override
-    public void setupOffset() {
+    protected void setupOffset() {
         super.setupOffset();
         setOffset(getOffset()*3/2);
     }
 
     @Override
-    public void generateTokens() {
+    protected void generateTokens() {
         getTokens().clear();
         for (int i = 0; i < getCardList().size(); i++) {
             getTokens().add(new HandToken(getCardList().get(i), getX() + getOffset()*i, getY(), getBattleStage(), this));

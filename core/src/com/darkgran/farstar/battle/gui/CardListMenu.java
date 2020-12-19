@@ -2,9 +2,8 @@ package com.darkgran.farstar.battle.gui;
 
 import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.cards.CardList;
+import com.darkgran.farstar.battle.players.CardList;
 import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.battle.players.cards.Ship;
 
 import java.util.ArrayList;
 
@@ -20,7 +19,7 @@ public abstract class CardListMenu extends BaseMenu {
         generateTokens();
     }
 
-    public void generateTokens() {
+    protected void generateTokens() {
         tokens.clear();
         for (int i = 0; i < cardList.size(); i++) {
             tokens.add(new Token(cardList.get(i), getX() + getOffset()*i, getY(), getBattleStage(), this));

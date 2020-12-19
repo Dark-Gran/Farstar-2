@@ -2,7 +2,6 @@ package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.cards.CardList;
 
 import static com.darkgran.farstar.battle.BattleSettings.MAX_IN_HAND;
 
@@ -39,7 +38,7 @@ public class Hand extends CardList {
     }
 
     @Override
-    public void setupSize() {
+    protected void setupSize() {
         setMaxSize(MAX_IN_HAND);
     }
 
