@@ -131,12 +131,13 @@ public class Automaton extends Bot {
                                 EffectTypeSpecifics.ChangeStatType changeStatType = EffectTypeSpecifics.ChangeStatType.valueOf(effect.getEffectInfo().get(0).toString());
                                 Token allyToken;
                                 Card ally;
+                                Card enemy;
                                 //Validate change of Type (color)
                                 if (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE || changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE) {
                                     if (getBattle().getCombatManager().isActive()) { //COMBAT ONLY
                                         allyToken = getAllyInDuel();
                                         ally = allyToken.getCard();
-                                        Card enemy = getBattle().getCombatManager().getDuelManager().getOpponent(allyToken).getCard();
+                                        enemy = getBattle().getCombatManager().getDuelManager().getOpponent(allyToken).getCard();
                                         if (techTypeNonsense(ally, enemy, changeStatType, changeInfo)) {
                                             return true;
                                         }
@@ -159,7 +160,8 @@ public class Automaton extends Bot {
                                             if (getBattle().getCombatManager().isActive()) { //COMBAT ONLY
                                                 allyToken = getAllyInDuel();
                                                 ally = allyToken.getCard();
-                                                if (getBattle().getCombatManager().getDuelManager().getStrikePriority() != null && getBattle().getCombatManager().getDuelManager().getStrikePriority() == ally) {
+                                                enemy = getBattle().getCombatManager().getDuelManager().getOpponent(allyToken).getCard();
+                                                if (enemy.isMS() || (getBattle().getCombatManager().getDuelManager().getStrikePriority() != null && getBattle().getCombatManager().getDuelManager().getStrikePriority() == ally)) {
                                                     return true;
                                                 }
                                             } else { //OUTSIDE COMBAT
