@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.DuelManager;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.gui.tokens.Token;
@@ -27,7 +28,7 @@ public class Automaton extends Bot {
     //---------------//
 
     @Override
-    public void turn() {
+    protected void turn() {
         if (!isDisposed()) {
             super.turn();
             PossibilityInfo bestPossibility = getTurnPossibility();
@@ -53,7 +54,7 @@ public class Automaton extends Bot {
     }
 
     @Override
-    public DropTarget getDropTarget(CardType cardType) {
+    protected DropTarget getDropTarget(CardType cardType) {
         if (cardType == CardType.SUPPORT) {
             return (SupportMenu) getSupports().getCardListMenu();
         } else {
@@ -65,7 +66,7 @@ public class Automaton extends Bot {
         }
     }
 
-    public int getBestPosition(Card card, BaseMenu sourceMenu, BaseMenu targetMenu) {
+    private int getBestPosition(Card card, BaseMenu sourceMenu, BaseMenu targetMenu) {
         if (CardType.isShip(card.getCardInfo().getCardType())) {
             if (targetMenu.isEmpty()) {
                 return 3;
@@ -88,7 +89,7 @@ public class Automaton extends Bot {
         }
     }
 
-    public PossibilityInfo getTurnPossibility() {
+    private PossibilityInfo getTurnPossibility() {
         ArrayList<PossibilityInfo> possibilities = getBattle().getRoundManager().getPossibilityAdvisor().getPossibilities(this, getBattle());
         if (possibilities.size() > 0) {
             //1. Have at least one defender
@@ -116,11 +117,11 @@ public class Automaton extends Bot {
         return null;
     }
 
-    public boolean isNonsense(PossibilityInfo possibilityInfo) {
+    private boolean isNonsense(PossibilityInfo possibilityInfo) {
         return (possibilityInfo.getCard().isTactic() != getBattle().getCombatManager().isActive()) || abilityNonsense(possibilityInfo.getCard());
     }
 
-    public boolean abilityNonsense(Card card) {
+    private boolean abilityNonsense(Card card) {
         for (AbilityInfo ability : card.getCardInfo().getAbilities()) {
             for (Effect effect : ability.getEffects()) {
                 if (effect != null && effect.getEffectType() != null) {
@@ -174,9 +175,18 @@ public class Automaton extends Bot {
                             //TODO findWounded
                             break;
                         case CHANGE_RESOURCE:
-                            //TODO dont go energy when low on matter
+                            if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
+                                Object changeInfo = effect.getEffectInfo().get(1);
+                                EffectTypeSpecifics.ChangeResourceType resource = EffectTypeSpecifics.ChangeResourceType.valueOf(effect.getEffectInfo().get(0).toString());
+                                int change = getBattle().getAbilityManager().floatObjectToInt(changeInfo);
+                                switch (resource) {
+                                    case ENERGY:
+                                        return getEnergy() > getMatter();
+                                    case MATTER:
+                                        return getMatter()/2 > getEnergy();
+                                }
+                            }
                             break;
-
                     }
                 }
             }
@@ -197,7 +207,7 @@ public class Automaton extends Bot {
         return null;
     }
 
-    public boolean techTypeNonsense(Card ally, Card enemy, EffectTypeSpecifics.ChangeStatType changeStatType, Object changeInfo) {
+    private boolean techTypeNonsense(Card ally, Card enemy, EffectTypeSpecifics.ChangeStatType changeStatType, Object changeInfo) {
         return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && DuelManager.noneToInferior(ally.getCardInfo().getOffenseType()) != TechType.INFERIOR && ally.getCardInfo().getOffenseType() != enemy.getCardInfo().getDefenseType()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && ally.getCardInfo().getDefenseType() == enemy.getCardInfo().getOffenseType());
     }
 
@@ -237,7 +247,7 @@ public class Automaton extends Bot {
     }
 
     @Override
-    public Token getAlliedTarget(Token caster, EffectType effectType) {
+    protected Token getAlliedTarget(Token caster, EffectType effectType) {
         if (getFleet().isEmpty()) {
             if (!getBattle().getAbilityManager().hasAttribute(getMs(), effectType)) {
                 return getMs().getToken();
@@ -261,7 +271,7 @@ public class Automaton extends Bot {
     }
 
     @Override
-    public Token getEnemyTarget(Token attacker, boolean checkReach) {
+    protected Token getEnemyTarget(Token attacker, boolean checkReach) {
         Player[] enemies = getBattle().getEnemies(this);
         Token picked = null;
         Ship weakestShip = null;
@@ -307,7 +317,7 @@ public class Automaton extends Bot {
     //--------//
 
     @Override
-    public void combat() {
+    protected void combat() {
         super.combat();
         if (getBattle().getCombatManager().isActive()) {
             for (Ship ship : getFleet().getShips()) {
@@ -320,7 +330,7 @@ public class Automaton extends Bot {
     }
 
     @Override
-    public void duel(DuelOK duelOK) { //atm expects all Tactics to be meant for allies
+    protected void duel(DuelOK duelOK) { //atm expects all Tactics to be meant for allies
         super.duel(duelOK);
         boolean success = false;
         PossibilityInfo bestPossibility = getDuelPossibility();
@@ -348,7 +358,7 @@ public class Automaton extends Bot {
         if (!success) { duelReady(duelOK); }
     }
 
-    public PossibilityInfo getDuelPossibility() {
+    private PossibilityInfo getDuelPossibility() {
         ArrayList<PossibilityInfo> possibilities = getBattle().getRoundManager().getPossibilityAdvisor().getPossibilities(this, getBattle());
         if (possibilities.size() > 0) {
             //1. Play the first playable thing that's not "nonsense"

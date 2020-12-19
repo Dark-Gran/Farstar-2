@@ -387,7 +387,7 @@ public class AbilityManager {
         return new Effect(effect.getEffectType(), effect.getEffectInfo(), effect.getDuration());
     }
 
-    private int floatObjectToInt(Object obj) {
+    public int floatObjectToInt(Object obj) {
         if (obj instanceof Float) {
             float f = (Float) obj;
             return (int) f;

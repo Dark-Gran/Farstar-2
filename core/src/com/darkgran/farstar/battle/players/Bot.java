@@ -42,7 +42,7 @@ public abstract class Bot extends Player implements BotSettings {
         }
     }
 
-    public void turn() {
+    protected void turn() {
         setPickingTarget(false);
         setPickingAbility(false);
     }
@@ -60,7 +60,7 @@ public abstract class Bot extends Player implements BotSettings {
         combat();
     }
 
-    public void combat() {
+    protected void combat() {
         setPickingTarget(false);
         setPickingAbility(false);
     }
@@ -69,60 +69,60 @@ public abstract class Bot extends Player implements BotSettings {
         delayedDuel(duelOK);
     }
 
-    public void duel(DuelOK duelOK) {
+    protected void duel(DuelOK duelOK) {
         setPickingTarget(false);
         setPickingAbility(false);
     }
 
-    public Token getEnemyTarget(Token attacker, boolean checkReach) { return null; }
+    protected Token getEnemyTarget(Token attacker, boolean checkReach) { return null; }
 
-    public Token getAlliedTarget(Token caster, EffectType effectType) { return null; }
+    protected Token getAlliedTarget(Token caster, EffectType effectType) { return null; }
 
-    public DropTarget getDropTarget(CardType cardType) { return null; }
+    protected DropTarget getDropTarget(CardType cardType) { return null; }
 
     public void gameOver(int winnerID) { report("GG"); }
 
     //EXECUTIONS + UTILITIES
 
-    public void cancelTurn() {
+    protected void cancelTurn() {
         setPickingAbility(false);
         getBattle().getRoundManager().tryCancel();
         getBattle().getRoundManager().endTurn();
     }
 
-    public void endCombat() {
+    protected void endCombat() {
         getBattle().getCombatManager().endCombat();
     }
 
-    public void delayedTurn() {
+    protected void delayedTurn() {
         delayAction(this::turn);
     }
 
-    public void delayedEndTurn() {
+    protected void delayedEndTurn() {
         delayAction(this::endTurn);
     }
 
-    public void delayedCombatEnd() {
+    protected void delayedCombatEnd() {
         delayAction(this::endCombat);
     }
 
-    public void delayedCombat() {
+    protected void delayedCombat() {
         delayAction(this::combat);
     }
 
-    public void delayedLaunchDuel(Ship ship) {
+    protected void delayedLaunchDuel(Ship ship) {
         delayAction(()->launchDuel(ship));
     }
 
-    public void delayedDuel(DuelOK duelOK) {
+    protected void delayedDuel(DuelOK duelOK) {
         delayAction(()->duel(duelOK));
     }
 
-    public void delayedDuelReady(DuelOK duelOK) {
+    protected void delayedDuelReady(DuelOK duelOK) {
         delayAction(()->duelReady(duelOK));
     }
 
-    public boolean deploy(Card card, BaseMenu baseMenu, int position) {
+    protected boolean deploy(Card card, BaseMenu baseMenu, int position) {
         DropTarget dropTarget = getDropTarget(card.getCardInfo().getCardType());
         Token token = cardToToken(card, baseMenu);
         if (baseMenu instanceof HandMenu) {
@@ -139,13 +139,13 @@ public abstract class Bot extends Player implements BotSettings {
         return getBattle().getRoundManager().processDrop(token, dropTarget, position, false, true);
     }
 
-    public boolean useAbility(Card card, BaseMenu baseMenu) {
+    protected boolean useAbility(Card card, BaseMenu baseMenu) {
         Token token = cardToToken(card, baseMenu);
         getBattle().getRoundManager().checkAllAbilities(token, null, AbilityStarter.USE, this, null);
         return true;
     }
 
-    public void launchDuel(Ship ship) {
+    protected void launchDuel(Ship ship) {
         Token enemy = getEnemyTarget(ship.getToken(), true);
         if (enemy != null && getBattle().getCombatManager().canReach(ship.getToken(), enemy, this.getFleet())) {
             getBattle().getCombatManager().getDuelManager().launchDuel(getBattle().getCombatManager(), ship.getToken(), enemy, new DuelPlayer[]{getBattle().getCombatManager().playerToDuelPlayer(ship.getPlayer())}, new DuelPlayer[]{getBattle().getCombatManager().playerToDuelPlayer(enemy.getCard().getPlayer())});
@@ -155,23 +155,23 @@ public abstract class Bot extends Player implements BotSettings {
         }
     }
 
-    public void duelReady(DuelOK duelOK) {
+    protected void duelReady(DuelOK duelOK) {
         getBattle().getCombatManager().getDuelManager().OK(duelOK);
     }
 
-    public Token cardToToken(Card card, BaseMenu baseMenu) {
+    protected Token cardToToken(Card card, BaseMenu baseMenu) {
         return new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (baseMenu instanceof CardListMenu) ? (CardListMenu) baseMenu : null);
     }
 
-    public void report(String message) {
+    protected void report(String message) {
         System.out.println(botTier+"(PLR"+getBattleID()+"): "+message);
     }
 
-    public boolean isDeploymentMenu(BaseMenu baseMenu) {
+    protected boolean isDeploymentMenu(BaseMenu baseMenu) {
         return (baseMenu instanceof FleetMenu || baseMenu instanceof SupportMenu);
     }
 
-    public void delayAction(Runnable runnable) { //use delayedTurn() etc. (above) for "recommended delays"
+    protected void delayAction(Runnable runnable) { //use delayedTurn() etc. (above) for "recommended delays"
         Timer.schedule(new Timer.Task() {
             public void run() {
                 if (runnable != null) { Gdx.app.postRunnable(runnable); }
