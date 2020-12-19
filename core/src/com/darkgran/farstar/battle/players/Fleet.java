@@ -74,7 +74,7 @@ public class Fleet implements BattleTicks {
 
     private void shiftShipsToBlank(int blankPosition) {
         if (blankPosition > 0 && blankPosition < 6) {
-            boolean direction = blankPosition < 3; //todo fix shifting to 3
+            boolean direction = blankPosition < 3; //in-future fix shifting to 3
             int end = direction ? 0 : 6;
             int change = direction ? -1 : 1;
             for (int i = blankPosition; i != end; i += change) {
