@@ -13,9 +13,9 @@ public class PlayerFactory {
         }
         switch (playerType.toUpperCase(Locale.ROOT)) {
             case "LOCAL":
-                return new LocalPlayer((byte) playerID, BattleSettings.STARTING_ENERGY, BattleSettings.STARTING_MATTER, new Mothership(mothershipId), new Deck(19), new Yard());
+                return new LocalPlayer((byte) playerID, BattleSettings.STARTING_ENERGY, BattleSettings.STARTING_MATTER, new Mothership(mothershipId), new Deck(), new Yard());
             case "AUTO":
-                return new Automaton((byte) playerID, BattleSettings.STARTING_ENERGY, BattleSettings.STARTING_MATTER, new Mothership(mothershipId), new Deck(19), new Yard(), BotSettings.BotTier.AUTOMATON);
+                return new Automaton((byte) playerID, BattleSettings.STARTING_ENERGY, BattleSettings.STARTING_MATTER, new Mothership(mothershipId), new Deck(), new Yard(), BotSettings.BotTier.AUTOMATON);
         }
         return null;
     }
