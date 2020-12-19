@@ -300,7 +300,7 @@ public class Automaton extends Bot {
             } else {
                 for (Ship ship : enemy.getFleet().getShips()) {
                     if (ship != null) {
-                        if ((weakestShip == null || isBiggerShip(weakestShip, ship)) && (!checkReach || getBattle().getCombatManager().canReach(attacker, ship.getToken(), this.getFleet()))) {
+                        if ((weakestShip == null || isBiggerShip(weakestShip, ship)) && (!checkReach || getBattle().getCombatManager().canReach(attacker, ship.getToken(), enemy.getFleet()))) {
                             weakestShip = ship;
                             picked = ship.getToken();
                         }

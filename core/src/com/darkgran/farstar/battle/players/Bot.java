@@ -147,10 +147,10 @@ public abstract class Bot extends Player implements BotSettings {
 
     protected void launchDuel(Ship ship) {
         Token enemy = getEnemyTarget(ship.getToken(), true);
-        if (enemy != null && getBattle().getCombatManager().canReach(ship.getToken(), enemy, this.getFleet())) {
+        if (enemy != null && getBattle().getCombatManager().canReach(ship.getToken(), enemy, enemy.getCard().getPlayer().getFleet())) {
             getBattle().getCombatManager().getDuelManager().launchDuel(getBattle().getCombatManager(), ship.getToken(), enemy, new DuelPlayer[]{getBattle().getCombatManager().playerToDuelPlayer(ship.getPlayer())}, new DuelPlayer[]{getBattle().getCombatManager().playerToDuelPlayer(enemy.getCard().getPlayer())});
         } else {
-            report("getEnemyTarget() for Duel failed! (enemy: "+enemy+") Ending Combat."); //TODO debug
+            report("getEnemyTarget() for Duel failed! (enemy: "+enemy+") Ending Combat.");
             delayedCombatEnd();
         }
     }
