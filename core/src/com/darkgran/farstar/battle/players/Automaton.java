@@ -1,6 +1,5 @@
 package com.darkgran.farstar.battle.players;
 
-import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.DuelManager;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.gui.tokens.Token;
@@ -172,8 +171,7 @@ public class Automaton extends Bot {
                                 }
                             break;
                         case REPAIR:
-                            //TODO findWounded
-                            break;
+                            return getWoundedAlly()==null;
                         case CHANGE_RESOURCE:
                             if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
                                 Object changeInfo = effect.getEffectInfo().get(1);
@@ -192,6 +190,21 @@ public class Automaton extends Bot {
             }
         }
         return false;
+    }
+
+    private Token getWoundedAlly() {
+        if (getMs().getDamage() > getMs().getCardInfo().getDefense()/2) { //PREFERS MS BELOW 50% HEALTH
+            return getMs().getToken();
+        }
+        for (Ship ship : getFleet().getShips()) {
+            if (ship != null && ship.getDamage() > 0) {
+                return ship.getToken();
+            }
+        }
+        if (getMs().getDamage() > 0) {
+            return getMs().getToken();
+        }
+        return null;
     }
 
     private Token getAllyInDuel() {
@@ -221,15 +234,16 @@ public class Automaton extends Bot {
                 case ANY_ALLY:
                 case ALLIED_FLEET:
                     EffectType attribute = null;
-                    if (ability.getStarter() == AbilityStarter.NONE) { //in-future: check for changing all abilities (no ability givers in game atm except the ones with Attribute)
-                        for (Effect effect : ability.getEffects()) {
-                            if (effect.getEffectType() != null && effect.getEffectType() == EffectType.FIRST_STRIKE && effect.getEffectType() == EffectType.GUARD) {
-                                attribute = effect.getEffectType();
-                                break;
-                            }
-                        }
+                    if (getBattle().getAbilityManager().hasAttribute(token.getCard(), EffectType.FIRST_STRIKE)) { //in-future: check for changing all abilities (no ability givers in game atm except the ones with Attribute)
+                        attribute = EffectType.FIRST_STRIKE;
+                    } else if (getBattle().getAbilityManager().hasAttribute(token.getCard(), EffectType.GUARD)) {
+                        attribute = EffectType.GUARD;
                     }
-                    target = getAlliedTarget(token, attribute); //in-future: check against field of attributes instead of the first attribute (again, does not matter with "prototype cards")
+                    if (getBattle().getAbilityManager().hasEffectType(token.getCard(), EffectType.REPAIR)) {
+                        target = getWoundedAlly();
+                    } else {
+                        target = getAlliedTarget(token, attribute); //in-future: check against field of attributes instead of the first attribute (again, does not matter with "prototype cards")
+                    }
                     break;
                 case ANY: //expects that Upgrades cannot be used on enemies, ergo ANY must mean ANY_ENEMY (it's "ANY" only for the whims of human player)
                 case ANY_ENEMY:
