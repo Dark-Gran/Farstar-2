@@ -150,7 +150,7 @@ public abstract class Bot extends Player implements BotSettings {
         if (enemy != null && getBattle().getCombatManager().canReach(ship.getToken(), enemy, this.getFleet())) {
             getBattle().getCombatManager().getDuelManager().launchDuel(getBattle().getCombatManager(), ship.getToken(), enemy, new DuelPlayer[]{getBattle().getCombatManager().playerToDuelPlayer(ship.getPlayer())}, new DuelPlayer[]{getBattle().getCombatManager().playerToDuelPlayer(enemy.getCard().getPlayer())});
         } else {
-            report("getEnemyTarget() for Duel failed! (Probably Reach.) Ending Combat.");
+            report("getEnemyTarget() for Duel failed! (enemy: "+enemy+") Ending Combat."); //TODO debug
             delayedCombatEnd();
         }
     }
