@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.Timer;
+import com.darkgran.farstar.util.Delayer;
 
-public class IntroScreen extends SuperScreen { //Animation used only once on app-launch
+public class IntroScreen extends SuperScreen implements Delayer { //Animation used only once on app-launch
     private final Texture logo = new Texture("images/logo.jpg");
     private boolean active = false;
     private float alpha = 0;
@@ -69,14 +69,6 @@ public class IntroScreen extends SuperScreen { //Animation used only once on app
         getGame().batch.end();
 
 
-    }
-
-    private void delayAction(Runnable runnable, float timerDelay) {
-        Timer.schedule(new Timer.Task() {
-            public void run() {
-                if (runnable != null) { Gdx.app.postRunnable(runnable); }
-            }
-        }, timerDelay);
     }
 
     @Override
