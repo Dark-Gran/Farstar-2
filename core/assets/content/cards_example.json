@@ -45,7 +45,7 @@
     "cardType": "YARDPRINT",
     "tier": 2,
     "energy": 2,
-    "matter": 3,
+    "matter": 2,
     "offense": 2,
     "defense": 2,
     "offenseType": "KINETIC",
@@ -58,7 +58,7 @@
     "cardType": "YARDPRINT",
     "tier": 3,
     "energy": 3,
-    "matter": 4,
+    "matter": 3,
     "offense": 3,
     "defense": 3,
     "offenseType": "THERMAL",
@@ -71,11 +71,11 @@
     "cardType": "YARDPRINT",
     "tier": 4,
     "energy": 4,
-    "matter": 7,
+    "matter": 4,
     "offense": 4,
     "defense": 4,
-    "offenseType": "KINETIC",
-    "defenseType": "PARTICLE",
+    "offenseType": "PARTICLE",
+    "defenseType": "THERMAL",
     "abilities": [{
       "starter": "NONE",
       "targets": "NONE",
@@ -94,12 +94,12 @@
     "name": "Battleship",
     "cardType": "YARDPRINT",
     "tier": 5,
-    "energy": 4,
-    "matter": 11,
+    "energy": 5,
+    "matter": 5,
     "offense": 5,
     "defense": 5,
     "offenseType": "THERMAL",
-    "defenseType": "KINETIC",
+    "defenseType": "PARTICLE",
     "abilities": [{
       "starter": "NONE",
       "targets": "NONE",
@@ -292,10 +292,10 @@
     "name": "Kinetic Switch",
     "cardType": "TACTIC",
     "tier": 1,
-    "energy": 1,
+    "energy": 0,
     "matter": 0,
-    "offense": 1,
-    "defense": 1,
+    "offense": 0,
+    "defense": 0,
     "offenseType": "KINETIC",
     "defenseType": "KINETIC",
     "abilities": [{
@@ -310,17 +310,7 @@
         },
         {
           "effectType": "CHANGE_STAT",
-          "effectInfo": ["OFFENSE", 1],
-          "duration": 1
-        },
-        {
-          "effectType": "CHANGE_STAT",
           "effectInfo": ["DEFENSE_TYPE", "KINETIC"],
-          "duration": 1
-        },
-        {
-          "effectType": "CHANGE_STAT",
-          "effectInfo": ["DEFENSE", 1],
           "duration": 1
         }
       ]
@@ -331,10 +321,10 @@
     "name": "Thermal Switch",
     "cardType": "TACTIC",
     "tier": 1,
-    "energy": 1,
+    "energy": 0,
     "matter": 0,
-    "offense": 1,
-    "defense": 1,
+    "offense": 0,
+    "defense": 0,
     "offenseType": "THERMAL",
     "defenseType": "THERMAL",
     "abilities": [{
@@ -349,17 +339,7 @@
         },
         {
           "effectType": "CHANGE_STAT",
-          "effectInfo": ["OFFENSE", 1],
-          "duration": 1
-        },
-        {
-          "effectType": "CHANGE_STAT",
           "effectInfo": ["DEFENSE_TYPE", "THERMAL"],
-          "duration": 1
-        },
-        {
-          "effectType": "CHANGE_STAT",
-          "effectInfo": ["DEFENSE", 1],
           "duration": 1
         }
       ]
@@ -370,10 +350,10 @@
     "name": "Particle Switch",
     "cardType": "TACTIC",
     "tier": 1,
-    "energy": 1,
+    "energy": 0,
     "matter": 0,
-    "offense": 1,
-    "defense": 1,
+    "offense": 0,
+    "defense": 0,
     "offenseType": "PARTICLE",
     "defenseType": "PARTICLE",
     "abilities": [{
@@ -388,17 +368,7 @@
         },
         {
           "effectType": "CHANGE_STAT",
-          "effectInfo": ["OFFENSE", 1],
-          "duration": 1
-        },
-        {
-          "effectType": "CHANGE_STAT",
           "effectInfo": ["DEFENSE_TYPE", "PARTICLE"],
-          "duration": 1
-        },
-        {
-          "effectType": "CHANGE_STAT",
-          "effectInfo": ["DEFENSE", 1],
           "duration": 1
         }
       ]
@@ -437,7 +407,7 @@
     "cardType": "ACTION",
     "tier": 1,
     "energy": 0,
-    "matter": 4,
+    "matter": 2,
     "offense": 0,
     "defense": 0,
     "offenseType": "NONE",
@@ -449,7 +419,7 @@
       "effects": [
         {
           "effectType": "CHANGE_RESOURCE",
-          "effectInfo": ["ENERGY", 3],
+          "effectInfo": ["ENERGY", 2],
           "duration": -1
         }
       ]
@@ -460,8 +430,8 @@
     "name": "Gauss Shot",
     "cardType": "ACTION",
     "tier": 1,
-    "energy": 4,
-    "matter": 0,
+    "energy": 3,
+    "matter": 2,
     "offense": 5,
     "defense": 0,
     "offenseType": "KINETIC",
@@ -484,8 +454,8 @@
     "name": "Plasblast",
     "cardType": "ACTION",
     "tier": 1,
-    "energy": 1,
-    "matter": 1,
+    "energy": 2,
+    "matter": 2,
     "offense": 2,
     "defense": 0,
     "offenseType": "THERMAL",
@@ -532,8 +502,8 @@
     "name": "Labour Deck",
     "cardType": "SUPPORT",
     "tier": 1,
-    "energy": 1,
-    "matter": 1,
+    "energy": 2,
+    "matter": 3,
     "offense": 0,
     "defense": 3,
     "offenseType": "NONE",
