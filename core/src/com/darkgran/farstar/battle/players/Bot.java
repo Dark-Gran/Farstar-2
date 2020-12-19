@@ -8,6 +8,7 @@ import com.darkgran.farstar.battle.gui.tokens.HandToken;
 import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
+import com.darkgran.farstar.battle.players.abilities.EffectType;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Mothership;
@@ -75,7 +76,7 @@ public abstract class Bot extends Player implements BotSettings {
 
     public Token getEnemyTarget(Token attacker, boolean checkReach) { return null; }
 
-    public Token getAlliedTarget(Token caster) { return null; }
+    public Token getAlliedTarget(Token caster, EffectType effectType) { return null; }
 
     public DropTarget getDropTarget(CardType cardType) { return null; }
 

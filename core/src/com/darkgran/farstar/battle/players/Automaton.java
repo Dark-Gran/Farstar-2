@@ -3,10 +3,7 @@ package com.darkgran.farstar.battle.players;
 import com.darkgran.farstar.battle.DuelManager;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.gui.tokens.Token;
-import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
-import com.darkgran.farstar.battle.players.abilities.Effect;
-import com.darkgran.farstar.battle.players.abilities.EffectType;
-import com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics;
+import com.darkgran.farstar.battle.players.abilities.*;
 import com.darkgran.farstar.battle.players.cards.*;
 
 import java.util.ArrayList;
@@ -76,7 +73,7 @@ public class Automaton extends Bot {
             }
         } else if (targetMenu instanceof FleetMenu && (card.getCardInfo().getCardType() == CardType.UPGRADE || card.isTactic())){
             FleetMenu fleetMenu = (FleetMenu) targetMenu;
-            Token ally = getAlliedTarget(cardToToken(card, sourceMenu));
+            Token ally = getAlliedTarget(cardToToken(card, sourceMenu), null);
             for (int i = 0; i < fleetMenu.getShips().length; i++) {
                 if (fleetMenu.getShips()[i] != null) {
                     if (fleetMenu.getShips()[i].getCard() == ally.getCard()) {
@@ -196,9 +193,17 @@ public class Automaton extends Bot {
             switch (ability.getTargets()) {
                 case ANY_ALLY:
                 case ALLIED_FLEET:
-                    target = getAlliedTarget(token);
+                    EffectType attribute = null;
+                    if (ability.getStarter() == AbilityStarter.NONE) { //in-future: check for changing all abilities (no ability givers in game atm except the ones with Attribute)
+                        for (Effect effect : ability.getEffects()) {
+                            if (effect.getEffectType() != null && effect.getEffectType() == EffectType.FIRST_STRIKE && effect.getEffectType() == EffectType.GUARD) {
+
+                            }
+                        }
+                    }
+                    target = getAlliedTarget(token, attribute);
                     break;
-                case ANY: //expects that Upgrades cannot be used on enemies, ergo ANY must mean ANY_ENEMY (and it allows both only for the human player)
+                case ANY: //expects that Upgrades cannot be used on enemies, ergo ANY must mean ANY_ENEMY (it's "ANY" only for the whims of human player)
                 case ANY_ENEMY:
                 case ENEMY_FLEET:
                     target = getEnemyTarget(token, false);
@@ -214,24 +219,27 @@ public class Automaton extends Bot {
     }
 
     @Override
-    public Token getAlliedTarget(Token caster) {
+    public Token getAlliedTarget(Token caster, EffectType effectType) { //todo
         if (getFleet().isEmpty()) {
-            return getMs().getToken();
+            if (!getBattle().getAbilityManager().hasAttribute(getMs(), effectType)) {
+                return getMs().getToken();
+            }
         } else {
             Ship strongestShip = null;
             for (Ship ship : getFleet().getShips()) {
                 if (ship != null) {
                     if (strongestShip == null || isBiggerShip(ship, strongestShip)) {
-                        strongestShip = ship;
+                        if (!getBattle().getAbilityManager().hasAttribute(strongestShip, effectType)) {
+                            strongestShip = ship;
+                        }
                     }
                 }
             }
             if (strongestShip != null) {
                 return strongestShip.getToken();
-            } else {
-                return null;
             }
         }
+        return null;
     }
 
     @Override

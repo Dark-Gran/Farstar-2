@@ -152,7 +152,7 @@ public class AbilityManager {
                             }
                         }
                         if (!success) {
-                            target.getCardInfo().addAbility(newAbility);
+                            target.getCardInfo().addAbility(newAbility); //in-future: When adding Reach where it's already present, upgrade with it instead (ie. sum)
                             success = true;
                         }
                     }
@@ -281,11 +281,13 @@ public class AbilityManager {
     }
 
     public boolean hasAttribute(Card card, EffectType effectType) { //checks for abilities with "starter=NONE" (old "attributes")
-        for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
-            if (abilityInfo.getStarter() == AbilityStarter.NONE) {
-                for (Effect effect : abilityInfo.getEffects()) {
-                    if (effect.getEffectType() == effectType) {
-                        return true;
+        if (effectType != null) {
+            for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
+                if (abilityInfo.getStarter() == AbilityStarter.NONE) {
+                    for (Effect effect : abilityInfo.getEffects()) {
+                        if (effect.getEffectType() == effectType) {
+                            return true;
+                        }
                     }
                 }
             }
