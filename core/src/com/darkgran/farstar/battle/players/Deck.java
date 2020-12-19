@@ -20,7 +20,7 @@ public class Deck extends CardList {
         int[] ids = new int[]{
                 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20,
                 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20,
-                18 ,18
+                19, 19
         };
         for (int i = 0; i < getMaxSize(); i++) {
             add(new Card(Farstar.CARD_LIBRARY.getCard(ids[i]), null));
