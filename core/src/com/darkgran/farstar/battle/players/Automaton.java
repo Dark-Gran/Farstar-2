@@ -1,6 +1,5 @@
 package com.darkgran.farstar.battle.players;
 
-import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.DuelManager;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.gui.tokens.Token;
@@ -9,7 +8,6 @@ import com.darkgran.farstar.battle.players.abilities.Effect;
 import com.darkgran.farstar.battle.players.abilities.EffectType;
 import com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics;
 import com.darkgran.farstar.battle.players.cards.*;
-import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 
@@ -153,17 +151,24 @@ public class Automaton extends Bot {
                                         return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && (ally.getCardInfo().getOffense() <= 1 || enemy.getCardInfo().getDefense() < ally.getCardInfo().getOffense())) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && (enemy.getCardInfo().getOffense() <= 1 || ally.getCardInfo().getDefense() < enemy.getCardInfo().getOffense()));
                                     }
                                 }
+                            } else {
+                                //in-future: don't allow Upgrades to certain Types (= based on what the enemy has the most)
                             }
                             break;
                         case FIRST_STRIKE:
-                            //TODO
+                            if (getBattle().getCombatManager().isActive()) { //COMBAT ONLY
+                                //TODO strikePriority check
+                            } else {
+                                //TODO dont upgrade who hasAttribute() already
+                            }
                             break;
                         case REPAIR:
-                            //TODO
+                            //TODO findWounded
                             break;
                         case CHANGE_RESOURCE:
-                            //TODO
+                            //TODO dont go energy when low on matter
                             break;
+
                     }
                 }
             }
@@ -253,6 +258,7 @@ public class Automaton extends Bot {
     public void pickAbility(Token caster, Token target, DropTarget dropTarget, ArrayList<AbilityInfo> options) {
         if (options.size() > 0) {
             setPickingAbility(true);
+            //TODO: "rework"? (if there's only SR and LD, use only the second option for now?)
             if (caster.getCard().getCardInfo().getId() == BONUS_CARD_ID) {
                 getBattle().getRoundManager().processPick(options.get(1)); //atm always picks the matter
             } else {
