@@ -13,8 +13,6 @@ This time in Java. One of the main reasons to pick Adobe Air (in which the origi
 **Current goal of this project is to create an 'offline version' of the original game.**  
   
 Server Application with user registrations, matchmaking and card-trading (all features of the original game) would be added in case of a positive reception.  
-
-Currently the prototype is only in internal testing.
   
 ## Progress  
   
