@@ -16,6 +16,11 @@ Server Application with user registrations, matchmaking and card-trading (all ar
   
 ## Progress  
   
-...  
-  
-  
+~~Paper-Prototype~~  
+~~Prototype (Java + LibGDX)~~  
+~~On-screen gameplay tests and Basic AI for more tests~~  
+GFX+GUI 'import'  
+Collection and Deck Building Screen  
+Cards 'import'  
+Tutorial Pop-Up and/or 1 Tutorial Mission  
+(LAN Multiplayer)
