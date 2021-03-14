@@ -14,6 +14,7 @@ This time in Java. One of the main reasons to pick Adobe Air (in which the origi
   
 Server Application with user registrations, matchmaking and card-trading (all are features of the original game) would be added in case of a positive reception.  
   
+  
 ## Progress  
   
 ~~Paper-Prototype~~  
@@ -21,6 +22,7 @@ Server Application with user registrations, matchmaking and card-trading (all ar
 ~~On-screen gameplay tests and Basic AI for more tests~~  
 GFX+GUI 'import'  
 Collection and Deck Building Screen  
-Cards 'import'  
+Remaining Cards ('import')  
 Tutorial Pop-Up and/or 1 Tutorial Mission  
-(LAN Multiplayer)
+(LAN Multiplayer)  
+  
