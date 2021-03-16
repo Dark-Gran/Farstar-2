@@ -15,7 +15,7 @@ This time in Java. One of the main reasons to pick Adobe Air (in which the origi
   
 **_Current goal of this project is to create an 'offline version' of the original game._**  
   
-Server Application with user registrations, matchmaking and card-trading (all are features of the original game) would be added in a case of a positive reception.  
+Server Application with user registrations, matchmaking and card-trading (all are features of the original game) would be added in case of a positive reception.  
   
 ~~Paper-Prototype~~  
 ~~Prototype (Java + LibGDX)~~  
