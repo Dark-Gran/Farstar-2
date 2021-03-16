@@ -4,7 +4,7 @@ For the original game, see [Farstar: Exodus](https://github.com/Dark-Gran/Farsta
   
 ## About Project  
   
-I've always enjoyed card games (both collectible and 'classic'), so after an attempt to merge them with a strategy genre, I decided to make a game that actually fits the 'card game' description.  
+I've always enjoyed card games (both collectible and 'classic'), so after an attempt to merge them with a strategy genre, I've decided to make a game that actually fits the 'card game' description.  
   
 With that in mind (and with feedback in hands), game's rules have been _drastically_ changed, therefore the entire application is being 'rewritten' from the scratch.  
   
