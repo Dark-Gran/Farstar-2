@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public abstract class SuperScreen implements Screen {
     private Farstar game;
     private OrthographicCamera camera = new OrthographicCamera();
-    private Viewport viewport = new FitViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);
+    private Viewport viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);
     private TableStage tableStage;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
 
@@ -54,16 +54,17 @@ public abstract class SuperScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         if (tableStage != null) { //should persist over all screens
+            tableStage.drawBackground(game.batch);
             tableStage.act(delta);
             tableStage.draw();
         }
 
         drawMenus(delta);
 
-        getGame().batch.begin();
-        getGame().batch.setColor(1, 1, 1, 1);
-        drawContent(delta, getGame().batch);
-        getGame().batch.end();
+        game.batch.begin();
+        game.batch.setColor(1, 1, 1, 1);
+        drawContent(delta, game.batch);
+        game.batch.end();
 
     }
 
