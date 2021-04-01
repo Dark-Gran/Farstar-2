@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.darkgran.farstar.battle.CardLibrary;
 
 public class Farstar extends Game {
-	public static final int STAGE_WIDTH = 1280;
-	public static final int STAGE_HEIGHT = 640;
+	public static final int STAGE_WIDTH = 1920;
+	public static final int STAGE_HEIGHT = 960;
 	public static final CardLibrary CARD_LIBRARY = new CardLibrary();
 	private final InputMultiplexer inputMultiplexer = new InputMultiplexer();
 	protected SuperScreen superScreen;
