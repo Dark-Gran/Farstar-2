@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		config.width = 1280;
 		config.height = 640;
 		config.foregroundFPS = 60;
-		config.resizable = false;
+		config.resizable = true;
 		config.fullscreen = false;
 		new LwjglApplication(new Farstar(), config);
 	}
