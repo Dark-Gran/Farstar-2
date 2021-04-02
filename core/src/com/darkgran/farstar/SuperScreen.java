@@ -1,6 +1,7 @@
 package com.darkgran.farstar;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -46,6 +47,15 @@ public abstract class SuperScreen implements Screen {
     }
 
     public ShapeRenderer getDebugRenderer() { return debugRenderer; }
+
+    public static void switchFullscreen() {
+        Graphics.DisplayMode currentMode = Gdx.graphics.getDisplayMode();
+        if (Gdx.graphics.isFullscreen()) {
+            Gdx.graphics.setWindowedMode(currentMode.width, currentMode.height);
+        } else {
+            Gdx.graphics.setFullscreenMode(currentMode);
+        }
+    }
 
     @Override
     public void render(float delta) {
