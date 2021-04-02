@@ -25,6 +25,7 @@ public abstract class SuperScreen implements Screen {
 
     protected void setTableMenu(TableStage tableStage) {
         this.tableStage = tableStage;
+        this.tableStage.setViewport(viewport);
         if (!game.getInputMultiplexer().getProcessors().contains(tableStage, true)) {
             game.getInputMultiplexer().addProcessor(tableStage);
         }
