@@ -18,8 +18,8 @@ public class TableStage extends ListeningStage {
 
     public TableStage(final Farstar game, Viewport viewport) {
         super(game, viewport);
-        exitButton.setBounds(1, 1, (float) Farstar.STAGE_WIDTH/40,(float) Farstar.STAGE_HEIGHT/20);
-        this.addActor(exitButton);
+        exitButton.setBounds(Farstar.STAGE_WIDTH - Farstar.STAGE_WIDTH/24.5f, Farstar.STAGE_HEIGHT/14.5f, (float) (Farstar.STAGE_WIDTH/20), (float) (Farstar.STAGE_HEIGHT/20));
+        addActor(exitButton);
         setupListeners();
     }
 
