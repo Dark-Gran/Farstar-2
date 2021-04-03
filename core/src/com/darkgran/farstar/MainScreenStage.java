@@ -12,17 +12,19 @@ import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.PlayerFactory;
 
 public class MainScreenStage extends ListeningStage {
-    private final Texture start = new Texture("images/start.png");
-    private final ImageButton startButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(start)));
-    private final ImageButton botButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(start)));
-    private final ImageButton simButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(start)));
+    private final Texture solitary = new Texture("images/solitary.png");
+    private final Texture skirmish = new Texture("images/skirmish.png");
+    private final Texture sim = new Texture("images/sim.png");
+    private final ImageButton startButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(solitary)));
+    private final ImageButton botButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(skirmish)));
+    private final ImageButton simButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(sim)));
     private final PlayerFactory playerFactory = new PlayerFactory();
 
     public MainScreenStage(final Farstar game, Viewport viewport) {
         super(game, viewport);
-        startButton.setPosition((float) (Farstar.STAGE_WIDTH/2-start.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2+start.getHeight()));
-        botButton.setPosition((float) (Farstar.STAGE_WIDTH/2-start.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2));
-        simButton.setPosition((float) (Farstar.STAGE_WIDTH/2-start.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-start.getHeight()));
+        startButton.setPosition((float) (Farstar.STAGE_WIDTH/2-solitary.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2+solitary.getHeight()));
+        botButton.setPosition((float) (Farstar.STAGE_WIDTH/2-solitary.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2));
+        simButton.setPosition((float) (Farstar.STAGE_WIDTH/2-solitary.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-solitary.getHeight()));
         this.addActor(startButton);
         this.addActor(botButton);
         this.addActor(simButton);
@@ -66,7 +68,9 @@ public class MainScreenStage extends ListeningStage {
     @Override
     public void dispose() {
         startButton.removeListener(startButton.getClickListener());
-        start.dispose();
+        solitary.dispose();
+        sim.dispose();
+        skirmish.dispose();
         super.dispose();
     }
 }
