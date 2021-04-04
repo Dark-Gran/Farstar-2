@@ -12,6 +12,7 @@ public class MainScreen extends SuperScreen {
     private final MainScreenStage menu = new MainScreenStage(getGame(), getViewport());
     private final Texture FSLogo = new Texture("images/FSLogo.png");
     private final VersionInfo versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.329f, 0.553f, 1, 1));
+    private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.15), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.329f, 0.553f, 1, 1));
 
     public MainScreen(final Farstar game, TableStage tableMenu) {
         super(game);
@@ -25,6 +26,7 @@ public class MainScreen extends SuperScreen {
     protected void drawContent(float delta, Batch batch) {
         batch.draw(FSLogo, (float) (Farstar.STAGE_WIDTH/2-FSLogo.getWidth()/2), (float) (Farstar.STAGE_HEIGHT*0.78));
         versionInfo.draw(batch);
+        perfMeter.draw(batch);
     }
 
     @Override
@@ -38,5 +40,7 @@ public class MainScreen extends SuperScreen {
         getGame().getInputMultiplexer().removeProcessor(menu);
         menu.dispose();
         FSLogo.dispose();
+        versionInfo.dispose();
+        perfMeter.dispose();
     }
 }
