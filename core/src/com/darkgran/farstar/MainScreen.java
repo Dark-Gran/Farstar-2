@@ -18,7 +18,7 @@ public class MainScreen extends SuperScreen {
 
     @Override
     protected void drawContent(float delta, Batch batch) {
-        batch.draw(FSLogo, Farstar.STAGE_WIDTH/2f-FSLogo.getWidth()/2f, Farstar.STAGE_HEIGHT*0.78f);
+        batch.draw(FSLogo, (float) (Farstar.STAGE_WIDTH/2-FSLogo.getWidth()/2), (float) (Farstar.STAGE_HEIGHT*0.78));
     }
 
     @Override
