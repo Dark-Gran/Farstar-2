@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 public interface TextDrawer {
     Color fontColor = new Color();
 
+    void draw(Batch batch);
+
     default void draw(BitmapFont font, Batch batch, float x, float y, String txt) {
         font.draw(batch, txt, x, y);
     }

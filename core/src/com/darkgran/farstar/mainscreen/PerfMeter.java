@@ -14,6 +14,7 @@ public class PerfMeter extends JustFont implements TextDrawer {
         setFontColor(fontColor);
     }
 
+    @Override
     public void draw(Batch batch) {
         String txt = "...";
         draw(getFont(), batch, getX(), getY(), txt, fontColor);
