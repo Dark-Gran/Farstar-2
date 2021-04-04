@@ -11,7 +11,7 @@ import com.darkgran.farstar.TableStage;
 public class MainScreen extends SuperScreen {
     private final MainScreenStage menu = new MainScreenStage(getGame(), getViewport());
     private final Texture FSLogo = new Texture("images/FSLogo.png");
-    private final VersionInfo versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.87), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0x548dff));
+    private final VersionInfo versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.329f, 0.553f, 1, 1));
 
     public MainScreen(final Farstar game, TableStage tableMenu) {
         super(game);

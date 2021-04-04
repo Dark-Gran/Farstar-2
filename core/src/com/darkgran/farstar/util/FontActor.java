@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public abstract class FontActor extends Actor {
     private BitmapFont font = new BitmapFont();
 
+    public void setFont(BitmapFont font) { this.font = font; }
+
     public BitmapFont getFont() { return font; }
 
 }
