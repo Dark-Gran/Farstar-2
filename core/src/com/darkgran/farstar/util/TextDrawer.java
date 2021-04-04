@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public interface TextDrawer {
+    Color fontColor = new Color();
 
     default void draw(BitmapFont font, Batch batch, float x, float y, String txt) {
         font.draw(batch, txt, x, y);
@@ -14,5 +15,9 @@ public interface TextDrawer {
         font.setColor(color);
         font.draw(batch, txt, x, y);
     }
+
+    default Color getFontColor() { return fontColor; }
+
+    default void setFontColor(Color fontColor) { this.fontColor.set(fontColor); }
 
 }
