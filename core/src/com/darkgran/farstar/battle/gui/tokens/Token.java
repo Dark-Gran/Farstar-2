@@ -72,6 +72,7 @@ public class Token extends FontActor {
                 cardListMenu.getCardList().remove(getCard());
             }
         }
+        dispose();
     }
 
     public void addCardToJunk() {
