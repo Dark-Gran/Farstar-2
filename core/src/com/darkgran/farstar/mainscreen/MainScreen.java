@@ -1,8 +1,11 @@
-package com.darkgran.farstar;
+package com.darkgran.farstar.mainscreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.SuperScreen;
+import com.darkgran.farstar.TableStage;
 
 public class MainScreen extends SuperScreen {
     private final MainScreenStage menu = new MainScreenStage(getGame(), getViewport());

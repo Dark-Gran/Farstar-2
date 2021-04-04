@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.darkgran.farstar.mainscreen.MainScreen;
 import com.darkgran.farstar.util.Delayer;
 
 public class IntroScreen extends SuperScreen implements Delayer { //Animation used only once on app-launch
