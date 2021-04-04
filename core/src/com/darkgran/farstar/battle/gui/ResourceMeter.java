@@ -11,6 +11,7 @@ public class ResourceMeter extends FontActor {
     private final boolean onBottom;
 
     public ResourceMeter(Player player, boolean onBottom, float x, float y) {
+        super("");
         this.player = player;
         this.onBottom = onBottom;
         String res = "Population: 999";

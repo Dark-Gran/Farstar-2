@@ -9,6 +9,7 @@ public class VersionInfo extends FontActor implements TextDrawer {
     private Color fontColor;
 
     public VersionInfo(float x, float y, Color fontColor) {
+        super("fonts/barlow24.fnt");
         setX(x);
         setY(y);
         this.fontColor = fontColor;
@@ -16,7 +17,7 @@ public class VersionInfo extends FontActor implements TextDrawer {
 
     public void draw(Batch batch) {
         String txt = "v0.2 (Alpha)";
-        draw(getBarlow24(), batch, getX(), getY(), txt, fontColor);
+        draw(getFont(), batch, getX(), getY(), txt, fontColor);
     }
 
     public Color getFontColor() {

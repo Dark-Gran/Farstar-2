@@ -25,6 +25,7 @@ public class Token extends FontActor {
     private final CardListMenu cardListMenu;
 
     public Token(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu){
+        super("");
         this.card = card;
         String res = "Battlestation";
         GlyphLayout layout = new GlyphLayout();
