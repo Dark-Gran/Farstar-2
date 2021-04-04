@@ -1,9 +1,7 @@
 package com.darkgran.farstar.mainscreen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.darkgran.farstar.util.FontActor;
 import com.darkgran.farstar.util.TextDrawer;
 
@@ -14,12 +12,11 @@ public class VersionInfo extends FontActor implements TextDrawer {
         setX(x);
         setY(y);
         this.fontColor = fontColor;
-        setFont(new BitmapFont(Gdx.files.internal("fonts/barlow24.fnt")));
     }
 
     public void draw(Batch batch) {
         String txt = "v0.2 (Alpha)";
-        draw(getFont(), batch, getX(), getY(), txt, fontColor);
+        draw(getBarlow24(), batch, getX(), getY(), txt, fontColor);
     }
 
     public Color getFontColor() {
@@ -29,4 +26,5 @@ public class VersionInfo extends FontActor implements TextDrawer {
     public void setFontColor(Color fontColor) {
         this.fontColor = fontColor;
     }
+
 }
