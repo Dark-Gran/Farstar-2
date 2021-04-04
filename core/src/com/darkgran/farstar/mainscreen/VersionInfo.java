@@ -15,7 +15,7 @@ public class VersionInfo extends FontActor implements TextDrawer {
     }
 
     public void draw(Batch batch) {
-        String txt = "v.0.1 (Alpha)";
+        String txt = "v0.2 (Alpha)";
         draw(getFont(), batch, getX(), getY(), txt, fontColor);
     }
 
