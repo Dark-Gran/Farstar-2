@@ -31,7 +31,6 @@ public class BattleStage1V1 extends BattleStage {
     private final JunkButton junkButton2;
     private final SupportMenu supportMenu1;
     private final SupportMenu supportMenu2;
-    private final AbilityPicker abilityPicker;
 
     public BattleStage1V1(Farstar game, Viewport viewport, BattleScreen battleScreen, DuelMenu duelMenu, Player player1, Player player2) {
         super(game, viewport, battleScreen, duelMenu);
@@ -71,9 +70,6 @@ public class BattleStage1V1 extends BattleStage {
         supportMenu2 = new SupportMenu(player2.getSupports(), Farstar.STAGE_WIDTH*1/3, Farstar.STAGE_HEIGHT*4/6, Farstar.STAGE_WIDTH*3/7, Farstar.STAGE_HEIGHT/7, true, this, player2);
         addDropTarget(supportMenu1);
         addDropTarget(supportMenu2);
-        //AbilityPicker ("Hybrid")
-        abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/3, this, null, getYardPic());
-        getBattleScreen().getBattle().getRoundManager().setAbilityPicker(abilityPicker);
         //Finish
         setupListeners();
     }
@@ -97,7 +93,6 @@ public class BattleStage1V1 extends BattleStage {
         drawTokenMenu(supportMenu2, batch);
         if (DEBUG_RENDER) { getBattleScreen().drawDebugSimpleBox2(supportMenu1.getSimpleBox2(), getBattleScreen().getDebugRenderer(), batch); }
         if (DEBUG_RENDER) { getBattleScreen().drawDebugSimpleBox2(supportMenu2.getSimpleBox2(), getBattleScreen().getDebugRenderer(), batch); }
-        abilityPicker.draw();
     }
 
     @Override
@@ -135,7 +130,6 @@ public class BattleStage1V1 extends BattleStage {
         yardMenu2.dispose();
         mothershipToken1.dispose();
         mothershipToken2.dispose();
-        abilityPicker.dispose();
         resourceMeter1.dispose();
         resourceMeter2.dispose();
         fleetMenu1.dispose();

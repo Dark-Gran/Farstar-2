@@ -35,6 +35,7 @@ public abstract class BattleStage extends ListeningStage {
     private final Texture combatEndPic = new Texture("images/combat_end.png");
     private final ImageButton combatEndButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(combatEndPic)));
     private ArrayList<DropTarget> dropTargets = new ArrayList<>();
+    private final AbilityPicker abilityPicker;
 
     public final static int TOKEN_WIDTH = 78; //future: (re)move
 
@@ -43,6 +44,9 @@ public abstract class BattleStage extends ListeningStage {
         this.battleScreen = battleScreen;
         this.duelMenu = duelMenu;
         combatEndButton.setBounds(Farstar.STAGE_WIDTH*3/4, Farstar.STAGE_HEIGHT*1/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
+        //AbilityPicker ("Hybrid")
+        abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/3, this, null, getYardPic());
+        battleScreen.getBattle().getRoundManager().setAbilityPicker(abilityPicker);
     }
 
     @Override
@@ -108,6 +112,7 @@ public abstract class BattleStage extends ListeningStage {
 
     public void drawBattleStage(float delta, Batch batch) {
         if (fakeToken != null) { fakeToken.draw(batch); }
+        abilityPicker.draw();
     }
 
     public void drawTokenMenu(CardListMenu cardListMenu, Batch batch) {
@@ -226,6 +231,7 @@ public abstract class BattleStage extends ListeningStage {
         turn.dispose();
         combatEndPic.dispose();
         yardPic.dispose();
+        abilityPicker.dispose();
         super.dispose();
     }
 
