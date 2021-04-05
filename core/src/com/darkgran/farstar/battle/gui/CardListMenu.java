@@ -43,4 +43,10 @@ public abstract class CardListMenu extends BaseMenu {
 
     public CardList getCardList() { return cardList; }
 
+    public void dispose() {
+        for (Token token : tokens) {
+            if (token != null) { token.dispose(); }
+        }
+    }
+
 }

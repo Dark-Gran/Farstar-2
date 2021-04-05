@@ -127,6 +127,12 @@ public class BattleStage1V1 extends BattleStage {
         yardButton1.remove();
         yardButton2.removeListener(yardButton2.getClickListener());
         yardButton2.remove();
+        handMenu1.dispose();
+        handMenu2.dispose();
+        supportMenu1.dispose();
+        supportMenu2.dispose();
+        yardMenu1.dispose();
+        yardMenu2.dispose();
         abilityPicker.dispose();
         super.dispose();
     }
