@@ -15,6 +15,7 @@ import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.PlayerFactory;
 
 public class MainScreenStage extends ListeningStage {
+    private final PlayerFactory playerFactory = new PlayerFactory();
     private final Texture solitary = new Texture("images/solitary.png");
     private final Texture skirmish = new Texture("images/skirmish.png");
     private final Texture sim = new Texture("images/sim.png");
@@ -23,7 +24,9 @@ public class MainScreenStage extends ListeningStage {
     private final ImageButton botButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(skirmish)));
     private final ImageButton simButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(sim)));
     private final ImageButton webButton = new ImageButton(new TextureRegionDrawable((new TextureRegion(web))));
-    private final PlayerFactory playerFactory = new PlayerFactory();
+    private final Texture FSLogo = new Texture("images/FSLogo.png");
+    private final VersionInfo versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.329f, 0.553f, 1, 1));
+    private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.085), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.329f, 0.553f, 1, 1));
 
     public MainScreenStage(final Farstar game, Viewport viewport) {
         super(game, viewport);
@@ -36,6 +39,16 @@ public class MainScreenStage extends ListeningStage {
         this.addActor(simButton);
         this.addActor(webButton);
         setupListeners();
+    }
+
+    @Override
+    public void draw() {
+        super.draw();
+        getBatch().begin();
+        getBatch().draw(FSLogo, (float) (Farstar.STAGE_WIDTH/2-FSLogo.getWidth()/2), (float) (Farstar.STAGE_HEIGHT*0.78));
+        versionInfo.draw(getBatch());
+        perfMeter.draw(getBatch());
+        getBatch().end();
     }
 
     @Override
@@ -87,6 +100,9 @@ public class MainScreenStage extends ListeningStage {
         sim.dispose();
         skirmish.dispose();
         web.dispose();
+        FSLogo.dispose();
+        versionInfo.dispose();
+        perfMeter.dispose();
         super.dispose();
     }
 }
