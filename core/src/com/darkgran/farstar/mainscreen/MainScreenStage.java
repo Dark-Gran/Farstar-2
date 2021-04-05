@@ -1,5 +1,6 @@
 package com.darkgran.farstar.mainscreen;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,9 +18,11 @@ public class MainScreenStage extends ListeningStage {
     private final Texture solitary = new Texture("images/solitary.png");
     private final Texture skirmish = new Texture("images/skirmish.png");
     private final Texture sim = new Texture("images/sim.png");
+    private final Texture web = new Texture("images/web.png");
     private final ImageButton startButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(solitary)));
     private final ImageButton botButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(skirmish)));
     private final ImageButton simButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(sim)));
+    private final ImageButton webButton = new ImageButton(new TextureRegionDrawable((new TextureRegion(web))));
     private final PlayerFactory playerFactory = new PlayerFactory();
 
     public MainScreenStage(final Farstar game, Viewport viewport) {
@@ -27,9 +30,11 @@ public class MainScreenStage extends ListeningStage {
         botButton.setPosition((float) (Farstar.STAGE_WIDTH/2-solitary.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2+solitary.getHeight()/2));
         simButton.setPosition((float) (Farstar.STAGE_WIDTH/2-solitary.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-solitary.getHeight()/2));
         startButton.setPosition((float) (Farstar.STAGE_WIDTH/2-solitary.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-solitary.getHeight()*1.5));
+        webButton.setPosition((float) (Farstar.STAGE_WIDTH*0.085), (float) (Farstar.STAGE_HEIGHT*0.015));
         this.addActor(startButton);
         this.addActor(botButton);
         this.addActor(simButton);
+        this.addActor(webButton);
         setupListeners();
     }
 
@@ -62,14 +67,26 @@ public class MainScreenStage extends ListeningStage {
                 getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("AUTO", 1, 0), playerFactory.getPlayer("AUTO", 2, 15))));
             }
         });
+        webButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                System.out.println("LinkButton Click"); //TODO
+            }
+        });
     }
 
     @Override
     public void dispose() {
         startButton.removeListener(startButton.getClickListener());
+        botButton.removeListener(botButton.getClickListener());
+        simButton.removeListener(simButton.getClickListener());
+        webButton.removeListener(webButton.getClickListener());
         solitary.dispose();
         sim.dispose();
         skirmish.dispose();
+        web.dispose();
         super.dispose();
     }
 }
