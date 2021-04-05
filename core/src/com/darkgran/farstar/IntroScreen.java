@@ -25,7 +25,6 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
 
     private void endIntro() {
         Gdx.input.setInputProcessor(getGame().getInputMultiplexer());
-        this.dispose();
         getGame().setScreen(new MainScreen(getGame(), new TableStage(getGame(), getViewport())));
     }
 

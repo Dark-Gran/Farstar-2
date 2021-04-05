@@ -41,7 +41,6 @@ public class MainScreenStage extends ListeningStage {
             public void clicked(InputEvent event, float x, float y)
             {
                 System.out.println("Starting Solitary.");
-                getGame().getScreen().dispose();
                 getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0), playerFactory.getPlayer("LOCAL", 2, 15))));
             }
         });
@@ -51,7 +50,6 @@ public class MainScreenStage extends ListeningStage {
             public void clicked(InputEvent event, float x, float y)
             {
                 System.out.println("Starting Skirmish.");
-                getGame().getScreen().dispose();
                 getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0), playerFactory.getPlayer("AUTO", 2, 15))));
             }
         });
@@ -61,7 +59,6 @@ public class MainScreenStage extends ListeningStage {
             public void clicked(InputEvent event, float x, float y)
             {
                 System.out.println("Starting Simulation.");
-                getGame().getScreen().dispose();
                 getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("AUTO", 1, 0), playerFactory.getPlayer("AUTO", 2, 15))));
             }
         });

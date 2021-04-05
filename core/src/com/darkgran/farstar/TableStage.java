@@ -68,7 +68,6 @@ public class TableStage extends ListeningStage {
                     System.exit(0);
                 } else  {
                     final TableStage tableMenu =  getGame().getSuperScreen().getTableMenu();
-                    getGame().getScreen().dispose();
                     getGame().setScreen(new MainScreen(getGame(), tableMenu));
                 }
 
