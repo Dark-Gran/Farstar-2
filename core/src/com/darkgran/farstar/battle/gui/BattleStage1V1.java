@@ -133,7 +133,13 @@ public class BattleStage1V1 extends BattleStage {
         supportMenu2.dispose();
         yardMenu1.dispose();
         yardMenu2.dispose();
+        mothershipToken1.dispose();
+        mothershipToken2.dispose();
         abilityPicker.dispose();
+        resourceMeter1.dispose();
+        resourceMeter2.dispose();
+        fleetMenu1.dispose();
+        fleetMenu2.dispose();
         super.dispose();
     }
 }

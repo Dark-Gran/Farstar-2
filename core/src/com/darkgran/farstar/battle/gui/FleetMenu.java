@@ -51,6 +51,12 @@ public class FleetMenu extends BaseMenu implements DropTarget {
 
     public Token[] getShips() { return ships; }
 
+    public void dispose() {
+        for (FleetToken ship : ships) {
+            if (ship != null) { ship.dispose(); }
+        }
+    }
+
     @Override
     public void setupSimpleBox2(float x, float y, float height, float width) {
         simpleBox2.setX(x);
