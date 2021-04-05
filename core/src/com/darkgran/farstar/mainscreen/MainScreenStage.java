@@ -33,7 +33,7 @@ public class MainScreenStage extends ListeningStage {
         botButton.setPosition((float) (Farstar.STAGE_WIDTH/2-solitary.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2+solitary.getHeight()/2));
         simButton.setPosition((float) (Farstar.STAGE_WIDTH/2-solitary.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-solitary.getHeight()/2));
         startButton.setPosition((float) (Farstar.STAGE_WIDTH/2-solitary.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-solitary.getHeight()*1.5));
-        webButton.setPosition((float) (Farstar.STAGE_WIDTH*0.085), (float) (Farstar.STAGE_HEIGHT*0.015));
+        webButton.setPosition((float) (Farstar.STAGE_WIDTH*0.054), (float) (Farstar.STAGE_HEIGHT*0.005));
         this.addActor(startButton);
         this.addActor(botButton);
         this.addActor(simButton);
