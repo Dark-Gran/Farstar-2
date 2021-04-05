@@ -25,8 +25,8 @@ public class MainScreenStage extends ListeningStage {
     private final ImageButton simButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(sim)));
     private final ImageButton webButton = new ImageButton(new TextureRegionDrawable((new TextureRegion(web))));
     private final Texture FSLogo = new Texture("images/FSLogo.png");
-    private final VersionInfo versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.329f, 0.553f, 1, 1));
-    private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.085), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.329f, 0.553f, 1, 1));
+    private final VersionInfo versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.31f, 0.498f, 0.706f, 1));
+    private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.085), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.31f, 0.498f, 0.706f, 1));
 
     public MainScreenStage(final Farstar game, Viewport viewport) {
         super(game, viewport);
@@ -45,7 +45,7 @@ public class MainScreenStage extends ListeningStage {
     public void draw() {
         super.draw();
         getBatch().begin();
-        getBatch().draw(FSLogo, (float) (Farstar.STAGE_WIDTH/2-FSLogo.getWidth()/2), (float) (Farstar.STAGE_HEIGHT*0.78));
+        getBatch().draw(FSLogo, (float) (Farstar.STAGE_WIDTH/2-FSLogo.getWidth()/2), (float) (Farstar.STAGE_HEIGHT*0.8));
         versionInfo.draw(getBatch());
         perfMeter.draw(getBatch());
         getBatch().end();
