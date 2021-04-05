@@ -2,6 +2,7 @@ package com.darkgran.farstar.mainscreen;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.util.FontActor;
 import com.darkgran.farstar.util.TextDrawer;
 
@@ -16,8 +17,7 @@ public class VersionInfo extends FontActor implements TextDrawer {
 
     @Override
     public void draw(Batch batch) {
-        String txt = "v0.2 (Alpha)";
-        draw(getFont(), batch, getX(), getY(), txt, fontColor);
+        draw(getFont(), batch, getX(), getY(), Farstar.APP_VERSION, fontColor);
     }
 
 }
