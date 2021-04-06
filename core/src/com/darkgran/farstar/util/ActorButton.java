@@ -7,18 +7,18 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 
-public class SimpleButton extends Actor {
+public class ActorButton extends Actor {
     private final Texture imageUp;
     private final Texture imageOver;
     private final ClickListener clickListener = new ClickListener(){
         @Override
         public void clicked(InputEvent event, float x, float y)
         {
-            SimpleButton.this.clicked();
+            ActorButton.this.clicked();
         }
     };
 
-    public SimpleButton(Texture imageUp, Texture imageOver) {
+    public ActorButton(Texture imageUp, Texture imageOver) {
         this.imageUp = imageUp;
         this.imageOver = imageOver;
         setWidth(imageOver.getWidth());

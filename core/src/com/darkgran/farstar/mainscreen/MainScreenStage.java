@@ -8,7 +8,7 @@ import com.darkgran.farstar.ListeningStage;
 import com.darkgran.farstar.battle.Battle1v1;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.PlayerFactory;
-import com.darkgran.farstar.util.SimpleButton;
+import com.darkgran.farstar.util.ActorButton;
 
 public class MainScreenStage extends ListeningStage {
     private final PlayerFactory playerFactory = new PlayerFactory();
@@ -24,28 +24,28 @@ public class MainScreenStage extends ListeningStage {
     private final VersionInfo versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.31f, 0.498f, 0.706f, 1));
     private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.085), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.31f, 0.498f, 0.706f, 1));
 
-    private final SimpleButton startButton = new SimpleButton(solitary, solitaryO){
+    private final ActorButton startButton = new ActorButton(solitary, solitaryO){
         @Override
         public void clicked() {
             System.out.println("Starting Solitary.");
             getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0), playerFactory.getPlayer("LOCAL", 2, 15))));
         }
     };
-    private final SimpleButton botButton = new SimpleButton(skirmish, skirmishO){
+    private final ActorButton botButton = new ActorButton(skirmish, skirmishO){
         @Override
         public void clicked() {
             System.out.println("Starting Skirmish.");
             getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0), playerFactory.getPlayer("AUTO", 2, 15))));
         }
     };
-    private final SimpleButton simButton = new SimpleButton(sim, simO){
+    private final ActorButton simButton = new ActorButton(sim, simO){
         @Override
         public void clicked() {
             System.out.println("Starting Simulation.");
             getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("AUTO", 1, 0), playerFactory.getPlayer("AUTO", 2, 15))));
         }
     };
-    private final SimpleButton webButton = new SimpleButton(web, webO){
+    private final ActorButton webButton = new ActorButton(web, webO){
         @Override
         public void clicked() {
             System.out.println("LinkButton Click"); //TODO
