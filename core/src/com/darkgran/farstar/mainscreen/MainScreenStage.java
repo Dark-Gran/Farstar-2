@@ -1,5 +1,6 @@
 package com.darkgran.farstar.mainscreen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -48,7 +49,8 @@ public class MainScreenStage extends ListeningStage {
     private final ActorButton webButton = new ActorButton(web, webO){
         @Override
         public void clicked() {
-            System.out.println("LinkButton Click"); //TODO
+            System.out.println("Opening Web-Browser.");
+            Gdx.net.openURI("https://github.com/Dark-Gran/Farstar-2");
         }
     };
 
