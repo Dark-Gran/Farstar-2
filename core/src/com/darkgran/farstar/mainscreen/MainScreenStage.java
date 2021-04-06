@@ -16,32 +16,36 @@ public class MainScreenStage extends ListeningStage {
     private final Texture skirmish = new Texture("images/skirmish.png");
     private final Texture sim = new Texture("images/sim.png");
     private final Texture web = new Texture("images/web.png");
+    private final Texture solitaryO = new Texture("images/solitaryO.png");
+    private final Texture skirmishO = new Texture("images/skirmishO.png");
+    private final Texture simO = new Texture("images/simO.png");
+    private final Texture webO = new Texture("images/webO.png");
     private final Texture FSLogo = new Texture("images/FSLogo.png");
     private final VersionInfo versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.31f, 0.498f, 0.706f, 1));
     private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.085), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.31f, 0.498f, 0.706f, 1));
 
-    private final SimpleButton startButton = new SimpleButton(solitary, solitary){
+    private final SimpleButton startButton = new SimpleButton(solitary, solitaryO){
         @Override
         public void clicked() {
             System.out.println("Starting Solitary.");
             getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0), playerFactory.getPlayer("LOCAL", 2, 15))));
         }
     };
-    private final SimpleButton botButton = new SimpleButton(skirmish, skirmish){
+    private final SimpleButton botButton = new SimpleButton(skirmish, skirmishO){
         @Override
         public void clicked() {
             System.out.println("Starting Skirmish.");
             getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0), playerFactory.getPlayer("AUTO", 2, 15))));
         }
     };
-    private final SimpleButton simButton = new SimpleButton(sim, sim){
+    private final SimpleButton simButton = new SimpleButton(sim, simO){
         @Override
         public void clicked() {
             System.out.println("Starting Simulation.");
             getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("AUTO", 1, 0), playerFactory.getPlayer("AUTO", 2, 15))));
         }
     };
-    private final SimpleButton webButton = new SimpleButton(web, web){
+    private final SimpleButton webButton = new SimpleButton(web, webO){
         @Override
         public void clicked() {
             System.out.println("LinkButton Click"); //TODO
