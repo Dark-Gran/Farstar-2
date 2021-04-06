@@ -22,7 +22,7 @@ public class MainScreenStage extends ListeningStage {
     private final Texture webO = new Texture("images/webO.png");
     private final Texture FSLogo = new Texture("images/FSLogo.png");
     private final VersionInfo versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.31f, 0.498f, 0.706f, 1));
-    private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.085), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.31f, 0.498f, 0.706f, 1));
+    private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.0885), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.31f, 0.498f, 0.706f, 1));
 
     private final ActorButton startButton = new ActorButton(solitary, solitaryO){
         @Override
@@ -57,7 +57,7 @@ public class MainScreenStage extends ListeningStage {
         botButton.setPosition((float) (Farstar.STAGE_WIDTH/2-solitary.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2+solitary.getHeight()/2));
         simButton.setPosition((float) (Farstar.STAGE_WIDTH/2-solitary.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-solitary.getHeight()/2));
         startButton.setPosition((float) (Farstar.STAGE_WIDTH/2-solitary.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-solitary.getHeight()*1.5));
-        webButton.setPosition((float) (Farstar.STAGE_WIDTH*0.054), (float) (Farstar.STAGE_HEIGHT*0.005));
+        webButton.setPosition((float) (Farstar.STAGE_WIDTH*0.0725), (float) (Farstar.STAGE_HEIGHT*0.012));
         this.addActor(startButton);
         this.addActor(botButton);
         this.addActor(simButton);
