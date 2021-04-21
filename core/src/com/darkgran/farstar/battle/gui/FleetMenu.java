@@ -42,7 +42,6 @@ public class FleetMenu extends BaseMenu implements DropTarget {
         return ships[position];
     }
 
-
     public void removeShip(int position) {
         ships[position] = null;
     }
@@ -50,12 +49,6 @@ public class FleetMenu extends BaseMenu implements DropTarget {
     public Fleet getFleet() { return fleet; }
 
     public Token[] getShips() { return ships; }
-
-    public void dispose() {
-        for (FleetToken ship : ships) {
-            if (ship != null) { ship.dispose(); }
-        }
-    }
 
     @Override
     public void setupSimpleBox2(float x, float y, float height, float width) {

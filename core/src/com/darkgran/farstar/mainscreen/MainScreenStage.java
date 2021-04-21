@@ -87,8 +87,6 @@ public class MainScreenStage extends ListeningStage {
         skirmish.dispose();
         web.dispose();
         FSLogo.dispose();
-        versionInfo.dispose();
-        perfMeter.dispose();
         super.dispose();
     }
 }

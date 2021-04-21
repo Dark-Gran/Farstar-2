@@ -1,22 +1,21 @@
 package com.darkgran.farstar.util;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.darkgran.farstar.Farstar;
 
-public abstract class JustFont extends SimpleVector2 { //see FontActor for the Actor extension
-    private BitmapFont font;
+public interface JustFont { //see FontActor for the Actor extension
+    StringHolder path = new StringHolder();
 
-    public JustFont(String path) {
-        if (path == "") {
-            font = new BitmapFont();
+    default void setFont(String path) {
+        if (path != "") {
+            this.path.setString(path);
         } else {
-            font = new BitmapFont(Gdx.files.internal(path));
+            this.path.setString("fonts/arial15.fnt");
         }
     }
 
-    public BitmapFont getFont() { return font; }
-
-    public void dispose() {
-        font.dispose();
+    default BitmapFont getFont() {
+        return Farstar.ASSET_LIBRARY.getAssetManager().get(path.getString(), BitmapFont.class);
     }
+
 }

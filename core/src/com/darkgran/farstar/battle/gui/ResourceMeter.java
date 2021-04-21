@@ -3,15 +3,16 @@ package com.darkgran.farstar.battle.gui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.util.FontActor;
+import com.darkgran.farstar.util.JustFont;
 
-public class ResourceMeter extends FontActor {
+public class ResourceMeter extends Actor implements JustFont {
     private final Player player;
     private final boolean onBottom;
 
     public ResourceMeter(Player player, boolean onBottom, float x, float y) {
-        super("");
+        setFont("");
         this.player = player;
         this.onBottom = onBottom;
         String res = "Population: 999";

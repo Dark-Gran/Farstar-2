@@ -16,6 +16,7 @@ public interface TextDrawer {
     default void draw (BitmapFont font, Batch batch, float x, float y, String txt, Color color) {
         font.setColor(color);
         font.draw(batch, txt, x, y);
+        font.setColor(Color.WHITE);
     }
 
     default Color getFontColor() { return fontColor; }
