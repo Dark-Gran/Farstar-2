@@ -26,5 +26,6 @@ public class MainScreen extends SuperScreen {
     public void dispose() {
         getGame().getInputMultiplexer().removeProcessor(mainScreenStage);
         mainScreenStage.dispose();
+        super.dispose();
     }
 }

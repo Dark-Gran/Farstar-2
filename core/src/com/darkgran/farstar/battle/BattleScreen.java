@@ -91,6 +91,7 @@ public class BattleScreen extends SuperScreen {
         getGame().getInputMultiplexer().removeProcessor(generalInputProcessor);
         getGame().getInputMultiplexer().removeProcessor(battleStage);
         battleStage.dispose();
+        super.dispose();
     }
 
     public BattleStage getGUI() { return battleStage; }
