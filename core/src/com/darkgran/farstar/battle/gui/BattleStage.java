@@ -27,12 +27,12 @@ import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 
 public abstract class BattleStage extends ListeningStage {
     private final BattleScreen battleScreen;
-    private final Texture turn = new Texture("images/turn.png");
+    private final Texture turn = Farstar.ASSET_LIBRARY.getAssetManager().get("images/turn.png");
     public final ImageButton turnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(turn)));
-    private final Texture yardPic = new Texture("images/yard.png");
+    private final Texture yardPic = Farstar.ASSET_LIBRARY.getAssetManager().get("images/yard.png");
     private FakeToken fakeToken;
     private final DuelMenu duelMenu;
-    private final Texture combatEndPic = new Texture("images/combat_end.png");
+    private final Texture combatEndPic = Farstar.ASSET_LIBRARY.getAssetManager().get("images/combat_end.png");
     private final ImageButton combatEndButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(combatEndPic)));
     private ArrayList<DropTarget> dropTargets = new ArrayList<>();
     private final AbilityPicker abilityPicker;
@@ -228,9 +228,6 @@ public abstract class BattleStage extends ListeningStage {
     public void dispose() {
         turnButton.removeListener(turnButton.getClickListener());
         disableCombatEnd();
-        turn.dispose();
-        combatEndPic.dispose();
-        yardPic.dispose();
         abilityPicker.dispose();
         super.dispose();
     }

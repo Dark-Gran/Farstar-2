@@ -8,7 +8,7 @@ import com.darkgran.farstar.mainscreen.MainScreen;
 import com.darkgran.farstar.util.Delayer;
 
 public class IntroScreen extends SuperScreen implements Delayer { //Animation used only once on app-launch
-    private final Texture logo = new Texture("images/logo.jpg");
+    private final Texture logo = Farstar.ASSET_LIBRARY.getAssetManager().get("images/logo.jpg");
     private boolean active = false;
     private float alpha = 0;
     private boolean fadeDirection = true; //true in, false out
@@ -73,7 +73,7 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
 
     @Override
     public void dispose() {
-        logo.dispose();
+
     }
 
 }

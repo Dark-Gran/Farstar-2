@@ -19,6 +19,9 @@ public class AssetLibrary {
     }
 
     private void loadTextures() {
+        //Intro
+        assetManager.load("images/logo.jpg", Texture.class);
+        //MainScreenStage
         assetManager.load("images/FSlogo.png", Texture.class);
         assetManager.load("images/solitary.png", Texture.class);
         assetManager.load("images/solitaryO.png", Texture.class);
@@ -28,6 +31,22 @@ public class AssetLibrary {
         assetManager.load("images/simO.png", Texture.class);
         assetManager.load("images/web.png", Texture.class);
         assetManager.load("images/webO.png", Texture.class);
+        //TableStage
+        assetManager.load("images/tableMain_1920.png", Texture.class);
+        assetManager.load("images/Space_1920.png", Texture.class);
+        assetManager.load("images/empty.png", Texture.class);
+        assetManager.load("images/exit.png", Texture.class);
+        assetManager.load("images/quality.png", Texture.class);
+        assetManager.load("images/fs.png", Texture.class);
+        assetManager.load("images/sound.png", Texture.class);
+        assetManager.load("images/logout.png", Texture.class);
+        assetManager.load("images/friends.png", Texture.class);
+        //Battle
+        assetManager.load("images/duel.png", Texture.class);
+        assetManager.load("images/duel_cancel.png", Texture.class);
+        assetManager.load("images/turn.png", Texture.class);
+        assetManager.load("images/yard.png", Texture.class);
+        assetManager.load("images/combat_end.png", Texture.class);
     }
 
     public void dispose() {

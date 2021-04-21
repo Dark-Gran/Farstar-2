@@ -6,12 +6,13 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.DuelManager;
 import com.darkgran.farstar.battle.players.LocalPlayer;
 
 public abstract class DuelMenu {
-    private final Texture duel = new Texture("images/duel.png");
-    private final Texture duelCancel = new Texture("images/duel_cancel.png");
+    private final Texture duel = Farstar.ASSET_LIBRARY.getAssetManager().get("images/duel.png");
+    private final Texture duelCancel = Farstar.ASSET_LIBRARY.getAssetManager().get("images/duel_cancel.png");
     private final ImageButton cancelButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(duelCancel)));
     private final DuelManager duelManager;
     private BattleStage battleStage;  //must be set after ini - before RM.launch (see BattleScreen constructor)
@@ -57,11 +58,6 @@ public abstract class DuelMenu {
     public void removeCancel() {
         cancelButton.remove();
         cancelButton.removeListener(cancelButton.getClickListener());
-    }
-
-    public void dispose() {
-        duel.dispose();
-        duelCancel.dispose();
     }
 
     public Texture getDuel() { return duel; }

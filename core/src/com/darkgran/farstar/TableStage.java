@@ -12,13 +12,13 @@ import com.darkgran.farstar.mainscreen.MainScreen;
 
 
 public class TableStage extends ListeningStage {
-    private final Texture empty = new Texture("images/empty.png");
-    private final Texture exit = new Texture("images/exit.png");
-    private final Texture quality = new Texture("images/quality.png");
-    private final Texture fs = new Texture("images/fs.png");
-    private final Texture sound = new Texture("images/sound.png");
-    private final Texture logout = new Texture("images/logout.png");
-    private final Texture friends = new Texture("images/friends.png");
+    private final Texture empty = Farstar.ASSET_LIBRARY.getAssetManager().get("images/empty.png");
+    private final Texture exit = Farstar.ASSET_LIBRARY.getAssetManager().get("images/exit.png");
+    private final Texture quality = Farstar.ASSET_LIBRARY.getAssetManager().get("images/quality.png");
+    private final Texture fs = Farstar.ASSET_LIBRARY.getAssetManager().get("images/fs.png");
+    private final Texture sound = Farstar.ASSET_LIBRARY.getAssetManager().get("images/sound.png");
+    private final Texture logout = Farstar.ASSET_LIBRARY.getAssetManager().get("images/logout.png");
+    private final Texture friends = Farstar.ASSET_LIBRARY.getAssetManager().get("images/friends.png");
     private final TextureRegionDrawable emptyTRD = new TextureRegionDrawable(new TextureRegion(empty));
     private final ImageButton exitButton = new ImageButton(emptyTRD, new TextureRegionDrawable(new TextureRegion(exit)));
     private final ImageButton qualityButton = new ImageButton(emptyTRD, new TextureRegionDrawable(new TextureRegion(quality)));
@@ -26,8 +26,8 @@ public class TableStage extends ListeningStage {
     private final ImageButton soundButton = new ImageButton(emptyTRD, new TextureRegionDrawable(new TextureRegion(sound)));
     private final ImageButton logoutButton = new ImageButton(emptyTRD, new TextureRegionDrawable(new TextureRegion(logout)));
     private final ImageButton friendsButton = new ImageButton(emptyTRD, new TextureRegionDrawable(new TextureRegion(friends)));
-    private final Texture table = new Texture("images/tableMain_1920.png"); //multiple resolutions will require texture atlas
-    private final Texture space = new Texture("images/Space_1920.png");
+    private final Texture table = Farstar.ASSET_LIBRARY.getAssetManager().get("images/tableMain_1920.png");
+    private final Texture space = Farstar.ASSET_LIBRARY.getAssetManager().get("images/Space_1920.png");
 
     public TableStage(final Farstar game, Viewport viewport) {
         super(game, viewport);
@@ -118,13 +118,11 @@ public class TableStage extends ListeningStage {
     @Override
     public void dispose() {
         exitButton.removeListener(exitButton.getClickListener());
-        empty.dispose();
-        quality.dispose();
-        exit.dispose();
-        friends.dispose();
-        logout.dispose();
-        sound.dispose();
-        fs.dispose();
+        fsButton.removeListener(fsButton.getClickListener());
+        qualityButton.removeListener(fsButton.getClickListener());
+        soundButton.removeListener(fsButton.getClickListener());
+        friendsButton.removeListener(fsButton.getClickListener());
+        logoutButton.removeListener(fsButton.getClickListener());
         super.dispose();
     }
 
