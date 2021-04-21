@@ -13,40 +13,33 @@ import com.darkgran.farstar.util.ActorButton;
 
 public class MainScreenStage extends ListeningStage {
     private final PlayerFactory playerFactory = new PlayerFactory();
-    private final Texture solitary = new Texture("images/solitary.png");
-    private final Texture skirmish = new Texture("images/skirmish.png");
-    private final Texture sim = new Texture("images/sim.png");
-    private final Texture web = new Texture("images/web.png");
-    private final Texture solitaryO = new Texture("images/solitaryO.png");
-    private final Texture skirmishO = new Texture("images/skirmishO.png");
-    private final Texture simO = new Texture("images/simO.png");
-    private final Texture webO = new Texture("images/webO.png");
-    private final Texture FSLogo = new Texture("images/FSLogo.png");
+    private final Texture measureTexture = Farstar.ASSET_LIBRARY.getAssetManager().get("images/solitary.png");
+    private final Texture FSLogo = Farstar.ASSET_LIBRARY.getAssetManager().get("images/FSlogo.png");
     private final VersionInfo versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.31f, 0.498f, 0.706f, 1));
     private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.0885), (float) (Farstar.STAGE_HEIGHT*0.98), new Color(0.31f, 0.498f, 0.706f, 1));
 
-    private final ActorButton startButton = new ActorButton(solitary, solitaryO){
+    private final ActorButton startButton = new ActorButton(Farstar.ASSET_LIBRARY.getAssetManager().get("images/solitary.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/solitaryO.png")){
         @Override
         public void clicked() {
             System.out.println("Starting Solitary.");
             getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0), playerFactory.getPlayer("LOCAL", 2, 15))));
         }
     };
-    private final ActorButton botButton = new ActorButton(skirmish, skirmishO){
+    private final ActorButton botButton = new ActorButton(Farstar.ASSET_LIBRARY.getAssetManager().get("images/skirmish.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/skirmishO.png")){
         @Override
         public void clicked() {
             System.out.println("Starting Skirmish.");
             getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0), playerFactory.getPlayer("AUTO", 2, 15))));
         }
     };
-    private final ActorButton simButton = new ActorButton(sim, simO){
+    private final ActorButton simButton = new ActorButton(Farstar.ASSET_LIBRARY.getAssetManager().get("images/sim.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/simO.png")){
         @Override
         public void clicked() {
             System.out.println("Starting Simulation.");
             getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("AUTO", 1, 0), playerFactory.getPlayer("AUTO", 2, 15))));
         }
     };
-    private final ActorButton webButton = new ActorButton(web, webO){
+    private final ActorButton webButton = new ActorButton(Farstar.ASSET_LIBRARY.getAssetManager().get("images/web.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/webO.png")){
         @Override
         public void clicked() {
             System.out.println("Opening Web-Browser.");
@@ -56,9 +49,9 @@ public class MainScreenStage extends ListeningStage {
 
     public MainScreenStage(final Farstar game, Viewport viewport) {
         super(game, viewport);
-        botButton.setPosition((float) (Farstar.STAGE_WIDTH/2-solitary.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2+solitary.getHeight()/2));
-        simButton.setPosition((float) (Farstar.STAGE_WIDTH/2-solitary.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-solitary.getHeight()/2));
-        startButton.setPosition((float) (Farstar.STAGE_WIDTH/2-solitary.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2-solitary.getHeight()*1.499));
+        botButton.setPosition((float) (Farstar.STAGE_WIDTH/2- measureTexture.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2+ measureTexture.getHeight()/2));
+        simButton.setPosition((float) (Farstar.STAGE_WIDTH/2- measureTexture.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2- measureTexture.getHeight()/2));
+        startButton.setPosition((float) (Farstar.STAGE_WIDTH/2- measureTexture.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2- measureTexture.getHeight()*1.499));
         webButton.setPosition((float) (Farstar.STAGE_WIDTH*0.0725), (float) (Farstar.STAGE_HEIGHT*0.012));
         this.addActor(startButton);
         this.addActor(botButton);
@@ -82,11 +75,6 @@ public class MainScreenStage extends ListeningStage {
 
     @Override
     public void dispose() {
-        solitary.dispose();
-        sim.dispose();
-        skirmish.dispose();
-        web.dispose();
-        FSLogo.dispose();
         super.dispose();
     }
 }
