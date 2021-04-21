@@ -36,6 +36,10 @@ public abstract class SuperScreen implements Screen {
 
     protected void drawMenus(float delta) { }//for all screens except intro
 
+    protected void drawSigns(float delta, Batch batch) { //TODO
+
+    }
+
     public Farstar getGame() { return game; }
 
     public OrthographicCamera getCamera() { return camera; }
@@ -75,6 +79,7 @@ public abstract class SuperScreen implements Screen {
         game.batch.begin();
         game.batch.setColor(1, 1, 1, 1);
         drawContent(delta, game.batch);
+        drawSigns(delta, game.batch);
         game.batch.end();
 
     }
