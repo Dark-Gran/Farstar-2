@@ -3,10 +3,10 @@ package com.darkgran.farstar.util;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.darkgran.farstar.Farstar;
 
-public interface JustFont { //see FontActor for the Actor extension
+public interface JustFont {
     StringHolder path = new StringHolder();
 
-    default void setFont(String path) {
+    default void setFont(String path) { //Must be set
         if (path != "") {
             this.path.setString(path);
         } else {
