@@ -3,20 +3,20 @@ package com.darkgran.farstar.util;
 public class SimpleCounter {
     private boolean enabled;
     private int timerCap;
-    private int timer;
+    private int time;
 
-    public SimpleCounter(boolean enabled, int timerCap, int timer) {
+    public SimpleCounter(boolean enabled, int timerCap, int time) {
         this.enabled = enabled;
         this.timerCap = timerCap;
-        this.timer = timer;
+        this.time = time;
     }
 
     public void update() {
         if (enabled) {
-            timer++;
-            if (timer >= timerCap) {
+            time++;
+            if (time >= timerCap) {
                 enabled = false;
-                timer = 0;
+                time = 0;
             }
         }
     }
@@ -37,11 +37,11 @@ public class SimpleCounter {
         this.timerCap = timerCap;
     }
 
-    public int getTimer() {
-        return timer;
+    public int getTime() {
+        return time;
     }
 
-    public void setTimer(int timer) {
-        this.timer = timer;
+    public void setTime(int time) {
+        this.time = time;
     }
 }

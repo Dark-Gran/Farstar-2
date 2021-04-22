@@ -66,7 +66,7 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
 
         getGame().batch.draw(logo, (float) (Farstar.STAGE_WIDTH / 2 - logo.getWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - logo.getHeight() / 2));
 
-        drawSigns(delta, getGame().batch);
+        drawSigns(getGame().batch);
         getGame().batch.end();
 
         update(delta);

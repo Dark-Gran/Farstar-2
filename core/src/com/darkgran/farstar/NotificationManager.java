@@ -13,7 +13,7 @@ import java.util.Map;
 public class NotificationManager {
     private final EnumMap<Notification.NotificationType, ArrayList<Notification>> notifications = new EnumMap<>(Notification.NotificationType.class);
 
-    public void drawAll(float delta, Batch batch, ShapeRenderer shapeRenderer) {
+    public void drawAll(Batch batch, ShapeRenderer shapeRenderer) {
         for (Map.Entry<Notification.NotificationType, ArrayList<Notification>> entry : notifications.entrySet()) {
             if (entry.getValue().size() > 0) {
                 entry.getValue().get(0).draw(batch, shapeRenderer);
@@ -21,10 +21,10 @@ public class NotificationManager {
         }
     }
 
-    public void update() {
+    public void update(float delta) {
         for (Map.Entry<Notification.NotificationType, ArrayList<Notification>> entry : notifications.entrySet()) {
             if (entry.getValue().size() > 0) {
-                entry.getValue().get(0).getTimer().update();
+                entry.getValue().get(0).update(delta);
                 if (!entry.getValue().get(0).getTimer().isEnabled()) {
                     entry.getValue().remove(0);
                 }

@@ -17,7 +17,6 @@ public abstract class SuperScreen implements Screen {
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
     private TableStage tableStage;
     private final NotificationManager notificationManager;
-    private float accumulator = 0f;
 
     public SuperScreen(final Farstar game, NotificationManager notificationManager) {
         this.game = game;
@@ -39,7 +38,7 @@ public abstract class SuperScreen implements Screen {
 
     protected void drawMenus(float delta) { }//for all screens except intro
 
-    protected void drawSigns(float delta, Batch batch) { notificationManager.drawAll(delta, batch, shapeRenderer); }
+    protected void drawSigns(Batch batch) { notificationManager.drawAll(batch, shapeRenderer); }
 
     public static void switchFullscreen() {
         Graphics.DisplayMode currentMode = Gdx.graphics.getDisplayMode();
@@ -69,7 +68,7 @@ public abstract class SuperScreen implements Screen {
         game.batch.begin();
         game.batch.setColor(1, 1, 1, 1);
         drawContent(delta, game.batch);
-        drawSigns(delta, game.batch);
+        drawSigns(game.batch);
         game.batch.end();
 
         update(delta);
@@ -77,11 +76,7 @@ public abstract class SuperScreen implements Screen {
     }
 
     public void update(float delta) {
-        accumulator += Math.min(delta, 0.25f);
-        if (accumulator > 1f) {
-            accumulator -= 1f;
-            notificationManager.update();
-        }
+        notificationManager.update(delta);
     }
 
     @Override

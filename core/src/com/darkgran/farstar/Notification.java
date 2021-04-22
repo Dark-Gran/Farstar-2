@@ -33,9 +33,11 @@ public class Notification implements TextDrawer, JustFont {
     private String message = "";
     private final NotificationType notificationType;
     private final GlyphLayout layout = new GlyphLayout();
-    private final Color boxColor = new Color(0f, 0f, 0f, 1f);
+    private final Color boxColor = new Color(ColorPalette.DARK.r, ColorPalette.DARK.g, ColorPalette.DARK.b, 0.5f);
     private final SimpleCounter timer;
+    private float accumulator = 0f;
 
+    /** @param duration Time in seconds. Set to MIN_DURATION(=3) unless greater duration is provided. */
     protected Notification(NotificationType notificationType, String message, int duration) {
         setFont("fonts/barlow24.fnt");
         setFontColor(ColorPalette.MAIN);
@@ -50,19 +52,35 @@ public class Notification implements TextDrawer, JustFont {
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(boxColor);
-        shapeRenderer.rect(notificationType.x-Farstar.STAGE_WIDTH/19f, notificationType.y+layout.height/2, layout.width+Farstar.STAGE_WIDTH/5f, -layout.height*2.1f);
+        shapeRenderer.setColor(boxColor.r, boxColor.g, boxColor.b, timeToAlpha(boxColor.a, timer.getTime(), timer.getTimerCap()));
+        shapeRenderer.rect(notificationType.x - Farstar.STAGE_WIDTH / 19f, notificationType.y + layout.height / 2, layout.width + Farstar.STAGE_WIDTH / 5f, -layout.height * 2.1f);
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
         batch.begin();
-        draw(batch);
+        Color color = new Color(fontColor.r, fontColor.g, fontColor.b, timeToAlpha(fontColor.a, timer.getTime(), timer.getTimerCap()));
+        draw(getFont(), batch, notificationType.x, notificationType.y, message, color);
+    }
+
+    protected void update(float delta) {
+        accumulator += Math.min(delta, 0.25f);
+        if (accumulator > 1f) {
+            accumulator -= 1f;
+            timer.update();
+        }
+    }
+
+    private float timeToAlpha(float a, float time, float duration) {
+        if (time < 1) {
+            a *= accumulator;
+        } else if (time > duration-2) {
+            a *= 1-accumulator;
+        }
+        return a;
     }
 
     @Override
-    public void draw(Batch batch) {
-        draw(getFont(), batch, notificationType.x, notificationType.y, message, fontColor);
-    }
+    public void draw(Batch batch) { }
 
     protected String getMessage() {
         return message;
