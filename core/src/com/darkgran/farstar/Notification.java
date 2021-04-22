@@ -39,8 +39,8 @@ public class Notification implements TextDrawer, JustFont {
 
     /** @param duration Time in seconds. Set to MIN_DURATION(=3) unless greater duration is provided. */
     protected Notification(NotificationType notificationType, String message, int duration) {
-        setFont("fonts/barlow24.fnt");
-        setFontColor(ColorPalette.MAIN);
+        setFont("fonts/barlow30.fnt");
+        setFontColor(ColorPalette.LIGHT);
         this.message = message;
         this.notificationType = notificationType;
         layout.setText(getFont(), message);
@@ -57,7 +57,7 @@ public class Notification implements TextDrawer, JustFont {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(boxColor.r, boxColor.g, boxColor.b, timeToAlpha(boxColor.a, timer.getCount(), timer.getCountCap()));
-        shapeRenderer.rect(notificationType.x - Farstar.STAGE_WIDTH / 19f, notificationType.y + layout.height / 2, layout.width + Farstar.STAGE_WIDTH / 5f, -layout.height * 2.1f);
+        shapeRenderer.rect(notificationType.x - Farstar.STAGE_WIDTH / 19f, notificationType.y + layout.height / 2, Farstar.STAGE_WIDTH / 3f, -layout.height * 2.1f);
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);

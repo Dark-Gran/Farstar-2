@@ -15,6 +15,7 @@ public class AssetLibrary {
 
     private void loadFonts() {
         assetManager.load("fonts/barlow24.fnt", BitmapFont.class);
+        assetManager.load("fonts/barlow30.fnt", BitmapFont.class);
         assetManager.load("fonts/arial15.fnt", BitmapFont.class);
     }
 
