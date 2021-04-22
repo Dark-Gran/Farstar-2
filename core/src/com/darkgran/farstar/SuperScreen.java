@@ -14,11 +14,13 @@ public abstract class SuperScreen implements Screen {
     private Farstar game;
     private OrthographicCamera camera = new OrthographicCamera();
     private Viewport viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);
-    private TableStage tableStage;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
+    private TableStage tableStage;
+    private final NotificationManager notificationManager;
 
-    public SuperScreen(final Farstar game) {
+    public SuperScreen(final Farstar game, NotificationManager notificationManager) {
         this.game = game;
+        this.notificationManager = notificationManager;
         camera.setToOrtho(false, Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT);
         viewport.apply();
         camera.position.set((float) Farstar.STAGE_WIDTH/2,(float) Farstar.STAGE_HEIGHT/2,0);
@@ -36,21 +38,7 @@ public abstract class SuperScreen implements Screen {
 
     protected void drawMenus(float delta) { }//for all screens except intro
 
-    protected void drawSigns(float delta, Batch batch) { //TODO
-
-    }
-
-    public Farstar getGame() { return game; }
-
-    public OrthographicCamera getCamera() { return camera; }
-
-    public Viewport getViewport() { return viewport; }
-
-    public TableStage getTableMenu() {
-        return tableStage;
-    }
-
-    public ShapeRenderer getDebugRenderer() { return debugRenderer; }
+    protected void drawSigns(float delta, Batch batch) { notificationManager.drawAll(batch); }
 
     public static void switchFullscreen() {
         Graphics.DisplayMode currentMode = Gdx.graphics.getDisplayMode();
@@ -92,27 +80,30 @@ public abstract class SuperScreen implements Screen {
     }
 
     @Override
-    public void show() {
-
-    }
+    public void show() { }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() { }
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() { }
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() { }
 
     @Override
-    public void dispose() {
+    public void dispose() { }
 
-    }
+    public Farstar getGame() { return game; }
+
+    public OrthographicCamera getCamera() { return camera; }
+
+    public Viewport getViewport() { return viewport; }
+
+    public TableStage getTableMenu() { return tableStage; }
+
+    public ShapeRenderer getDebugRenderer() { return debugRenderer; }
+
+    public NotificationManager getNotificationManager() { return notificationManager; }
+
 }

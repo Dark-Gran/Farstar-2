@@ -10,6 +10,7 @@ import com.darkgran.farstar.util.JustFont;
 public class ResourceMeter extends Actor implements JustFont {
     private final Player player;
     private final boolean onBottom;
+    private String fontPath = "";
 
     public ResourceMeter(Player player, boolean onBottom, float x, float y) {
         setFont("");
@@ -31,4 +32,13 @@ public class ResourceMeter extends Actor implements JustFont {
         getFont().draw(batch, res, getX(), onBottom ? getY()+getHeight()*6 : getY()-getHeight()*8);
     }
 
+    @Override
+    public String getFontPath() {
+        return fontPath;
+    }
+
+    @Override
+    public void setFontPath(String path) {
+        fontPath = path;
+    }
 }

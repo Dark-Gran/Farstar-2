@@ -16,6 +16,7 @@ import com.darkgran.farstar.util.SimpleBox2;
 import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 
 public class Token extends Actor implements JustFont {
+    private String fontPath = "";
     private Dragger dragger;
     private final Card card;
     private final TokenPrice tokenPrice = new TokenPrice();
@@ -97,5 +98,15 @@ public class Token extends Actor implements JustFont {
     public void setDragger(Dragger dragger) { this.dragger = dragger; }
 
     public Token getThis() { return this; }
+
+    @Override
+    public String getFontPath() {
+        return fontPath;
+    }
+
+    @Override
+    public void setFontPath(String path) {
+        fontPath = path;
+    }
 
 }

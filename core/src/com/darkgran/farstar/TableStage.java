@@ -67,8 +67,8 @@ public class TableStage extends ListeningStage {
                 if (getGame().getScreen().getClass() == MainScreen.class) {
                     System.exit(0);
                 } else  {
-                    final TableStage tableMenu =  getGame().getSuperScreen().getTableMenu();
-                    getGame().setScreen(new MainScreen(getGame(), tableMenu));
+                    final SuperScreen superScreen = getGame().getSuperScreen();
+                    getGame().setScreen(new MainScreen(getGame(), superScreen.getTableMenu(), superScreen.getNotificationManager()));
                 }
 
             }
@@ -86,7 +86,7 @@ public class TableStage extends ListeningStage {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                System.out.println("Quality-Button Clicked.");
+                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Not Available.");
             }
         });
         soundButton.addListener(new ClickListener()
@@ -94,7 +94,7 @@ public class TableStage extends ListeningStage {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                System.out.println("Sound-Button Clicked.");
+                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Not Available.");
             }
         });
         logoutButton.addListener(new ClickListener()
@@ -102,7 +102,7 @@ public class TableStage extends ListeningStage {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                System.out.println("LogOut-Button Clicked.");
+                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Not Available.");
             }
         });
         friendsButton.addListener(new ClickListener()
@@ -110,7 +110,7 @@ public class TableStage extends ListeningStage {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                System.out.println("Friends-Button Clicked.");
+                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Not Available.");
             }
         });
     }

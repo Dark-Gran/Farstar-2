@@ -8,6 +8,8 @@ import com.darkgran.farstar.util.JustFont;
 import com.darkgran.farstar.util.TextDrawer;
 
 public class VersionInfo extends Actor implements TextDrawer, JustFont {
+    private String fontPath = "";
+    private Color fontColor = new Color();
 
     public VersionInfo(float x, float y, Color fontColor) {
         setFont("fonts/barlow24.fnt");
@@ -18,7 +20,26 @@ public class VersionInfo extends Actor implements TextDrawer, JustFont {
 
     @Override
     public void draw(Batch batch) {
-        draw(getFont(), batch, getX(), getY(), Farstar.APP_VERSION, fontColor);
+        draw(getFont(), batch, getX(), getY(), Farstar.APP_VERSION, getFontColor());
     }
 
+    @Override
+    public String getFontPath() {
+        return fontPath;
+    }
+
+    @Override
+    public void setFontPath(String path) {
+        fontPath = path;
+    }
+
+    @Override
+    public Color getFontColor() {
+        return fontColor;
+    }
+
+    @Override
+    public void setFontColor(Color fontColor) {
+        this.fontColor = fontColor;
+    }
 }

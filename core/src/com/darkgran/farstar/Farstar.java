@@ -22,7 +22,7 @@ public class Farstar extends Game {
 	public void create () {
 		ASSET_LIBRARY.loadAssets();
 		batch = new SpriteBatch();
-		this.setScreen(new IntroScreen(this));
+		this.setScreen(new IntroScreen(this, new NotificationManager()));
 	}
 
 	@Override

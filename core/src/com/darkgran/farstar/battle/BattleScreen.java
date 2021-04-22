@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.*;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.NotificationManager;
 import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.TableStage;
 import com.darkgran.farstar.battle.gui.BattleStage;
@@ -32,9 +33,8 @@ public class BattleScreen extends SuperScreen {
         }
     };
 
-    public BattleScreen(final Farstar game, TableStage tableStage, Battle battle)
-    {
-        super(game);
+    public BattleScreen(final Farstar game, TableStage tableStage, Battle battle, NotificationManager notificationManager) {
+        super(game, notificationManager);
         setTableMenu(tableStage);
         Box2D.init();
         this.battle = battle;

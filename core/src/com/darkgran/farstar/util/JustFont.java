@@ -4,18 +4,20 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.darkgran.farstar.Farstar;
 
 public interface JustFont {
-    StringHolder path = new StringHolder();
 
     default void setFont(String path) { //Must be set
         if (path != "") {
-            this.path.setString(path);
+            setFontPath(path);
         } else {
-            this.path.setString("fonts/arial15.fnt");
+            setFontPath("fonts/arial15.fnt");
         }
     }
 
     default BitmapFont getFont() {
-        return Farstar.ASSET_LIBRARY.getAssetManager().get(path.getString(), BitmapFont.class);
+        return Farstar.ASSET_LIBRARY.getAssetManager().get(getFontPath(), BitmapFont.class);
     }
+
+    String getFontPath();
+    void setFontPath(String path);
 
 }
