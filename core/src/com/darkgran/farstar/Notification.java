@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.darkgran.farstar.util.DeltaCounter;
 import com.darkgran.farstar.util.JustFont;
 import com.darkgran.farstar.util.SimpleCounter;
 import com.darkgran.farstar.util.TextDrawer;
@@ -34,8 +35,7 @@ public class Notification implements TextDrawer, JustFont {
     private final NotificationType notificationType;
     private final GlyphLayout layout = new GlyphLayout();
     private final Color boxColor = new Color(ColorPalette.DARK.r, ColorPalette.DARK.g, ColorPalette.DARK.b, 0.5f);
-    private final SimpleCounter timer;
-    private float accumulator = 0f;
+    private final DeltaCounter timer;
 
     /** @param duration Time in seconds. Set to MIN_DURATION(=3) unless greater duration is provided. */
     protected Notification(NotificationType notificationType, String message, int duration) {
@@ -44,7 +44,11 @@ public class Notification implements TextDrawer, JustFont {
         this.message = message;
         this.notificationType = notificationType;
         layout.setText(getFont(), message);
-        timer = new SimpleCounter(true, Math.max(duration, MIN_DURATION), 0);
+        timer = new DeltaCounter(true, Math.max(duration, MIN_DURATION), 0);
+    }
+
+    protected void update(float delta) {
+        timer.update(delta);
     }
 
     protected void draw(Batch batch, ShapeRenderer shapeRenderer) {
@@ -52,29 +56,21 @@ public class Notification implements TextDrawer, JustFont {
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(boxColor.r, boxColor.g, boxColor.b, timeToAlpha(boxColor.a, timer.getTime(), timer.getTimerCap()));
+        shapeRenderer.setColor(boxColor.r, boxColor.g, boxColor.b, timeToAlpha(boxColor.a, timer.getCount(), timer.getCountCap()));
         shapeRenderer.rect(notificationType.x - Farstar.STAGE_WIDTH / 19f, notificationType.y + layout.height / 2, layout.width + Farstar.STAGE_WIDTH / 5f, -layout.height * 2.1f);
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
         batch.begin();
-        Color color = new Color(fontColor.r, fontColor.g, fontColor.b, timeToAlpha(fontColor.a, timer.getTime(), timer.getTimerCap()));
+        Color color = new Color(fontColor.r, fontColor.g, fontColor.b, timeToAlpha(fontColor.a, timer.getCount(), timer.getCountCap()));
         draw(getFont(), batch, notificationType.x, notificationType.y, message, color);
-    }
-
-    protected void update(float delta) {
-        accumulator += Math.min(delta, 0.25f);
-        if (accumulator > 1f) {
-            accumulator -= 1f;
-            timer.update();
-        }
     }
 
     private float timeToAlpha(float a, float time, float duration) {
         if (time < 1) {
-            a *= accumulator;
+            a *= timer.getAccumulator();
         } else if (time > duration-2) {
-            a *= 1-accumulator;
+            a *= 1-timer.getAccumulator();
         }
         return a;
     }
