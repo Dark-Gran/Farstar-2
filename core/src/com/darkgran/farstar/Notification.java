@@ -9,7 +9,7 @@ import com.darkgran.farstar.util.TextDrawer;
  *  Stylized on-screen message.
  *  Uses NotificationType for placement.
  */
-public class Notification implements TextDrawer, JustFont {
+public class Notification implements TextDrawer, JustFont { //TODO
     public enum NotificationType {
         BOT_LEFT(20, 20);
 
