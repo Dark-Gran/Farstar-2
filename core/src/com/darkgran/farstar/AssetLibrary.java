@@ -1,4 +1,4 @@
-package com.darkgran.farstar.util;
+package com.darkgran.farstar;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;

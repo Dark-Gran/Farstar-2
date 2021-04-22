@@ -3,10 +3,8 @@ package com.darkgran.farstar;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.darkgran.farstar.battle.CardLibrary;
-import com.darkgran.farstar.util.AssetLibrary;
 
 public class Farstar extends Game {
 	public static final String APP_VERSION = "v0.2 (Alpha)";
