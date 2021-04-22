@@ -91,8 +91,8 @@ public class BattleStage1V1 extends BattleStage {
         if (yardMenu2.isVisible()) { drawTokenMenu(yardMenu2, batch); }
         drawTokenMenu(supportMenu1, batch);
         drawTokenMenu(supportMenu2, batch);
-        if (DEBUG_RENDER) { getBattleScreen().drawDebugSimpleBox2(supportMenu1.getSimpleBox2(), getBattleScreen().getDebugRenderer(), batch); }
-        if (DEBUG_RENDER) { getBattleScreen().drawDebugSimpleBox2(supportMenu2.getSimpleBox2(), getBattleScreen().getDebugRenderer(), batch); }
+        if (DEBUG_RENDER) { getBattleScreen().drawDebugSimpleBox2(supportMenu1.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch); }
+        if (DEBUG_RENDER) { getBattleScreen().drawDebugSimpleBox2(supportMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch); }
     }
 
     @Override

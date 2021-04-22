@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.gui;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.util.SimpleBox2;
@@ -25,7 +26,7 @@ public abstract class BaseMenu extends SimpleBox2 {
 
     protected void setupOffset() {
         String res = "Battlestation";
-        layout.setText(new BitmapFont(), res);
+        layout.setText(Farstar.ASSET_LIBRARY.getAssetManager().get("fonts/arial15.fnt"), res);
         offset = layout.width;
         if (negativeOffset) { offset *= -1; }
     }

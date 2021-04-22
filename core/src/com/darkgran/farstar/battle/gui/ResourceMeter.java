@@ -18,7 +18,7 @@ public class ResourceMeter extends Actor implements JustFont {
         this.onBottom = onBottom;
         String res = "Population: 999";
         GlyphLayout layout = new GlyphLayout();
-        layout.setText(new BitmapFont(), res);
+        layout.setText(getFont(), res);
         setWidth(layout.width);
         setHeight(layout.height);
         setX(x-getWidth()*2);

@@ -1,6 +1,7 @@
 package com.darkgran.farstar;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -12,10 +13,10 @@ import java.util.Map;
 public class NotificationManager {
     private EnumMap<Notification.NotificationType, ArrayList<Notification>> notifications = new EnumMap<>(Notification.NotificationType.class);
 
-    public void drawAll(float delta, Batch batch) {
+    public void drawAll(float delta, Batch batch, ShapeRenderer shapeRenderer) {
         for (Map.Entry<Notification.NotificationType, ArrayList<Notification>> entry : notifications.entrySet()) {
-            for (Notification notification : entry.getValue()) {
-                notification.draw(batch);
+            if (entry.getValue().size() > 0) {
+                entry.getValue().get(0).draw(batch, shapeRenderer);
             }
         }
     }
@@ -25,7 +26,7 @@ public class NotificationManager {
         //check for duplicates
         if (notifications.get(notificationType) != null) {
             for (Notification notification : notifications.get(notificationType)) {
-                if (notification.getMessage() == message) {
+                if (notification.getMessage().equals(message)) {
                     return false;
                 }
             }

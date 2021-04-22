@@ -14,7 +14,7 @@ public abstract class SuperScreen implements Screen {
     private Farstar game;
     private OrthographicCamera camera = new OrthographicCamera();
     private Viewport viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);
-    private ShapeRenderer debugRenderer = new ShapeRenderer();
+    private ShapeRenderer shapeRenderer = new ShapeRenderer();
     private TableStage tableStage;
     private final NotificationManager notificationManager;
 
@@ -38,7 +38,7 @@ public abstract class SuperScreen implements Screen {
 
     protected void drawMenus(float delta) { }//for all screens except intro
 
-    protected void drawSigns(float delta, Batch batch) { notificationManager.drawAll(delta, batch); }
+    protected void drawSigns(float delta, Batch batch) { notificationManager.drawAll(delta, batch, shapeRenderer); }
 
     public static void switchFullscreen() {
         Graphics.DisplayMode currentMode = Gdx.graphics.getDisplayMode();
@@ -55,6 +55,7 @@ public abstract class SuperScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(camera.combined);
 
         if (tableStage != null) { //should persist over all screens
             tableStage.drawBackground(game.batch);
@@ -102,7 +103,7 @@ public abstract class SuperScreen implements Screen {
 
     public TableStage getTableMenu() { return tableStage; }
 
-    public ShapeRenderer getDebugRenderer() { return debugRenderer; }
+    public ShapeRenderer getShapeRenderer() { return shapeRenderer; }
 
     public NotificationManager getNotificationManager() { return notificationManager; }
 
