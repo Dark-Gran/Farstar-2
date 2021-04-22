@@ -3,10 +3,13 @@ package com.darkgran.farstar;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.darkgran.farstar.util.JustFont;
-import com.darkgran.farstar.util.SimpleVector2;
 import com.darkgran.farstar.util.TextDrawer;
 
-public class Notification extends SimpleVector2 implements TextDrawer, JustFont {
+/**
+ *  Stylized on-screen message.
+ *  Uses NotificationType for placement.
+ */
+public class Notification implements TextDrawer, JustFont {
     public enum NotificationType {
         BOT_LEFT(20, 20);
 
@@ -26,8 +29,6 @@ public class Notification extends SimpleVector2 implements TextDrawer, JustFont 
 
     public Notification(NotificationType notificationType, String message) {
         setFont("");
-        setX(notificationType.x);
-        setY(notificationType.y);
         setFontColor(ColorPalette.MAIN);
         this.message = message;
         this.notificationType = notificationType;
@@ -35,7 +36,7 @@ public class Notification extends SimpleVector2 implements TextDrawer, JustFont 
 
     @Override
     public void draw(Batch batch) {
-        draw(getFont(), batch, getX(), getY(), message, fontColor);
+        draw(getFont(), batch, notificationType.x, notificationType.y, message, fontColor);
     }
 
     public String getMessage() {

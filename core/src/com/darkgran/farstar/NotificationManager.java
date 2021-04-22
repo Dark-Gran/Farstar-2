@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class NotificationManager {
     private ArrayList<Notification> notifications = new ArrayList<>();
 
-    public void drawAll(Batch batch) {
+    public void drawAll(float delta, Batch batch) {
         for (Notification notification : notifications) {
             notification.draw(batch);
         }

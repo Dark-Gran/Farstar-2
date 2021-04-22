@@ -38,7 +38,7 @@ public abstract class SuperScreen implements Screen {
 
     protected void drawMenus(float delta) { }//for all screens except intro
 
-    protected void drawSigns(float delta, Batch batch) { notificationManager.drawAll(batch); }
+    protected void drawSigns(float delta, Batch batch) { notificationManager.drawAll(delta, batch); }
 
     public static void switchFullscreen() {
         Graphics.DisplayMode currentMode = Gdx.graphics.getDisplayMode();
