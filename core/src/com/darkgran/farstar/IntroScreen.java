@@ -69,6 +69,8 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
         drawSigns(delta, getGame().batch);
         getGame().batch.end();
 
+        update(delta);
+
     }
 
 }

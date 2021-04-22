@@ -86,7 +86,7 @@ public class TableStage extends ListeningStage {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Not Available.");
+                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Q Not Available.", 4);
             }
         });
         soundButton.addListener(new ClickListener()
@@ -94,7 +94,7 @@ public class TableStage extends ListeningStage {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Not Available.");
+                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "S Not Available.", 4);
             }
         });
         logoutButton.addListener(new ClickListener()
@@ -102,7 +102,7 @@ public class TableStage extends ListeningStage {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Not Available.");
+                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "L Not Available.", 4);
             }
         });
         friendsButton.addListener(new ClickListener()
@@ -110,7 +110,7 @@ public class TableStage extends ListeningStage {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Not Available.");
+                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "F Not Available.", 4);
             }
         });
     }

@@ -17,6 +17,7 @@ public abstract class SuperScreen implements Screen {
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
     private TableStage tableStage;
     private final NotificationManager notificationManager;
+    private float accumulator = 0f;
 
     public SuperScreen(final Farstar game, NotificationManager notificationManager) {
         this.game = game;
@@ -71,6 +72,16 @@ public abstract class SuperScreen implements Screen {
         drawSigns(delta, game.batch);
         game.batch.end();
 
+        update(delta);
+
+    }
+
+    public void update(float delta) {
+        accumulator += Math.min(delta, 0.25f);
+        if (accumulator > 1f) {
+            accumulator -= 1f;
+            notificationManager.update();
+        }
     }
 
     @Override
