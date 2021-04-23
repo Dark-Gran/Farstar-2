@@ -1,8 +1,6 @@
 package com.darkgran.farstar;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.darkgran.farstar.battle.CardLibrary;
 
@@ -13,6 +11,7 @@ public class Farstar extends Game {
 	public static final CardLibrary CARD_LIBRARY = new CardLibrary();
 	public static final AssetLibrary ASSET_LIBRARY = new AssetLibrary();
 	private final InputMultiplexer inputMultiplexer = new InputMultiplexer();
+	private final KeyboardProcessor keyboardProcessor = new KeyboardProcessor();
 	protected SuperScreen superScreen;
 	SpriteBatch batch;
 
@@ -22,6 +21,8 @@ public class Farstar extends Game {
 	public void create () {
 		ASSET_LIBRARY.loadAssets();
 		batch = new SpriteBatch();
+		inputMultiplexer.addProcessor(keyboardProcessor);
+		Gdx.input.setInputProcessor(inputMultiplexer);
 		this.setScreen(new IntroScreen(this, new NotificationManager()));
 	}
 
