@@ -75,7 +75,7 @@ public abstract class SuperScreen implements Screen {
 
     }
 
-    public void update(float delta) {
+    protected void update(float delta) {
         notificationManager.update(delta);
     }
 
