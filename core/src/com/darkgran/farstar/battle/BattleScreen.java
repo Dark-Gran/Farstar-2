@@ -21,7 +21,7 @@ public class BattleScreen extends SuperScreen {
     private final BattleStage battleStage;
     public final static boolean DEBUG_RENDER = true;
 
-    private final InputAdapter generalInputProcessor = new InputAdapter() {
+    private final InputAdapter battleAdapter = new InputAdapter() {
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             if (button == 1) { //mouse.right
@@ -46,7 +46,7 @@ public class BattleScreen extends SuperScreen {
         battleStage = battle.createBattleStage(game, getViewport(), this);
         battle.getCombatManager().setBattleStage(battleStage);
         battle.getCombatManager().getDuelManager().getDuelMenu().setBattleStage(battleStage);
-        game.getInputMultiplexer().addProcessor(generalInputProcessor);
+        game.getInputMultiplexer().addProcessor(battleAdapter);
         game.getInputMultiplexer().addProcessor(battleStage);
         battle.getRoundManager().launch();
     }
@@ -87,7 +87,7 @@ public class BattleScreen extends SuperScreen {
     public void dispose() {
         battle.dispose();
         worldManager.disposeWorld();
-        getGame().getInputMultiplexer().removeProcessor(generalInputProcessor);
+        getGame().getInputMultiplexer().removeProcessor(battleAdapter);
         getGame().getInputMultiplexer().removeProcessor(battleStage);
         battleStage.dispose();
         super.dispose();
