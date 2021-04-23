@@ -21,11 +21,16 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
         delayAction(this::activate, 0.5f);
     }
 
-    private void activate() { active = true; }
+    @Override
+    protected void userEscape() {
+        endIntro();
+    }
 
     private void endIntro() {
         getGame().setScreen(new MainScreen(getGame(), new TableStage(getGame(), getViewport()), getNotificationManager()));
     }
+
+    private void activate() { active = true; }
 
     private void updateAlpha(float delta) {
         //if (delta > 0.03f) { delta = 0.03f; }

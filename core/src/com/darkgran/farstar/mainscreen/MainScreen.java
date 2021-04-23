@@ -18,6 +18,11 @@ public class MainScreen extends SuperScreen {
     }
 
     @Override
+    protected void userEscape() {
+        System.exit(0);
+    }
+
+    @Override
     protected void drawMenus(float delta) {
         mainScreenStage.act(delta);
         mainScreenStage.draw();

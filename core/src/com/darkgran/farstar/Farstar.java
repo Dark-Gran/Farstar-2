@@ -11,7 +11,7 @@ public class Farstar extends Game {
 	public static final CardLibrary CARD_LIBRARY = new CardLibrary();
 	public static final AssetLibrary ASSET_LIBRARY = new AssetLibrary();
 	private final InputMultiplexer inputMultiplexer = new InputMultiplexer();
-	private final KeyboardProcessor keyboardProcessor = new KeyboardProcessor();
+	private final KeyboardProcessor keyboardProcessor = new KeyboardProcessor(this);
 	protected SuperScreen superScreen;
 	SpriteBatch batch;
 
@@ -21,9 +21,9 @@ public class Farstar extends Game {
 	public void create () {
 		ASSET_LIBRARY.loadAssets();
 		batch = new SpriteBatch();
+		this.setScreen(new IntroScreen(this, new NotificationManager()));
 		inputMultiplexer.addProcessor(keyboardProcessor);
 		Gdx.input.setInputProcessor(inputMultiplexer);
-		this.setScreen(new IntroScreen(this, new NotificationManager()));
 	}
 
 	@Override

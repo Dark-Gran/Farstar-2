@@ -12,6 +12,7 @@ import com.darkgran.farstar.TableStage;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.players.LocalPlayer;
 import com.darkgran.farstar.battle.players.PossibilityAdvisor;
+import com.darkgran.farstar.mainscreen.MainScreen;
 import com.darkgran.farstar.util.SimpleBox2;
 
 public class BattleScreen extends SuperScreen {
@@ -49,6 +50,11 @@ public class BattleScreen extends SuperScreen {
         game.getInputMultiplexer().addProcessor(battleAdapter);
         game.getInputMultiplexer().addProcessor(battleStage);
         battle.getRoundManager().launch();
+    }
+
+    @Override
+    protected void userEscape() {
+        getGame().setScreen(new MainScreen(getGame(), getTableMenu(), getNotificationManager()));
     }
 
     @Override

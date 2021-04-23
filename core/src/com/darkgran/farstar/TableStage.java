@@ -8,8 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.darkgran.farstar.mainscreen.MainScreen;
-
 
 public class TableStage extends ListeningStage {
     private final Texture empty = Farstar.ASSET_LIBRARY.getAssetManager().get("images/empty.png");
@@ -48,14 +46,6 @@ public class TableStage extends ListeningStage {
         setupListeners();
     }
 
-    protected void drawBackground(SpriteBatch batch) {
-        batch.begin();
-        batch.setColor(1, 1, 1, 1);
-        batch.draw(space, (float) (Farstar.STAGE_WIDTH / 2 - space.getWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - space.getHeight() / 2));
-        batch.draw(table, (float) (Farstar.STAGE_WIDTH / 2 - table.getWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - table.getHeight() / 2));
-        batch.end();
-    }
-
     @Override
     protected void setupListeners() {
         exitButton.addListener(new ClickListener()
@@ -63,14 +53,7 @@ public class TableStage extends ListeningStage {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-
-                if (getGame().getScreen().getClass() == MainScreen.class) {
-                    System.exit(0);
-                } else  {
-                    final SuperScreen superScreen = getGame().getSuperScreen();
-                    getGame().setScreen(new MainScreen(getGame(), superScreen.getTableMenu(), superScreen.getNotificationManager()));
-                }
-
+               getGame().getSuperScreen().userEscape();
             }
         });
         fsButton.addListener(new ClickListener()
@@ -113,6 +96,14 @@ public class TableStage extends ListeningStage {
                 getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Contacts Not Available.", 3);
             }
         });
+    }
+
+    protected void drawBackground(SpriteBatch batch) {
+        batch.begin();
+        batch.setColor(1, 1, 1, 1);
+        batch.draw(space, (float) (Farstar.STAGE_WIDTH / 2 - space.getWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - space.getHeight() / 2));
+        batch.draw(table, (float) (Farstar.STAGE_WIDTH / 2 - table.getWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - table.getHeight() / 2));
+        batch.end();
     }
 
     @Override

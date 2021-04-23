@@ -6,6 +6,11 @@ import com.badlogic.gdx.utils.IntSet;
 
 public class KeyboardProcessor extends InputAdapter {
     private IntSet keysDown = new IntSet(20);
+    private final Farstar game;
+
+    public KeyboardProcessor(Farstar game) {
+        this.game = game;
+    }
 
     private void multipleKeysDown() {
         if (keysDown.size == 2) {
@@ -29,6 +34,9 @@ public class KeyboardProcessor extends InputAdapter {
     @Override
     public boolean keyUp(int keycode) {
         keysDown.remove(keycode);
+        if (keycode == Input.Keys.ESCAPE) {
+            if (game.getSuperScreen() != null) { game.getSuperScreen().userEscape(); }
+        }
         return true;
     }
 
