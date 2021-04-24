@@ -49,12 +49,12 @@ public class Notification extends TextInTheBox {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(ColorPalette.changeAlpha(getBoxColor(), a));
-        shapeRenderer.rect(notificationType.x - Farstar.STAGE_WIDTH / 19f, notificationType.y + getHeight() / 2, Farstar.STAGE_WIDTH / 3f, -getHeight() * 2.1f);
+        shapeRenderer.rect(notificationType.x - Farstar.STAGE_WIDTH / 19f, notificationType.y + getSimpleBox().getHeight() / 2, Farstar.STAGE_WIDTH / 3f, -getSimpleBox().getHeight() * 2.1f);
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
         batch.begin();
-        drawText(getFont(), batch, notificationType.x, notificationType.y, getMessage(), ColorPalette.changeAlpha(getFontColor(), a));
+        drawText(getFont(), batch, notificationType.x, notificationType.y, getText(), ColorPalette.changeAlpha(getFontColor(), a));
     }
 
     private float timeToAlpha(float time, float duration) {

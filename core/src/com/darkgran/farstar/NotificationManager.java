@@ -37,7 +37,7 @@ public class NotificationManager {
         //check for duplicates
         if (notifications.get(notificationType) != null) {
             for (Notification notification : notifications.get(notificationType)) {
-                if (notification.getMessage().equals(message)) {
+                if (notification.getText().equals(message)) {
                     return false;
                 }
             }
