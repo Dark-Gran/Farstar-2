@@ -9,7 +9,7 @@ public final class ColorPalette {
     public static final Color LIGHT = new Color(0.43f, 0.7f, 1f, 1);
 
     public static Color changeAlpha(Color color, float a) {
-        return new Color(color.r, color.g, color.b, a);
+        return new Color(color.r, color.g, color.b, color.a*a);
     }
 
 }
