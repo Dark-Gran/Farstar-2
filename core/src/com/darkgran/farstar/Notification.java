@@ -32,7 +32,7 @@ public class Notification extends TextInTheBox {
 
     /** @param duration Time in seconds. Set to MIN_DURATION unless greater duration is provided. */
     protected Notification(NotificationType notificationType, String message, int duration) {
-        super(ColorPalette.LIGHT, new Color(ColorPalette.DARK.r, ColorPalette.DARK.g, ColorPalette.DARK.b, 0.5f), "fonts/barlow30.fnt", message);
+        super(ColorPalette.LIGHT, ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f), "fonts/barlow30.fnt", message);
         this.notificationType = notificationType;
         layout.setText(getFont(), message);
         setupBox(notificationType.x, notificationType.y, layout.width, layout.height);
@@ -45,7 +45,7 @@ public class Notification extends TextInTheBox {
 
     @Override
     public void draw(Batch batch, ShapeRenderer shapeRenderer) {
-        float a = timeToAlpha(getBoxColor().a, timer.getCount(), timer.getCountCap());
+        float a = timeToAlpha(timer.getCount(), timer.getCountCap());
         batch.end();
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -59,13 +59,13 @@ public class Notification extends TextInTheBox {
         drawText(getFont(), batch, notificationType.x, notificationType.y, getMessage(), ColorPalette.changeAlpha(getFontColor(), a));
     }
 
-    private float timeToAlpha(float a, float time, float duration) {
+    private float timeToAlpha(float time, float duration) {
         if (time < 1) {
-            a *= timer.getAccumulator();
+            return timer.getAccumulator();
         } else if (time > duration-2) {
-            a *= 1-timer.getAccumulator();
+            return 1-timer.getAccumulator();
         }
-        return a;
+        return 1;
     }
 
     public SimpleCounter getTimer() {
