@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.darkgran.farstar.util.SimpleVector2;
 import com.darkgran.farstar.util.TextDrawer;
 
-public class PerfMeter extends SimpleVector2 implements TextDrawer {
+public class PerfMeter extends SimpleVector2 implements TextDrawer { //possibly: create TextDrawer+Vector parent implementation? ("TextWithVector" x "TextActor" x "TextInTheBox")
     private String fontPath = "";
     private Color fontColor = new Color();
 

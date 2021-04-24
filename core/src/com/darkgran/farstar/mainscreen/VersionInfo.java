@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.util.TextDrawer;
 
-public class VersionInfo extends Actor implements TextDrawer {
+public class VersionInfo extends Actor implements TextDrawer { //possibly: create TextDrawer+Actor parent implementation? ("TextWithVector" x "TextActor" x "TextInTheBox")
     private String fontPath = "";
     private Color fontColor = new Color();
 
