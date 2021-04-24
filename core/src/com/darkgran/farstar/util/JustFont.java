@@ -3,6 +3,9 @@ package com.darkgran.farstar.util;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.darkgran.farstar.Farstar;
 
+/**
+ * Holds a String path to the font and provides a way for default - the actual handling (and disposal) of fonts is done by the AssetManager/AssetLibrary.
+ */
 public interface JustFont {
 
     default void setFont(String path) { //Must be set
