@@ -30,7 +30,8 @@ public class MainScreen extends SuperScreen {
                     Farstar.STAGE_WIDTH/2f,
                     Farstar.STAGE_HEIGHT/2f,
                     textWH.getX(),
-                    textWH.getY()
+                    textWH.getY(),
+                    true
             ));
         }
     }
