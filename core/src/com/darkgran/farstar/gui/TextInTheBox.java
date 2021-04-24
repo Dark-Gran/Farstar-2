@@ -38,8 +38,6 @@ public class TextInTheBox extends TextLine {
 
     public TextInTheBox(Color fontColor, Color boxColor, String fontPath, String text, float x, float y, float width, float height, boolean noBox) {
         super(fontColor, fontPath, x, y, text);
-        setFont(fontPath);
-        setFontColor(fontColor);
         this.boxColor = boxColor;
         this.noBox = noBox;
         simpleBox.setWidth(width);
