@@ -62,8 +62,13 @@ public class MainScreenStage extends ListeningStage {
 
     @Override
     public void draw() {
-        super.draw();
-        getBatch().begin();
+        if (!getGame().getSuperScreen().isConcederActive()) {
+            super.draw();
+            getBatch().begin();
+        } else {
+            getBatch().begin();
+            webButton.draw(getBatch(), 1f);
+        }
         getBatch().draw(FSLogo, (float) (Farstar.STAGE_WIDTH/2-FSLogo.getWidth()/2), (float) (Farstar.STAGE_HEIGHT*0.8));
         versionInfo.drawText(getBatch());
         perfMeter.drawText(getBatch());

@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.darkgran.farstar.mainscreen.MainScreen;
 
 public abstract class SuperScreen implements Screen {
     private Farstar game;
@@ -17,6 +16,7 @@ public abstract class SuperScreen implements Screen {
     private Viewport viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
     private TableStage tableStage;
+    private ScreenConceder screenConceder = null;
     private final NotificationManager notificationManager;
 
     public SuperScreen(final Farstar game, NotificationManager notificationManager) {
@@ -41,7 +41,12 @@ public abstract class SuperScreen implements Screen {
 
     protected void drawMenus(float delta) { }//for all screens except intro
 
-    protected void drawSigns(Batch batch) { notificationManager.drawAll(batch, shapeRenderer); }
+    protected void drawSigns(Batch batch) {
+        notificationManager.drawAll(batch, shapeRenderer);
+        if (screenConceder != null) {
+            screenConceder.draw(batch, shapeRenderer);
+        }
+    }
 
     public static void switchFullscreen() {
         Graphics.DisplayMode currentMode = Gdx.graphics.getDisplayMode();
@@ -115,5 +120,11 @@ public abstract class SuperScreen implements Screen {
     public ShapeRenderer getShapeRenderer() { return shapeRenderer; }
 
     public NotificationManager getNotificationManager() { return notificationManager; }
+
+    public ScreenConceder getScreenConceder() { return screenConceder; }
+
+    public void setScreenConceder(ScreenConceder screenConceder) { this.screenConceder = screenConceder; }
+
+    public boolean isConcederActive() { return screenConceder != null; }
 
 }

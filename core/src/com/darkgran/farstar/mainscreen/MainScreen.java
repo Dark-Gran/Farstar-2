@@ -1,10 +1,7 @@
 package com.darkgran.farstar.mainscreen;
 
 import com.badlogic.gdx.Gdx;
-import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.NotificationManager;
-import com.darkgran.farstar.SuperScreen;
-import com.darkgran.farstar.TableStage;
+import com.darkgran.farstar.*;
 
 public class MainScreen extends SuperScreen {
     private final MainScreenStage mainScreenStage = new MainScreenStage(getGame(), getViewport());
@@ -18,8 +15,19 @@ public class MainScreen extends SuperScreen {
     }
 
     @Override
-    protected void userEscape() {
-        System.exit(0);
+    protected void userEscape() { //TODO
+        if (!isConcederActive()) {
+            setScreenConceder(new ScreenConceder(
+                    ColorPalette.LIGHT,
+                    ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f),
+                    "fonts/barlow30.fnt",
+                    "",
+                    50,
+                    50,
+                    50,
+                    50
+            ));
+        }
     }
 
     @Override
