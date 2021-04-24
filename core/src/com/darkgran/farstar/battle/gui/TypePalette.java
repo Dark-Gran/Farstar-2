@@ -3,7 +3,7 @@ package com.darkgran.farstar.battle.gui;
 import com.badlogic.gdx.graphics.Color;
 import com.darkgran.farstar.battle.players.TechType;
 
-public abstract class ColorPalette {
+public abstract class TypePalette {
     public static Color getTypeColor(TechType techType) {
         switch (techType) {
             case INFERIOR:

@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
-import com.darkgran.farstar.battle.gui.ColorPalette;
+import com.darkgran.farstar.battle.gui.TypePalette;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.gui.JustFont;
@@ -60,9 +60,9 @@ public class Token extends Actor implements JustFont {
         else if (getCard().isInDuel()) { color.set(1, 1, 0, 1); }
         tokenName.drawText(tokenName.getFont(), batch, getX(), getY()+getHeight(), card.getCardInfo().getName(), color);
         //Offense+Defense
-        color = ColorPalette.getTypeColor(card.getCardInfo().getOffenseType());
+        color = TypePalette.getTypeColor(card.getCardInfo().getOffenseType());
         if (!getCard().isMS()) { tokenOffense.drawText(tokenOffense.getFont(), batch, getX(), getY()+getHeight()/3, String.valueOf(card.getCardInfo().getOffense()), color); }
-        color = ColorPalette.getTypeColor(card.getCardInfo().getDefenseType());
+        color = TypePalette.getTypeColor(card.getCardInfo().getDefenseType());
         tokenDefense.drawText(tokenDefense.getFont(), batch, getX()+getWidth()*5/6, getY()+getHeight()/3, String.valueOf(card.getHealth()), color);
         //Debug
         if (DEBUG_RENDER) { battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch); }
