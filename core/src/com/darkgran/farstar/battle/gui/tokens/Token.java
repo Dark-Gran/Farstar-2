@@ -2,7 +2,6 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
@@ -11,6 +10,8 @@ import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.util.JustFont;
 import com.darkgran.farstar.util.SimpleBox2;
+import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.util.TextDrawer;
 
 import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 
@@ -33,10 +34,9 @@ public class Token extends Actor implements JustFont {
         tokenDefense.setFont(getFontPath());
         this.card = card;
         String res = "Battlestation";
-        GlyphLayout layout = new GlyphLayout();
-        layout.setText(getFont(), res);
-        setWidth(layout.width);
-        setHeight(layout.height*4);
+        SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), res);
+        setWidth(textWH.getX());
+        setHeight(textWH.getY()*4);
         setX(x);
         setY(y);
         this.cardListMenu = cardListMenu;

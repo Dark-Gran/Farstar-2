@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.darkgran.farstar.util.*;
 
@@ -27,15 +26,14 @@ public class Notification extends TextInTheBox {
 
     private static final int MIN_DURATION = 3;
     private final NotificationType notificationType;
-    private final GlyphLayout layout = new GlyphLayout();
     private final DeltaCounter timer;
 
     /** @param duration Time in seconds. Set to MIN_DURATION unless greater duration is provided. */
     protected Notification(NotificationType notificationType, String message, int duration) {
         super(ColorPalette.LIGHT, ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f), "fonts/barlow30.fnt", message);
         this.notificationType = notificationType;
-        layout.setText(getFont(), message);
-        setupBox(notificationType.x, notificationType.y, layout.width, layout.height);
+        SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), message);
+        setupBox(notificationType.x, notificationType.y, textWH.getX(), textWH.getY());
         timer = new DeltaCounter(true, Math.max(duration, MIN_DURATION), 0);
     }
 
@@ -51,7 +49,7 @@ public class Notification extends TextInTheBox {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(ColorPalette.changeAlpha(getBoxColor(), a));
-        shapeRenderer.rect(notificationType.x - Farstar.STAGE_WIDTH / 19f, notificationType.y + layout.height / 2, Farstar.STAGE_WIDTH / 3f, -layout.height * 2.1f);
+        shapeRenderer.rect(notificationType.x - Farstar.STAGE_WIDTH / 19f, notificationType.y + getHeight() / 2, Farstar.STAGE_WIDTH / 3f, -getHeight() * 2.1f);
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);

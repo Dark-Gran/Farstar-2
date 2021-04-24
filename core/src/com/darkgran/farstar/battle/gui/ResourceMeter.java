@@ -1,10 +1,11 @@
 package com.darkgran.farstar.battle.gui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.util.JustFont;
+import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.util.TextDrawer;
 
 public class ResourceMeter extends Actor implements JustFont {
     private final Player player;
@@ -16,10 +17,9 @@ public class ResourceMeter extends Actor implements JustFont {
         this.player = player;
         this.onBottom = onBottom;
         String res = "Population: 999";
-        GlyphLayout layout = new GlyphLayout();
-        layout.setText(getFont(), res);
-        setWidth(layout.width);
-        setHeight(layout.height);
+        SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), res);
+        setWidth(textWH.getX());
+        setHeight(textWH.getY());
         setX(x-getWidth()*2);
         setY(y);
     }
