@@ -51,7 +51,7 @@ public class Notification implements TextDrawer, JustFont {
         timer.update(delta);
     }
 
-    protected void draw(Batch batch, ShapeRenderer shapeRenderer) {
+    public void draw(Batch batch, ShapeRenderer shapeRenderer) {
         batch.end();
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
