@@ -2,11 +2,11 @@ package com.darkgran.farstar.mainscreen;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.util.SimpleVector2;
 import com.darkgran.farstar.util.TextDrawer;
 
-public class VersionInfo extends Actor implements TextDrawer { //possibly: create TextDrawer+Actor parent implementation? ("TextWithVector" x "TextActor" x "TextInTheBox")
+public class VersionInfo extends SimpleVector2 implements TextDrawer { //possibly: create TextDrawer+Actor parent implementation? ("TextWithVector" x "TextActor" x "TextInTheBox")
     private String fontPath = "";
     private Color fontColor = new Color();
 
