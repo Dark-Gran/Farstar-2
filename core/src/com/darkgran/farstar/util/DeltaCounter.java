@@ -9,10 +9,12 @@ public class DeltaCounter extends SimpleCounter {
     }
 
     public void update(float delta) {
-        accumulator += Math.min(delta, 0.25f);
-        if (accumulator > 1f) {
-            accumulator -= 1f;
-            update();
+        if (isEnabled()) {
+            accumulator += Math.min(delta, 0.25f);
+            if (accumulator > 1f) {
+                accumulator -= 1f;
+                update();
+            }
         }
     }
 
