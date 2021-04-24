@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 public class ActorButton extends Actor {
     private final Texture imageUp;
     private final Texture imageOver;
+    private final Texture imageDown;
     private boolean disabled = false;
     private final ClickListener clickListener = new ClickListener(){
         @Override
@@ -24,6 +25,16 @@ public class ActorButton extends Actor {
     public ActorButton(Texture imageUp, Texture imageOver) {
         this.imageUp = imageUp;
         this.imageOver = imageOver;
+        this.imageDown = imageOver;
+        setWidth(imageOver.getWidth());
+        setHeight(imageOver.getHeight());
+        addListener(clickListener);
+    }
+
+    public ActorButton(Texture imageUp, Texture imageOver, Texture imageDown) {
+        this.imageUp = imageUp;
+        this.imageOver = imageOver;
+        this.imageDown = imageDown;
         setWidth(imageOver.getWidth());
         setHeight(imageOver.getHeight());
         addListener(clickListener);
@@ -33,7 +44,9 @@ public class ActorButton extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        if (clickListener.isOver()) {
+        if (clickListener.isPressed()) {
+            batch.draw(imageDown, getX(), getY());
+        } else if (clickListener.isOver()) {
             batch.draw(imageOver, getX(), getY());
         } else {
             batch.draw(imageUp, getX(), getY());
