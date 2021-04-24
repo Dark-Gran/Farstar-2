@@ -17,6 +17,7 @@ public class MainScreen extends SuperScreen {
     @Override
     protected void userEscape() { //TODO
         if (!isConcederActive()) {
+            mainScreenStage.disableMainButtons();
             setScreenConceder(new ScreenConceder(
                     ColorPalette.LIGHT,
                     ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f),

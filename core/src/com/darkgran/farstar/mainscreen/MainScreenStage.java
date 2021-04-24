@@ -21,28 +21,22 @@ public class MainScreenStage extends ListeningStage {
     private final ActorButton startButton = new ActorButton(Farstar.ASSET_LIBRARY.getAssetManager().get("images/solitary.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/solitaryO.png")){
         @Override
         public void clicked() {
-            if (!isConcederActive()) {
-                System.out.println("Starting Solitary.");
-                getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0), playerFactory.getPlayer("LOCAL", 2, 15)), getGame().getSuperScreen().getNotificationManager()));
-            }
+            System.out.println("Starting Solitary.");
+            getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0), playerFactory.getPlayer("LOCAL", 2, 15)), getGame().getSuperScreen().getNotificationManager()));
         }
     };
     private final ActorButton botButton = new ActorButton(Farstar.ASSET_LIBRARY.getAssetManager().get("images/skirmish.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/skirmishO.png")){
         @Override
         public void clicked() {
-            if (!isConcederActive()) {
-                System.out.println("Starting Skirmish.");
-                getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0), playerFactory.getPlayer("AUTO", 2, 15)), getGame().getSuperScreen().getNotificationManager()));
-            }
+            System.out.println("Starting Skirmish.");
+            getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0), playerFactory.getPlayer("AUTO", 2, 15)), getGame().getSuperScreen().getNotificationManager()));
         }
     };
     private final ActorButton simButton = new ActorButton(Farstar.ASSET_LIBRARY.getAssetManager().get("images/sim.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/simO.png")){
         @Override
         public void clicked() {
-            if (!isConcederActive()) {
-                System.out.println("Starting Simulation.");
-                getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("AUTO", 1, 0), playerFactory.getPlayer("AUTO", 2, 15)), getGame().getSuperScreen().getNotificationManager()));
-            }
+            System.out.println("Starting Simulation.");
+            getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("AUTO", 1, 0), playerFactory.getPlayer("AUTO", 2, 15)), getGame().getSuperScreen().getNotificationManager()));
         }
     };
     private final ActorButton webButton = new ActorButton(Farstar.ASSET_LIBRARY.getAssetManager().get("images/web.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/webO.png")){
@@ -64,6 +58,12 @@ public class MainScreenStage extends ListeningStage {
         this.addActor(simButton);
         this.addActor(webButton);
         setupListeners();
+    }
+
+    public void disableMainButtons() {
+        startButton.setDisabled(true);
+        botButton.setDisabled(true);
+        simButton.setDisabled(true);
     }
 
     @Override
@@ -88,5 +88,4 @@ public class MainScreenStage extends ListeningStage {
     public void dispose() {
         super.dispose();
     }
-
 }
