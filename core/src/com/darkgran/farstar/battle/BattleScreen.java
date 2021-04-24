@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.*;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.NotificationManager;
+import com.darkgran.farstar.gui.NotificationManager;
 import com.darkgran.farstar.SuperScreen;
-import com.darkgran.farstar.TableStage;
+import com.darkgran.farstar.gui.TableStage;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.players.LocalPlayer;
 import com.darkgran.farstar.battle.players.PossibilityAdvisor;
@@ -53,7 +53,7 @@ public class BattleScreen extends SuperScreen {
     }
 
     @Override
-    protected void userEscape() {
+    public void userEscape() {
         getGame().setScreen(new MainScreen(getGame(), getTableMenu(), getNotificationManager()));
     }
 

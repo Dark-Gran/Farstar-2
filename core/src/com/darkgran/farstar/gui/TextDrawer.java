@@ -1,9 +1,10 @@
-package com.darkgran.farstar.util;
+package com.darkgran.farstar.gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.darkgran.farstar.util.SimpleVector2;
 
 public interface TextDrawer extends JustFont {
     void drawText(Batch batch);

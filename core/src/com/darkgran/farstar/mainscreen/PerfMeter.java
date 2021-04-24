@@ -3,7 +3,7 @@ package com.darkgran.farstar.mainscreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.darkgran.farstar.util.TextLine;
+import com.darkgran.farstar.gui.TextLine;
 
 public class PerfMeter extends TextLine {
 

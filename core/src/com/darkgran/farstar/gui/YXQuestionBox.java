@@ -1,7 +1,6 @@
-package com.darkgran.farstar;
+package com.darkgran.farstar.gui;
 
 import com.badlogic.gdx.graphics.Color;
-import com.darkgran.farstar.util.TextInTheBox;
 
 public class YXQuestionBox extends TextInTheBox { //TODO
 

@@ -1,9 +1,10 @@
-package com.darkgran.farstar;
+package com.darkgran.farstar.gui;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.darkgran.farstar.util.ActorButton;
+import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.SuperScreen;
 
 public class TableStage extends ListeningStage {
     private final Texture empty = Farstar.ASSET_LIBRARY.getAssetManager().get("images/empty.png");
@@ -71,7 +72,7 @@ public class TableStage extends ListeningStage {
         addActor(friendsButton);
     }
 
-    protected void drawBackground(SpriteBatch batch) {
+    public void drawBackground(SpriteBatch batch) {
         batch.begin();
         batch.setColor(1, 1, 1, 1);
         batch.draw(space, (float) (Farstar.STAGE_WIDTH / 2 - space.getWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - space.getHeight() / 2));

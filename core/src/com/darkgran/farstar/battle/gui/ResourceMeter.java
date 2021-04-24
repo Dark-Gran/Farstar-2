@@ -3,9 +3,9 @@ package com.darkgran.farstar.battle.gui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.util.JustFont;
+import com.darkgran.farstar.gui.JustFont;
 import com.darkgran.farstar.util.SimpleVector2;
-import com.darkgran.farstar.util.TextDrawer;
+import com.darkgran.farstar.gui.TextDrawer;
 
 public class ResourceMeter extends Actor implements JustFont {
     private final Player player;

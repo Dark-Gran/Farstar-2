@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.darkgran.farstar.gui.NotificationManager;
+import com.darkgran.farstar.gui.TableStage;
+import com.darkgran.farstar.gui.YXQuestionBox;
 
 public abstract class SuperScreen implements Screen {
     private Farstar game;
@@ -35,7 +38,7 @@ public abstract class SuperScreen implements Screen {
         }
     }
 
-    protected void userEscape() { }
+    public void userEscape() { }
 
     protected void drawContent(float delta, Batch batch) { }//for all screens except intro
 

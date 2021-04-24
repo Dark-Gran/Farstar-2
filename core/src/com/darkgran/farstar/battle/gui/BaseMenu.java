@@ -4,7 +4,7 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.util.SimpleBox2;
 import com.darkgran.farstar.util.SimpleVector2;
-import com.darkgran.farstar.util.TextDrawer;
+import com.darkgran.farstar.gui.TextDrawer;
 
 //base for laying out menus
 public abstract class BaseMenu extends SimpleBox2 {

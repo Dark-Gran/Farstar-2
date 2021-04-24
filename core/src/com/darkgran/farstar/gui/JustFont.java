@@ -1,4 +1,4 @@
-package com.darkgran.farstar.util;
+package com.darkgran.farstar.gui;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.darkgran.farstar.Farstar;

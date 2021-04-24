@@ -2,7 +2,7 @@ package com.darkgran.farstar.mainscreen;
 
 import com.badlogic.gdx.graphics.Color;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.util.TextLine;
+import com.darkgran.farstar.gui.TextLine;
 
 public class VersionInfo extends TextLine {
 

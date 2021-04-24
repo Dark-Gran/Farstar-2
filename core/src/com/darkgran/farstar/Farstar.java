@@ -3,6 +3,7 @@ package com.darkgran.farstar;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.darkgran.farstar.battle.CardLibrary;
+import com.darkgran.farstar.gui.NotificationManager;
 
 public class Farstar extends Game {
 	public static final String APP_VERSION = "v0.2 (Alpha)";

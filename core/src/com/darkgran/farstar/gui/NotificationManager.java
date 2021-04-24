@@ -1,4 +1,4 @@
-package com.darkgran.farstar;
+package com.darkgran.farstar.gui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;

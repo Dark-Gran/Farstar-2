@@ -1,7 +1,8 @@
-package com.darkgran.farstar.util;
+package com.darkgran.farstar.gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.darkgran.farstar.util.SimpleVector2;
 
 public class TextLine extends SimpleVector2 implements TextDrawer { //in-future: TextActor variant/implementation
     private Color fontColor = new Color();

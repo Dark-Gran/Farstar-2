@@ -1,8 +1,9 @@
-package com.darkgran.farstar.util;
+package com.darkgran.farstar.gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.darkgran.farstar.util.SimpleBox2;
 
 /**
  * Text at coordinates with a box around it.

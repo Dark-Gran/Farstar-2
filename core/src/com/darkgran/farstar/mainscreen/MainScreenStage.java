@@ -5,11 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.ColorPalette;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.ListeningStage;
+import com.darkgran.farstar.gui.ListeningStage;
 import com.darkgran.farstar.battle.Battle1v1;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.PlayerFactory;
-import com.darkgran.farstar.util.ActorButton;
+import com.darkgran.farstar.gui.ActorButton;
 
 public class MainScreenStage extends ListeningStage {
     private final PlayerFactory playerFactory = new PlayerFactory();

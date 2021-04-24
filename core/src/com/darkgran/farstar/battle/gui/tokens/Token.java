@@ -8,10 +8,10 @@ import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.gui.ColorPalette;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.Ship;
-import com.darkgran.farstar.util.JustFont;
+import com.darkgran.farstar.gui.JustFont;
 import com.darkgran.farstar.util.SimpleBox2;
 import com.darkgran.farstar.util.SimpleVector2;
-import com.darkgran.farstar.util.TextDrawer;
+import com.darkgran.farstar.gui.TextDrawer;
 
 import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 

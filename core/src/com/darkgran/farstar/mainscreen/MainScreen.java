@@ -3,8 +3,8 @@ package com.darkgran.farstar.mainscreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.darkgran.farstar.*;
+import com.darkgran.farstar.gui.*;
 import com.darkgran.farstar.util.SimpleVector2;
-import com.darkgran.farstar.util.TextDrawer;
 
 public class MainScreen extends SuperScreen {
     private final MainScreenStage mainScreenStage = new MainScreenStage(getGame(), getViewport());
@@ -18,7 +18,7 @@ public class MainScreen extends SuperScreen {
     }
 
     @Override
-    protected void userEscape() { //TODO
+    public void userEscape() { //TODO
         if (!isConcederActive()) {
             mainScreenStage.disableMainButtons();
             SimpleVector2 textWH = TextDrawer.getTextWH(Farstar.ASSET_LIBRARY.getAssetManager().get("fonts/barlow30.fnt", BitmapFont.class), "ASD");
