@@ -68,4 +68,12 @@ public class TextInTheBox extends SimpleBox2 implements TextDrawer, JustFont {
         return boxColor;
     }
 
+    public void setBoxColor(Color boxColor) {
+        this.boxColor = boxColor;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
 }
