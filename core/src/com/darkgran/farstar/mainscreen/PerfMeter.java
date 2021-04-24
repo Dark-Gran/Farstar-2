@@ -3,11 +3,10 @@ package com.darkgran.farstar.mainscreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.darkgran.farstar.util.JustFont;
 import com.darkgran.farstar.util.SimpleVector2;
 import com.darkgran.farstar.util.TextDrawer;
 
-public class PerfMeter extends SimpleVector2 implements TextDrawer, JustFont {
+public class PerfMeter extends SimpleVector2 implements TextDrawer {
     private String fontPath = "";
     private Color fontColor = new Color();
 

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
-public interface TextDrawer {
+public interface TextDrawer extends JustFont {
     void drawText(Batch batch);
 
     default void drawText(BitmapFont font, Batch batch, float x, float y, String txt) {
@@ -18,7 +18,6 @@ public interface TextDrawer {
     }
 
     Color getFontColor();
-
     void setFontColor(Color fontColor);
 
 }

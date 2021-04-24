@@ -1,7 +1,6 @@
 package com.darkgran.farstar.battle.gui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.darkgran.farstar.battle.players.Player;

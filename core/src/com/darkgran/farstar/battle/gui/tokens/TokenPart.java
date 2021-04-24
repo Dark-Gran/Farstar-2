@@ -6,6 +6,7 @@ import com.darkgran.farstar.util.TextDrawer;
 
 public class TokenPart implements TextDrawer {
     private Color fontColor = new Color();
+    private String fontPath = "";
 
     @Override
     public void drawText(Batch batch) { }
@@ -19,4 +20,15 @@ public class TokenPart implements TextDrawer {
     public void setFontColor(Color fontColor) {
         this.fontColor = fontColor;
     }
+
+    @Override
+    public String getFontPath() {
+        return fontPath;
+    }
+
+    @Override
+    public void setFontPath(String path) {
+        fontPath = path;
+    }
+
 }

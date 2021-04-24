@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 /**
  * Text at coordinates with a box around it.
  */
-public class TextInTheBox extends SimpleBox2 implements TextDrawer, JustFont {
+public class TextInTheBox extends SimpleBox2 implements TextDrawer {
     private Color fontColor;
     private Color boxColor;
     private String fontPath = "";
