@@ -45,18 +45,18 @@ public class Notification extends TextInTheBox {
 
     @Override
     public void draw(Batch batch, ShapeRenderer shapeRenderer) {
+        float a = timeToAlpha(getBoxColor().a, timer.getCount(), timer.getCountCap());
         batch.end();
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(getBoxColor().r, getBoxColor().g, getBoxColor().b, timeToAlpha(getBoxColor().a, timer.getCount(), timer.getCountCap()));
+        shapeRenderer.setColor(ColorPalette.changeAlpha(getBoxColor(), a));
         shapeRenderer.rect(notificationType.x - Farstar.STAGE_WIDTH / 19f, notificationType.y + layout.height / 2, Farstar.STAGE_WIDTH / 3f, -layout.height * 2.1f);
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
         batch.begin();
-        Color color = new Color(getFontColor().r, getFontColor().g, getFontColor().b, timeToAlpha(getFontColor().a, timer.getCount(), timer.getCountCap()));
-        drawText(getFont(), batch, notificationType.x, notificationType.y, getMessage(), color);
+        drawText(getFont(), batch, notificationType.x, notificationType.y, getMessage(), ColorPalette.changeAlpha(getFontColor(), a));
     }
 
     private float timeToAlpha(float a, float time, float duration) {
