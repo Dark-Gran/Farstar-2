@@ -65,8 +65,8 @@ public class MainScreenStage extends ListeningStage {
         super.draw();
         getBatch().begin();
         getBatch().draw(FSLogo, (float) (Farstar.STAGE_WIDTH/2-FSLogo.getWidth()/2), (float) (Farstar.STAGE_HEIGHT*0.8));
-        versionInfo.draw(getBatch());
-        perfMeter.draw(getBatch());
+        versionInfo.drawText(getBatch());
+        perfMeter.drawText(getBatch());
         getBatch().end();
     }
 

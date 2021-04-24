@@ -19,8 +19,8 @@ public class VersionInfo extends Actor implements TextDrawer, JustFont {
     }
 
     @Override
-    public void draw(Batch batch) {
-        draw(getFont(), batch, getX(), getY(), Farstar.APP_VERSION, getFontColor());
+    public void drawText(Batch batch) {
+        drawText(getFont(), batch, getX(), getY(), Farstar.APP_VERSION, getFontColor());
     }
 
     @Override

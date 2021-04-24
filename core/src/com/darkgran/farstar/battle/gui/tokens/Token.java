@@ -2,7 +2,6 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.darkgran.farstar.battle.gui.BattleStage;
@@ -49,18 +48,18 @@ public class Token extends Actor implements JustFont {
         //Price
         color.set(1, 1, 1, 1);
         if (this instanceof YardToken || this instanceof HandToken || this instanceof FakeToken) {
-            tokenPrice.draw(getFont(), batch, getX(), getY()+getHeight()*4/3, card.getCardInfo().getEnergy()+":"+card.getCardInfo().getMatter(), color);
+            tokenPrice.drawText(getFont(), batch, getX(), getY()+getHeight()*4/3, card.getCardInfo().getEnergy()+":"+card.getCardInfo().getMatter(), color);
         }
         //Name
         if (card instanceof Ship) { if (((Ship) card).haveFought()) { color.set(1, 0, 0, 1); } }
         if (getCard().isPossible()) { color.set(0, 1, 0, 1); }
         else if (getCard().isInDuel()) { color.set(1, 1, 0, 1); }
-        tokenName.draw(getFont(), batch, getX(), getY()+getHeight(), card.getCardInfo().getName(), color);
+        tokenName.drawText(getFont(), batch, getX(), getY()+getHeight(), card.getCardInfo().getName(), color);
         //Offense+Defense
         color = ColorPalette.getTypeColor(card.getCardInfo().getOffenseType());
-        if (!getCard().isMS()) { tokenOffense.draw(getFont(), batch, getX(), getY()+getHeight()/3, String.valueOf(card.getCardInfo().getOffense()), color); }
+        if (!getCard().isMS()) { tokenOffense.drawText(getFont(), batch, getX(), getY()+getHeight()/3, String.valueOf(card.getCardInfo().getOffense()), color); }
         color = ColorPalette.getTypeColor(card.getCardInfo().getDefenseType());
-        tokenDefense.draw(getFont(), batch, getX()+getWidth()*5/6, getY()+getHeight()/3, String.valueOf(card.getHealth()), color);
+        tokenDefense.drawText(getFont(), batch, getX()+getWidth()*5/6, getY()+getHeight()/3, String.valueOf(card.getHealth()), color);
         //Debug
         if (DEBUG_RENDER) { battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch); }
     }

@@ -8,7 +8,7 @@ public class TokenPart implements TextDrawer {
     private Color fontColor = new Color();
 
     @Override
-    public void draw(Batch batch) { }
+    public void drawText(Batch batch) { }
 
     @Override
     public Color getFontColor() {
