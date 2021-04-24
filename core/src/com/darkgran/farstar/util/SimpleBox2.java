@@ -19,7 +19,7 @@ public class SimpleBox2 extends SimpleVector2 {
         setY(y);
     }
 
-    public void setup(float x, float y, float height, float width) {
+    public void setupBox(float x, float y, float height, float width) {
         setX(x);
         setY(y);
         setHeight(height);
