@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.darkgran.farstar.util.ActorButton;
 
 public class TableStage extends ListeningStage {
     private final Texture empty = Farstar.ASSET_LIBRARY.getAssetManager().get("images/empty.png");
@@ -17,15 +18,25 @@ public class TableStage extends ListeningStage {
     private final Texture sound = Farstar.ASSET_LIBRARY.getAssetManager().get("images/sound.png");
     private final Texture logout = Farstar.ASSET_LIBRARY.getAssetManager().get("images/logout.png");
     private final Texture friends = Farstar.ASSET_LIBRARY.getAssetManager().get("images/friends.png");
+    private final Texture table = Farstar.ASSET_LIBRARY.getAssetManager().get("images/tableMain_1920.png");
+    private final Texture space = Farstar.ASSET_LIBRARY.getAssetManager().get("images/Space_1920.png");
+
     private final TextureRegionDrawable emptyTRD = new TextureRegionDrawable(new TextureRegion(empty));
-    private final ImageButton exitButton = new ImageButton(emptyTRD, new TextureRegionDrawable(new TextureRegion(exit)));
+
+    private final ActorButton exitButton = new ActorButton(empty, empty, exit){
+        @Override
+        public void clicked() {
+            getGame().getSuperScreen().userEscape();
+        }
+    };
+
+    //private final ImageButton exitButton = new ImageButton(emptyTRD, new TextureRegionDrawable(new TextureRegion(exit)));
     private final ImageButton qualityButton = new ImageButton(emptyTRD, new TextureRegionDrawable(new TextureRegion(quality)));
     private final ImageButton fsButton = new ImageButton(emptyTRD, new TextureRegionDrawable(new TextureRegion(fs)));
     private final ImageButton soundButton = new ImageButton(emptyTRD, new TextureRegionDrawable(new TextureRegion(sound)));
     private final ImageButton logoutButton = new ImageButton(emptyTRD, new TextureRegionDrawable(new TextureRegion(logout)));
     private final ImageButton friendsButton = new ImageButton(emptyTRD, new TextureRegionDrawable(new TextureRegion(friends)));
-    private final Texture table = Farstar.ASSET_LIBRARY.getAssetManager().get("images/tableMain_1920.png");
-    private final Texture space = Farstar.ASSET_LIBRARY.getAssetManager().get("images/Space_1920.png");
+
 
     public TableStage(final Farstar game, Viewport viewport) {
         super(game, viewport);
@@ -48,14 +59,6 @@ public class TableStage extends ListeningStage {
 
     @Override
     protected void setupListeners() {
-        exitButton.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y)
-            {
-               getGame().getSuperScreen().userEscape();
-            }
-        });
         fsButton.addListener(new ClickListener()
         {
             @Override
@@ -108,12 +111,7 @@ public class TableStage extends ListeningStage {
 
     @Override
     public void dispose() {
-        exitButton.removeListener(exitButton.getClickListener());
-        fsButton.removeListener(fsButton.getClickListener());
-        qualityButton.removeListener(fsButton.getClickListener());
-        soundButton.removeListener(fsButton.getClickListener());
-        friendsButton.removeListener(fsButton.getClickListener());
-        logoutButton.removeListener(fsButton.getClickListener());
+        exitButton.dispose();
         super.dispose();
     }
 

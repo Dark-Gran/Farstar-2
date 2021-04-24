@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-
 public class ActorButton extends Actor {
     private final Texture imageUp;
     private final Texture imageOver;
@@ -53,6 +52,10 @@ public class ActorButton extends Actor {
         }
     }
 
+    public void dispose() {
+        removeListener(clickListener);
+    }
+
     public boolean isDisabled() {
         return disabled;
     }
@@ -60,4 +63,5 @@ public class ActorButton extends Actor {
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
     }
+
 }

@@ -57,7 +57,6 @@ public class MainScreenStage extends ListeningStage {
         this.addActor(botButton);
         this.addActor(simButton);
         this.addActor(webButton);
-        setupListeners();
     }
 
     public void disableMainButtons() {
@@ -82,10 +81,11 @@ public class MainScreenStage extends ListeningStage {
     }
 
     @Override
-    protected void setupListeners() { }
-
-    @Override
     public void dispose() {
+        startButton.dispose();
+        botButton.dispose();
+        simButton.dispose();
+        webButton.dispose();
         super.dispose();
     }
 }
