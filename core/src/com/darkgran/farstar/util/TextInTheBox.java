@@ -21,6 +21,14 @@ public class TextInTheBox extends SimpleBox2 implements TextDrawer {
         setupBox(0, 0, 1, 1);
     }
 
+    public TextInTheBox(Color fontColor, Color boxColor, String fontPath, String message, float x, float y, float width, float height) {
+        setFont(fontPath);
+        setFontColor(fontColor);
+        this.boxColor = boxColor;
+        this.message = message;
+        setupBox(x, y, width, height);
+    }
+
     /** Box outlines keep the same distance from text on all sides. */
     public void draw(Batch batch, ShapeRenderer shapeRenderer) {
         //BOX
