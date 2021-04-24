@@ -16,7 +16,7 @@ public abstract class SuperScreen implements Screen {
     private Viewport viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
     private TableStage tableStage;
-    private ScreenConceder screenConceder = null;
+    private YXQuestionBox screenConceder = null;
     private final NotificationManager notificationManager;
 
     public SuperScreen(final Farstar game, NotificationManager notificationManager) {
@@ -121,9 +121,9 @@ public abstract class SuperScreen implements Screen {
 
     public NotificationManager getNotificationManager() { return notificationManager; }
 
-    public ScreenConceder getScreenConceder() { return screenConceder; }
+    public YXQuestionBox getScreenConceder() { return screenConceder; }
 
-    public void setScreenConceder(ScreenConceder screenConceder) { this.screenConceder = screenConceder; }
+    public void setScreenConceder(YXQuestionBox screenConceder) { this.screenConceder = screenConceder; }
 
     public boolean isConcederActive() { return screenConceder != null; }
 

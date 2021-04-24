@@ -18,7 +18,7 @@ public class MainScreen extends SuperScreen {
     protected void userEscape() { //TODO
         if (!isConcederActive()) {
             mainScreenStage.disableMainButtons();
-            setScreenConceder(new ScreenConceder(
+            setScreenConceder(new YXQuestionBox(
                     ColorPalette.LIGHT,
                     ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f),
                     "fonts/barlow30.fnt",
