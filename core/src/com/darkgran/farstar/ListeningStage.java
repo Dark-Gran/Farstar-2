@@ -17,4 +17,8 @@ public abstract class ListeningStage extends Stage {
 
     }
 
+    protected boolean isConcederActive() {
+        return getGame().getSuperScreen() != null && getGame().getSuperScreen().isConcederActive();
+    }
+
 }

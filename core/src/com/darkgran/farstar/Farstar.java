@@ -29,8 +29,8 @@ public class Farstar extends Game {
 	@Override
 	public void setScreen(Screen screen) {
 		if (superScreen != null) { superScreen.dispose(); }
-		super.setScreen(screen);
 		this.superScreen = (SuperScreen) screen;
+		super.setScreen(screen);
 	}
 
 	@Override
