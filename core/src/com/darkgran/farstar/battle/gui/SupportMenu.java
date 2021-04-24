@@ -14,7 +14,7 @@ public class SupportMenu extends CardListMenu implements DropTarget {
         super(cardList, x, y, negativeOffset, battleStage, player);
         setWidth(width);
         setHeight(height);
-        setupSimpleBox2(x, y, height, width);
+        setupSimpleBox2(x, y, width, height);
     }
 
     @Override
