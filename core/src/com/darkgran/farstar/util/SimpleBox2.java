@@ -19,6 +19,13 @@ public class SimpleBox2 extends SimpleVector2 {
         setY(y);
     }
 
+    public void setup(float x, float y, float height, float width) {
+        setX(x);
+        setY(y);
+        setHeight(height);
+        setWidth(width);
+    }
+
     public float getWidth() { return width; }
 
     public void setWidth(float width) { this.width = width; }

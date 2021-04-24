@@ -21,14 +21,6 @@ public class JunkButton extends BaseMenu implements DropTarget {
     }
 
     @Override
-    public void setupSimpleBox2(float x, float y, float height, float width) {
-        simpleBox2.setX(x);
-        simpleBox2.setY(y);
-        simpleBox2.setHeight(height);
-        simpleBox2.setWidth(width);
-    }
-
-    @Override
     public SimpleBox2 getSimpleBox2() {
         return simpleBox2;
     }
