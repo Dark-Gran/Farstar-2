@@ -21,6 +21,11 @@ public class AssetLibrary {
     }
 
     private void loadTextures() {
+        //All-Screens
+        assetManager.load("images/y.png", Texture.class);
+        assetManager.load("images/yO.png", Texture.class);
+        assetManager.load("images/x.png", Texture.class);
+        assetManager.load("images/xO.png", Texture.class);
         //Intro
         assetManager.load("images/logo.jpg", Texture.class);
         //MainScreenStage

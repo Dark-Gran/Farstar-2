@@ -31,12 +31,14 @@ public class MainScreen extends SuperScreen {
                     txt,
                     Farstar.STAGE_WIDTH/2f - textWH.getX()/2,
                     Farstar.STAGE_HEIGHT/2f + textWH.getY()/2,
-                    1,
-                    1,
-                    true
+                    textWH.getX(),
+                    textWH.getY(),
+                    false,
+                    mainScreenStage
             ));
         } else {
             mainScreenStage.enableMainButtons(false);
+            getScreenConceder().dispose();
             setScreenConceder(null);
         }
     }
