@@ -20,19 +20,24 @@ public class MainScreen extends SuperScreen {
     @Override
     public void userEscape() { //TODO
         if (!isConcederActive()) {
-            mainScreenStage.disableMainButtons();
-            SimpleVector2 textWH = TextDrawer.getTextWH(Farstar.ASSET_LIBRARY.getAssetManager().get("fonts/barlow30.fnt", BitmapFont.class), "ASD");
+            mainScreenStage.enableMainButtons(true);
+            String txt = "GAME OVER?";
+            String fontPath = "fonts/orbitron36.fnt";
+            SimpleVector2 textWH = TextDrawer.getTextWH(Farstar.ASSET_LIBRARY.getAssetManager().get(fontPath, BitmapFont.class), txt);
             setScreenConceder(new YXQuestionBox(
                     ColorPalette.LIGHT,
-                    ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f),
-                    "fonts/barlow30.fnt",
-                    "ASD",
-                    Farstar.STAGE_WIDTH/2f,
-                    Farstar.STAGE_HEIGHT/2f,
-                    textWH.getX(),
-                    textWH.getY(),
+                    ColorPalette.DARK,
+                    fontPath,
+                    txt,
+                    Farstar.STAGE_WIDTH/2f - textWH.getX()/2,
+                    Farstar.STAGE_HEIGHT/2f + textWH.getY()/2,
+                    1,
+                    1,
                     true
             ));
+        } else {
+            mainScreenStage.enableMainButtons(false);
+            setScreenConceder(null);
         }
     }
 

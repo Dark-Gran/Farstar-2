@@ -59,10 +59,10 @@ public class MainScreenStage extends ListeningStage {
         this.addActor(webButton);
     }
 
-    public void disableMainButtons() {
-        startButton.setDisabled(true);
-        botButton.setDisabled(true);
-        simButton.setDisabled(true);
+    public void enableMainButtons(boolean disable) {
+        startButton.setDisabled(disable);
+        botButton.setDisabled(disable);
+        simButton.setDisabled(disable);
     }
 
     @Override
