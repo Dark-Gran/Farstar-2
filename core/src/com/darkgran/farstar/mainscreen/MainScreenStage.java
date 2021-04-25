@@ -53,28 +53,31 @@ public class MainScreenStage extends ListeningStage {
         simButton.setPosition((float) (Farstar.STAGE_WIDTH/2- measureTexture.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2- measureTexture.getHeight()/2));
         startButton.setPosition((float) (Farstar.STAGE_WIDTH/2- measureTexture.getWidth()/2), (float) (Farstar.STAGE_HEIGHT/2- measureTexture.getHeight()*1.499));
         webButton.setPosition((float) (Farstar.STAGE_WIDTH*0.0725), (float) (Farstar.STAGE_HEIGHT*0.012));
-        this.addActor(startButton);
-        this.addActor(botButton);
-        this.addActor(simButton);
-        this.addActor(webButton);
+        addActor(startButton);
+        addActor(botButton);
+        addActor(simButton);
+        addActor(webButton);
     }
 
     public void enableMainButtons(boolean disable) {
         startButton.setDisabled(disable);
         botButton.setDisabled(disable);
         simButton.setDisabled(disable);
+        if (disable) {
+            startButton.remove();
+            botButton.remove();
+            simButton.remove();
+        } else {
+            addActor(startButton);
+            addActor(botButton);
+            addActor(simButton);
+        }
     }
 
     @Override
     public void draw() {
-        if (!getGame().getSuperScreen().isConcederActive()) {
-            super.draw();
-            getBatch().begin();
-        } else {
-            getBatch().setProjectionMatrix(getCamera().combined);
-            getBatch().begin();
-            webButton.draw(getBatch(), 1f);
-        }
+        super.draw();
+        getBatch().begin();
         getBatch().draw(FSLogo, (float) (Farstar.STAGE_WIDTH/2-FSLogo.getWidth()/2), (float) (Farstar.STAGE_HEIGHT*0.8));
         versionInfo.drawText(getBatch());
         perfMeter.drawText(getBatch());
