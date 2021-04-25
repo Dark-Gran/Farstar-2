@@ -71,6 +71,7 @@ public class MainScreenStage extends ListeningStage {
             super.draw();
             getBatch().begin();
         } else {
+            getBatch().setProjectionMatrix(getCamera().combined);
             getBatch().begin();
             webButton.draw(getBatch(), 1f);
         }
