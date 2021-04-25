@@ -21,8 +21,8 @@ public class YXQuestionBox extends TextInTheBox { //TODO
 
     public YXQuestionBox(Color fontColor, Color boxColor, String fontPath, String message, float x, float y, float width, float height, boolean noBox, Stage stage) {
         super(fontColor, boxColor, fontPath, message, x, y, width, height, noBox);
-        yBut.setPosition(x-10-yBut.getWidth()/2, y);
-        xBut.setPosition(x+10-xBut.getWidth()/2, y);
+        yBut.setPosition(x, y);
+        xBut.setPosition(x+xBut.getWidth(), y);
         this.stage = stage;
         stage.addActor(yBut);
         stage.addActor(xBut);
