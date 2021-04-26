@@ -15,7 +15,7 @@ This time in Java. One of the main reasons behind the original choice of Adobe A
   
 **_Current goal of this project is to create an 'offline version' of the original game._**  
   
-Server Application with user registrations, matchmaking and card-trading (all are features of the original game) may be added in the future (depends on game's reception).
+Server Application with user registrations, matchmaking and direct card-trading between players (all are features of the original game) may be added in the future (depends on game's reception).
   
 ~~Paper-Prototype~~  
 ~~Prototype (Java + LibGDX)~~  
