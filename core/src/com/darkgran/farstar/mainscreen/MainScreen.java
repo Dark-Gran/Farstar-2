@@ -1,10 +1,13 @@
 package com.darkgran.farstar.mainscreen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.darkgran.farstar.*;
 import com.darkgran.farstar.gui.*;
 import com.darkgran.farstar.util.SimpleVector2;
+
+import java.util.function.Function;
 
 public class MainScreen extends SuperScreen {
     private final MainScreenStage mainScreenStage = new MainScreenStage(getGame(), getViewport());
@@ -18,7 +21,7 @@ public class MainScreen extends SuperScreen {
     }
 
     @Override
-    public void userEscape() { //TODO
+    public void userEscape() {
         if (!isConcederActive()) {
             mainScreenStage.enableMainButtons(true);
             String txt = "GAME OVER?";
@@ -30,11 +33,13 @@ public class MainScreen extends SuperScreen {
                     fontPath,
                     txt,
                     Farstar.STAGE_WIDTH/2f - textWH.getX()/2,
-                    Farstar.STAGE_HEIGHT/2f + textWH.getY()/2,
+                    Farstar.STAGE_HEIGHT/2f + textWH.getY()/2 + textWH.getY()*2,
                     textWH.getX(),
                     textWH.getY(),
-                    false,
-                    mainScreenStage
+                    true,
+                    mainScreenStage,
+                    this::userEscape,
+                    () -> System.exit(0)
             ));
         } else {
             mainScreenStage.enableMainButtons(false);
@@ -44,7 +49,8 @@ public class MainScreen extends SuperScreen {
     }
 
     @Override
-    protected void drawMenus(float delta) {
+    protected void drawMenus(float delta, Batch batch) {
+        super.drawMenus(delta, batch);
         mainScreenStage.act(delta);
         mainScreenStage.draw();
     }
