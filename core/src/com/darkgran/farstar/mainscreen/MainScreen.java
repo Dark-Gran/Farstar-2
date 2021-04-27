@@ -7,8 +7,6 @@ import com.darkgran.farstar.*;
 import com.darkgran.farstar.gui.*;
 import com.darkgran.farstar.util.SimpleVector2;
 
-import java.util.function.Function;
-
 public class MainScreen extends SuperScreen {
     private final MainScreenStage mainScreenStage = new MainScreenStage(getGame(), getViewport());
 
