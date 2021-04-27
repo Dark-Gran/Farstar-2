@@ -13,19 +13,11 @@ public class JunkButton extends BaseMenu implements DropTarget {
         super(x, y, false, battleStage, player);
         setHeight(BattleStage.TOKEN_WIDTH/2);
         setWidth(BattleStage.TOKEN_WIDTH);
-        setupSimpleBox2(x, y, getHeight(), getWidth());
+        setupSimpleBox2(x, y, getWidth(), getHeight());
     }
 
     public void draw(Batch batch) {
-        if (DEBUG_RENDER) { getBattleStage().getBattleScreen().drawDebugSimpleBox2(getSimpleBox2(), getBattleStage().getBattleScreen().getDebugRenderer(), batch); }
-    }
-
-    @Override
-    public void setupSimpleBox2(float x, float y, float height, float width) {
-        simpleBox2.setX(x);
-        simpleBox2.setY(y);
-        simpleBox2.setHeight(height);
-        simpleBox2.setWidth(width);
+        if (DEBUG_RENDER) { getBattleStage().getBattleScreen().drawDebugSimpleBox2(getSimpleBox2(), getBattleStage().getBattleScreen().getShapeRenderer(), batch); }
     }
 
     @Override

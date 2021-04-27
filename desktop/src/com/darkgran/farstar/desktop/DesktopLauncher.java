@@ -8,11 +8,12 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = "FARSTAR";
-		config.width = 1280;
-		config.height = 640;
+		config.width = 1920;
+		config.height = 960;
 		config.foregroundFPS = 60;
-		config.resizable = false;
+		config.resizable = true;
 		config.fullscreen = false;
+		config.vSyncEnabled = true;
 		new LwjglApplication(new Farstar(), config);
 	}
 }

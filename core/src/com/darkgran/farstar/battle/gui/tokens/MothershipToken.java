@@ -12,7 +12,7 @@ public class MothershipToken extends ClickToken implements DropTarget {
 
     public MothershipToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
         super(card, x, y, battleStage, cardListMenu);
-        setupSimpleBox2(x, y, getHeight(), getWidth());
+        setupSimpleBox2(x, y, getWidth(), getHeight());
         getCard().getPlayer().getMs().setToken(this);
     }
 
@@ -27,14 +27,6 @@ public class MothershipToken extends ClickToken implements DropTarget {
         if (button == 0) {
             getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(getThis(), getCard().getPlayer());
         }
-    }
-
-    @Override
-    public void setupSimpleBox2(float x, float y, float height, float width) {
-        simpleBox2.setX(x);
-        simpleBox2.setY(y);
-        simpleBox2.setHeight(height);
-        simpleBox2.setWidth(width);
     }
 
     @Override

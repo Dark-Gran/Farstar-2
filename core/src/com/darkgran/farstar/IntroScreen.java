@@ -4,29 +4,35 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.darkgran.farstar.gui.NotificationManager;
+import com.darkgran.farstar.gui.TableStage;
+import com.darkgran.farstar.mainscreen.MainScreen;
 import com.darkgran.farstar.util.Delayer;
 
 public class IntroScreen extends SuperScreen implements Delayer { //Animation used only once on app-launch
-    private final Texture logo = new Texture("images/logo.jpg");
+    private final Texture logo = Farstar.ASSET_LIBRARY.getAssetManager().get("images/logo.jpg");
     private boolean active = false;
     private float alpha = 0;
     private boolean fadeDirection = true; //true in, false out
 
     private final static float INTRO_SPEED = 0.35f;
 
-    public IntroScreen(final Farstar game) {
-        super(game);
+    public IntroScreen(final Farstar game, NotificationManager notificationManager) {
+        super(game, notificationManager);
         Gdx.input.setCursorCatched(true);
         delayAction(this::activate, 0.5f);
     }
 
-    private void activate() { active = true; }
+    @Override
+    public void userEscape() {
+        endIntro();
+    }
 
     private void endIntro() {
-        Gdx.input.setInputProcessor(getGame().getInputMultiplexer());
-        this.dispose();
-        getGame().setScreen(new MainScreen(getGame(), new TableStage(getGame(), getViewport())));
+        getGame().setScreen(new MainScreen(getGame(), new TableStage(getGame(), getViewport()), getNotificationManager()));
     }
+
+    private void activate() { active = true; }
 
     private void updateAlpha(float delta) {
         //if (delta > 0.03f) { delta = 0.03f; }
@@ -66,14 +72,11 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
 
         getGame().batch.draw(logo, (float) (Farstar.STAGE_WIDTH / 2 - logo.getWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - logo.getHeight() / 2));
 
+        drawSigns(getGame().batch);
         getGame().batch.end();
 
+        update(delta);
 
-    }
-
-    @Override
-    public void dispose() {
-        logo.dispose();
     }
 
 }

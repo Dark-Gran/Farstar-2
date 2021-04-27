@@ -14,7 +14,7 @@ public class SupportMenu extends CardListMenu implements DropTarget {
         super(cardList, x, y, negativeOffset, battleStage, player);
         setWidth(width);
         setHeight(height);
-        setupSimpleBox2(x, y, height, width);
+        setupSimpleBox2(x, y, width, height);
     }
 
     @Override
@@ -77,14 +77,6 @@ public class SupportMenu extends CardListMenu implements DropTarget {
     protected void setupOffset() {
         super.setupOffset();
         if (isNegativeOffset()) { setOffset(getOffset()*-1); } //switching back, SupportMenu handles offset differently
-    }
-
-    @Override
-    public void setupSimpleBox2(float x, float y, float height, float width) {
-        simpleBox2.setX(x);
-        simpleBox2.setY(y);
-        simpleBox2.setHeight(height);
-        simpleBox2.setWidth(width);
     }
 
     @Override

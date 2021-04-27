@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.ListeningStage;
+import com.darkgran.farstar.gui.ListeningStage;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.battle.gui.tokens.AnchoredToken;
@@ -27,14 +27,15 @@ import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 
 public abstract class BattleStage extends ListeningStage {
     private final BattleScreen battleScreen;
-    private final Texture turn = new Texture("images/turn.png");
+    private final Texture turn = Farstar.ASSET_LIBRARY.getAssetManager().get("images/turn.png");
     public final ImageButton turnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(turn)));
-    private final Texture yardPic = new Texture("images/yard.png");
+    private final Texture yardPic = Farstar.ASSET_LIBRARY.getAssetManager().get("images/yard.png");
     private FakeToken fakeToken;
     private final DuelMenu duelMenu;
-    private final Texture combatEndPic = new Texture("images/combat_end.png");
+    private final Texture combatEndPic = Farstar.ASSET_LIBRARY.getAssetManager().get("images/combat_end.png");
     private final ImageButton combatEndButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(combatEndPic)));
     private ArrayList<DropTarget> dropTargets = new ArrayList<>();
+    private final AbilityPicker abilityPicker;
 
     public final static int TOKEN_WIDTH = 78; //future: (re)move
 
@@ -43,6 +44,9 @@ public abstract class BattleStage extends ListeningStage {
         this.battleScreen = battleScreen;
         this.duelMenu = duelMenu;
         combatEndButton.setBounds(Farstar.STAGE_WIDTH*3/4, Farstar.STAGE_HEIGHT*1/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
+        //AbilityPicker ("Hybrid")
+        abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/3, this, null, getYardPic());
+        battleScreen.getBattle().getRoundManager().setAbilityPicker(abilityPicker);
     }
 
     @Override
@@ -108,6 +112,7 @@ public abstract class BattleStage extends ListeningStage {
 
     public void drawBattleStage(float delta, Batch batch) {
         if (fakeToken != null) { fakeToken.draw(batch); }
+        abilityPicker.draw();
     }
 
     public void drawTokenMenu(CardListMenu cardListMenu, Batch batch) {
@@ -122,7 +127,7 @@ public abstract class BattleStage extends ListeningStage {
                 fleetMenu.getShips()[i].draw(batch);
             }
         }
-        if (DEBUG_RENDER) { getBattleScreen().drawDebugSimpleBox2(fleetMenu.getSimpleBox2(), getBattleScreen().getDebugRenderer(), batch); }
+        if (DEBUG_RENDER) { getBattleScreen().drawDebugSimpleBox2(fleetMenu.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch); }
     }
 
     public boolean isInBox(SimpleBox2 simpleBox2, float x, float y) {
@@ -223,9 +228,7 @@ public abstract class BattleStage extends ListeningStage {
     public void dispose() {
         turnButton.removeListener(turnButton.getClickListener());
         disableCombatEnd();
-        turn.dispose();
-        combatEndPic.dispose();
-        yardPic.dispose();
+        abilityPicker.dispose();
         super.dispose();
     }
 

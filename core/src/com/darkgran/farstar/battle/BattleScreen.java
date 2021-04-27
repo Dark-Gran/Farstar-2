@@ -6,11 +6,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.*;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.gui.NotificationManager;
 import com.darkgran.farstar.SuperScreen;
-import com.darkgran.farstar.TableStage;
+import com.darkgran.farstar.gui.TableStage;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.players.LocalPlayer;
 import com.darkgran.farstar.battle.players.PossibilityAdvisor;
+import com.darkgran.farstar.mainscreen.MainScreen;
 import com.darkgran.farstar.util.SimpleBox2;
 
 public class BattleScreen extends SuperScreen {
@@ -20,7 +22,7 @@ public class BattleScreen extends SuperScreen {
     private final BattleStage battleStage;
     public final static boolean DEBUG_RENDER = true;
 
-    private final InputAdapter generalInputProcessor = new InputAdapter() {
+    private final InputAdapter battleAdapter = new InputAdapter() {
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             if (button == 1) { //mouse.right
@@ -32,9 +34,8 @@ public class BattleScreen extends SuperScreen {
         }
     };
 
-    public BattleScreen(final Farstar game, TableStage tableStage, Battle battle)
-    {
-        super(game);
+    public BattleScreen(final Farstar game, TableStage tableStage, Battle battle, NotificationManager notificationManager) {
+        super(game, notificationManager);
         setTableMenu(tableStage);
         Box2D.init();
         this.battle = battle;
@@ -46,9 +47,14 @@ public class BattleScreen extends SuperScreen {
         battleStage = battle.createBattleStage(game, getViewport(), this);
         battle.getCombatManager().setBattleStage(battleStage);
         battle.getCombatManager().getDuelManager().getDuelMenu().setBattleStage(battleStage);
-        game.getInputMultiplexer().addProcessor(generalInputProcessor);
+        game.getInputMultiplexer().addProcessor(battleAdapter);
         game.getInputMultiplexer().addProcessor(battleStage);
         battle.getRoundManager().launch();
+    }
+
+    @Override
+    public void userEscape() {
+        getGame().setScreen(new MainScreen(getGame(), getTableMenu(), getNotificationManager()));
     }
 
     @Override
@@ -59,7 +65,8 @@ public class BattleScreen extends SuperScreen {
     }
 
     @Override
-    protected void drawMenus(float delta) { //Stage-menus use their own Batch
+    protected void drawMenus(float delta, Batch batch) { //Stage-menus use their own Batch
+        super.drawMenus(delta, batch);
         if (battleStage != null) {
             battleStage.act(delta);
             battleStage.draw();
@@ -77,7 +84,6 @@ public class BattleScreen extends SuperScreen {
 
     public void drawDebugSimpleBox2(SimpleBox2 simpleBox2, ShapeRenderer shapeRenderer, Batch batch) {
         batch.end();
-        shapeRenderer.setProjectionMatrix(new Matrix4(getCamera().combined));
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.rect(simpleBox2.getX(), simpleBox2.getY(), simpleBox2.getWidth(), simpleBox2.getHeight());
         shapeRenderer.end();
@@ -88,9 +94,10 @@ public class BattleScreen extends SuperScreen {
     public void dispose() {
         battle.dispose();
         worldManager.disposeWorld();
-        getGame().getInputMultiplexer().removeProcessor(generalInputProcessor);
+        getGame().getInputMultiplexer().removeProcessor(battleAdapter);
         getGame().getInputMultiplexer().removeProcessor(battleStage);
         battleStage.dispose();
+        super.dispose();
     }
 
     public BattleStage getGUI() { return battleStage; }

@@ -1,14 +1,13 @@
 package com.darkgran.farstar.battle.gui;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.util.SimpleBox2;
+import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.TextDrawer;
 
 //base for laying out menus
 public abstract class BaseMenu extends SimpleBox2 {
-    private GlyphLayout layout = new GlyphLayout();
     private float offset;
     private boolean negativeOffset;
     private final BattleStage battleStage;
@@ -24,9 +23,8 @@ public abstract class BaseMenu extends SimpleBox2 {
     }
 
     protected void setupOffset() {
-        String res = "Battlestation";
-        layout.setText(new BitmapFont(), res);
-        offset = layout.width;
+        SimpleVector2 textWH = TextDrawer.getTextWH(Farstar.ASSET_LIBRARY.getAssetManager().get("fonts/arial15.fnt"), "Battlestation");
+        offset = textWH.getX();
         if (negativeOffset) { offset *= -1; }
     }
 
@@ -35,8 +33,6 @@ public abstract class BaseMenu extends SimpleBox2 {
     public float getOffset() { return offset; }
 
     public void setOffset(float offset) { this.offset = offset; }
-
-    public GlyphLayout getLayout() { return layout; }
 
     public boolean isNegativeOffset() { return negativeOffset; }
 

@@ -18,7 +18,7 @@ public class FleetMenu extends BaseMenu implements DropTarget {
         super(x, y, negativeOffset, battleStage, player);
         setWidth(width);
         setHeight(height);
-        setupSimpleBox2(x, y, height, width);
+        setupSimpleBox2(x, y, width, height);
         this.fleet = fleet;
         fleet.receiveFleetMenu(this);
         setupOffset();
@@ -42,7 +42,6 @@ public class FleetMenu extends BaseMenu implements DropTarget {
         return ships[position];
     }
 
-
     public void removeShip(int position) {
         ships[position] = null;
     }
@@ -50,14 +49,6 @@ public class FleetMenu extends BaseMenu implements DropTarget {
     public Fleet getFleet() { return fleet; }
 
     public Token[] getShips() { return ships; }
-
-    @Override
-    public void setupSimpleBox2(float x, float y, float height, float width) {
-        simpleBox2.setX(x);
-        simpleBox2.setY(y);
-        simpleBox2.setHeight(height);
-        simpleBox2.setWidth(width);
-    }
 
     @Override
     public SimpleBox2 getSimpleBox2() { return simpleBox2; }

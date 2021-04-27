@@ -128,16 +128,6 @@ Thumbs.db
 
 ## CUSTOM
 
-/core/assets/DGLogo.jpg
-/core/assets/exit.png
-/core/assets/start.png
-/core/assets/fonts/BarlowSemiCondensed-Regular.otf
-/core/assets/images/exit.png
-/core/assets/images/logo.jpg
-/core/assets/images/start.png
-/core/assets/images/turn.png
-/core/assets/images/yard.png
-/core/assets/images/duel.png
-/core/assets/images/combat_end.png
-/core/assets/images/duel_cancel.png
+/core/assets/fonts/
 /core/assets/content/cards.json
+/core/assets/images/

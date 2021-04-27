@@ -74,7 +74,6 @@ public class AbilityPicker extends BaseMenu {
 
     public void dispose() {
         removeActors();
-        texture.dispose();
     }
 
 }
