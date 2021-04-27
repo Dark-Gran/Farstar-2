@@ -65,7 +65,8 @@ public class BattleScreen extends SuperScreen {
     }
 
     @Override
-    protected void drawMenus(float delta) { //Stage-menus use their own Batch
+    protected void drawMenus(float delta, Batch batch) { //Stage-menus use their own Batch
+        super.drawMenus(delta, batch);
         if (battleStage != null) {
             battleStage.act(delta);
             battleStage.draw();

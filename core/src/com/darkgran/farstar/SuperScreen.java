@@ -42,13 +42,16 @@ public abstract class SuperScreen implements Screen {
 
     protected void drawContent(float delta, Batch batch) { }//for all screens except intro
 
-    protected void drawMenus(float delta) { }//for all screens except intro
-
-    protected void drawSigns(Batch batch) {
-        notificationManager.drawAll(batch, shapeRenderer);
+    protected void drawMenus(float delta, Batch batch) { //for all screens except intro
+        batch.begin();
         if (screenConceder != null) {
             screenConceder.draw(batch, shapeRenderer);
         }
+        batch.end();
+    }
+
+    protected void drawSigns(Batch batch) {
+        notificationManager.drawAll(batch, shapeRenderer);
     }
 
     public static void switchFullscreen() {
@@ -74,7 +77,7 @@ public abstract class SuperScreen implements Screen {
             tableStage.draw();
         }
 
-        drawMenus(delta);
+        drawMenus(delta, game.batch);
 
         game.batch.begin();
         game.batch.setColor(1, 1, 1, 1);
