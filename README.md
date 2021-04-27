@@ -20,7 +20,7 @@ Server Application with user registrations, matchmaking and direct card-trading 
 ~~Paper-Prototype~~  
 ~~Prototype (Java + LibGDX)~~  
 ~~On-screen gameplay tests and Basic AI for more tests~~  
-~~General + MainScreen GUI+GFX 'import'~~  
+~~General and MainScreen GUI+GFX 'import'~~  
 Battle GUI+GFX 'import' (including card-portraits)  
 Collection and Deck Building Screen  
 Remaining Cards ('import')  
