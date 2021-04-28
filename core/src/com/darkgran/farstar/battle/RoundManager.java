@@ -24,7 +24,7 @@ public class RoundManager {
     private boolean firstTurnThisRound;
     private int roundNum = 0;
     private boolean targetingActive;
-    private DeploymentInfo postponedDeploy = new DeploymentInfo();
+    private DeploymentInfo postponedDeploy = new DeploymentInfo(); //in-future: turn into a List to enable deployment-chains (eg. on-deploy summoning (targeted) that leads to another targeted on-deploy ability; atm there are no such cards)
     private AbilityPicker abilityPicker;
 
     public RoundManager(Battle battle, PossibilityAdvisor possibilityAdvisor) {

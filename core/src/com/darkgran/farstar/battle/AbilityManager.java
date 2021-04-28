@@ -20,7 +20,7 @@ public class AbilityManager {
         this.battle = battle;
     }
 
-    public boolean playAbility(Token casterToken, Card target, AbilityInfo ability, DropTarget dropTarget) {
+    public boolean playAbility(Token casterToken, Card target, AbilityInfo ability, DropTarget dropTarget) { //in-future: use List for "target" to enable multi-targeting (atm no such cards)
         boolean success = false;
         Card caster = casterToken.getCard();
         if (caster != null && caster.getCardInfo().getAbilities() != null) {
