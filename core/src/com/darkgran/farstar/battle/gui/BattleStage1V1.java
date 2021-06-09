@@ -46,15 +46,15 @@ public class BattleStage1V1 extends BattleStage {
         turnButton.setBounds(Farstar.STAGE_WIDTH*6/7, Farstar.STAGE_HEIGHT/2, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
         this.addActor(turnButton);
         //Shipyards
-        yardMenu1 = new YardMenu(player1.getShipyard(), false, Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*1/5, this, player1);
-        yardButton1.setBounds(Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*1/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
+        yardMenu1 = new YardMenu(player1.getShipyard(), false, Farstar.STAGE_WIDTH*0.12f, Farstar.STAGE_HEIGHT*0.12f, this, player1);
+        yardButton1.setBounds(Farstar.STAGE_WIDTH*0.12f, Farstar.STAGE_HEIGHT*0.12f, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
         this.addActor(yardButton1);
-        yardMenu2 = new YardMenu(player2.getShipyard(), true, Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*4/5, this, player2);
-        yardButton2.setBounds(Farstar.STAGE_WIDTH*1/9, Farstar.STAGE_HEIGHT*4/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
+        yardMenu2 = new YardMenu(player2.getShipyard(), true, Farstar.STAGE_WIDTH*0.12f, Farstar.STAGE_HEIGHT*0.78f, this, player2);
+        yardButton2.setBounds(Farstar.STAGE_WIDTH*0.12f, Farstar.STAGE_HEIGHT*0.78f, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
         this.addActor(yardButton2);
         //Hands
-        handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/12, this, player1);
-        handMenu2 = new HandMenu(player2.getHand(),Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*7/8, this, player2);
+        handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*0.3f, Farstar.STAGE_HEIGHT*0.01f, this, player1);
+        handMenu2 = new HandMenu(player2.getHand(),Farstar.STAGE_WIDTH*0.3f, Farstar.STAGE_HEIGHT*0.95f, this, player2);
         //Fleets
         fleetMenu1 = new FleetMenu(player1.getFleet(), Farstar.STAGE_WIDTH*1/3, Farstar.STAGE_HEIGHT*1/3, Farstar.STAGE_WIDTH*3/7, Farstar.STAGE_HEIGHT/7, this, player1, false);
         fleetMenu2 = new FleetMenu(player2.getFleet(), Farstar.STAGE_WIDTH*1/3, Farstar.STAGE_HEIGHT/2, Farstar.STAGE_WIDTH*3/7, Farstar.STAGE_HEIGHT/7, this, player2, true);
