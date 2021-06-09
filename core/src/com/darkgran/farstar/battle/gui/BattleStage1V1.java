@@ -66,8 +66,8 @@ public class BattleStage1V1 extends BattleStage {
         addDropTarget(junkButton1);
         addDropTarget(junkButton2);
         //Supports
-        supportMenu1 = new SupportMenu(player1.getSupports(), Farstar.STAGE_WIDTH*1/3, Farstar.STAGE_HEIGHT*1/6, Farstar.STAGE_WIDTH*3/7, Farstar.STAGE_HEIGHT/7, false, this, player1);
-        supportMenu2 = new SupportMenu(player2.getSupports(), Farstar.STAGE_WIDTH*1/3, Farstar.STAGE_HEIGHT*4/6, Farstar.STAGE_WIDTH*3/7, Farstar.STAGE_HEIGHT/7, true, this, player2);
+        supportMenu1 = new SupportMenu(player1.getSupports(), Farstar.STAGE_WIDTH*0.36f, Farstar.STAGE_HEIGHT*1/12, Farstar.STAGE_WIDTH*3/7, Farstar.STAGE_HEIGHT/7, false, this, player1);
+        supportMenu2 = new SupportMenu(player2.getSupports(), Farstar.STAGE_WIDTH*0.36f, Farstar.STAGE_HEIGHT*8/9, Farstar.STAGE_WIDTH*3/7, Farstar.STAGE_HEIGHT/7, true, this, player2);
         addDropTarget(supportMenu1);
         addDropTarget(supportMenu2);
         //Finish
