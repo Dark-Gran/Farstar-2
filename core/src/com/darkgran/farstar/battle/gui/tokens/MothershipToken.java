@@ -11,7 +11,7 @@ public class MothershipToken extends ClickToken implements DropTarget {
     private final SimpleBox2 simpleBox2 = new SimpleBox2();
 
     public MothershipToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
-        super(card, x, y, battleStage, cardListMenu);
+        super(card, x, y, battleStage, cardListMenu, TokenType.MS);
         setupSimpleBox2(x, y, getWidth(), getHeight());
         getCard().getPlayer().getMs().setToken(this);
     }

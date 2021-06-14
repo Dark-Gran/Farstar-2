@@ -8,8 +8,8 @@ public abstract class AnchoredToken extends ClickToken {
     private float anchorX;
     private float anchorY;
 
-    public AnchoredToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
-        super(card, x, y, battleStage, cardListMenu);
+    public AnchoredToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType) {
+        super(card, x, y, battleStage, cardListMenu, tokenType);
         this.anchorX = x;
         this.anchorY = y;
     }

@@ -6,6 +6,7 @@ import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.gui.tokens.HandToken;
 import com.darkgran.farstar.battle.gui.tokens.Token;
+import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.battle.players.abilities.EffectType;
@@ -160,7 +161,7 @@ public abstract class Bot extends Player implements BotSettings {
     }
 
     protected Token cardToToken(Card card, BaseMenu baseMenu) {
-        return new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (baseMenu instanceof CardListMenu) ? (CardListMenu) baseMenu : null);
+        return new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (baseMenu instanceof CardListMenu) ? (CardListMenu) baseMenu : null, TokenType.FLEET); //TokenType.FLEET = default
     }
 
     protected void report(String message) {

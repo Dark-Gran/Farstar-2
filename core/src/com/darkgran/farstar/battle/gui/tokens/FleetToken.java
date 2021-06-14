@@ -9,7 +9,7 @@ public class FleetToken extends AnchoredToken {
     private FleetMenu fleetMenu;
 
     public FleetToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, FleetMenu fleetMenu) {
-        super(card, x, y, battleStage, cardListMenu);
+        super(card, x, y, battleStage, cardListMenu, TokenType.FLEET);
         this.fleetMenu = fleetMenu;
         setDragger(new ManagedDragger(this, battleStage.getBattleScreen().getBattle().getRoundManager(), true));
         this.addListener(getDragger());

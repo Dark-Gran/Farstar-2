@@ -7,8 +7,8 @@ import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
 
 public abstract class ClickToken extends Token {
-    public ClickToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
-        super(card, x, y, battleStage, cardListMenu);
+    public ClickToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType) {
+        super(card, x, y, battleStage, cardListMenu, tokenType);
     }
 
     @Override

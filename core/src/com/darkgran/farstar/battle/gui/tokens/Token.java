@@ -25,18 +25,22 @@ public class Token extends Actor implements JustFont {
     private final TokenDefense tokenDefense = new TokenDefense();
     private final BattleStage battleStage;
     private final CardListMenu cardListMenu;
+    private final TokenType tokenType;
 
-    public Token(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu){
+    public Token(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType){
         setFont("");
         tokenPrice.setFont(getFontPath());
         tokenName.setFont(getFontPath());
         tokenOffense.setFont(getFontPath());
         tokenDefense.setFont(getFontPath());
         this.card = card;
-        String res = "Battlestation";
-        SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), res);
-        setWidth(textWH.getX());
-        setHeight(textWH.getY()*4);
+        this.tokenType = tokenType;
+        //String res = "Battlestation";
+        //SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), res);
+        //setWidth(textWH.getX());
+        //setHeight(textWH.getY()*4);
+        setWidth(tokenType.getWidth());
+        setHeight(tokenType.getHeight());
         setX(x);
         setY(y);
         this.cardListMenu = cardListMenu;
