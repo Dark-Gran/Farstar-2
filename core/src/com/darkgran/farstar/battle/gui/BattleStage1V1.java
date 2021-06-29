@@ -55,10 +55,10 @@ public class BattleStage1V1 extends BattleStage {
         //this.addActor(turnButton);
         //Shipyards
         yardMenu1 = new YardMenu(player1.getShipyard(), false, Farstar.STAGE_WIDTH*0.12f, Farstar.STAGE_HEIGHT*0.12f, this, player1);
-        yardButton1.setPosition(Farstar.STAGE_WIDTH*0.12f, Farstar.STAGE_HEIGHT*0.22f);
+        yardButton1.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.012f);
         this.addActor(yardButton1);
         yardMenu2 = new YardMenu(player2.getShipyard(), true, Farstar.STAGE_WIDTH*0.12f, Farstar.STAGE_HEIGHT*0.78f, this, player2);
-        yardButton2.setPosition(Farstar.STAGE_WIDTH*0.12f, Farstar.STAGE_HEIGHT*0.78f);
+        yardButton2.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.935f);
         this.addActor(yardButton2);
         //Hands
         handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*0.3f, Farstar.STAGE_HEIGHT*0.01f, this, player1);
@@ -95,8 +95,8 @@ public class BattleStage1V1 extends BattleStage {
         drawFleet(fleetMenu2, batch);
         drawTokenMenu(handMenu1, batch);
         drawTokenMenu(handMenu2, batch);
-        //if (yardMenu1.isVisible()) { drawTokenMenu(yardMenu1, batch); }
-        //if (yardMenu2.isVisible()) { drawTokenMenu(yardMenu2, batch); }
+        if (yardMenu1.isVisible()) { drawTokenMenu(yardMenu1, batch); }
+        if (yardMenu2.isVisible()) { drawTokenMenu(yardMenu2, batch); }
         drawTokenMenu(supportMenu1, batch);
         drawTokenMenu(supportMenu2, batch);
         if (DEBUG_RENDER) {
