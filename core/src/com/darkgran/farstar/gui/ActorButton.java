@@ -64,4 +64,7 @@ public class ActorButton extends Actor {
         this.disabled = disabled;
     }
 
+    public ClickListener getClickListener() {
+        return clickListener;
+    }
 }
