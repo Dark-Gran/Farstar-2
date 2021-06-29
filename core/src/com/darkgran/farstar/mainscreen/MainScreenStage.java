@@ -86,9 +86,13 @@ public class MainScreenStage extends ListeningStage {
 
     @Override
     public void dispose() {
+        startButton.remove();
         startButton.dispose();
+        botButton.remove();
         botButton.dispose();
+        simButton.remove();
         simButton.dispose();
+        webButton.remove();
         webButton.dispose();
         super.dispose();
     }
