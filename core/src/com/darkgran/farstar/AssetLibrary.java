@@ -57,6 +57,9 @@ public class AssetLibrary {
         assetManager.load("images/duel_cancel.png", Texture.class, texParams);
         assetManager.load("images/turn.png", Texture.class, texParams);
         assetManager.load("images/yard.png", Texture.class, texParams);
+        assetManager.load("images/yardO.png", Texture.class, texParams);
+        assetManager.load("images/yardOP.png", Texture.class, texParams);
+        assetManager.load("images/yardP.png", Texture.class, texParams);
         assetManager.load("images/combat_end.png", Texture.class, texParams);
     }
 

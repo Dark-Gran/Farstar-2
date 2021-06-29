@@ -29,7 +29,6 @@ public abstract class BattleStage extends ListeningStage {
     private final BattleScreen battleScreen;
     private final Texture turn = Farstar.ASSET_LIBRARY.getAssetManager().get("images/turn.png");
     public final ImageButton turnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(turn)));
-    private final Texture yardPic = Farstar.ASSET_LIBRARY.getAssetManager().get("images/yard.png");
     private FakeToken fakeToken;
     private final DuelMenu duelMenu;
     private final Texture combatEndPic = Farstar.ASSET_LIBRARY.getAssetManager().get("images/combat_end.png");
@@ -45,7 +44,7 @@ public abstract class BattleStage extends ListeningStage {
         this.duelMenu = duelMenu;
         combatEndButton.setBounds(Farstar.STAGE_WIDTH*3/4, Farstar.STAGE_HEIGHT*1/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
         //AbilityPicker ("Hybrid")
-        abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/3, this, null, getYardPic());
+        abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/3, this, null, Farstar.ASSET_LIBRARY.getAssetManager().get("images/yard.png"));
         battleScreen.getBattle().getRoundManager().setAbilityPicker(abilityPicker);
     }
 
@@ -208,8 +207,6 @@ public abstract class BattleStage extends ListeningStage {
         }
         return -1;
     }
-
-    public Texture getYardPic() { return yardPic; }
 
     public BattleScreen getBattleScreen() { return battleScreen; }
 
