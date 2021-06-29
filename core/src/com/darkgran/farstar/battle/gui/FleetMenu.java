@@ -2,12 +2,13 @@ package com.darkgran.farstar.battle.gui;
 
 import com.darkgran.farstar.battle.gui.tokens.FleetToken;
 import com.darkgran.farstar.battle.gui.tokens.Token;
+import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.util.SimpleBox2;
 
-//The only "Menu" that does NOT extend CardListMenu! (Fleet is not a CardList!)
+//The only "Menu" that does NOT extend CardListMenu! (ie. Fleet is not a CardList!)
 //(uses Array instead of ArrayList)
 public class FleetMenu extends BaseMenu implements DropTarget {
     private final SimpleBox2 simpleBox2 = new SimpleBox2();
@@ -37,7 +38,7 @@ public class FleetMenu extends BaseMenu implements DropTarget {
     }
 
     public FleetToken addShip(Card card, int position) {
-        float y = isNegativeOffset() ? getY() : getY()+getHeight()/2;
+        float y = isNegativeOffset() ? getY() + getHeight() - TokenType.FLEET.getHeight() - 80f : getY() + 80f;
         ships[position] = new FleetToken(card, getX()+getOffset()*(position), y, getBattleStage(), null, this);
         return ships[position];
     }
