@@ -67,8 +67,8 @@ public class BattleStage1V1 extends BattleStage {
         addDropTarget(junkButton1);
         addDropTarget(junkButton2);
         //Supports
-        supportMenu1 = new SupportMenu(player1.getSupports(), Farstar.STAGE_WIDTH*0.082f, Farstar.STAGE_HEIGHT*0.11f, Farstar.STAGE_WIDTH * 0.838f, Farstar.STAGE_HEIGHT*0.14f, false, this, player1);
-        supportMenu2 = new SupportMenu(player2.getSupports(), Farstar.STAGE_WIDTH*0.082f, Farstar.STAGE_HEIGHT*0.76f, Farstar.STAGE_WIDTH * 0.838f, Farstar.STAGE_HEIGHT*0.14f, true, this, player2);
+        supportMenu1 = new SupportMenu(player1.getSupports(), Farstar.STAGE_WIDTH*0.082f, Farstar.STAGE_HEIGHT*0.11f, TokenType.SUPPORT.getWidth()*0.155f, 10f, Farstar.STAGE_WIDTH * 0.838f, Farstar.STAGE_HEIGHT*0.14f, false, this, player1);
+        supportMenu2 = new SupportMenu(player2.getSupports(), Farstar.STAGE_WIDTH*0.082f, Farstar.STAGE_HEIGHT*0.76f, TokenType.SUPPORT.getWidth()*0.155f, 30f, Farstar.STAGE_WIDTH * 0.838f, Farstar.STAGE_HEIGHT*0.14f, true, this, player2);
         addDropTarget(supportMenu1);
         addDropTarget(supportMenu2);
         //Finish
@@ -92,8 +92,8 @@ public class BattleStage1V1 extends BattleStage {
         //if (yardMenu2.isVisible()) { drawTokenMenu(yardMenu2, batch); }
         drawTokenMenu(supportMenu1, batch);
         drawTokenMenu(supportMenu2, batch);
-        if (DEBUG_RENDER) { getBattleScreen().drawDebugSimpleBox2(supportMenu1.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch); }
-        if (DEBUG_RENDER) { getBattleScreen().drawDebugSimpleBox2(supportMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch); }
+        //if (DEBUG_RENDER) { getBattleScreen().drawDebugSimpleBox2(supportMenu1.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch); }
+        //if (DEBUG_RENDER) { getBattleScreen().drawDebugSimpleBox2(supportMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch); }
     }
 
     @Override

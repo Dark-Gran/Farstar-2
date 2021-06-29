@@ -11,8 +11,8 @@ import com.darkgran.farstar.util.SimpleBox2;
 public class SupportMenu extends CardListMenu implements DropTarget {
     private final SimpleBox2 simpleBox2 = new SimpleBox2();
 
-    public SupportMenu(CardList cardList, float x, float y, float width, float height, boolean negativeOffset, BattleStage battleStage, Player player) {
-        super(cardList, x, y, TokenType.SUPPORT.getWidth()*0.155f, 10f, negativeOffset, battleStage, player);
+    public SupportMenu(CardList cardList, float x, float y, float tokensX, float tokensY, float width, float height, boolean negativeOffset, BattleStage battleStage, Player player) {
+        super(cardList, x, y, tokensX, tokensY, negativeOffset, battleStage, player);
         setWidth(width);
         setHeight(height);
         setupSimpleBox2(x, y, width, height);
@@ -27,7 +27,8 @@ public class SupportMenu extends CardListMenu implements DropTarget {
     protected void generateTokens() {
         getTokens().clear();
         for (int i = 0; i < getCardList().size(); i++) {
-            getTokens().add(new SupportToken(getCardList().get(i), getTokensX() + getX() + getOffset()*i + ((i >= 3) ? TokenType.MS.getWidth()*1.063f : 0), getTokensY() + getY(), getBattleStage(), this));
+            int pos = translatePosition(i);
+            getTokens().add(new SupportToken(getCardList().get(i), getTokensX() + getX() + getOffset()*pos + ((pos >= 3) ? TokenType.MS.getWidth()*1.063f : 0), getTokensY() + getY(), getBattleStage(), this));
         }
     }
 
@@ -35,7 +36,8 @@ public class SupportMenu extends CardListMenu implements DropTarget {
     public void generateNewToken(Card card) {
         if (card instanceof Support) {
             Support support = (Support) card;
-            SupportToken supportToken = new SupportToken(support, getTokensX() + getX() + getOffset()*getTokens().size() + ((getTokens().size() >= 3) ? TokenType.MS.getWidth()*1.063f : 0), getTokensY() + getY(), getBattleStage(), this);
+            int pos = translatePosition(getTokens().size());
+            SupportToken supportToken = new SupportToken(support, getTokensX() + getX() + getOffset()*pos + ((pos >= 3) ? TokenType.MS.getWidth()*1.063f : 0), getTokensY() + getY(), getBattleStage(), this);
             getTokens().add(supportToken);
             ((Support) card).setToken(supportToken);
         }
@@ -46,17 +48,17 @@ public class SupportMenu extends CardListMenu implements DropTarget {
             case 0:
                 return 2;
             case 1:
-                return 4;
+                return 3;
             case 2:
                 return 1;
             case 3:
-                return 5;
+                return 4;
             case 4:
                 return 0;
             case 5:
-                return 6;
+                return 5;
             default:
-                return position+1;
+                return position;
         }
     }
 
@@ -68,14 +70,14 @@ public class SupportMenu extends CardListMenu implements DropTarget {
                 return 2;
             case 2:
                 return 0;
-            case 4:
+            case 3:
                 return 1;
-            case 5:
+            case 4:
                 return 3;
-            case 6:
+            case 5:
                 return 5;
             default:
-                return position-1;
+                return position;
         }
     }
 
