@@ -35,10 +35,6 @@ public class Token extends Actor implements JustFont {
         tokenDefense.setFont(getFontPath());
         this.card = card;
         this.tokenType = tokenType;
-        //String res = "Battlestation";
-        //SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), res);
-        //setWidth(textWH.getX());
-        //setHeight(textWH.getY()*4);
         setWidth(tokenType.getWidth());
         setHeight(tokenType.getHeight());
         setX(x);
