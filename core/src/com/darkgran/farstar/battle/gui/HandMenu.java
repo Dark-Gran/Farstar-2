@@ -10,7 +10,7 @@ import com.darkgran.farstar.battle.players.Player;
 public class HandMenu extends CardListMenu { //in-future: rearrangement of cards
 
     public HandMenu(Hand hand, float x, float y, BattleStage battleStage, Player player) {
-        super(hand, x, y, false, battleStage, player);
+        super(hand, x, y, 0, 0, false, battleStage, player);
     }
 
     @Override

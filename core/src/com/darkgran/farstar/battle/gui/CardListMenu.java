@@ -12,10 +12,14 @@ import java.util.ArrayList;
 public abstract class CardListMenu extends BaseMenu {
     private ArrayList<Token> tokens = new ArrayList<>();
     private final CardList cardList;
+    private final float tokensX;
+    private final float tokensY;
 
-    public CardListMenu(CardList cardList, float x, float y, boolean negativeOffset, BattleStage battleStage, Player player) {
+    public CardListMenu(CardList cardList, float x, float y, float tokensX, float tokensY, boolean negativeOffset, BattleStage battleStage, Player player) {
         super(x, y, negativeOffset, battleStage, player);
         this.cardList = cardList;
+        this.tokensX = tokensX;
+        this.tokensY = tokensY;
         cardList.receiveCardListMenu(this);
         generateTokens();
     }
@@ -23,12 +27,12 @@ public abstract class CardListMenu extends BaseMenu {
     protected void generateTokens() {
         tokens.clear();
         for (int i = 0; i < cardList.size(); i++) {
-            tokens.add(new Token(cardList.get(i), getX() + getOffset()*i, getY(), getBattleStage(), this, TokenType.FLEET));
+            tokens.add(new Token(cardList.get(i), tokensX + getX() + getOffset()*i, tokensY + getY(), getBattleStage(), this, TokenType.FLEET));
         }
     }
 
     public void generateNewToken(Card card) {
-        tokens.add(new Token(card, getX() + getOffset()*tokens.size()-1, getY(), getBattleStage(), this, TokenType.FLEET));
+        tokens.add(new Token(card, tokensX + getX() + getOffset()*tokens.size()-1, tokensY + getY(), getBattleStage(), this, TokenType.FLEET));
     }
 
     @Override
@@ -44,4 +48,11 @@ public abstract class CardListMenu extends BaseMenu {
 
     public CardList getCardList() { return cardList; }
 
+    public float getTokensX() {
+        return tokensX;
+    }
+
+    public float getTokensY() {
+        return tokensY;
+    }
 }

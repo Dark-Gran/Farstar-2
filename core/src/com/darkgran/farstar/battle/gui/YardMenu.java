@@ -9,7 +9,7 @@ public class YardMenu extends CardListMenu {
     private boolean visible = false;
 
     public YardMenu(Yard yard, boolean onTop, float x, float y, BattleStage battleStage, Player player) {
-        super(yard, x, y, onTop, battleStage, player);
+        super(yard, x, y, 0, 0, onTop, battleStage, player);
     }
 
     @Override

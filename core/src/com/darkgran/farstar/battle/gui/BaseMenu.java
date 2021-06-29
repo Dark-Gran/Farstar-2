@@ -1,10 +1,8 @@
 package com.darkgran.farstar.battle.gui;
 
-import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.util.SimpleBox2;
-import com.darkgran.farstar.util.SimpleVector2;
-import com.darkgran.farstar.gui.TextDrawer;
 
 //base for laying out menus
 public abstract class BaseMenu extends SimpleBox2 {
@@ -23,8 +21,7 @@ public abstract class BaseMenu extends SimpleBox2 {
     }
 
     protected void setupOffset() {
-        SimpleVector2 textWH = TextDrawer.getTextWH(Farstar.ASSET_LIBRARY.getAssetManager().get("fonts/arial15.fnt"), "Battlestation");
-        offset = textWH.getX();
+        offset = TokenType.FLEET.getWidth();
         if (negativeOffset) { offset *= -1; }
     }
 
