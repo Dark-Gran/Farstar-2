@@ -3,7 +3,8 @@ package com.darkgran.farstar.battle.gui.tokens;
 public enum TokenType {
     MS(340f, 180f),
     SUPPORT(190f, 100f),
-    FLEET(232f, 137f);
+    FLEET(232f, 138f),
+    YARD(216f, 120f);
 
     private final float width;
     private final float height;
