@@ -54,11 +54,11 @@ public class BattleStage1V1 extends BattleStage {
         turnButton.setPosition(1828f, 478f - turnButton.getHeight() * 0.5f);
         this.addActor(turnButton);
         //Shipyards
-        yardMenu1 = new YardMenu(player1.getShipyard(), false, 228f, Farstar.STAGE_HEIGHT*0.078f, this, player1);
-        yardButton1.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.012f);
+        yardMenu1 = new YardMenu(player1.getShipyard(), false, 217f, Farstar.STAGE_HEIGHT*0.078f, this, player1);
+        yardButton1.setPosition(Farstar.STAGE_WIDTH*0.112f, Farstar.STAGE_HEIGHT*0.029f);
         this.addActor(yardButton1);
-        yardMenu2 = new YardMenu(player2.getShipyard(), true, 228f, Farstar.STAGE_HEIGHT*0.78f, this, player2);
-        yardButton2.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.935f);
+        yardMenu2 = new YardMenu(player2.getShipyard(), true, 217f, Farstar.STAGE_HEIGHT*0.78f, this, player2);
+        yardButton2.setPosition(Farstar.STAGE_WIDTH*0.112f, Farstar.STAGE_HEIGHT*0.930f);
         this.addActor(yardButton2);
         //Hands
         handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*0.3f, Farstar.STAGE_HEIGHT*0.01f, this, player1);
