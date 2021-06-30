@@ -1,6 +1,7 @@
 package com.darkgran.farstar.battle.gui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.util.SimpleBox2;
 
@@ -11,8 +12,8 @@ public class JunkButton extends BaseMenu implements DropTarget {
 
     public JunkButton(float x, float y, BattleStage battleStage, Player player) {
         super(x, y, false, battleStage, player);
-        setHeight(BattleStage.TOKEN_WIDTH/2);
-        setWidth(BattleStage.TOKEN_WIDTH);
+        setHeight(TokenType.JUNK.getHeight());
+        setWidth(TokenType.JUNK.getWidth());
         setupSimpleBox2(x, y, getWidth(), getHeight());
     }
 

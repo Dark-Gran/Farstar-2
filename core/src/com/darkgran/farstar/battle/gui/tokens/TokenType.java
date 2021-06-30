@@ -5,7 +5,8 @@ public enum TokenType {
     SUPPORT(190f, 100f),
     FLEET(232f, 138f),
     YARD(216f, 120f),
-    FAKE(260f, 155f);
+    FAKE(260f, 155f),
+    JUNK(88f, 116f);
 
     private final float width;
     private final float height;
