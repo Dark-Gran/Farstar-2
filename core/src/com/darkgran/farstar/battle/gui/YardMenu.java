@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.gui;
 
+import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.gui.tokens.YardToken;
 import com.darkgran.farstar.battle.players.LocalPlayer;
 import com.darkgran.farstar.battle.players.Player;
@@ -14,15 +15,14 @@ public class YardMenu extends CardListMenu {
 
     @Override
     protected void setupOffset() {
-        super.setupOffset();
-        setOffset(getOffset()*3/4);
+        setOffset(TokenType.FLEET.getHeight());
     }
 
     @Override
     protected void generateTokens() {
         getTokens().clear();
         for (int i = 0; i < getCardList().size(); i++) {
-            getTokens().add(new YardToken(getCardList().get(i), getX(), getY()+ getOffset()*(i+1), getBattleStage(), this));
+            getTokens().add(new YardToken(getCardList().get(i), getX(), getY()+ getOffset()*i, getBattleStage(), this));
         }
     }
 
