@@ -8,7 +8,7 @@ import com.darkgran.farstar.gui.TextLine;
 public class PerfMeter extends TextLine {
 
     public PerfMeter(float x, float y, Color fontColor) {
-        super(fontColor, "fonts/barlow24.fnt", x, y, "-");
+        super(fontColor, "fonts/bahnschrift24.fnt", x, y, "-");
     }
 
     @Override

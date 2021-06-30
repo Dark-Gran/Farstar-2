@@ -32,7 +32,7 @@ public class Notification extends TextInTheBox {
 
     /** @param duration Time in seconds. Set to MIN_DURATION unless greater duration is provided. */
     protected Notification(NotificationType notificationType, String message, int duration) {
-        super(ColorPalette.LIGHT, ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f), "fonts/barlow30.fnt", message);
+        super(ColorPalette.LIGHT, ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f), "fonts/bahnschrift30.fnt", message);
         this.notificationType = notificationType;
         SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), message);
         setupBox(notificationType.x, notificationType.y, textWH.getX(), textWH.getY());
