@@ -7,7 +7,7 @@ public class ButtonWithExtraState extends ActorButton {
     private final Texture extraUp;
     private final Texture extraOver;
     private final Texture extraDown;
-    private boolean possible;
+    private boolean extraState;
 
     public ButtonWithExtraState(Texture imageUp, Texture imageOver, Texture extraUp, Texture extraOver) {
         super(imageUp, imageOver);
@@ -25,7 +25,7 @@ public class ButtonWithExtraState extends ActorButton {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        if (possible) {
+        if (extraState) {
             if (getClickListener().isPressed()) {
                 batch.draw(extraDown, getX(), getY());
             } else if (getClickListener().isOver()) {
@@ -36,5 +36,13 @@ public class ButtonWithExtraState extends ActorButton {
         } else {
             super.draw(batch, parentAlpha);
         }
+    }
+
+    public boolean isExtraState() {
+        return extraState;
+    }
+
+    public void setExtraState(boolean extraState) {
+        this.extraState = extraState;
     }
 }
