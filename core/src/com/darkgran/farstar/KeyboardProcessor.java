@@ -34,7 +34,7 @@ public class KeyboardProcessor extends InputAdapter {
     @Override
     public boolean keyUp(int keycode) {
         keysDown.remove(keycode);
-        if (keycode == Input.Keys.ESCAPE) {
+        if (keycode == Input.Keys.ESCAPE || (keycode == Input.Keys.SPACE && game.getSuperScreen() instanceof IntroScreen)) {
             if (game.getSuperScreen() != null) { game.getSuperScreen().userEscape(); }
         }
         return true;
