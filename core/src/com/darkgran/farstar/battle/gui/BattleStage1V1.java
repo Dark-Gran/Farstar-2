@@ -51,8 +51,8 @@ public class BattleStage1V1 extends BattleStage {
         addDropTarget(mothershipToken1);
         addDropTarget(mothershipToken2);
         //Buttons
-        turnButton.setBounds(Farstar.STAGE_WIDTH*0.95f, Farstar.STAGE_HEIGHT * 0.5f, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
-        //this.addActor(turnButton);
+        turnButton.setPosition(1828f, 478f - turnButton.getHeight() * 0.5f);
+        this.addActor(turnButton);
         //Shipyards
         yardMenu1 = new YardMenu(player1.getShipyard(), false, 228f, Farstar.STAGE_HEIGHT*0.078f, this, player1);
         yardButton1.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.012f);
@@ -78,8 +78,6 @@ public class BattleStage1V1 extends BattleStage {
         supportMenu2 = new SupportMenu(player2.getSupports(), Farstar.STAGE_WIDTH*0.082f, Farstar.STAGE_HEIGHT*0.76f, TokenType.SUPPORT.getWidth()*0.155f, 30f, Farstar.STAGE_WIDTH * 0.838f, Farstar.STAGE_HEIGHT*0.14f, true, this, player2);
         addDropTarget(supportMenu1);
         addDropTarget(supportMenu2);
-        //Finish
-        setupListeners();
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.gui.ButtonWithExtraState;
 import com.darkgran.farstar.gui.ListeningStage;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.CombatManager;
@@ -27,14 +28,20 @@ import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 
 public abstract class BattleStage extends ListeningStage {
     private final BattleScreen battleScreen;
-    private final Texture turn = Farstar.ASSET_LIBRARY.getAssetManager().get("images/turn.png");
-    public final ImageButton turnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(turn)));
     private FakeToken fakeToken;
     private final DuelMenu duelMenu;
     private final Texture combatEndPic = Farstar.ASSET_LIBRARY.getAssetManager().get("images/combat_end.png");
     private final ImageButton combatEndButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(combatEndPic)));
     private ArrayList<DropTarget> dropTargets = new ArrayList<>();
     private final AbilityPicker abilityPicker;
+    public final ButtonWithExtraState turnButton = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAssetManager().get("images/turn.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/turnO.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/turnP.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/turnOP.png")){
+        @Override
+        public void clicked() {
+            if (battleScreen.getBattle().getWhoseTurn() instanceof LocalPlayer) {
+                battleScreen.getBattle().getRoundManager().endTurn();
+            }
+        }
+    };
 
     public final static int TOKEN_WIDTH = 78; //future: (re)move
 
@@ -46,20 +53,6 @@ public abstract class BattleStage extends ListeningStage {
         //AbilityPicker ("Hybrid")
         abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/3, this, null, Farstar.ASSET_LIBRARY.getAssetManager().get("images/yard.png"));
         battleScreen.getBattle().getRoundManager().setAbilityPicker(abilityPicker);
-    }
-
-    @Override
-    public void setupListeners() {
-        turnButton.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y)
-            {
-                if (battleScreen.getBattle().getWhoseTurn() instanceof LocalPlayer) {
-                    battleScreen.getBattle().getRoundManager().endTurn();
-                }
-            }
-        });
     }
 
     public void enableCombatEnd() {
