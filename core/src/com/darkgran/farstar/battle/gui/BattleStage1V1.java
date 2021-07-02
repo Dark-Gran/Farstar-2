@@ -44,7 +44,7 @@ public class BattleStage1V1 extends BattleStage {
         super(game, viewport, battleScreen, duelMenu);
         //Resources
         resourceMeter1 = new ResourceMeter(player1, true, Farstar.STAGE_WIDTH*0.8f, Farstar.STAGE_HEIGHT*0.04f);
-        resourceMeter2 = new ResourceMeter(player2, false, Farstar.STAGE_WIDTH*0.8f, Farstar.STAGE_HEIGHT*0.963f);
+        resourceMeter2 = new ResourceMeter(player2, false, Farstar.STAGE_WIDTH*0.8f, Farstar.STAGE_HEIGHT*0.97f);
         //Motherships
         mothershipToken1 = new MothershipToken(player1.getMs(), (Farstar.STAGE_WIDTH - TokenType.MS.getWidth()) * 0.5f, Farstar.STAGE_HEIGHT * 0.1f, this, null);
         mothershipToken2 = new MothershipToken(player2.getMs(), (Farstar.STAGE_WIDTH - TokenType.MS.getWidth()) * 0.5f, (Farstar.STAGE_HEIGHT * 0.91f) - TokenType.MS.getHeight(), this, null);
