@@ -22,7 +22,7 @@ public class ResourceMeter extends Actor implements JustFont {
         setFont("fonts/bahnschrift40b.fnt");
         this.player = player;
         this.onBottom = onBottom;
-        String res = "123456";
+        String res = "E 123 M 456";
         SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), res);
         setWidth(textWH.getX());
         setHeight(textWH.getY());
