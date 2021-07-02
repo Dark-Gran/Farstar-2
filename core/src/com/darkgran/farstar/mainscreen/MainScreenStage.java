@@ -16,7 +16,6 @@ public class MainScreenStage extends ListeningStage {
     private final Texture measureTexture = Farstar.ASSET_LIBRARY.getAssetManager().get("images/solitary.png");
     private final Texture FSLogo = Farstar.ASSET_LIBRARY.getAssetManager().get("images/FSlogo.png");
     private final VersionInfo versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN);
-    private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.0885), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN);
 
     private final ActorButton startButton = new ActorButton(Farstar.ASSET_LIBRARY.getAssetManager().get("images/solitary.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/solitaryO.png")){
         @Override
@@ -80,7 +79,6 @@ public class MainScreenStage extends ListeningStage {
         getBatch().begin();
         getBatch().draw(FSLogo, (float) (Farstar.STAGE_WIDTH/2-FSLogo.getWidth()/2), (float) (Farstar.STAGE_HEIGHT*0.8));
         versionInfo.drawText(getBatch());
-        perfMeter.drawText(getBatch());
         getBatch().end();
     }
 

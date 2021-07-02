@@ -1,12 +1,6 @@
 package com.darkgran.farstar.battle.gui;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.ActorButton;
@@ -24,8 +18,6 @@ import com.darkgran.farstar.util.SimpleBox2;
 
 import java.awt.*;
 import java.util.ArrayList;
-
-import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 
 public abstract class BattleStage extends ListeningStage {
     private final BattleScreen battleScreen;

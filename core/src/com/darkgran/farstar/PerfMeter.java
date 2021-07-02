@@ -1,4 +1,4 @@
-package com.darkgran.farstar.mainscreen;
+package com.darkgran.farstar;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

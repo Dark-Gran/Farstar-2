@@ -21,6 +21,7 @@ public abstract class SuperScreen implements Screen {
     private TableStage tableStage;
     private YXQuestionBox screenConceder = null;
     private final NotificationManager notificationManager;
+    private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.0885), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN);
 
     public SuperScreen(final Farstar game, NotificationManager notificationManager) {
         this.game = game;
@@ -44,6 +45,7 @@ public abstract class SuperScreen implements Screen {
 
     protected void drawMenus(float delta, Batch batch) { //for all screens except intro
         batch.begin();
+        perfMeter.drawText(batch);
         if (screenConceder != null) {
             screenConceder.draw(batch, shapeRenderer);
         }
