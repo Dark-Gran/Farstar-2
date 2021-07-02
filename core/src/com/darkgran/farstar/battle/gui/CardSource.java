@@ -16,10 +16,10 @@ public class CardSource extends PB2Drawer {
     private final Texture pic = Farstar.ASSET_LIBRARY.getAssetManager().get("images/deck.png");
     private final TextInTheBox info;
 
-    public CardSource(float x, float y, BattleStage battleStage, Player player) {
+    public CardSource(float x, float y, float width, float height, BattleStage battleStage, Player player) {
         super(x, y, battleStage, player);
         setupBox(x, y, pic.getWidth(), pic.getHeight());
-        info = new TextInTheBox(ColorPalette.MAIN, ColorPalette.DARK, "fonts/bahnschrift30.fnt", "n/a", x, y, 10, 10);
+        info = new TextInTheBox(ColorPalette.MAIN, ColorPalette.DARK, "fonts/bahnschrift30.fnt", "n/a", x, y, width, height);
         update();
     }
 
