@@ -1,14 +1,15 @@
 package com.darkgran.farstar.battle.gui;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
-import com.darkgran.farstar.gui.PlayerBox2;
+import com.darkgran.farstar.gui.PB2Drawer;
 
 import java.util.ArrayList;
 
-public class AbilityPicker extends PlayerBox2 {
+public class AbilityPicker extends PB2Drawer {
     private boolean active = false;
     private ArrayList<AbilityInfo> abilityInfos = new ArrayList<>();
     private ArrayList<AbilityPickerOption> abilityGraphics = new ArrayList<>();
@@ -19,7 +20,10 @@ public class AbilityPicker extends PlayerBox2 {
         this.texture = texture;
     }
 
-    public void draw() { }
+    @Override
+    public void draw(Batch batch) {
+        super.draw(batch);
+    }
 
     public void enable() {
         active = true;

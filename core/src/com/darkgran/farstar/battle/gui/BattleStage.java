@@ -104,7 +104,7 @@ public abstract class BattleStage extends ListeningStage {
 
     public void drawBattleStage(float delta, Batch batch) {
         if (fakeToken != null) { fakeToken.draw(batch); }
-        abilityPicker.draw();
+        abilityPicker.draw(batch);
     }
 
     public void drawTokenMenu(CardListMenu cardListMenu, Batch batch) {

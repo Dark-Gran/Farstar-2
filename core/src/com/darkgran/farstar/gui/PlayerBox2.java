@@ -5,9 +5,9 @@ import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.util.SimpleBox2;
 
 /**
- * SimpleBox2 with player+battleStage references.
+ * SimpleBox2 with battleStage+player (for simple drawing use PB2Drawer).
  */
-public class PlayerBox2 extends SimpleBox2 {
+public abstract class PlayerBox2 extends SimpleBox2 {
     private final BattleStage battleStage;
     private Player player;
 
