@@ -16,6 +16,8 @@ public class RoundCounter extends SimpleBox2 implements TextDrawer {
     private final BattleStage battleStage;
     private Color fontColor;
     private String fontPath = "fonts/bahnschrift30.fnt";
+    private String text = "R#0";
+    private SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), text);
 
     public RoundCounter(float x, float y, BattleStage battleStage, Battle battle) {
         this.fontColor = ColorPalette.MAIN;
@@ -26,6 +28,11 @@ public class RoundCounter extends SimpleBox2 implements TextDrawer {
         this.battleStage = battleStage;
     }
 
+    public void update() {
+        text = "R#"+battle.getRoundManager().getRoundNum();
+        textWH = TextDrawer.getTextWH(getFont(), text);
+    }
+
     public void draw(Batch batch) {
         batch.draw(pic, getX(), getY());
         drawText(batch);
@@ -33,9 +40,7 @@ public class RoundCounter extends SimpleBox2 implements TextDrawer {
 
     @Override
     public void drawText(Batch batch) {
-        String txt = "R#"+battle.getRoundManager().getRoundNum();
-        SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), txt);
-        drawText(getFont(), batch, (getX()+pic.getWidth()*0.5f) - textWH.getX()*0.5f, (getY()+pic.getHeight()*0.5f) + textWH.getY()*0.5f, txt, getFontColor());
+        drawText(getFont(), batch, (getX()+pic.getWidth()*0.5f) - textWH.getX()*0.5f, (getY()+pic.getHeight()*0.5f) + textWH.getY()*0.5f, text, getFontColor());
     }
 
     @Override

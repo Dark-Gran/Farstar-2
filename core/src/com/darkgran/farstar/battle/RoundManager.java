@@ -47,6 +47,7 @@ public class RoundManager {
 
     public void newRound() {
         roundNum++;
+        getBattle().getBattleScreen().getBattleStage().getRoundCounter().update();
         System.out.println("R#"+roundNum);
         firstTurnThisRound = true;
         newTurn();

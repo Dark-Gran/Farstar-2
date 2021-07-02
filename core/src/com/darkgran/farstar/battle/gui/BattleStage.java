@@ -208,6 +208,10 @@ public abstract class BattleStage extends ListeningStage {
 
     public DuelMenu getDuelMenu() { return duelMenu; }
 
+    public RoundCounter getRoundCounter() {
+        return roundCounter;
+    }
+
     @Override
     public void dispose() {
         turnButton.removeListener(turnButton.getClickListener());

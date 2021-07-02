@@ -19,9 +19,13 @@ public class ResourceMeter extends Actor implements JustFont {
     private String fontPath = "";
     private Texture enePic = Farstar.ASSET_LIBRARY.getAssetManager().get("images/energy.png");
     private Texture matPic = Farstar.ASSET_LIBRARY.getAssetManager().get("images/matter.png");
+    private SimpleVector2 eneWH;
+    private SimpleVector2 matWH;
 
     public ResourceMeter(Battle battle, Player player, boolean onBottom, float x, float y) {
         setFont("fonts/bahnschrift40b.fnt");
+        eneWH = TextDrawer.getTextWH(getFont(), "0 ");
+        matWH = TextDrawer.getTextWH(getFont(), "0 ");
         this.battle = battle;
         this.player = player;
         this.onBottom = onBottom;
@@ -31,9 +35,11 @@ public class ResourceMeter extends Actor implements JustFont {
         setHeight(textWH.getY());
         setX(x);
         setY(y);
+        update();
+        this.player.setResourceMeter(this);
     }
 
-    public void draw(Batch batch) {
+    public void update() {
         String eneSub = "0";
         if (player.getEnergy() > 9) {
             if (player.getEnergy() > 99) {
@@ -50,21 +56,19 @@ public class ResourceMeter extends Actor implements JustFont {
                 matSub = "00";
             }
         }
-        SimpleVector2 eneWH = TextDrawer.getTextWH(getFont(), eneSub+" ");
-        SimpleVector2 matWH = TextDrawer.getTextWH(getFont(), matSub+" ");
-        float x = getX();
+        eneWH = TextDrawer.getTextWH(getFont(), eneSub+" ");
+        matWH = TextDrawer.getTextWH(getFont(), matSub+" ");
+    }
+
+    public void draw(Batch batch) {
         getFont().setColor(ColorPalette.ENERGY);
-        batch.draw(enePic, x, getY() - (onBottom ? 0f : eneWH.getY()) - getHeight()*0.49f);
-        x += enePic.getWidth()*1.5f;
-        getFont().draw(batch, Integer.toString(player.getEnergy()), x, onBottom ? getY()+getHeight() : getY());
+        batch.draw(enePic, getX(), getY() - (onBottom ? 0f : eneWH.getY()) - getHeight()*0.49f);
+        getFont().draw(batch, Integer.toString(player.getEnergy()), getX()+enePic.getWidth()*1.5f, onBottom ? getY()+getHeight() : getY());
         getFont().setColor(ColorPalette.MATTER);
-        x += eneWH.getX();
-        batch.draw(matPic, x, getY()-(onBottom ? 0f : eneWH.getY()) + getHeight()*0.02f);
-        x += matPic.getWidth()*1.3f;
-        getFont().draw(batch, player.getMatter()+" ", x, onBottom ? getY()+getHeight() : getY());
+        batch.draw(matPic, getX()+enePic.getWidth()*1.5f+eneWH.getX(), getY()-(onBottom ? 0f : eneWH.getY()) + getHeight()*0.02f);
+        getFont().draw(batch, player.getMatter()+" ", getX()+enePic.getWidth()*1.5f+eneWH.getX()+matPic.getWidth()*1.3f, onBottom ? getY()+getHeight() : getY());
         getFont().setColor((ColorPalette.MAIN));
-        x += matWH.getX();
-        getFont().draw(batch, " +"+getIncome(), x, onBottom ? getY()+getHeight() : getY());
+        getFont().draw(batch, " +"+getIncome(), getX()+enePic.getWidth()*1.5f+eneWH.getX()+matPic.getWidth()*1.3f+matWH.getX(), onBottom ? getY()+getHeight() : getY());
         getFont().setColor(Color.WHITE);
     }
 

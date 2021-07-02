@@ -1,6 +1,7 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.Battle;
+import com.darkgran.farstar.battle.gui.ResourceMeter;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.Mothership;
 
@@ -16,6 +17,7 @@ public class Player {
     private Fleet fleet;
     private Junkpile junkpile;
     private Supports supports;
+    private ResourceMeter resourceMeter;
 
     public Player(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard) {
         this.battleID = battleID;
@@ -52,16 +54,32 @@ public class Player {
     public void payday(Card card) {
         setEnergy(energy-card.getCardInfo().getEnergy());
         setMatter(matter-card.getCardInfo().getMatter());
+        if (resourceMeter != null) {
+            resourceMeter.update();
+        }
     }
 
     public void payday(int energy, int matter) {
         setEnergy(this.energy-energy);
         setMatter(this.matter-matter);
+        if (resourceMeter != null) {
+            resourceMeter.update();
+        }
     }
 
-    public void addEnergy(int energy) { this.energy += energy; }
+    public void addEnergy(int energy) {
+        this.energy += energy;
+        if (resourceMeter != null) {
+            resourceMeter.update();
+        }
+    }
 
-    public void addMatter(int matter) { this.matter += matter; }
+    public void addMatter(int matter) {
+        this.matter += matter;
+        if (resourceMeter != null) {
+            resourceMeter.update();
+        }
+    }
 
     public int getEnergy() { return energy; }
 
@@ -103,11 +121,12 @@ public class Player {
 
     public void setSupports(Supports supports) { this.supports = supports; }
 
-    public Battle getBattle() {
-        return battle;
-    }
+    public Battle getBattle() { return battle; }
 
-    public void setBattle(Battle battle) {
-        this.battle = battle;
-    }
+    public void setBattle(Battle battle) { this.battle = battle; }
+
+    public void setResourceMeter(ResourceMeter resourceMeter) { this.resourceMeter = resourceMeter; }
+
+    public ResourceMeter getResourceMeter() { return resourceMeter; }
+
 }
