@@ -361,4 +361,6 @@ public class RoundManager {
 
     public PossibilityAdvisor getPossibilityAdvisor() { return possibilityAdvisor; }
 
+    public Player getStartingPlayer() { return startingPlayer; }
+
 }
