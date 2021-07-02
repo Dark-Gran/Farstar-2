@@ -2,22 +2,19 @@ package com.darkgran.farstar.battle.gui;
 
 import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.util.SimpleBox2;
+import com.darkgran.farstar.gui.PlayerBox2;
 
-//base for laying out menus
-public abstract class BaseMenu extends SimpleBox2 {
+/**
+ * Base for laying out menus.
+ */
+public abstract class BaseMenu extends PlayerBox2 {
     private float offset;
     private boolean negativeOffset;
-    private final BattleStage battleStage;
-    private Player player;
 
     public BaseMenu(float x, float y, boolean negativeOffset, BattleStage battleStage, Player player) {
-        setX(x);
-        setY(y);
-        this.player = player;
+        super(x, y, battleStage, player);
         this.negativeOffset = negativeOffset;
         setupOffset();
-        this.battleStage = battleStage;
     }
 
     protected void setupOffset() {
@@ -35,10 +32,5 @@ public abstract class BaseMenu extends SimpleBox2 {
 
     public void setNegativeOffset(boolean negativeOffset) { this.negativeOffset = negativeOffset; }
 
-    public BattleStage getBattleStage() { return battleStage; }
-
-    public Player getPlayer() { return player; }
-
-    public void setPlayer(Player player) { this.player = player; }
 
 }

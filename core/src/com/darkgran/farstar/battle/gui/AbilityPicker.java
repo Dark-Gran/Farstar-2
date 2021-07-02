@@ -4,17 +4,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
+import com.darkgran.farstar.gui.PlayerBox2;
 
 import java.util.ArrayList;
 
-public class AbilityPicker extends BaseMenu {
+public class AbilityPicker extends PlayerBox2 {
     private boolean active = false;
     private ArrayList<AbilityInfo> abilityInfos = new ArrayList<>();
     private ArrayList<AbilityPickerOption> abilityGraphics = new ArrayList<>();
     private final Texture texture;
 
     public AbilityPicker(float x, float y, BattleStage battleStage, Player player, Texture texture) {
-        super(x, y, false, battleStage, player);
+        super(x, y, battleStage, player);
         this.texture = texture;
     }
 
