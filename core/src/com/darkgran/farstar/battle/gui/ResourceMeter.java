@@ -64,8 +64,16 @@ public class ResourceMeter extends Actor implements JustFont {
         getFont().draw(batch, player.getMatter()+" ", x, onBottom ? getY()+getHeight() : getY());
         getFont().setColor((ColorPalette.MAIN));
         x += matWH.getX();
-        getFont().draw(batch, " +"+battle.getRoundManager().getIncome(), x, onBottom ? getY()+getHeight() : getY());
+        getFont().draw(batch, " +"+getIncome(), x, onBottom ? getY()+getHeight() : getY());
         getFont().setColor(Color.WHITE);
+    }
+
+    private String getIncome() { //might need update for other mods (ie. ResourceMeter x ResourceMeter1v1?)
+        int income = battle.getRoundManager().getIncome();
+        if (player == battle.getRoundManager().getStartingPlayer()) {
+            income += 1;
+        }
+        return Integer.toString(income);
     }
 
     @Override
