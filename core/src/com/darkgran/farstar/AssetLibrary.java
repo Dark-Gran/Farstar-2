@@ -61,6 +61,7 @@ public class AssetLibrary {
         assetManager.load("images/duel_cancel.png", Texture.class, texParams);
         assetManager.load("images/matter.png", Texture.class, texParams);
         assetManager.load("images/energy.png", Texture.class, texParams);
+        assetManager.load("images/rounds.png", Texture.class, texParams);
         assetManager.load("images/turn.png", Texture.class, texParams);
         assetManager.load("images/turnO.png", Texture.class, texParams);
         assetManager.load("images/turnOP.png", Texture.class, texParams);

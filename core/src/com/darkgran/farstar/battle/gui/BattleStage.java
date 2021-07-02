@@ -34,6 +34,7 @@ public abstract class BattleStage extends ListeningStage {
     private final ImageButton combatEndButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(combatEndPic)));
     private ArrayList<DropTarget> dropTargets = new ArrayList<>();
     private final AbilityPicker abilityPicker;
+    private final RoundCounter roundCounter;
     public final ButtonWithExtraState turnButton = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAssetManager().get("images/turn.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/turnO.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/turnP.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/turnOP.png")){
         @Override
         public void clicked() {
@@ -50,9 +51,9 @@ public abstract class BattleStage extends ListeningStage {
         this.battleScreen = battleScreen;
         this.duelMenu = duelMenu;
         combatEndButton.setBounds(Farstar.STAGE_WIDTH*3/4, Farstar.STAGE_HEIGHT*1/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
-        //AbilityPicker ("Hybrid")
         abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/3, this, null, Farstar.ASSET_LIBRARY.getAssetManager().get("images/yard.png"));
         battleScreen.getBattle().getRoundManager().setAbilityPicker(abilityPicker);
+        roundCounter = new RoundCounter(Farstar.STAGE_WIDTH*0.003f, Farstar.STAGE_HEIGHT*0.475f, this, getBattleScreen().getBattle());
     }
 
     public void enableCombatEnd() {
@@ -105,6 +106,7 @@ public abstract class BattleStage extends ListeningStage {
     public void drawBattleStage(float delta, Batch batch) {
         if (fakeToken != null) { fakeToken.draw(batch); }
         abilityPicker.draw(batch);
+        roundCounter.draw(batch);
     }
 
     public void drawTokenMenu(CardListMenu cardListMenu, Batch batch) {
