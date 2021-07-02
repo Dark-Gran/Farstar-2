@@ -11,7 +11,6 @@ import com.darkgran.farstar.battle.DuelManager;
 import com.darkgran.farstar.battle.players.LocalPlayer;
 
 public abstract class DuelMenu {
-    private final Texture duel = Farstar.ASSET_LIBRARY.getAssetManager().get("images/duel.png");
     private final Texture duelCancel = Farstar.ASSET_LIBRARY.getAssetManager().get("images/duel_cancel.png");
     private final ImageButton cancelButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(duelCancel)));
     private final DuelManager duelManager;
@@ -29,18 +28,13 @@ public abstract class DuelMenu {
     public void addOK(DuelOK duelOK) {
         if (duelOK.getDuelPlayer().getPlayer() instanceof LocalPlayer) {
             getBattleStage().addActor(duelOK);
-            duelOK.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    getDuelManager().OK(duelOK);
-                }
-            });
+            duelOK.setDisabled(false);
         }
     }
 
     public void removeOK(DuelOK duelOK) {
         duelOK.remove();
-        duelOK.removeListener(duelOK.getClickListener());
+        duelOK.setDisabled(true);
     }
 
     public void addCancel() {
@@ -59,8 +53,6 @@ public abstract class DuelMenu {
         cancelButton.remove();
         cancelButton.removeListener(cancelButton.getClickListener());
     }
-
-    public Texture getDuel() { return duel; }
 
     public DuelManager getDuelManager() { return duelManager; }
 

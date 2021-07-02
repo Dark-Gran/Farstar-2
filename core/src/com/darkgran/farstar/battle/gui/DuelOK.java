@@ -1,14 +1,23 @@
 package com.darkgran.farstar.battle.gui;
 
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.graphics.Texture;
+import com.darkgran.farstar.battle.DuelManager;
 import com.darkgran.farstar.battle.players.DuelPlayer;
+import com.darkgran.farstar.gui.ActorButton;
 
-public class DuelOK extends ImageButton {
+public class DuelOK extends ActorButton {
     private DuelPlayer duelPlayer;
+    private DuelManager duelManager;
 
-    public DuelOK(Drawable imageUp) {
-        super(imageUp);
+    public DuelOK(Texture imageUp, Texture imageOver, DuelManager duelManager) {
+        super(imageUp, imageOver);
+        this.duelManager = duelManager;
+        setDisabled(true);
+    }
+
+    @Override
+    public void clicked() {
+        duelManager.OK(this);
     }
 
     public void setDuelPlayer(DuelPlayer duelPlayer) { this.duelPlayer = duelPlayer; }
