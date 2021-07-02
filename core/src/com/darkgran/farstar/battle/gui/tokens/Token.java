@@ -45,7 +45,7 @@ public class Token extends Actor implements JustFont {
 
     protected void setupListener() { }
 
-    public void draw(Batch batch) {
+    public void draw(Batch batch) { //needs mem-perf rework
         Color color = new Color();
         //Price
         color.set(1, 1, 1, 1);
