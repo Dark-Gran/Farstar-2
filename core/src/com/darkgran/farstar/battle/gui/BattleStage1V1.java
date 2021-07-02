@@ -88,6 +88,8 @@ public class BattleStage1V1 extends BattleStage {
         //Decks
         deck1 = new CardSource(Farstar.STAGE_WIDTH*0.96f, Farstar.STAGE_HEIGHT*0.4f,this, player1, true);
         deck2 = new CardSource(Farstar.STAGE_WIDTH*0.96f, Farstar.STAGE_HEIGHT*0.559f, this, player2, false);
+        this.addActor(deck1);
+        this.addActor(deck2);
     }
 
     @Override
@@ -131,6 +133,8 @@ public class BattleStage1V1 extends BattleStage {
         yardButton2.remove();
         yardButton1.dispose();
         yardButton2.dispose();
+        deck1.remove();
+        deck2.remove();
         super.dispose();
     }
 }

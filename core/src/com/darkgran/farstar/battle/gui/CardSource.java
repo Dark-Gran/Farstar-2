@@ -3,6 +3,8 @@ package com.darkgran.farstar.battle.gui;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.darkgran.farstar.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.Player;
@@ -12,13 +14,25 @@ import com.darkgran.farstar.gui.TextInTheBox;
 /**
  * "Deck"
  */
-public class CardSource extends PB2Drawer {
+public class CardSource extends Actor {
     private final Texture pic = Farstar.ASSET_LIBRARY.getAssetManager().get("images/deck.png");
+    private final PB2Drawer drawer;
     private final TextInTheBox info;
+    private final ClickListener clickListener = new ClickListener(){};
 
     public CardSource(float x, float y, BattleStage battleStage, Player player, boolean onBottom) {
-        super(x, y, battleStage, player);
-        setupBox(x, y, pic.getWidth(), pic.getHeight());
+        drawer = new PB2Drawer(x, y, battleStage, player){
+            @Override
+            public void draw(Batch batch) {
+                //super.draw(batch);
+                batch.draw(pic, getX(), getY());
+            }
+        };
+        drawer.setupBox(x, y, pic.getWidth(), pic.getHeight());
+        setX(x);
+        setY(y);
+        setWidth(pic.getWidth());
+        setHeight(pic.getHeight());
         info = new TextInTheBox(
                 ColorPalette.MAIN,
                 ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f),
@@ -30,21 +44,18 @@ public class CardSource extends PB2Drawer {
                 50
         );
         update();
+        addListener(clickListener);
     }
 
     public void update() {
-        info.setText(getPlayer().getDeck().size()+" Cards remaining.");
+        info.setText(drawer.getPlayer().getDeck().size()+" Cards remaining.");
     }
 
     public void draw(Batch batch, ShapeRenderer shapeRenderer) {
-        draw(batch);
-        info.draw(batch, shapeRenderer);
-    }
-
-    @Override
-    public void draw(Batch batch) {
-        //super.draw(batch);
-        batch.draw(pic, getX(), getY());
+        drawer.draw(batch);
+        if (clickListener.isOver()) {
+            info.draw(batch, shapeRenderer);
+        }
     }
 
 }

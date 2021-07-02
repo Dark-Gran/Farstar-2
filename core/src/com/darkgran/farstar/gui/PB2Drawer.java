@@ -10,7 +10,7 @@ import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
  * SimpleBox2 with battleStage+player references meant for drawing.
  * For simple objects (see BaseMenu subclasses for more complexity (eg. CardListMenu)).
  */
-public abstract class PB2Drawer extends PlayerBox2 {
+public class PB2Drawer extends PlayerBox2 {
     public PB2Drawer(float x, float y, BattleStage battleStage, Player player) {
         super(x, y, battleStage, player);
     }
