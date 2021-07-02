@@ -22,7 +22,7 @@ public class AbilityPicker extends PB2Drawer {
 
     @Override
     public void draw(Batch batch) {
-        super.draw(batch);
+        //super.draw(batch);
     }
 
     public void enable() {
