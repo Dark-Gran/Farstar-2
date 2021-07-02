@@ -99,8 +99,8 @@ public class BattleStage1V1 extends BattleStage {
     }
 
     @Override
-    public void drawBattleStage(float delta, Batch batch) {
-        super.drawBattleStage(delta, batch);
+    public void drawBattleStage(float delta, Batch batch) { //TODO debug perf
+        /*super.drawBattleStage(delta, batch);
         resourceMeter2.draw(batch);
         resourceMeter1.draw(batch);
         mothershipToken1.draw(batch);
@@ -118,7 +118,7 @@ public class BattleStage1V1 extends BattleStage {
         drawTokenMenu(supportMenu1, batch);
         drawTokenMenu(supportMenu2, batch);
         deck1.draw(batch, getBattleScreen().getShapeRenderer());
-        deck2.draw(batch, getBattleScreen().getShapeRenderer());
+        deck2.draw(batch, getBattleScreen().getShapeRenderer());*/
         if (DEBUG_RENDER) {
             //getBattleScreen().drawDebugSimpleBox2(fleetMenu1.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
             //getBattleScreen().drawDebugSimpleBox2(fleetMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
