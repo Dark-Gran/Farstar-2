@@ -18,7 +18,6 @@ import com.darkgran.farstar.battle.players.cards.Ship;
 import java.util.ArrayList;
 
 public abstract class Bot extends Player implements BotSettings {
-    private Battle battle;
     private final BotTier botTier;
     private final float timerDelay;
     private boolean pickingTarget = false;
@@ -183,10 +182,6 @@ public abstract class Bot extends Player implements BotSettings {
     public void dispose() {
         disposed = true;
     }
-
-    public void setBattle(Battle battle) { this.battle = battle; }
-
-    public Battle getBattle() { return battle; }
 
     public BotTier getBotTier() { return botTier; }
 

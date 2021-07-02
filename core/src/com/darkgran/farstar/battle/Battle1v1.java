@@ -17,17 +17,16 @@ public class Battle1v1 extends Battle {
 
     public Battle1v1(@NotNull Player player1, @NotNull Player player2) {
         super();
-        //in future: pass the Players in parameters
         this.player1 = player1;
         this.player2 = player2;
+        this.player1.setBattle(this);
+        this.player2.setBattle(this);
         this.player1.getMs().setPlayer(player1);
         this.player1.getDeck().setPlayerOnAll(player1);
         this.player1.getYard().setPlayerOnAll(player1);
         this.player2.getMs().setPlayer(player2);
         this.player2.getDeck().setPlayerOnAll(player2);
         this.player2.getYard().setPlayerOnAll(player2);
-        if (this.player1 instanceof Bot) { ((Bot) this.player1).setBattle(this); }
-        if (this.player2 instanceof Bot) { ((Bot) this.player2).setBattle(this); }
     }
 
     @Override

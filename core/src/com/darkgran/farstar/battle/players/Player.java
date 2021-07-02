@@ -1,9 +1,11 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.Mothership;
 
 public class Player {
+    private Battle battle;
     private final byte battleID; //must be unique for each Player in match
     private int energy;
     private int matter;
@@ -101,5 +103,11 @@ public class Player {
 
     public void setSupports(Supports supports) { this.supports = supports; }
 
+    public Battle getBattle() {
+        return battle;
+    }
 
+    public void setBattle(Battle battle) {
+        this.battle = battle;
+    }
 }
