@@ -31,7 +31,15 @@ public class ResourceMeter extends Actor implements JustFont {
     }
 
     public void draw(Batch batch) {
-        SimpleVector2 eneWH = TextDrawer.getTextWH(getFont(), player.getEnergy()+"  ");
+        String eneSub = "0";
+        if (player.getEnergy() > 9) {
+            if (player.getEnergy() > 99) {
+                eneSub = "000";
+            } else {
+                eneSub = "00";
+            }
+        }
+        SimpleVector2 eneWH = TextDrawer.getTextWH(getFont(), eneSub+" ");
         float x = getX();
         getFont().setColor(ColorPalette.ENERGY);
         batch.draw(enePic, x, getY() - (onBottom ? 0f : eneWH.getY()) - getHeight()*0.49f);
