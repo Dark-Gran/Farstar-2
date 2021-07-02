@@ -29,6 +29,8 @@ public class BattleStage1V1 extends BattleStage {
     private final SupportMenu supportMenu2;
     private final CardSource deck1;
     private final CardSource deck2;
+    private final TierCounter tier1;
+    private final TierCounter tier2;
     private final ActorButton yardButton1 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAssetManager().get("images/yard.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/yardO.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/yardP.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/yardOP.png")){
         @Override
         public void clicked() {
@@ -62,6 +64,9 @@ public class BattleStage1V1 extends BattleStage {
         yardMenu2 = new YardMenu(player2.getShipyard(), true, 200f, Farstar.STAGE_HEIGHT*0.78f, this, player2);
         yardButton2.setPosition(Farstar.STAGE_WIDTH*0.11f, Farstar.STAGE_HEIGHT*0.930f);
         this.addActor(yardButton2);
+        //Tiers
+        tier1 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.09f, Farstar.STAGE_HEIGHT*0.064f);
+        tier2 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.09f, Farstar.STAGE_HEIGHT*0.97f);
         //Hands
         handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*0.3f, Farstar.STAGE_HEIGHT*0.01f, this, player1);
         handMenu2 = new HandMenu(player2.getHand(),Farstar.STAGE_WIDTH*0.3f, Farstar.STAGE_HEIGHT*0.95f, this, player2);
@@ -100,6 +105,8 @@ public class BattleStage1V1 extends BattleStage {
         drawTokenMenu(handMenu2, batch);
         if (yardMenu1.isVisible()) { drawTokenMenu(yardMenu1, batch); }
         if (yardMenu2.isVisible()) { drawTokenMenu(yardMenu2, batch); }
+        tier1.drawText(batch);
+        tier2.drawText(batch);
         drawTokenMenu(supportMenu1, batch);
         drawTokenMenu(supportMenu2, batch);
         deck1.draw(batch);
