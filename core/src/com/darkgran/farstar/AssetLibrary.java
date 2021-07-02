@@ -66,6 +66,8 @@ public class AssetLibrary {
         assetManager.load("images/yardOP.png", Texture.class, texParams);
         assetManager.load("images/yardP.png", Texture.class, texParams);
         assetManager.load("images/combat_end.png", Texture.class, texParams);
+        assetManager.load("images/energy.png", Texture.class, texParams);
+        assetManager.load("images/matter.png", Texture.class, texParams);
     }
 
     public void dispose() {
