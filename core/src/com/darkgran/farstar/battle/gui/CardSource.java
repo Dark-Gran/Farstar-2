@@ -34,7 +34,7 @@ public class CardSource extends Actor {
         setWidth(pic.getWidth());
         setHeight(pic.getHeight());
         info = new TextInTheBox(
-                ColorPalette.MAIN,
+                ColorPalette.LIGHT,
                 ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f),
                 "fonts/bahnschrift30.fnt",
                 "00 Cards remaining.",
