@@ -65,8 +65,8 @@ public class BattleStage1V1 extends BattleStage {
         yardButton2.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.930f);
         this.addActor(yardButton2);
         //Tiers
-        tier1 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.09f, Farstar.STAGE_HEIGHT*0.064f);
-        tier2 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.09f, Farstar.STAGE_HEIGHT*0.97f);
+        tier1 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.083f, Farstar.STAGE_HEIGHT*0.064f);
+        tier2 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.083f, Farstar.STAGE_HEIGHT*0.97f);
         //Hands
         handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*0.3f, Farstar.STAGE_HEIGHT*0.01f, this, player1);
         handMenu2 = new HandMenu(player2.getHand(),Farstar.STAGE_WIDTH*0.3f, Farstar.STAGE_HEIGHT*0.95f, this, player2);
