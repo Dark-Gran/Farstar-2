@@ -46,6 +46,7 @@ public class Deck extends CardList {
         if (size() > 0) {
             Card card = get(0);
             remove(0);
+            getPlayer().getBattle().getBattleScreen().getBattleStage().updateDeckInfos();
             return card;
         } else { return null; }
     }

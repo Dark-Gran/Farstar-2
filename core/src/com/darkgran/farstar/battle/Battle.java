@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public abstract class Battle {
+    private BattleScreen battleScreen;
     private Player whoseTurn;
     private RoundManager roundManager;
     private CombatManager combatManager;
@@ -37,10 +38,10 @@ public abstract class Battle {
         getRoundManager().getPossibilityAdvisor().unMarkAll(whoseTurn, this);
     }
 
-    public void startingSetup(@NotNull RoundManager roundManager, @NotNull CombatManager combatManager, @NotNull AbilityManager abilityManager) {
+    public void startingSetup(@NotNull BattleScreen battleScreen, @NotNull RoundManager roundManager, @NotNull CombatManager combatManager, @NotNull AbilityManager abilityManager) {
+        this.battleScreen = battleScreen;
         coinToss();
         roundManager.setStartingPlayer(whoseTurn);
-        startingCards();
         this.roundManager = roundManager;
         this.combatManager = combatManager;
         this.abilityManager = abilityManager;
@@ -103,4 +104,7 @@ public abstract class Battle {
 
     public ArrayList<Player> getGameOvers() { return gameOvers; }
 
+    public BattleScreen getBattleScreen() {
+        return battleScreen;
+    }
 }

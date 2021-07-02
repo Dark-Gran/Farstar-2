@@ -40,6 +40,7 @@ public class RoundManager {
     public void launch() {
         roundNum = 0;
         endTargeting();
+        battle.startingCards();
         launched = true;
         newRound();
     }

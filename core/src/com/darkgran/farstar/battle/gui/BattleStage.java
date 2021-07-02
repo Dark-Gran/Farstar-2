@@ -56,6 +56,8 @@ public abstract class BattleStage extends ListeningStage {
         roundCounter = new RoundCounter(Farstar.STAGE_WIDTH*0.003f, Farstar.STAGE_HEIGHT*0.475f, this, getBattleScreen().getBattle());
     }
 
+    public void updateDeckInfos() { }
+
     public void enableCombatEnd() {
         if (battleScreen.getBattle().getWhoseTurn() instanceof LocalPlayer) {
             addActor(combatEndButton);
