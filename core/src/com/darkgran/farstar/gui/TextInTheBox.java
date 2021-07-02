@@ -1,6 +1,8 @@
 package com.darkgran.farstar.gui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -66,11 +68,14 @@ public class TextInTheBox extends TextLine {
         //BOX
         if (!hasNoBox()) {
             batch.end();
+            Gdx.gl.glEnable(GL20.GL_BLEND);
+            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(getBoxColor());
             shapeRenderer.rect(simpleBox.getX(), simpleBox.getY(), simpleBox.getWidth(), simpleBox.getHeight());
             shapeRenderer.setColor(Color.WHITE);
             shapeRenderer.end();
+            Gdx.gl.glDisable(GL20.GL_BLEND);
             batch.begin();
         }
         //TEXT
