@@ -86,7 +86,7 @@ public class BattleStage1V1 extends BattleStage {
         addDropTarget(supportMenu1);
         addDropTarget(supportMenu2);
         //Decks
-        deck1 = new CardSource(Farstar.STAGE_WIDTH*0.96f, Farstar.STAGE_HEIGHT*0.4f,this, player1, true); //TODO
+        deck1 = new CardSource(Farstar.STAGE_WIDTH*0.96f, Farstar.STAGE_HEIGHT*0.4f,this, player1, true);
         deck2 = new CardSource(Farstar.STAGE_WIDTH*0.96f, Farstar.STAGE_HEIGHT*0.559f, this, player2, false);
     }
 
