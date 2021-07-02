@@ -1,24 +1,24 @@
 package com.darkgran.farstar.battle.gui;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.DuelManager;
 import com.darkgran.farstar.battle.players.LocalPlayer;
+import com.darkgran.farstar.gui.ActorButton;
 
 public abstract class DuelMenu {
-    private final Texture duelCancel = Farstar.ASSET_LIBRARY.getAssetManager().get("images/duel_cancel.png");
-    private final ImageButton cancelButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(duelCancel)));
     private final DuelManager duelManager;
     private BattleStage battleStage;  //must be set after ini - before RM.launch (see BattleScreen constructor)
+    private final ActorButton cancelButton = new ActorButton(Farstar.ASSET_LIBRARY.getAssetManager().get("images/duel_cancel.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/duel_cancelO.png")){
+        @Override
+        public void clicked() {
+            getDuelManager().cancelDuel();
+        }
+    };
 
     public DuelMenu(DuelManager duelManager) {
         this.duelManager = duelManager;
         duelManager.receiveDuelMenu(this);
+        cancelButton.setDisabled(true);
     }
 
     public void setBattleStage(BattleStage battleStage) { this.battleStage = battleStage; }
@@ -39,26 +39,19 @@ public abstract class DuelMenu {
 
     public void addCancel() {
         getBattleStage().addActor(cancelButton);
-        cancelButton.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y)
-            {
-                getDuelManager().cancelDuel();
-            }
-        });
+        cancelButton.setDisabled(false);
     }
 
     public void removeCancel() {
         cancelButton.remove();
-        cancelButton.removeListener(cancelButton.getClickListener());
+        cancelButton.setDisabled(true);
     }
 
     public DuelManager getDuelManager() { return duelManager; }
 
     public BattleStage getBattleStage() { return battleStage; }
 
-    public ImageButton getCancelButton() { return cancelButton; }
+    public ActorButton getCancelButton() { return cancelButton; }
 
 
 

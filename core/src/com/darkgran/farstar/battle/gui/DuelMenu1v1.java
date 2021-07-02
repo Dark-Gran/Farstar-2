@@ -12,8 +12,8 @@ public class DuelMenu1v1 extends DuelMenu {
         duelButton1 = new DuelOK(Farstar.ASSET_LIBRARY.getAssetManager().get("images/duel.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/duelO.png"), duelManager);
         duelButton2 = new DuelOK(Farstar.ASSET_LIBRARY.getAssetManager().get("images/duel.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/duelO.png"), duelManager);
         duelButton1.setPosition(Farstar.STAGE_WIDTH*0.6f, Farstar.STAGE_HEIGHT*0.28f);
-        duelButton2.setPosition(Farstar.STAGE_WIDTH*0.6f, Farstar.STAGE_HEIGHT*0.5f);
-        getCancelButton().setBounds(Farstar.STAGE_WIDTH*2/3, Farstar.STAGE_HEIGHT*1/5, (float) Farstar.STAGE_WIDTH/20,(float) Farstar.STAGE_HEIGHT/20);
+        duelButton2.setPosition(Farstar.STAGE_WIDTH*0.6f, Farstar.STAGE_HEIGHT*0.69f);
+        getCancelButton().setPosition(Farstar.STAGE_WIDTH*0.75f, Farstar.STAGE_HEIGHT*0.28f);
     }
 
     @Override
