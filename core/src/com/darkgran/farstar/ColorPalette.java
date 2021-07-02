@@ -1,6 +1,7 @@
 package com.darkgran.farstar;
 
 import com.badlogic.gdx.graphics.Color;
+import com.darkgran.farstar.battle.players.TechType;
 
 public final class ColorPalette {
     private ColorPalette() { }
@@ -10,6 +11,22 @@ public final class ColorPalette {
 
     public static Color changeAlpha(Color color, float a) {
         return new Color(color.r, color.g, color.b, color.a*a);
+    }
+
+    public static Color getTypeColor(TechType techType) {
+        switch (techType) {
+            case INFERIOR:
+                return Color.GRAY;
+            case KINETIC:
+                return Color.ORANGE;
+            case THERMAL:
+                return Color.RED;
+            case PARTICLE:
+                return Color.SKY;
+            case SUPERIOR:
+                return Color.PURPLE;
+        }
+        return Color.WHITE;
     }
 
 }
