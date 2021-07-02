@@ -20,6 +20,7 @@ import static com.darkgran.farstar.battle.BattleSettings.MAX_TECH_INCOME;
 public class RoundManager {
     private final Battle battle;
     private final PossibilityAdvisor possibilityAdvisor;
+    private final Player startingPlayer;
     private boolean launched = false;
     private boolean firstTurnThisRound;
     private int roundNum = 0;
@@ -30,6 +31,7 @@ public class RoundManager {
     public RoundManager(Battle battle, PossibilityAdvisor possibilityAdvisor) {
         this.battle = battle;
         this.possibilityAdvisor = possibilityAdvisor;
+        this.startingPlayer = battle.getWhoseTurn();
     }
 
     //-------------//
