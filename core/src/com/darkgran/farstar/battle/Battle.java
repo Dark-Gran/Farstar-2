@@ -39,6 +39,7 @@ public abstract class Battle {
 
     public void startingSetup(@NotNull RoundManager roundManager, @NotNull CombatManager combatManager, @NotNull AbilityManager abilityManager) {
         coinToss();
+        roundManager.setStartingPlayer(whoseTurn);
         startingCards();
         this.roundManager = roundManager;
         this.combatManager = combatManager;
