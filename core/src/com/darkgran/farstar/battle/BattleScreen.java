@@ -61,7 +61,7 @@ public class BattleScreen extends SuperScreen {
     protected void drawContent(float delta, Batch batch) {
         battleStage.drawBattleStage(delta, batch);
         //if (DEBUG_RENDER) { drawBox2DDebug(batch); } //draws boundaries of world-bodies
-        worldManager.worldTimer(delta); //world stepping
+        //worldManager.worldTimer(delta); //world stepping
     }
 
     @Override
