@@ -72,6 +72,7 @@ public class ResourceMeter extends Actor implements JustFont {
         int income = battle.getRoundManager().getIncome();
         if (player == battle.getRoundManager().getStartingPlayer()) {
             income += 1;
+            battle.getRoundManager().capIncome(income);
         }
         return Integer.toString(income);
     }
