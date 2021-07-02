@@ -31,7 +31,6 @@ public class RoundManager {
     public RoundManager(Battle battle, PossibilityAdvisor possibilityAdvisor) {
         this.battle = battle;
         this.possibilityAdvisor = possibilityAdvisor;
-        this.startingPlayer = battle.getWhoseTurn();
     }
 
     //-------------//
