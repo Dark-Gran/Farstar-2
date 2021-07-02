@@ -62,12 +62,17 @@ public class RoundManager {
     }
 
     public void resourceIncomes(Player player) {
+        int income = getIncome();
+        player.setEnergy(income);
+        player.addMatter(income);
+    }
+
+    public int getIncome() {
         int income = roundNum;
         if (income > MAX_TECH_INCOME) {
             income = MAX_TECH_INCOME;
         }
-        player.setEnergy(income);
-        player.addMatter(income);
+        return income;
     }
 
     public void endTurn() {
