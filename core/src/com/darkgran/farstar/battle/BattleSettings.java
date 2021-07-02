@@ -5,7 +5,7 @@ public final class BattleSettings {
     //Cards.json setup
     public static final int BONUS_CARD_ID = 21;
     //Battle
-    public static final int STARTING_ENERGY = 1;
+    public static final int STARTING_ENERGY = 0;
     public static final int STARTING_MATTER = 2;
     public static final int STARTING_CARDS_ATT = 1;
     public static final int STARTING_CARDS_DEF = 2;
