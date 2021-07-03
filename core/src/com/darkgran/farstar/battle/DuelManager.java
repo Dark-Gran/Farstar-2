@@ -45,6 +45,8 @@ public abstract class DuelManager {
             } else {
                 ((Bot) this.playersA[0].getPlayer()).newDuelOK(this.playersA[0].getDuelButton());
             }
+        } else {
+            System.out.println("- launchDuel() Error! ("+!engaged+" : "+(attacker!=null)+" : "+(defender!=null)+")");
         }
     }
 
