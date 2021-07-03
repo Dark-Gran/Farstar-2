@@ -3,15 +3,12 @@ package com.darkgran.farstar.battle.gui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.battle.gui.tokens.*;
 import com.darkgran.farstar.gui.ActorButton;
 import com.darkgran.farstar.gui.ButtonWithExtraState;
 import com.darkgran.farstar.gui.ListeningStage;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.CombatManager;
-import com.darkgran.farstar.battle.gui.tokens.AnchoredToken;
-import com.darkgran.farstar.battle.gui.tokens.FakeToken;
-import com.darkgran.farstar.battle.gui.tokens.MothershipToken;
-import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.LocalPlayer;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.util.SimpleBox2;
@@ -82,6 +79,9 @@ public abstract class BattleStage extends ListeningStage {
     public void processDrop(float x, float y, Token token) {
         CombatManager combatManager = getBattleScreen().getBattle().getCombatManager();
         DropTarget targetHit = returnDropTarget(x, y);
+        if (targetHit instanceof MothershipToken && token.getCard().getCardInfo().getCardType() == CardType.SUPPORT) {
+            targetHit = ((MothershipToken) targetHit).getSupportMenu();
+        }
         if (targetHit != null || token.getCard().getCardInfo().getCardType() == CardType.ACTION) {
             if (!token.getCard().isTactic() && combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
                 combatManager.processDrop(token, targetHit, getCombatDropToken(x, y, targetHit));
@@ -177,7 +177,7 @@ public abstract class BattleStage extends ListeningStage {
         } else if (dropTarget instanceof SupportMenu) {
             SupportMenu supportMenu = (SupportMenu) dropTarget;
             for (int i = 0; i < 7; i++) {
-                if (x > supportMenu.getX() + (TOKEN_WIDTH * i) && x < supportMenu.getX() + (TOKEN_WIDTH * (i + 1))) {
+                if (x > supportMenu.getX() + (supportMenu.getOffset() * i) && x < supportMenu.getX() + (supportMenu.getOffset() * (8))) {
                     if (i != 3) {
                         return i;
                     } else {
