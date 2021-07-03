@@ -12,11 +12,6 @@ public class YardToken extends Token {
     public YardToken(Card card, float x, float y, BattleStage battleStage, YardMenu yardMenu) {
         super(card, x, y, battleStage, yardMenu, TokenType.YARD);
         this.yardMenu = yardMenu;
-    }
-
-    @Override
-    protected void setupListener() {
-        super.setupListener();
         this.addListener(new InputListener()
         {
             @Override
@@ -31,7 +26,5 @@ public class YardToken extends Token {
             }
         });
     }
-
-
 
 }

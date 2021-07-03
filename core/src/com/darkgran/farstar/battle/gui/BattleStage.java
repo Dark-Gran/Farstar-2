@@ -143,7 +143,7 @@ public abstract class BattleStage extends ListeningStage {
                         if (i != 3 || shipUpgrade) {
                             return i;
                         } else { //hit middle token (not empty) - pick left/right
-                            if (x < fleetMenu.getX() + fleetMenu.getWidth() / 2) {
+                            if (x <= fleetMenu.getX() + fleetMenu.getWidth() / 2) {
                                 return 2;
                             } else {
                                 return 4;

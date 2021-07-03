@@ -40,7 +40,6 @@ public class Token extends Actor implements JustFont {
         this.cardListMenu = cardListMenu;
         this.battleStage = battleStage;
         battleStage.addActor(this);
-        setupListener();
     }
 
     public Token(Card card, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType) {
@@ -49,8 +48,6 @@ public class Token extends Actor implements JustFont {
         this.cardListMenu = cardListMenu;
         this.tokenType = tokenType;
     }
-
-    protected void setupListener() { }
 
     public void draw(Batch batch) { //needs mem-perf rework
         if (card != null) {
