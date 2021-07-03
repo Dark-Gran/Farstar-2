@@ -2,7 +2,6 @@ package com.darkgran.farstar.battle.gui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.darkgran.farstar.battle.gui.tokens.FleetToken;
-import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.Fleet;
