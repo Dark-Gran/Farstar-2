@@ -39,7 +39,7 @@ public class Fleet implements BattleTicks {
                     }
                 }
                 if (!sideHasSpace) {
-                    shiftAllShips(ships, side, false);
+                    shiftAllShips(side, false);
                 }
                 for (i = start; i != end; i += change) {
                     if (ships[i] != null) {
@@ -75,17 +75,17 @@ public class Fleet implements BattleTicks {
             }
         }
         if (left != right) {
-            shiftAllShips(ships, left > right, false);
+            shiftAllShips(left > right, false);
         }
     }
 
-    public void shiftAllShips(Ship[] arr, boolean fromSide, boolean noUpdate) {
+    public void shiftAllShips(boolean fromSide, boolean noUpdate) {
         int start = fromSide ? 6 : 0;
         int end = fromSide ? 0 : 6;
         int change = fromSide ? -1 : 1;
         for (int i = start; i != end; i+=change) {
-            if (arr[i+change] != null) {
-                setShip(arr[i+change], i, (FleetToken) arr[i+change].getToken());
+            if (ships[i+change] != null) {
+                setShip(ships[i+change], i, (FleetToken) ships[i+change].getToken());
                 removeShip(i+change, true);
             }
         }
