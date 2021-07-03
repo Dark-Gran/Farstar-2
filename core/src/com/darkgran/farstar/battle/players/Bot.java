@@ -122,11 +122,11 @@ public abstract class Bot extends Player implements BotSettings {
         delayAction(()->duelReady(duelOK));
     }
 
-    protected boolean deploy(Card card, BaseMenu baseMenu, int position) {
+    protected boolean deploy(Card card, Menu menu, int position) {
         DropTarget dropTarget = getDropTarget(card.getCardInfo().getCardType());
-        Token token = cardToToken(card, baseMenu);
-        if (baseMenu instanceof HandMenu) {
-            for (Token tokenInHand : ((HandMenu) baseMenu).getTokens()) {
+        Token token = cardToToken(card, menu);
+        if (menu instanceof HandMenu) {
+            for (Token tokenInHand : ((HandMenu) menu).getTokens()) {
                 if (tokenInHand instanceof HandToken && tokenInHand.getCard() == card) {
                     token = tokenInHand;
                     break;
@@ -139,8 +139,8 @@ public abstract class Bot extends Player implements BotSettings {
         return getBattle().getRoundManager().processDrop(token, dropTarget, position, false, true);
     }
 
-    protected boolean useAbility(Card card, BaseMenu baseMenu) {
-        Token token = cardToToken(card, baseMenu);
+    protected boolean useAbility(Card card, Menu menu) {
+        Token token = cardToToken(card, menu);
         getBattle().getRoundManager().checkAllAbilities(token, null, AbilityStarter.USE, this, null);
         return true;
     }
@@ -159,16 +159,16 @@ public abstract class Bot extends Player implements BotSettings {
         getBattle().getCombatManager().getDuelManager().OK(duelOK);
     }
 
-    protected Token cardToToken(Card card, BaseMenu baseMenu) {
-        return new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (baseMenu instanceof CardListMenu) ? (CardListMenu) baseMenu : null, TokenType.FLEET); //TokenType.FLEET = default
+    protected Token cardToToken(Card card, Menu menu) {
+        return new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (menu instanceof CardListMenu) ? (CardListMenu) menu : null, TokenType.FLEET); //TokenType.FLEET = default
     }
 
     protected void report(String message) {
         System.out.println(botTier+"(PLR"+getBattleID()+"): "+message);
     }
 
-    protected boolean isDeploymentMenu(BaseMenu baseMenu) {
-        return (baseMenu instanceof FleetMenu || baseMenu instanceof SupportMenu);
+    protected boolean isDeploymentMenu(Menu menu) {
+        return (menu instanceof FleetMenu || menu instanceof SupportMenu);
     }
 
     protected void delayAction(Runnable runnable) { //use delayedTurn() etc. (above) for "recommended delays"

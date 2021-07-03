@@ -1,16 +1,17 @@
 package com.darkgran.farstar.battle.gui;
 
 import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.gui.PlayerBox2;
+import com.darkgran.farstar.gui.PlayerActor;
 
 /**
- * Base for laying out menus.
+ * "BaseMenu but Actor"
  */
-public abstract class BaseMenu extends PlayerBox2 implements Menu {
+
+public abstract class BaseActorMenu extends PlayerActor implements Menu {
     private float offset;
     private boolean negativeOffset;
 
-    public BaseMenu(float x, float y, boolean negativeOffset, BattleStage battleStage, Player player) {
+    public BaseActorMenu(float x, float y, boolean negativeOffset, BattleStage battleStage, Player player) {
         super(x, y, battleStage, player);
         this.negativeOffset = negativeOffset;
         setupOffset();

@@ -19,7 +19,7 @@ public class SupportMenu extends CardListMenu implements DropTarget {
     }
 
     @Override
-    protected void setupOffset() {
+    public void setupOffset() {
         setOffset(TokenType.SUPPORT.getWidth()*1.05f);
     }
 

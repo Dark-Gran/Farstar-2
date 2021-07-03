@@ -15,7 +15,7 @@ import com.darkgran.farstar.util.SimpleBox2;
 
 //The only "Menu" that does NOT extend CardListMenu! (ie. Fleet is not a CardList!)
 //(uses Array instead of ArrayList)
-public class FleetMenu extends BaseMenu implements DropTarget {
+public class FleetMenu extends BaseActorMenu implements DropTarget {
     private final Fleet fleet;
     private FleetToken[] fleetTokens = new FleetToken[7];
     private FleetToken[] tokensPrediction = new FleetToken[7];
@@ -129,13 +129,13 @@ public class FleetMenu extends BaseMenu implements DropTarget {
     }
 
     public void drawTokens(Batch batch) { //todo
-        if (clickListener.isOver() != predicting) {
+        /*if (clickListener.isOver() != predicting) {
             predicting = clickListener.isOver();
             if (clickListener.isOver()) {
                 predictCoordinates();
             }
-        }
-        System.out.println(predicting);
+        }*/
+        //System.out.println(predicting);
         if (!predicting) {
             drawShips(getFleetTokens(), batch);
         } else {
@@ -152,7 +152,7 @@ public class FleetMenu extends BaseMenu implements DropTarget {
     }
 
     @Override
-    protected void setupOffset() {
+    public void setupOffset() {
         setOffset(TokenType.FLEET.getWidth()*1.03f);
     }
 
@@ -179,6 +179,6 @@ public class FleetMenu extends BaseMenu implements DropTarget {
     public boolean isPredicting() { return predicting; }
 
     @Override
-    public SimpleBox2 getSimpleBox2() { return this; }
+    public SimpleBox2 getSimpleBox2() { return new SimpleBox2(getX(), getY(), getWidth(), getHeight()); }
 
 }

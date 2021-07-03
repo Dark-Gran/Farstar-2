@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.gui.BaseMenu;
+import com.darkgran.farstar.battle.gui.Menu;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.battle.players.abilities.AbilityTargets;
@@ -86,7 +87,7 @@ public class PossibilityAdvisor {
         return tier <= battle.getRoundManager().getRoundNum();
     }
 
-    public BaseMenu getTargetMenu(Card card, Player player) {
+    public Menu getTargetMenu(Card card, Player player) {
         if (card.getCardInfo().getCardType() == CardType.SUPPORT) {
             return player.getSupports().getCardListMenu();
         } else {

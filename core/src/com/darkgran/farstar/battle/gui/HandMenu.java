@@ -30,7 +30,7 @@ public class HandMenu extends CardListMenu { //in-future: rearrangement of cards
     }
 
     @Override
-    protected void setupOffset() {
+    public void setupOffset() {
         super.setupOffset();
         setOffset(getOffset()*3/2);
     }

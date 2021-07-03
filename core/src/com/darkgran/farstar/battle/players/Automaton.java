@@ -65,7 +65,7 @@ public class Automaton extends Bot {
         }
     }
 
-    private int getBestPosition(Card card, BaseMenu sourceMenu, BaseMenu targetMenu) {
+    private int getBestPosition(Card card, Menu sourceMenu, Menu targetMenu) {
         if (CardType.isShip(card.getCardInfo().getCardType())) {
             if (targetMenu.isEmpty()) {
                 return 3;

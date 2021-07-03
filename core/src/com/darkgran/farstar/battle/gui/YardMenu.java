@@ -14,7 +14,7 @@ public class YardMenu extends CardListMenu {
     }
 
     @Override
-    protected void setupOffset() {
+    public void setupOffset() {
         if (isNegativeOffset()) { setOffset(TokenType.YARD.getHeight()*-1); }
         else { setOffset(TokenType.YARD.getHeight()); }
     }
