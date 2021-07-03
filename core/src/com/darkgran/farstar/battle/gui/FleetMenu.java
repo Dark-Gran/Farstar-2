@@ -32,7 +32,7 @@ public class FleetMenu extends BaseMenu implements DropTarget {
         return ships[position];
     }
 
-    public void updateCoordinates() {
+    public void updateCoordinates() { //provides a visual shift of tokens so the even numbers seem centralized
         int count = 0;
         int left = 0;
         int right = 0;
