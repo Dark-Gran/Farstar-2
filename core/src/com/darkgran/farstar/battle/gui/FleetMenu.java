@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.gui;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.darkgran.farstar.battle.gui.tokens.FleetToken;
 import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.gui.tokens.TokenType;
@@ -23,6 +24,14 @@ public class FleetMenu extends BaseMenu implements DropTarget {
         this.fleet = fleet;
         fleet.receiveFleetMenu(this);
         setupOffset();
+    }
+
+    public void drawTokens(Batch batch) {
+        for (int i = 0; i < this.getShips().length; i++) {
+            if (this.getShips()[i] != null) {
+                this.getShips()[i].draw(batch);
+            }
+        }
     }
 
     @Override

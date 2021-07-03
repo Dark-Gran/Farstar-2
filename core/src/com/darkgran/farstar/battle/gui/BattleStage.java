@@ -63,6 +63,14 @@ public abstract class BattleStage extends ListeningStage {
         combatEndButton.remove();
     }
 
+    public void drawBattleStage(float delta, Batch batch) {
+        if (fakeToken != null) { fakeToken.draw(batch); }
+        abilityPicker.draw(batch);
+        roundCounter.draw(batch);
+    }
+
+
+
     public DropTarget returnDropTarget(float x, float y) {
         for (DropTarget dropTarget : dropTargets) {
             if (isInBox(dropTarget.getSimpleBox2(), x, y)) { return dropTarget; }
@@ -92,31 +100,6 @@ public abstract class BattleStage extends ListeningStage {
         if (token instanceof FakeToken) {
             token.destroy();
         }
-    }
-
-    public void drawBattleStage(float delta, Batch batch) {
-        if (fakeToken != null) { fakeToken.draw(batch); }
-        abilityPicker.draw(batch);
-        roundCounter.draw(batch);
-    }
-
-    public void drawTokenMenu(CardListMenu cardListMenu, Batch batch) {
-        for (int i = 0; i < cardListMenu.getTokens().size(); i++) {
-            cardListMenu.getTokens().get(i).draw(batch);
-        }
-    }
-
-    public void drawFleet(FleetMenu fleetMenu, Batch batch) {
-        for (int i = 0; i < fleetMenu.getShips().length; i++) {
-            if (fleetMenu.getShips()[i] != null) {
-                fleetMenu.getShips()[i].draw(batch);
-            }
-        }
-    }
-
-    public boolean isInBox(SimpleBox2 simpleBox2, float x, float y) {
-        Rectangle rectangle = new Rectangle((int) simpleBox2.getX(), (int) simpleBox2.getY(), (int) simpleBox2.getWidth(), (int) simpleBox2.getHeight());
-        return rectangle.contains(x, y);
     }
 
     public Token getCombatDropToken(float x, float y, DropTarget dropTarget) {
@@ -192,6 +175,11 @@ public abstract class BattleStage extends ListeningStage {
             return 8;
         }
         return -1;
+    }
+
+    public boolean isInBox(SimpleBox2 simpleBox2, float x, float y) {
+        Rectangle rectangle = new Rectangle((int) simpleBox2.getX(), (int) simpleBox2.getY(), (int) simpleBox2.getWidth(), (int) simpleBox2.getHeight());
+        return rectangle.contains(x, y);
     }
 
     public BattleScreen getBattleScreen() { return battleScreen; }

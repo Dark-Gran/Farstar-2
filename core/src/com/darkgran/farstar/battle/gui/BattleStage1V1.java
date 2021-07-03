@@ -106,16 +106,16 @@ public class BattleStage1V1 extends BattleStage {
         mothershipToken2.draw(batch);
         junkButton1.draw(batch);
         junkButton2.draw(batch);
-        drawFleet(fleetMenu1, batch);
-        drawFleet(fleetMenu2, batch);
-        drawTokenMenu(handMenu1, batch);
-        drawTokenMenu(handMenu2, batch);
-        if (yardMenu1.isVisible()) { drawTokenMenu(yardMenu1, batch); }
-        if (yardMenu2.isVisible()) { drawTokenMenu(yardMenu2, batch); }
+        fleetMenu1.drawTokens(batch);
+        fleetMenu2.drawTokens(batch);
+        handMenu1.drawTokens(batch);
+        handMenu2.drawTokens(batch);
+        if (yardMenu1.isVisible()) { yardMenu1.drawTokens(batch); }
+        if (yardMenu2.isVisible()) { yardMenu2.drawTokens(batch); }
         tier1.drawText(batch);
         tier2.drawText(batch);
-        drawTokenMenu(supportMenu1, batch);
-        drawTokenMenu(supportMenu2, batch);
+        supportMenu1.drawTokens(batch);
+        supportMenu2.drawTokens(batch);
         deck1.draw(batch, getBattleScreen().getShapeRenderer());
         deck2.draw(batch, getBattleScreen().getShapeRenderer());
         if (DEBUG_RENDER) {

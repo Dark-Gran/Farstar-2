@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.gui;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.cards.Card;
@@ -33,6 +34,12 @@ public abstract class CardListMenu extends BaseMenu {
 
     public void generateNewToken(Card card) {
         tokens.add(new Token(card, tokensX + getX() + getOffset()*tokens.size()-1, tokensY + getY(), getBattleStage(), this, TokenType.FLEET));
+    }
+
+    public void drawTokens(Batch batch) {
+        for (int i = 0; i < getTokens().size(); i++) {
+            getTokens().get(i).draw(batch);
+        }
     }
 
     @Override
