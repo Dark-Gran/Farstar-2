@@ -105,7 +105,7 @@ public abstract class BattleStage extends ListeningStage {
             return ((MothershipToken) dropTarget);
         } else if (dropTarget instanceof FleetMenu) {
             FleetMenu fleetMenu = (FleetMenu) dropTarget;
-            Token[] ships = fleetMenu.getShips();
+            Token[] ships = fleetMenu.getFleetTokens();
             for (int i = 0; i < ships.length; i++) {
                 if (x > fleetMenu.getX() + (fleetMenu.getOffset() * i) && x < fleetMenu.getX() + (fleetMenu.getOffset() * (i + 1))) {
                     return ships[i];
@@ -120,7 +120,7 @@ public abstract class BattleStage extends ListeningStage {
             return 7;
         } else if (dropTarget instanceof FleetMenu) {
             FleetMenu fleetMenu = (FleetMenu) dropTarget;
-            Token[] ships = fleetMenu.getShips();
+            Token[] ships = fleetMenu.getFleetTokens();
             for (int i = 0; i < ships.length; i++) {
                 if (x > fleetMenu.getX() + (fleetMenu.getOffset() * i) && x < fleetMenu.getX() + (fleetMenu.getOffset() * (i + 1))) {
                     return i;
@@ -134,7 +134,7 @@ public abstract class BattleStage extends ListeningStage {
         boolean shipUpgrade = !CardType.isShip(cardType);
         if (dropTarget instanceof FleetMenu) {
             FleetMenu fleetMenu = (FleetMenu) dropTarget;
-            Token[] ships = fleetMenu.getShips();
+            Token[] ships = fleetMenu.getFleetTokens();
             if (!shipUpgrade && ships[3] == null) { //middle token empty
                 return 3;
             } else {

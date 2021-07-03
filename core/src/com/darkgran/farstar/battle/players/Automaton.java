@@ -75,9 +75,9 @@ public class Automaton extends Bot {
         } else if (targetMenu instanceof FleetMenu && (card.getCardInfo().getCardType() == CardType.UPGRADE || card.isTactic())){
             FleetMenu fleetMenu = (FleetMenu) targetMenu;
             Token ally = getAlliedTarget(cardToToken(card, sourceMenu), null);
-            for (int i = 0; i < fleetMenu.getShips().length; i++) {
-                if (fleetMenu.getShips()[i] != null) {
-                    if (fleetMenu.getShips()[i].getCard() == ally.getCard()) {
+            for (int i = 0; i < fleetMenu.getFleetTokens().length; i++) {
+                if (fleetMenu.getFleetTokens()[i] != null) {
+                    if (fleetMenu.getFleetTokens()[i].getCard() == ally.getCard()) {
                         return i;
                     }
                 }
@@ -358,9 +358,9 @@ public class Automaton extends Bot {
         if (bestPossibility != null) {
             report("Playing a tactic: " + bestPossibility.getCard().getCardInfo().getName());
             int position = -1;
-            for (int i = 0; i < getFleet().getFleetMenu().getShips().length; i++) {
-                if (getFleet().getFleetMenu().getShips()[i] != null) {
-                    if (getFleet().getFleetMenu().getShips()[i].getCard().isInDuel()) {
+            for (int i = 0; i < getFleet().getFleetMenu().getFleetTokens().length; i++) {
+                if (getFleet().getFleetMenu().getFleetTokens()[i] != null) {
+                    if (getFleet().getFleetMenu().getFleetTokens()[i].getCard().isInDuel()) {
                         position = i;
                         break;
                     }
