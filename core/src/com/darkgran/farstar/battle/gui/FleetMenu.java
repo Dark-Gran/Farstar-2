@@ -27,8 +27,7 @@ public class FleetMenu extends BaseMenu implements DropTarget {
 
     @Override
     protected void setupOffset() {
-        super.setupOffset();
-        if (isNegativeOffset()) { setOffset(getOffset()*-1); } //switching back, FleetMenu handles offset differently
+        setOffset(TokenType.FLEET.getWidth()*1.03f);
     }
 
     @Override

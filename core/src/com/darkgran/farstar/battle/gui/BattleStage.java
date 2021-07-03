@@ -38,8 +38,6 @@ public abstract class BattleStage extends ListeningStage {
         }
     };
 
-    public final static int TOKEN_WIDTH = 78; //future: (re)move
-
     public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen, DuelMenu duelMenu) {
         super(game, viewport);
         this.battleScreen = battleScreen;
@@ -128,7 +126,7 @@ public abstract class BattleStage extends ListeningStage {
             FleetMenu fleetMenu = (FleetMenu) dropTarget;
             Token[] ships = fleetMenu.getShips();
             for (int i = 0; i < ships.length; i++) {
-                if (x > fleetMenu.getX() + (TOKEN_WIDTH * i) && x < fleetMenu.getX() + (TOKEN_WIDTH * (i + 1))) {
+                if (x > fleetMenu.getX() + (fleetMenu.getOffset() * i) && x < fleetMenu.getX() + (fleetMenu.getOffset() * (i + 1))) {
                     return ships[i];
                 }
             }
@@ -143,7 +141,7 @@ public abstract class BattleStage extends ListeningStage {
             FleetMenu fleetMenu = (FleetMenu) dropTarget;
             Token[] ships = fleetMenu.getShips();
             for (int i = 0; i < ships.length; i++) {
-                if (x > fleetMenu.getX() + (TOKEN_WIDTH * i) && x < fleetMenu.getX() + (TOKEN_WIDTH * (i + 1))) {
+                if (x > fleetMenu.getX() + (fleetMenu.getOffset() * i) && x < fleetMenu.getX() + (fleetMenu.getOffset() * (i + 1))) {
                     return i;
                 }
             }
@@ -160,7 +158,7 @@ public abstract class BattleStage extends ListeningStage {
                 return 3;
             } else {
                 for (int i = 0; i < 7; i++) {
-                    if (x > fleetMenu.getX() + (TOKEN_WIDTH * i) && x < fleetMenu.getX() + (TOKEN_WIDTH * (i + 1))) {
+                    if (x > fleetMenu.getX() + (fleetMenu.getOffset() * i) && x < fleetMenu.getX() + (fleetMenu.getOffset() * (i + 1))) {
                         if (i != 3 || shipUpgrade) {
                             return i;
                         } else { //hit middle token (not empty) - pick left/right
