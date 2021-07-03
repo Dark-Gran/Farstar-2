@@ -38,7 +38,7 @@ public class Fleet implements BattleTicks {
                     }
                 }
                 if (!sideHasSpace) {
-                    shiftAllShips(side);
+                    shiftAllShips(side, false);
                 }
                 for (i = start; i != end; i += change) {
                     if (ships[i] != null) {
@@ -60,15 +60,18 @@ public class Fleet implements BattleTicks {
         return success;
     }
 
-    public void shiftAllShips(boolean fromSide) {
+    public void shiftAllShips(boolean fromSide, boolean noUpdate) {
         int start = fromSide ? 6 : 0;
         int end = fromSide ? 0 : 6;
         int change = fromSide ? -1 : 1;
         for (int i = start; i != end; i+=change) {
             if (ships[i+change] != null) {
                 setShip(ships[i+change], i);
-                removeShip(i+change);
+                removeShip(i+change, true);
             }
+        }
+        if (!noUpdate) {
+            getFleetMenu().updateCoordinates();
         }
     }
 
@@ -80,9 +83,10 @@ public class Fleet implements BattleTicks {
             for (int i = blankPosition; i != end; i += change) {
                 if (ships[i + change] != null) {
                     setShip(ships[i + change], i);
-                    removeShip(i + change);
+                    removeShip(i + change, true);
                 }
             }
+            getFleetMenu().updateCoordinates();
         }
     }
 
@@ -122,15 +126,15 @@ public class Fleet implements BattleTicks {
     public void removeShip(Ship ship) {
         for (int i = 0; i < ships.length; i++) {
             if (ships[i] == ship) {
-                removeShip(i);
+                removeShip(i, false);
                 shiftShipsToBlank(i);
             }
         }
     }
 
-    public void removeShip(int position) {
+    public void removeShip(int position, boolean noUpdate) {
         ships[position] = null;
-        getFleetMenu().removeShip(position);
+        getFleetMenu().removeShip(position, noUpdate);
     }
 
     private void setShip(Ship ship, int position) {

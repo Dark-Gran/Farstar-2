@@ -33,7 +33,7 @@ public class FleetMenu extends BaseMenu implements DropTarget {
         return ships[position];
     }
 
-    private void updateCoordinates() {
+    public void updateCoordinates() {
         int count = 0;
         int left = 0;
         int right = 0;
@@ -56,7 +56,7 @@ public class FleetMenu extends BaseMenu implements DropTarget {
                 }
             } else { //odd
                 if (left != right) {
-                    fleet.shiftAllShips(left > right);
+                    fleet.shiftAllShips(left > right, true);
                 }
                 for (int i = 0; i < getShips().length; i++) {
                     if (getShips()[i] != null) {
@@ -86,9 +86,9 @@ public class FleetMenu extends BaseMenu implements DropTarget {
         return true;
     }
 
-    public void removeShip(int position) {
+    public void removeShip(int position, boolean noUpdate) {
         ships[position] = null;
-        updateCoordinates();
+        if (!noUpdate) { updateCoordinates(); }
     }
 
     public Fleet getFleet() { return fleet; }
