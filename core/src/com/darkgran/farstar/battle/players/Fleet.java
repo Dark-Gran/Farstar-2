@@ -55,9 +55,27 @@ public class Fleet implements BattleTicks {
                         break;
                     }
                 }
+                centralizeShips();
             }
         }
         return success;
+    }
+
+    private void centralizeShips() {
+        int left = 0;
+        int right = 0;
+        for (int i = 0; i < getShips().length; i++) {
+            if (getShips()[i] != null) {
+                if (i < 3) {
+                    left++;
+                } else if (i > 3) {
+                    right++;
+                }
+            }
+        }
+        if (left != right) {
+            shiftAllShips(left > right, false);
+        }
     }
 
     public void shiftAllShips(boolean fromSide, boolean noUpdate) {
@@ -128,6 +146,7 @@ public class Fleet implements BattleTicks {
             if (ships[i] == ship) {
                 removeShip(i, false);
                 shiftShipsToBlank(i);
+                centralizeShips();
             }
         }
     }

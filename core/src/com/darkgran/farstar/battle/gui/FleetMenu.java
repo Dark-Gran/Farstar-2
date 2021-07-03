@@ -55,9 +55,6 @@ public class FleetMenu extends BaseMenu implements DropTarget {
                     }
                 }
             } else { //odd
-                if (left != right) {
-                    fleet.shiftAllShips(left > right, true);
-                }
                 for (int i = 0; i < getShips().length; i++) {
                     if (getShips()[i] != null) {
                         getShips()[i].setX(getX() + getOffset() * i);
