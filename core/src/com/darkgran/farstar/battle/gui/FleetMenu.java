@@ -1,12 +1,18 @@
 package com.darkgran.farstar.battle.gui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.darkgran.farstar.battle.gui.tokens.FleetToken;
 import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.battle.players.Player;
+import com.darkgran.farstar.battle.players.cards.CardType;
+import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.util.SimpleBox2;
+import com.darkgran.farstar.util.SimpleVector2;
 
 //The only "Menu" that does NOT extend CardListMenu! (ie. Fleet is not a CardList!)
 //(uses Array instead of ArrayList)
@@ -14,6 +20,8 @@ public class FleetMenu extends BaseMenu implements DropTarget {
     private final SimpleBox2 simpleBox2 = new SimpleBox2();
     private final Fleet fleet;
     private FleetToken[] ships = new FleetToken[7];
+    private ClickListener clickListener = new ClickListener(){};
+    private boolean predicting;
 
     public FleetMenu(Fleet fleet, float x, float y, float width, float height, BattleStage battleStage, Player player, boolean negativeOffset) {
         super(x, y, negativeOffset, battleStage, player);
@@ -23,6 +31,7 @@ public class FleetMenu extends BaseMenu implements DropTarget {
         this.fleet = fleet;
         fleet.receiveFleetMenu(this);
         setupOffset();
+        getBattleStage().addListener(clickListener);
     }
 
     public FleetToken addShip(Card card, int position) {
@@ -87,6 +96,11 @@ public class FleetMenu extends BaseMenu implements DropTarget {
     public void removeShip(int position, boolean noUpdate) {
         ships[position] = null;
         if (!noUpdate) { updateCoordinates(); }
+    }
+
+    public void overwriteToken(int position, FleetToken fleetToken) {
+        ships[position] = fleetToken;
+        updateCoordinates();
     }
 
     public Fleet getFleet() { return fleet; }

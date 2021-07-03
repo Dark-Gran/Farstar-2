@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.gui.FleetMenu;
+import com.darkgran.farstar.battle.gui.tokens.FleetToken;
 import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.cards.Ship;
 
@@ -20,7 +21,7 @@ public class Fleet implements BattleTicks {
         if (hasSpace() && position > -1 && position < 7) {
             if (position == 3) {
                 if (ships[3] == null) {
-                    setShip(ship, position);
+                    setShip(ship, position, null);
                     success = true;
                 }
             } else {
@@ -44,13 +45,13 @@ public class Fleet implements BattleTicks {
                     if (ships[i] != null) {
                         if (i == position) {
                             Ship holder = ships[i];
-                            setShip(shipToSet, i);
+                            setShip(shipToSet, i, (FleetToken) shipToSet.getToken());
                             shipToSet = holder;
                             success = true;
                             position += change;
                         }
                     } else {
-                        setShip(shipToSet, i);
+                        setShip(shipToSet, i, null);
                         success = true;
                         break;
                     }
@@ -84,7 +85,7 @@ public class Fleet implements BattleTicks {
         int change = fromSide ? -1 : 1;
         for (int i = start; i != end; i+=change) {
             if (ships[i+change] != null) {
-                setShip(ships[i+change], i);
+                setShip(ships[i+change], i, (FleetToken) ships[i+change].getToken());
                 removeShip(i+change, true);
             }
         }
@@ -100,7 +101,7 @@ public class Fleet implements BattleTicks {
             int change = direction ? -1 : 1;
             for (int i = blankPosition; i != end; i += change) {
                 if (ships[i + change] != null) {
-                    setShip(ships[i + change], i);
+                    setShip(ships[i + change], i, (FleetToken) ships[i+change].getToken());
                     removeShip(i + change, true);
                 }
             }
@@ -156,9 +157,13 @@ public class Fleet implements BattleTicks {
         getFleetMenu().removeShip(position, noUpdate);
     }
 
-    private void setShip(Ship ship, int position) {
+    private void setShip(Ship ship, int position, FleetToken fleetToken) {
         ships[position] = ship;
-        ship.setToken(getFleetMenu().addShip(ship, position));
+        if (fleetToken == null) { ship.setToken(getFleetMenu().addShip(ship, position)); }
+        else {
+            ship.setToken(fleetToken);
+            getFleetMenu().overwriteToken(position, fleetToken);
+        }
     }
 
     public void receiveFleetMenu(FleetMenu fleetMenu) { this.fleetMenu = fleetMenu; }
