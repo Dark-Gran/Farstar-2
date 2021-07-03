@@ -66,8 +66,8 @@ public class BattleStage1V1 extends BattleStage {
         handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*0.3f, Farstar.STAGE_HEIGHT*0.01f, this, player1);
         handMenu2 = new HandMenu(player2.getHand(),Farstar.STAGE_WIDTH*0.3f, Farstar.STAGE_HEIGHT*0.95f, this, player2);
         //Fleets
-        fleetMenu1 = new FleetMenu(player1.getFleet(), Farstar.STAGE_WIDTH*0.065f, Farstar.STAGE_HEIGHT*0.255f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.25f, this, player1, false);
-        fleetMenu2 = new FleetMenu(player2.getFleet(), Farstar.STAGE_WIDTH*0.065f, Farstar.STAGE_HEIGHT*0.505f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.25f, this, player2, true);
+        fleetMenu1 = new FleetMenu(player1.getFleet(), Farstar.STAGE_WIDTH*0.066f, Farstar.STAGE_HEIGHT*0.255f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.25f, this, player1, false);
+        fleetMenu2 = new FleetMenu(player2.getFleet(), Farstar.STAGE_WIDTH*0.066f, Farstar.STAGE_HEIGHT*0.505f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.25f, this, player2, true);
         addDropTarget(fleetMenu1);
         addDropTarget(fleetMenu2);
         //Discards / Junkpiles
@@ -118,12 +118,12 @@ public class BattleStage1V1 extends BattleStage {
         supportMenu2.drawTokens(batch);
         deck1.draw(batch, getBattleScreen().getShapeRenderer());
         deck2.draw(batch, getBattleScreen().getShapeRenderer());
-        if (DEBUG_RENDER) {
+        /*if (DEBUG_RENDER) {
             getBattleScreen().drawDebugSimpleBox2(fleetMenu1.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
             getBattleScreen().drawDebugSimpleBox2(fleetMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
             getBattleScreen().drawDebugSimpleBox2(supportMenu1.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
             getBattleScreen().drawDebugSimpleBox2(supportMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
-        }
+        }*/
     }
 
     @Override

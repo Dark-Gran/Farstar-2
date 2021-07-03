@@ -26,10 +26,51 @@ public class FleetMenu extends BaseMenu implements DropTarget {
         setupOffset();
     }
 
+    public FleetToken addShip(Card card, int position) {
+        float y = isNegativeOffset() ? getY() + getHeight() - TokenType.FLEET.getHeight() - 80f : getY() + 80f;
+        ships[position] = new FleetToken(card, getX()+getOffset()*(position), y, getBattleStage(), null, this);
+        updateCoordinates();
+        return ships[position];
+    }
+
+    private void updateCoordinates() {
+        int count = 0;
+        int left = 0;
+        int right = 0;
+        for (int i = 0; i < getShips().length; i++) {
+            if (getShips()[i] != null) {
+                count++;
+                if (i < 3) {
+                    left++;
+                } else if (i > 3) {
+                    right++;
+                }
+            }
+        }
+        if (count != 0) {
+            if (count % 2 == 0) { //even
+                for (int i = 0; i < getShips().length; i++) {
+                    if (getShips()[i] != null) {
+                        getShips()[i].setX(getX() + ((left > right) ? getOffset()/2 : -getOffset()/2) + getOffset() * i);
+                    }
+                }
+            } else { //odd
+                if (left != right) {
+                    fleet.shiftAllShips(left > right);
+                }
+                for (int i = 0; i < getShips().length; i++) {
+                    if (getShips()[i] != null) {
+                        getShips()[i].setX(getX() + getOffset() * i);
+                    }
+                }
+            }
+        }
+    }
+
     public void drawTokens(Batch batch) {
-        for (int i = 0; i < this.getShips().length; i++) {
-            if (this.getShips()[i] != null) {
-                this.getShips()[i].draw(batch);
+        for (int i = 0; i < getShips().length; i++) {
+            if (getShips()[i] != null) {
+                getShips()[i].draw(batch);
             }
         }
     }
@@ -45,14 +86,9 @@ public class FleetMenu extends BaseMenu implements DropTarget {
         return true;
     }
 
-    public FleetToken addShip(Card card, int position) {
-        float y = isNegativeOffset() ? getY() + getHeight() - TokenType.FLEET.getHeight() - 80f : getY() + 80f;
-        ships[position] = new FleetToken(card, getX()+getOffset()*(position), y, getBattleStage(), null, this);
-        return ships[position];
-    }
-
     public void removeShip(int position) {
         ships[position] = null;
+        updateCoordinates();
     }
 
     public Fleet getFleet() { return fleet; }

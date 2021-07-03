@@ -60,7 +60,7 @@ public class Fleet implements BattleTicks {
         return success;
     }
 
-    private void shiftAllShips(boolean fromSide) {
+    public void shiftAllShips(boolean fromSide) {
         int start = fromSide ? 6 : 0;
         int end = fromSide ? 0 : 6;
         int change = fromSide ? -1 : 1;
@@ -72,7 +72,7 @@ public class Fleet implements BattleTicks {
         }
     }
 
-    private void shiftShipsToBlank(int blankPosition) {
+    public void shiftShipsToBlank(int blankPosition) {
         if (blankPosition > 0 && blankPosition < 6) {
             boolean direction = blankPosition < 3; //in-future fix shifting to 3
             int end = direction ? 0 : 6;
