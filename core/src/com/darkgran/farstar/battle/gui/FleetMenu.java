@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.darkgran.farstar.battle.gui.tokens.FleetToken;
-import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.Fleet;
@@ -20,10 +19,11 @@ import com.darkgran.farstar.util.SimpleBox2;
 //(uses Array instead of ArrayList)
 public class FleetMenu extends BaseActorMenu implements DropTarget {
     private final Fleet fleet;
-    private FleetToken[] fleetTokens = new FleetToken[7];
+    private FleetToken[] fleetTokens = new FleetToken[7]; //in-future: consider removing (FleetToken is held by the Ship itself)
     private FleetToken[] tokensPrediction = new FleetToken[7];
     private ClickListener clickListener = new ClickListener(){};
     private boolean predicting;
+    private boolean predictEnabled;
 
     public FleetMenu(Fleet fleet, float x, float y, float width, float height, BattleStage battleStage, Player player, boolean negativeOffset) {
         super(x, y, negativeOffset, battleStage, player);
@@ -178,21 +178,20 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
     }
 
     public void drawTokens(Batch batch) {
-        boolean overToken = false;
-        for (FleetToken fleetToken : fleetTokens) {
-            if (fleetToken != null && fleetToken.getClickListener().isOver()) {
-                overToken = true;
-                break;
+        if (predictEnabled) {
+            boolean overToken = false;
+            for (FleetToken fleetToken : fleetTokens) {
+                if (fleetToken != null && fleetToken.getClickListener().isOver()) {
+                    overToken = true;
+                    break;
+                }
             }
-        }
-        //if (clickListener.isOver() != predicting) {
             predicting = clickListener.isOver() || overToken;
             if (clickListener.isOver()) {
                 predictCoordinates();
             }
-        //}
-        if (((BattleStage1V1) getBattleStage()).getFleetMenu1() == this) {
-            System.out.println(predicting);
+        } else {
+            predicting = false;
         }
         if (!predicting) {
             drawShips(fleetTokens, batch);
@@ -235,6 +234,14 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
     public FleetToken[] getFleetTokens() { return fleetTokens; }
 
     public boolean isPredicting() { return predicting; }
+
+    public boolean isPredictEnabled() {
+        return predictEnabled;
+    }
+
+    public void setPredictEnabled(boolean predictEnabled) {
+        this.predictEnabled = predictEnabled;
+    }
 
     @Override
     public SimpleBox2 getSimpleBox2() { return new SimpleBox2(getX(), getY(), getWidth(), getHeight()); }
