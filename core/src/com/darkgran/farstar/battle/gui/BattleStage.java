@@ -69,8 +69,6 @@ public abstract class BattleStage extends ListeningStage {
         roundCounter.draw(batch);
     }
 
-
-
     public DropTarget returnDropTarget(float x, float y) {
         for (DropTarget dropTarget : dropTargets) {
             if (isInBox(dropTarget.getSimpleBox2(), x, y)) { return dropTarget; }
