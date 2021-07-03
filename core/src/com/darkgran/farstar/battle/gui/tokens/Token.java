@@ -79,9 +79,9 @@ public class Token extends Actor implements JustFont {
             }
             color = ColorPalette.getTypeColor(card.getCardInfo().getDefenseType());
             tokenDefense.drawText(tokenDefense.getFont(), batch, getX() + getWidth() * 5 / 6, getY() + getHeight() / 3, String.valueOf(card.getHealth()), color);
-            //Debug
-            if (DEBUG_RENDER) { battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch); }
         }
+        //Debug
+        if (DEBUG_RENDER) { battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch); }
     }
 
     public void destroy() {
