@@ -15,6 +15,11 @@ public class FleetToken extends AnchoredToken {
         this.addListener(getDragger());
     }
 
+    public FleetToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, FleetMenu fleetMenu) {
+        super(card, x, y, battleStage, cardListMenu, tokenType);
+        this.fleetMenu = fleetMenu;
+    }
+
     @Override
     public void click(int button) {
         getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(getThis(), getFleetMenu().getPlayer());

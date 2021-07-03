@@ -90,7 +90,7 @@ public class Fleet implements BattleTicks {
             }
         }
         if (!noUpdate) {
-            getFleetMenu().updateCoordinates();
+            getFleetMenu().updateCoordinates(getFleetMenu().getFleetTokens());
         }
     }
 
@@ -105,7 +105,7 @@ public class Fleet implements BattleTicks {
                     removeShip(i + change, true);
                 }
             }
-            getFleetMenu().updateCoordinates();
+            getFleetMenu().updateCoordinates(fleetMenu.getFleetTokens());
         }
     }
 

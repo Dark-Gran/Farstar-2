@@ -70,6 +70,8 @@ public class BattleStage1V1 extends BattleStage {
         fleetMenu2 = new FleetMenu(player2.getFleet(), Farstar.STAGE_WIDTH*0.066f, Farstar.STAGE_HEIGHT*0.505f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.25f, this, player2, true);
         addDropTarget(fleetMenu1);
         addDropTarget(fleetMenu2);
+        addActor(fleetMenu1);
+        addActor(fleetMenu2);
         //Discards / Junkpiles
         junkButton1 = new JunkButton(Farstar.STAGE_WIDTH*0.905f, Farstar.STAGE_HEIGHT*0.16f, this, player1);
         junkButton2 = new JunkButton(Farstar.STAGE_WIDTH*0.905f, Farstar.STAGE_HEIGHT*0.84f - TokenType.JUNK.getHeight(), this, player2);
@@ -89,6 +91,10 @@ public class BattleStage1V1 extends BattleStage {
         deck2 = new CardSource(Farstar.STAGE_WIDTH*0.96f, Farstar.STAGE_HEIGHT*0.559f, this, player2, false);
         this.addActor(deck1);
         this.addActor(deck2);
+    }
+
+    public FleetMenu getFleetMenu1() {
+        return fleetMenu1;
     }
 
     @Override

@@ -43,27 +43,45 @@ public class Token extends Actor implements JustFont {
         setupListener();
     }
 
+    public Token(Card card, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType) {
+        this.card = card;
+        this.battleStage = battleStage;
+        this.cardListMenu = cardListMenu;
+        this.tokenType = tokenType;
+    }
+
     protected void setupListener() { }
 
     public void draw(Batch batch) { //needs mem-perf rework
-        Color color = new Color();
-        //Price
-        color.set(1, 1, 1, 1);
-        if (this instanceof YardToken || this instanceof HandToken || this instanceof FakeToken) {
-            tokenPrice.drawText(tokenPrice.getFont(), batch, getX(), getY()+getHeight()*4/3, card.getCardInfo().getEnergy()+":"+card.getCardInfo().getMatter(), color);
+        if (card != null) {
+            Color color = new Color();
+            //Price
+            color.set(1, 1, 1, 1);
+            if (this instanceof YardToken || this instanceof HandToken || this instanceof FakeToken) {
+                tokenPrice.drawText(tokenPrice.getFont(), batch, getX(), getY() + getHeight() * 4 / 3, card.getCardInfo().getEnergy() + ":" + card.getCardInfo().getMatter(), color);
+            }
+            //Name
+            if (card instanceof Ship) {
+                if (((Ship) card).haveFought()) {
+                    color.set(1, 0, 0, 1);
+                }
+            }
+            if (getCard().isPossible()) {
+                color.set(0, 1, 0, 1);
+            } else if (getCard().isInDuel()) {
+                color.set(1, 1, 0, 1);
+            }
+            tokenName.drawText(tokenName.getFont(), batch, getX(), getY() + getHeight(), card.getCardInfo().getName(), color);
+            //Offense+Defense
+            color = ColorPalette.getTypeColor(card.getCardInfo().getOffenseType());
+            if (!getCard().isMS()) {
+                tokenOffense.drawText(tokenOffense.getFont(), batch, getX(), getY() + getHeight() / 3, String.valueOf(card.getCardInfo().getOffense()), color);
+            }
+            color = ColorPalette.getTypeColor(card.getCardInfo().getDefenseType());
+            tokenDefense.drawText(tokenDefense.getFont(), batch, getX() + getWidth() * 5 / 6, getY() + getHeight() / 3, String.valueOf(card.getHealth()), color);
+            //Debug
+            if (DEBUG_RENDER) { battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch); }
         }
-        //Name
-        if (card instanceof Ship) { if (((Ship) card).haveFought()) { color.set(1, 0, 0, 1); } }
-        if (getCard().isPossible()) { color.set(0, 1, 0, 1); }
-        else if (getCard().isInDuel()) { color.set(1, 1, 0, 1); }
-        tokenName.drawText(tokenName.getFont(), batch, getX(), getY()+getHeight(), card.getCardInfo().getName(), color);
-        //Offense+Defense
-        color = ColorPalette.getTypeColor(card.getCardInfo().getOffenseType());
-        if (!getCard().isMS()) { tokenOffense.drawText(tokenOffense.getFont(), batch, getX(), getY()+getHeight()/3, String.valueOf(card.getCardInfo().getOffense()), color); }
-        color = ColorPalette.getTypeColor(card.getCardInfo().getDefenseType());
-        tokenDefense.drawText(tokenDefense.getFont(), batch, getX()+getWidth()*5/6, getY()+getHeight()/3, String.valueOf(card.getHealth()), color);
-        //Debug
-        if (DEBUG_RENDER) { battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch); }
     }
 
     public void destroy() {

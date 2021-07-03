@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.darkgran.farstar.battle.gui.tokens.FleetToken;
+import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.battle.players.Player;
+import com.darkgran.farstar.battle.players.cards.CardInfo;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.util.SimpleBox2;
@@ -30,22 +32,22 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
         this.fleet = fleet;
         fleet.receiveFleetMenu(this);
         setupOffset();
-        getBattleStage().addListener(clickListener);
+        addListener(clickListener);
     }
 
     public FleetToken addShip(Card card, int position) {
         float y = isNegativeOffset() ? getY() + getHeight() - TokenType.FLEET.getHeight() - 80f : getY() + 80f;
         fleetTokens[position] = new FleetToken(card, getX()+getOffset()*(position), y, getBattleStage(), null, this);
-        updateCoordinates();
+        updateCoordinates(fleetTokens);
         return fleetTokens[position];
     }
 
-    public void updateCoordinates() { //provides a visual shift of tokens so the even numbers seem centralized
+    public void updateCoordinates(FleetToken[] arr) { //provides a visual shift of tokens so the even numbers seem centralized
         int count = 0;
         int left = 0;
         int right = 0;
-        for (int i = 0; i < getFleetTokens().length; i++) {
-            if (getFleetTokens()[i] != null) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] != null) {
                 count++;
                 if (i < 3) {
                     left++;
@@ -56,17 +58,17 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
         }
         if (count != 0) {
             if (count % 2 == 0) { //even
-                for (int i = 0; i < getFleetTokens().length; i++) {
-                    if (getFleetTokens()[i] != null) {
-                        getFleetTokens()[i].setX(getX() + ((left > right) ? getOffset()/2 : -getOffset()/2) + getOffset() * i);
-                        getFleetTokens()[i].setNewAnchor(getFleetTokens()[i].getX(), getFleetTokens()[i].getY());
+                for (int i = 0; i < arr.length; i++) {
+                    if (arr[i] != null) {
+                        arr[i].setX(getX() + ((left > right) ? getOffset()/2 : -getOffset()/2) + getOffset() * i);
+                        arr[i].setNewAnchor(arr[i].getX(), arr[i].getY());
                     }
                 }
             } else { //odd
-                for (int i = 0; i < getFleetTokens().length; i++) {
-                    if (getFleetTokens()[i] != null) {
-                        getFleetTokens()[i].setX(getX() + getOffset() * i);
-                        getFleetTokens()[i].setNewAnchor(getFleetTokens()[i].getX(), getFleetTokens()[i].getY());
+                for (int i = 0; i < arr.length; i++) {
+                    if (arr[i] != null) {
+                        arr[i].setX(getX() + getOffset() * i);
+                        arr[i].setNewAnchor(arr[i].getX(), arr[i].getY());
                     }
                 }
             }
@@ -92,7 +94,8 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
                 int start = side ? 2 : 4;
                 int end = side ? -1 : 7;
                 int change = side ? -1 : 1;
-                Ship shipToSet = null;
+                Ship shipToSet = new Ship(getFleet(), new CardInfo(), getPlayer()); // = null;
+                shipToSet.setToken(new FleetToken(null, getX(), getY(), getBattleStage(), null, TokenType.FLEET, this));
                 int i;
                 boolean sideHasSpace = false;
                 for (i = start; i != end; i += change) {
@@ -121,23 +124,24 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
                     if (shipsPrediction[c] == null) {
                         tokensPrediction[c] = null;
                     } else {
-                        tokensPrediction[c] = (FleetToken) shipsPrediction[c].getToken();
+                        FleetToken token = (FleetToken) shipsPrediction[c].getToken();
+                        tokensPrediction[c] = new FleetToken(token.getCard(), token.getX(), token.getY(), token.getBattleStage(), token.getCardListMenu(), token.getFleetMenu());
                     }
                 }
+                updateCoordinates(tokensPrediction);
             }
         }
     }
 
     public void drawTokens(Batch batch) { //todo
-        /*if (clickListener.isOver() != predicting) {
+        if (clickListener.isOver() != predicting) {
             predicting = clickListener.isOver();
             if (clickListener.isOver()) {
                 predictCoordinates();
             }
-        }*/
-        //System.out.println(predicting);
+        }
         if (!predicting) {
-            drawShips(getFleetTokens(), batch);
+            drawShips(fleetTokens, batch);
         } else {
             drawShips(tokensPrediction, batch);
         }
@@ -164,12 +168,12 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
 
     public void removeShip(int position, boolean noUpdate) {
         fleetTokens[position] = null;
-        if (!noUpdate) { updateCoordinates(); }
+        if (!noUpdate) { updateCoordinates(fleetTokens); }
     }
 
     public void overwriteToken(int position, FleetToken fleetToken) {
         fleetTokens[position] = fleetToken;
-        updateCoordinates();
+        updateCoordinates(fleetTokens);
     }
 
     public Fleet getFleet() { return fleet; }
