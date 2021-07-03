@@ -52,6 +52,7 @@ public class FleetMenu extends BaseMenu implements DropTarget {
                 for (int i = 0; i < getShips().length; i++) {
                     if (getShips()[i] != null) {
                         getShips()[i].setX(getX() + ((left > right) ? getOffset()/2 : -getOffset()/2) + getOffset() * i);
+                        getShips()[i].setNewAnchor(getShips()[i].getX(), getShips()[i].getY());
                     }
                 }
             } else { //odd
@@ -61,6 +62,7 @@ public class FleetMenu extends BaseMenu implements DropTarget {
                 for (int i = 0; i < getShips().length; i++) {
                     if (getShips()[i] != null) {
                         getShips()[i].setX(getX() + getOffset() * i);
+                        getShips()[i].setNewAnchor(getShips()[i].getX(), getShips()[i].getY());
                     }
                 }
             }
@@ -93,7 +95,7 @@ public class FleetMenu extends BaseMenu implements DropTarget {
 
     public Fleet getFleet() { return fleet; }
 
-    public Token[] getShips() { return ships; }
+    public FleetToken[] getShips() { return ships; }
 
     @Override
     public SimpleBox2 getSimpleBox2() { return simpleBox2; }
