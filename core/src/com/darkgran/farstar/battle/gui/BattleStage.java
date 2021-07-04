@@ -12,6 +12,7 @@ import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.battle.players.LocalPlayer;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.util.SimpleBox2;
+import com.darkgran.farstar.util.SimpleVector2;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -138,17 +139,38 @@ public abstract class BattleStage extends ListeningStage {
             if (!shipUpgrade && ships[3] == null) { //middle token empty
                 return 3;
             } else {
+                int count = 0;
+                int left = 0;
+                int right = 0;
+                for (int i = 0; i < ships.length; i++) {
+                    if (ships[i] != null) {
+                        count++;
+                    }
+                    if (i < 3) {
+                        left++;
+                    } else if (i > 3) {
+                        right++;
+                    }
+                }
+                float shift = 0;
+                if (count % 2 != 0) {
+                    shift = ((left > right) ? fleetMenu.getOffset()/2 : -fleetMenu.getOffset()/2);
+                }
                 for (int i = 0; i < 7; i++) {
-                    if (x > fleetMenu.getX() + (fleetMenu.getOffset() * i) && x < fleetMenu.getX() + (fleetMenu.getOffset() * (i + 1))) {
-                        if (i != 3 || shipUpgrade) {
-                            return i;
-                        } else { //hit middle token (not empty) - pick left/right
-                            if (x <= fleetMenu.getX() + fleetMenu.getWidth() / 2) {
-                                return 2;
-                            } else {
-                                return 4;
+                    if (x > fleetMenu.getX() + shift + fleetMenu.getOffset() * i && (x < fleetMenu.getX() + shift + fleetMenu.getOffset() * (i+1))) {
+                        SimpleVector2 lr = fleetMenu.getFleet().getSideSizes(fleetMenu.getFleet().getShips());
+                        if (count != 6) {
+                            if (lr.getX() > lr.getY() && (i < 3 && i > 0)) {
+                                i--;
+                            } else if (lr.getX() < lr.getY() && i > 3 && i < 6) {
+                                i++;
+                            } else if (count % 2 != 0) {
+                                if (i < 3 && i > 0) {
+                                    i--;
+                                }
                             }
                         }
+                        return i;
                     }
                 }
                 return -1;

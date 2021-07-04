@@ -14,6 +14,7 @@ import com.darkgran.farstar.battle.players.cards.CardInfo;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.util.SimpleBox2;
+import com.darkgran.farstar.util.SimpleVector2;
 
 //The only "Menu" that does NOT extend CardListMenu! (ie. Fleet is not a CardList!)
 //(uses Array instead of ArrayList)
@@ -87,7 +88,7 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
         getBattleStage().getBattleScreen().getCamera().unproject(mouseInWorld3D);
         int pos = getBattleStage().getRoundDropPosition(mouseInWorld3D.x, mouseInWorld3D.y, this, CardType.YARDPRINT);
         if (fleet.hasSpace() && pos > -1 && pos < 7) { //fleet.addShip() validation
-            if (pos != 3) {
+            if (!fleet.isEmpty()) {
                 //Copy ships
                 Ship[] shipsPrediction = new Ship[7];
                 for (int c = 0; c < fleet.getShips().length; c++) {
@@ -101,6 +102,13 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
                 //Proceed with fleet.addShip()
                 boolean side = pos < 3;
                 int start = side ? 2 : 4;
+                if (pos == 3) {
+                    SimpleVector2 lr = getFleet().getSideSizes(shipsPrediction);
+                    if (lr.getX() < lr.getY()) {
+                        side = true;
+                    }
+                    start = 3;
+                }
                 int end = side ? -1 : 7;
                 int change = side ? -1 : 1;
                 Ship shipToSet = new Ship(getFleet(), new CardInfo(), getPlayer()); // = null;
@@ -172,7 +180,7 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
                 }
             }
         }
-        if (left != right) {
+        if (Math.abs(left-right) > 1) {
             shiftAllPredictions(shipArr, tokenArr, left > right);
         }
     }
@@ -187,7 +195,7 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
                 }
             }
             predicting = clickListener.isOver() || overToken;
-            if (clickListener.isOver()) {
+            if (predicting) {
                 predictCoordinates();
             }
         } else {

@@ -5,6 +5,7 @@ import com.darkgran.farstar.battle.gui.FleetMenu;
 import com.darkgran.farstar.battle.gui.tokens.FleetToken;
 import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.cards.Ship;
+import com.darkgran.farstar.util.SimpleVector2;
 
 public class Fleet implements BattleTicks {
     private final Junkpile junkpile;
@@ -13,20 +14,25 @@ public class Fleet implements BattleTicks {
 
     public Fleet(Junkpile junkpile) { this.junkpile = junkpile; }
 
-    public boolean addShip(Token token, int position) {
+    public boolean addShip(Token token, int position) { //in-future: split to be used on any Ship[] field (so it can be used by FleetMenu in predictCoordinates())
         boolean success = false;
         Ship ship = new Ship(this, token.getCard().getCardInfo(), token.getCard().getPlayer());
         ship.setFought(true);
         ship.setUsed(true);
         if (hasSpace() && position > -1 && position < 7) {
-            if (position == 3) {
-                if (ships[3] == null) {
-                    setShip(ship, position, null);
-                    success = true;
-                }
+            if (position == 3 && ships[3] == null) {
+                setShip(ship, position, null);
+                success = true;
             } else {
                 boolean side = position < 3;
                 int start = side ? 2 : 4;
+                if (position == 3) {
+                    SimpleVector2 lr = getSideSizes(ships);
+                    if (lr.getX() < lr.getY()) {
+                        side = true;
+                    }
+                    start = 3;
+                }
                 int end = side ? -1 : 7;
                 int change = side ? -1 : 1;
                 Ship shipToSet = ship;
@@ -62,11 +68,11 @@ public class Fleet implements BattleTicks {
         return success;
     }
 
-    private void centralizeShips() {
+    public SimpleVector2 getSideSizes(Ship[] arr) {
         int left = 0;
         int right = 0;
-        for (int i = 0; i < getShips().length; i++) {
-            if (getShips()[i] != null) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] != null) {
                 if (i < 3) {
                     left++;
                 } else if (i > 3) {
@@ -74,8 +80,13 @@ public class Fleet implements BattleTicks {
                 }
             }
         }
-        if (left != right) {
-            shiftAllShips(left > right, false);
+        return new SimpleVector2(left, right);
+    }
+
+    private void centralizeShips() {
+        SimpleVector2 lr = getSideSizes(getShips());
+        if (Math.abs(lr.getX()-lr.getY()) > 1) {
+            shiftAllShips(lr.getX() > lr.getY(), false);
         }
     }
 
