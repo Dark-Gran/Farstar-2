@@ -156,7 +156,7 @@ public abstract class BattleStage extends ListeningStage {
                 if (count % 2 != 0) {
                     shift = ((left > right) ? fleetMenu.getOffset()/2 : -fleetMenu.getOffset()/2);
                 }
-                for (int i = 0; i < 7; i++) {
+                for (int i = 0; i < 8; i++) {
                     if (x > fleetMenu.getX() + shift + fleetMenu.getOffset() * i && (x < fleetMenu.getX() + shift + fleetMenu.getOffset() * (i+1))) {
                         SimpleVector2 lr = fleetMenu.getFleet().getSideSizes(fleetMenu.getFleet().getShips());
                         if (count != 6) {
@@ -170,6 +170,7 @@ public abstract class BattleStage extends ListeningStage {
                                 }
                             }
                         }
+                        if (i > 6) { i = 6; }
                         return i;
                     }
                 }
