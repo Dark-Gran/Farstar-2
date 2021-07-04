@@ -3,11 +3,12 @@ package com.darkgran.farstar.battle.gui;
 import com.darkgran.farstar.battle.gui.tokens.AnchoredToken;
 import com.darkgran.farstar.battle.gui.tokens.HandToken;
 import com.darkgran.farstar.battle.gui.tokens.Token;
+import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.Hand;
 import com.darkgran.farstar.battle.players.Player;
 
-public class HandMenu extends CardListMenu { //in-future: rearrangement of cards
+public class HandMenu extends CardListMenu {
 
     public HandMenu(Hand hand, float x, float y, BattleStage battleStage, Player player) {
         super(hand, x, y, 0, 0, false, battleStage, player);
@@ -31,8 +32,8 @@ public class HandMenu extends CardListMenu { //in-future: rearrangement of cards
 
     @Override
     public void setupOffset() {
-        super.setupOffset();
-        setOffset(getOffset()*3/2);
+        setOffset(TokenType.FLEET.getWidth());
+        if (isNegativeOffset()) { setOffset(getOffset()*-1); }
     }
 
     @Override
