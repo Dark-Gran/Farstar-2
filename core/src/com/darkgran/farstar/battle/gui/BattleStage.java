@@ -82,22 +82,24 @@ public abstract class BattleStage extends ListeningStage {
     }
 
     public void processDrop(float x, float y, Token token) {
-        CombatManager combatManager = getBattleScreen().getBattle().getCombatManager();
-        DropTarget targetHit = returnDropTarget(x, y);
-        if (targetHit instanceof MothershipToken && token.getCard().getCardInfo().getCardType() == CardType.SUPPORT) {
-            targetHit = ((MothershipToken) targetHit).getSupportMenu();
-        }
-        if (targetHit != null || token.getCard().getCardInfo().getCardType() == CardType.ACTION) {
-            if (!token.getCard().isTactic() && combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
-                combatManager.processDrop(token, targetHit, getCombatDropToken(x, y, targetHit));
-            } else {
-                getBattleScreen().getBattle().getRoundManager().processDrop(token, targetHit, getRoundDropPosition(x, y, targetHit, token.getCard().getCardInfo().getCardType()), false, true);
+        if (token != null) {
+            CombatManager combatManager = getBattleScreen().getBattle().getCombatManager();
+            DropTarget targetHit = returnDropTarget(x, y);
+            if (targetHit instanceof MothershipToken && token.getCard().getCardInfo().getCardType() == CardType.SUPPORT) {
+                targetHit = ((MothershipToken) targetHit).getSupportMenu();
             }
-        } else if (token instanceof AnchoredToken) {
-            ((AnchoredToken) token).resetPosition();
-        }
-        if (token instanceof FakeToken) {
-            token.destroy();
+            if (targetHit != null || token.getCard().getCardInfo().getCardType() == CardType.ACTION) {
+                if (!token.getCard().isTactic() && combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
+                    combatManager.processDrop(token, targetHit, getCombatDropToken(x, y, targetHit));
+                } else {
+                    getBattleScreen().getBattle().getRoundManager().processDrop(token, targetHit, getRoundDropPosition(x, y, targetHit, token.getCard().getCardInfo().getCardType()), false, true);
+                }
+            } else if (token instanceof AnchoredToken) {
+                ((AnchoredToken) token).resetPosition();
+            }
+            if (token instanceof FakeToken) {
+                token.destroy();
+            }
         }
     }
 
