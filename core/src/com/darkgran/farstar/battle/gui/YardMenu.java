@@ -5,6 +5,7 @@ import com.darkgran.farstar.battle.gui.tokens.YardToken;
 import com.darkgran.farstar.battle.players.LocalPlayer;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.players.Yard;
+import com.darkgran.farstar.gui.Notification;
 
 public class YardMenu extends CardListMenu {
     private boolean visible = false;
@@ -30,6 +31,8 @@ public class YardMenu extends CardListMenu {
     public void switchVisibility() {
         if (getPlayer() instanceof LocalPlayer) {
             visible = !visible;
+        } else {
+            getBattleStage().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Access Denied.", 3);
         }
     }
 
