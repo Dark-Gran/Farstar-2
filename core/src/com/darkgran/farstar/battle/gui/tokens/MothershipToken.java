@@ -8,6 +8,8 @@ import com.darkgran.farstar.battle.gui.SupportMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.util.SimpleBox2;
 
+import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
+
 public class MothershipToken extends ClickToken implements DropTarget {
     private final SimpleBox2 simpleBox2 = new SimpleBox2();
     private final SupportMenu supportMenu;
@@ -23,7 +25,7 @@ public class MothershipToken extends ClickToken implements DropTarget {
     public void draw(Batch batch) {
         super.draw(batch);
         //Draws DropTarget SimpleBox2
-        //if (BattleScreen.DEBUG_RENDER) { getBattleStage().getBattleScreen().drawDebugSimpleBox2(getSimpleBox2(), getBattleStage().getBattleScreen().getDebugRenderer(), batch); }
+        //if (DEBUG_RENDER) { getBattleStage().getBattleScreen().drawDebugSimpleBox2(getSimpleBox2(), getBattleStage().getBattleScreen().getShapeRenderer(), batch); }
     }
 
     @Override
