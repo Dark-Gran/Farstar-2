@@ -107,7 +107,13 @@ public class Fleet implements BattleTicks {
 
     public void shiftShipsToBlank(int blankPosition) {
         if (blankPosition > 0 && blankPosition < 6) {
-            boolean direction = blankPosition < 3; //in-future fix shifting to 3
+            boolean direction = blankPosition < 3;
+            if (blankPosition == 3) {
+                SimpleVector2 lr = getSideSizes(ships);
+                if (lr.getY() < lr.getX()) {
+                    direction = true;
+                }
+            }
             int end = direction ? 0 : 6;
             int change = direction ? -1 : 1;
             for (int i = blankPosition; i != end; i += change) {
