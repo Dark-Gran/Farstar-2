@@ -28,8 +28,6 @@ public class Token extends Actor implements JustFont {
     public Token(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, boolean noPics){
         setWidth(tokenType.getWidth());
         setHeight(tokenType.getHeight());
-        setX(x);
-        setY(y);
         setFont(tokenType.getFontPath());
         this.card = card;
         this.tokenType = tokenType;
@@ -43,8 +41,10 @@ public class Token extends Actor implements JustFont {
         tokenDefense = new TokenDefense(getFontPath(), this);
         tokenOffense = new TokenOffense(getFontPath(), this);
         tokenPrice = new TokenPrice(getFontPath(), this);
-        setParts();
-        card.setToken(this);
+        setPosition(x, y);
+        if (card != null) {
+            card.setToken(this);
+        }
         battleStage.addActor(this);
     }
 
@@ -61,7 +61,9 @@ public class Token extends Actor implements JustFont {
         tokenOffense = new TokenOffense(getFontPath(), this);
         tokenPrice = new TokenPrice(getFontPath(), this);
         setParts();
-        card.setToken(this);
+        if (card != null) {
+            card.setToken(this);
+        }
     }
 
     public void setParts() {
@@ -71,6 +73,24 @@ public class Token extends Actor implements JustFont {
         tokenOffense.setY(getY() + getHeight() * 0.2f);
         tokenPrice.setX(getX());
         tokenPrice.setY(getY() + getHeight() * 1.2f);
+    }
+
+    @Override
+    public void setX(float x) {
+        super.setX(x);
+        setParts();
+    }
+
+    @Override
+    public void setY(float y) {
+        super.setY(y);
+        setParts();
+    }
+
+    @Override
+    public void setPosition(float x, float y) {
+        super.setPosition(x, y);
+        setParts();
     }
 
     public void draw(Batch batch) {

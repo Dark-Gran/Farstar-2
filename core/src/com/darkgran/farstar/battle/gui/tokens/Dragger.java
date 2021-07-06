@@ -40,7 +40,6 @@ public class Dragger extends InputListener {
 
     protected void drag(float x, float y) {
         token.setPosition(Gdx.input.getX()-token.getWidth()/2, Farstar.STAGE_HEIGHT-(Gdx.input.getY()+token.getHeight()/2));
-        token.setParts();
     }
 
     protected void drop(float x, float y) {

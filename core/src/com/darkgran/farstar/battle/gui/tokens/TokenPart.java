@@ -15,8 +15,10 @@ public class TokenPart extends TextLine {
     public TokenPart(String fontPath, Token token) {
         super(fontPath);
         this.token = token;
-        updateWH();
-        setPad();
+        if (!token.isNoPics()) {
+            updateWH();
+            setPad();
+        }
     }
 
     public void setPad() {
