@@ -4,7 +4,7 @@ public enum TokenType {
     MS(309f, 184f),
     FAKE(260f, 155f),
     FLEET(232f, 138f),
-    YARD(216f, 128f),
+    YARD(216f, 129f),
     SUPPORT(190f, 113f),
     JUNK(88f, 116f); //to be adjusted
 
