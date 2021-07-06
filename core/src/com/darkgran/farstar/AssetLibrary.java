@@ -11,10 +11,6 @@ import com.darkgran.farstar.battle.players.cards.CardInfo;
 public class AssetLibrary {
     private final AssetManager assetManager = new AssetManager();
 
-    public <T> T get(String filename) {
-        return assetManager.get(filename);
-    }
-
     public String getPortraitName(CardInfo cardInfo, TokenType tokenType) {
         String path = "images/portraits/";
         String name = addTokenTypeAcronym(Integer.toString(cardInfo.getId()), tokenType) + ".png";
@@ -193,6 +189,10 @@ public class AssetLibrary {
         assetManager.load("images/portraits/empty_MS.png", Texture.class, texParams);
         assetManager.load("images/portraits/empty_S.png", Texture.class, texParams);
         assetManager.load("images/portraits/empty_Y.png", Texture.class, texParams);
+    }
+
+    public <T> T get(String filename) {
+        return assetManager.get(filename);
     }
 
     public void dispose() {
