@@ -129,6 +129,11 @@ public class AssetLibrary {
         assetManager.load("images/portraits/frameB_MS.png", Texture.class, texParams);
         assetManager.load("images/portraits/frameB_S.png", Texture.class, texParams);
         assetManager.load("images/portraits/frameB_Y.png", Texture.class, texParams);
+        assetManager.load("images/portraits/frameI_F.png", Texture.class, texParams);
+        assetManager.load("images/portraits/frameI_FK.png", Texture.class, texParams);
+        assetManager.load("images/portraits/frameI_MS.png", Texture.class, texParams);
+        assetManager.load("images/portraits/frameI_S.png", Texture.class, texParams);
+        assetManager.load("images/portraits/frameI_Y.png", Texture.class, texParams);
     }
 
     public void dispose() {
