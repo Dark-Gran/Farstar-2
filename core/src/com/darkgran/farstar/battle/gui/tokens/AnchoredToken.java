@@ -16,7 +16,7 @@ public abstract class AnchoredToken extends ClickToken {
 
     public void resetPosition() {
         setPosition(anchorX, anchorY);
-        setPads();
+        setParts();
     }
 
     public void setNewAnchor(float x, float y) {

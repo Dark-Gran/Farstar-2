@@ -44,7 +44,7 @@ public class Token extends Actor implements JustFont {
         tokenDefense = new TokenDefense(getFontPath(), this);
         tokenOffense = new TokenOffense(getFontPath(), this);
         tokenPrice = new TokenPrice(getFontPath(), this);
-        setPads();
+        setParts();
         battleStage.addActor(this);
     }
 
@@ -60,10 +60,10 @@ public class Token extends Actor implements JustFont {
         tokenDefense = new TokenDefense(getFontPath(), this);
         tokenOffense = new TokenOffense(getFontPath(), this);
         tokenPrice = new TokenPrice(getFontPath(), this);
-        setPads();
+        setParts();
     }
 
-    public void setPads() {
+    public void setParts() {
         tokenDefense.setX(getX() + getWidth() * 0.85f);
         tokenDefense.setY(getY() + getHeight() * 0.2f);
         tokenOffense.setX(getX());
