@@ -16,7 +16,7 @@ public class TokenPart extends TextLine {
         super(fontPath);
         this.token = token;
         if (!token.isNoPics()) {
-            updateWH();
+            update();
             setPad();
         }
     }
@@ -29,7 +29,7 @@ public class TokenPart extends TextLine {
         return "";
     }
 
-    public void updateWH() {
+    public void update() {
         textWH = TextDrawer.getTextWH(getFont(), getContent());
     }
 

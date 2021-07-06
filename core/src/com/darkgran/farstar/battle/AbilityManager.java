@@ -126,20 +126,24 @@ public class AbilityManager {
             switch (changeStatType) {
                 case OFFENSE:
                     target.getCardInfo().changeOffense(floatObjectToInt(changeInfo));
+                    target.refreshToken(false, true);
                     success = true;
                     break;
                 case DEFENSE:
                     target.getCardInfo().changeDefense(floatObjectToInt(changeInfo));
+                    target.refreshToken(true, false);
                     success = true;
                     break;
                 case OFFENSE_TYPE:
                     techType = TechType.valueOf(changeInfo.toString());
                     target.getCardInfo().setOffenseType(techType);
+                    target.refreshToken(false, true);
                     success = true;
                     break;
                 case DEFENSE_TYPE:
                     techType = TechType.valueOf(changeInfo.toString());
                     target.getCardInfo().setDefenseType(techType);
+                    target.refreshToken(true, false);
                     success = true;
                     break;
                 case ABILITY:
@@ -174,15 +178,18 @@ public class AbilityManager {
             switch (changeStatType) {
                 case OFFENSE:
                     target.getCardInfo().changeOffense(-floatObjectToInt(changeInfo));
+                    target.refreshToken(false, true);
                     success = true;
                     break;
                 case DEFENSE:
                     target.getCardInfo().changeDefense(-floatObjectToInt(changeInfo));
+                    target.refreshToken(true, false);
                     success = true;
                     break;
                 case OFFENSE_TYPE:
                 case DEFENSE_TYPE:
                     reverseType(target, effect, changeStatType);
+                    target.refreshToken(changeStatType == DEFENSE_TYPE, changeStatType == OFFENSE_TYPE);
                     success = true;
                     break;
                 case ABILITY:

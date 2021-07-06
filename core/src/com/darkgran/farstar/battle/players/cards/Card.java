@@ -40,15 +40,22 @@ public class Card {
         player = null;
     }
 
+    public void refreshToken(boolean def, boolean off) {
+        if (getToken() != null) {
+            if (def) { getToken().getTokenDefense().update(); }
+            if (off) { getToken().getTokenOffense().update(); }
+        }
+    }
+
     public boolean receiveDMG(int dmg) { //returns survival
         damage += dmg;
-        if (getToken() != null) { getToken().getTokenDefense().updateWH(); }
+        refreshToken(true, false);
         return getHealth() > 0;
     }
 
     public void repairDMG(int dmg) {
         damage -= dmg;
-        if (getToken() != null) { getToken().getTokenDefense().updateWH(); }
+        refreshToken(true, false);
         if (damage < 0) { damage = 0; }
     }
 
@@ -85,10 +92,7 @@ public class Card {
 
     public void addToEffects (Effect effect) {
         effects.add(effect);
-        if (getToken() != null) {
-            getToken().getTokenDefense().updateWH();
-            getToken().getTokenOffense().updateWH();
-        }
+        refreshToken(true, true);
     }
 
     public boolean isPurelyOffensiveChange() {
