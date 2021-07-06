@@ -9,7 +9,9 @@ public class TextLine extends SimpleVector2 implements TextDrawer { //in-future:
     private String fontPath = "";
     private String text = "";
 
-    public TextLine() { }
+    public TextLine() {
+        this.fontColor = Color.WHITE;
+    }
 
     public TextLine(Color fontColor, String fontPath, float x, float y, String text) {
         this.fontColor = fontColor;
@@ -17,6 +19,11 @@ public class TextLine extends SimpleVector2 implements TextDrawer { //in-future:
         setY(y);
         setFont(fontPath);
         this.text = text;
+    }
+
+    public TextLine(String fontPath) {
+        this.fontColor = Color.WHITE;
+        setFontPath(fontPath);
     }
 
     @Override
