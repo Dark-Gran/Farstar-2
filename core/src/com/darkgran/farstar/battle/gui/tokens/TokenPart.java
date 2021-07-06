@@ -19,8 +19,8 @@ public class TokenPart extends TextLine {
         if (!token.isNoPics()) {
             update();
             setPad();
+            setupOffset();
         }
-        setupOffset();
     }
 
     public void setupOffset() { }

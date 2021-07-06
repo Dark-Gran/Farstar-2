@@ -17,4 +17,12 @@ public class TokenOffense extends TokenPart {
         setPad(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getTypeTexture(getToken().getCard().getCardInfo().getOffenseType(), getToken().getTokenType())));
     }
 
+    @Override
+    public void setX(float x) {
+        if (getToken().isNoPics()) {
+            super.setX(x);
+        } else {
+            super.setX(x+getPad().getWidth());
+        }
+    }
 }

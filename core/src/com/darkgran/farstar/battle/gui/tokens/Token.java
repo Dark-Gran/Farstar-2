@@ -70,9 +70,9 @@ public class Token extends Actor implements JustFont {
         tokenDefense.setX(getX() + getWidth());
         tokenDefense.setY(getY());
         tokenOffense.setX(getX());
-        tokenOffense.setY(getY() + getHeight() * 0.2f);
+        tokenOffense.setY(getY());
         tokenPrice.setX(getX());
-        tokenPrice.setY(getY() + getHeight() * 1.2f);
+        tokenPrice.setY(getY());
     }
 
     @Override
@@ -100,7 +100,7 @@ public class Token extends Actor implements JustFont {
             if (frame != null) { batch.draw(frame, getX(), getY()); }
             //Pads
             tokenDefense.draw(batch);
-            //tokenOffense.draw(batch);
+            tokenOffense.draw(batch);
             //tokenPrice.draw(batch);
         }
         //Debug
