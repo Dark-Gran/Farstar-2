@@ -73,6 +73,12 @@ public class AssetLibrary {
         assetManager.load("images/yardO.png", Texture.class, texParams);
         assetManager.load("images/yardOP.png", Texture.class, texParams);
         assetManager.load("images/yardP.png", Texture.class, texParams);
+        //Portraits
+        assetManager.load("images/empty_F.png", Texture.class, texParams);
+        assetManager.load("images/empty_FK.png", Texture.class, texParams);
+        assetManager.load("images/empty_MS.png", Texture.class, texParams);
+        assetManager.load("images/empty_S.png", Texture.class, texParams);
+        assetManager.load("images/empty_Y.png", Texture.class, texParams);
     }
 
     public void dispose() {
