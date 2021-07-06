@@ -10,7 +10,7 @@ public class YardToken extends Token {
     private final YardMenu yardMenu;
 
     public YardToken(Card card, float x, float y, BattleStage battleStage, YardMenu yardMenu) {
-        super(card, x, y, battleStage, yardMenu, TokenType.YARD);
+        super(card, x, y, battleStage, yardMenu, TokenType.YARD, false);
         this.yardMenu = yardMenu;
         this.addListener(new InputListener()
         {

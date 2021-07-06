@@ -6,12 +6,12 @@ import com.darkgran.farstar.battle.players.cards.Card;
 
 public class SupportToken extends ClickToken {
     public SupportToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
-        super(card, x, y, battleStage, cardListMenu, TokenType.SUPPORT);
+        super(card, x, y, battleStage, cardListMenu, TokenType.SUPPORT, false);
     }
 
     @Override
     public void click(int button) {
-        getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(getThis(), getCard().getPlayer());
+        getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(this, getCard().getPlayer());
     }
 
     @Override

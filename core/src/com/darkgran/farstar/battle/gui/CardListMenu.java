@@ -28,12 +28,12 @@ public abstract class CardListMenu extends BaseMenu {
     protected void generateTokens() {
         tokens.clear();
         for (int i = 0; i < cardList.size(); i++) {
-            tokens.add(new Token(cardList.get(i), tokensX + getX() + getOffset()*i, tokensY + getY(), getBattleStage(), this, TokenType.FLEET));
+            tokens.add(new Token(cardList.get(i), tokensX + getX() + getOffset()*i, tokensY + getY(), getBattleStage(), this, TokenType.FLEET, false));
         }
     }
 
     public void generateNewToken(Card card) {
-        tokens.add(new Token(card, tokensX + getX() + getOffset()*tokens.size()-1, tokensY + getY(), getBattleStage(), this, TokenType.FLEET));
+        tokens.add(new Token(card, tokensX + getX() + getOffset()*tokens.size()-1, tokensY + getY(), getBattleStage(), this, TokenType.FLEET, false));
     }
 
     public void drawTokens(Batch batch) {

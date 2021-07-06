@@ -42,7 +42,7 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
     }
 
     public FleetToken addShip(Card card, int position) {
-        fleetTokens[position] = new FleetToken(card, getX()+getOffset()*(position), getBaseY(), getBattleStage(), null, this);
+        fleetTokens[position] = new FleetToken(card, getX()+getOffset()*(position), getBaseY(), getBattleStage(), null, this, false);
         updateCoordinates(fleetTokens);
         return fleetTokens[position];
     }
@@ -112,7 +112,7 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
                 int end = side ? -1 : 7;
                 int change = side ? -1 : 1;
                 Ship shipToSet = new Ship(getFleet(), new CardInfo(), getPlayer()); // = null;
-                shipToSet.setToken(new FleetToken(null, getX(), getBaseY(), getBattleStage(), null, TokenType.FLEET, this));
+                shipToSet.setToken(new FleetToken(null, getX(), getBaseY(), getBattleStage(), null, TokenType.FLEET, this, true));
                 shipToSet.getToken().setTouchable(Touchable.disabled);
                 int i;
                 boolean sideHasSpace = false;
@@ -144,7 +144,7 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
                         tokensPrediction[c] = null;
                     } else {
                         FleetToken token = (FleetToken) shipsPrediction[c].getToken();
-                        tokensPrediction[c] = new FleetToken(token.getCard(), token.getX(), token.getY(), token.getBattleStage(), null, TokenType.FLEET, this);
+                        tokensPrediction[c] = new FleetToken(token.getCard(), token.getX(), token.getY(), token.getBattleStage(), null, TokenType.FLEET, this, token.isNoPics());
                         tokensPrediction[c].setTouchable(Touchable.disabled);
                     }
                 }

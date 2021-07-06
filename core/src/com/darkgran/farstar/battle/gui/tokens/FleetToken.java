@@ -8,21 +8,21 @@ import com.darkgran.farstar.battle.players.cards.Card;
 public class FleetToken extends AnchoredToken {
     private FleetMenu fleetMenu;
 
-    public FleetToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, FleetMenu fleetMenu) {
-        super(card, x, y, battleStage, cardListMenu, TokenType.FLEET);
+    public FleetToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, FleetMenu fleetMenu, boolean noPics) {
+        super(card, x, y, battleStage, cardListMenu, TokenType.FLEET, noPics);
         this.fleetMenu = fleetMenu;
         setDragger(new ManagedDragger(this, battleStage.getBattleScreen().getBattle().getRoundManager(), true));
         this.addListener(getDragger());
     }
 
-    public FleetToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, FleetMenu fleetMenu) {
-        super(card, x, y, battleStage, cardListMenu, tokenType);
+    public FleetToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, FleetMenu fleetMenu, boolean noPics) {
+        super(card, x, y, battleStage, cardListMenu, tokenType, noPics);
         this.fleetMenu = fleetMenu;
     }
 
     @Override
     public void click(int button) {
-        getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(getThis(), getFleetMenu().getPlayer());
+        getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(this, getFleetMenu().getPlayer());
     }
 
     @Override
