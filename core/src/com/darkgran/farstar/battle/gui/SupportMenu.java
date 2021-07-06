@@ -28,7 +28,7 @@ public class SupportMenu extends CardListMenu implements DropTarget {
         getTokens().clear();
         for (int i = 0; i < getCardList().size(); i++) {
             int pos = translatePosition(i);
-            getTokens().add(new SupportToken(getCardList().get(i), getTokensX() + getX() + getOffset()*pos + ((pos >= 3) ? TokenType.MS.getWidth()*1.063f : 0), getTokensY() + getY(), getBattleStage(), this));
+            getTokens().add(new SupportToken(getCardList().get(i), getTokensX() + getX() + getOffset()*pos + ((pos >= 3) ? 0 : 0), getTokensY() + getY(), getBattleStage(), this));
         }
     }
 
@@ -37,7 +37,7 @@ public class SupportMenu extends CardListMenu implements DropTarget {
         if (card instanceof Support) {
             Support support = (Support) card;
             int pos = translatePosition(getTokens().size());
-            SupportToken supportToken = new SupportToken(support, getTokensX() + getX() + getOffset()*pos + ((pos >= 3) ? TokenType.MS.getWidth()*1.063f : 0), getTokensY() + getY(), getBattleStage(), this);
+            SupportToken supportToken = new SupportToken(support, getTokensX() + getX() + getOffset()*pos + ((pos >= 3) ? TokenType.MS.getWidth()*1.161f : 0), getTokensY() + getY(), getBattleStage(), this);
             getTokens().add(supportToken);
             ((Support) card).setToken(supportToken);
         }
