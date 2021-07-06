@@ -11,8 +11,15 @@ public class TokenPart extends TextLine {
         this.token = token;
     }
 
-    public void draw(Batch batch) {
-        drawText(getFont(), batch, getX(), getY(), Integer.toString(token.getCard().getHealth()));
+    public String getContent() {
+        return "";
     }
 
+    public void draw(Batch batch) {
+        drawText(getFont(), batch, getX(), getY(), getContent());
+    }
+
+    public Token getToken() {
+        return token;
+    }
 }

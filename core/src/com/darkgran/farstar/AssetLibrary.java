@@ -64,7 +64,11 @@ public class AssetLibrary {
         assetManager.load("fonts/bahnschrift24.fnt", BitmapFont.class);
         assetManager.load("fonts/bahnschrift30.fnt", BitmapFont.class);
         assetManager.load("fonts/bahnschrift40b.fnt", BitmapFont.class);
+        //assetManager.load("fonts/bahnschrift42b.fnt", BitmapFont.class);
         assetManager.load("fonts/bahnschrift44b.fnt", BitmapFont.class);
+        assetManager.load("fonts/bahnschrift46b.fnt", BitmapFont.class);
+        //assetManager.load("fonts/bahnschrift48b.fnt", BitmapFont.class);
+        assetManager.load("fonts/bahnschrift50b.fnt", BitmapFont.class);
         assetManager.load("fonts/orbitron36.fnt", BitmapFont.class);
     }
 

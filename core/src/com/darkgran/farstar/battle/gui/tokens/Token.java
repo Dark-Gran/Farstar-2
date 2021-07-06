@@ -1,6 +1,5 @@
 package com.darkgran.farstar.battle.gui.tokens;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -17,9 +16,9 @@ public class Token extends Actor implements JustFont {
     private String fontPath = "";
     private Dragger dragger;
     private final Card card;
-    //private final TokenPrice tokenPrice = new TokenPrice();
-    //private final TokenOffense tokenOffense = new TokenOffense();
     private final TokenDefense tokenDefense;
+    private final TokenOffense tokenOffense;
+    private final TokenPrice tokenPrice;
     private final BattleStage battleStage;
     private final CardListMenu cardListMenu;
     private final TokenType tokenType;
@@ -32,7 +31,7 @@ public class Token extends Actor implements JustFont {
         setHeight(tokenType.getHeight());
         setX(x);
         setY(y);
-        setFont("");
+        setFont(tokenType.getFontPath());
         this.card = card;
         this.tokenType = tokenType;
         this.noPics = noPics;
@@ -42,9 +41,9 @@ public class Token extends Actor implements JustFont {
         }
         this.cardListMenu = cardListMenu;
         this.battleStage = battleStage;
-        //tokenPrice.setFont(getFontPath());
-        //tokenOffense.setFont(getFontPath());
         tokenDefense = new TokenDefense(getFontPath(), this);
+        tokenOffense = new TokenOffense(getFontPath(), this);
+        tokenPrice = new TokenPrice(getFontPath(), this);
         setPads();
         battleStage.addActor(this);
     }
@@ -59,31 +58,29 @@ public class Token extends Actor implements JustFont {
         this.cardListMenu = cardListMenu;
         this.tokenType = tokenType;
         tokenDefense = new TokenDefense(getFontPath(), this);
+        tokenOffense = new TokenOffense(getFontPath(), this);
+        tokenPrice = new TokenPrice(getFontPath(), this);
         setPads();
     }
 
-    private void setPads() {
+    public void setPads() {
         tokenDefense.setX(getX() + getWidth() * 0.85f);
         tokenDefense.setY(getY() + getHeight() * 0.2f);
+        tokenOffense.setX(getX());
+        tokenOffense.setY(getY() + getHeight() * 0.2f);
+        tokenPrice.setX(getX());
+        tokenPrice.setY(getY() + getHeight() * 1.2f);
     }
 
-    public void draw(Batch batch) { //todo
+    public void draw(Batch batch) {
         if (card != null) {
             //Portrait + Frame
             if (portrait != null) { batch.draw(portrait, getX(), getY()); }
             if (frame != null) { batch.draw(frame, getX(), getY()); }
             //Pads
             tokenDefense.draw(batch);
-
-            //Offense
-            /*if (!getCard().isMS()) {
-                tokenOffense.drawText(tokenOffense.getFont(), batch, getX(), getY() + getHeight() / 3, String.valueOf(card.getCardInfo().getOffense()), ColorPalette.getTypeColor(card.getCardInfo().getOffenseType()));
-            }
-            //Price
-            if (this instanceof YardToken || this instanceof HandToken || this instanceof FakeToken) {
-                tokenPrice.drawText(tokenPrice.getFont(), batch, getX(), getY() + getHeight() * 4 / 3, card.getCardInfo().getEnergy() + ":" + card.getCardInfo().getMatter(), Color.WHITE);
-            }*/
-
+            //tokenOffense.draw(batch);
+            //tokenPrice.draw(batch);
         }
         //Debug
         if (DEBUG_RENDER) { battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch); }
