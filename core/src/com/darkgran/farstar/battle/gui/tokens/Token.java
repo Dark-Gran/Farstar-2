@@ -8,7 +8,6 @@ import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.gui.JustFont;
-import com.darkgran.farstar.util.SimpleBox2;
 
 import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 
@@ -64,8 +63,8 @@ public class Token extends Actor implements JustFont {
     }
 
     public void setParts() {
-        tokenDefense.setX(getX() + getWidth() * 0.85f);
-        tokenDefense.setY(getY() + getHeight() * 0.2f);
+        tokenDefense.setX(getX() + getWidth() * 0.775f);
+        tokenDefense.setY(getY() + getHeight() * 0.297f);
         tokenOffense.setX(getX());
         tokenOffense.setY(getY() + getHeight() * 0.2f);
         tokenPrice.setX(getX());
@@ -83,7 +82,7 @@ public class Token extends Actor implements JustFont {
             //tokenPrice.draw(batch);
         }
         //Debug
-        if (DEBUG_RENDER) { battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch); }
+        //if (DEBUG_RENDER) { battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch); }
     }
 
     public void destroy() {
@@ -120,6 +119,10 @@ public class Token extends Actor implements JustFont {
 
     public boolean isNoPics() {
         return noPics;
+    }
+
+    public TokenType getTokenType() {
+        return tokenType;
     }
 
     @Override

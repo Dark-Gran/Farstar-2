@@ -5,10 +5,15 @@ import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.darkgran.farstar.battle.gui.tokens.TokenType;
+import com.darkgran.farstar.battle.players.TechType;
 import com.darkgran.farstar.battle.players.cards.CardInfo;
 
 public class AssetLibrary {
     private final AssetManager assetManager = new AssetManager();
+
+    public <T> T get(String filename) {
+        return assetManager.get(filename);
+    }
 
     public String getPortraitName(CardInfo cardInfo, TokenType tokenType) {
         String path = "images/portraits/";
@@ -24,6 +29,30 @@ public class AssetLibrary {
         String path = "images/portraits/";
         String name = addTokenTypeAcronym(addRarityAcronym("frame", cardInfo), tokenType)+".png";
         return path+name;
+    }
+
+    public String getTypeTexture(TechType techType, TokenType tokenType) {
+        String name = "images/portraits/pad";
+        switch (techType) {
+            default:
+            case NONE:
+            case INFERIOR:
+                name += "I";
+                break;
+            case KINETIC:
+                name += "K";
+                break;
+            case THERMAL:
+                name += "T";
+                break;
+            case PARTICLE:
+                name += "P";
+                break;
+            case SUPERIOR:
+                name += "S";
+                break;
+        }
+        return addTokenTypeAcronym(name, tokenType)+".png";
     }
 
     public String addTokenTypeAcronym(String string, TokenType tokenType) {
@@ -133,11 +162,31 @@ public class AssetLibrary {
         assetManager.load("images/portraits/frameI_MS.png", Texture.class, texParams);
         assetManager.load("images/portraits/frameI_S.png", Texture.class, texParams);
         assetManager.load("images/portraits/frameI_Y.png", Texture.class, texParams);
-        assetManager.load("images/portraits/pad_I.png", Texture.class, texParams);
-        assetManager.load("images/portraits/pad_K.png", Texture.class, texParams);
-        assetManager.load("images/portraits/pad_P.png", Texture.class, texParams);
-        assetManager.load("images/portraits/pad_S.png", Texture.class, texParams);
-        assetManager.load("images/portraits/pad_T.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padI_F.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padI_FK.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padI_MS.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padI_S.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padI_Y.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padK_F.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padK_FK.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padK_MS.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padK_S.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padK_Y.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padT_F.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padT_FK.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padT_MS.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padT_S.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padT_Y.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padP_F.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padP_FK.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padP_MS.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padP_S.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padP_Y.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padS_F.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padS_FK.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padS_MS.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padS_S.png", Texture.class, texParams);
+        assetManager.load("images/portraits/padS_Y.png", Texture.class, texParams);
         //Portraits
         assetManager.load("images/portraits/empty_F.png", Texture.class, texParams);
         assetManager.load("images/portraits/empty_FK.png", Texture.class, texParams);

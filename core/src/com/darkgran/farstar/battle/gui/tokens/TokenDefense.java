@@ -1,6 +1,8 @@
 package com.darkgran.farstar.battle.gui.tokens;
 
-public class TokenDefense extends TokenTech {
+import com.darkgran.farstar.Farstar;
+
+public class TokenDefense extends TokenPart {
     public TokenDefense(String fontPath, Token token) {
         super(fontPath, token);
     }
@@ -12,7 +14,7 @@ public class TokenDefense extends TokenTech {
 
     @Override
     public void setPad() {
-        setPad(getTypeTexture(getToken().getCard().getCardInfo().getDefenseType()));
+        setPad(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getTypeTexture(getToken().getCard().getCardInfo().getDefenseType(), getToken().getTokenType())));
     }
 
 }
