@@ -67,8 +67,8 @@ public class Token extends Actor implements JustFont {
     }
 
     public void setParts() {
-        tokenDefense.setX(getX() + getWidth() * 0.775f);
-        tokenDefense.setY(getY() + getHeight() * 0.297f);
+        tokenDefense.setX(getX() + getWidth());
+        tokenDefense.setY(getY());
         tokenOffense.setX(getX());
         tokenOffense.setY(getY() + getHeight() * 0.2f);
         tokenPrice.setX(getX());

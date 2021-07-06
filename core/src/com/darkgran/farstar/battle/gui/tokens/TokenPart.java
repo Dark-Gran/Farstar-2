@@ -11,6 +11,7 @@ public class TokenPart extends TextLine {
     private final Token token;
     private Texture pad;
     private SimpleVector2 textWH;
+    private float offsetY = 0f;
 
     public TokenPart(String fontPath, Token token) {
         super(fontPath);
@@ -19,7 +20,10 @@ public class TokenPart extends TextLine {
             update();
             setPad();
         }
+        setupOffset();
     }
+
+    public void setupOffset() { }
 
     public void setPad() {
         pad = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/portraits/padI", getToken().getTokenType())+".png");
@@ -34,8 +38,8 @@ public class TokenPart extends TextLine {
     }
 
     public void draw(Batch batch) {
-        batch.draw(pad, getX(), getY()-pad.getHeight());
-        drawText(getFont(), batch, getX()+pad.getWidth()*0.5f-textWH.getX()*0.5f, getY()-pad.getHeight()*0.5f+textWH.getY()*0.5f, getContent());
+        batch.draw(pad, getX()-pad.getWidth(), getY()+ offsetY);
+        drawText(getFont(), batch, getX()-pad.getWidth()*0.5f-textWH.getX()*0.5f, getY()+1f+ offsetY +pad.getHeight()*0.5f+textWH.getY()*0.48f, getContent());
     }
 
     public Token getToken() {
@@ -48,5 +52,13 @@ public class TokenPart extends TextLine {
 
     public void setPad(Texture pad) {
         this.pad = pad;
+    }
+
+    public float getOffsetY() {
+        return offsetY;
+    }
+
+    public void setOffsetY(float offsetY) {
+        this.offsetY = offsetY;
     }
 }

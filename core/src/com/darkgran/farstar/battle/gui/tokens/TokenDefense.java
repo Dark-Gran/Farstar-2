@@ -17,4 +17,8 @@ public class TokenDefense extends TokenPart {
         setPad(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getTypeTexture(getToken().getCard().getCardInfo().getDefenseType(), getToken().getTokenType())));
     }
 
+    @Override
+    public void setupOffset() {
+        setOffsetY(getPad().getHeight()*0.02f);
+    }
 }
