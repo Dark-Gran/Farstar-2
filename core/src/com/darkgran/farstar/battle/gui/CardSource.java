@@ -15,7 +15,7 @@ import com.darkgran.farstar.gui.TextInTheBox;
  * "Deck"
  */
 public class CardSource extends Actor {
-    private final Texture pic = Farstar.ASSET_LIBRARY.getAssetManager().get("images/deck.png");
+    private final Texture pic = Farstar.ASSET_LIBRARY.get("images/deck.png");
     private final PB2Drawer drawer;
     private final TextInTheBox info;
     private final ClickListener clickListener = new ClickListener(){};

@@ -13,32 +13,32 @@ import com.darkgran.farstar.gui.ActorButton;
 
 public class MainScreenStage extends ListeningStage {
     private final PlayerFactory playerFactory = new PlayerFactory();
-    private final Texture measureTexture = Farstar.ASSET_LIBRARY.getAssetManager().get("images/solitary.png");
-    private final Texture FSLogo = Farstar.ASSET_LIBRARY.getAssetManager().get("images/FSlogo.png");
+    private final Texture measureTexture = Farstar.ASSET_LIBRARY.get("images/solitary.png");
+    private final Texture FSLogo = Farstar.ASSET_LIBRARY.get("images/FSlogo.png");
     private final VersionInfo versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN);
 
-    private final ActorButton startButton = new ActorButton(Farstar.ASSET_LIBRARY.getAssetManager().get("images/solitary.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/solitaryO.png")){
+    private final ActorButton startButton = new ActorButton(Farstar.ASSET_LIBRARY.get("images/solitary.png"), Farstar.ASSET_LIBRARY.get("images/solitaryO.png")){
         @Override
         public void clicked() {
             System.out.println("Starting Solitary.");
             getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0), playerFactory.getPlayer("LOCAL", 2, 15)), getGame().getSuperScreen().getNotificationManager()));
         }
     };
-    private final ActorButton botButton = new ActorButton(Farstar.ASSET_LIBRARY.getAssetManager().get("images/skirmish.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/skirmishO.png")){
+    private final ActorButton botButton = new ActorButton(Farstar.ASSET_LIBRARY.get("images/skirmish.png"), Farstar.ASSET_LIBRARY.get("images/skirmishO.png")){
         @Override
         public void clicked() {
             System.out.println("Starting Skirmish.");
             getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0), playerFactory.getPlayer("AUTO", 2, 15)), getGame().getSuperScreen().getNotificationManager()));
         }
     };
-    private final ActorButton simButton = new ActorButton(Farstar.ASSET_LIBRARY.getAssetManager().get("images/sim.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/simO.png")){
+    private final ActorButton simButton = new ActorButton(Farstar.ASSET_LIBRARY.get("images/sim.png"), Farstar.ASSET_LIBRARY.get("images/simO.png")){
         @Override
         public void clicked() {
             System.out.println("Starting Simulation.");
             getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), new Battle1v1(playerFactory.getPlayer("AUTO", 1, 0), playerFactory.getPlayer("AUTO", 2, 15)), getGame().getSuperScreen().getNotificationManager()));
         }
     };
-    private final ActorButton webButton = new ActorButton(Farstar.ASSET_LIBRARY.getAssetManager().get("images/web.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/webO.png")){
+    private final ActorButton webButton = new ActorButton(Farstar.ASSET_LIBRARY.get("images/web.png"), Farstar.ASSET_LIBRARY.get("images/webO.png")){
         @Override
         public void clicked() {
             System.out.println("Opening Web-Browser.");

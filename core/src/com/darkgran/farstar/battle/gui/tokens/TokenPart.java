@@ -22,7 +22,7 @@ public class TokenPart extends TextLine {
     }
 
     public void setPad() {
-        pad = Farstar.ASSET_LIBRARY.getAssetManager().get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/portraits/padI", getToken().getTokenType())+".png");
+        pad = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/portraits/padI", getToken().getTokenType())+".png");
     }
 
     public String getContent() {

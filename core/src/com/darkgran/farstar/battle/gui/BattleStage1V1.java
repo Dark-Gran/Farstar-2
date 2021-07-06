@@ -31,13 +31,13 @@ public class BattleStage1V1 extends BattleStage {
     private final CardSource deck2;
     private final TierCounter tier1;
     private final TierCounter tier2;
-    private final ActorButton yardButton1 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAssetManager().get("images/yard.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/yardO.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/yardP.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/yardOP.png")){
+    private final ActorButton yardButton1 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.get("images/yard.png"), Farstar.ASSET_LIBRARY.get("images/yardO.png"), Farstar.ASSET_LIBRARY.get("images/yardP.png"), Farstar.ASSET_LIBRARY.get("images/yardOP.png")){
         @Override
         public void clicked() {
             yardMenu1.switchVisibility();
         }
     };
-    private final ActorButton yardButton2 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAssetManager().get("images/yard.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/yardO.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/yardP.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/yardOP.png")){
+    private final ActorButton yardButton2 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.get("images/yard.png"), Farstar.ASSET_LIBRARY.get("images/yardO.png"), Farstar.ASSET_LIBRARY.get("images/yardP.png"), Farstar.ASSET_LIBRARY.get("images/yardOP.png")){
         @Override
         public void clicked() {
             yardMenu2.switchVisibility();

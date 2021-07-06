@@ -11,7 +11,7 @@ import com.darkgran.farstar.util.SimpleBox2;
 import com.darkgran.farstar.util.SimpleVector2;
 
 public class RoundCounter extends SimpleBox2 implements TextDrawer {
-    private final Texture pic = Farstar.ASSET_LIBRARY.getAssetManager().get("images/rounds.png");
+    private final Texture pic = Farstar.ASSET_LIBRARY.get("images/rounds.png");
     private final Battle battle;
     private final BattleStage battleStage;
     private Color fontColor;

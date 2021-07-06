@@ -17,8 +17,8 @@ public class ResourceMeter extends Actor implements JustFont {
     private final Player player;
     private final boolean onBottom;
     private String fontPath = "";
-    private Texture enePic = Farstar.ASSET_LIBRARY.getAssetManager().get("images/energy.png");
-    private Texture matPic = Farstar.ASSET_LIBRARY.getAssetManager().get("images/matter.png");
+    private Texture enePic = Farstar.ASSET_LIBRARY.get("images/energy.png");
+    private Texture matPic = Farstar.ASSET_LIBRARY.get("images/matter.png");
     private SimpleVector2 eneWH;
     private SimpleVector2 matWH;
 

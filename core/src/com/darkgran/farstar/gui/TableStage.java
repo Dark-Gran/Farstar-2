@@ -7,15 +7,15 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
 
 public class TableStage extends ListeningStage {
-    private final Texture empty = Farstar.ASSET_LIBRARY.getAssetManager().get("images/empty.png");
-    private final Texture exit = Farstar.ASSET_LIBRARY.getAssetManager().get("images/exit.png");
-    private final Texture quality = Farstar.ASSET_LIBRARY.getAssetManager().get("images/quality.png");
-    private final Texture fs = Farstar.ASSET_LIBRARY.getAssetManager().get("images/fs.png");
-    private final Texture sound = Farstar.ASSET_LIBRARY.getAssetManager().get("images/sound.png");
-    private final Texture logout = Farstar.ASSET_LIBRARY.getAssetManager().get("images/logout.png");
-    private final Texture friends = Farstar.ASSET_LIBRARY.getAssetManager().get("images/friends.png");
-    private final Texture table = Farstar.ASSET_LIBRARY.getAssetManager().get("images/tableMain_1920.png");
-    private final Texture space = Farstar.ASSET_LIBRARY.getAssetManager().get("images/Space_1920.png");
+    private final Texture empty = Farstar.ASSET_LIBRARY.get("images/empty.png");
+    private final Texture exit = Farstar.ASSET_LIBRARY.get("images/exit.png");
+    private final Texture quality = Farstar.ASSET_LIBRARY.get("images/quality.png");
+    private final Texture fs = Farstar.ASSET_LIBRARY.get("images/fs.png");
+    private final Texture sound = Farstar.ASSET_LIBRARY.get("images/sound.png");
+    private final Texture logout = Farstar.ASSET_LIBRARY.get("images/logout.png");
+    private final Texture friends = Farstar.ASSET_LIBRARY.get("images/friends.png");
+    private final Texture table = Farstar.ASSET_LIBRARY.get("images/tableMain_1920.png");
+    private final Texture space = Farstar.ASSET_LIBRARY.get("images/Space_1920.png");
 
     private final ActorButton exitButton = new ActorButton(empty, empty, exit){
         @Override

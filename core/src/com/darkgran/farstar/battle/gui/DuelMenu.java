@@ -8,7 +8,7 @@ import com.darkgran.farstar.gui.ActorButton;
 public abstract class DuelMenu {
     private final DuelManager duelManager;
     private BattleStage battleStage;  //must be set after ini - before RM.launch (see BattleScreen constructor)
-    private final ActorButton cancelButton = new ActorButton(Farstar.ASSET_LIBRARY.getAssetManager().get("images/duel_cancel.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/duel_cancelO.png")){
+    private final ActorButton cancelButton = new ActorButton(Farstar.ASSET_LIBRARY.get("images/duel_cancel.png"), Farstar.ASSET_LIBRARY.get("images/duel_cancelO.png")){
         @Override
         public void clicked() {
             getDuelManager().cancelDuel();

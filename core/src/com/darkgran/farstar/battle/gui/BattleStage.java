@@ -24,7 +24,7 @@ public abstract class BattleStage extends ListeningStage {
     private ArrayList<DropTarget> dropTargets = new ArrayList<>();
     private final AbilityPicker abilityPicker;
     private final RoundCounter roundCounter;
-    public final ButtonWithExtraState turnButton = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAssetManager().get("images/turn.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/turnO.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/turnP.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/turnOP.png")){
+    public final ButtonWithExtraState turnButton = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.get("images/turn.png"), Farstar.ASSET_LIBRARY.get("images/turnO.png"), Farstar.ASSET_LIBRARY.get("images/turnP.png"), Farstar.ASSET_LIBRARY.get("images/turnOP.png")){
         @Override
         public void clicked() {
             if (battleScreen.getBattle().getWhoseTurn() instanceof LocalPlayer) {
@@ -32,7 +32,7 @@ public abstract class BattleStage extends ListeningStage {
             }
         }
     };
-    private final ActorButton combatEndButton = new ActorButton(Farstar.ASSET_LIBRARY.getAssetManager().get("images/combat_end.png"), Farstar.ASSET_LIBRARY.getAssetManager().get("images/combat_endO.png")) {
+    private final ActorButton combatEndButton = new ActorButton(Farstar.ASSET_LIBRARY.get("images/combat_end.png"), Farstar.ASSET_LIBRARY.get("images/combat_endO.png")) {
         @Override
         public void clicked() {
             battleScreen.getBattle().getCombatManager().endCombat();
@@ -45,7 +45,7 @@ public abstract class BattleStage extends ListeningStage {
         this.duelMenu = duelMenu;
         combatEndButton.setPosition(Farstar.STAGE_WIDTH*0.82f, Farstar.STAGE_HEIGHT*0.3f);
         combatEndButton.setDisabled(true);
-        abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/3, this, null, Farstar.ASSET_LIBRARY.getAssetManager().get("images/yard.png"));
+        abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/3, this, null, Farstar.ASSET_LIBRARY.get("images/yard.png"));
         battleScreen.getBattle().getRoundManager().setAbilityPicker(abilityPicker);
         roundCounter = new RoundCounter(Farstar.STAGE_WIDTH*0.003f, Farstar.STAGE_HEIGHT*0.475f, this, getBattleScreen().getBattle());
     }
