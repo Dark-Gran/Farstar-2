@@ -12,15 +12,22 @@ public class AssetLibrary {
 
     public String getPortraitName(CardInfo cardInfo, TokenType tokenType) {
         String path = "images/portraits/";
-        String name = addTokenTypeAcronym(cardInfo.getId()+"_", tokenType) + ".png";
+        String name = addTokenTypeAcronym(Integer.toString(cardInfo.getId()), tokenType) + ".png";
         if (assetManager.contains(path+name)) {
             return path+name;
         } else {
-            return path+addTokenTypeAcronym("empty_", tokenType)+".png";
+            return path+addTokenTypeAcronym("empty", tokenType)+".png";
         }
     }
 
-    private String addTokenTypeAcronym(String string, TokenType tokenType) {
+    public String getFrameName(CardInfo cardInfo, TokenType tokenType) {
+        String path = "images/portraits/";
+        String name = addTokenTypeAcronym(addRarityAcronym("frame", cardInfo), tokenType)+".png";
+        return path+name;
+    }
+
+    public String addTokenTypeAcronym(String string, TokenType tokenType) {
+        string += "_";
         switch (tokenType) {
             case FLEET:
                 return string + "F";
@@ -33,6 +40,11 @@ public class AssetLibrary {
             case SUPPORT:
                 return string + "S";
         }
+        return string;
+    }
+
+    public String addRarityAcronym(String string, CardInfo cardInfo) {
+        string += "B"; //todo
         return string;
     }
 
@@ -107,6 +119,11 @@ public class AssetLibrary {
         assetManager.load("images/portraits/empty_MS.png", Texture.class, texParams);
         assetManager.load("images/portraits/empty_S.png", Texture.class, texParams);
         assetManager.load("images/portraits/empty_Y.png", Texture.class, texParams);
+        assetManager.load("images/portraits/frameB_F.png", Texture.class, texParams);
+        assetManager.load("images/portraits/frameB_FK.png", Texture.class, texParams);
+        assetManager.load("images/portraits/frameB_MS.png", Texture.class, texParams);
+        assetManager.load("images/portraits/frameB_S.png", Texture.class, texParams);
+        assetManager.load("images/portraits/frameB_Y.png", Texture.class, texParams);
     }
 
     public void dispose() {

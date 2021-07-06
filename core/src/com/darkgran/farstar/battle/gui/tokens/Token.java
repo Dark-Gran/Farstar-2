@@ -28,6 +28,7 @@ public class Token extends Actor implements JustFont {
     private final CardListMenu cardListMenu;
     private final TokenType tokenType;
     private Texture portrait;
+    private Texture frame;
 
     public Token(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType){
         setFont("");
@@ -38,6 +39,7 @@ public class Token extends Actor implements JustFont {
         this.card = card;
         this.tokenType = tokenType;
         portrait = Farstar.ASSET_LIBRARY.getAssetManager().get(Farstar.ASSET_LIBRARY.getPortraitName(card.getCardInfo(), tokenType));
+        frame = Farstar.ASSET_LIBRARY.getAssetManager().get(Farstar.ASSET_LIBRARY.getFrameName(card.getCardInfo(), tokenType));
         setWidth(tokenType.getWidth());
         setHeight(tokenType.getHeight());
         setX(x);
@@ -58,9 +60,9 @@ public class Token extends Actor implements JustFont {
 
     public void draw(Batch batch) { //needs mem-perf rework
         if (card != null) {
-            //Portrait
+            //Portrait + Frame
             batch.draw(portrait, getX(), getY());
-
+            batch.draw(frame, getX(), getY());
             //Price
             Color color = new Color();
             color.set(1, 1, 1, 1);
