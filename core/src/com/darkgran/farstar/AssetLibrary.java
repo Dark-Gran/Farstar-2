@@ -4,9 +4,37 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.darkgran.farstar.battle.gui.tokens.TokenType;
+import com.darkgran.farstar.battle.players.cards.CardInfo;
 
 public class AssetLibrary {
     private final AssetManager assetManager = new AssetManager();
+
+    public String getPortraitName(CardInfo cardInfo, TokenType tokenType) {
+        String path = "images/portraits/";
+        String name = addTokenTypeAcronym(cardInfo.getId()+"_", tokenType) + ".png";
+        if (assetManager.contains(path+name)) {
+            return path+name;
+        } else {
+            return path+addTokenTypeAcronym("empty_", tokenType)+".png";
+        }
+    }
+
+    private String addTokenTypeAcronym(String string, TokenType tokenType) {
+        switch (tokenType) {
+            case FLEET:
+                return string + "F";
+            case MS:
+                return string + "MS";
+            case FAKE:
+                return string + "FK";
+            case YARD:
+                return string + "Y";
+            case SUPPORT:
+                return string + "S";
+        }
+        return string;
+    }
 
     public void loadAssets() {
         loadFonts();
@@ -74,11 +102,11 @@ public class AssetLibrary {
         assetManager.load("images/yardOP.png", Texture.class, texParams);
         assetManager.load("images/yardP.png", Texture.class, texParams);
         //Portraits
-        assetManager.load("images/empty_F.png", Texture.class, texParams);
-        assetManager.load("images/empty_FK.png", Texture.class, texParams);
-        assetManager.load("images/empty_MS.png", Texture.class, texParams);
-        assetManager.load("images/empty_S.png", Texture.class, texParams);
-        assetManager.load("images/empty_Y.png", Texture.class, texParams);
+        assetManager.load("images/portraits/empty_F.png", Texture.class, texParams);
+        assetManager.load("images/portraits/empty_FK.png", Texture.class, texParams);
+        assetManager.load("images/portraits/empty_MS.png", Texture.class, texParams);
+        assetManager.load("images/portraits/empty_S.png", Texture.class, texParams);
+        assetManager.load("images/portraits/empty_Y.png", Texture.class, texParams);
     }
 
     public void dispose() {

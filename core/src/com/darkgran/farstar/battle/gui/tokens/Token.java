@@ -1,9 +1,12 @@
 package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.darkgran.farstar.AssetLibrary;
 import com.darkgran.farstar.ColorPalette;
+import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
@@ -24,6 +27,7 @@ public class Token extends Actor implements JustFont {
     private final BattleStage battleStage;
     private final CardListMenu cardListMenu;
     private final TokenType tokenType;
+    private Texture portrait;
 
     public Token(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType){
         setFont("");
@@ -33,6 +37,7 @@ public class Token extends Actor implements JustFont {
         tokenDefense.setFont(getFontPath());
         this.card = card;
         this.tokenType = tokenType;
+        portrait = Farstar.ASSET_LIBRARY.getAssetManager().get(Farstar.ASSET_LIBRARY.getPortraitName(card.getCardInfo(), tokenType));
         setWidth(tokenType.getWidth());
         setHeight(tokenType.getHeight());
         setX(x);
@@ -41,6 +46,8 @@ public class Token extends Actor implements JustFont {
         this.battleStage = battleStage;
         battleStage.addActor(this);
     }
+
+
 
     public Token(Card card, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType) {
         this.card = card;
@@ -51,8 +58,11 @@ public class Token extends Actor implements JustFont {
 
     public void draw(Batch batch) { //needs mem-perf rework
         if (card != null) {
-            Color color = new Color();
+            //Portrait
+            batch.draw(portrait, getX(), getY());
+
             //Price
+            Color color = new Color();
             color.set(1, 1, 1, 1);
             if (this instanceof YardToken || this instanceof HandToken || this instanceof FakeToken) {
                 tokenPrice.drawText(tokenPrice.getFont(), batch, getX(), getY() + getHeight() * 4 / 3, card.getCardInfo().getEnergy() + ":" + card.getCardInfo().getMatter(), color);
