@@ -122,12 +122,7 @@ public class AssetLibrary {
         assetManager.load("images/yardO.png", Texture.class, texParams);
         assetManager.load("images/yardOP.png", Texture.class, texParams);
         assetManager.load("images/yardP.png", Texture.class, texParams);
-        //Portraits
-        assetManager.load("images/portraits/empty_F.png", Texture.class, texParams);
-        assetManager.load("images/portraits/empty_FK.png", Texture.class, texParams);
-        assetManager.load("images/portraits/empty_MS.png", Texture.class, texParams);
-        assetManager.load("images/portraits/empty_S.png", Texture.class, texParams);
-        assetManager.load("images/portraits/empty_Y.png", Texture.class, texParams);
+        //Token Parts
         assetManager.load("images/portraits/frameB_F.png", Texture.class, texParams);
         assetManager.load("images/portraits/frameB_FK.png", Texture.class, texParams);
         assetManager.load("images/portraits/frameB_MS.png", Texture.class, texParams);
@@ -138,6 +133,17 @@ public class AssetLibrary {
         assetManager.load("images/portraits/frameI_MS.png", Texture.class, texParams);
         assetManager.load("images/portraits/frameI_S.png", Texture.class, texParams);
         assetManager.load("images/portraits/frameI_Y.png", Texture.class, texParams);
+        assetManager.load("images/portraits/pad_I.png", Texture.class, texParams);
+        assetManager.load("images/portraits/pad_K.png", Texture.class, texParams);
+        assetManager.load("images/portraits/pad_P.png", Texture.class, texParams);
+        assetManager.load("images/portraits/pad_S.png", Texture.class, texParams);
+        assetManager.load("images/portraits/pad_T.png", Texture.class, texParams);
+        //Portraits
+        assetManager.load("images/portraits/empty_F.png", Texture.class, texParams);
+        assetManager.load("images/portraits/empty_FK.png", Texture.class, texParams);
+        assetManager.load("images/portraits/empty_MS.png", Texture.class, texParams);
+        assetManager.load("images/portraits/empty_S.png", Texture.class, texParams);
+        assetManager.load("images/portraits/empty_Y.png", Texture.class, texParams);
     }
 
     public void dispose() {
