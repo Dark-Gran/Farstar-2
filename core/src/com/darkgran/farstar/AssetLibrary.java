@@ -29,6 +29,9 @@ public class AssetLibrary {
     public String addTokenTypeAcronym(String string, TokenType tokenType) {
         string += "_";
         switch (tokenType) {
+            default:
+            case SUPPORT:
+                return string + "S";
             case FLEET:
                 return string + "F";
             case MS:
@@ -37,15 +40,17 @@ public class AssetLibrary {
                 return string + "FK";
             case YARD:
                 return string + "Y";
-            case SUPPORT:
-                return string + "S";
         }
-        return string;
     }
 
     public String addRarityAcronym(String string, CardInfo cardInfo) {
-        string += "B"; //todo
-        return string;
+        switch (cardInfo.getCardRarity()) {
+            default:
+            case IRON:
+                return string + "I";
+            case BRONZE:
+                return string + "B";
+        }
     }
 
     public void loadAssets() {
