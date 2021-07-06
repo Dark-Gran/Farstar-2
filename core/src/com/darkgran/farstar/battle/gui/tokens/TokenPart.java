@@ -10,14 +10,12 @@ import com.darkgran.farstar.util.SimpleVector2;
 public class TokenPart extends TextLine {
     private final Token token;
     private Texture pad;
-    private final SimpleVector2 textWH1;
-    private final SimpleVector2 textWH2;
+    private SimpleVector2 textWH;
 
     public TokenPart(String fontPath, Token token) {
         super(fontPath);
         this.token = token;
-        textWH1 = TextDrawer.getTextWH(getFont(), "0");
-        textWH2 = TextDrawer.getTextWH(getFont(), "00");
+        updateWH();
         setPad();
     }
 
@@ -29,9 +27,13 @@ public class TokenPart extends TextLine {
         return "";
     }
 
+    public void updateWH() {
+        textWH = TextDrawer.getTextWH(getFont(), getContent());
+    }
+
     public void draw(Batch batch) {
         batch.draw(pad, getX(), getY()-pad.getHeight());
-        drawText(getFont(), batch, getX()+pad.getWidth()*0.5f-(getContent().length() > 1 ? textWH2.getX() : textWH1.getX())*0.5f, getY()-pad.getHeight()*0.5f+(getContent().length() > 1 ? textWH2.getY() : textWH1.getY())*0.5f, getContent());
+        drawText(getFont(), batch, getX()+pad.getWidth()*0.5f-textWH.getX()*0.5f, getY()-pad.getHeight()*0.5f+textWH.getY()*0.5f, getContent());
     }
 
     public Token getToken() {

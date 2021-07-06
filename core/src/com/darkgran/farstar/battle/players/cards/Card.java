@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.players.cards;
 
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.AbilityManager;
+import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityRecord;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 
 public class Card {
     private Player player;
+    private Token token;
     private final CardInfo cardInfo;
     private final CardInfo originalInfo;
     private final ArrayList<Effect> effects = new ArrayList<Effect>();
@@ -40,11 +42,13 @@ public class Card {
 
     public boolean receiveDMG(int dmg) { //returns survival
         damage += dmg;
+        if (getToken() != null) { getToken().getTokenDefense().updateWH(); }
         return getHealth() > 0;
     }
 
     public void repairDMG(int dmg) {
         damage -= dmg;
+        if (getToken() != null) { getToken().getTokenDefense().updateWH(); }
         if (damage < 0) { damage = 0; }
     }
 
@@ -79,7 +83,13 @@ public class Card {
 
     public void addToHistory (Card card, AbilityInfo ability) { history.add(new AbilityRecord(card, ability));  }
 
-    public void addToEffects (Effect effect) { effects.add(effect); }
+    public void addToEffects (Effect effect) {
+        effects.add(effect);
+        if (getToken() != null) {
+            getToken().getTokenDefense().updateWH();
+            getToken().getTokenOffense().updateWH();
+        }
+    }
 
     public boolean isPurelyOffensiveChange() {
         boolean foundOffense = false;
@@ -125,4 +135,11 @@ public class Card {
 
     public void setInDuel(boolean inDuel) { this.inDuel = inDuel; }
 
+    public Token getToken() {
+        return token;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
+    }
 }
