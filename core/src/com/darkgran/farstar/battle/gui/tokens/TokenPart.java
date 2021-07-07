@@ -27,7 +27,7 @@ public class TokenPart extends TextLine {
     public void setupOffset() { }
 
     public void setPad() {
-        pad = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/portraits/padI", getToken().getTokenType())+".png");
+        pad = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padI", getToken().getTokenType())+".png");
     }
 
     public String getContent() {

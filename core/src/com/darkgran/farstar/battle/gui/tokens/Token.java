@@ -8,6 +8,7 @@ import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.gui.JustFont;
+import com.darkgran.farstar.util.SimpleBox2;
 
 import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 
@@ -72,7 +73,7 @@ public class Token extends Actor implements JustFont {
         tokenOffense.setX(getX());
         tokenOffense.setY(getY());
         tokenPrice.setX(getX());
-        tokenPrice.setY(getY());
+        tokenPrice.setY(getY() + getHeight());
     }
 
     @Override
@@ -101,7 +102,7 @@ public class Token extends Actor implements JustFont {
             //Pads
             tokenDefense.draw(batch);
             tokenOffense.draw(batch);
-            //tokenPrice.draw(batch);
+            tokenPrice.draw(batch);
         }
         //Debug
         //if (DEBUG_RENDER) { battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch); }

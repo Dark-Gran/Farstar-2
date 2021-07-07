@@ -14,7 +14,7 @@ public class TokenOffense extends TokenPart {
 
     @Override
     public void setPad() {
-        setPad(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getTypeTexture(getToken().getCard().getCardInfo().getOffenseType(), getToken().getTokenType())));
+        setPad(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getTypePad(getToken().getCard().getCardInfo().getOffenseType(), getToken().getTokenType())));
     }
 
     @Override
