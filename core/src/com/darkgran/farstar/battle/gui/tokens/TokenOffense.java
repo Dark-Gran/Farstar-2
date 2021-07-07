@@ -8,6 +8,11 @@ public class TokenOffense extends TokenPart {
     }
 
     @Override
+    public boolean isEnabled() { //todo
+        return super.isEnabled();
+    }
+
+    @Override
     public String getContent() {
         return Integer.toString(getToken().getCard().getCardInfo().getOffense());
     }
@@ -29,4 +34,5 @@ public class TokenOffense extends TokenPart {
             getTextWH().setX(getTextWH().getX()+3f);
         }
     }
+
 }

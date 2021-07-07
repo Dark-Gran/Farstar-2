@@ -8,6 +8,11 @@ public class TokenDefense extends TokenPart {
     }
 
     @Override
+    public boolean isEnabled() { //todo
+        return super.isEnabled();
+    }
+
+    @Override
     public String getContent() {
         return Integer.toString(getToken().getCard().getHealth());
     }
@@ -21,4 +26,5 @@ public class TokenDefense extends TokenPart {
     public void setupOffset() {
         setOffsetY(1f+getPad().getHeight()*0.02f);
     }
+
 }

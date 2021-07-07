@@ -48,8 +48,14 @@ public class TokenPart extends TextLine {
     }
 
     public void draw(Batch batch) {
-        batch.draw(pad, getX()-pad.getWidth()+offsetX, getY()+ offsetY);
-        drawText(getFont(), batch, getX()-pad.getWidth()*0.5f-textWH.getX()*0.5f+offsetX, getY()+ offsetY +pad.getHeight()*0.5f+textWH.getY()*0.48f, getContent());
+        if (isEnabled()) {
+            batch.draw(pad, getX() - pad.getWidth() + offsetX, getY() + offsetY);
+            drawText(getFont(), batch, getX() - pad.getWidth() * 0.5f - textWH.getX() * 0.5f + offsetX, getY() + offsetY + pad.getHeight() * 0.5f + textWH.getY() * 0.48f, getContent());
+        }
+    }
+
+    public boolean isEnabled() {
+        return true;
     }
 
     public Token getToken() {
