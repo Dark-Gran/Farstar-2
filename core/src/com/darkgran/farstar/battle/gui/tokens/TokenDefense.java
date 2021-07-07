@@ -1,6 +1,8 @@
 package com.darkgran.farstar.battle.gui.tokens;
 
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.battle.players.TechType;
+import com.darkgran.farstar.battle.players.cards.CardType;
 
 public class TokenDefense extends TokenPart {
     public TokenDefense(String fontPath, Token token) {
@@ -8,8 +10,12 @@ public class TokenDefense extends TokenPart {
     }
 
     @Override
-    public boolean isEnabled() { //todo
-        return super.isEnabled();
+    public boolean isEnabled() {
+        if (!getContent().equals("0") || !TechType.isInferior(getToken().getCard().getCardInfo().getDefenseType())) {
+            return true;
+        } else {
+            return CardType.needsDefense(getToken().getCard().getCardInfo().getCardType());
+        }
     }
 
     @Override

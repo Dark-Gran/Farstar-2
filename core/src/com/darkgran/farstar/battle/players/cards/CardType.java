@@ -10,11 +10,15 @@ public enum CardType {
     ACTION;
 
     public static boolean isShip(CardType cardType) {
-        return cardType == CardType.YARDPRINT || cardType == CardType.BLUEPRINT;
+        return cardType == YARDPRINT || cardType == BLUEPRINT;
     }
 
     public static boolean isSpell(CardType cardType) {
-        return cardType == CardType.ACTION || cardType == CardType.UPGRADE || cardType == CardType.TACTIC;
+        return cardType == ACTION || cardType == UPGRADE || cardType == TACTIC;
+    }
+
+    public static boolean needsDefense(CardType cardType) {
+        return isShip(cardType) || cardType == SUPPORT || cardType == MS;
     }
 
 }
