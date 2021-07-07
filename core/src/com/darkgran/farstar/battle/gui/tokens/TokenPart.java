@@ -19,7 +19,7 @@ public class TokenPart extends TextLine {
         this.token = token;
         if (!token.isNoPics()) {
             update();
-            setPad();
+            setPad(token.getTokenType());
             setupOffset();
         }
     }
@@ -28,8 +28,8 @@ public class TokenPart extends TextLine {
         setOffsetY(1f);
     }
 
-    public void setPad() {
-        pad = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padI", getToken().getTokenType(), true)+".png");
+    public void setPad(TokenType tokenType) {
+        pad = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padI", tokenType, true)+".png");
     }
 
     public String getContent() {

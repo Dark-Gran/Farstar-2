@@ -179,4 +179,12 @@ public class Token extends Actor implements JustFont {
     public Texture getFrame() {
         return frame;
     }
+
+    public void setPortrait(Texture portrait) {
+        this.portrait = portrait;
+    }
+
+    public void setFrame(Texture frame) {
+        this.frame = frame;
+    }
 }
