@@ -16,8 +16,8 @@ public class TokenPrice extends TokenPart {
 
     @Override
     public void setPad() {
-        setPad(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padE", getToken().getTokenType())+".png"));
-        pad2 = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padM", getToken().getTokenType())+".png");
+        setPad(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padE", getToken().getTokenType(), true)+".png"));
+        pad2 = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padM", getToken().getTokenType(), true)+".png");
     }
 
     @Override
