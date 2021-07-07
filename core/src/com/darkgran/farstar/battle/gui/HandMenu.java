@@ -9,9 +9,13 @@ import com.darkgran.farstar.battle.players.Hand;
 import com.darkgran.farstar.battle.players.Player;
 
 public class HandMenu extends CardListMenu {
+    private float actualX;
+    private float actualY;
 
     public HandMenu(Hand hand, float x, float y, BattleStage battleStage, Player player) {
         super(hand, x, y, 0, 0, false, battleStage, player);
+        actualX = x;
+        actualY = y;
     }
 
     @Override
@@ -28,6 +32,19 @@ public class HandMenu extends CardListMenu {
                 if (nextToken instanceof AnchoredToken) { ((AnchoredToken) nextToken).setAnchorX(nextToken.getX()); }
             }
         }
+        centralize();
+    }
+
+    private void centralize() {
+        float offset = TokenType.HAND.getWidth() * getTokens().size() * 0.5f;
+        actualX = getX()-offset;
+        refreshTokenPositions();
+    }
+
+    private void refreshTokenPositions() {
+        for (int i = 0; i < getTokens().size(); i++) {
+            getTokens().get(i).setPosition(actualX + getOffset()*i, actualY);
+        }
     }
 
     @Override
@@ -40,13 +57,14 @@ public class HandMenu extends CardListMenu {
     protected void generateTokens() {
         getTokens().clear();
         for (int i = 0; i < getCardList().size(); i++) {
-            getTokens().add(new HandToken(getCardList().get(i), getX() + getOffset()*i, getY(), getBattleStage(), this));
+            getTokens().add(new HandToken(getCardList().get(i), actualX + getOffset()*i, actualY, getBattleStage(), this));
         }
     }
 
     @Override
     public void generateNewToken(Card card) {
-        getTokens().add(new HandToken(card, getX() + getOffset()*getTokens().size(), getY(), getBattleStage(), this));
+        getTokens().add(new HandToken(card, actualX + getOffset()*getTokens().size(), actualY, getBattleStage(), this));
+        centralize();
     }
 
 }
