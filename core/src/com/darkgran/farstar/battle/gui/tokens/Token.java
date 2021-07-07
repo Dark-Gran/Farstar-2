@@ -102,7 +102,13 @@ public class Token extends Actor implements JustFont {
             tokenPrice.draw(batch);
         }
         //Debug
-        if (DEBUG_RENDER) { battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch); }
+        if (DEBUG_RENDER) {
+            debugRender(batch);
+        }
+    }
+
+    protected void debugRender(Batch batch) {
+        battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch);
     }
 
     protected void drawPortrait(Batch batch) {
