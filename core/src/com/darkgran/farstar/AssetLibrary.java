@@ -153,7 +153,8 @@ public class AssetLibrary {
         assetManager.load("images/tokens/abiU_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/abiU_MS.png", Texture.class, texParams);
         assetManager.load("images/tokens/abiU_S.png", Texture.class, texParams);
-        assetManager.load("images/tokens/card.png", Texture.class, texParams);
+        assetManager.load("images/tokens/card_D.png", Texture.class, texParams);
+        assetManager.load("images/tokens/card_U.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameB_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameB_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameB_MS.png", Texture.class, texParams);

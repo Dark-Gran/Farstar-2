@@ -40,7 +40,7 @@ public class HandToken extends AnchoredToken {
             }
         });
         this.addListener(getDragger());
-        cardPic = Farstar.ASSET_LIBRARY.get("images/tokens/card.png");
+        cardPic = Farstar.ASSET_LIBRARY.get("images/tokens/card_D.png");
     }
 
     public void refreshSize() {
@@ -55,6 +55,7 @@ public class HandToken extends AnchoredToken {
             if (!isNoPics()) {
                 setPortrait(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getPortraitName(getCard().getCardInfo(), tokenType)));
                 setFrame(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getFrameName(getCard().getCardInfo(), tokenType)));
+                cardPic = Farstar.ASSET_LIBRARY.get("images/tokens/card_"+(nextState == HandState.UP ? "U" : "D")+".png");
             }
             getTokenDefense().setPad(tokenType);
             getTokenOffense().setPad(tokenType);
