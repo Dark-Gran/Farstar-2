@@ -2,6 +2,8 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.BattleStage;
@@ -17,6 +19,7 @@ public class HandToken extends AnchoredToken {
     private Texture cardPic;
     private HandState currentState = HandState.DOWN;
     private HandState nextState = currentState;
+    private float angle = 0f;
 
 
     public HandToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
@@ -41,6 +44,7 @@ public class HandToken extends AnchoredToken {
         });
         this.addListener(getDragger());
         cardPic = Farstar.ASSET_LIBRARY.get("images/tokens/card_D.png");
+        refreshRotation();
     }
 
     public void refreshSize() {
@@ -65,10 +69,29 @@ public class HandToken extends AnchoredToken {
         }
     }
 
+    public void refreshRotation() {
+        angle = getNewAngle();
+        setRotation(angle);
+    }
+
+    private float getNewAngle() {
+        float degrees = 45f;
+        //todo
+        return degrees;
+    }
+
     @Override
     public void draw(Batch batch) {
+        //Rotate
+        Matrix4 oldMX = batch.getTransformMatrix().cpy();
+        Matrix4 mx = new Matrix4();
+        mx.rotate(new Vector3(0, 0, 1), angle);
+        mx.trn(getX(), getY(), 0);
+        batch.setTransformMatrix(mx);
+        //Draw
         batch.draw(cardPic, getX(), getY());
         super.draw(batch);
+        batch.setTransformMatrix(oldMX);
     }
 
     @Override

@@ -65,6 +65,7 @@ public class HandMenu extends CardListMenu {
         for (int i = 0; i < getTokens().size(); i++) {
             getTokens().get(i).setPosition(actualX + getOffset()*i*covering, actualY);
             ((AnchoredToken) getTokens().get(i)).setNewAnchor(actualX + getOffset()*i*covering, actualY);
+            ((HandToken) getTokens().get(i)).refreshRotation();
         }
     }
 
