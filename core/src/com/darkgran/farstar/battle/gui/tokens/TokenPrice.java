@@ -51,9 +51,13 @@ public class TokenPrice extends TokenPart {
     public void draw(Batch batch) {
         if (isEnabled()) {
             float x = getX() - getPad().getWidth() + getOffsetX();
-            if (!abiPadEnabled()) {
+            boolean hasAbility = hasValidAbility(getToken());
+            if (hasAbility && !isMouseOver()) {
+                batch.draw(getPad(), x, getY() + getOffsetY());
+                batch.draw(abiMark, x, getY() + getOffsetY());
+            } else {
                 int E = getResource(true);
-                if (E != 0) {
+                if (E != 0 || hasAbility) {
                     String e = Integer.toString(E);
                     batch.draw(getPad(), x, getY() + getOffsetY());
                     drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - getTextWH().getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + getTextWH().getY() * 0.48f, e);
@@ -65,22 +69,8 @@ public class TokenPrice extends TokenPart {
                     batch.draw(pad2, x, getY() + getOffsetY());
                     drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - textWH2.getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + textWH2.getY() * 0.48f, m);
                 }
-            } else {
-                batch.draw(getPad(), x, getY() + getOffsetY());
-                batch.draw(abiMark, x, getY() + getOffsetY());
             }
         }
-    }
-
-    private boolean abiPadEnabled() {
-        if (TokenType.isDeployed(getToken().getTokenType())) {
-            for (AbilityInfo abilityInfo : getToken().getCard().getCardInfo().getAbilities()) {
-                if (abilityInfo.getStarter() == AbilityStarter.USE) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     private int getResource(boolean energy) {
@@ -101,6 +91,24 @@ public class TokenPrice extends TokenPart {
                 }
                 return 0;
         }
+    }
+
+    private boolean hasValidAbility(Token token) {
+        if (TokenType.isDeployed(token.getTokenType())) {
+            for (AbilityInfo abilityInfo : token.getCard().getCardInfo().getAbilities()) {
+                if (abilityInfo.getStarter() == AbilityStarter.USE) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isMouseOver() {
+        if (getToken() instanceof ClickToken) {
+            return ((ClickToken) getToken()).getClickListener().isOver();
+        }
+        return false;
     }
 
 }
