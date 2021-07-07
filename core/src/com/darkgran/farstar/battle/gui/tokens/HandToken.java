@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.BattleStage;
@@ -57,7 +56,6 @@ public class HandToken extends AnchoredToken {
         cardPic = Farstar.ASSET_LIBRARY.get("images/tokens/card_D.png");
         setOriginX(getWidth()/2);
         setOriginY(getHeight()/2);
-        refreshRotation();
     }
 
     public void refreshSize() {
@@ -84,8 +82,8 @@ public class HandToken extends AnchoredToken {
         }
     }
 
-    public void refreshRotation() {
-        angle = getNewAngle();
+    public void refreshRotation(int position, int cards) {
+        angle = getNewAngle(position, cards);
         mx = new Matrix4();
         mx.rotate(new Vector3(0, 0, 1), angle);
         SimpleVector2 newXY = getNewXYFromAngle(0, 0, getX()+getWidth()/2, getY()+getHeight()/2, Math.toRadians(angle));
@@ -93,9 +91,28 @@ public class HandToken extends AnchoredToken {
         setRotation(angle);
     }
 
-    private float getNewAngle() {
-        float degrees = 45f;
-        //todo
+    private float getNewAngle(int position, int cards) {
+        final float step = 2f;
+        final boolean even = cards % 2 == 0;
+        float degrees = 0f;
+        if (cards > 1) {
+            int mid = Math.round(cards/2f)-1;
+            if (even) {
+                if (position <= mid) {
+                    mid += 1;
+                    degrees = ((mid-position)*step) - step/2;
+                } else {
+                    degrees = ((position-mid)*-step) + step/2;
+                }
+            } else {
+                if (position < mid) {
+                    degrees = (mid-position)*step;
+                } else if (position > mid) {
+                    degrees = (position-mid)*-step;
+                }
+            }
+        }
+        if (getCardListMenu().isNegativeOffset()) { degrees *= -1f; }
         return degrees;
     }
 
