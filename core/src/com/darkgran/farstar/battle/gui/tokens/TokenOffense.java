@@ -18,11 +18,15 @@ public class TokenOffense extends TokenPart {
     }
 
     @Override
-    public void setX(float x) {
-        if (getToken().isNoPics()) {
-            super.setX(x);
-        } else {
-            super.setX(x+getPad().getWidth());
+    public void setupOffset() {
+        setOffsetY(getPad().getHeight()*0.02f);
+        setOffsetX(getPad().getWidth());
+    }
+
+    @Override
+    public void adjustTextWH() {
+        if (getContent().equals("1")) {
+            getTextWH().setX(getTextWH().getX()+3f);
         }
     }
 }

@@ -12,6 +12,7 @@ public class TokenPart extends TextLine {
     private Texture pad;
     private SimpleVector2 textWH;
     private float offsetY = 0f;
+    private float offsetX = 0f;
 
     public TokenPart(String fontPath, Token token) {
         super(fontPath);
@@ -35,11 +36,18 @@ public class TokenPart extends TextLine {
 
     public void update() {
         textWH = TextDrawer.getTextWH(getFont(), getContent());
+        adjustTextWH();
+    }
+
+    public void adjustTextWH() {
+        if (getContent().equals("1")) {
+            textWH.setX(textWH.getX()+2f);
+        }
     }
 
     public void draw(Batch batch) {
-        batch.draw(pad, getX()-pad.getWidth(), getY()+ offsetY);
-        drawText(getFont(), batch, getX()-pad.getWidth()*0.5f-textWH.getX()*0.5f, getY()+1f+ offsetY +pad.getHeight()*0.5f+textWH.getY()*0.48f, getContent());
+        batch.draw(pad, getX()-pad.getWidth()+offsetX, getY()+ offsetY);
+        drawText(getFont(), batch, getX()-pad.getWidth()*0.5f-textWH.getX()*0.5f+offsetX, getY()+1f+ offsetY +pad.getHeight()*0.5f+textWH.getY()*0.48f, getContent());
     }
 
     public Token getToken() {
@@ -60,5 +68,21 @@ public class TokenPart extends TextLine {
 
     public void setOffsetY(float offsetY) {
         this.offsetY = offsetY;
+    }
+
+    public float getOffsetX() {
+        return offsetX;
+    }
+
+    public void setOffsetX(float offsetX) {
+        this.offsetX = offsetX;
+    }
+
+    public SimpleVector2 getTextWH() {
+        return textWH;
+    }
+
+    public void setTextWH(SimpleVector2 textWH) {
+        this.textWH = textWH;
     }
 }
