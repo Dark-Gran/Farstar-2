@@ -3,6 +3,8 @@ package com.darkgran.farstar.battle.gui.tokens;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
+import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.gui.TextDrawer;
 import com.darkgran.farstar.util.SimpleVector2;
 
@@ -49,14 +51,14 @@ public class TokenPrice extends TokenPart {
             float x = getX() - getPad().getWidth() + getOffsetX();
             int E = getResource(true);
             if (E != 0) {
-                String e = Integer.toString(getToken().getCard().getCardInfo().getEnergy());
+                String e = Integer.toString(E);
                 batch.draw(getPad(), x, getY() + getOffsetY());
                 drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - getTextWH().getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + getTextWH().getY() * 0.48f, e);
                 x += getPad().getWidth();
             }
             int M = getResource(false);
             if (M != 0) {
-                String m = Integer.toString(getToken().getCard().getCardInfo().getMatter());
+                String m = Integer.toString(M);
                 batch.draw(pad2, x, getY() + getOffsetY());
                 drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - textWH2.getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + textWH2.getY() * 0.48f, m);
             }
@@ -74,7 +76,12 @@ public class TokenPrice extends TokenPart {
             case MS:
             case SUPPORT:
             case FLEET:
-                return 0; //todo ability check
+                for (AbilityInfo abilityInfo : getToken().getCard().getCardInfo().getAbilities()) {
+                    if (abilityInfo.getStarter() == AbilityStarter.USE) {
+                        return energy ? abilityInfo.getResourcePrice().getEnergy() : abilityInfo.getResourcePrice().getMatter();
+                    }
+                }
+                return 0;
         }
     }
 
