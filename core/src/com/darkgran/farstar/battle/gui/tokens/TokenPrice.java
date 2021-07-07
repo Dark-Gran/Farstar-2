@@ -15,11 +15,6 @@ public class TokenPrice extends TokenPart {
     }
 
     @Override
-    public boolean isEnabled() { //todo
-        return super.isEnabled();
-    }
-
-    @Override
     public void setPad() {
         setPad(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padE", getToken().getTokenType())+".png"));
         pad2 = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padM", getToken().getTokenType())+".png");
@@ -28,7 +23,7 @@ public class TokenPrice extends TokenPart {
     @Override
     public void setupOffset() {
         setOffsetY(-1f-getPad().getHeight());
-        setOffsetX(getPad().getWidth());
+        setOffsetX(1f+getPad().getWidth());
     }
 
     @Override
@@ -52,17 +47,34 @@ public class TokenPrice extends TokenPart {
     public void draw(Batch batch) {
         if (isEnabled()) {
             float x = getX() - getPad().getWidth() + getOffsetX();
-            if (getToken().getCard().getCardInfo().getEnergy() != 0) {
+            int E = getResource(true);
+            if (E != 0) {
                 String e = Integer.toString(getToken().getCard().getCardInfo().getEnergy());
                 batch.draw(getPad(), x, getY() + getOffsetY());
                 drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - getTextWH().getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + getTextWH().getY() * 0.48f, e);
                 x += getPad().getWidth();
             }
-            if (getToken().getCard().getCardInfo().getMatter() != 0) {
+            int M = getResource(false);
+            if (M != 0) {
                 String m = Integer.toString(getToken().getCard().getCardInfo().getMatter());
                 batch.draw(pad2, x, getY() + getOffsetY());
                 drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - textWH2.getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + textWH2.getY() * 0.48f, m);
             }
+        }
+    }
+
+    private int getResource(boolean energy) {
+        switch (getToken().getTokenType()) {
+            case YARD:
+            case JUNK:
+            case FAKE:
+            case HAND:
+                return energy ? getToken().getCard().getCardInfo().getEnergy() : getToken().getCard().getCardInfo().getMatter();
+            default:
+            case MS:
+            case SUPPORT:
+            case FLEET:
+                return 0; //todo ability check
         }
     }
 

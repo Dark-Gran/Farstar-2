@@ -6,7 +6,8 @@ public enum TokenType {
     FLEET(232f, 138f, "fonts/bahnschrift44b.fnt"), //54x41
     YARD(216f, 129f, "fonts/bahnschrift44b.fnt"), //F
     SUPPORT(190f, 113f, "fonts/bahnschrift40b.fnt"), //50x38
-    JUNK(88f, 116f, "fonts/bahnschrift30.fnt"); //to be adjusted
+    JUNK(88f, 116f, "fonts/bahnschrift30.fnt"), //to be adjusted
+    HAND(232f, 138f, "fonts/bahnschrift44b.fnt"); //to be adjusted (F)
 
     private final float width;
     private final float height;

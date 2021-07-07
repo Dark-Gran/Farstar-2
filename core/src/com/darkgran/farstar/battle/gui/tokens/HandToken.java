@@ -9,7 +9,7 @@ import com.darkgran.farstar.battle.players.cards.CardType;
 public class HandToken extends AnchoredToken {
 
     public HandToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
-        super(card, x, y, battleStage, cardListMenu, TokenType.FLEET, false); //TokenType.FLEET = placeholder
+        super(card, x, y, battleStage, cardListMenu, TokenType.HAND, false);
         setDragger(new ManagedDragger(this, battleStage.getBattleScreen().getBattle().getRoundManager(), false){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
