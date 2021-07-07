@@ -30,4 +30,8 @@ public enum TokenType {
     public String getFontPath() {
         return fontPath;
     }
+
+    public static boolean isDeployed(TokenType tokenType) {
+        return tokenType == MS || tokenType == SUPPORT || tokenType == FLEET;
+    }
 }
