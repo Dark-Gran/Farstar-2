@@ -96,16 +96,18 @@ public class Token extends Actor implements JustFont {
 
     public void draw(Batch batch) {
         if (card != null) {
-            //Portrait + Frame
-            if (portrait != null) { batch.draw(portrait, getX(), getY()); }
-            if (frame != null) { batch.draw(frame, getX(), getY()); }
-            //Pads
+            drawPortrait(batch);
             tokenDefense.draw(batch);
             tokenOffense.draw(batch);
             tokenPrice.draw(batch);
         }
         //Debug
-        if (DEBUG_RENDER) { battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch); }
+        //if (DEBUG_RENDER) { battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch); }
+    }
+
+    protected void drawPortrait(Batch batch) {
+        if (portrait != null) { batch.draw(portrait, getX(), getY()); }
+        if (frame != null) { batch.draw(frame, getX(), getY()); }
     }
 
     public void destroy() {
@@ -170,4 +172,11 @@ public class Token extends Actor implements JustFont {
         fontPath = path;
     }
 
+    public Texture getPortrait() {
+        return portrait;
+    }
+
+    public Texture getFrame() {
+        return frame;
+    }
 }

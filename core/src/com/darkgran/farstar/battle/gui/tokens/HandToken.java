@@ -10,6 +10,7 @@ import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 
 public class HandToken extends AnchoredToken {
+    private static final float PORTRAIT_OFFSET_Y = -16f;
     private Texture cardPic;
 
     public HandToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
@@ -31,6 +32,12 @@ public class HandToken extends AnchoredToken {
     public void draw(Batch batch) {
         batch.draw(cardPic, getX(), getY());
         super.draw(batch);
+    }
+
+    @Override
+    protected void drawPortrait(Batch batch) {
+        if (getPortrait() != null) { batch.draw(getPortrait(), getX(), getY()+cardPic.getHeight()-getPortrait().getHeight()+PORTRAIT_OFFSET_Y); }
+        if (getFrame() != null) { batch.draw(getFrame(), getX(), getY()+cardPic.getHeight()-getFrame().getHeight()+PORTRAIT_OFFSET_Y); }
     }
 
     @Override
