@@ -1,6 +1,7 @@
 package com.darkgran.farstar.battle.gui.tokens;
 
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.battle.players.TechType;
 
 public class TokenOffense extends TokenPart {
     public TokenOffense(String fontPath, Token token) {
@@ -8,8 +9,8 @@ public class TokenOffense extends TokenPart {
     }
 
     @Override
-    public boolean isEnabled() { //todo
-        return super.isEnabled();
+    public boolean isEnabled() {
+        return !getContent().equals("0") || !TechType.isInferior(getToken().getCard().getCardInfo().getOffenseType());
     }
 
     @Override
