@@ -79,6 +79,7 @@ public class TokenPrice extends TokenPart {
             case JUNK:
             case FAKE:
             case HAND:
+            case PRINT:
                 return energy ? getToken().getCard().getCardInfo().getEnergy() : getToken().getCard().getCardInfo().getMatter();
             default:
             case MS:
