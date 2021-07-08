@@ -105,25 +105,25 @@ public class BattleStage1V1 extends BattleStage {
 
     @Override
     public void drawBattleStage(float delta, Batch batch) {
-        super.drawBattleStage(delta, batch);
         resourceMeter1.draw(batch);
         resourceMeter2.draw(batch);
+        deck1.draw(batch, getBattleScreen().getShapeRenderer());
+        deck2.draw(batch, getBattleScreen().getShapeRenderer());
+        tier1.drawText(batch);
+        tier2.drawText(batch);
         mothershipToken1.draw(batch);
         mothershipToken2.draw(batch);
         junkButton1.draw(batch);
         junkButton2.draw(batch);
         fleetMenu1.drawTokens(batch);
         fleetMenu2.drawTokens(batch);
-        handMenu1.drawTokens(batch);
-        handMenu2.drawTokens(batch);
-        if (yardMenu1.isVisible()) { yardMenu1.drawTokens(batch); }
-        if (yardMenu2.isVisible()) { yardMenu2.drawTokens(batch); }
-        tier1.drawText(batch);
-        tier2.drawText(batch);
         supportMenu1.drawTokens(batch);
         supportMenu2.drawTokens(batch);
-        deck1.draw(batch, getBattleScreen().getShapeRenderer());
-        deck2.draw(batch, getBattleScreen().getShapeRenderer());
+        if (yardMenu1.isVisible()) { yardMenu1.drawTokens(batch); }
+        if (yardMenu2.isVisible()) { yardMenu2.drawTokens(batch); }
+        handMenu1.drawTokens(batch);
+        handMenu2.drawTokens(batch);
+        super.drawBattleStage(delta, batch);
         if (DEBUG_RENDER) {
             //getBattleScreen().drawDebugSimpleBox2(fleetMenu1.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
             //getBattleScreen().drawDebugSimpleBox2(fleetMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
