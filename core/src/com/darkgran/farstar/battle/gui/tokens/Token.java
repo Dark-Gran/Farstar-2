@@ -15,7 +15,7 @@ import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 public class Token extends Actor implements JustFont {
     private String fontPath = "";
     private Dragger dragger;
-    private final Card card;
+    private Card card;
     private final TokenDefense tokenDefense;
     private final TokenOffense tokenOffense;
     private final TokenPrice tokenPrice;
@@ -194,5 +194,9 @@ public class Token extends Actor implements JustFont {
 
     public void setFrame(Texture frame) {
         this.frame = frame;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
     }
 }
