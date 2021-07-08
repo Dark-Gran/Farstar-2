@@ -8,12 +8,13 @@ import com.darkgran.farstar.util.SimpleCounter;
 import com.darkgran.farstar.util.SimpleVector2;
 
 public abstract class TokenZoom extends PrintToken {
-    private final SimpleCounter counter = new SimpleCounter(false, 30, 0);
+    private final SimpleCounter counter;
     private boolean activated;
     private boolean visible;
 
-    public TokenZoom(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
+    public TokenZoom(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, int counterCap) {
         super(card, x, y, battleStage, cardListMenu);
+        counter = new SimpleCounter(false, counterCap, 0);
     }
 
     public void update(float delta) {
@@ -33,8 +34,8 @@ public abstract class TokenZoom extends PrintToken {
                 activated = true;
                 counter.setEnabled(true);
             }
+            setup(card, targetType, targetXY);
         }
-        super.enable(card, targetType, targetXY);
     }
 
     @Override
@@ -50,4 +51,25 @@ public abstract class TokenZoom extends PrintToken {
         }
     }
 
+    public SimpleCounter getCounter() {
+        return counter;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+    @Override
+    public boolean isVisible() {
+        return visible;
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 }

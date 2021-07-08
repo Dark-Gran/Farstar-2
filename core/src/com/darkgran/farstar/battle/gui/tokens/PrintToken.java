@@ -25,22 +25,26 @@ public class PrintToken extends Token {
 
     public void enable(Card card, TokenType targetType, SimpleVector2 targetXY) {
         if (getCard() != card) {
-            setCard(card);
-            this.targetType = targetType;
-            this.targetXY = targetXY;
-            shiftPosition();
-            setPortrait(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getPortraitName(card.getCardInfo(), getTokenType())));
-            setFrame(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getFrameName(card.getCardInfo(), getTokenType())));
-            getTokenDefense().update();
-            getTokenDefense().setPad(getTokenType());
-            getTokenDefense().setupOffset();
-            getTokenOffense().update();
-            getTokenOffense().setPad(getTokenType());
-            getTokenOffense().setupOffset();
-            getTokenPrice().update();
-            getTokenPrice().setPad(getTokenType());
-            getTokenPrice().setupOffset();
+            setup(card, targetType, targetXY);
         }
+    }
+
+    public void setup(Card card, TokenType targetType, SimpleVector2 targetXY) {
+        setCard(card);
+        this.targetType = targetType;
+        this.targetXY = targetXY;
+        shiftPosition();
+        setPortrait(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getPortraitName(card.getCardInfo(), getTokenType())));
+        setFrame(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getFrameName(card.getCardInfo(), getTokenType())));
+        getTokenDefense().update();
+        getTokenDefense().setPad(getTokenType());
+        getTokenDefense().setupOffset();
+        getTokenOffense().update();
+        getTokenOffense().setPad(getTokenType());
+        getTokenOffense().setupOffset();
+        getTokenPrice().update();
+        getTokenPrice().setPad(getTokenType());
+        getTokenPrice().setupOffset();
     }
 
     public void shiftPosition() { }

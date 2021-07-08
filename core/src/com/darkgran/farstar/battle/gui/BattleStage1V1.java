@@ -93,7 +93,7 @@ public class BattleStage1V1 extends BattleStage {
         handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*0.5f, -Farstar.STAGE_HEIGHT*0.25f, this, player1, true);
         handMenu2 = new HandMenu(player2.getHand(),Farstar.STAGE_WIDTH*0.5f, Farstar.STAGE_HEIGHT*0.95f, this, player2, false);
         //TokenZoom
-        setCardZoom(new TokenZoom1v1(null, 0, 0, this, null));
+        setCardZoom(new TokenZoom1v1(null, 0, 0, this, null, 30));
     }
 
     public FleetMenu getFleetMenu1() {

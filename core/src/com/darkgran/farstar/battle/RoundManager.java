@@ -11,6 +11,7 @@ import com.darkgran.farstar.battle.players.*;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardInfo;
 import com.darkgran.farstar.battle.players.cards.CardType;
+import com.darkgran.farstar.util.SimpleVector2;
 
 import java.util.ArrayList;
 
@@ -205,6 +206,7 @@ public class RoundManager {
             if (!success && !postAbility) {
                 ((HandToken) token).resetPosition();
             } else {
+                getBattle().getBattleScreen().getBattleStage().getHerald().enable(token.getCard(), token.getTokenType(), new SimpleVector2(token.getX(), token.getY()));
                 token.destroy();
             }
         }

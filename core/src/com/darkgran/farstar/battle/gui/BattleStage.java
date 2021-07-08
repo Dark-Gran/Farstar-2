@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.tokens.*;
+import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.gui.ActorButton;
 import com.darkgran.farstar.gui.ButtonWithExtraState;
 import com.darkgran.farstar.gui.ListeningStage;
@@ -39,6 +40,27 @@ public abstract class BattleStage extends ListeningStage {
         }
     };
     private TokenZoom cardZoom;
+    private final TokenZoom herald = new TokenZoom(null, Farstar.STAGE_WIDTH*0.09f, Farstar.STAGE_HEIGHT*0.38f, this, null, 210) {
+        @Override
+        public void update(float delta) {
+            getCounter().update();
+            if (isVisible() && !getCounter().isEnabled()) {
+                disable();
+            }
+        }
+
+        @Override
+        public void enable(Card card, TokenType targetType, SimpleVector2 targetXY) {
+            if (getCard() != card) {
+                if (getCounter().isEnabled()) {
+                    getCounter().setCount(0);
+                }
+                setVisible(true);
+                getCounter().setEnabled(true);
+                setup(card, targetType, targetXY);
+            }
+        }
+    };
 
 
     public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen, DuelMenu duelMenu) {
@@ -52,9 +74,18 @@ public abstract class BattleStage extends ListeningStage {
         roundCounter = new RoundCounter(Farstar.STAGE_WIDTH*0.003f, Farstar.STAGE_HEIGHT*0.475f, this, getBattleScreen().getBattle());
     }
 
+    public void drawBattleStage(float delta, Batch batch) {
+        roundCounter.draw(batch);
+        abilityPicker.draw(batch);
+        if (fakeToken != null) { fakeToken.draw(batch); }
+        cardZoom.draw(batch);
+        herald.draw(batch);
+    }
+
     @Override
     public void act(float delta) {
         cardZoom.update(delta);
+        herald.update(delta);
         super.act(delta);
     }
 
@@ -70,13 +101,6 @@ public abstract class BattleStage extends ListeningStage {
     public void disableCombatEnd() {
         combatEndButton.setDisabled(true);
         combatEndButton.remove();
-    }
-
-    public void drawBattleStage(float delta, Batch batch) {
-        roundCounter.draw(batch);
-        abilityPicker.draw(batch);
-        if (fakeToken != null) { fakeToken.draw(batch); }
-        cardZoom.draw(batch);
     }
 
     public DropTarget returnDropTarget(float x, float y) {
@@ -236,6 +260,10 @@ public abstract class BattleStage extends ListeningStage {
 
     public PrintToken getCardZoom() {
         return cardZoom;
+    }
+
+    public PrintToken getHerald() {
+        return herald;
     }
 
     @Override

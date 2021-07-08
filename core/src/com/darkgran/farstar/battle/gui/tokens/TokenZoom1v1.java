@@ -7,8 +7,8 @@ import com.darkgran.farstar.battle.players.cards.Card;
 
 public class TokenZoom1v1 extends TokenZoom {
 
-    public TokenZoom1v1(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
-        super(card, x, y, battleStage, cardListMenu);
+    public TokenZoom1v1(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, int counterCap) {
+        super(card, x, y, battleStage, cardListMenu, counterCap);
     }
 
     @Override
