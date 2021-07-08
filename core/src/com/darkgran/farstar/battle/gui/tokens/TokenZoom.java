@@ -35,8 +35,8 @@ public abstract class TokenZoom extends PrintToken {
     }
 
     public void reactivate() {
-        enabled = true;
         if (getCard() != null && getTargetType() != null) {
+            enabled = true;
             if (getTargetType() == TokenType.HAND || getTargetType() == TokenType.YARD) {
                 hidden = false;
             } else {
@@ -52,6 +52,7 @@ public abstract class TokenZoom extends PrintToken {
             if (targetType == TokenType.HAND || targetType == TokenType.YARD) {
                 hidden = false;
             } else {
+                hidden = true;
                 counting = true;
                 counter.setEnabled(true);
             }
