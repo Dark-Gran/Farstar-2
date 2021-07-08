@@ -52,7 +52,6 @@ public class HandToken extends AnchoredToken {
                 super.touchUp(event, x, y, pointer, button);
             }
         });
-        setZoomEnabled(false);
         this.addListener(getDragger());
         cardPic = Farstar.ASSET_LIBRARY.get("images/tokens/card_D.png");
         setOriginX(getWidth()/2);
@@ -119,17 +118,21 @@ public class HandToken extends AnchoredToken {
 
     @Override
     public void draw(Batch batch) {
-        //Rotate
-        if (currentState == HandState.DOWN) {
-            oldMX = batch.getTransformMatrix().cpy();
-            batch.setTransformMatrix(mx);
-        } else if (oldMX != null) {
-            oldMX = null;
+        if (!(getClickListener().isOver() && currentState == HandState.DOWN)) {
+            //Rotate
+            if (currentState == HandState.DOWN) {
+                oldMX = batch.getTransformMatrix().cpy();
+                batch.setTransformMatrix(mx);
+            } else if (oldMX != null) {
+                oldMX = null;
+            }
+            //Draw
+            batch.draw(cardPic, getX(), getY());
+            super.draw(batch);
+            if (oldMX != null) {
+                batch.setTransformMatrix(oldMX);
+            }
         }
-        //Draw
-        batch.draw(cardPic, getX(), getY());
-        super.draw(batch);
-        if (oldMX != null) { batch.setTransformMatrix(oldMX); }
     }
 
     @Override

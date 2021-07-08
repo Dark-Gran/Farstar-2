@@ -56,6 +56,10 @@ public abstract class BattleStage extends ListeningStage {
                         newX += 5f;
                         newY = (getCard().getPlayer().getBattleID() == 1) ? Farstar.STAGE_HEIGHT*0.15f : Farstar.STAGE_HEIGHT*0.4f;
                         break;
+                    case HAND:
+                        newX -= getTargetType().getWidth()/2f+getCardPic().getWidth()/2f;
+                        newY = 0f;
+                        break;
                 }
                 setPosition(newX, newY);
             }
