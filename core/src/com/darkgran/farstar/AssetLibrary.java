@@ -1,6 +1,7 @@
 package com.darkgran.farstar;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -86,16 +87,19 @@ public class AssetLibrary {
     }
 
     private void loadFonts() {
-        assetManager.load("fonts/arial15.fnt", BitmapFont.class);
-        assetManager.load("fonts/bahnschrift24.fnt", BitmapFont.class);
-        assetManager.load("fonts/bahnschrift30.fnt", BitmapFont.class);
-        assetManager.load("fonts/bahnschrift40b.fnt", BitmapFont.class);
-        //assetManager.load("fonts/bahnschrift42b.fnt", BitmapFont.class);
-        assetManager.load("fonts/bahnschrift44b.fnt", BitmapFont.class);
-        assetManager.load("fonts/bahnschrift46b.fnt", BitmapFont.class);
-        //assetManager.load("fonts/bahnschrift48b.fnt", BitmapFont.class);
-        assetManager.load("fonts/bahnschrift50b.fnt", BitmapFont.class);
-        assetManager.load("fonts/orbitron36.fnt", BitmapFont.class);
+        BitmapFontLoader.BitmapFontParameter bmpParams = new BitmapFontLoader.BitmapFontParameter();
+        bmpParams.minFilter = Texture.TextureFilter.Linear;
+        bmpParams.magFilter = Texture.TextureFilter.Linear;
+        assetManager.load("fonts/arial15.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/bahnschrift24.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/bahnschrift30.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/bahnschrift40b.fnt", BitmapFont.class, bmpParams);
+        //assetManager.load("fonts/bahnschrift42b.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/bahnschrift44b.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/bahnschrift46b.fnt", BitmapFont.class, bmpParams);
+        //assetManager.load("fonts/bahnschrift48b.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/bahnschrift50b.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/orbitron36.fnt", BitmapFont.class, bmpParams);
     }
 
     private void loadTextures() {
