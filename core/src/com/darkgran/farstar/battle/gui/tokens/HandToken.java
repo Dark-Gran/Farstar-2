@@ -17,7 +17,7 @@ public class HandToken extends AnchoredToken {
     public enum HandState {
         DOWN, UP;
     }
-    private static final float PORTRAIT_OFFSET_Y = -16f;
+    public static final float PORTRAIT_OFFSET_Y = -16f;
     private Texture cardPic;
     private HandState currentState = HandState.DOWN;
     private HandState nextState = currentState;
