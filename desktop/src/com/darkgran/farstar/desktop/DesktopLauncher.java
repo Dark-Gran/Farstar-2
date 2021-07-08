@@ -13,7 +13,7 @@ public class DesktopLauncher {
 		config.foregroundFPS = 60;
 		config.resizable = true;
 		config.fullscreen = false;
-		config.vSyncEnabled = true;
+		config.vSyncEnabled = false;
 		config.samples = 8;
 		new LwjglApplication(new Farstar(), config);
 	}
