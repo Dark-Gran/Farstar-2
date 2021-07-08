@@ -60,7 +60,6 @@ public class AssetLibrary {
                 return string + "S";
             case FLEET:
             case HAND:
-            case PRINT:
                 return string + "F";
             case MS:
                 return string + "MS";
@@ -68,6 +67,8 @@ public class AssetLibrary {
                 return string + "FK";
             case YARD:
                 return pad ? string + "F" : string + "Y";
+            case PRINT:
+                return string + "Z";
         }
     }
 
@@ -160,50 +161,61 @@ public class AssetLibrary {
         assetManager.load("images/tokens/abiU_S.png", Texture.class, texParams);
         assetManager.load("images/tokens/card_D.png", Texture.class, texParams);
         assetManager.load("images/tokens/card_U.png", Texture.class, texParams);
+        assetManager.load("images/tokens/card_Z.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameB_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameB_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameB_MS.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameB_S.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameB_Y.png", Texture.class, texParams);
+        assetManager.load("images/tokens/frameB_Z.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameI_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameI_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameI_MS.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameI_S.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameI_Y.png", Texture.class, texParams);
+        assetManager.load("images/tokens/frameI_Z.png", Texture.class, texParams);
         assetManager.load("images/tokens/padE_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/padE_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/padE_MS.png", Texture.class, texParams);
         assetManager.load("images/tokens/padE_S.png", Texture.class, texParams);
+        assetManager.load("images/tokens/padE_Z.png", Texture.class, texParams);
         assetManager.load("images/tokens/padI_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/padI_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/padI_MS.png", Texture.class, texParams);
         assetManager.load("images/tokens/padI_S.png", Texture.class, texParams);
+        assetManager.load("images/tokens/padI_Z.png", Texture.class, texParams);
         assetManager.load("images/tokens/padK_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/padK_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/padK_MS.png", Texture.class, texParams);
         assetManager.load("images/tokens/padK_S.png", Texture.class, texParams);
+        assetManager.load("images/tokens/padK_Z.png", Texture.class, texParams);
         assetManager.load("images/tokens/padM_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/padM_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/padM_MS.png", Texture.class, texParams);
         assetManager.load("images/tokens/padM_S.png", Texture.class, texParams);
+        assetManager.load("images/tokens/padM_Z.png", Texture.class, texParams);
         assetManager.load("images/tokens/padT_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/padT_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/padT_MS.png", Texture.class, texParams);
         assetManager.load("images/tokens/padT_S.png", Texture.class, texParams);
+        assetManager.load("images/tokens/padT_Z.png", Texture.class, texParams);
         assetManager.load("images/tokens/padP_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/padP_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/padP_MS.png", Texture.class, texParams);
         assetManager.load("images/tokens/padP_S.png", Texture.class, texParams);
+        assetManager.load("images/tokens/padP_Z.png", Texture.class, texParams);
         assetManager.load("images/tokens/padS_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/padS_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/padS_MS.png", Texture.class, texParams);
         assetManager.load("images/tokens/padS_S.png", Texture.class, texParams);
+        assetManager.load("images/tokens/padS_Z.png", Texture.class, texParams);
         //Portraits
         assetManager.load("images/portraits/empty_F.png", Texture.class, texParams);
         assetManager.load("images/portraits/empty_FK.png", Texture.class, texParams);
         assetManager.load("images/portraits/empty_MS.png", Texture.class, texParams);
         assetManager.load("images/portraits/empty_S.png", Texture.class, texParams);
         assetManager.load("images/portraits/empty_Y.png", Texture.class, texParams);
+        assetManager.load("images/portraits/empty_Z.png", Texture.class, texParams);
     }
 
     public <T> T get(String filename) {

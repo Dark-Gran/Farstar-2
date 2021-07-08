@@ -21,7 +21,7 @@ public class TokenPrice extends TokenPart {
     public void setPad(TokenType tokenType) {
         setPad((Texture) Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padE", tokenType, true)+".png"));
         pad2 = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padM", tokenType, true)+".png");
-        abiMark = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/abiU", tokenType, true)+".png");
+        if (tokenType != TokenType.PRINT) { abiMark = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/abiU", tokenType, true)+".png"); }
     }
 
     @Override
@@ -54,7 +54,7 @@ public class TokenPrice extends TokenPart {
             boolean hasAbility = hasValidAbility(getToken());
             if (hasAbility && !isMouseOver()) {
                 batch.draw(getPad(), x, getY() + getOffsetY());
-                batch.draw(abiMark, x, getY() + getOffsetY());
+                if (abiMark != null) { batch.draw(abiMark, x, getY() + getOffsetY()); }
             } else {
                 int E = getResource(true);
                 if (E != 0 || hasAbility) {

@@ -19,7 +19,7 @@ public class PrintToken extends Token {
 
     public PrintToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
         super(card, x, y, battleStage, cardListMenu, TokenType.PRINT, false);
-        cardPic = Farstar.ASSET_LIBRARY.get("images/tokens/card_D.png");
+        cardPic = Farstar.ASSET_LIBRARY.get("images/tokens/card_Z.png");
         setTouchable(Touchable.disabled);
     }
 
