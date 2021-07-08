@@ -1,9 +1,6 @@
 package com.darkgran.farstar.battle;
 
-import com.darkgran.farstar.battle.gui.tokens.FleetToken;
-import com.darkgran.farstar.battle.gui.tokens.HandToken;
-import com.darkgran.farstar.battle.gui.tokens.MothershipToken;
-import com.darkgran.farstar.battle.gui.tokens.Token;
+import com.darkgran.farstar.battle.gui.tokens.*;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.battle.gui.*;
@@ -206,8 +203,14 @@ public class RoundManager {
             if (!success && !postAbility) {
                 ((HandToken) token).resetPosition();
             } else {
-                getBattle().getBattleScreen().getBattleStage().getHerald().enable(token.getCard(), token.getTokenType(), new SimpleVector2(token.getX(), token.getY()));
+                callHerald(token.getCard(), token.getTokenType(), new SimpleVector2(token.getX(), token.getY()));
                 token.destroy();
+            }
+        }
+        //FAKE
+        else if (token instanceof FakeToken) {
+            if (success || postAbility) {
+                callHerald(token.getCard(), token.getTokenType(), new SimpleVector2(token.getX(), token.getY()));
             }
         }
         return success;
@@ -338,6 +341,10 @@ public class RoundManager {
     private void endTargeting() {
         targetingActive = false;
         postponedDeploy.resetInDeployment();
+    }
+
+    private void callHerald(Card card, TokenType targetType, SimpleVector2 targetXY) {
+        getBattle().getBattleScreen().getBattleStage().getHerald().enable(card, targetType, targetXY);
     }
 
     //-----------//
