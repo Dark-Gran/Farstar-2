@@ -9,7 +9,8 @@ import com.darkgran.farstar.util.SimpleVector2;
 
 public abstract class TokenZoom extends PrintToken {
     private final SimpleCounter counter;
-    private boolean activated;
+    private boolean enabled = true;
+    private boolean counting;
     private boolean hidden = true;
 
     public TokenZoom(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, int counterCap) {
@@ -19,9 +20,29 @@ public abstract class TokenZoom extends PrintToken {
 
     public void update(float delta) {
         counter.update();
-        if (activated && !counter.isEnabled()) {
-            activated = false;
+        if (counting && !counter.isEnabled()) {
+            counting = false;
             hidden = false;
+        }
+    }
+
+    public void deactivate() {
+        enabled = false;
+        hidden = true;
+        counter.setEnabled(false);
+        counter.setCount(0);
+        counting = false;
+    }
+
+    public void reactivate() {
+        enabled = true;
+        if (getCard() != null && getTargetType() != null) {
+            if (getTargetType() == TokenType.HAND || getTargetType() == TokenType.YARD) {
+                hidden = false;
+            } else {
+                counting = true;
+                counter.setEnabled(true);
+            }
         }
     }
 
@@ -31,7 +52,7 @@ public abstract class TokenZoom extends PrintToken {
             if (targetType == TokenType.HAND || targetType == TokenType.YARD) {
                 hidden = false;
             } else {
-                activated = true;
+                counting = true;
                 counter.setEnabled(true);
             }
             setup(card, targetType, targetXY);
@@ -39,13 +60,8 @@ public abstract class TokenZoom extends PrintToken {
     }
 
     @Override
-    public void disable() {
-        super.disable();
-    }
-
-    @Override
     public void draw(Batch batch) {
-        if (!hidden && getCard() != null && getTargetType() != null && getTargetXY() != null) {
+        if (isEnabled() && !hidden && getCard() != null && getTargetType() != null && getTargetXY() != null) {
             super.draw(batch);
         }
     }
@@ -54,12 +70,12 @@ public abstract class TokenZoom extends PrintToken {
         return counter;
     }
 
-    public boolean isActivated() {
-        return activated;
+    public boolean isCounting() {
+        return counting;
     }
 
-    public void setActivated(boolean activated) {
-        this.activated = activated;
+    public void setCounting(boolean counting) {
+        this.counting = counting;
     }
 
     public boolean isHidden() {
@@ -68,5 +84,13 @@ public abstract class TokenZoom extends PrintToken {
 
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

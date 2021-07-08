@@ -49,7 +49,6 @@ public class HandToken extends AnchoredToken {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 nextState = HandState.DOWN;
                 refreshSize();
-                getBattleStage().getCardZoom().setHidden(false);
                 super.touchUp(event, x, y, pointer, button);
             }
         });

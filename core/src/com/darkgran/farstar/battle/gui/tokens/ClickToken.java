@@ -24,13 +24,13 @@ public abstract class ClickToken extends Token {
 
         @Override
         public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-            if (zoomEnabled) { getBattleStage().getCardZoom().enable(getCard(), getTokenType(), new SimpleVector2(getX(), getY())); }
+            if (zoomEnabled && pointer == -1) { getBattleStage().getCardZoom().enable(getCard(), getTokenType(), new SimpleVector2(getX(), getY())); }
             super.enter(event, x, y, pointer, fromActor);
         }
 
         @Override
         public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-            if (zoomEnabled) { getBattleStage().getCardZoom().disable(); }
+            if (zoomEnabled && pointer == -1) { getBattleStage().getCardZoom().disable(); }
             super.exit(event, x, y, pointer, toActor);
         }
     };
