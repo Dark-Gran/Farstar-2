@@ -52,6 +52,7 @@ public class HandToken extends AnchoredToken {
                 super.touchUp(event, x, y, pointer, button);
             }
         });
+        setZoomEnabled(false);
         this.addListener(getDragger());
         cardPic = Farstar.ASSET_LIBRARY.get("images/tokens/card_D.png");
         setOriginX(getWidth()/2);
