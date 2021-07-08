@@ -10,7 +10,7 @@ public enum TokenType {
     //Other
     JUNK(88f, 116f, "fonts/bahnschrift30.fnt"), //to be adjusted
     HAND(232f, 322f, "fonts/bahnschrift44b.fnt"), //FF
-    PRINT(348f, 483f, "fonts/bahnschrift44b.fnt"); //81x61
+    PRINT(348f, 483f, "fonts/bahnschrift58b.fnt"); //81x61
 
     private final float width;
     private final float height;

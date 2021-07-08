@@ -101,6 +101,7 @@ public class AssetLibrary {
         assetManager.load("fonts/bahnschrift46b.fnt", BitmapFont.class, bmpParams);
         //assetManager.load("fonts/bahnschrift48b.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift50b.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/bahnschrift58b.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/orbitron36.fnt", BitmapFont.class, bmpParams);
     }
 
