@@ -3,23 +3,28 @@ package com.darkgran.farstar.battle.gui.tokens;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.gui.TextDrawer;
 import com.darkgran.farstar.gui.TextLine;
 import com.darkgran.farstar.util.SimpleVector2;
 
 public class TokenPart extends TextLine {
-    private final Token token;
+    private final Card card;
+    private TokenType tokenType;
+    private boolean noPics;
     private Texture pad;
     private SimpleVector2 textWH;
     private float offsetY = 0f;
     private float offsetX = 0f;
 
-    public TokenPart(String fontPath, Token token) {
+    public TokenPart(String fontPath, Card card, TokenType tokenType, boolean noPics) {
         super(fontPath);
-        this.token = token;
-        if (!token.isNoPics()) {
+        this.card = card;
+        this.noPics = noPics;
+        this.tokenType = tokenType;
+        if (!noPics) {
             update();
-            setPad(token.getTokenType());
+            setPad(tokenType);
             setupOffset();
         }
     }
@@ -58,10 +63,6 @@ public class TokenPart extends TextLine {
         return true;
     }
 
-    public Token getToken() {
-        return token;
-    }
-
     public Texture getPad() {
         return pad;
     }
@@ -92,5 +93,25 @@ public class TokenPart extends TextLine {
 
     public void setTextWH(SimpleVector2 textWH) {
         this.textWH = textWH;
+    }
+
+    public Card getCard() {
+        return card;
+    }
+
+    public TokenType getTokenType() {
+        return tokenType;
+    }
+
+    public void setTokenType(TokenType tokenType) {
+        this.tokenType = tokenType;
+    }
+
+    public boolean isNoPics() {
+        return noPics;
+    }
+
+    public void setNoPics(boolean noPics) {
+        this.noPics = noPics;
     }
 }
