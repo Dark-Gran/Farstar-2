@@ -44,7 +44,7 @@ public abstract class BattleStage extends ListeningStage {
         @Override
         public void update(float delta) {
             getCounter().update();
-            if (isVisible() && !getCounter().isEnabled()) {
+            if (!isHidden() && !getCounter().isEnabled()) {
                 disable();
             }
         }
@@ -55,7 +55,7 @@ public abstract class BattleStage extends ListeningStage {
                 if (getCounter().isEnabled()) {
                     getCounter().setCount(0);
                 }
-                setVisible(true);
+                setHidden(false);
                 getCounter().setEnabled(true);
                 setup(card, targetType, targetXY);
             }
@@ -258,7 +258,7 @@ public abstract class BattleStage extends ListeningStage {
         this.cardZoom = cardZoom;
     }
 
-    public PrintToken getCardZoom() {
+    public TokenZoom getCardZoom() {
         return cardZoom;
     }
 

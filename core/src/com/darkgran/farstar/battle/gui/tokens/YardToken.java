@@ -18,6 +18,7 @@ public class YardToken extends ClickToken {
         {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                getBattleStage().getCardZoom().setHidden(true);
                 if (yardMenu.isVisible() && !yardMenu.getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
                     getBattleStage().setFakeToken(new FakeToken(getCard(), getX(), getY(), getBattleStage(), getCardListMenu()));
                     event.setRelatedActor(getBattleStage().getFakeToken());

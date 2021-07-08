@@ -10,7 +10,7 @@ import com.darkgran.farstar.util.SimpleVector2;
 public abstract class TokenZoom extends PrintToken {
     private final SimpleCounter counter;
     private boolean activated;
-    private boolean visible;
+    private boolean hidden = true;
 
     public TokenZoom(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, int counterCap) {
         super(card, x, y, battleStage, cardListMenu);
@@ -21,7 +21,7 @@ public abstract class TokenZoom extends PrintToken {
         counter.update();
         if (activated && !counter.isEnabled()) {
             activated = false;
-            visible = true;
+            hidden = false;
         }
     }
 
@@ -29,7 +29,7 @@ public abstract class TokenZoom extends PrintToken {
     public void enable(Card card, TokenType targetType, SimpleVector2 targetXY) {
         if (getCard() != card) {
             if (targetType == TokenType.HAND || targetType == TokenType.YARD) {
-                visible = true;
+                hidden = false;
             } else {
                 activated = true;
                 counter.setEnabled(true);
@@ -40,13 +40,12 @@ public abstract class TokenZoom extends PrintToken {
 
     @Override
     public void disable() {
-        visible = false;
         super.disable();
     }
 
     @Override
     public void draw(Batch batch) {
-        if (visible && getCard() != null && getTargetType() != null && getTargetXY() != null) {
+        if (!hidden && getCard() != null && getTargetType() != null && getTargetXY() != null) {
             super.draw(batch);
         }
     }
@@ -63,13 +62,11 @@ public abstract class TokenZoom extends PrintToken {
         this.activated = activated;
     }
 
-    @Override
-    public boolean isVisible() {
-        return visible;
+    public boolean isHidden() {
+        return hidden;
     }
 
-    @Override
-    public void setVisible(boolean visible) {
-        this.visible = visible;
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 }

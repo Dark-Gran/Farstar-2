@@ -14,6 +14,7 @@ public abstract class ClickToken extends Token {
     private ClickListener clickListener = new ClickListener(){
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            getBattleStage().getCardZoom().setHidden(true);
             return true;
         }
 
