@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
+import com.darkgran.farstar.battle.players.cards.Card;
 
 /**
  * Used for "card-zoom" etc.
@@ -12,8 +13,8 @@ import com.darkgran.farstar.battle.gui.CardListMenu;
 public class PrintToken extends Token {
     private Texture cardPic;
 
-    public PrintToken(float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
-        super(null, x, y, battleStage, cardListMenu, TokenType.PRINT, false);
+    public PrintToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
+        super(card, x, y, battleStage, cardListMenu, TokenType.PRINT, false);
         cardPic = Farstar.ASSET_LIBRARY.get("images/tokens/card_D.png");
     }
 
@@ -28,7 +29,5 @@ public class PrintToken extends Token {
         if (getPortrait() != null) { batch.draw(getPortrait(), getX(), getY()+cardPic.getHeight()-getPortrait().getHeight()+HandToken.PORTRAIT_OFFSET_Y); }
         if (getFrame() != null) { batch.draw(getFrame(), getX(), getY()+cardPic.getHeight()-getFrame().getHeight()+HandToken.PORTRAIT_OFFSET_Y); }
     }
-
-
 
 }

@@ -50,7 +50,7 @@ public abstract class BattleStage extends ListeningStage {
         abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/3, this, null, Farstar.ASSET_LIBRARY.get("images/yard.png"));
         battleScreen.getBattle().getRoundManager().setAbilityPicker(abilityPicker);
         roundCounter = new RoundCounter(Farstar.STAGE_WIDTH*0.003f, Farstar.STAGE_HEIGHT*0.475f, this, getBattleScreen().getBattle());
-        cardZoom = new PrintToken(0, 0, this, null);
+        cardZoom = new PrintToken(null, 0, 0, this, null);
     }
 
     public void updateDeckInfos() { }
