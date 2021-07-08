@@ -39,9 +39,9 @@ public class Token extends Actor implements JustFont {
         }
         this.cardListMenu = cardListMenu;
         this.battleStage = battleStage;
-        tokenDefense = new TokenDefense(getFontPath(), card, tokenType, noPics);
-        tokenOffense = new TokenOffense(getFontPath(), card, tokenType, noPics);
-        tokenPrice = new TokenPrice(getFontPath(), card, tokenType, noPics, (this instanceof ClickToken) ? ((ClickToken) this).getClickListener() : null);
+        tokenDefense = new TokenDefense(getFontPath(), this);
+        tokenOffense = new TokenOffense(getFontPath(), this);
+        tokenPrice = new TokenPrice(getFontPath(), this);
         setPosition(x, y);
         if (card != null) {
             card.setToken(this);
@@ -58,9 +58,9 @@ public class Token extends Actor implements JustFont {
         this.battleStage = battleStage;
         this.cardListMenu = cardListMenu;
         this.tokenType = tokenType;
-        tokenDefense = new TokenDefense(getFontPath(), card, tokenType, noPics);
-        tokenOffense = new TokenOffense(getFontPath(), card, tokenType, noPics);
-        tokenPrice = new TokenPrice(getFontPath(), card, tokenType, noPics, (this instanceof ClickToken) ? ((ClickToken) this).getClickListener() : null);
+        tokenDefense = new TokenDefense(getFontPath(), this);
+        tokenOffense = new TokenOffense(getFontPath(), this);
+        tokenPrice = new TokenPrice(getFontPath(), this);
         setParts();
         if (card != null) {
             card.setToken(this);

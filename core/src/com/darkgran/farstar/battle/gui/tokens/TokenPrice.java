@@ -2,11 +2,9 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
-import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.gui.TextDrawer;
 import com.darkgran.farstar.util.SimpleVector2;
 
@@ -14,11 +12,9 @@ public class TokenPrice extends TokenPart {
     private Texture pad2;
     private SimpleVector2 textWH2;
     private Texture abiMark;
-    private ClickListener clickListener;
 
-    public TokenPrice(String fontPath, Card card, TokenType tokenType, boolean noPics, ClickListener clickListener) {
-        super(fontPath, card, tokenType, noPics);
-        this.clickListener = clickListener;
+    public TokenPrice(String fontPath, Token token) {
+        super(fontPath, token);
     }
 
     @Override
@@ -36,8 +32,8 @@ public class TokenPrice extends TokenPart {
 
     @Override
     public void update() {
-        String e = Integer.toString(getCard().getCardInfo().getEnergy());
-        String m = Integer.toString(getCard().getCardInfo().getMatter());
+        String e = Integer.toString(getToken().getCard().getCardInfo().getEnergy());
+        String m = Integer.toString(getToken().getCard().getCardInfo().getMatter());
         setTextWH(TextDrawer.getTextWH(getFont(), e));
         textWH2 = TextDrawer.getTextWH(getFont(), m);
         if (e.equals("1")) {
@@ -55,19 +51,19 @@ public class TokenPrice extends TokenPart {
     public void draw(Batch batch) {
         if (isEnabled()) {
             float x = getX() - getPad().getWidth() + getOffsetX();
-            boolean hasAbility = hasValidAbility(getTokenType(), getCard());
+            boolean hasAbility = hasValidAbility(getToken());
             if (hasAbility && !isMouseOver()) {
                 batch.draw(getPad(), x, getY() + getOffsetY());
                 batch.draw(abiMark, x, getY() + getOffsetY());
             } else {
-                int E = getResource(getTokenType(), getCard(), true);
+                int E = getResource(true);
                 if (E != 0 || hasAbility) {
                     String e = Integer.toString(E);
                     batch.draw(getPad(), x, getY() + getOffsetY());
                     drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - getTextWH().getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + getTextWH().getY() * 0.48f, e);
                     x += getPad().getWidth();
                 }
-                int M = getResource(getTokenType(), getCard(), false);
+                int M = getResource(false);
                 if (M != 0) {
                     String m = Integer.toString(M);
                     batch.draw(pad2, x, getY() + getOffsetY());
@@ -77,18 +73,18 @@ public class TokenPrice extends TokenPart {
         }
     }
 
-    private int getResource(TokenType tokenType, Card card, boolean energy) {
-        switch (tokenType) {
+    private int getResource(boolean energy) {
+        switch (getToken().getTokenType()) {
             case YARD:
             case JUNK:
             case FAKE:
             case HAND:
-                return energy ? card.getCardInfo().getEnergy() : card.getCardInfo().getMatter();
+                return energy ? getToken().getCard().getCardInfo().getEnergy() : getToken().getCard().getCardInfo().getMatter();
             default:
             case MS:
             case SUPPORT:
             case FLEET:
-                for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
+                for (AbilityInfo abilityInfo : getToken().getCard().getCardInfo().getAbilities()) {
                     if (abilityInfo.getStarter() == AbilityStarter.USE) {
                         return energy ? abilityInfo.getResourcePrice().getEnergy() : abilityInfo.getResourcePrice().getMatter();
                     }
@@ -97,9 +93,9 @@ public class TokenPrice extends TokenPart {
         }
     }
 
-    private boolean hasValidAbility(TokenType tokenType, Card card) {
-        if (TokenType.isDeployed(tokenType)) {
-            for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
+    private boolean hasValidAbility(Token token) {
+        if (TokenType.isDeployed(token.getTokenType())) {
+            for (AbilityInfo abilityInfo : token.getCard().getCardInfo().getAbilities()) {
                 if (abilityInfo.getStarter() == AbilityStarter.USE) {
                     return true;
                 }
@@ -109,8 +105,8 @@ public class TokenPrice extends TokenPart {
     }
 
     private boolean isMouseOver() {
-        if (clickListener != null) {
-            return clickListener.isOver();
+        if (getToken() instanceof ClickToken) {
+            return ((ClickToken) getToken()).getClickListener().isOver();
         }
         return false;
     }
