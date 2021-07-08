@@ -44,14 +44,12 @@ public abstract class BattleStage extends ListeningStage {
             if (getCard() != null && getTargetType() != null && getTargetXY() != null) {
                 float offsetX = 0;
                 float offsetY = 0;
-                switch (getTargetType()) {
+                switch (getTargetType()) { //todo
                     case MS:
                     case SUPPORT:
-                        offsetY += getTargetType().getHeight();
+                    case FLEET:
+                    case YARD:
                         break;
-                }
-                if (getCard().getPlayer().getBattleID() != 1) {
-                    offsetY *= -1f;
                 }
                 setPosition(getTargetXY().getX() + offsetX, getTargetXY().getY() + offsetY);
                 super.draw(batch);
