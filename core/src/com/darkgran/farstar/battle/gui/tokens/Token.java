@@ -196,7 +196,7 @@ public class Token extends Actor implements JustFont {
         this.frame = frame;
     }
 
-    public void setCard(Card card) {
+    protected void setCard(Card card) {
         this.card = card;
     }
 }
