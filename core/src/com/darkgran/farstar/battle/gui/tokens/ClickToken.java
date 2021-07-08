@@ -6,8 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
+import com.darkgran.farstar.util.SimpleVector2;
 
 public abstract class ClickToken extends Token {
+    private boolean zoomEnabled = true;
+
     private ClickListener clickListener = new ClickListener(){
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -21,13 +24,13 @@ public abstract class ClickToken extends Token {
 
         @Override
         public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-            getBattleStage().getCardZoom().enable(getCard());
+            if (zoomEnabled) { getBattleStage().getCardZoom().enable(getCard(), getTokenType(), new SimpleVector2(getX(), getY())); }
             super.enter(event, x, y, pointer, fromActor);
         }
 
         @Override
         public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-            getBattleStage().getCardZoom().disable();
+            if (zoomEnabled) { getBattleStage().getCardZoom().disable(); }
             super.exit(event, x, y, pointer, toActor);
         }
     };
@@ -43,4 +46,11 @@ public abstract class ClickToken extends Token {
         return clickListener;
     }
 
+    public boolean isZoomEnabled() {
+        return zoomEnabled;
+    }
+
+    public void setZoomEnabled(boolean zoomEnabled) {
+        this.zoomEnabled = zoomEnabled;
+    }
 }
