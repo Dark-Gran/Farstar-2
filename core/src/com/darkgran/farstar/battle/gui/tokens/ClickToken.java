@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.gui.tokens;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.darkgran.farstar.battle.gui.BattleStage;
@@ -16,6 +17,18 @@ public abstract class ClickToken extends Token {
         @Override
         public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
             click(button);
+        }
+
+        @Override
+        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+            getBattleStage().getCardZoom().enable(getCard());
+            super.enter(event, x, y, pointer, fromActor);
+        }
+
+        @Override
+        public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+            getBattleStage().getCardZoom().disable();
+            super.exit(event, x, y, pointer, toActor);
         }
     };
 

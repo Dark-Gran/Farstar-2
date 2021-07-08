@@ -225,6 +225,10 @@ public abstract class BattleStage extends ListeningStage {
         return roundCounter;
     }
 
+    public PrintToken getCardZoom() {
+        return cardZoom;
+    }
+
     @Override
     public void dispose() {
         turnButton.removeListener(turnButton.getClickListener());
