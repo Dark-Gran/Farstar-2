@@ -40,10 +40,10 @@ public abstract class BattleStage extends ListeningStage {
     };
     private final PrintToken cardZoom = new PrintToken(null, 0, 0, this, null){
         @Override
-        public void draw(Batch batch) {
-            if (getCard() != null && getTargetType() != null && getTargetXY() != null) {
-                float offsetX = 0;
-                float offsetY = 0;
+        public void shiftPosition() {
+            if (getTargetXY() != null) {
+                float offsetX = getTargetType().getWidth();
+                float offsetY = getTargetType().getHeight()/2;
                 switch (getTargetType()) { //todo
                     case MS:
                     case SUPPORT:
@@ -51,7 +51,13 @@ public abstract class BattleStage extends ListeningStage {
                     case YARD:
                         break;
                 }
-                setPosition(getTargetXY().getX() + offsetX, getTargetXY().getY() + offsetY);
+                setPosition(getTargetXY().getX()+offsetX, getTargetXY().getY()+offsetY);
+            }
+        }
+
+        @Override
+        public void draw(Batch batch) {
+            if (getCard() != null && getTargetType() != null && getTargetXY() != null) {
                 super.draw(batch);
             }
         }

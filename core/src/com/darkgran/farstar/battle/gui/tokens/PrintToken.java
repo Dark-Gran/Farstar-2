@@ -28,6 +28,7 @@ public class PrintToken extends Token {
             setCard(card);
             this.targetType = targetType;
             this.targetXY = targetXY;
+            shiftPosition();
             setPortrait(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getPortraitName(card.getCardInfo(), getTokenType())));
             setFrame(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getFrameName(card.getCardInfo(), getTokenType())));
             getTokenDefense().update();
@@ -41,6 +42,8 @@ public class PrintToken extends Token {
             getTokenPrice().setupOffset();
         }
     }
+
+    public void shiftPosition() { }
 
     public void disable() {
         setCard(null);
