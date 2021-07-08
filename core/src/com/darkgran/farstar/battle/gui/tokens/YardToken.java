@@ -6,7 +6,7 @@ import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.YardMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
 
-public class YardToken extends Token {
+public class YardToken extends ClickToken {
     private final YardMenu yardMenu;
 
     public YardToken(Card card, float x, float y, BattleStage battleStage, YardMenu yardMenu) {
