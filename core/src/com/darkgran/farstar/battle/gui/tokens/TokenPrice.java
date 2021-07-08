@@ -16,8 +16,9 @@ public class TokenPrice extends TokenPart {
     private Texture abiMark;
     private ClickListener clickListener;
 
-    public TokenPrice(String fontPath, Card card, TokenType tokenType, boolean noPics) {
+    public TokenPrice(String fontPath, Card card, TokenType tokenType, boolean noPics, ClickListener clickListener) {
         super(fontPath, card, tokenType, noPics);
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -114,11 +115,4 @@ public class TokenPrice extends TokenPart {
         return false;
     }
 
-    public ClickListener getClickListener() {
-        return clickListener;
-    }
-
-    public void setClickListener(ClickListener clickListener) {
-        this.clickListener = clickListener;
-    }
 }
