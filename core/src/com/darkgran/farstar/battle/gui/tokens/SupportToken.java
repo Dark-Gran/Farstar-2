@@ -11,6 +11,7 @@ public class SupportToken extends ClickToken {
 
     @Override
     public void click(int button) {
+        super.click(button);
         getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(this, getCard().getPlayer());
     }
 
