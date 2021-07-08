@@ -38,40 +38,7 @@ public abstract class BattleStage extends ListeningStage {
             battleScreen.getBattle().getCombatManager().endCombat();
         }
     };
-    private final PrintToken cardZoom = new PrintToken(null, 0, 0, this, null){
-        @Override
-        public void shiftPosition() {
-            if (getTargetXY() != null) {
-                float newX = getTargetXY().getX()+getTargetType().getWidth()+5f;
-                float newY = getTargetXY().getY();
-                switch (getTargetType()) {
-                    case SUPPORT:
-                    case MS:
-                        newY += (getCard().getPlayer().getBattleID() == 1) ? getTargetType().getHeight()*0.25f : -getCardPic().getHeight()*0.8f;
-                        break;
-                    case FLEET:
-                        newY += getTargetType().getHeight()/2-getCardPic().getHeight() * ((getCard().getPlayer().getBattleID() == 1) ? 0.5f : 0.6f);
-                        break;
-                    case YARD:
-                        newX += 5f;
-                        newY = (getCard().getPlayer().getBattleID() == 1) ? Farstar.STAGE_HEIGHT*0.15f : Farstar.STAGE_HEIGHT*0.4f;
-                        break;
-                    case HAND:
-                        newX -= getTargetType().getWidth()/2f+getCardPic().getWidth()/2f;
-                        newY = 0f;
-                        break;
-                }
-                setPosition(newX, newY);
-            }
-        }
-
-        @Override
-        public void draw(Batch batch) {
-            if (getCard() != null && getTargetType() != null && getTargetXY() != null) {
-                super.draw(batch);
-            }
-        }
-    };
+    private TokenZoom cardZoom;
 
 
     public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen, DuelMenu duelMenu) {
@@ -255,6 +222,10 @@ public abstract class BattleStage extends ListeningStage {
 
     public RoundCounter getRoundCounter() {
         return roundCounter;
+    }
+
+    public void setCardZoom(TokenZoom cardZoom) {
+        this.cardZoom = cardZoom;
     }
 
     public PrintToken getCardZoom() {
