@@ -42,6 +42,7 @@ public class TokenPart extends TextLine {
         if (getToken().getCard() != null) {
             textWH = TextDrawer.getTextWH(getFont(), getContent());
             adjustTextWH();
+            setPad(getToken().getTokenType());
         }
     }
 
