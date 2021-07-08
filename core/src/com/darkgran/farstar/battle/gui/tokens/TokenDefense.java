@@ -31,7 +31,7 @@ public class TokenDefense extends TokenPart {
 
     @Override
     public void setupOffset() {
-        setOffsetY(1f+getPad().getHeight()*0.02f);
+        if (getPad() != null) { setOffsetY(1f+getPad().getHeight()*0.02f); }
     }
 
 }

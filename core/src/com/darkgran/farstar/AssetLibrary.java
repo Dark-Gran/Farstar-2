@@ -60,6 +60,7 @@ public class AssetLibrary {
                 return string + "S";
             case FLEET:
             case HAND:
+            case PRINT:
                 return string + "F";
             case MS:
                 return string + "MS";

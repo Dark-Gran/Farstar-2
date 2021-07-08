@@ -34,8 +34,10 @@ public class Token extends Actor implements JustFont {
         this.tokenType = tokenType;
         this.noPics = noPics;
         if (!noPics) {
-            portrait = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getPortraitName(card.getCardInfo(), tokenType));
-            frame = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getFrameName(card.getCardInfo(), tokenType));
+            if (card != null) {
+                portrait = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getPortraitName(card.getCardInfo(), tokenType));
+                frame = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getFrameName(card.getCardInfo(), tokenType));
+            }
         }
         this.cardListMenu = cardListMenu;
         this.battleStage = battleStage;

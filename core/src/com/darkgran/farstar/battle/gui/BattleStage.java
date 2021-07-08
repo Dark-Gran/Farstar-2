@@ -24,6 +24,7 @@ public abstract class BattleStage extends ListeningStage {
     private ArrayList<DropTarget> dropTargets = new ArrayList<>();
     private final AbilityPicker abilityPicker;
     private final RoundCounter roundCounter;
+    private final PrintToken cardZoom;
     public final ButtonWithExtraState turnButton = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.get("images/turn.png"), Farstar.ASSET_LIBRARY.get("images/turnO.png"), Farstar.ASSET_LIBRARY.get("images/turnP.png"), Farstar.ASSET_LIBRARY.get("images/turnOP.png")){
         @Override
         public void clicked() {
@@ -39,6 +40,7 @@ public abstract class BattleStage extends ListeningStage {
         }
     };
 
+
     public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen, DuelMenu duelMenu) {
         super(game, viewport);
         this.battleScreen = battleScreen;
@@ -48,6 +50,7 @@ public abstract class BattleStage extends ListeningStage {
         abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/3, this, null, Farstar.ASSET_LIBRARY.get("images/yard.png"));
         battleScreen.getBattle().getRoundManager().setAbilityPicker(abilityPicker);
         roundCounter = new RoundCounter(Farstar.STAGE_WIDTH*0.003f, Farstar.STAGE_HEIGHT*0.475f, this, getBattleScreen().getBattle());
+        cardZoom = new PrintToken(null, 0, 0, this, null);
     }
 
     public void updateDeckInfos() { }

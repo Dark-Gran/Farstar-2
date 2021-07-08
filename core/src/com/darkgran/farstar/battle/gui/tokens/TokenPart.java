@@ -18,9 +18,11 @@ public class TokenPart extends TextLine {
         super(fontPath);
         this.token = token;
         if (!token.isNoPics()) {
-            update();
-            setPad(token.getTokenType());
-            setupOffset();
+            if (token.getCard() != null) {
+                update();
+                setPad(token.getTokenType());
+                setupOffset();
+            }
         }
     }
 
@@ -37,8 +39,10 @@ public class TokenPart extends TextLine {
     }
 
     public void update() {
-        textWH = TextDrawer.getTextWH(getFont(), getContent());
-        adjustTextWH();
+        if (getToken().getCard() != null) {
+            textWH = TextDrawer.getTextWH(getFont(), getContent());
+            adjustTextWH();
+        }
     }
 
     public void adjustTextWH() {
