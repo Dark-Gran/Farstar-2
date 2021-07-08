@@ -14,6 +14,7 @@ public class DesktopLauncher {
 		config.resizable = true;
 		config.fullscreen = false;
 		config.vSyncEnabled = true;
+		config.samples = 8;
 		new LwjglApplication(new Farstar(), config);
 	}
 }

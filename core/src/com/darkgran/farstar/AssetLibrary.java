@@ -101,7 +101,7 @@ public class AssetLibrary {
     private void loadTextures() {
         TextureLoader.TextureParameter texParams = new TextureLoader.TextureParameter();
         texParams.minFilter = Texture.TextureFilter.Linear;
-        texParams.magFilter = Texture.TextureFilter.Nearest;
+        texParams.magFilter = Texture.TextureFilter.Linear;
         //All-Screens
         assetManager.load("images/x.png", Texture.class, texParams);
         assetManager.load("images/xO.png", Texture.class, texParams);
