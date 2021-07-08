@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.YardMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
@@ -12,6 +13,7 @@ public class YardToken extends ClickToken {
     public YardToken(Card card, float x, float y, BattleStage battleStage, YardMenu yardMenu) {
         super(card, x, y, battleStage, yardMenu, TokenType.YARD, false);
         this.yardMenu = yardMenu;
+        setTouchable(Touchable.disabled);
         this.addListener(new InputListener()
         {
             @Override

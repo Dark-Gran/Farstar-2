@@ -1,5 +1,7 @@
 package com.darkgran.farstar.battle.gui;
 
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.gui.tokens.YardToken;
 import com.darkgran.farstar.battle.players.LocalPlayer;
@@ -31,8 +33,15 @@ public class YardMenu extends CardListMenu {
     public void switchVisibility() {
         if (getPlayer() instanceof LocalPlayer) {
             visible = !visible;
+            setTouchable(visible);
         } else {
             getBattleStage().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Access Denied.", 3);
+        }
+    }
+
+    private void setTouchable(boolean enable) {
+        for (Token token : getTokens()) {
+            token.setTouchable(enable ? Touchable.enabled : Touchable.disabled);
         }
     }
 
