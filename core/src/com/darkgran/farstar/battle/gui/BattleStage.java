@@ -71,6 +71,7 @@ public abstract class BattleStage extends ListeningStage {
         if (fakeToken != null) { fakeToken.draw(batch); }
         abilityPicker.draw(batch);
         roundCounter.draw(batch);
+        cardZoom.draw(batch);
     }
 
     public DropTarget returnDropTarget(float x, float y) {
