@@ -53,13 +53,6 @@ public class BattleStage1V1 extends BattleStage {
         //Buttons
         turnButton.setPosition(1828f, 478f - turnButton.getHeight() * 0.5f);
         addActor(turnButton);
-        //Shipyards
-        yardMenu1 = new YardMenu(player1.getShipyard(), false, 202f, Farstar.STAGE_HEIGHT*0.078f, this, player1);
-        yardButton1.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.029f);
-        addActor(yardButton1);
-        yardMenu2 = new YardMenu(player2.getShipyard(), true, 202f, Farstar.STAGE_HEIGHT*0.76f, this, player2);
-        yardButton2.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.91f);
-        addActor(yardButton2);
         //Tiers
         tier1 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.083f, Farstar.STAGE_HEIGHT*0.064f);
         tier2 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.083f, Farstar.STAGE_HEIGHT*0.95f);
@@ -84,6 +77,13 @@ public class BattleStage1V1 extends BattleStage {
         addDropTarget(mothershipToken2);
         addDropTarget(supportMenu1);
         addDropTarget(supportMenu2);
+        //Shipyards
+        yardMenu1 = new YardMenu(player1.getShipyard(), false, 202f, Farstar.STAGE_HEIGHT*0.078f, this, player1);
+        yardButton1.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.029f);
+        addActor(yardButton1);
+        yardMenu2 = new YardMenu(player2.getShipyard(), true, 202f, Farstar.STAGE_HEIGHT*0.76f, this, player2);
+        yardButton2.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.91f);
+        addActor(yardButton2);
         //Decks
         deck1 = new CardSource(Farstar.STAGE_WIDTH*0.96f, Farstar.STAGE_HEIGHT*0.4f,this, player1, true);
         deck2 = new CardSource(Farstar.STAGE_WIDTH*0.96f, Farstar.STAGE_HEIGHT*0.559f, this, player2, false);
