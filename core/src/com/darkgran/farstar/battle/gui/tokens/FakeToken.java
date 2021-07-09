@@ -1,6 +1,5 @@
 package com.darkgran.farstar.battle.gui.tokens;
 
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
@@ -10,7 +9,6 @@ public class FakeToken extends Token { //temporary token for targeted deployment
     public FakeToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
         super(card, x, y, battleStage, cardListMenu, TokenType.FAKE, false, false);
         getCardListMenu().getPlayer().getFleet().getFleetMenu().setPredictEnabled(true);
-        setTouchable(Touchable.disabled);
         setDragger(new Dragger(this));
         this.addListener(getDragger());
     }
