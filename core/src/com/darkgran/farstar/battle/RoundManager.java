@@ -297,7 +297,7 @@ public class RoundManager {
         if (!battle.isEverythingDisabled() && !battle.activeCombatOrDuel() && getBattle().getWhoseTurn() instanceof LocalPlayer) {
             if (targetingActive) {
                 processTarget(token);
-            } else if (possibilityAdvisor.isPossibleToDeploy(owner, battle.getWhoseTurn(), token.getCard(), false, battle)) {
+            } else if (owner == battle.getWhoseTurn() && possibilityAdvisor.hasPossibleAbility(owner, token.getCard())) {
                 checkAllAbilities(token, null, AbilityStarter.USE, owner, null);
             }
         }
