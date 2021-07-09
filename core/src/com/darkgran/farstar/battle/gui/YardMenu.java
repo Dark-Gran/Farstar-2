@@ -10,7 +10,7 @@ import com.darkgran.farstar.battle.players.Yard;
 import com.darkgran.farstar.gui.Notification;
 
 public class YardMenu extends CardListMenu {
-    private boolean visible = false;
+    private boolean open = false;
 
     public YardMenu(Yard yard, boolean onTop, float x, float y, BattleStage battleStage, Player player) {
         super(yard, x, y, 0, 0, onTop, battleStage, player);
@@ -30,10 +30,15 @@ public class YardMenu extends CardListMenu {
         }
     }
 
+    public void switchVisibility(boolean visible) {
+        setOpen(!visible);
+        switchVisibility();
+    }
+
     public void switchVisibility() {
         if (getPlayer() instanceof LocalPlayer) {
-            visible = !visible;
-            setTouchable(visible);
+            open = !open;
+            setTouchable(open);
         } else {
             getBattleStage().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Access Denied.", 3);
         }
@@ -45,8 +50,8 @@ public class YardMenu extends CardListMenu {
         }
     }
 
-    public boolean isVisible() { return visible; }
+    public boolean isOpen() { return open; }
 
-    public void setVisible(boolean visible) { this.visible = visible; }
+    public void setOpen(boolean open) { this.open = open; }
 
 }

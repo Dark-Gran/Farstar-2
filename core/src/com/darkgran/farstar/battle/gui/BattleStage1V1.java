@@ -122,8 +122,8 @@ public class BattleStage1V1 extends BattleStage {
         fleetMenu2.drawTokens(batch);
         supportMenu1.drawTokens(batch);
         supportMenu2.drawTokens(batch);
-        if (yardMenu1.isVisible()) { yardMenu1.drawTokens(batch); }
-        if (yardMenu2.isVisible()) { yardMenu2.drawTokens(batch); }
+        if (yardMenu1.isOpen()) { yardMenu1.drawTokens(batch); }
+        if (yardMenu2.isOpen()) { yardMenu2.drawTokens(batch); }
         handMenu1.drawTokens(batch);
         handMenu2.drawTokens(batch);
         super.drawBattleStage(delta, batch);
