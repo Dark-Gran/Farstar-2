@@ -25,7 +25,7 @@ public class MothershipToken extends ClickToken implements DropTarget {
     public void draw(Batch batch) {
         super.draw(batch);
         //Draws DropTarget SimpleBox2
-        //if (DEBUG_RENDER) { getBattleStage().getBattleScreen().drawDebugSimpleBox2(getSimpleBox2(), getBattleStage().getBattleScreen().getShapeRenderer(), batch); }
+        if (DEBUG_RENDER) { getBattleStage().getBattleScreen().drawDebugSimpleBox2(getSimpleBox2(), getBattleStage().getBattleScreen().getShapeRenderer(), batch); }
     }
 
     @Override

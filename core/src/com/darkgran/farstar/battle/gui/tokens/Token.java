@@ -126,7 +126,7 @@ public class Token extends Actor implements JustFont {
             tokenPrice.draw(batch);
         }
         if (DEBUG_RENDER) {
-            //debugRender(batch);
+            debugRender(batch);
         }
     }
 
