@@ -133,7 +133,10 @@ public class Card {
 
     public boolean isPossible() { return possible; }
 
-    public void setPossible(boolean possible) { this.possible = possible; }
+    public void setPossible(boolean possible) {
+        this.possible = possible;
+        if (token != null) { token.setGlowState(possible ? Token.GlowState.POSSIBLE : Token.GlowState.DIM); }
+    }
 
     public boolean isInDuel() { return inDuel; }
 

@@ -23,9 +23,17 @@ public class Token extends Actor implements JustFont {
     private final BattleStage battleStage;
     private final CardListMenu cardListMenu;
     private final TokenType tokenType;
+    private boolean noPics;
     private Texture portrait;
     private Texture frame;
-    private boolean noPics;
+    private GlowState glowState = GlowState.DIM;
+    private Texture glowG;
+    private Texture glowY;
+    private float glowOffsetX = 0f;
+    private float glowOffsetY = 0f;
+    public enum GlowState {
+        DIM, POSSIBLE, PICKED;
+    }
 
     public Token(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, boolean noPics, boolean connectCard){
         setWidth(tokenType.getWidth());
@@ -38,6 +46,7 @@ public class Token extends Actor implements JustFont {
             if (card != null) {
                 portrait = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getPortraitName(card.getCardInfo(), tokenType));
                 frame = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getFrameName(card.getCardInfo(), tokenType));
+                setGlows();
             }
         }
         this.cardListMenu = cardListMenu;
@@ -68,6 +77,13 @@ public class Token extends Actor implements JustFont {
         if (card != null && connectCard) {
             card.setToken(this);
         }
+    }
+
+    public void setGlows() {
+        glowG = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/glowG", tokenType, false)+".png");
+        glowY = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/glowY", tokenType, false)+".png");
+        glowOffsetX = -glowG.getWidth()/2f+frame.getWidth()/2f;
+        glowOffsetY = -glowG.getHeight()/2f+frame.getHeight()/2f;
     }
 
     public void setParts() {
@@ -120,6 +136,16 @@ public class Token extends Actor implements JustFont {
 
     public void draw(Batch batch) {
         if (card != null) {
+            if (glowG != null) {
+                switch (glowState) {
+                    case POSSIBLE:
+                        batch.draw(glowG, getX() + glowOffsetX, getY() + glowOffsetY);
+                        break;
+                    case PICKED:
+                        batch.draw(glowY, getX() + glowOffsetX, getY() + glowOffsetY);
+                        break;
+                }
+            }
             drawPortrait(batch);
             tokenDefense.draw(batch);
             tokenOffense.draw(batch);
@@ -220,4 +246,9 @@ public class Token extends Actor implements JustFont {
     protected void setCard(Card card) {
         this.card = card;
     }
+
+    public void setGlowState(GlowState glowState) {
+        this.glowState = glowState;
+    }
+
 }
