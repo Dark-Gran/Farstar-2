@@ -32,6 +32,10 @@ public class TokenZoom1v1 extends TokenZoom {
                     newX -= getTargetType().getWidth()/2f+getCardPic().getWidth()/2f;
                     newY = (getCard().getPlayer().getBattleID() == 1) ? 0f : Farstar.STAGE_HEIGHT-getCardPic().getHeight();
                     break;
+                case JUNK:
+                    newX = getTargetXY().getX()-getTargetType().getWidth()*1.5f-5f;
+                    newY -= (getCard().getPlayer().getBattleID() == 1) ? 0f : getCardPic().getHeight()-TokenType.JUNK.getWidth()/2f;
+                    break;
             }
             setPosition(newX, newY);
         }

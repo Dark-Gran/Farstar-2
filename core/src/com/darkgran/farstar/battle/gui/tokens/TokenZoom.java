@@ -67,7 +67,7 @@ public abstract class TokenZoom extends PrintToken {
     }
 
     private boolean instantReaction(TokenType targetType) {
-        return targetType == TokenType.HAND || targetType == TokenType.YARD;
+        return targetType == TokenType.HAND || targetType == TokenType.YARD || targetType == TokenType.JUNK;
     }
 
     @Override
