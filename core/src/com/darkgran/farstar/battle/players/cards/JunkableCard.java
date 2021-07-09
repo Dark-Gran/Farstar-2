@@ -15,8 +15,8 @@ public abstract class JunkableCard extends TokenizedCard {
         if (getToken() != null) {
             if (getCardInfo().getCardType() != CardType.YARDPRINT) {
                 getToken().addCardToJunk();
-                getToken().destroy();
             }
+            getToken().destroy();
         }
     }
 
