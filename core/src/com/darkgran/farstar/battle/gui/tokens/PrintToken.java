@@ -29,22 +29,12 @@ public class PrintToken extends Token {
         }
     }
 
+    @Override
     public void setup(Card card, TokenType targetType, SimpleVector2 targetXY) {
-        setCard(card);
+        super.setup(card, targetType, targetXY);
         this.targetType = targetType;
         this.targetXY = targetXY;
         shiftPosition();
-        setPortrait(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getPortraitName(card.getCardInfo(), getTokenType())));
-        setFrame(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getFrameName(card.getCardInfo(), getTokenType())));
-        getTokenDefense().update();
-        getTokenDefense().setPad(getTokenType());
-        getTokenDefense().setupOffset();
-        getTokenOffense().update();
-        getTokenOffense().setPad(getTokenType());
-        getTokenOffense().setupOffset();
-        getTokenPrice().update();
-        getTokenPrice().setPad(getTokenType());
-        getTokenPrice().setupOffset();
     }
 
     public void shiftPosition() { }

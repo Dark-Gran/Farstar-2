@@ -12,10 +12,14 @@ public class TokenDefense extends TokenPart {
 
     @Override
     public boolean isEnabled() {
-        if (!getContent().equals("0") || !TechType.isInferior(getToken().getCard().getCardInfo().getDefenseType())) {
-            return true;
+        if (getToken().getTokenType() != TokenType.JUNK) {
+            if (!getContent().equals("0") || !TechType.isInferior(getToken().getCard().getCardInfo().getDefenseType())) {
+                return true;
+            } else {
+                return CardType.needsDefense(getToken().getCard().getCardInfo().getCardType());
+            }
         } else {
-            return CardType.needsDefense(getToken().getCard().getCardInfo().getCardType());
+            return false;
         }
     }
 

@@ -11,7 +11,11 @@ public class TokenOffense extends TokenPart {
 
     @Override
     public boolean isEnabled() {
-        return !getContent().equals("0") || !TechType.isInferior(getToken().getCard().getCardInfo().getOffenseType());
+        if (getToken().getTokenType() != TokenType.JUNK) {
+            return !getContent().equals("0") || !TechType.isInferior(getToken().getCard().getCardInfo().getOffenseType());
+        } else {
+            return false;
+        }
     }
 
     @Override

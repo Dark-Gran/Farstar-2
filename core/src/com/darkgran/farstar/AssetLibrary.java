@@ -56,6 +56,7 @@ public class AssetLibrary {
         string += "_";
         switch (tokenType) {
             default:
+            case JUNK:
             case SUPPORT:
                 return string + "S";
             case FLEET:

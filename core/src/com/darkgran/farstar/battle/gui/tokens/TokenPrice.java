@@ -18,6 +18,11 @@ public class TokenPrice extends TokenPart {
     }
 
     @Override
+    public boolean isEnabled() {
+        return getToken().getTokenType() != TokenType.JUNK;
+    }
+
+    @Override
     public void setPad(TokenType tokenType) {
         setPad((Texture) Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padE", tokenType, true)+".png"));
         pad2 = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padM", tokenType, true)+".png");

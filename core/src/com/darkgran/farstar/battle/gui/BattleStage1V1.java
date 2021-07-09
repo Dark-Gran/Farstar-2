@@ -60,6 +60,8 @@ public class BattleStage1V1 extends BattleStage {
         //Discards / Junkpiles
         junkButton1 = new JunkButton(Farstar.STAGE_WIDTH*0.894f, Farstar.STAGE_HEIGHT*0.16f, this, player1);
         junkButton2 = new JunkButton(Farstar.STAGE_WIDTH*0.894f, Farstar.STAGE_HEIGHT*0.84f - TokenType.JUNK.getHeight(), this, player2);
+        player1.getJunkpile().setJunkButton(junkButton1);
+        player2.getJunkpile().setJunkButton(junkButton2);
         addDropTarget(junkButton1);
         addDropTarget(junkButton2);
         //Fleets

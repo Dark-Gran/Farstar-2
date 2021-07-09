@@ -9,6 +9,7 @@ import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.gui.JustFont;
 import com.darkgran.farstar.util.SimpleBox2;
+import com.darkgran.farstar.util.SimpleVector2;
 
 import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 
@@ -76,6 +77,21 @@ public class Token extends Actor implements JustFont {
         tokenOffense.setY(getY());
         tokenPrice.setX(getX());
         tokenPrice.setY(getY() + getHeight());
+    }
+
+    public void setup(Card card, TokenType targetType, SimpleVector2 targetXY) { //used only by non-standard tokens (that do not connectCard)
+        setCard(card);
+        setPortrait(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getPortraitName(card.getCardInfo(), getTokenType())));
+        setFrame(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getFrameName(card.getCardInfo(), getTokenType())));
+        getTokenDefense().update();
+        getTokenDefense().setPad(getTokenType());
+        getTokenDefense().setupOffset();
+        getTokenOffense().update();
+        getTokenOffense().setPad(getTokenType());
+        getTokenOffense().setupOffset();
+        getTokenPrice().update();
+        getTokenPrice().setPad(getTokenType());
+        getTokenPrice().setupOffset();
     }
 
     @Override
