@@ -112,6 +112,12 @@ public class Token extends Actor implements JustFont {
         setParts();
     }
 
+    @Override
+    public void setBounds(float x, float y, float width, float height) {
+        super.setBounds(x, y, width, height);
+        setParts();
+    }
+
     public void draw(Batch batch) {
         if (card != null) {
             drawPortrait(batch);
