@@ -16,13 +16,16 @@ public class AbilityPickerOption extends PrintToken {
         clickListener = new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("OK");
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                battle.getRoundManager().processPick(abilityInfo);
+                if (button == 0) {
+                    battle.getRoundManager().processPick(abilityInfo);
+                } else if (button == 1) {
+                    battle.getRoundManager().tryCancel();
+                }
             }
         };
         addListener(clickListener);

@@ -35,7 +35,7 @@ public class BattleScreen extends SuperScreen {
         }
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            battleStage.getCardZoom().deactivate();
+            battleStage.getCardZoom().deactivate(button==1);
             return super.touchDown(screenX, screenY, pointer, button);
         }
     };
