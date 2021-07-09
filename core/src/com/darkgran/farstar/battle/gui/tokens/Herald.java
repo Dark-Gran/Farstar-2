@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.gui.tokens;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -26,6 +27,9 @@ public class Herald extends TokenZoom {
         setTouchable(Touchable.disabled);
         addListener(clickListener);
     }
+
+    @Override
+    protected void drawGlows(Batch batch) { }
 
     public void touched() {
         disable();

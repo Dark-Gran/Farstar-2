@@ -9,6 +9,8 @@ import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.util.SimpleVector2;
 
+import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
+
 /**
  * Used for "card-zoom" etc.
  */
@@ -26,15 +28,26 @@ public class PrintToken extends Token {
     public void enable(Card card, TokenType targetType, SimpleVector2 targetXY) {
         if (getCard() != card) {
             setup(card, targetType, targetXY);
+            if (getGlowG() == null) { setGlows(); }
         }
     }
 
     @Override
-    public void setGlows() { }
+    public void setGlows() {
+        setGlowG(Farstar.ASSET_LIBRARY.get("images/tokens/glowG_Z.png"));
+        setGlowY(Farstar.ASSET_LIBRARY.get("images/tokens/glowY_Z.png"));
+        setGlowOffsetX(-getGlowG().getWidth()/2f+getFrame().getWidth()/2f);
+        setGlowOffsetY(-getGlowG().getHeight()/2f+cardPic.getHeight()/2f);
+    }
 
     @Override
     public void setup(Card card, TokenType targetType, SimpleVector2 targetXY) {
         super.setup(card, targetType, targetXY);
+        if (card.isPossible()) {
+            setGlowState(GlowState.POSSIBLE);
+        } else {
+            setGlowState(GlowState.DIM);
+        }
         this.targetType = targetType;
         this.targetXY = targetXY;
         shiftPosition();
@@ -49,8 +62,15 @@ public class PrintToken extends Token {
     @Override
     public void draw(Batch batch) {
         if (getCard() != null) {
+            drawGlows(batch);
             batch.draw(cardPic, getX(), getY());
-            super.draw(batch);
+            drawPortrait(batch);
+            getTokenDefense().draw(batch);
+            getTokenOffense().draw(batch);
+            getTokenPrice().draw(batch);
+            if (DEBUG_RENDER) {
+                debugRender(batch);
+            }
         }
     }
 

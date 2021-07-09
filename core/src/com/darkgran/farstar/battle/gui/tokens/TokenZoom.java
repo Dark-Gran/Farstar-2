@@ -62,7 +62,8 @@ public abstract class TokenZoom extends PrintToken {
                 counting = true;
                 counter.setEnabled(true);
             }
-            setup(card, targetType, targetXY);
+
+            super.enable(card, targetType, targetXY);
         }
     }
 
