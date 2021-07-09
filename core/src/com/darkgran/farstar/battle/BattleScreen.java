@@ -28,6 +28,7 @@ public class BattleScreen extends SuperScreen {
             if (button == 1) { //mouse.right
                 if (battle.getRoundManager().isLaunched() && battle.getWhoseTurn() instanceof LocalPlayer) {
                     battle.getRoundManager().tryCancel();
+                    battle.closeYards();
                 }
             }
             battleStage.getCardZoom().reactivate();
