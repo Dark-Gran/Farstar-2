@@ -58,8 +58,8 @@ public class BattleStage1V1 extends BattleStage {
         tier1 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.083f, Farstar.STAGE_HEIGHT*0.064f);
         tier2 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.083f, Farstar.STAGE_HEIGHT*0.95f);
         //Discards / Junkpiles
-        junkButton1 = new JunkButton(Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.16f, this, player1);
-        junkButton2 = new JunkButton(Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.84f - TokenType.JUNK.getHeight(), this, player2);
+        junkButton1 = new JunkButton(Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.13f, this, player1);
+        junkButton2 = new JunkButton(Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.88f - TokenType.JUNK.getHeight(), this, player2);
         player1.getJunkpile().setJunkButton(junkButton1);
         player2.getJunkpile().setJunkButton(junkButton2);
         addDropTarget(junkButton1);
@@ -134,10 +134,10 @@ public class BattleStage1V1 extends BattleStage {
         handMenu2.drawTokens(batch);
         super.drawBattleStage(delta, batch);
         if (DEBUG_RENDER) {
-            /*getBattleScreen().drawDebugSimpleBox2(fleetMenu1.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
+            getBattleScreen().drawDebugSimpleBox2(fleetMenu1.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
             getBattleScreen().drawDebugSimpleBox2(fleetMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
             getBattleScreen().drawDebugSimpleBox2(supportMenu1.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
-            getBattleScreen().drawDebugSimpleBox2(supportMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);*/
+            getBattleScreen().drawDebugSimpleBox2(supportMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
         }
     }
 
