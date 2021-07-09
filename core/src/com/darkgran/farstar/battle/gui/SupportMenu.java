@@ -20,7 +20,7 @@ public class SupportMenu extends CardListMenu implements DropTarget {
 
     @Override
     public void setupOffset() {
-        setOffset(TokenType.SUPPORT.getWidth()*1.05f);
+        setOffset(TokenType.SUPPORT.getWidth()*1.02f);
     }
 
     @Override
@@ -37,9 +37,9 @@ public class SupportMenu extends CardListMenu implements DropTarget {
         if (card instanceof Support) {
             Support support = (Support) card;
             int pos = translatePosition(getTokens().size());
-            SupportToken supportToken = new SupportToken(support, getTokensX() + getX() + getOffset()*pos + ((pos >= 3) ? TokenType.MS.getWidth()*1.161f : 0), getTokensY() + getY(), getBattleStage(), this);
+            SupportToken supportToken = new SupportToken(support, getTokensX() + getX() + getOffset()*pos + ((pos >= 3) ? TokenType.MS.getWidth()+13f : 0), getTokensY() + getY(), getBattleStage(), this);
             getTokens().add(supportToken);
-            ((Support) card).setToken(supportToken);
+            card.setToken(supportToken);
         }
     }
 

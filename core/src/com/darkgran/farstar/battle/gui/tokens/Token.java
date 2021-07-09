@@ -105,7 +105,7 @@ public class Token extends Actor implements JustFont {
         }
         //Debug
         if (DEBUG_RENDER) {
-            //debugRender(batch);
+            debugRender(batch);
         }
     }
 
