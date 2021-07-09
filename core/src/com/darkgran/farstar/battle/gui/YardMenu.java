@@ -31,8 +31,12 @@ public class YardMenu extends CardListMenu {
     }
 
     public void switchVisibility(boolean visible) {
-        setOpen(!visible);
-        switchVisibility();
+        if (getPlayer() instanceof LocalPlayer) {
+            setOpen(!visible);
+            switchVisibility();
+        } else {
+            accessDenied();
+        }
     }
 
     public void switchVisibility() {
@@ -40,8 +44,12 @@ public class YardMenu extends CardListMenu {
             open = !open;
             setTouchable(open);
         } else {
-            getBattleStage().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Access Denied.", 3);
+            accessDenied();
         }
+    }
+
+    private void accessDenied() {
+        getBattleStage().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Access Denied.", 3);
     }
 
     private void setTouchable(boolean enable) {
