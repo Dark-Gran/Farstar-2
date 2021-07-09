@@ -65,7 +65,7 @@ public class HandToken extends AnchoredToken {
     @Override
     public void setGlows() {
         setGlowG(Farstar.ASSET_LIBRARY.get("images/tokens/glowG_"+(currentState == HandState.DOWN ? "D" : "U")+".png"));
-        setGlowY(Farstar.ASSET_LIBRARY.get("images/tokens/glowG_"+(currentState == HandState.DOWN ? "D" : "U")+".png"));
+        setGlowY(Farstar.ASSET_LIBRARY.get("images/tokens/glowY_"+(currentState == HandState.DOWN ? "D" : "U")+".png"));
     }
 
     public void refreshSize() {
