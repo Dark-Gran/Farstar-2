@@ -30,6 +30,9 @@ public class PrintToken extends Token {
     }
 
     @Override
+    public void setGlows() { }
+
+    @Override
     public void setup(Card card, TokenType targetType, SimpleVector2 targetXY) {
         super.setup(card, targetType, targetXY);
         this.targetType = targetType;
