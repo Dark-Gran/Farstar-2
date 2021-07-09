@@ -2,7 +2,7 @@ package com.darkgran.farstar.battle.players.cards;
 
 import com.darkgran.farstar.battle.players.Player;
 
-public abstract class JunkableCard extends TokenizedCard {
+public abstract class JunkableCard extends Card {
 
     public JunkableCard(CardInfo cardInfo, Player player) { super(cardInfo, player); }
 

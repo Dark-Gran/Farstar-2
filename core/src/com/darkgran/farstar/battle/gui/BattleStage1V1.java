@@ -72,6 +72,8 @@ public class BattleStage1V1 extends BattleStage {
         //Motherships
         mothershipToken1 = new MothershipToken(player1.getMs(), (Farstar.STAGE_WIDTH - TokenType.MS.getWidth()) * 0.5f, Farstar.STAGE_HEIGHT * 0.1f, this, null, supportMenu1);
         mothershipToken2 = new MothershipToken(player2.getMs(), (Farstar.STAGE_WIDTH - TokenType.MS.getWidth()) * 0.5f, (Farstar.STAGE_HEIGHT * 0.91f) - TokenType.MS.getHeight(), this, null, supportMenu2);
+        player1.getMs().setToken(mothershipToken1);
+        player2.getMs().setToken(mothershipToken2);
         addDropTarget(mothershipToken1);
         addDropTarget(mothershipToken2);
         //Discards / Junkpiles

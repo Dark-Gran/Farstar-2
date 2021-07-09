@@ -1,6 +1,6 @@
 package com.darkgran.farstar.battle.players.cards;
 
-public class Mothership extends TokenizedCard {
+public class Mothership extends Card {
 
     public Mothership(int id) { super(id); }
 
