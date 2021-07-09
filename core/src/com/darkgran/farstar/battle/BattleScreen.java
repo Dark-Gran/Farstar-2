@@ -29,11 +29,9 @@ public class BattleScreen extends SuperScreen {
                 if (battle.getRoundManager().isLaunched() && battle.getWhoseTurn() instanceof LocalPlayer) {
                     battle.getRoundManager().tryCancel();
                 }
-                return false;
-            } else {
-                battleStage.getCardZoom().reactivate();
-                return super.touchUp(screenX, screenY, pointer, button);
             }
+            battleStage.getCardZoom().reactivate();
+            return super.touchUp(screenX, screenY, pointer, button);
         }
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
