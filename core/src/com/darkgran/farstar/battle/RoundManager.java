@@ -208,11 +208,11 @@ public class RoundManager {
             }
         }
         //FAKE
-        else if (token.getCard().getCardInfo().getCardType() == CardType.YARDPRINT) {
+        /*else if (token.getCard().getCardInfo().getCardType() == CardType.YARDPRINT) {
             if (success || postAbility) {
                 callHerald(token.getCard(), token.getTokenType(), new SimpleVector2(token.getX(), token.getY()));
             }
-        }
+        }*/
         return success;
     }
 
