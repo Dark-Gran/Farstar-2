@@ -119,7 +119,7 @@ public class RoundManager {
                     Card targetCard = null;
                     if (possibilityAdvisor.isPossibleToDeploy(whoseTurn, whoseTurn, token.getCard(), false, battle)) {
                         //TARGETING ANYWHERE FOR ACTION-CARDS
-                        if (cardType == CardType.ACTION) {
+                        if (cardType == CardType.ACTION && !(dropTarget instanceof JunkButton)) {
                             if (!postAbility) {
                                 success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
                             }
