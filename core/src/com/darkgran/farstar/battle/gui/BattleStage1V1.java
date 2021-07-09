@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.BattleScreen;
+import com.darkgran.farstar.battle.gui.tokens.Herald;
 import com.darkgran.farstar.battle.gui.tokens.MothershipToken;
 import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.gui.tokens.TokenZoom1v1;
@@ -93,11 +94,14 @@ public class BattleStage1V1 extends BattleStage {
         handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*0.5f, -Farstar.STAGE_HEIGHT*0.25f, this, player1, true);
         handMenu2 = new HandMenu(player2.getHand(),Farstar.STAGE_WIDTH*0.5f, Farstar.STAGE_HEIGHT*0.95f, this, player2, false);
         //TokenZoom
-        setCardZoom(new TokenZoom1v1(null, 0, 0, this, null, 30));
+        createTokenZooms();
     }
 
-    public FleetMenu getFleetMenu1() {
-        return fleetMenu1;
+    @Override
+    protected void createTokenZooms() {
+        setCardZoom(new TokenZoom1v1(null, 0, 0, this, null, 30));
+        setHerald(new Herald(null, Farstar.STAGE_WIDTH*0.09f, Farstar.STAGE_HEIGHT*0.38f, this, null, 210));
+        addActor(getHerald());
     }
 
     @Override
