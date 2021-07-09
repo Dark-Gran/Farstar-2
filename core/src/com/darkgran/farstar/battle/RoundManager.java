@@ -186,7 +186,7 @@ public class RoundManager {
                             battle.getCombatManager().getDuelManager().saveTactic(token.getCard(), targetCard);
                         }
                         if (payPrice) { whoseTurn.payday(token.getCard()); }
-                        if (!(token instanceof FakeToken)) { token.addCardToJunk(); }
+                        if (!(token instanceof FakeToken) && !CardType.isShip(cardType)) { token.addCardToJunk(); }
                         possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
                     } else if (dropTarget instanceof JunkButton && token instanceof HandToken) { //Target: Discard
                         Junkpile junkpile = ((JunkButton) dropTarget).getPlayer().getJunkpile();
