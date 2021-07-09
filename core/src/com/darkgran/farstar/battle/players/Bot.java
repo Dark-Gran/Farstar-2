@@ -160,7 +160,7 @@ public abstract class Bot extends Player implements BotSettings {
     }
 
     protected Token cardToToken(Card card, Menu menu) {
-        return new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (menu instanceof CardListMenu) ? (CardListMenu) menu : null, TokenType.FLEET, false); //TokenType.FLEET = default
+        return new Token(card, getFleet().getFleetMenu().getX(), getFleet().getFleetMenu().getY(), getHand().getCardListMenu().getBattleStage(), (menu instanceof CardListMenu) ? (CardListMenu) menu : null, TokenType.FLEET, false, true); //TokenType.FLEET = default
     }
 
     protected void report(String message) {

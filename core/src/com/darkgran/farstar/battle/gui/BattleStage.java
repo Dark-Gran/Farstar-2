@@ -69,7 +69,7 @@ public abstract class BattleStage extends ListeningStage {
         this.duelMenu = duelMenu;
         combatEndButton.setPosition(Farstar.STAGE_WIDTH*0.82f, Farstar.STAGE_HEIGHT*0.3f);
         combatEndButton.setDisabled(true);
-        abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH*1/12, Farstar.STAGE_HEIGHT*1/3, this, null, Farstar.ASSET_LIBRARY.get("images/yard.png"));
+        abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH/2f+5f, Farstar.STAGE_HEIGHT*0.2f, this, null, Farstar.ASSET_LIBRARY.get("images/yard.png"));
         battleScreen.getBattle().getRoundManager().setAbilityPicker(abilityPicker);
         roundCounter = new RoundCounter(Farstar.STAGE_WIDTH*0.003f, Farstar.STAGE_HEIGHT*0.475f, this, getBattleScreen().getBattle());
     }

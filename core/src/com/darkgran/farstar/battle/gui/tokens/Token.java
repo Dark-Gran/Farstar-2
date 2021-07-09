@@ -26,7 +26,7 @@ public class Token extends Actor implements JustFont {
     private Texture frame;
     private boolean noPics;
 
-    public Token(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, boolean noPics){
+    public Token(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, boolean noPics, boolean connectCard){
         setWidth(tokenType.getWidth());
         setHeight(tokenType.getHeight());
         setFont(tokenType.getFontPath());
@@ -45,13 +45,13 @@ public class Token extends Actor implements JustFont {
         tokenOffense = new TokenOffense(getFontPath(), this);
         tokenPrice = new TokenPrice(getFontPath(), this);
         setPosition(x, y);
-        if (card != null) {
+        if (card != null && connectCard) {
             card.setToken(this);
         }
         battleStage.addActor(this);
     }
 
-    public Token(Card card, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType) {
+    public Token(Card card, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, boolean connectCard) {
         setWidth(tokenType.getWidth());
         setHeight(tokenType.getHeight());
         setX(0);
@@ -64,7 +64,7 @@ public class Token extends Actor implements JustFont {
         tokenOffense = new TokenOffense(getFontPath(), this);
         tokenPrice = new TokenPrice(getFontPath(), this);
         setParts();
-        if (card != null) {
+        if (card != null && connectCard) {
             card.setToken(this);
         }
     }

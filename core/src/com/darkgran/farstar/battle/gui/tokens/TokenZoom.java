@@ -14,7 +14,7 @@ public abstract class TokenZoom extends PrintToken {
     private boolean hidden = true;
 
     public TokenZoom(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, int counterCap) {
-        super(card, x, y, battleStage, cardListMenu);
+        super(card, x, y, battleStage, cardListMenu, false);
         counter = new SimpleCounter(false, counterCap, 0);
     }
 

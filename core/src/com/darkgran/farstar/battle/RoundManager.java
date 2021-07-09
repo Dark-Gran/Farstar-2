@@ -258,7 +258,7 @@ public class RoundManager {
             for (AbilityInfo option : options) {
                 abilityPicker.getAbilityInfos().add(option);
             }
-            abilityPicker.enable();
+            abilityPicker.enable(caster.getCard());
         }
     }
 

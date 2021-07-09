@@ -17,8 +17,8 @@ public class PrintToken extends Token {
     private TokenType targetType;
     private SimpleVector2 targetXY = new SimpleVector2(0, 0);
 
-    public PrintToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
-        super(card, x, y, battleStage, cardListMenu, TokenType.PRINT, false);
+    public PrintToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, boolean connectCard) {
+        super(card, x, y, battleStage, cardListMenu, TokenType.PRINT, false, connectCard);
         cardPic = Farstar.ASSET_LIBRARY.get("images/tokens/card_Z.png");
         setTouchable(Touchable.disabled);
     }

@@ -1,30 +1,36 @@
 package com.darkgran.farstar.battle.gui;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.darkgran.farstar.battle.Battle;
+import com.darkgran.farstar.battle.gui.tokens.PrintToken;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
+import com.darkgran.farstar.battle.players.cards.Card;
 
-public class AbilityPickerOption extends ImageButton {
+public class AbilityPickerOption extends PrintToken {
+    private ClickListener clickListener;
 
-    public AbilityPickerOption(Texture texture, Battle battle, AbilityInfo abilityInfo) {
-        super(new TextureRegionDrawable(new TextureRegion(texture)));
-        this.addListener(new InputListener()
-        {
+    public AbilityPickerOption(Battle battle, AbilityInfo abilityInfo, Card card, float x, float y) {
+        super(card, x, y, battle.getBattleScreen().getBattleStage(), null, false);
+        clickListener = new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("OK");
                 return true;
             }
 
             @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 battle.getRoundManager().processPick(abilityInfo);
             }
-        });
+        };
+        addListener(clickListener);
+        setTouchable(Touchable.enabled);
+    }
+
+    public ClickListener getClickListener() {
+        return clickListener;
     }
 
 }
