@@ -3,6 +3,7 @@ package com.darkgran.farstar.battle.gui.tokens;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.battle.gui.AbilityPickerOption;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.gui.TextDrawer;
@@ -61,14 +62,14 @@ public class TokenPrice extends TokenPart {
                 batch.draw(getPad(), x, getY() + getOffsetY());
                 if (abiMark != null) { batch.draw(abiMark, x, getY() + getOffsetY()); }
             } else {
-                int E = getResource(true);
+                int E = getResource(true, getToken() instanceof AbilityPickerOption ? TokenType.SUPPORT : getToken().getTokenType());
                 if (E != 0 || hasAbility) {
                     String e = Integer.toString(E);
                     batch.draw(getPad(), x, getY() + getOffsetY());
                     drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - getTextWH().getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + getTextWH().getY() * 0.48f, e);
                     x += getPad().getWidth();
                 }
-                int M = getResource(false);
+                int M = getResource(false, getToken() instanceof AbilityPickerOption ? TokenType.SUPPORT : getToken().getTokenType());
                 if (M != 0) {
                     String m = Integer.toString(M);
                     batch.draw(pad2, x, getY() + getOffsetY());
@@ -78,8 +79,8 @@ public class TokenPrice extends TokenPart {
         }
     }
 
-    private int getResource(boolean energy) {
-        switch (getToken().getTokenType()) {
+    private int getResource(boolean energy, TokenType tokenType) {
+        switch (tokenType) {
             case YARD:
             case JUNK:
             case FAKE:
