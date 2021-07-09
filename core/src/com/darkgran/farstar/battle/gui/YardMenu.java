@@ -35,7 +35,7 @@ public class YardMenu extends CardListMenu {
             setOpen(!visible);
             switchVisibility();
         } else {
-            accessDenied();
+            if (visible) { accessDenied(); }
         }
     }
 
@@ -44,7 +44,7 @@ public class YardMenu extends CardListMenu {
             open = !open;
             setTouchable(open);
         } else {
-            accessDenied();
+            if (!open) { accessDenied(); }
         }
     }
 
