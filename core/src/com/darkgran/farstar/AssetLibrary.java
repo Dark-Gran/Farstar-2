@@ -176,6 +176,18 @@ public class AssetLibrary {
         assetManager.load("images/tokens/frameI_S.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameI_Y.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameI_Z.png", Texture.class, texParams);
+        assetManager.load("images/tokens/glowG_D.png", Texture.class, texParams);
+        assetManager.load("images/tokens/glowG_F.png", Texture.class, texParams);
+        assetManager.load("images/tokens/glowG_MS.png", Texture.class, texParams);
+        assetManager.load("images/tokens/glowG_S.png", Texture.class, texParams);
+        assetManager.load("images/tokens/glowG_U.png", Texture.class, texParams);
+        assetManager.load("images/tokens/glowG_Y.png", Texture.class, texParams);
+        assetManager.load("images/tokens/glowY_D.png", Texture.class, texParams);
+        assetManager.load("images/tokens/glowY_F.png", Texture.class, texParams);
+        assetManager.load("images/tokens/glowY_MS.png", Texture.class, texParams);
+        assetManager.load("images/tokens/glowY_S.png", Texture.class, texParams);
+        assetManager.load("images/tokens/glowY_U.png", Texture.class, texParams);
+        assetManager.load("images/tokens/glowY_Y.png", Texture.class, texParams);
         assetManager.load("images/tokens/padE_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/padE_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/padE_MS.png", Texture.class, texParams);
