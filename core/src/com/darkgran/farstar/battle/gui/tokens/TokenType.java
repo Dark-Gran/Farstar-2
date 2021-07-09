@@ -2,7 +2,7 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 public enum TokenType {
     //Standard
-    MS(309f, 184f, "fonts/bahnschrift50b.fnt"), //Parts: 69x52
+    MS(309f, 184f, "fonts/bahnschrift50b.fnt"), //Parts: 69x52 (g: 420x295)
     FAKE(260f, 155f, "fonts/bahnschrift46b.fnt"), //60x45
     FLEET(232f, 138f, "fonts/bahnschrift44b.fnt"), //54x41
     YARD(216f, 129f, "fonts/bahnschrift44b.fnt"), //F
