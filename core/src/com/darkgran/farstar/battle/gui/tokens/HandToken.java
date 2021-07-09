@@ -13,6 +13,8 @@ import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.util.SimpleVector2;
 
+import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
+
 public class HandToken extends AnchoredToken {
     public enum HandState {
         DOWN, UP;
@@ -54,8 +56,16 @@ public class HandToken extends AnchoredToken {
         });
         this.addListener(getDragger());
         cardPic = Farstar.ASSET_LIBRARY.get("images/tokens/card_D.png");
+        setGlowOffsetX(-getGlowG().getWidth()/2f+getFrame().getWidth()/2f);
+        setGlowOffsetY(-getGlowG().getHeight()/2f+cardPic.getHeight()/2f);
         setOriginX(getWidth()/2);
         setOriginY(getHeight()/2);
+    }
+
+    @Override
+    public void setGlows() {
+        setGlowG(Farstar.ASSET_LIBRARY.get("images/tokens/glowG_"+(currentState == HandState.DOWN ? "D" : "U")+".png"));
+        setGlowY(Farstar.ASSET_LIBRARY.get("images/tokens/glowG_"+(currentState == HandState.DOWN ? "D" : "U")+".png"));
     }
 
     public void refreshSize() {
@@ -127,8 +137,17 @@ public class HandToken extends AnchoredToken {
                 oldMX = null;
             }
             //Draw
-            batch.draw(cardPic, getX(), getY());
-            super.draw(batch);
+            if (getCard() != null) {
+                drawGlows(batch);
+                batch.draw(cardPic, getX(), getY());
+                drawPortrait(batch);
+                getTokenDefense().draw(batch);
+                getTokenOffense().draw(batch);
+                getTokenPrice().draw(batch);
+            }
+            if (DEBUG_RENDER) {
+                debugRender(batch);
+            }
             if (oldMX != null) {
                 batch.setTransformMatrix(oldMX);
             }

@@ -136,16 +136,7 @@ public class Token extends Actor implements JustFont {
 
     public void draw(Batch batch) {
         if (card != null) {
-            if (glowG != null) {
-                switch (glowState) {
-                    case POSSIBLE:
-                        batch.draw(glowG, getX() + glowOffsetX, getY() + glowOffsetY);
-                        break;
-                    case PICKED:
-                        batch.draw(glowY, getX() + glowOffsetX, getY() + glowOffsetY);
-                        break;
-                }
-            }
+            drawGlows(batch);
             drawPortrait(batch);
             tokenDefense.draw(batch);
             tokenOffense.draw(batch);
@@ -153,6 +144,19 @@ public class Token extends Actor implements JustFont {
         }
         if (DEBUG_RENDER) {
             debugRender(batch);
+        }
+    }
+
+    protected void drawGlows(Batch batch) {
+        if (glowG != null) {
+            switch (glowState) {
+                case POSSIBLE:
+                    batch.draw(glowG, getX() + glowOffsetX, getY() + glowOffsetY);
+                    break;
+                case PICKED:
+                    batch.draw(glowY, getX() + glowOffsetX, getY() + glowOffsetY);
+                    break;
+            }
         }
     }
 
@@ -251,4 +255,39 @@ public class Token extends Actor implements JustFont {
         this.glowState = glowState;
     }
 
+    public GlowState getGlowState() {
+        return glowState;
+    }
+
+    public Texture getGlowG() {
+        return glowG;
+    }
+
+    public void setGlowG(Texture glowG) {
+        this.glowG = glowG;
+    }
+
+    public Texture getGlowY() {
+        return glowY;
+    }
+
+    public void setGlowY(Texture glowY) {
+        this.glowY = glowY;
+    }
+
+    public float getGlowOffsetX() {
+        return glowOffsetX;
+    }
+
+    public void setGlowOffsetX(float glowOffsetX) {
+        this.glowOffsetX = glowOffsetX;
+    }
+
+    public float getGlowOffsetY() {
+        return glowOffsetY;
+    }
+
+    public void setGlowOffsetY(float glowOffsetY) {
+        this.glowOffsetY = glowOffsetY;
+    }
 }
