@@ -33,7 +33,7 @@ public class HandToken extends AnchoredToken {
 
 
     public HandToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
-        super(card, x, y, battleStage, cardListMenu, TokenType.HAND, false);
+        super(card, x, y, battleStage, cardListMenu, TokenType.HAND, false, true);
         setDragger(new ManagedDragger(this, battleStage.getBattleScreen().getBattle().getRoundManager(), false){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {

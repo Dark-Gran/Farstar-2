@@ -11,7 +11,7 @@ public class YardToken extends ClickToken {
     private final YardMenu yardMenu;
 
     public YardToken(Card card, float x, float y, BattleStage battleStage, YardMenu yardMenu) {
-        super(card, x, y, battleStage, yardMenu, TokenType.YARD, false);
+        super(card, x, y, battleStage, yardMenu, TokenType.YARD, false, true);
         this.yardMenu = yardMenu;
         setTouchable(Touchable.disabled);
         this.addListener(new InputListener()

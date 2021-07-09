@@ -35,8 +35,8 @@ public abstract class ClickToken extends Token {
         }
     };
 
-    public ClickToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, boolean noPics) {
-        super(card, x, y, battleStage, cardListMenu, tokenType, noPics, true);
+    public ClickToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, boolean noPics, boolean connectCard) {
+        super(card, x, y, battleStage, cardListMenu, tokenType, noPics, connectCard);
         this.addListener(clickListener);
     }
 

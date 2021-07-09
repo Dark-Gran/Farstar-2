@@ -4,14 +4,14 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
+import com.darkgran.farstar.battle.gui.tokens.ClickToken;
 import com.darkgran.farstar.battle.gui.tokens.HandToken;
-import com.darkgran.farstar.battle.gui.tokens.Token;
 import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.util.SimpleBox2;
 import com.darkgran.farstar.util.SimpleVector2;
 
-public class JunkButton extends Token implements DropTarget {
+public class JunkButton extends ClickToken implements DropTarget {
     private final float angle = -90f;
     private final Player player;
     private Matrix4 mx = new Matrix4();
