@@ -13,16 +13,16 @@ public class FleetToken extends AnchoredToken implements DisableMark {
     private FleetMenu fleetMenu;
     private Texture disableMark;
 
-    public FleetToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, FleetMenu fleetMenu, boolean noPics) {
-        super(card, x, y, battleStage, cardListMenu, TokenType.FLEET, noPics, true);
+    public FleetToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, FleetMenu fleetMenu, boolean noPics, boolean connectCard) {
+        super(card, x, y, battleStage, cardListMenu, TokenType.FLEET, noPics, connectCard);
         this.fleetMenu = fleetMenu;
         setDragger(new ManagedDragger(this, battleStage.getBattleScreen().getBattle().getRoundManager(), true));
         this.addListener(getDragger());
         if (!noPics) { setMark(Farstar.ASSET_LIBRARY.get("images/tokens/disable_F.png")); }
     }
 
-    public FleetToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, FleetMenu fleetMenu, boolean noPics) {
-        super(card, x, y, battleStage, cardListMenu, tokenType, noPics, true);
+    public FleetToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, FleetMenu fleetMenu, boolean noPics, boolean connectCard) {
+        super(card, x, y, battleStage, cardListMenu, tokenType, noPics, connectCard);
         this.fleetMenu = fleetMenu;
     }
 
