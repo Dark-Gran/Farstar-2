@@ -84,8 +84,8 @@ public class RoundManager {
     public void endTurn() {
         if (!battle.getCombatManager().isActive() && !battle.isEverythingDisabled() && !targetingActive) {
             battle.closeYards();
-            battle.unMarkAllPossibilities();
             battle.getCombatManager().launchCombat();
+            battle.refreshPossibilities();
         }
     }
 
@@ -213,7 +213,7 @@ public class RoundManager {
                 callHerald(token.getCard(), token.getTokenType(), new SimpleVector2(token.getX(), token.getY()));
             }
         }*/
-        possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
+        battle.refreshPossibilities();
         return success;
     }
 
@@ -281,7 +281,7 @@ public class RoundManager {
             if (playAbility(postponedDeploy.getCaster(), (postponedDeploy.getTarget()!=null) ? postponedDeploy.getTarget().getCard() : null, ability.getStarter(), postponedDeploy.getCaster().getCard().getPlayer(), postponedDeploy.getDrop(), ability)) {
                 processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, ability.getStarter()==AbilityStarter.DEPLOY);
                 postponedDeploy.resetInDeployment();
-                possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
+                battle.refreshPossibilities();
             }
         }
     }
@@ -303,7 +303,7 @@ public class RoundManager {
                 processTarget(token);
             } else if (owner == battle.getWhoseTurn() && possibilityAdvisor.hasPossibleAbility(owner, token.getCard())) {
                 checkAllAbilities(token, null, AbilityStarter.USE, owner, null);
-                possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
+                battle.refreshPossibilities();
             }
         }
     }
@@ -326,7 +326,7 @@ public class RoundManager {
                     }
                     endTargeting();
                 }
-                possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
+                battle.refreshPossibilities();
             } else {
                 System.out.println("Invalid Target.");
             }
@@ -346,7 +346,7 @@ public class RoundManager {
             getBattle().getCombatManager().getDuelManager().cancelDuel();
         }
         if (!getBattle().getCombatManager().getDuelManager().isActive()) {
-            possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
+            battle.refreshPossibilities();
         }
     }
 

@@ -86,6 +86,7 @@ public class CombatManager {
 
     public void afterDuel() {
         fleetCheck();
+        getBattle().refreshPossibilities();
     }
 
     public void endCombat() {

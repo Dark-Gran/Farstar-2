@@ -34,10 +34,6 @@ public abstract class Battle {
 
     public void dispose() {}
 
-    public void unMarkAllPossibilities() {
-        getRoundManager().getPossibilityAdvisor().unMarkAll(whoseTurn, this);
-    }
-
     public void startingSetup(@NotNull BattleScreen battleScreen, @NotNull RoundManager roundManager, @NotNull CombatManager combatManager, @NotNull AbilityManager abilityManager) {
         this.battleScreen = battleScreen;
         coinToss();
@@ -76,6 +72,14 @@ public abstract class Battle {
         whoseTurn.getMs().setUsed(false);
         whoseTurn.getFleet().setUsedOnAll(false);
         whoseTurn.getSupports().setUsedOnAll(false);
+    }
+
+    public void unMarkAllPossibilities() {
+        getRoundManager().getPossibilityAdvisor().unMarkAll(whoseTurn, this);
+    }
+
+    public void refreshPossibilities() {
+        getRoundManager().getPossibilityAdvisor().refresh(whoseTurn, this);
     }
 
     public boolean activeCombatOrDuel() {

@@ -9,6 +9,7 @@ import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.battle.players.abilities.AbilityTargets;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
+import com.darkgran.farstar.battle.players.cards.Ship;
 
 import java.util.ArrayList;
 
@@ -16,30 +17,33 @@ public class PossibilityAdvisor {
 
     public ArrayList<PossibilityInfo> getPossibilities(Player player, Battle battle) { //also used by Automaton
         ArrayList<PossibilityInfo> possibilities = new ArrayList<>();
-        boolean activeDuel = battle.getCombatManager().getDuelManager().isActive();
-        Player whoseTurn = !activeDuel ? battle.getWhoseTurn() : battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer();
+        boolean inCombat = battle.getCombatManager().isActive();
+        boolean inDuel = battle.getCombatManager().getDuelManager().isActive();
+        Player whoseTurn = !inDuel ? battle.getWhoseTurn() : battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer();
         if (player == whoseTurn) {
-            if (!activeDuel && hasPossibleAbility(player, player.getMs())) {
+            if (!inCombat && hasPossibleAbility(player, player.getMs())) {
                 possibilities.add(new PossibilityInfo(player.getMs(), null));
             }
             for (Card card : player.getSupports()) {
-                if (!activeDuel && hasPossibleAbility(player, card)) {
+                if (!inCombat && hasPossibleAbility(player, card)) {
                     possibilities.add(new PossibilityInfo(card, player.getSupports().getCardListMenu()));
                 }
             }
             for (Card card : player.getHand()) {
-                if ((!activeDuel || card.isTactic()) && isPossibleToDeploy(player, whoseTurn, card, true, battle)) {
+                if ((!inCombat || (card.isTactic() && inDuel)) && isPossibleToDeploy(player, whoseTurn, card, true, battle)) {
                     possibilities.add(new PossibilityInfo(card, player.getHand().getCardListMenu()));
                 }
             }
             for (int i = player.getYard().size()-1; i >= 0; i--) {
-                if ((!activeDuel || player.getYard().get(i).isTactic()) && isPossibleToDeploy(player, whoseTurn, player.getYard().get(i), true, battle)) {
+                if ((!inCombat || (player.getYard().get(i).isTactic() && inDuel)) && isPossibleToDeploy(player, whoseTurn, player.getYard().get(i), true, battle)) {
                     possibilities.add(new PossibilityInfo(player.getYard().get(i), player.getYard().getCardListMenu()));
                 }
             }
-            for (Card card : player.getFleet().getShips()) {
-                if (!activeDuel && hasPossibleAbility(player, card)) {
-                    possibilities.add(new PossibilityInfo(card, player.getFleet().getFleetMenu()));
+            for (Ship ship : player.getFleet().getShips()) {
+                if (ship != null) {
+                    if ((!inCombat && hasPossibleAbility(player, ship)) || (inCombat && !inDuel && !ship.haveFought())) {
+                        possibilities.add(new PossibilityInfo(ship, player.getFleet().getFleetMenu()));
+                    }
                 }
             }
         }
@@ -118,7 +122,7 @@ public class PossibilityAdvisor {
             if (yardToo) {
                 player.getYard().getYardButton().setExtraState(true);
             }
-        } else {
+        } else if (!battle.getCombatManager().isActive()){
             battle.getBattleScreen().getBattleStage().getTurnButton().setExtraState(true);
         }
     }
