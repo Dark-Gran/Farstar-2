@@ -166,6 +166,7 @@ public abstract class DuelManager {
         attacker.getCard().setInDuel(false);
         defender.getCard().setInDuel(false);
         active = false;
+        setDuelGlows(false);
         combatManager.afterDuel();
     }
 
