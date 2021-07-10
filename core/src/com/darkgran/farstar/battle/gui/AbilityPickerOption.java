@@ -32,6 +32,9 @@ public class AbilityPickerOption extends PrintToken {
         setTouchable(Touchable.enabled);
     }
 
+    @Override
+    public void setGlows() { }
+
     public ClickListener getClickListener() {
         return clickListener;
     }
