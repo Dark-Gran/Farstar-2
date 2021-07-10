@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.gui.NotificationManager;
@@ -38,6 +39,7 @@ public abstract class SuperScreen implements Screen {
         }
         Gdx.graphics.setCursor(cursor);
     }
+    private final Vector3 mouseInWorld3D = new Vector3();
 
     public SuperScreen(final Farstar game, NotificationManager notificationManager) {
         this.game = game;
@@ -46,6 +48,13 @@ public abstract class SuperScreen implements Screen {
         viewport.apply();
         camera.position.set((float) Farstar.STAGE_WIDTH/2,(float) Farstar.STAGE_HEIGHT/2,0);
         switchCursor(CursorType.DEFAULT);
+    }
+
+    public void refreshMouseInWorld() {
+        mouseInWorld3D.x = Gdx.input.getX();
+        mouseInWorld3D.y = Gdx.input.getY();
+        mouseInWorld3D.z = 0;
+        getCamera().unproject(mouseInWorld3D);
     }
 
     protected void setTableMenu(TableStage tableStage) {
@@ -89,6 +98,7 @@ public abstract class SuperScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         shapeRenderer.setProjectionMatrix(camera.combined);
+        refreshMouseInWorld();
 
         if (tableStage != null) { //should persist over all screens
             tableStage.drawBackground(game.batch);
@@ -152,4 +162,7 @@ public abstract class SuperScreen implements Screen {
 
     public boolean isConcederActive() { return screenConceder != null; }
 
+    public Vector3 getMouseInWorld3D() {
+        return mouseInWorld3D;
+    }
 }
