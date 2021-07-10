@@ -11,10 +11,8 @@ public class FakeToken extends Token { //temporary token for targeted deployment
         getCardListMenu().getPlayer().getFleet().getFleetMenu().setPredictEnabled(true);
         setDragger(new Dragger(this));
         this.addListener(getDragger());
+        setPicked(true);
     }
-
-    @Override
-    public void setGlows() { }
 
     @Override
     public void destroy() {
