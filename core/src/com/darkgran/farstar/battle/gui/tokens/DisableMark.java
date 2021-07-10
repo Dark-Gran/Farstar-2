@@ -9,7 +9,7 @@ public interface DisableMark {
     boolean isDisabled();
 
     default void drawMark(Batch batch, float x, float y) {
-        if (isDisabled()) {
+        if (isDisabled() && getMark() != null) {
             batch.draw(getMark(), x, y);
         }
     }

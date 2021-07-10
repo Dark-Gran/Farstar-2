@@ -62,6 +62,10 @@ public class FleetToken extends AnchoredToken implements DisableMark {
 
     @Override
     public boolean isDisabled() {
-        return getCard().isUsed() || ((Ship) getCard()).haveFought();
+        if (isNoPics()) {
+            return false;
+        } else {
+            return getCard().isUsed() || ((Ship) getCard()).haveFought();
+        }
     }
 }
