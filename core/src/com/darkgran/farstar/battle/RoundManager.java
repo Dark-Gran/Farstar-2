@@ -255,6 +255,7 @@ public class RoundManager {
         if (battle.getWhoseTurn() instanceof Bot) {
             ((Bot) battle.getWhoseTurn()).pickAbility(caster, target, dropTarget, options);
         } else if (abilityPicker != null) {
+            caster.setPicked(true);
             abilityPicker.setAbilityInfos(new ArrayList<>());
             for (AbilityInfo option : options) {
                 abilityPicker.getAbilityInfos().add(option);
@@ -288,6 +289,7 @@ public class RoundManager {
     public void askForTargets(Token token, AbilityInfo ability, DropTarget dropTarget) {
         targetingActive = true;
         SuperScreen.switchCursor(SuperScreen.CursorType.AIM);
+        token.setPicked(true);
         postponedDeploy.saveInDeployment(token, ability, dropTarget, null);
         System.out.println("Need a Target.");
         if (battle.getWhoseTurn() instanceof Bot) {
@@ -340,6 +342,7 @@ public class RoundManager {
             abilityPicker.disable();
             postponedDeploy.resetInDeployment();
         }
+        possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
     }
 
     private void endTargeting() {

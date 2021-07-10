@@ -43,10 +43,14 @@ public class PrintToken extends Token {
     @Override
     public void setup(Card card, TokenType targetType, SimpleVector2 targetXY) {
         super.setup(card, targetType, targetXY);
-        if (card.isPossible()) {
-            setGlowState(GlowState.POSSIBLE);
+        if (!card.getToken().isPicked()) {
+            if (card.isPossible()) {
+                setGlowState(GlowState.POSSIBLE);
+            } else {
+                setGlowState(GlowState.DIM);
+            }
         } else {
-            setGlowState(GlowState.DIM);
+            setGlowState(GlowState.PICKED);
         }
         this.targetType = targetType;
         this.targetXY = targetXY;

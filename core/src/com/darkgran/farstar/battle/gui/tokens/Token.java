@@ -34,6 +34,7 @@ public class Token extends Actor implements JustFont {
     public enum GlowState {
         DIM, POSSIBLE, PICKED;
     }
+    private boolean picked;
 
     public Token(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, boolean noPics, boolean connectCard){
         setWidth(tokenType.getWidth());
@@ -182,6 +183,7 @@ public class Token extends Actor implements JustFont {
 
     public void addCardToJunk() {
         getCard().setPossible(false);
+        setPicked(false);
         if (getCardListMenu() != null) {
             getCardListMenu().getPlayer().getJunkpile().addCard(this.getCard());
         } else if (this instanceof FleetToken) {
@@ -190,6 +192,15 @@ public class Token extends Actor implements JustFont {
                 fleetToken.getFleetMenu().getFleet().getJunkpile().addCard(this.getCard());
             }
         }
+    }
+
+    public void setPicked(boolean picked) {
+        this.picked = picked;
+        glowState = GlowState.PICKED;
+    }
+
+    public boolean isPicked() {
+        return picked;
     }
 
     public Card getCard() { return card; }

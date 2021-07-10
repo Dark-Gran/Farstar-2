@@ -135,7 +135,7 @@ public class Card {
 
     public void setPossible(boolean possible) {
         this.possible = possible;
-        if (token != null) { token.setGlowState(possible ? Token.GlowState.POSSIBLE : Token.GlowState.DIM); }
+        if (token != null && !token.isPicked()) { token.setGlowState(possible ? Token.GlowState.POSSIBLE : Token.GlowState.DIM); }
     }
 
     public boolean isInDuel() { return inDuel; }

@@ -18,7 +18,10 @@ public class DeploymentInfo {
     }
 
     public void resetInDeployment() {
-        caster = null;
+        if (caster != null) {
+            caster.setPicked(false);
+            caster = null;
+        }
         drop = null;
         ability = null;
         target = null;
