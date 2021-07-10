@@ -90,6 +90,7 @@ public class RoundManager {
     }
 
     public void afterCombat() {
+        battle.unMarkAllPossibilities();
         if (!battle.isEverythingDisabled()) {
             battle.tickEffects();
             battle.refreshUsedShips();
