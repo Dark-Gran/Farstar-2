@@ -26,8 +26,6 @@ public class Farstar extends Game {
 		this.setScreen(new IntroScreen(this, new NotificationManager()));
 		inputMultiplexer.addProcessor(keyboardProcessor);
 		Gdx.input.setInputProcessor(inputMultiplexer);
-		Cursor cursor = Gdx.graphics.newCursor(ASSET_LIBRARY.get("images/cursor_default.png"), 0, 0);
-		Gdx.graphics.setCursor(cursor);
 	}
 
 	@Override
