@@ -20,7 +20,6 @@ public class BattleScreen extends SuperScreen {
     private final WorldManager worldManager = new WorldManager();
     private final Battle battle;
     private final BattleStage battleStage;
-    public final static boolean DEBUG_RENDER = false;
 
     private final InputAdapter battleAdapter = new InputAdapter() {
         @Override
