@@ -3,6 +3,7 @@ package com.darkgran.farstar;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.darkgran.farstar.battle.gui.tokens.TokenType;
@@ -84,9 +85,15 @@ public class AssetLibrary {
     }
 
     public void loadAssets() {
+        loadCursors();
         loadFonts();
         loadTextures();
         assetManager.finishLoading();
+    }
+
+    private void loadCursors() {
+        assetManager.load("images/cursor_aim.png", Pixmap.class);
+        assetManager.load("images/cursor_default.png", Pixmap.class);
     }
 
     private void loadFonts() {
