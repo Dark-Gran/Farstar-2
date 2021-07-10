@@ -57,6 +57,13 @@ public class BattleStage1V1 extends BattleStage {
         //Tiers
         tier1 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.083f, Farstar.STAGE_HEIGHT*0.064f);
         tier2 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.083f, Farstar.STAGE_HEIGHT*0.95f);
+        //Discards / Junkpiles
+        junkButton1 = new JunkButton(Farstar.STAGE_WIDTH*0.871f, Farstar.STAGE_HEIGHT*0.13f, this, player1);
+        junkButton2 = new JunkButton(Farstar.STAGE_WIDTH*0.871f, Farstar.STAGE_HEIGHT*0.88f - TokenType.JUNK.getHeight(), this, player2);
+        player1.getJunkpile().setJunkButton(junkButton1);
+        player2.getJunkpile().setJunkButton(junkButton2);
+        addDropTarget(junkButton1);
+        addDropTarget(junkButton2);
         //Fleets
         fleetMenu1 = new FleetMenu(player1.getFleet(), Farstar.STAGE_WIDTH*0.066f, Farstar.STAGE_HEIGHT*0.255f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.25f, this, player1, false);
         fleetMenu2 = new FleetMenu(player2.getFleet(), Farstar.STAGE_WIDTH*0.066f, Farstar.STAGE_HEIGHT*0.505f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.25f, this, player2, true);
@@ -76,13 +83,7 @@ public class BattleStage1V1 extends BattleStage {
         player2.getMs().setToken(mothershipToken2);
         addDropTarget(mothershipToken1);
         addDropTarget(mothershipToken2);
-        //Discards / Junkpiles
-        junkButton1 = new JunkButton(Farstar.STAGE_WIDTH*0.871f, Farstar.STAGE_HEIGHT*0.13f, this, player1);
-        junkButton2 = new JunkButton(Farstar.STAGE_WIDTH*0.871f, Farstar.STAGE_HEIGHT*0.88f - TokenType.JUNK.getHeight(), this, player2);
-        player1.getJunkpile().setJunkButton(junkButton1);
-        player2.getJunkpile().setJunkButton(junkButton2);
-        addDropTarget(junkButton1);
-        addDropTarget(junkButton2);
+
         //Decks
         deck1 = new CardSource(Farstar.STAGE_WIDTH*0.96f, Farstar.STAGE_HEIGHT*0.4f,this, player1, true);
         deck2 = new CardSource(Farstar.STAGE_WIDTH*0.96f, Farstar.STAGE_HEIGHT*0.559f, this, player2, false);
