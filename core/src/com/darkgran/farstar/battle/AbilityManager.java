@@ -300,7 +300,7 @@ public class AbilityManager {
         return false;
     }
 
-    public boolean hasAttribute(Card card, EffectType effectType) { //checks for abilities with "starter=NONE" (old "attributes")
+    public static boolean hasAttribute(Card card, EffectType effectType) { //checks for abilities with "starter=NONE" (old "attributes")
         if (effectType != null) {
             for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
                 if (abilityInfo.getStarter() == AbilityStarter.NONE) {
