@@ -3,16 +3,21 @@ package com.darkgran.farstar.battle.gui.tokens;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.gui.AbilityPickerOption;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
+import com.darkgran.farstar.battle.players.abilities.EffectType;
 import com.darkgran.farstar.gui.TextDrawer;
 import com.darkgran.farstar.util.SimpleVector2;
 
 public class TokenPrice extends TokenPart {
     private Texture pad2;
     private SimpleVector2 textWH2;
-    private Texture abiMark;
+    private Texture useMark;
+    private Texture guardMark;
+    private boolean showUseMark;
+    private boolean showGuardMark;
 
     public TokenPrice(String fontPath, Token token) {
         super(fontPath, token);
@@ -27,7 +32,8 @@ public class TokenPrice extends TokenPart {
     public void setPad(TokenType tokenType) {
         setPad((Texture) Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padE", tokenType, true)+".png"));
         pad2 = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padM", tokenType, true)+".png");
-        if (tokenType != TokenType.PRINT) { abiMark = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/abiU", tokenType, true)+".png"); }
+        if (tokenType != TokenType.PRINT) { useMark = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/abiU", tokenType, true)+".png"); }
+        if (tokenType == TokenType.FLEET) { guardMark = Farstar.ASSET_LIBRARY.get("images/tokens/abiG_F.png"); }
     }
 
     @Override
@@ -48,6 +54,8 @@ public class TokenPrice extends TokenPart {
         if (m.equals("1")) {
             textWH2.setX(textWH2.getX()+3f);
         }
+        showUseMark = AbilityManager.hasStarter(getToken().getCard(), AbilityStarter.USE);
+        showGuardMark = AbilityManager.hasAttribute(getToken().getCard(), EffectType.GUARD);
     }
 
     @Override
@@ -57,13 +65,15 @@ public class TokenPrice extends TokenPart {
     public void draw(Batch batch) {
         if (isEnabled()) {
             float x = getX() - getPad().getWidth() + getOffsetX();
-            boolean hasAbility = hasValidAbility(getToken());
-            if (hasAbility && !isMouseOver()) {
-                batch.draw(getPad(), x, getY() + getOffsetY());
-                if (abiMark != null) { batch.draw(abiMark, x, getY() + getOffsetY()); }
+            if ((showUseMark && !isMouseOver()) || (showGuardMark && guardMark != null)) {
+                if (showUseMark && useMark != null) {
+                    batch.draw(useMark, x, getY() + getOffsetY());
+                    x += getPad().getWidth();
+                }
+                if (showGuardMark && guardMark != null) { batch.draw(guardMark, x, getY() + getOffsetY()); }
             } else {
                 int E = getResource(true, getToken() instanceof AbilityPickerOption ? TokenType.SUPPORT : getToken().getTokenType());
-                if (E != 0 || hasAbility) {
+                if (E != 0 || showUseMark) {
                     String e = Integer.toString(E);
                     batch.draw(getPad(), x, getY() + getOffsetY());
                     drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - getTextWH().getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + getTextWH().getY() * 0.48f, e);
@@ -98,17 +108,6 @@ public class TokenPrice extends TokenPart {
                 }
                 return 0;
         }
-    }
-
-    private boolean hasValidAbility(Token token) {
-        if (TokenType.isDeployed(token.getTokenType())) {
-            for (AbilityInfo abilityInfo : token.getCard().getCardInfo().getAbilities()) {
-                if (abilityInfo.getStarter() == AbilityStarter.USE) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     private boolean isMouseOver() {
