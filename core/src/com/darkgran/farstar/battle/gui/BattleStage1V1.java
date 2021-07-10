@@ -33,13 +33,13 @@ public class BattleStage1V1 extends BattleStage {
     private final CardSource deck2;
     private final TierCounter tier1;
     private final TierCounter tier2;
-    private final ActorButton yardButton1 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.get("images/yard.png"), Farstar.ASSET_LIBRARY.get("images/yardO.png"), Farstar.ASSET_LIBRARY.get("images/yardP.png"), Farstar.ASSET_LIBRARY.get("images/yardOP.png")){
+    private final ButtonWithExtraState yardButton1 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.get("images/yard.png"), Farstar.ASSET_LIBRARY.get("images/yardO.png"), Farstar.ASSET_LIBRARY.get("images/yardP.png"), Farstar.ASSET_LIBRARY.get("images/yardOP.png")){
         @Override
         public void clicked() {
             yardMenu1.switchVisibility();
         }
     };
-    private final ActorButton yardButton2 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.get("images/yard.png"), Farstar.ASSET_LIBRARY.get("images/yardO.png"), Farstar.ASSET_LIBRARY.get("images/yardP.png"), Farstar.ASSET_LIBRARY.get("images/yardOP.png")){
+    private final ButtonWithExtraState yardButton2 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.get("images/yard.png"), Farstar.ASSET_LIBRARY.get("images/yardO.png"), Farstar.ASSET_LIBRARY.get("images/yardP.png"), Farstar.ASSET_LIBRARY.get("images/yardOP.png")){
         @Override
         public void clicked() {
             yardMenu2.switchVisibility();
@@ -91,9 +91,11 @@ public class BattleStage1V1 extends BattleStage {
         //Shipyards
         yardMenu1 = new YardMenu(player1.getShipyard(), false, 202f, Farstar.STAGE_HEIGHT*0.078f, this, player1);
         yardButton1.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.029f);
+        player1.getYard().setYardButton(yardButton1);
         addActor(yardButton1);
         yardMenu2 = new YardMenu(player2.getShipyard(), true, 202f, Farstar.STAGE_HEIGHT*0.76f, this, player2);
         yardButton2.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.91f);
+        player2.getYard().setYardButton(yardButton2);
         addActor(yardButton2);
         //Hands
         handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*0.5f, -Farstar.STAGE_HEIGHT*0.25f, this, player1, true);
