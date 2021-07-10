@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle;
 
+import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.battle.gui.tokens.*;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
@@ -286,6 +287,7 @@ public class RoundManager {
 
     public void askForTargets(Token token, AbilityInfo ability, DropTarget dropTarget) {
         targetingActive = true;
+        SuperScreen.switchCursor(SuperScreen.CursorType.AIM);
         postponedDeploy.saveInDeployment(token, ability, dropTarget, null);
         System.out.println("Need a Target.");
         if (battle.getWhoseTurn() instanceof Bot) {
@@ -317,6 +319,7 @@ public class RoundManager {
                     } else {
                         //System.out.println("Reprocessing original drop...");
                         targetingActive = false;
+                        SuperScreen.switchCursor(SuperScreen.CursorType.DEFAULT);
                         processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, postponedDeploy.getAbility().getStarter()==AbilityStarter.DEPLOY);
                     }
                     endTargeting();
@@ -341,6 +344,7 @@ public class RoundManager {
 
     private void endTargeting() {
         targetingActive = false;
+        SuperScreen.switchCursor(SuperScreen.CursorType.DEFAULT);
         postponedDeploy.resetInDeployment();
     }
 

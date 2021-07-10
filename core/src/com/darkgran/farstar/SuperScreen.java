@@ -32,7 +32,7 @@ public abstract class SuperScreen implements Screen {
         Cursor cursor = Gdx.graphics.newCursor(ASSET_LIBRARY.get("images/cursor_default.png"), 0, 0);
         switch (cursorType) {
             case AIM:
-                cursor = Gdx.graphics.newCursor(ASSET_LIBRARY.get("images/cursor_aim.png"), 0, 0);
+                cursor = Gdx.graphics.newCursor(ASSET_LIBRARY.get("images/cursor_aim.png"), 16, 16);
                 break;
         }
         Gdx.graphics.setCursor(cursor);
@@ -44,6 +44,7 @@ public abstract class SuperScreen implements Screen {
         camera.setToOrtho(false, Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT);
         viewport.apply();
         camera.position.set((float) Farstar.STAGE_WIDTH/2,(float) Farstar.STAGE_HEIGHT/2,0);
+        switchCursor(CursorType.DEFAULT);
     }
 
     protected void setTableMenu(TableStage tableStage) {
