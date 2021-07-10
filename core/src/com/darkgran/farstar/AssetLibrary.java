@@ -171,6 +171,9 @@ public class AssetLibrary {
         assetManager.load("images/tokens/card_D.png", Texture.class, texParams);
         assetManager.load("images/tokens/card_U.png", Texture.class, texParams);
         assetManager.load("images/tokens/card_Z.png", Texture.class, texParams);
+        assetManager.load("images/tokens/disable_F.png", Texture.class, texParams);
+        assetManager.load("images/tokens/disable_MS.png", Texture.class, texParams);
+        assetManager.load("images/tokens/disable_S.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameB_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameB_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/frameB_MS.png", Texture.class, texParams);

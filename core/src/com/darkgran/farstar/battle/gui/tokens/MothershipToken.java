@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.gui.tokens;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
@@ -10,9 +11,10 @@ import com.darkgran.farstar.util.SimpleBox2;
 
 import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 
-public class MothershipToken extends ClickToken implements DropTarget {
+public class MothershipToken extends ClickToken implements DropTarget, DisableMark {
     private final SimpleBox2 simpleBox2 = new SimpleBox2();
     private final SupportMenu supportMenu;
+    private Texture disableMark;
 
     public MothershipToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, SupportMenu supportMenu) {
         super(card, x, y, battleStage, cardListMenu, TokenType.MS, false, true);
@@ -24,6 +26,7 @@ public class MothershipToken extends ClickToken implements DropTarget {
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
+        drawMark(batch, getX(), getY());
         //Draws DropTarget SimpleBox2
         if (DEBUG_RENDER) { getBattleStage().getBattleScreen().drawDebugSimpleBox2(getSimpleBox2(), getBattleStage().getBattleScreen().getShapeRenderer(), batch); }
     }
@@ -41,5 +44,20 @@ public class MothershipToken extends ClickToken implements DropTarget {
 
     public SupportMenu getSupportMenu() {
         return supportMenu;
+    }
+
+    @Override
+    public Texture getMark() {
+        return disableMark;
+    }
+
+    @Override
+    public void setMark(Texture texture) {
+        disableMark = texture;
+    }
+
+    @Override
+    public boolean isDisabled() {
+        return getCard().isUsed();
     }
 }
