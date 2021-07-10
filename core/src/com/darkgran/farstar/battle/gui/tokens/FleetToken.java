@@ -40,10 +40,6 @@ public class FleetToken extends AnchoredToken implements DisableMark {
     @Override
     public void destroy() {
         remove();
-        if (getCardListMenu()!=null) {
-            getCardListMenu().getTokens().remove(this);
-            getCardListMenu().getCardList().remove(getCard());
-        }
     }
 
     public FleetMenu getFleetMenu() { return fleetMenu; }
