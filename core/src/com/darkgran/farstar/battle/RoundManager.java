@@ -187,7 +187,6 @@ public class RoundManager {
                         }
                         if (payPrice) { whoseTurn.payday(token.getCard()); }
                         if (!(token instanceof FakeToken) && !CardType.isShip(cardType)) { token.addCardToJunk(); }
-                        possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
                     } else if (dropTarget instanceof JunkButton && token instanceof HandToken) { //Target: Discard
                         Junkpile junkpile = ((JunkButton) dropTarget).getPlayer().getJunkpile();
                         if (junkpile == whoseTurn.getJunkpile()) {
@@ -213,6 +212,7 @@ public class RoundManager {
                 callHerald(token.getCard(), token.getTokenType(), new SimpleVector2(token.getX(), token.getY()));
             }
         }*/
+        possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
         return success;
     }
 
@@ -269,7 +269,6 @@ public class RoundManager {
             if (abilityStarter == AbilityStarter.USE) {
                 caster.getCard().setUsed(true);
             }
-            possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
         }
         return success;
     }
@@ -280,6 +279,7 @@ public class RoundManager {
             if (playAbility(postponedDeploy.getCaster(), (postponedDeploy.getTarget()!=null) ? postponedDeploy.getTarget().getCard() : null, ability.getStarter(), postponedDeploy.getCaster().getCard().getPlayer(), postponedDeploy.getDrop(), ability)) {
                 processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, ability.getStarter()==AbilityStarter.DEPLOY);
                 postponedDeploy.resetInDeployment();
+                possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
             }
         }
     }
@@ -299,6 +299,7 @@ public class RoundManager {
                 processTarget(token);
             } else if (owner == battle.getWhoseTurn() && possibilityAdvisor.hasPossibleAbility(owner, token.getCard())) {
                 checkAllAbilities(token, null, AbilityStarter.USE, owner, null);
+                possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
             }
         }
     }
@@ -312,7 +313,6 @@ public class RoundManager {
                     if (postponedDeploy.getAbility().getStarter() == AbilityStarter.USE) {
                         battle.getWhoseTurn().payday(postponedDeploy.getAbility().getResourcePrice().getEnergy(), postponedDeploy.getAbility().getResourcePrice().getMatter());
                         postponedDeploy.getCaster().getCard().setUsed(true);
-                        possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
                         //System.out.println("Ability price paid.");
                     } else {
                         //System.out.println("Reprocessing original drop...");
@@ -321,6 +321,7 @@ public class RoundManager {
                     }
                     endTargeting();
                 }
+                possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
             } else {
                 System.out.println("Invalid Target.");
             }
