@@ -20,14 +20,10 @@ public abstract class TokenZoom extends PrintToken {
 
     public void update(float delta) {
         counter.update();
-        if (counting && !counter.isEnabled()) {
-            counting = false;
-            hidden = false;
-        }
     }
 
     public void deactivate(boolean rightClick) {
-        if (!rightClick || !(getTargetType() != null && instantReaction(getTargetType()))) {
+        if (!rightClick || !(getTargetType() != null && (getTargetType() == TokenType.HAND || getTargetType() == TokenType.JUNK))) {
             deactivate();
         }
     }
@@ -43,32 +39,16 @@ public abstract class TokenZoom extends PrintToken {
     public void reactivate() {
         enabled = true;
         if (getCard() != null && getTargetType() != null) {
-            if (instantReaction(getTargetType())) {
-                hidden = false;
-            } else {
-                counting = true;
-                counter.setEnabled(true);
-            }
+            hidden = false;
         }
     }
 
     @Override
     public void enable(Card card, TokenType targetType, SimpleVector2 targetXY) {
         if (getCard() != card) {
-            if (instantReaction(targetType)) {
-                hidden = false;
-            } else {
-                hidden = true;
-                counting = true;
-                counter.setEnabled(true);
-            }
-
+            hidden = false;
             super.enable(card, targetType, targetXY);
         }
-    }
-
-    private boolean instantReaction(TokenType targetType) {
-        return targetType == TokenType.HAND || targetType == TokenType.YARD || targetType == TokenType.JUNK;
     }
 
     @Override
