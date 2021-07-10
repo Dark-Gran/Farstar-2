@@ -181,6 +181,7 @@ public class Token extends Actor implements JustFont {
     }
 
     public void addCardToJunk() {
+        getCard().setPossible(false);
         if (getCardListMenu() != null) {
             getCardListMenu().getPlayer().getJunkpile().addCard(this.getCard());
         } else if (this instanceof FleetToken) {
