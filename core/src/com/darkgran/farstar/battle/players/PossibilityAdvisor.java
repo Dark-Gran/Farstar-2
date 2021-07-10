@@ -107,15 +107,19 @@ public class PossibilityAdvisor {
 
     public void markPossibilities(Player player, Battle battle) {
         ArrayList<PossibilityInfo> possibilities = getPossibilities(player, battle);
-        boolean yardToo = false;
-        for (PossibilityInfo possibility : possibilities) {
-            possibility.getCard().setPossible(true);
-            if (!yardToo && possibility.getCard().getCardInfo().getCardType() == CardType.YARDPRINT) {
-                yardToo = true;
+        if (possibilities.size() != 0) {
+            boolean yardToo = false;
+            for (PossibilityInfo possibility : possibilities) {
+                possibility.getCard().setPossible(true);
+                if (!yardToo && possibility.getCard().getCardInfo().getCardType() == CardType.YARDPRINT) {
+                    yardToo = true;
+                }
             }
-        }
-        if (yardToo) {
-            player.getYard().getYardButton().setExtraState(true);
+            if (yardToo) {
+                player.getYard().getYardButton().setExtraState(true);
+            }
+        } else {
+            battle.getBattleScreen().getBattleStage().getTurnButton().setExtraState(true);
         }
     }
 
@@ -136,8 +140,7 @@ public class PossibilityAdvisor {
         }
         player.getMs().setPossible(false);
         player.getYard().getYardButton().setExtraState(false);
+        battle.getBattleScreen().getBattleStage().getTurnButton().setExtraState(false);
     }
-
-
 
 }

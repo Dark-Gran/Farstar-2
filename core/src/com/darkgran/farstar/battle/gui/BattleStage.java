@@ -219,15 +219,23 @@ public abstract class BattleStage extends ListeningStage {
         return rectangle.contains(x, y);
     }
 
-    public BattleScreen getBattleScreen() { return battleScreen; }
-
-    public FakeToken getFakeToken() { return fakeToken; }
+    @Override
+    public void dispose() {
+        turnButton.removeListener(turnButton.getClickListener());
+        combatEndButton.remove();
+        abilityPicker.dispose();
+        super.dispose();
+    }
 
     public void setFakeToken(FakeToken fakeToken) {
         if (this.fakeToken != null) { this.fakeToken.remove(); }
         this.fakeToken = fakeToken;
         if (fakeToken != null) { this.addActor(fakeToken); }
     }
+
+    public FakeToken getFakeToken() { return fakeToken; }
+
+    public BattleScreen getBattleScreen() { return battleScreen; }
 
     public DuelMenu getDuelMenu() { return duelMenu; }
 
@@ -251,12 +259,8 @@ public abstract class BattleStage extends ListeningStage {
         this.herald = herald;
     }
 
-    @Override
-    public void dispose() {
-        turnButton.removeListener(turnButton.getClickListener());
-        combatEndButton.remove();
-        abilityPicker.dispose();
-        super.dispose();
+    public ButtonWithExtraState getTurnButton() {
+        return turnButton;
     }
 
 }
