@@ -345,7 +345,9 @@ public class RoundManager {
         if (getBattle().getCombatManager().getDuelManager().isActive()) {
             getBattle().getCombatManager().getDuelManager().cancelDuel();
         }
-        possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
+        if (!getBattle().getCombatManager().getDuelManager().isActive()) {
+            possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
+        }
     }
 
     private void endTargeting() {

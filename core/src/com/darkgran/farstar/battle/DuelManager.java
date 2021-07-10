@@ -42,14 +42,18 @@ public abstract class DuelManager {
                 duelMenu.addCancel();
                 duelMenu.addOK(this.playersA[0].getDuelButton());
                 this.combatManager.getBattle().getRoundManager().getPossibilityAdvisor().refresh(this.combatManager.getDuelManager().getActivePlayer().getPlayer(), this.combatManager.getBattle());
+                setDuelGlows(true);
             } else {
                 ((Bot) this.playersA[0].getPlayer()).newDuelOK(this.playersA[0].getDuelButton());
             }
-            this.attacker.setGlowState(Token.GlowState.PICKED);
-            this.defender.setGlowState(Token.GlowState.PICKED);
         } else {
             System.out.println("- launchDuel() Error! ("+!engaged+" : "+(attacker!=null)+" : "+(defender!=null)+")");
         }
+    }
+
+    protected void setDuelGlows(boolean enable) {
+        this.attacker.setGlowState(enable ? Token.GlowState.PICKED : Token.GlowState.DIM);
+        this.defender.setGlowState(enable ? Token.GlowState.PICKED : Token.GlowState.DIM);
     }
 
     private void iniStrikePriority(Card att, Card def) {
@@ -87,8 +91,7 @@ public abstract class DuelManager {
             ((Bot) activePlayer.getPlayer()).newDuelOK(activePlayer.getDuelButton());
         } else {
             combatManager.getBattle().getRoundManager().getPossibilityAdvisor().refresh(combatManager.getDuelManager().getActivePlayer().getPlayer(), combatManager.getBattle());
-            this.attacker.setGlowState(Token.GlowState.PICKED);
-            this.defender.setGlowState(Token.GlowState.PICKED);
+            setDuelGlows(true);
         }
     }
 
@@ -151,6 +154,7 @@ public abstract class DuelManager {
 
     public void cancelDuel() {
         if (!duelMenu.getCancelButton().isDisabled()) {
+            setDuelGlows(false);
             duelMenu.removeCancel();
             endDuel();
         }
