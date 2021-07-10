@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -80,13 +81,10 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
         }
     }
 
+
+
     private void predictCoordinates() {
-        Vector3 mouseInWorld3D = new Vector3();
-        mouseInWorld3D.x = Gdx.input.getX();
-        mouseInWorld3D.y = Gdx.input.getY();
-        mouseInWorld3D.z = 0;
-        getBattleStage().getBattleScreen().getCamera().unproject(mouseInWorld3D);
-        int pos = getBattleStage().getRoundDropPosition(mouseInWorld3D.x, mouseInWorld3D.y, this, CardType.YARDPRINT);
+        int pos = getBattleStage().getRoundDropPosition(Gdx.input.getX(), Gdx.input.getY(), this, CardType.YARDPRINT);
         if (fleet.hasSpace() && pos > -1 && pos < 7) { //fleet.addShip() validation
             if (!fleet.isEmpty()) {
                 //Copy ships
@@ -188,13 +186,14 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
     public void drawTokens(Batch batch) {
         if (predictEnabled) {
             boolean overToken = false;
+            Vector2 mousePosition = screenToLocalCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
             for (FleetToken fleetToken : fleetTokens) {
-                if (fleetToken != null && fleetToken.getClickListener().isOver()) {
+                if (fleetToken != null && fleetToken.getClickListener().isOver(fleetToken, mousePosition.x, mousePosition.y)) {
                     overToken = true;
                     break;
                 }
             }
-            predicting = clickListener.isOver() || overToken;
+            predicting = clickListener.isOver(this, mousePosition.x, mousePosition.y) || overToken;
             if (predicting) {
                 predictCoordinates();
             }
