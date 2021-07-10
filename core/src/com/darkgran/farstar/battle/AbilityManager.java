@@ -251,7 +251,7 @@ public class AbilityManager {
     //-UTILITIES-//
     //-----------//
 
-    public boolean validAbilityTarget(AbilityInfo abilityInfo, Card caster, Card target) { //in-future: support for other modes than 1v1
+    public static boolean validAbilityTarget(AbilityInfo abilityInfo, Card caster, Card target) { //in-future: support for other modes than 1v1
         switch (abilityInfo.getTargets()) {
             default:
                 return false;
@@ -278,7 +278,7 @@ public class AbilityManager {
         }
     }
 
-    public boolean hasStarter(Card card, AbilityStarter abilityStarter) {
+    public static boolean hasStarter(Card card, AbilityStarter abilityStarter) {
         for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
             if (abilityInfo.getStarter() == abilityStarter) {
                 return true;
@@ -287,7 +287,7 @@ public class AbilityManager {
         return false;
     }
 
-    public boolean hasEffectType(Card card, EffectType effectType) {
+    public static boolean hasEffectType(Card card, EffectType effectType) {
         if (effectType != null) {
             for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
                 for (Effect effect : abilityInfo.getEffects()) {
@@ -315,7 +315,7 @@ public class AbilityManager {
         return false;
     }
 
-    public int getReach(Card card) {
+    public static int getReach(Card card) {
         for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
             if (abilityInfo.getStarter() == AbilityStarter.NONE) {
                 for (Effect effect : abilityInfo.getEffects()) {
@@ -330,14 +330,22 @@ public class AbilityManager {
         return 0;
     }
 
-    private boolean isTheSameAbility(AbilityInfo abilityA, AbilityInfo abilityB) {
+    public static int floatObjectToInt(Object obj) {
+        if (obj instanceof Float) {
+            float f = (Float) obj;
+            return (int) f;
+        }
+        return 0;
+    }
+
+    private static boolean isTheSameAbility(AbilityInfo abilityA, AbilityInfo abilityB) {
         if (abilityA != null && abilityB != null) {
             return (abilityA.getStarter() == abilityB.getStarter()) && isTheSameEffectsList(abilityA.getEffects(), abilityB.getEffects());
         }
         return (abilityA == abilityB);
     }
 
-    private boolean isTheSameEffectsList(ArrayList<Effect> effectsA, ArrayList<Effect> effectsB) {
+    private static boolean isTheSameEffectsList(ArrayList<Effect> effectsA, ArrayList<Effect> effectsB) {
         if (effectsA != null && effectsB != null) {
             if (effectsA.size() == effectsB.size()) {
                 for (int i = 0; i < effectsA.size(); i++) {
@@ -405,14 +413,6 @@ public class AbilityManager {
 
     private Effect instanceEffect(Effect effect) {
         return new Effect(effect.getEffectType(), effect.getEffectInfo(), effect.getDuration());
-    }
-
-    public int floatObjectToInt(Object obj) {
-        if (obj instanceof Float) {
-            float f = (Float) obj;
-            return (int) f;
-        }
-        return 0;
     }
 
     public Battle getBattle() { return battle; }
