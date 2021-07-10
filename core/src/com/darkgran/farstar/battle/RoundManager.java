@@ -342,6 +342,9 @@ public class RoundManager {
             abilityPicker.disable();
             postponedDeploy.resetInDeployment();
         }
+        if (getBattle().getCombatManager().getDuelManager().isActive()) {
+            getBattle().getCombatManager().getDuelManager().cancelDuel();
+        }
         possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
     }
 

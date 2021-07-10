@@ -45,6 +45,8 @@ public abstract class DuelManager {
             } else {
                 ((Bot) this.playersA[0].getPlayer()).newDuelOK(this.playersA[0].getDuelButton());
             }
+            this.attacker.setGlowState(Token.GlowState.PICKED);
+            this.defender.setGlowState(Token.GlowState.PICKED);
         } else {
             System.out.println("- launchDuel() Error! ("+!engaged+" : "+(attacker!=null)+" : "+(defender!=null)+")");
         }
@@ -85,6 +87,8 @@ public abstract class DuelManager {
             ((Bot) activePlayer.getPlayer()).newDuelOK(activePlayer.getDuelButton());
         } else {
             combatManager.getBattle().getRoundManager().getPossibilityAdvisor().refresh(combatManager.getDuelManager().getActivePlayer().getPlayer(), combatManager.getBattle());
+            this.attacker.setGlowState(Token.GlowState.PICKED);
+            this.defender.setGlowState(Token.GlowState.PICKED);
         }
     }
 
@@ -146,8 +150,10 @@ public abstract class DuelManager {
     }
 
     public void cancelDuel() {
-        duelMenu.removeCancel();
-        endDuel();
+        if (!duelMenu.getCancelButton().isDisabled()) {
+            duelMenu.removeCancel();
+            endDuel();
+        }
     }
 
     public void endDuel() {
