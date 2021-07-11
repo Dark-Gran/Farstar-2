@@ -50,11 +50,11 @@ public abstract class TokenZoom extends PrintToken {
     @Override
     public void enable(Card card, TokenType targetType, SimpleVector2 targetXY) {
         if (getCard() != card) {
-            explainer.refreshText(getCard());
             counter.setEnabled(true);
             counting = true;
             hidden = false;
             super.enable(card, targetType, targetXY);
+            explainer.refreshText(getCard());
         }
     }
 
