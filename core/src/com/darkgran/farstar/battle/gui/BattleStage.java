@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public abstract class BattleStage extends ListeningStage {
     private final BattleScreen battleScreen;
     private FakeToken fakeToken;
-    private final DuelMenu duelMenu;
+    private final CombatMenu combatMenu;
     private ArrayList<DropTarget> dropTargets = new ArrayList<>();
     private final AbilityPicker abilityPicker;
     private final RoundCounter roundCounter;
@@ -35,17 +35,17 @@ public abstract class BattleStage extends ListeningStage {
     private final ActorButton combatEndButton = new ActorButton(Farstar.ASSET_LIBRARY.get("images/combat_end.png"), Farstar.ASSET_LIBRARY.get("images/combat_endO.png")) {
         @Override
         public void clicked() {
-            battleScreen.getBattle().getCombatManager().endCombat();
+            battleScreen.getBattle().getCombatManager().startTacticalPhase();
         }
     };
     private TokenZoom cardZoom;
     private Herald herald;
 
 
-    public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen, DuelMenu duelMenu) {
+    public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen, CombatMenu combatMenu) {
         super(game, viewport);
         this.battleScreen = battleScreen;
-        this.duelMenu = duelMenu;
+        this.combatMenu = combatMenu;
         combatEndButton.setPosition(Farstar.STAGE_WIDTH*0.82f, Farstar.STAGE_HEIGHT*0.3f);
         combatEndButton.setDisabled(true);
         abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH/2f+5f, Farstar.STAGE_HEIGHT*0.2f, this, null, Farstar.ASSET_LIBRARY.get("images/yard.png"));
@@ -104,7 +104,7 @@ public abstract class BattleStage extends ListeningStage {
             }
             if (targetHit != null || token.getCard().getCardInfo().getCardType() == CardType.ACTION) {
                 if (!token.getCard().isTactic() && combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
-                    combatManager.processDrop(token, targetHit, getCombatDropToken(x, y, targetHit));
+                    combatManager.processDrop(token, getCombatDropToken(x, y, targetHit));
                 } else {
                     getBattleScreen().getBattle().getRoundManager().processDrop(token, targetHit, getRoundDropPosition(x, y, targetHit, token.getCard().getCardInfo().getCardType()), false, true);
                 }
@@ -237,7 +237,7 @@ public abstract class BattleStage extends ListeningStage {
 
     public BattleScreen getBattleScreen() { return battleScreen; }
 
-    public DuelMenu getDuelMenu() { return duelMenu; }
+    public CombatMenu getDuelMenu() { return combatMenu; }
 
     public RoundCounter getRoundCounter() {
         return roundCounter;

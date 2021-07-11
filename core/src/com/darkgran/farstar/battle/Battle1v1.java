@@ -31,12 +31,12 @@ public class Battle1v1 extends Battle {
 
     @Override
     public BattleStage createBattleStage(@NotNull Farstar game, @NotNull Viewport viewport, @NotNull BattleScreen battleScreen) {
-        return new BattleStage1V1(game, viewport, battleScreen, new DuelMenu1v1(getCombatManager().getDuelManager()), player1, player2);
+        return new BattleStage1V1(game, viewport, battleScreen, new CombatMenu1V1(getCombatManager()), player1, player2);
     }
 
     @Override
-    public DuelManager createDuelManager() {
-        return new DuelManager1v1();
+    public CombatManager createCombatManager() {
+        return new CombatManager1v1(this, new DuelManager());
     }
 
     @Override
@@ -72,12 +72,6 @@ public class Battle1v1 extends Battle {
             player1.getHand().drawCards(BattleSettings.BONUS_CARD_ID, 1, player1);
             player2.getHand().drawCards(player2.getDeck(), STARTING_CARDS_ATT);
         }
-    }
-
-    @Override
-    public void setUsedForAllFleets(boolean used) {
-        setUsedForFleet(player1, used);
-        setUsedForFleet(player2, used);
     }
 
     @Override
@@ -119,6 +113,15 @@ public class Battle1v1 extends Battle {
             return new Player[]{player2};
         } else {
             return new Player[]{player1};
+        }
+    }
+
+    @Override
+    public Player[] getAllies(Player player) {
+        if (player == player1) {
+            return new Player[]{player1};
+        } else {
+            return new Player[]{player2};
         }
     }
 

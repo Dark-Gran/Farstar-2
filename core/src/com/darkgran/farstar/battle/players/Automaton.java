@@ -137,8 +137,8 @@ public class Automaton extends Bot {
                                     if (getBattle().getCombatManager().isActive()) { //COMBAT ONLY
                                         allyToken = getAllyInDuel();
                                         ally = allyToken.getCard();
-                                        enemy = getBattle().getCombatManager().getDuelManager().getOpponent(allyToken).getCard();
-                                        if (techTypeNonsense(ally, enemy, changeStatType, changeInfo)) {
+                                        //enemy = getBattle().getCombatManager().getOpponent(allyToken).getCard();
+                                        /*if (techTypeNonsense(ally, enemy, changeStatType, changeInfo)) {
                                             return true;
                                         }
                                         if (ability.isPurelyTypeChange()) {
@@ -148,7 +148,7 @@ public class Automaton extends Bot {
                                                 TechType techType = TechType.valueOf(changeInfo.toString()); //in-future: rework invalidating "switches" (changing both types at the same time)
                                                 return ((changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && techType == ally.getCardInfo().getDefenseType() || changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && techType == ally.getCardInfo().getOffenseType()));
                                             }
-                                        }
+                                        }*/
                                     } else { //OUTSIDE COMBAT
                                         //in-future: don't allow Upgrades to certain Types (= based on what the enemy has the most)
                                     }
@@ -160,10 +160,10 @@ public class Automaton extends Bot {
                                             if (getBattle().getCombatManager().isActive()) { //COMBAT ONLY
                                                 allyToken = getAllyInDuel();
                                                 ally = allyToken.getCard();
-                                                enemy = getBattle().getCombatManager().getDuelManager().getOpponent(allyToken).getCard();
-                                                if (enemy.isMS() || (getBattle().getCombatManager().getDuelManager().getStrikePriority() != null && getBattle().getCombatManager().getDuelManager().getStrikePriority() == ally)) {
+                                                //enemy = getBattle().getCombatManager().getDuelManager().getOpponent(allyToken).getCard();
+                                                /*if (enemy.isMS() || (getBattle().getCombatManager().getDuelManager().getStrikePriority() != null && getBattle().getCombatManager().getDuelManager().getStrikePriority() == ally)) {
                                                     return true;
-                                                }
+                                                }*/
                                             } else { //OUTSIDE COMBAT
                                                 for (Ship ship : getFleet().getShips()) {
                                                     if (ship != null && !getBattle().getAbilityManager().hasAttribute(ship, EffectType.FIRST_STRIKE)) {
@@ -215,7 +215,7 @@ public class Automaton extends Bot {
     }
 
     private Token getAllyInDuel() {
-        if (getBattle().getCombatManager().getDuelManager().isActive()) {
+        /*if (getBattle().getCombatManager().getDuelManager().isActive()) {
             Token attacker = getBattle().getCombatManager().getDuelManager().getAttacker();
             Token defender = getBattle().getCombatManager().getDuelManager().getDefender();
             if (attacker.getCard().getPlayer() == this) {
@@ -223,7 +223,7 @@ public class Automaton extends Bot {
             } else {
                 return defender;
             }
-        }
+        }*/
         return null;
     }
 
@@ -342,7 +342,7 @@ public class Automaton extends Bot {
         super.combat();
         if (getBattle().getCombatManager().isActive()) {
             for (Ship ship : getFleet().getShips()) {
-                if (ship != null && !ship.haveFought()) {
+                if (ship != null) {
                     delayedLaunchDuel(ship);
                     break;
                 }
@@ -351,8 +351,8 @@ public class Automaton extends Bot {
     }
 
     @Override
-    protected void duel(DuelOK duelOK) { //atm expects all Tactics to be meant for allies
-        super.duel(duelOK);
+    protected void duel(CombatOK combatOK) { //atm expects all Tactics to be meant for allies
+        super.duel(combatOK);
         boolean success = false;
         PossibilityInfo bestPossibility = getDuelPossibility();
         if (bestPossibility != null) {
@@ -368,7 +368,7 @@ public class Automaton extends Bot {
             }
             if (deploy(bestPossibility.getCard(), bestPossibility.getMenu(), position)) {
                 success = true;
-                delayedDuel(duelOK);
+                delayedDuel(combatOK);
             } else {
                 report("Failed to deploy the tactic!");
                 success = false;
@@ -376,7 +376,7 @@ public class Automaton extends Bot {
         } else {
             report("No duel possibilities.");
         }
-        if (!success) { duelReady(duelOK); }
+        if (!success) { duelReady(combatOK); }
     }
 
     private PossibilityInfo getDuelPossibility() {

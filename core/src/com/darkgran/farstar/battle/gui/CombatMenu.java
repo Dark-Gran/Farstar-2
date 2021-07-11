@@ -1,23 +1,24 @@
 package com.darkgran.farstar.battle.gui;
 
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.battle.DuelManager;
 import com.darkgran.farstar.battle.players.LocalPlayer;
 import com.darkgran.farstar.gui.ActorButton;
 
-public abstract class DuelMenu {
-    private final DuelManager duelManager;
+public abstract class CombatMenu {
+    private final CombatManager combatManager;
     private BattleStage battleStage;  //must be set after ini - before RM.launch (see BattleScreen constructor)
     private final ActorButton cancelButton = new ActorButton(Farstar.ASSET_LIBRARY.get("images/duel_cancel.png"), Farstar.ASSET_LIBRARY.get("images/duel_cancelO.png")){
         @Override
         public void clicked() {
-            getDuelManager().cancelDuel();
+
         }
     };
 
-    public DuelMenu(DuelManager duelManager) {
-        this.duelManager = duelManager;
-        duelManager.receiveDuelMenu(this);
+    public CombatMenu(CombatManager combatManager) {
+        this.combatManager = combatManager;
+        combatManager.setCombatMenu(this);
         cancelButton.setDisabled(true);
     }
 
@@ -25,16 +26,16 @@ public abstract class DuelMenu {
 
     public void removeAllOKs() { }
 
-    public void addOK(DuelOK duelOK) {
-        if (duelOK.getDuelPlayer().getPlayer() instanceof LocalPlayer) {
-            getBattleStage().addActor(duelOK);
-            duelOK.setDisabled(false);
+    public void addOK(CombatOK combatOK) {
+        if (combatOK.getDuelPlayer().getPlayer() instanceof LocalPlayer) {
+            getBattleStage().addActor(combatOK);
+            combatOK.setDisabled(false);
         }
     }
 
-    public void removeOK(DuelOK duelOK) {
-        duelOK.remove();
-        duelOK.setDisabled(true);
+    public void removeOK(CombatOK combatOK) {
+        combatOK.remove();
+        combatOK.setDisabled(true);
     }
 
     public void addCancel() {
@@ -47,7 +48,7 @@ public abstract class DuelMenu {
         cancelButton.setDisabled(true);
     }
 
-    public DuelManager getDuelManager() { return duelManager; }
+    public CombatManager getCombatManager() { return combatManager; }
 
     public BattleStage getBattleStage() { return battleStage; }
 

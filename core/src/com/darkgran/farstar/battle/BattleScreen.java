@@ -47,12 +47,12 @@ public class BattleScreen extends SuperScreen {
         this.battle = battle;
         battle.startingSetup(this,
                 new RoundManager(battle, new PossibilityAdvisor()),
-                new CombatManager(battle, battle.createDuelManager()),
+                battle.createCombatManager(),
                 new AbilityManager(battle)
         );
         battleStage = battle.createBattleStage(game, getViewport(), this);
         battle.getCombatManager().setBattleStage(battleStage);
-        battle.getCombatManager().getDuelManager().getDuelMenu().setBattleStage(battleStage);
+        battle.getCombatManager().getCombatMenu().setBattleStage(battleStage);
         game.getInputMultiplexer().addProcessor(battleAdapter);
         game.getInputMultiplexer().addProcessor(battleStage);
         battle.getRoundManager().launch();

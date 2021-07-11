@@ -26,7 +26,7 @@ public abstract class Battle {
         return null;
     }
 
-    public DuelManager createDuelManager() {
+    public CombatManager createCombatManager() {
         return null;
     }
 
@@ -46,12 +46,6 @@ public abstract class Battle {
     protected void coinToss() { } //must setWhoseTurn
 
     protected void startingCards() { }
-
-    public void setUsedForAllFleets(boolean used) { }
-
-    public void setUsedForFleet(Player player, boolean used) {
-        for (Ship ship : player.getFleet().getShips()) { if (ship != null) { ship.setFought(used); } }
-    }
 
     public void addGameOver(Player player) {
         gameOvers.add(player);
@@ -89,6 +83,8 @@ public abstract class Battle {
     public Player[] getEnemies(Player player) {
         return null;
     }
+
+    public Player[] getAllies(Player player) { return null; }
 
     public Player getWhoseTurn() { return whoseTurn; }
 

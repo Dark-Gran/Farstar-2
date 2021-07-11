@@ -2,7 +2,6 @@ package com.darkgran.farstar.battle.players;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
-import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.gui.tokens.HandToken;
 import com.darkgran.farstar.battle.gui.tokens.Token;
@@ -65,11 +64,11 @@ public abstract class Bot extends Player implements BotSettings {
         setPickingAbility(false);
     }
 
-    public void newDuelOK(DuelOK duelOK) {
-        delayedDuel(duelOK);
+    public void newDuelOK(CombatOK combatOK) {
+        delayedDuel(combatOK);
     }
 
-    protected void duel(DuelOK duelOK) {
+    protected void duel(CombatOK combatOK) {
         setPickingTarget(false);
         setPickingAbility(false);
     }
@@ -114,12 +113,12 @@ public abstract class Bot extends Player implements BotSettings {
         delayAction(()->launchDuel(ship));
     }
 
-    protected void delayedDuel(DuelOK duelOK) {
-        delayAction(()->duel(duelOK));
+    protected void delayedDuel(CombatOK combatOK) {
+        delayAction(()->duel(combatOK));
     }
 
-    protected void delayedDuelReady(DuelOK duelOK) {
-        delayAction(()->duelReady(duelOK));
+    protected void delayedDuelReady(CombatOK combatOK) {
+        delayAction(()->duelReady(combatOK));
     }
 
     protected boolean deploy(Card card, Menu menu, int position) {
@@ -148,15 +147,15 @@ public abstract class Bot extends Player implements BotSettings {
     protected void launchDuel(Ship ship) {
         Token enemy = getEnemyTarget(ship.getToken(), true);
         if (enemy != null && getBattle().getCombatManager().canReach(ship.getToken(), enemy, enemy.getCard().getPlayer().getFleet())) {
-            getBattle().getCombatManager().getDuelManager().launchDuel(getBattle().getCombatManager(), ship.getToken(), enemy, new DuelPlayer[]{getBattle().getCombatManager().playerToDuelPlayer(ship.getPlayer())}, new DuelPlayer[]{getBattle().getCombatManager().playerToDuelPlayer(enemy.getCard().getPlayer())});
+            //getBattle().getCombatManager().getDuelManager().launchDuel(getBattle().getCombatManager(), ship.getToken(), enemy, new CombatPlayer[]{getBattle().getCombatManager().playerToCombatPlayer(ship.getPlayer())}, new CombatPlayer[]{getBattle().getCombatManager().playerToCombatPlayer(enemy.getCard().getPlayer())});
         } else {
             report("getEnemyTarget() for Duel failed! (enemy: "+enemy+") Ending Combat.");
             delayedCombatEnd();
         }
     }
 
-    protected void duelReady(DuelOK duelOK) {
-        getBattle().getCombatManager().getDuelManager().OK(duelOK);
+    protected void duelReady(CombatOK combatOK) {
+        getBattle().getCombatManager().tacticalOK(combatOK);
     }
 
     protected Token cardToToken(Card card, Menu menu) {

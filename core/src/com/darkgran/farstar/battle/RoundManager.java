@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import static com.darkgran.farstar.battle.BattleSettings.CARDS_PER_TURN;
 import static com.darkgran.farstar.battle.BattleSettings.MAX_TECH_INCOME;
 
-//in-future: split into abstract and RoundManager1v1
+//in-future: depending on how other mods than 1v1 treat combat-phase, split into abstract+RoundManager1v1 might be required (probably not needed unless combat shared between allies)
 public class RoundManager {
     private final Battle battle;
     private final PossibilityAdvisor possibilityAdvisor;
@@ -117,7 +117,7 @@ public class RoundManager {
                 //OUTSIDE COMBAT OR TACTIC
                 Player whoseTurn;
                 if (!battle.getCombatManager().getDuelManager().isActive()) { whoseTurn = battle.getWhoseTurn(); }
-                else { whoseTurn = battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer(); }
+                else { whoseTurn = battle.getCombatManager().getActivePlayer().getPlayer(); }
                 if (token.getCardListMenu().getPlayer() == whoseTurn) {
                     Card targetCard = null;
                     if (possibilityAdvisor.isPossibleToDeploy(whoseTurn, whoseTurn, token.getCard(), false, battle)) {
@@ -187,7 +187,7 @@ public class RoundManager {
                     if (success || postAbility) {
                         //System.out.println("Drop Success.");
                         if (targetCard != null && cardType == CardType.TACTIC && battle.getCombatManager().getDuelManager().isActive()) {
-                            battle.getCombatManager().getDuelManager().saveTactic(token.getCard(), targetCard);
+                            battle.getCombatManager().saveTactic(token.getCard(), targetCard);
                         }
                         if (payPrice) { whoseTurn.payday(token.getCard()); }
                         if (!(token instanceof FakeToken) && !CardType.isShip(cardType)) { token.addCardToJunk(); }
@@ -344,9 +344,6 @@ public class RoundManager {
         if (abilityPicker.isActive()) {
             abilityPicker.disable();
             postponedDeploy.resetInDeployment();
-        }
-        if (getBattle().getCombatManager().getDuelManager().isActive()) {
-            getBattle().getCombatManager().getDuelManager().cancelDuel();
         }
         if (!getBattle().getCombatManager().getDuelManager().isActive()) {
             battle.refreshPossibilities();

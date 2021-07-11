@@ -4,7 +4,6 @@ import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.battle.players.Player;
 
 public class Ship extends JunkableCard {
-    private boolean fought = false;
     private final Fleet fleet;
 
     public Ship(Fleet fleet, CardInfo cardInfo, Player player) {
@@ -17,10 +16,6 @@ public class Ship extends JunkableCard {
         super.death();
         if (fleet != null) { fleet.removeShip(this); }
     }
-
-    public boolean haveFought() { return fought; }
-
-    public void setFought(boolean fought) { this.fought = fought; }
 
     public Fleet getFleet() { return fleet; }
 

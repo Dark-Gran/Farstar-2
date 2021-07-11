@@ -45,8 +45,8 @@ public class BattleStage1V1 extends BattleStage {
         }
     };
 
-    public BattleStage1V1(Farstar game, Viewport viewport, BattleScreen battleScreen, DuelMenu duelMenu, Player player1, Player player2) {
-        super(game, viewport, battleScreen, duelMenu);
+    public BattleStage1V1(Farstar game, Viewport viewport, BattleScreen battleScreen, CombatMenu combatMenu, Player player1, Player player2) {
+        super(game, viewport, battleScreen, combatMenu);
         //Resources
         resourceMeter1 = new ResourceMeter(getBattleScreen().getBattle(), player1, true, Farstar.STAGE_WIDTH*0.779f, Farstar.STAGE_HEIGHT*0.04f);
         resourceMeter2 = new ResourceMeter(getBattleScreen().getBattle(), player2, false, Farstar.STAGE_WIDTH*0.779f, Farstar.STAGE_HEIGHT*0.97f);

@@ -19,7 +19,7 @@ public class PossibilityAdvisor {
         ArrayList<PossibilityInfo> possibilities = new ArrayList<>();
         boolean inCombat = battle.getCombatManager().isActive();
         boolean inDuel = battle.getCombatManager().getDuelManager().isActive();
-        Player whoseTurn = !inDuel ? battle.getWhoseTurn() : battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer();
+        Player whoseTurn = !inDuel ? battle.getWhoseTurn() : battle.getCombatManager().getActivePlayer().getPlayer();
         if (player == whoseTurn) {
             if (!inCombat && hasPossibleAbility(player, player.getMs())) {
                 possibilities.add(new PossibilityInfo(player.getMs(), null));
@@ -41,7 +41,7 @@ public class PossibilityAdvisor {
             }
             for (Ship ship : player.getFleet().getShips()) {
                 if (ship != null) {
-                    if ((!inCombat && hasPossibleAbility(player, ship)) || (inCombat && !inDuel && !ship.haveFought())) {
+                    if ((!inCombat && hasPossibleAbility(player, ship)) || (inCombat && !inDuel)) {
                         possibilities.add(new PossibilityInfo(ship, player.getFleet().getFleetMenu()));
                     }
                 }
