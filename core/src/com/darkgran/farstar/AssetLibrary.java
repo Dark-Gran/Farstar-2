@@ -164,7 +164,9 @@ public class AssetLibrary {
         assetManager.load("images/yardOP.png", Texture.class, texParams);
         assetManager.load("images/yardP.png", Texture.class, texParams);
         //Token Parts
+        assetManager.load("images/tokens/abiFS_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/abiG_F.png", Texture.class, texParams);
+        assetManager.load("images/tokens/abiR_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/abiU_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/abiU_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/abiU_MS.png", Texture.class, texParams);

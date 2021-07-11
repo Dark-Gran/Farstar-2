@@ -7,20 +7,25 @@ import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.gui.AbilityPickerOption;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
+import com.darkgran.farstar.battle.players.abilities.Effect;
 import com.darkgran.farstar.battle.players.abilities.EffectType;
 import com.darkgran.farstar.gui.TextDrawer;
 import com.darkgran.farstar.util.SimpleVector2;
 
 /**
- * Handles the entire top-left corner (ie. ability-pads too)
+ * Actually a group of pads: Handles the entire top-left corner (ie. ability-pads too)
  */
 public class TokenPrice extends TokenPart {
     private Texture pad2;
     private SimpleVector2 textWH2;
     private Texture useMark;
     private Texture guardMark;
+    private Texture reachMark;
+    private Texture fsMark;
     private boolean showUseMark;
     private boolean showGuardMark;
+    private boolean showReachMark;
+    private boolean showFSMark;
 
     public TokenPrice(String fontPath, Token token) {
         super(fontPath, token);
@@ -36,7 +41,11 @@ public class TokenPrice extends TokenPart {
         setPad((Texture) Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padE", tokenType, true)+".png"));
         pad2 = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padM", tokenType, true)+".png");
         if (tokenType != TokenType.PRINT) { useMark = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/abiU", tokenType, true)+".png"); }
-        if (tokenType == TokenType.FLEET) { guardMark = Farstar.ASSET_LIBRARY.get("images/tokens/abiG_F.png"); }
+        if (tokenType == TokenType.FLEET) {
+            fsMark = Farstar.ASSET_LIBRARY.get("images/tokens/abiFS_F.png");
+            guardMark = Farstar.ASSET_LIBRARY.get("images/tokens/abiG_F.png");
+            reachMark = Farstar.ASSET_LIBRARY.get("images/tokens/abiR_F.png");
+        }
     }
 
     @Override
@@ -58,7 +67,23 @@ public class TokenPrice extends TokenPart {
             textWH2.setX(textWH2.getX()+3f);
         }
         showUseMark = AbilityManager.hasStarter(getToken().getCard(), AbilityStarter.USE);
-        showGuardMark = AbilityManager.hasAttribute(getToken().getCard(), EffectType.GUARD);
+        for (AbilityInfo abilityInfo : getToken().getCard().getCardInfo().getAbilities()) {
+            if (abilityInfo.getStarter() == AbilityStarter.NONE) {
+                for (Effect effect : abilityInfo.getEffects()) {
+                    switch (effect.getEffectType()) {
+                        case GUARD:
+                            showGuardMark = true;
+                            break;
+                        case FIRST_STRIKE:
+                            showFSMark = true;
+                            break;
+                        case REACH:
+                            showReachMark = true;
+                            break;
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -68,12 +93,20 @@ public class TokenPrice extends TokenPart {
     public void draw(Batch batch) {
         if (isEnabled()) {
             float x = getX() - getPad().getWidth() + getOffsetX();
-            if ((showUseMark && !isMouseOver()) || (showGuardMark && guardMark != null)) {
+            if ((showUseMark && !isMouseOver()) || (showGuardMark && guardMark != null) || (showReachMark && reachMark != null) || (showFSMark && fsMark != null)) {
                 if (showUseMark && useMark != null) {
                     batch.draw(useMark, x, getY() + getOffsetY());
                     x += getPad().getWidth();
                 }
-                if (showGuardMark && guardMark != null) { batch.draw(guardMark, x, getY() + getOffsetY()); }
+                if (showGuardMark && guardMark != null) {
+                    batch.draw(guardMark, x, getY() + getOffsetY());
+                    x += getPad().getWidth();
+                }
+                if (showReachMark && reachMark != null) {
+                    batch.draw(reachMark, x, getY() + getOffsetY());
+                    x += getPad().getWidth();
+                }
+                if (showFSMark && fsMark != null) { batch.draw(fsMark, x, getY() + getOffsetY()); }
             } else {
                 int E = getResource(true, getToken() instanceof AbilityPickerOption ? TokenType.SUPPORT : getToken().getTokenType());
                 if (E != 0 || showUseMark) {
