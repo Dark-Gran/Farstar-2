@@ -16,7 +16,7 @@ import static com.darkgran.farstar.battle.BattleSettings.BONUS_CARD_ID;
  *  -- No planning (atm not even the frame for it - both turn and combat work with "what comes first")
  *  -- Possibility "nonsense"-filter to substitute planning (ie. filters out some "typical bad moves")
  */
-public class Automaton extends Bot {
+public class Automaton extends Bot { //todo combat
 
     public Automaton(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard, BotTier botTier) {
         super(battleID, energy, matter, ms, deck, yard, botTier);

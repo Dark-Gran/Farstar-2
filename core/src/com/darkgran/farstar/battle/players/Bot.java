@@ -16,7 +16,7 @@ import com.darkgran.farstar.battle.players.cards.Ship;
 
 import java.util.ArrayList;
 
-public abstract class Bot extends Player implements BotSettings {
+public abstract class Bot extends Player implements BotSettings { //todo combat
     private final BotTier botTier;
     private final float timerDelay;
     private boolean pickingTarget = false;
