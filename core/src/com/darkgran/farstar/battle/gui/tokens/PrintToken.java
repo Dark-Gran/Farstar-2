@@ -67,7 +67,7 @@ public class PrintToken extends Token implements CardGFX {
     public void draw(Batch batch) {
         if (getCard() != null) {
             drawGlows(batch);
-            batch.draw(getCardPic(), getX(), getY());
+            drawCardGFX(batch, getX(), getY());
             drawPortrait(batch);
             getTokenDefense().draw(batch);
             getTokenOffense().draw(batch);
