@@ -11,6 +11,9 @@ import com.darkgran.farstar.battle.players.abilities.EffectType;
 import com.darkgran.farstar.gui.TextDrawer;
 import com.darkgran.farstar.util.SimpleVector2;
 
+/**
+ * Handles the entire top-left corner (ie. ability-pads too)
+ */
 public class TokenPrice extends TokenPart {
     private Texture pad2;
     private SimpleVector2 textWH2;
