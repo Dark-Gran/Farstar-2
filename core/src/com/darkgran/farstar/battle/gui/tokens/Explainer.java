@@ -9,6 +9,7 @@ import com.darkgran.farstar.battle.players.abilities.EffectType;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.gui.TextDrawer;
 import com.darkgran.farstar.gui.TextInTheBox;
+import com.darkgran.farstar.util.SimpleVector2;
 
 public class Explainer extends TextInTheBox {
 
@@ -28,7 +29,11 @@ public class Explainer extends TextInTheBox {
     }
 
     private void setupBox() {
-        setupBox(getX(), getY(), getWrapWidth()+40f, TextDrawer.getTextWH(getFont(), getText(), getWrapWidth(), getWrap()).getY()+40f);
+        SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), getText(), getWrapWidth(), getWrap());
+        if (textWH.getX() < getWrapWidth()) {
+            setX(getX() + (getWrapWidth() - textWH.getX())/2);
+        }
+        setupBox(getX(), getY(), getWrapWidth()+40f, textWH.getY()+40f);
         centralizeBox();
         //getSimpleBox().setY(getSimpleBox().getY()-1f);
     }
@@ -42,20 +47,20 @@ public class Explainer extends TextInTheBox {
         String str = "";
         switch (card.getCardInfo().getCardType()) {
             case TACTIC:
-                str += "Tactic.";
+                str += "Tactic.\n";
                 break;
         }
         for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
             for (Effect effect : abilityInfo.getEffects()) {
                 switch (effect.getEffectType()) {
                     case GUARD:
-                        str += "Guard.";
+                        str += "Guard.\n";
                         break;
                     case REACH:
-                        str += "Reach.";
+                        str += "Reach.\n";
                         break;
                     case FIRST_STRIKE:
-                        str += "FirstStrike.";
+                        str += "FirstStrike.\n";
                         break;
                 }
             }
