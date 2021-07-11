@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import static com.darkgran.farstar.battle.BattleSettings.CARDS_PER_TURN;
 import static com.darkgran.farstar.battle.BattleSettings.MAX_TECH_INCOME;
 
+//in-future: split into abstract and RoundManager1v1
 public class RoundManager {
     private final Battle battle;
     private final PossibilityAdvisor possibilityAdvisor;
