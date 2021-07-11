@@ -2,6 +2,10 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.darkgran.farstar.ColorPalette;
+import com.darkgran.farstar.battle.AbilityManager;
+import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
+import com.darkgran.farstar.battle.players.abilities.Effect;
+import com.darkgran.farstar.battle.players.abilities.EffectType;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.gui.TextDrawer;
 import com.darkgran.farstar.gui.TextInTheBox;
@@ -35,7 +39,29 @@ public class Explainer extends TextInTheBox {
     }
 
     protected String getExplanation(Card card) {
-        return "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        String str = "";
+        switch (card.getCardInfo().getCardType()) {
+            case TACTIC:
+                str += "Tactic.";
+                break;
+        }
+        for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
+            for (Effect effect : abilityInfo.getEffects()) {
+                switch (effect.getEffectType()) {
+                    case GUARD:
+                        str += "Guard.";
+                        break;
+                    case REACH:
+                        str += "Reach.";
+                        break;
+                    case FIRST_STRIKE:
+                        str += "FirstStrike.";
+                        break;
+                }
+            }
+        }
+        return str;
     }
+
 
 }
