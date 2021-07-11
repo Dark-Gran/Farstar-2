@@ -47,20 +47,20 @@ public class Explainer extends TextInTheBox {
         String str = "";
         switch (card.getCardInfo().getCardType()) {
             case TACTIC:
-                str += "Tactic.\n";
+                //str += "Tactic.\n";
                 break;
         }
         for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
             for (Effect effect : abilityInfo.getEffects()) {
                 switch (effect.getEffectType()) {
                     case GUARD:
-                        str += "Guard.\n";
+                        //str += "Guard.\n";
                         break;
                     case REACH:
-                        str += "Reach.\n";
+                        //str += "Reach.\n";
                         break;
                     case FIRST_STRIKE:
-                        str += "FirstStrike.\n";
+                        //str += "FirstStrike.\n";
                         break;
                 }
             }
