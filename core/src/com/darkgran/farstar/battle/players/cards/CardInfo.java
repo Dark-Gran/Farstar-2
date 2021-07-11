@@ -40,7 +40,7 @@ public class CardInfo {
         this.id = 0;
         this.name = "X";
         this.description = "";
-        this.cardType = CardType.UPGRADE;
+        this.cardType = CardType.ACTION;
         this.cardRarity = CardRarity.IRON;
         this.tier = 0;
         this.energy = 0;

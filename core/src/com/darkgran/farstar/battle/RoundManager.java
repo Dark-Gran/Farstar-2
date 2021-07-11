@@ -225,7 +225,7 @@ public class RoundManager {
             ArrayList<AbilityInfo> options = new ArrayList<>();
             for (int i = 0; i < cardInfo.getAbilities().size(); i++) {
                 if (cardInfo.getAbilities().get(i) != null) {
-                    if (cardInfo.getAbilities().get(i).getStarter() == abilityStarter) { //cardType == CardType.UPGRADE || cardType == CardType.TACTIC ||
+                    if (cardInfo.getAbilities().get(i).getStarter() == abilityStarter) {
                         AbilityInfo abilityInfo = cardInfo.getAbilities().get(i);
                         if (owner.canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
                             options.add(abilityInfo);

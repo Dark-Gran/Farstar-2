@@ -72,7 +72,7 @@ public class Automaton extends Bot {
             } else {
                 return 2;
             }
-        } else if (targetMenu instanceof FleetMenu && (card.getCardInfo().getCardType() == CardType.UPGRADE || card.isTactic())){
+        } else if (targetMenu instanceof FleetMenu && CardType.isSpell(card.getCardInfo().getCardType())){ //card.isTactic()
             FleetMenu fleetMenu = (FleetMenu) targetMenu;
             Token ally = getAlliedTarget(cardToToken(card, sourceMenu), null);
             for (int i = 0; i < fleetMenu.getFleetTokens().length; i++) {
@@ -252,7 +252,7 @@ public class Automaton extends Bot {
                         target = getAlliedTarget(token, attribute); //in-future: check against field of attributes instead of the first attribute (again, does not matter with "prototype cards")
                     }
                     break;
-                case ANY: //expects that Upgrades cannot be used on enemies, ergo ANY must mean ANY_ENEMY (it's "ANY" only for the whims of human player)
+                case ANY: //expects that "Upgrades" cannot be used on enemies, ergo ANY must mean ANY_ENEMY (it's "ANY" only for the whims of human player)
                 case ANY_ENEMY:
                 case ENEMY_FLEET:
                     target = getEnemyTarget(token, false);

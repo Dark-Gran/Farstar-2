@@ -5,16 +5,15 @@ public enum CardType {
     SUPPORT,
     YARDPRINT,
     BLUEPRINT,
-    UPGRADE,
-    TACTIC,
-    ACTION;
+    ACTION,
+    TACTIC;
 
     public static boolean isShip(CardType cardType) {
         return cardType == YARDPRINT || cardType == BLUEPRINT;
     }
 
     public static boolean isSpell(CardType cardType) {
-        return cardType == ACTION || cardType == UPGRADE || cardType == TACTIC;
+        return cardType == ACTION || cardType == TACTIC;
     }
 
     public static boolean needsDefense(CardType cardType) {

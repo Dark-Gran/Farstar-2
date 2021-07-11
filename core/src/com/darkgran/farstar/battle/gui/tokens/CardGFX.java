@@ -37,7 +37,6 @@ public interface CardGFX extends TextDrawer {
     static String getTierName(int tier, CardType cardType) {
         switch (cardType) {
             case ACTION:
-            case UPGRADE:
                 return "action";
             case TACTIC:
                 return "tactic";
