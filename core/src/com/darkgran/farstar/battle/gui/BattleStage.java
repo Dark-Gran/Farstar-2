@@ -104,7 +104,9 @@ public abstract class BattleStage extends ListeningStage {
             }
             if (targetHit != null || token.getCard().getCardInfo().getCardType() == CardType.ACTION) {
                 if (!token.getCard().isTactic() && combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
-                    combatManager.processDrop(token, getCombatDropToken(x, y, targetHit));
+                    if (getCombatDropToken(x, y, targetHit) != null) {
+                        combatManager.processDrop(token, getCombatDropToken(x, y, targetHit));
+                    }
                 } else {
                     getBattleScreen().getBattle().getRoundManager().processDrop(token, targetHit, getRoundDropPosition(x, y, targetHit, token.getCard().getCardInfo().getCardType()), false, true);
                 }
@@ -117,84 +119,89 @@ public abstract class BattleStage extends ListeningStage {
         }
     }
 
+    public int getRoundDropPosition(float x, float y, DropTarget dropTarget, CardType cardType) {
+        if (dropTarget instanceof FleetMenu) {
+            System.out.println(getFleetDropPosition(x, y, cardType, (FleetMenu) dropTarget, CardType.isShip(cardType))); //todo
+            return getFleetDropPosition(x, y, cardType, (FleetMenu) dropTarget, CardType.isShip(cardType));
+        } else if (dropTarget instanceof SupportMenu) {
+            return getSupportDropPosition(x, y, cardType, (SupportMenu) dropTarget);
+        } else if (dropTarget instanceof JunkButton) {
+            return 8;
+        }
+        return -1;
+    }
+
     public Token getCombatDropToken(float x, float y, DropTarget dropTarget) {
         if (dropTarget instanceof MothershipToken) {
             return ((MothershipToken) dropTarget);
         } else if (dropTarget instanceof FleetMenu) {
-            FleetMenu fleetMenu = (FleetMenu) dropTarget;
-            Token[] ships = fleetMenu.getFleetTokens();
-            for (int i = 0; i < ships.length; i++) {
-                if (x > fleetMenu.getX() + (fleetMenu.getOffset() * i) && x < fleetMenu.getX() + (fleetMenu.getOffset() * (i + 1))) {
-                    return ships[i];
-                }
+            int pos = getFleetDropPosition(x, y, CardType.BLUEPRINT, (FleetMenu) dropTarget, false);
+            System.out.println(pos); //todo
+            Token[] ships = ((FleetMenu) dropTarget).getFleetTokens();
+            if (ships[pos] != null) {
+                return ships[pos];
             }
         }
         return null;
     }
 
-    public int getRoundDropPosition(float x, float y, DropTarget dropTarget, CardType cardType) {
-        boolean shipUpgrade = !CardType.isShip(cardType);
-        if (dropTarget instanceof FleetMenu) {
-            FleetMenu fleetMenu = (FleetMenu) dropTarget;
-            Token[] ships = fleetMenu.getFleetTokens();
-            if (!shipUpgrade && ships[3] == null) { //middle token empty
-                return 3;
-            } else {
-                int count = 0;
-                int left = 0;
-                int right = 0;
-                for (int i = 0; i < ships.length; i++) {
-                    if (ships[i] != null) {
-                        count++;
-                    }
-                    if (i < 3) {
-                        left++;
-                    } else if (i > 3) {
-                        right++;
-                    }
+    public int getFleetDropPosition(float x, float y, CardType cardType, FleetMenu fleetMenu, boolean free3) {
+        Token[] ships = fleetMenu.getFleetTokens();
+        if (free3 && ships[3] == null) { //middle token empty
+            return 3;
+        } else {
+            int count = 0;
+            int left = 0;
+            int right = 0;
+            for (int i = 0; i < ships.length; i++) {
+                if (ships[i] != null) {
+                    count++;
                 }
-                float shift = 0;
-                if (count % 2 != 0) {
-                    shift = ((left > right) ? fleetMenu.getOffset()/2 : -fleetMenu.getOffset()/2);
+                if (i < 3) {
+                    left++;
+                } else if (i > 3) {
+                    right++;
                 }
-                for (int i = 0; i < 8; i++) {
-                    if (x > fleetMenu.getX() + shift + fleetMenu.getOffset() * i && (x < fleetMenu.getX() + shift + fleetMenu.getOffset() * (i+1))) {
-                        SimpleVector2 lr = fleetMenu.getFleet().getSideSizes(fleetMenu.getFleet().getShips());
-                        if (count != 6) {
-                            if (lr.getX() > lr.getY() && (i < 3 && i > 0)) {
+            }
+            float shift = 0;
+            if (count % 2 != 0) {
+                shift = ((left > right) ? fleetMenu.getOffset()/2 : -fleetMenu.getOffset()/2);
+            }
+            for (int i = 0; i < 8; i++) {
+                if (x > fleetMenu.getX() + shift + fleetMenu.getOffset() * i && (x < fleetMenu.getX() + shift + fleetMenu.getOffset() * (i+1))) {
+                    SimpleVector2 lr = fleetMenu.getFleet().getSideSizes(fleetMenu.getFleet().getShips());
+                    if (count != 6) {
+                        if (lr.getX() > lr.getY() && (i < 3 && i > 0)) {
+                            i--;
+                        } else if (lr.getX() < lr.getY() && i > 3 && i < 6) {
+                            i++;
+                        } else if (count % 2 != 0) {
+                            if (i < 3 && i > 0) {
                                 i--;
-                            } else if (lr.getX() < lr.getY() && i > 3 && i < 6) {
-                                i++;
-                            } else if (count % 2 != 0) {
-                                if (i < 3 && i > 0) {
-                                    i--;
-                                }
                             }
                         }
-                        if (i > 6) { i = 6; }
-                        return i;
                     }
-                }
-                return -1;
-            }
-        } else if (dropTarget instanceof SupportMenu) {
-            SupportMenu supportMenu = (SupportMenu) dropTarget;
-            for (int i = 0; i < 7; i++) {
-                if (x > supportMenu.getX() + (supportMenu.getOffset() * i) && x < supportMenu.getX() + (supportMenu.getOffset() * (8))) {
-                    if (i != 3) {
-                        return i;
-                    } else {
-                        if (x < supportMenu.getX() + supportMenu.getWidth() / 2) {
-                            return 2;
-                        } else {
-                            return 4;
-                        }
-                    }
+                    if (i > 6) { i = 6; }
+                    return i;
                 }
             }
             return -1;
-        } else if (dropTarget instanceof JunkButton) {
-            return 8;
+        }
+    }
+
+    public int getSupportDropPosition(float x, float y, CardType cardtype, SupportMenu supportMenu) {
+        for (int i = 0; i < 7; i++) {
+            if (x > supportMenu.getX() + (supportMenu.getOffset() * i) && x < supportMenu.getX() + (supportMenu.getOffset() * (8))) {
+                if (i != 3) {
+                    return i;
+                } else {
+                    if (x < supportMenu.getX() + supportMenu.getWidth() / 2) {
+                        return 2;
+                    } else {
+                        return 4;
+                    }
+                }
+            }
         }
         return -1;
     }
