@@ -36,4 +36,10 @@ public interface TextDrawer extends JustFont {
         return new SimpleVector2(layout.width, layout.height);
     }
 
+    static SimpleVector2 getTextWH(BitmapFont font, String txt, float wrapWidth, boolean wrap) {
+        GlyphLayout layout = new GlyphLayout();
+        layout.setText(font, txt, Color.WHITE, wrapWidth, Align.left, wrap);
+        return new SimpleVector2(layout.width, layout.height);
+    }
+
 }

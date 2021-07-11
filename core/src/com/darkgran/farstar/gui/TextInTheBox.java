@@ -48,12 +48,12 @@ public class TextInTheBox extends TextLine {
     }
 
     public void centralizeBox() {
-        SimpleVector2 boxOrigin = boxOriginFromTextCenter(simpleBox.getWidth(), simpleBox.getHeight(), getFont(), getText(), getX(), getY());
+        SimpleVector2 boxOrigin = boxOriginFromTextCenter(simpleBox.getWidth(), simpleBox.getHeight(), getFont(), getText(), getX(), getY(), getWrapWidth(), getWrap());
         setupBox(boxOrigin.getX(), boxOrigin.getY(), simpleBox.getWidth(), simpleBox.getHeight());
     }
 
-    public static SimpleVector2 boxOriginFromTextCenter(float width, float height, BitmapFont font, String text, float x, float y) {
-        return new SimpleVector2((x + TextDrawer.getTextWH(font, text).getX()/2) - width/2,(y - TextDrawer.getTextWH(font, text).getY()/2) - height/2);
+    public static SimpleVector2 boxOriginFromTextCenter(float width, float height, BitmapFont font, String text, float x, float y, float wrapWidth, boolean wrap) {
+        return new SimpleVector2((x + TextDrawer.getTextWH(font, text, wrapWidth, wrap).getX()/2) - width/2,(y - TextDrawer.getTextWH(font, text, wrapWidth, wrap).getY()/2) - height/2);
     }
 
     public void setupBox(float x, float y, float width, float height) {
