@@ -9,7 +9,6 @@ import com.darkgran.farstar.battle.gui.tokens.MothershipToken;
 import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.gui.tokens.TokenZoom1v1;
 import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.gui.ActorButton;
 import com.darkgran.farstar.gui.ButtonWithExtraState;
 
 import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
