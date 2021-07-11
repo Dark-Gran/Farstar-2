@@ -104,7 +104,7 @@ public abstract class BattleStage extends ListeningStage {
             }
             if (targetHit != null || token.getCard().getCardInfo().getCardType() == CardType.ACTION) {
                 if (!token.getCard().isTactic() && combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
-                    combatManager.processDrop(token, getCombatDropToken(x, y, targetHit)); //todo
+                    combatManager.processDrop(token, getCombatDropToken(x, y, targetHit));
                 } else {
                     getBattleScreen().getBattle().getRoundManager().processDrop(token, targetHit, getRoundDropPosition(x, y, targetHit, token.getCard().getCardInfo().getCardType()), false, true);
                 }
@@ -130,21 +130,6 @@ public abstract class BattleStage extends ListeningStage {
             }
         }
         return null;
-    }
-
-    public int getCombatDropPosition(float x, float y, DropTarget dropTarget) {
-        if (dropTarget instanceof MothershipToken) {
-            return 7;
-        } else if (dropTarget instanceof FleetMenu) {
-            FleetMenu fleetMenu = (FleetMenu) dropTarget;
-            Token[] ships = fleetMenu.getFleetTokens();
-            for (int i = 0; i < ships.length; i++) {
-                if (x > fleetMenu.getX() + (fleetMenu.getOffset() * i) && x < fleetMenu.getX() + (fleetMenu.getOffset() * (i + 1))) {
-                    return i;
-                }
-            }
-        }
-        return -1;
     }
 
     public int getRoundDropPosition(float x, float y, DropTarget dropTarget, CardType cardType) {

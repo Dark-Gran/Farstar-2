@@ -55,10 +55,14 @@ public abstract class CombatManager {
         if (token instanceof FleetToken) {
             ((FleetToken) token).resetPosition();
         }
-        if (active && !tacticalPhase && !duelManager.isActive() && token != targetToken) {
-            if (canReach(token, targetToken, targetToken.getCard().getPlayer().getFleet())) {
+        if (active && !tacticalPhase && !duelManager.isActive()) {
+            if (targetToken == null) {
                 duels.remove(token);
-                duels.put(token, targetToken);
+            } else if (token != targetToken) {
+                if (canReach(token, targetToken, targetToken.getCard().getPlayer().getFleet())) {
+                    duels.remove(token);
+                    duels.put(token, targetToken);
+                }
             }
         }
     }
