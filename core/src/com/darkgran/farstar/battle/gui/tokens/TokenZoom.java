@@ -81,7 +81,7 @@ public abstract class TokenZoom extends PrintToken {
     public void draw(Batch batch) {
         if (isEnabled() && !hidden && getCard() != null && getTargetType() != null && getTargetXY() != null) {
             super.draw(batch);
-            if (showExplainer) { explainer.draw(batch, getBattleStage().getBattleScreen().getShapeRenderer()); }
+            if (showExplainer && !explainer.getText().equals("")) { explainer.draw(batch, getBattleStage().getBattleScreen().getShapeRenderer()); }
         }
     }
 
