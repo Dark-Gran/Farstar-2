@@ -1,7 +1,6 @@
 package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.darkgran.farstar.ColorPalette;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
@@ -13,14 +12,7 @@ public abstract class TokenZoom extends PrintToken {
     private boolean enabled = true;
     private boolean counting;
     private boolean hidden = true;
-    private Explainer explainer = new Explainer(
-            ColorPalette.LIGHT,
-            ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f),
-            "fonts/bahnschrift30.fnt",
-            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            true,
-            200f
-    );
+    private Explainer explainer = new Explainer();
 
     public TokenZoom(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, int counterCap) {
         super(card, x, y, battleStage, cardListMenu, false);
@@ -55,6 +47,7 @@ public abstract class TokenZoom extends PrintToken {
     @Override
     public void enable(Card card, TokenType targetType, SimpleVector2 targetXY) {
         if (getCard() != card) {
+            explainer.refreshText(card);
             hidden = false;
             super.enable(card, targetType, targetXY);
         }
