@@ -147,7 +147,8 @@ public class RoundManager {
                             if (cardType != CardType.SUPPORT) {
                                 Fleet fleet = ((FleetMenu) dropTarget).getFleet();
                                 if ((fleet == whoseTurn.getFleet() || !CardType.isShip(cardType)) && position != -1) {
-                                    if (!battle.getCombatManager().getDuelManager().isActive() || (fleet.getShips()[position].getToken() != null && fleet.getShips()[position].isInDuel())) {
+                                    System.out.println(position);
+                                    if (!battle.getCombatManager().getDuelManager().isActive() || !fleet.isEmpty()) { //(fleet.getShips()[position].getToken() != null && fleet.getShips()[position].isInDuel())
                                         //ABILITIES
                                         postponedDeploy.setPosition(position);
                                         if (!postAbility) {
