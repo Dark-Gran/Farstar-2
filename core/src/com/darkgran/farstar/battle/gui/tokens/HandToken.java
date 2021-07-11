@@ -19,13 +19,12 @@ import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
 
 public class HandToken extends AnchoredToken implements CardGFX {
     public enum HandState {
-        DOWN, UP;
+        DOWN, UP
     }
     private Color fontColor = ColorPalette.BLACK;
     private Texture cardPic;
     private HandState currentState = HandState.DOWN;
     private HandState nextState = currentState;
-    private float angle = 0f;
     Matrix4 oldMX = null;
     Matrix4 mx;
     public static SimpleVector2 getNewXYFromAngle(float currentX, float currentY, float centerX, float centerY, double rads) {
@@ -96,7 +95,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
     }
 
     public void refreshRotation(int position, int cards) {
-        angle = getNewAngle(position, cards);
+        float angle = getNewAngle(position, cards);
         mx = new Matrix4();
         mx.rotate(new Vector3(0, 0, 1), angle);
         SimpleVector2 newXY = getNewXYFromAngle(0, 0, getX()+getWidth()/2, getY()+getHeight()/2, Math.toRadians(angle));
