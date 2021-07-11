@@ -13,6 +13,7 @@ public abstract class TokenZoom extends PrintToken {
     private boolean counting;
     private boolean hidden = true;
     private Explainer explainer = new Explainer();
+    private boolean showExplainer = false;
 
     public TokenZoom(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, int counterCap) {
         super(card, x, y, battleStage, cardListMenu, false);
@@ -21,6 +22,10 @@ public abstract class TokenZoom extends PrintToken {
 
     public void update(float delta) {
         counter.update();
+        if (counting && !counter.isEnabled()) {
+            counting = false;
+            showExplainer = true;
+        }
     }
 
     public void deactivate(boolean rightClick) {
@@ -32,9 +37,7 @@ public abstract class TokenZoom extends PrintToken {
     public void deactivate() {
         enabled = false;
         hidden = true;
-        counter.setEnabled(false);
-        counter.setCount(0);
-        counting = false;
+        hideExplainer();
     }
 
     public void reactivate() {
@@ -47,23 +50,38 @@ public abstract class TokenZoom extends PrintToken {
     @Override
     public void enable(Card card, TokenType targetType, SimpleVector2 targetXY) {
         if (getCard() != card) {
-            explainer.refreshText(card);
+            explainer.refreshText(getCard());
+            counter.setEnabled(true);
+            counting = true;
             hidden = false;
             super.enable(card, targetType, targetXY);
         }
     }
 
     @Override
+    public void disable() {
+        super.disable();
+        hideExplainer();
+    }
+
+    private void hideExplainer() {
+        showExplainer = false;
+        counter.setEnabled(false);
+        counter.setCount(0);
+        counting = false;
+    }
+
+    @Override
     public void setPosition(float x, float y) {
         super.setPosition(x, y);
-        if (explainer != null) { explainer.setPosition(x, y); }
+        if (explainer != null) { explainer.setShiftedPosition(x, y); }
     }
 
     @Override
     public void draw(Batch batch) {
         if (isEnabled() && !hidden && getCard() != null && getTargetType() != null && getTargetXY() != null) {
             super.draw(batch);
-            explainer.draw(batch, getBattleStage().getBattleScreen().getShapeRenderer());
+            if (showExplainer) { explainer.draw(batch, getBattleStage().getBattleScreen().getShapeRenderer()); }
         }
     }
 
@@ -94,4 +112,17 @@ public abstract class TokenZoom extends PrintToken {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
+    public Explainer getExplainer() {
+        return explainer;
+    }
+
+    public boolean isShowExplainer() {
+        return showExplainer;
+    }
+
+    public void setShowExplainer(boolean showExplainer) {
+        this.showExplainer = showExplainer;
+    }
+
 }

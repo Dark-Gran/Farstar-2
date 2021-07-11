@@ -17,7 +17,7 @@ public class Explainer extends TextInTheBox {
         setWrap(true);
     }
 
-    public void setPosition(float x, float y) {
+    public void setShiftedPosition(float x, float y) {
         setX(x+TokenType.PRINT.getWidth()*1.1f);
         setY(y+TokenType.PRINT.getHeight()*0.95f);
     }
