@@ -10,6 +10,7 @@ public final class ColorPalette {
     public static final Color LIGHT = new Color(0.43f, 0.7f, 1f, 1);
     public static final Color ENERGY = new Color(0.525f, 0.973f, 0.886f, 1);
     public static final Color MATTER = new Color(0.718f, 0.475f, 0.345f, 1);
+    public static final Color BLACK = new Color(0f, 0f, 0f, 1);
 
     public static Color changeAlpha(Color color, float a) {
         return new Color(color.r, color.g, color.b, color.a*a);

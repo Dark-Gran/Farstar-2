@@ -1,11 +1,13 @@
 package com.darkgran.farstar.battle.gui.tokens;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.darkgran.farstar.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
@@ -19,7 +21,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
     public enum HandState {
         DOWN, UP;
     }
-
+    private Color fontColor = ColorPalette.BLACK;
     private Texture cardPic;
     private HandState currentState = HandState.DOWN;
     private HandState nextState = currentState;
@@ -55,6 +57,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
             }
         });
         this.addListener(getDragger());
+        setFont("fonts/bahnschrift30.fnt");
         setCardPic(Farstar.ASSET_LIBRARY.get("images/tokens/card_D.png"));
         setGlowOffsetX(-getGlowG().getWidth()/2f+getFrame().getWidth()/2f);
         setGlowOffsetY(-getGlowG().getHeight()/2f+getCardPic().getHeight()/2f);
@@ -187,6 +190,16 @@ public class HandToken extends AnchoredToken implements CardGFX {
     @Override
     public Texture getCardPic() {
         return cardPic;
+    }
+
+    @Override
+    public Color getFontColor() {
+        return fontColor;
+    }
+
+    @Override
+    public void setFontColor(Color fontColor) {
+        this.fontColor = fontColor;
     }
 
 }
