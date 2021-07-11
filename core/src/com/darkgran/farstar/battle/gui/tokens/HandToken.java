@@ -13,13 +13,13 @@ import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.util.SimpleVector2;
 
-import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
+import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
 
-public class HandToken extends AnchoredToken {
+public class HandToken extends AnchoredToken implements CardGFX {
     public enum HandState {
         DOWN, UP;
     }
-    public static final float PORTRAIT_OFFSET_Y = -16f;
+
     private Texture cardPic;
     private HandState currentState = HandState.DOWN;
     private HandState nextState = currentState;
@@ -55,9 +55,9 @@ public class HandToken extends AnchoredToken {
             }
         });
         this.addListener(getDragger());
-        cardPic = Farstar.ASSET_LIBRARY.get("images/tokens/card_D.png");
+        setCardPic(Farstar.ASSET_LIBRARY.get("images/tokens/card_D.png"));
         setGlowOffsetX(-getGlowG().getWidth()/2f+getFrame().getWidth()/2f);
-        setGlowOffsetY(-getGlowG().getHeight()/2f+cardPic.getHeight()/2f);
+        setGlowOffsetY(-getGlowG().getHeight()/2f+getCardPic().getHeight()/2f);
         setOriginX(getWidth()/2);
         setOriginY(getHeight()/2);
     }
@@ -80,7 +80,7 @@ public class HandToken extends AnchoredToken {
             if (!isNoPics()) {
                 setPortrait(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getPortraitName(getCard().getCardInfo(), tokenType)));
                 setFrame(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getFrameName(getCard().getCardInfo(), tokenType)));
-                cardPic = Farstar.ASSET_LIBRARY.get("images/tokens/card_"+(nextState == HandState.UP ? "U" : "D")+".png");
+                setCardPic(Farstar.ASSET_LIBRARY.get("images/tokens/card_"+(nextState == HandState.UP ? "U" : "D")+".png"));
             }
             getTokenDefense().setPad(tokenType);
             getTokenOffense().setPad(tokenType);
@@ -139,7 +139,7 @@ public class HandToken extends AnchoredToken {
             //Draw
             if (getCard() != null) {
                 drawGlows(batch);
-                batch.draw(cardPic, getX(), getY());
+                drawCardGFX(batch, getX(), getY());
                 drawPortrait(batch);
                 getTokenDefense().draw(batch);
                 getTokenOffense().draw(batch);
@@ -156,8 +156,8 @@ public class HandToken extends AnchoredToken {
 
     @Override
     protected void drawPortrait(Batch batch) {
-        if (getPortrait() != null) { batch.draw(getPortrait(), getX(), getY()+cardPic.getHeight()-getPortrait().getHeight()+PORTRAIT_OFFSET_Y); }
-        if (getFrame() != null) { batch.draw(getFrame(), getX(), getY()+cardPic.getHeight()-getFrame().getHeight()+PORTRAIT_OFFSET_Y); }
+        if (getPortrait() != null) { batch.draw(getPortrait(), getX(), getY()+getCardPic().getHeight()-getPortrait().getHeight()+PORTRAIT_OFFSET_Y); }
+        if (getFrame() != null) { batch.draw(getFrame(), getX(), getY()+getCardPic().getHeight()-getFrame().getHeight()+PORTRAIT_OFFSET_Y); }
     }
 
     @Override
@@ -177,6 +177,16 @@ public class HandToken extends AnchoredToken {
     public void destroy() {
         super.destroy();
         getCardListMenu().getPlayer().getFleet().getFleetMenu().setPredictEnabled(false);
+    }
+
+    @Override
+    public void setCardPic(Texture texture) {
+        cardPic = texture;
+    }
+
+    @Override
+    public Texture getCardPic() {
+        return cardPic;
     }
 
 }

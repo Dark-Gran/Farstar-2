@@ -2,6 +2,7 @@
   {
     "id": 0,
     "name": "Battlestation",
+    "description": "",
     "cardType": "MS",
     "cardRarity": "IRON",
     "tier": 0,
@@ -30,6 +31,7 @@
   {
     "id": 1,
     "name": "Fighter",
+    "description": "",
     "cardType": "YARDPRINT",
     "cardRarity": "IRON",
     "tier": 1,
@@ -44,6 +46,7 @@
   {
     "id": 2,
     "name": "Corvette",
+    "description": "",
     "cardType": "YARDPRINT",
     "cardRarity": "IRON",
     "tier": 2,
@@ -58,6 +61,7 @@
   {
     "id": 3,
     "name": "Frigate",
+    "description": "",
     "cardType": "YARDPRINT",
     "cardRarity": "IRON",
     "tier": 3,
@@ -72,6 +76,7 @@
   {
     "id": 4,
     "name": "Cruiser",
+    "description": "",
     "cardType": "YARDPRINT",
     "cardRarity": "IRON",
     "tier": 4,
@@ -97,6 +102,7 @@
   {
     "id": 5,
     "name": "Battleship",
+    "description": "",
     "cardType": "YARDPRINT",
     "cardRarity": "IRON",
     "tier": 5,
@@ -122,6 +128,7 @@
   {
     "id": 6,
     "name": "Kinetic Shield",
+    "description": "",
     "cardType": "UPGRADE",
     "cardRarity": "IRON",
     "tier": 1,
@@ -152,6 +159,7 @@
   {
     "id": 7,
     "name": "Thermal Shield",
+    "description": "",
     "cardType": "UPGRADE",
     "cardRarity": "IRON",
     "tier": 1,
@@ -182,6 +190,7 @@
   {
     "id": 8,
     "name": "Particle Shield",
+    "description": "",
     "cardType": "UPGRADE",
     "cardRarity": "IRON",
     "tier": 1,
@@ -212,6 +221,7 @@
   {
     "id": 9,
     "name": "Kinetic Weapons",
+    "description": "",
     "cardType": "UPGRADE",
     "cardRarity": "IRON",
     "tier": 1,
@@ -242,6 +252,7 @@
   {
     "id": 10,
     "name": "Thermal Weapons",
+    "description": "",
     "cardType": "UPGRADE",
     "cardRarity": "IRON",
     "tier": 1,
@@ -272,6 +283,7 @@
   {
     "id": 11,
     "name": "Particle Weapons",
+    "description": "",
     "cardType": "UPGRADE",
     "cardRarity": "IRON",
     "tier": 1,
@@ -302,6 +314,7 @@
   {
     "id": 12,
     "name": "Kinetic Switch",
+    "description": "",
     "cardType": "TACTIC",
     "cardRarity": "IRON",
     "tier": 1,
@@ -332,6 +345,7 @@
   {
     "id": 13,
     "name": "Thermal Switch",
+    "description": "",
     "cardType": "TACTIC",
     "cardRarity": "IRON",
     "tier": 1,
@@ -362,6 +376,7 @@
   {
     "id": 14,
     "name": "Particle Switch",
+    "description": "",
     "cardType": "TACTIC",
     "cardRarity": "IRON",
     "tier": 1,
@@ -392,6 +407,7 @@
   {
     "id": 15,
     "name": "Motherstation",
+    "description": "",
     "cardType": "MS",
     "cardRarity": "IRON",
     "tier": 0,
@@ -420,6 +436,7 @@
   {
     "id": 16,
     "name": "Furnace",
+    "description": "",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
@@ -445,6 +462,7 @@
   {
     "id": 17,
     "name": "Gauss Shot",
+    "description": "",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
@@ -470,6 +488,7 @@
   {
     "id": 18,
     "name": "Plasblast",
+    "description": "",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
@@ -495,6 +514,7 @@
   {
     "id": 19,
     "name": "Upper Hand",
+    "description": "",
     "cardType": "TACTIC",
     "cardRarity": "IRON",
     "tier": 1,
@@ -520,6 +540,7 @@
   {
     "id": 20,
     "name": "Labour Deck",
+    "description": "",
     "cardType": "SUPPORT",
     "cardRarity": "IRON",
     "tier": 1,
@@ -563,6 +584,7 @@
   {
     "id": 21,
     "name": "Spare Resources",
+    "description": "",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
