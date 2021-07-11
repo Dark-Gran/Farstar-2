@@ -158,12 +158,14 @@ public class Fleet implements BattleTicks {
         return false;
     }
 
-    public void removeShip(Ship ship) {
+    public void removeShip(Ship ship, boolean inAftermath) {
         for (int i = 0; i < ships.length; i++) {
             if (ships[i] == ship) {
-                removeShip(i, false);
-                shiftShipsToBlank(i);
-                centralizeShips();
+                removeShip(i, inAftermath);
+                if (!inAftermath) {
+                    shiftShipsToBlank(i);
+                    centralizeShips();
+                }
             }
         }
     }

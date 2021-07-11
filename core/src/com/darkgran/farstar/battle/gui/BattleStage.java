@@ -104,7 +104,7 @@ public abstract class BattleStage extends ListeningStage {
             }
             if (targetHit != null || token.getCard().getCardInfo().getCardType() == CardType.ACTION) {
                 if (!token.getCard().isTactic() && combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
-                    combatManager.processDrop(token, getCombatDropToken(x, y, targetHit));
+                    combatManager.processDrop(token, getCombatDropToken(x, y, targetHit)); //todo
                 } else {
                     getBattleScreen().getBattle().getRoundManager().processDrop(token, targetHit, getRoundDropPosition(x, y, targetHit, token.getCard().getCardInfo().getCardType()), false, true);
                 }

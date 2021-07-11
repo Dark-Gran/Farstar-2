@@ -35,7 +35,7 @@ public class DuelManager {
         if (it.hasNext()) {
             Map.Entry<Token, Token> duel = it.next();
             exeDuel(duel.getKey().getCard(), duel.getValue().getCard());
-            it.remove();
+            //it.remove();
             iterateDuels();
         } else {
             afterDuels();
@@ -49,6 +49,8 @@ public class DuelManager {
     }
 
     private void exeDuel(Card att, Card def) {
+        exeOneSide(att, def);
+        exeOneSide(def, att);
         /*if (strikePriority != null) {
             if (strikePriority == att || def.isMS()) {
                 if (!exeOneSide(att, def)) { def.death(); }
@@ -65,14 +67,14 @@ public class DuelManager {
                     if (!exeOneSide(att, def)) { def.death(); }
                 }
             }
-        } else {*/
+        } else {
             if (!exeOneSide(att, def)) { def.death(); }
             if (!def.isMS()) {
                 if (!exeOneSide(def, att)) {
                     att.death();
                 }
             }
-        //}
+        }*/
     }
 
     /*private void iniStrikePriority(Card att, Card def) {

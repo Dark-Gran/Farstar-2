@@ -11,10 +11,15 @@ public class Ship extends JunkableCard {
         this.fleet = fleet;
     }
 
+    public void deathInAfterMath() {
+        super.death();
+        if (fleet != null) { fleet.removeShip(this, true); }
+    }
+
     @Override
     public void death() {
         super.death();
-        if (fleet != null) { fleet.removeShip(this); }
+        if (fleet != null) { fleet.removeShip(this, false); }
     }
 
     public Fleet getFleet() { return fleet; }

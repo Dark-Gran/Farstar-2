@@ -100,7 +100,7 @@ public abstract class CombatManager {
         }*/
         } else {
             activePlayer = null;
-            afterDuels();
+            endCombat();
         }
     }
 
@@ -187,7 +187,21 @@ public abstract class CombatManager {
     }
 
     public void afterDuels() {
+        for (CombatPlayer cp : playersA) {
+            checkForAftermath(cp.getPlayer().getFleet().getShips());
+        }
+        for (CombatPlayer cp : playersD) {
+            checkForAftermath(cp.getPlayer().getFleet().getShips());
+        }
         endCombat();
+    }
+
+    private void checkForAftermath(Ship[] ships) {
+        for (Ship ship : ships) {
+            if (ship != null && ship.getHealth()<=0) {
+                ship.deathInAfterMath();
+            }
+        }
     }
 
     public CombatPlayer playerToCombatPlayer(Player player) {
