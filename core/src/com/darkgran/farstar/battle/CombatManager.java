@@ -55,7 +55,7 @@ public abstract class CombatManager {
         if (token instanceof FleetToken) {
             ((FleetToken) token).resetPosition();
         }
-        if (active && !tacticalPhase && !duelManager.isActive()) {
+        if (active && !tacticalPhase && !duelManager.isActive() && token.getCard().getPlayer() == battle.getWhoseTurn()) {
             if (targetToken == null) {
                 duels.remove(token);
             } else if (token != targetToken) {
