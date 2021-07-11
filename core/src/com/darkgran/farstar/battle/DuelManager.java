@@ -23,6 +23,7 @@ public class DuelManager {
             this.active = true;
             duelSet = duels.entrySet();
             it = duelSet.iterator();
+            System.out.println("Launching Duels.");
             iterateDuels();
         } else {
             System.out.println("Invalid number of duels to launch (0 or null).");

@@ -86,13 +86,14 @@ public abstract class CombatManager {
     public void startTacticalPhase() {
         getBattleStage().disableCombatEnd();
         if (duels.size() > 0) {
-            tacticalPhase = true;
             lastTactic = null;
             playersA = playersToCombatPlayers(getBattle().getAllies(battle.getWhoseTurn()));
             playersD = playersToCombatPlayers(getBattle().getEnemies(battle.getWhoseTurn()));
             preparePlayers();
-            if (!(this.playersA[0].getPlayer() instanceof Bot)) {
-                combatMenu.addOK(this.playersA[0].getDuelButton());
+            tacticalPhase = true;
+            System.out.println("Tactical Phase started.");
+            if (!(activePlayer.getPlayer() instanceof Bot)) {
+                combatMenu.addOK(activePlayer.getDuelButton());
                 battle.getRoundManager().getPossibilityAdvisor().refresh(activePlayer.getPlayer(), battle);
             }/* else {
             ((Bot) this.playersA[0].getPlayer()).newDuelOK(this.playersA[0].getDuelButton());
