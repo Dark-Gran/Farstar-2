@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.darkgran.farstar.util.SimpleVector2;
 
 public class TextLine extends SimpleVector2 implements TextDrawer { //in-future: TextActor variant/implementation
+    private boolean wrap = false;
+    private float wrapWidth = 0f;
     private Color fontColor = new Color();
     private String fontPath = "";
     private String text = "";
@@ -41,6 +43,26 @@ public class TextLine extends SimpleVector2 implements TextDrawer { //in-future:
     @Override
     public void setFontColor(Color fontColor) {
         this.fontColor = fontColor;
+    }
+
+    @Override
+    public boolean getWrap() {
+        return wrap;
+    }
+
+    @Override
+    public void setWrap(boolean wrap) {
+        this.wrap = wrap;
+    }
+
+    @Override
+    public float getWrapWidth() {
+        return wrapWidth;
+    }
+
+    @Override
+    public void setWrapWidth(float width) {
+        wrapWidth = width;
     }
 
     @Override

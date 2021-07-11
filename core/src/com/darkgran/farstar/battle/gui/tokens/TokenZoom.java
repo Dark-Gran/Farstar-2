@@ -17,7 +17,9 @@ public abstract class TokenZoom extends PrintToken {
             ColorPalette.LIGHT,
             ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f),
             "fonts/bahnschrift30.fnt",
-            "test"
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            true,
+            200f
     );
 
     public TokenZoom(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, int counterCap) {

@@ -11,6 +11,8 @@ import com.darkgran.farstar.util.SimpleBox2;
 import com.darkgran.farstar.util.SimpleVector2;
 
 public class RoundCounter extends SimpleBox2 implements TextDrawer {
+    private boolean wrap = false;
+    private float wrapWidth = 0f;
     private final Texture pic = Farstar.ASSET_LIBRARY.get("images/rounds.png");
     private final Battle battle;
     private final BattleStage battleStage;
@@ -54,5 +56,25 @@ public class RoundCounter extends SimpleBox2 implements TextDrawer {
 
     @Override
     public void setFontColor(Color fontColor) { this.fontColor = fontColor; }
+
+    @Override
+    public boolean getWrap() {
+        return wrap;
+    }
+
+    @Override
+    public void setWrap(boolean wrap) {
+        this.wrap = wrap;
+    }
+
+    @Override
+    public float getWrapWidth() {
+        return wrapWidth;
+    }
+
+    @Override
+    public void setWrapWidth(float width) {
+        wrapWidth = width;
+    }
 
 }
