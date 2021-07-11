@@ -16,7 +16,7 @@ public interface TextDrawer extends JustFont {
     float getWrapWidth();
     void setWrapWidth(float width);
 
-    void drawText(Batch batch);
+    default void drawText(Batch batch) {}
 
     default void drawText(BitmapFont font, Batch batch, float x, float y, String txt) {
         font.setColor(getFontColor());
