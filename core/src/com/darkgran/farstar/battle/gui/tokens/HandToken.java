@@ -56,7 +56,6 @@ public class HandToken extends AnchoredToken implements CardGFX {
             }
         });
         this.addListener(getDragger());
-        setFont("fonts/bahnschrift30.fnt");
         setCardPic(Farstar.ASSET_LIBRARY.get("images/tokens/card_D.png"));
         setGlowOffsetX(-getGlowG().getWidth()/2f+getFrame().getWidth()/2f);
         setGlowOffsetY(-getGlowG().getHeight()/2f+getCardPic().getHeight()/2f);

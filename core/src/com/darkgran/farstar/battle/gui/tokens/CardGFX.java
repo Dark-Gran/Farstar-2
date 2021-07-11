@@ -2,7 +2,9 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.MathUtils;
+import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.gui.TextDrawer;
@@ -14,14 +16,21 @@ public interface CardGFX extends TextDrawer {
     Texture getCardPic();
     Card getCard();
 
+    default BitmapFont getCardFont() { return Farstar.ASSET_LIBRARY.get("fonts/bahnschrift30.fnt"); }
+    @Override
+    default float getWrapWidth() { return getCardPic().getWidth(); }
+    @Override
+    default boolean getWrap() { return true; }
+
+
     default void drawCardGFX(Batch batch, float x, float y) {
         if (getCardPic() != null) {
             batch.draw(getCardPic(), x, y);
         }
         if (getCard() != null) {
-            drawText(getFont(), batch, x, y+getCardPic().getHeight()/2f, getCardName(getCard()));
-            drawText(getFont(), batch, x, y+getCardPic().getHeight()/2f-40f, getTierName(getCardTier(getCard()), getCardType(getCard())));
-            drawText(getFont(), batch, x, y+getCardPic().getHeight()/2f-80f, getCardDescription(getCard()));
+            drawText(getCardFont(), batch, x, y+getCardPic().getHeight()/2f, getCardName(getCard()));
+            drawText(getCardFont(), batch, x, y+getCardPic().getHeight()/2f-40f, getTierName(getCardTier(getCard()), getCardType(getCard())));
+            drawText(getCardFont(), batch, x, y+getCardPic().getHeight()/2f-80f, getCardDescription(getCard()));
         }
     }
 
@@ -78,12 +87,6 @@ public interface CardGFX extends TextDrawer {
     }
 
     //Wrap unchangeable unless overridden
-    @Override
-    default float getWrapWidth() { return getCardPic().getWidth(); }
-
-    @Override
-    default boolean getWrap() { return true; }
-
     @Override
     default void setWrap(boolean wrap) {}
 
