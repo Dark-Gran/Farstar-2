@@ -13,10 +13,11 @@ import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Mothership;
 import com.darkgran.farstar.battle.players.cards.Ship;
+import com.darkgran.farstar.util.Delayer;
 
 import java.util.ArrayList;
 
-public abstract class Bot extends Player implements BotSettings { //todo combat
+public abstract class Bot extends Player implements BotSettings, Delayer { //todo combat
     private final BotTier botTier;
     private final float timerDelay;
     private boolean pickingTarget = false;
@@ -94,31 +95,31 @@ public abstract class Bot extends Player implements BotSettings { //todo combat
     }
 
     protected void delayedTurn() {
-        delayAction(this::turn);
+        delayAction(this::turn, timerDelay);
     }
 
     protected void delayedEndTurn() {
-        delayAction(this::endTurn);
+        delayAction(this::endTurn, timerDelay);
     }
 
     protected void delayedCombatEnd() {
-        delayAction(this::endCombat);
+        delayAction(this::endCombat, timerDelay);
     }
 
     protected void delayedCombat() {
-        delayAction(this::combat);
+        delayAction(this::combat, timerDelay);
     }
 
     protected void delayedLaunchDuel(Ship ship) {
-        delayAction(()->launchDuel(ship));
+        delayAction(()->launchDuel(ship), timerDelay);
     }
 
     protected void delayedDuel(CombatOK combatOK) {
-        delayAction(()->duel(combatOK));
+        delayAction(()->duel(combatOK), timerDelay);
     }
 
     protected void delayedDuelReady(CombatOK combatOK) {
-        delayAction(()->duelReady(combatOK));
+        delayAction(()->duelReady(combatOK), timerDelay);
     }
 
     protected boolean deploy(Card card, Menu menu, int position) {
@@ -168,14 +169,6 @@ public abstract class Bot extends Player implements BotSettings { //todo combat
 
     protected boolean isDeploymentMenu(Menu menu) {
         return (menu instanceof FleetMenu || menu instanceof SupportMenu);
-    }
-
-    protected void delayAction(Runnable runnable) { //use delayedTurn() etc. (above) for "recommended delays"
-        Timer.schedule(new Timer.Task() {
-            public void run() {
-                if (runnable != null) { Gdx.app.postRunnable(runnable); }
-            }
-        }, timerDelay);
     }
 
     public void dispose() {

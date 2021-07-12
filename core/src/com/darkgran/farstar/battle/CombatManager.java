@@ -207,9 +207,9 @@ public abstract class CombatManager {
         duelManager.launchDuels(this, duels);
     }
 
-    void markDuelAsDone(Map.Entry<Token, DuelManager.AttackInfo> duel) {
+    void setDuelState(Map.Entry<Token, DuelManager.AttackInfo> duel, byte state) {
         if (duels.containsKey(duel.getKey())) {
-            duels.put(duel.getKey(), new DuelManager.AttackInfo(duel.getValue().getDefender(), duel.getValue().getUpperStrike(), true));
+            duels.put(duel.getKey(), new DuelManager.AttackInfo(duel.getValue().getDefender(), duel.getValue().getUpperStrike(), state));
         }
     }
 

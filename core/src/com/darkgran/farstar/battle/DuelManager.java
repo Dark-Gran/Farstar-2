@@ -15,7 +15,7 @@ public class DuelManager implements Delayer {
     public static class AttackInfo {
         private final Token defender;
         private Card upperStrike = null;
-        private boolean done = false;
+        private byte state = 0;
         public AttackInfo(Token defender) {
             this.defender = defender;
         }
@@ -23,19 +23,18 @@ public class DuelManager implements Delayer {
             this.defender = defender;
             this.upperStrike = upperStrike;
         }
-        public AttackInfo(Token defender, Card upperStrike, boolean done) {
+        public AttackInfo(Token defender, Card upperStrike, byte state) {
             this.defender = defender;
             this.upperStrike = upperStrike;
-            this.done = done;
+            this.state = state;
         }
         public Token getDefender() { return defender; }
         public Card getUpperStrike() { return upperStrike; }
         public void setUpperStrike(Card upperStrike) { this.upperStrike = upperStrike; }
-        public boolean isDone() { return done; }
-        public void setDone(boolean done) { this.done = done; }
+        public byte getState() { return state; }
+        public void setState(byte state) { this.state = state; }
     }
     private CombatManager combatManager;
-    private HashMap<Token, AttackInfo> duels;
     private boolean active = false;
     private Set<Map.Entry<Token, AttackInfo>> duelSet;
     private Iterator<Map.Entry<Token, AttackInfo>> it;
@@ -44,7 +43,6 @@ public class DuelManager implements Delayer {
     void launchDuels(CombatManager combatManager, HashMap<Token, AttackInfo> duels) {
         if (duels != null && duels.size() > 0) {
             this.combatManager = combatManager;
-            this.duels = duels;
             this.active = true;
             duelSet = duels.entrySet();
             it = duelSet.iterator();
@@ -59,13 +57,17 @@ public class DuelManager implements Delayer {
     private void iterateDuels() { //loop
         if (it.hasNext()) {
             Map.Entry<Token, AttackInfo> duel = it.next();
-            exeDuel(duel.getKey().getCard(), duel.getValue());
-            combatManager.markDuelAsDone(duel);
-            //it.remove();
-            delayAction(this::iterateDuels, duelDelay);
+            combatManager.setDuelState(duel, (byte) 1);
+            delayAction(()->performDuel(duel), duelDelay);
         } else {
             delayAction(this::afterDuels, duelDelay);
         }
+    }
+
+    private void performDuel(Map.Entry<Token, AttackInfo> duel) {
+        exeDuel(duel.getKey().getCard(), duel.getValue());
+        combatManager.setDuelState(duel, (byte) 2);
+        delayAction(this::iterateDuels, duelDelay);
     }
 
     private void afterDuels() {
