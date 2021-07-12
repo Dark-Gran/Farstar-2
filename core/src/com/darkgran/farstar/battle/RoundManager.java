@@ -187,7 +187,7 @@ public class RoundManager {
                     //PAYMENT + DISCARD (incl. targeting discard)
                     if (success || postAbility) {
                         //System.out.println("Drop Success.");
-                        if (targetCard != null && cardType == CardType.TACTIC && battle.getCombatManager().getDuelManager().isActive()) {
+                        if (targetCard != null && cardType == CardType.TACTIC && battle.getCombatManager().isTacticalPhase()) {
                             battle.getCombatManager().saveTactic(token.getCard(), targetCard);
                         }
                         if (payPrice) { whoseTurn.payday(token.getCard()); }
@@ -302,10 +302,10 @@ public class RoundManager {
     }
 
     public void processClick(Token token, Player owner) {
-        if (!abilityPicker.isActive() && !battle.isEverythingDisabled() && !battle.activeCombatOrDuel() && getBattle().getWhoseTurn() instanceof LocalPlayer) {
+        if (!abilityPicker.isActive() && (!battle.activeCombatOrDuel() || (battle.getCombatManager().isTacticalPhase() && targetingActive)) && !battle.isEverythingDisabled() && getBattle().getWhoseTurn() instanceof LocalPlayer) {
             if (targetingActive) {
                 processTarget(token);
-            } else if (owner == battle.getWhoseTurn() && possibilityAdvisor.hasPossibleAbility(owner, token.getCard())) {
+            } else if (owner == battle.getWhoseTurn() && token != null && possibilityAdvisor.hasPossibleAbility(owner, token.getCard())) {
                 checkAllAbilities(token, null, AbilityStarter.USE, owner, null);
                 battle.refreshPossibilities();
             }
@@ -314,7 +314,7 @@ public class RoundManager {
 
     public void processTarget(Token target) {
         if (targetingActive && postponedDeploy.getCaster() != null) {
-            if (battle.getAbilityManager().validAbilityTarget(postponedDeploy.getAbility(), postponedDeploy.getCaster().getCard(), target.getCard())) {
+            if (AbilityManager.validAbilityTarget(postponedDeploy.getAbility(), postponedDeploy.getCaster().getCard(), target.getCard())) {
                 //System.out.println("Playing ability...");
                 if (battle.getAbilityManager().playAbility(postponedDeploy.getCaster(), target.getCard(), postponedDeploy.getAbility(), postponedDeploy.getDrop())) {
                     System.out.println("Targeted-Ability Success!");
