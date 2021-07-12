@@ -23,7 +23,7 @@ public abstract class CombatManager {
     private CombatPlayer activePlayer;
     private CombatMenu combatMenu;
 
-    public CombatManager(Battle battle, DuelManager duelManager) {
+    CombatManager(Battle battle, DuelManager duelManager) {
         this.battle = battle;
         this.duelManager = duelManager;
     }
@@ -107,7 +107,7 @@ public abstract class CombatManager {
         }
     }
 
-    protected void preparePlayers() {
+    void preparePlayers() {
         resetReadyStates(null); //battle.getWhoseTurn()
         activePlayer = playersA[0];
     }
@@ -122,13 +122,26 @@ public abstract class CombatManager {
     }
 
     void saveTactic(Card card, Card target) {
-        if (target.getToken() != null) {
-            if (duels.containsKey(target.getToken())) {
-                DuelManager.AttackInfo attackInfo = new DuelManager.AttackInfo(duels.get(target.getToken()).getDefender(), card);
-                duels.put(target.getToken(), attackInfo);
-            }
+        if (AbilityManager.upgradesFirstStrike(card)) {
+            saveUpperStrike(target);
         }
         resetReadyStates(null);
+    }
+
+    private void saveUpperStrike(Card target) {
+        if (duels.containsKey(target.getToken())) {
+            DuelManager.AttackInfo attackInfo = new DuelManager.AttackInfo(duels.get(target.getToken()).getDefender(), target);
+            duels.put(target.getToken(), attackInfo);
+        } else {
+            for (Map.Entry<Token, DuelManager.AttackInfo> entry : duels.entrySet()) {
+                if (entry.getValue().getDefender().getCard() == target) {
+                    Token att = entry.getKey();
+                    DuelManager.AttackInfo attackInfo = new DuelManager.AttackInfo(entry.getValue().getDefender(), target);
+                    duels.put(att, attackInfo);
+                    break;
+                }
+            }
+        }
     }
 
     public void tacticalOK(CombatOK combatOK) {
@@ -194,7 +207,13 @@ public abstract class CombatManager {
         duelManager.launchDuels(this, duels);
     }
 
-    public void afterDuels() {
+    void markDuelAsDone(Map.Entry<Token, DuelManager.AttackInfo> duel) {
+        if (duels.containsKey(duel.getKey())) {
+            duels.put(duel.getKey(), new DuelManager.AttackInfo(duel.getValue().getDefender(), duel.getValue().getUpperStrike(), true));
+        }
+    }
+
+    void afterDuels() {
         for (CombatPlayer cp : playersA) {
             checkForAftermath(cp.getPlayer().getFleet().getShips());
             refreshFleets(cp.getPlayer());
@@ -220,11 +239,11 @@ public abstract class CombatManager {
         }
     }
 
-    public CombatPlayer playerToCombatPlayer(Player player) {
+    CombatPlayer playerToCombatPlayer(Player player) {
         return new CombatPlayer(player);
     }
 
-    public CombatPlayer[] playersToCombatPlayers(Player[] players) {
+    CombatPlayer[] playersToCombatPlayers(Player[] players) {
         CombatPlayer[] cps = new CombatPlayer[players.length];
         for (int i = 0; i < cps.length; i++) {
             cps[i] = new CombatPlayer(players[i]);
@@ -232,11 +251,11 @@ public abstract class CombatManager {
         return cps;
     }
 
-    public void setPlayersA_OK(int ix, CombatOK combatOK) {
+    void setPlayersA_OK(int ix, CombatOK combatOK) {
         if (playersA[ix] != null) { playersA[ix].setDuelOK(combatOK); }
     }
 
-    public void setPlayersD_OK(int ix, CombatOK combatOK) {
+    void setPlayersD_OK(int ix, CombatOK combatOK) {
         if (playersA[ix] != null) { playersD[ix].setDuelOK(combatOK); }
     }
 
@@ -266,10 +285,6 @@ public abstract class CombatManager {
         return tacticalPhase;
     }
 
-    public void setTacticalPhase(boolean tacticalPhase) {
-        this.tacticalPhase = tacticalPhase;
-    }
-
     public CombatMenu getCombatMenu() {
         return combatMenu;
     }
@@ -289,4 +304,9 @@ public abstract class CombatManager {
     public CombatPlayer getActivePlayer() {
         return activePlayer;
     }
+
+    public HashMap<Token, DuelManager.AttackInfo> getDuels() {
+        return duels;
+    }
+
 }

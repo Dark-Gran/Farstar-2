@@ -1,36 +1,47 @@
 package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.battle.gui.tokens.Token;
+import com.darkgran.farstar.battle.players.abilities.EffectType;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.TechType;
+import com.darkgran.farstar.util.Delayer;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-public class DuelManager {
+public class DuelManager implements Delayer {
     public static class AttackInfo {
         private final Token defender;
-        private Card lastTactic = null;
+        private Card upperStrike = null;
+        private boolean done = false;
         public AttackInfo(Token defender) {
             this.defender = defender;
         }
-        public AttackInfo(Token defender, Card lastTactic) {
+        public AttackInfo(Token defender, Card upperStrike) {
             this.defender = defender;
-            this.lastTactic = lastTactic;
+            this.upperStrike = upperStrike;
+        }
+        public AttackInfo(Token defender, Card upperStrike, boolean done) {
+            this.defender = defender;
+            this.upperStrike = upperStrike;
+            this.done = done;
         }
         public Token getDefender() { return defender; }
-        public Card getLastTactic() { return lastTactic; }
-        public void setLastTactic(Card lastTactic) { this.lastTactic = lastTactic; }
+        public Card getUpperStrike() { return upperStrike; }
+        public void setUpperStrike(Card upperStrike) { this.upperStrike = upperStrike; }
+        public boolean isDone() { return done; }
+        public void setDone(boolean done) { this.done = done; }
     }
     private CombatManager combatManager;
     private HashMap<Token, AttackInfo> duels;
     private boolean active = false;
     private Set<Map.Entry<Token, AttackInfo>> duelSet;
     private Iterator<Map.Entry<Token, AttackInfo>> it;
+    private final float duelDelay = 0.9f;
 
-    public void launchDuels(CombatManager combatManager, HashMap<Token, AttackInfo> duels) {
+    void launchDuels(CombatManager combatManager, HashMap<Token, AttackInfo> duels) {
         if (duels != null && duels.size() > 0) {
             this.combatManager = combatManager;
             this.duels = duels;
@@ -38,10 +49,10 @@ public class DuelManager {
             duelSet = duels.entrySet();
             it = duelSet.iterator();
             System.out.println("Launching Duels.");
-            iterateDuels();
+            delayAction(this::iterateDuels, duelDelay);
         } else {
             System.out.println("Invalid number of duels to launch (0 or null).");
-            afterDuels();
+            delayAction(this::afterDuels, duelDelay);
         }
     }
 
@@ -49,10 +60,11 @@ public class DuelManager {
         if (it.hasNext()) {
             Map.Entry<Token, AttackInfo> duel = it.next();
             exeDuel(duel.getKey().getCard(), duel.getValue());
+            combatManager.markDuelAsDone(duel);
             //it.remove();
-            iterateDuels();
+            delayAction(this::iterateDuels, duelDelay);
         } else {
-            afterDuels();
+            delayAction(this::afterDuels, duelDelay);
         }
     }
 
@@ -63,44 +75,33 @@ public class DuelManager {
 
     private void exeDuel(Card att, AttackInfo attackInfo) {
         Card def = attackInfo.getDefender().getCard();
-        exeOneSide(att, def);
-        exeOneSide(def, att);
-        /*if (strikePriority != null) {
-            if (strikePriority == att || def.isMS()) {
-                if (!exeOneSide(att, def)) { def.death(); }
-                else {
-                    if (!def.isMS()) {
-                        if (!exeOneSide(def, att)) {
-                            att.death();
-                        }
-                    }
+        boolean attFS;
+        boolean defFS;
+        if (def.isMS()) {
+            attFS = AbilityManager.hasAttribute(att, EffectType.FIRST_STRIKE);
+            defFS = false;
+        } else if (attackInfo.getUpperStrike() == null) {
+            attFS = AbilityManager.hasAttribute(att, EffectType.FIRST_STRIKE);
+            defFS = AbilityManager.hasAttribute(def, EffectType.FIRST_STRIKE);
+        } else {
+            attFS = attackInfo.getUpperStrike() == att;
+            defFS = !attFS;
+        }
+        if (attFS != defFS) {
+            if (attFS) {
+                if (exeOneSide(att, def)) {
+                    if (!def.isMS()) { exeOneSide(def, att); }
                 }
             } else {
-                if (!exeOneSide(def, att)) { att.death(); }
-                else {
-                    if (!exeOneSide(att, def)) { def.death(); }
+                if (def.isMS() || exeOneSide(def, att)) {
+                    exeOneSide(att, def);
                 }
             }
         } else {
-            if (!exeOneSide(att, def)) { def.death(); }
-            if (!def.isMS()) {
-                if (!exeOneSide(def, att)) {
-                    att.death();
-                }
-            }
-        }*/
-    }
-
-    /*private void iniStrikePriority(Card att, Card def) {
-        boolean attShootsFirst = combatManager.getBattle().getAbilityManager().hasAttribute(att, EffectType.FIRST_STRIKE);
-        boolean defShootsFirst = combatManager.getBattle().getAbilityManager().hasAttribute(def, EffectType.FIRST_STRIKE);
-        if (attShootsFirst != defShootsFirst) {
-            if (attShootsFirst) { strikePriority = att; }
-            else { strikePriority = def; }
-        } else {
-            strikePriority = null;
+            exeOneSide(att, def);
+            if (!def.isMS()) { exeOneSide(def, att); }
         }
-    }*/
+    }
 
     private boolean exeOneSide(Card att, Card def) { //returns survival
         int dmg = getDmgAgainstShields(att.getCardInfo().getOffense(), def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());

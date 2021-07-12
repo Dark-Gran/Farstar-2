@@ -330,6 +330,21 @@ public class AbilityManager {
         return 0;
     }
 
+    public static boolean upgradesFirstStrike(Card card) {
+        for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
+            for (Effect effect : abilityInfo.getEffects()) {
+                if (effect.getEffectType() == EffectType.CHANGE_STAT) {
+                    if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
+                        if (effect.getEffectInfo().get(0).toString().equals("ABILITY") && effect.getEffectInfo().get(1).toString().equals("FIRST_STRIKE")) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public static int floatObjectToInt(Object obj) {
         if (obj instanceof Float) {
             float f = (Float) obj;

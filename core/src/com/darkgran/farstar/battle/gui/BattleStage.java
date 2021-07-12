@@ -58,6 +58,7 @@ public abstract class BattleStage extends ListeningStage {
 
     public void drawBattleStage(float delta, Batch batch) {
         roundCounter.draw(batch);
+        combatMenu.drawDuels(batch, getBattleScreen().getShapeRenderer());
         abilityPicker.draw(batch);
         if (fakeToken != null) { fakeToken.draw(batch); }
         cardZoom.draw(batch);

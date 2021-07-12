@@ -4,12 +4,12 @@ import com.darkgran.farstar.battle.gui.CombatMenu1V1;
 
 public class CombatManager1v1 extends CombatManager {
 
-    public CombatManager1v1(Battle battle, DuelManager duelManager) {
+    CombatManager1v1(Battle battle, DuelManager duelManager) {
         super(battle, duelManager);
     }
 
     @Override
-    protected void preparePlayers() {
+    void preparePlayers() {
         super.preparePlayers();
         if (getPlayersA()[0].getPlayer().getBattleID() == 1) {
             setPlayersA_OK(0, ((CombatMenu1V1) getCombatMenu()).getDuelButton1());
