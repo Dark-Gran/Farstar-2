@@ -193,11 +193,19 @@ public abstract class CombatManager {
     public void afterDuels() {
         for (CombatPlayer cp : playersA) {
             checkForAftermath(cp.getPlayer().getFleet().getShips());
+            refreshFleets(cp.getPlayer());
         }
         for (CombatPlayer cp : playersD) {
             checkForAftermath(cp.getPlayer().getFleet().getShips());
+            refreshFleets(cp.getPlayer());
         }
         endCombat();
+    }
+
+    private void refreshFleets(Player player) {
+        player.getFleet().checkForBlanks();
+        player.getFleet().centralizeShips();
+        player.getFleet().getFleetMenu().updateCoordinates(player.getFleet().getFleetMenu().getFleetTokens());
     }
 
     private void checkForAftermath(Ship[] ships) {

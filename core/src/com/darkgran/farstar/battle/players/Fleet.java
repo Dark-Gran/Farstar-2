@@ -80,11 +80,47 @@ public class Fleet implements BattleTicks {
         return new SimpleVector2(left, right);
     }
 
-    private void centralizeShips() {
+    public void centralizeShips() {
         SimpleVector2 lr = getSideSizes(getShips());
         if (Math.abs(lr.getX()-lr.getY()) > 1) {
             shiftAllShips(lr.getX() > lr.getY(), false);
         }
+    }
+
+    public void checkForBlanks() {
+        int bp = hasBlank();
+        while (bp != -1) {
+            shiftShipsToBlank(bp);
+            bp = hasBlank();
+        }
+    }
+
+    public int hasBlank() {
+        if (!isEmpty()) {
+            int step = 0;
+            int blankPosition = -1;
+            for (int i = 0; i < ships.length; i++) {
+                switch (step) {
+                    case 0: //nothing found yet
+                        if (ships[i] != null) {
+                            step = 1;
+                        }
+                        break;
+                    case 1: //found some ships
+                        if (ships[i] == null) {
+                            step = 2;
+                            blankPosition = i;
+                        }
+                        break;
+                    case 2: //found ships and space
+                        if (ships[i] != null) {
+                            return blankPosition;
+                        }
+                        break;
+                }
+            }
+        }
+        return -1;
     }
 
     public void shiftAllShips(boolean fromSide, boolean noUpdate) {
