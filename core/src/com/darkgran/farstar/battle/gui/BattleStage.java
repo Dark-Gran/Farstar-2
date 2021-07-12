@@ -120,8 +120,7 @@ public abstract class BattleStage extends ListeningStage {
 
     public int getRoundDropPosition(float x, float y, DropTarget dropTarget, CardType cardType) {
         if (dropTarget instanceof FleetMenu) {
-            System.out.println(getFleetDropPosition(x, y, (FleetMenu) dropTarget, CardType.isShip(cardType))); //todo
-            return getFleetDropPosition(x, y, (FleetMenu) dropTarget, CardType.isShip(cardType));
+            return getFleetDropPosition(x, y, (FleetMenu) dropTarget, CardType.isShip(cardType), true);
         } else if (dropTarget instanceof SupportMenu) {
             return getSupportDropPosition(x, y, (SupportMenu) dropTarget);
         } else if (dropTarget instanceof JunkButton) {
@@ -134,8 +133,7 @@ public abstract class BattleStage extends ListeningStage {
         if (dropTarget instanceof MothershipToken) {
             return ((MothershipToken) dropTarget);
         } else if (dropTarget instanceof FleetMenu) {
-            int pos = getFleetDropPosition(x, y, (FleetMenu) dropTarget, false);
-            //System.out.println(pos); //todo
+            int pos = getFleetDropPosition(x, y, (FleetMenu) dropTarget, false, false);
             Token[] ships = ((FleetMenu) dropTarget).getFleetTokens();
             if (pos > 0 && pos < ships.length && ships[pos] != null) {
                 return ships[pos];
@@ -144,27 +142,36 @@ public abstract class BattleStage extends ListeningStage {
         return null;
     }
 
-    public int getFleetDropPosition(float x, float y, FleetMenu fleetMenu, boolean free3) { //todo
+    public int getFleetDropPosition(float x, float y, FleetMenu fleetMenu, boolean force3, boolean deployment) {
         Token[] ships = fleetMenu.getFleetTokens();
-        if (free3 && ships[3] == null) { //middle token empty
+        if (force3 && ships[3] == null) { //middle token empty
             return 3;
         } else {
             float shift = 0f;
             SimpleVector2 lr = fleetMenu.getFleet().getSideSizes(fleetMenu.getFleet().getShips());
-            if (lr.getX() > lr.getY()) {
-                shift = fleetMenu.getOffset() / 2;
-            } else if (lr.getX() < lr.getY()) {
-                shift = -fleetMenu.getOffset() / 2;
+            int count = fleetMenu.getFleet().countShips();
+            if (!deployment || count % 2 != 0) {
+                if (lr.getX() > lr.getY()) {
+                    shift = fleetMenu.getOffset() / 2;
+                } else if ((!deployment && lr.getX() < lr.getY()) || (deployment && lr.getX() <= lr.getY())) {
+                    shift = -fleetMenu.getOffset() / 2;
+                }
             }
             for (int i = 0; i < 8; i++) {
                 if (x > shift + fleetMenu.getX() + fleetMenu.getOffset() * i && x < shift + fleetMenu.getX() + fleetMenu.getOffset() * (i + 1)) {
-                    /*if (i == 3 && split3) {
-                        if (x < shift+fleetMenu.getX()+fleetMenu.getOffset()*i+TokenType.FLEET.getWidth()/2) {
-                            i = 2;
-                        } else {
-                            i = 4;
+                    if (deployment) {
+                        if (count != 6) {
+                            if (lr.getX() > lr.getY() && (i < 3 && i > 0)) {
+                                i--;
+                            } else if (lr.getX() < lr.getY() && i > 3 && i < 6) {
+                                i++;
+                            } else if (count % 2 != 0) {
+                                if (i < 3 && i > 0) {
+                                    i--;
+                                }
+                            }
                         }
-                    }*/
+                    }
                     return MathUtils.clamp(i, 0, 6);
                 }
             }

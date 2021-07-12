@@ -151,6 +151,12 @@ public class Fleet implements BattleTicks {
         return true;
     }
 
+    public int countShips() {
+        int count = 0;
+        for (Ship ship : ships) { if (ship != null) { count++; } }
+        return count;
+    }
+
     public boolean hasSpace() {
         for (Ship ship : ships) { if (ship == null) { return true; } }
         return false;
