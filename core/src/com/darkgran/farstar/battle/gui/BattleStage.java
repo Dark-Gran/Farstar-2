@@ -1,6 +1,7 @@
 package com.darkgran.farstar.battle.gui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.tokens.*;
@@ -104,9 +105,7 @@ public abstract class BattleStage extends ListeningStage {
             }
             if (targetHit != null || token.getCard().getCardInfo().getCardType() == CardType.ACTION) {
                 if (!token.getCard().isTactic() && combatManager.isActive() && !combatManager.getDuelManager().isActive()) {
-                    if (getCombatDropToken(x, y, targetHit) != null) {
-                        combatManager.processDrop(token, getCombatDropToken(x, y, targetHit));
-                    }
+                    combatManager.processDrop(token, getCombatDropToken(x, y, targetHit));
                 } else {
                     getBattleScreen().getBattle().getRoundManager().processDrop(token, targetHit, getRoundDropPosition(x, y, targetHit, token.getCard().getCardInfo().getCardType()), false, true);
                 }
@@ -121,10 +120,10 @@ public abstract class BattleStage extends ListeningStage {
 
     public int getRoundDropPosition(float x, float y, DropTarget dropTarget, CardType cardType) {
         if (dropTarget instanceof FleetMenu) {
-            System.out.println(getFleetDropPosition(x, y, cardType, (FleetMenu) dropTarget, CardType.isShip(cardType))); //todo
-            return getFleetDropPosition(x, y, cardType, (FleetMenu) dropTarget, CardType.isShip(cardType));
+            System.out.println(getFleetDropPosition(x, y, (FleetMenu) dropTarget, CardType.isShip(cardType))); //todo
+            return getFleetDropPosition(x, y, (FleetMenu) dropTarget, CardType.isShip(cardType));
         } else if (dropTarget instanceof SupportMenu) {
-            return getSupportDropPosition(x, y, cardType, (SupportMenu) dropTarget);
+            return getSupportDropPosition(x, y, (SupportMenu) dropTarget);
         } else if (dropTarget instanceof JunkButton) {
             return 8;
         }
@@ -135,61 +134,45 @@ public abstract class BattleStage extends ListeningStage {
         if (dropTarget instanceof MothershipToken) {
             return ((MothershipToken) dropTarget);
         } else if (dropTarget instanceof FleetMenu) {
-            int pos = getFleetDropPosition(x, y, CardType.BLUEPRINT, (FleetMenu) dropTarget, false);
-            System.out.println(pos); //todo
+            int pos = getFleetDropPosition(x, y, (FleetMenu) dropTarget, false);
+            //System.out.println(pos); //todo
             Token[] ships = ((FleetMenu) dropTarget).getFleetTokens();
-            if (ships[pos] != null) {
+            if (pos > 0 && pos < ships.length && ships[pos] != null) {
                 return ships[pos];
             }
         }
         return null;
     }
 
-    public int getFleetDropPosition(float x, float y, CardType cardType, FleetMenu fleetMenu, boolean free3) {
+    public int getFleetDropPosition(float x, float y, FleetMenu fleetMenu, boolean free3) { //todo
         Token[] ships = fleetMenu.getFleetTokens();
         if (free3 && ships[3] == null) { //middle token empty
             return 3;
         } else {
-            int count = 0;
-            int left = 0;
-            int right = 0;
-            for (int i = 0; i < ships.length; i++) {
-                if (ships[i] != null) {
-                    count++;
-                }
-                if (i < 3) {
-                    left++;
-                } else if (i > 3) {
-                    right++;
-                }
-            }
-            float shift = 0;
-            if (count % 2 != 0) {
-                shift = ((left > right) ? fleetMenu.getOffset()/2 : -fleetMenu.getOffset()/2);
+            float shift = 0f;
+            SimpleVector2 lr = fleetMenu.getFleet().getSideSizes(fleetMenu.getFleet().getShips());
+            if (lr.getX() > lr.getY()) {
+                shift = fleetMenu.getOffset() / 2;
+            } else if (lr.getX() < lr.getY()) {
+                shift = -fleetMenu.getOffset() / 2;
             }
             for (int i = 0; i < 8; i++) {
-                if (x > fleetMenu.getX() + shift + fleetMenu.getOffset() * i && (x < fleetMenu.getX() + shift + fleetMenu.getOffset() * (i+1))) {
-                    SimpleVector2 lr = fleetMenu.getFleet().getSideSizes(fleetMenu.getFleet().getShips());
-                    if (count != 6) {
-                        if (lr.getX() > lr.getY() && (i < 3 && i > 0)) {
-                            i--;
-                        } else if (lr.getX() < lr.getY() && i > 3 && i < 6) {
-                            i++;
-                        } else if (count % 2 != 0) {
-                            if (i < 3 && i > 0) {
-                                i--;
-                            }
+                if (x > shift + fleetMenu.getX() + fleetMenu.getOffset() * i && x < shift + fleetMenu.getX() + fleetMenu.getOffset() * (i + 1)) {
+                    /*if (i == 3 && split3) {
+                        if (x < shift+fleetMenu.getX()+fleetMenu.getOffset()*i+TokenType.FLEET.getWidth()/2) {
+                            i = 2;
+                        } else {
+                            i = 4;
                         }
-                    }
-                    if (i > 6) { i = 6; }
-                    return i;
+                    }*/
+                    return MathUtils.clamp(i, 0, 6);
                 }
             }
             return -1;
         }
     }
 
-    public int getSupportDropPosition(float x, float y, CardType cardtype, SupportMenu supportMenu) {
+    public int getSupportDropPosition(float x, float y, SupportMenu supportMenu) {
         for (int i = 0; i < 7; i++) {
             if (x > supportMenu.getX() + (supportMenu.getOffset() * i) && x < supportMenu.getX() + (supportMenu.getOffset() * (8))) {
                 if (i != 3) {
