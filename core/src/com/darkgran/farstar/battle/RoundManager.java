@@ -187,9 +187,6 @@ public class RoundManager {
                     //PAYMENT + DISCARD (incl. targeting discard)
                     if (success || postAbility) {
                         //System.out.println("Drop Success.");
-                        if (targetCard != null && cardType == CardType.TACTIC && battle.getCombatManager().isTacticalPhase()) {
-                            battle.getCombatManager().saveTactic(token.getCard(), targetCard);
-                        }
                         if (payPrice) { whoseTurn.payday(token.getCard()); }
                         if (!(token instanceof FakeToken) && !CardType.isShip(cardType)) { token.addCardToJunk(); }
                     } else if (dropTarget instanceof JunkButton && token instanceof HandToken) { //Target: Discard
@@ -327,6 +324,9 @@ public class RoundManager {
                         targetingActive = false;
                         SuperScreen.switchCursor(SuperScreen.CursorType.DEFAULT);
                         processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, postponedDeploy.getAbility().getStarter()==AbilityStarter.DEPLOY);
+                        if (target.getCard() != null && battle.getCombatManager().isTacticalPhase() && postponedDeploy.getCaster().getCard().getCardInfo().getCardType() == CardType.TACTIC) {
+                            battle.getCombatManager().saveTactic(postponedDeploy.getCaster().getCard(), target.getCard());
+                        }
                     }
                     endTargeting();
                 }
