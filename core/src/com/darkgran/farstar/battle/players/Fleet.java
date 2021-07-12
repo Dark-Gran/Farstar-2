@@ -27,9 +27,7 @@ public class Fleet implements BattleTicks {
                 int start = side ? 2 : 4;
                 if (position == 3) {
                     SimpleVector2 lr = getSideSizes(ships);
-                    if (lr.getX() < lr.getY()) {
-                        side = true;
-                    }
+                    side = lr.getX() < lr.getY();
                     start = 3;
                 }
                 int end = side ? -1 : 7;
