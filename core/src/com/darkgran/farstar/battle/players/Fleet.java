@@ -97,7 +97,7 @@ public class Fleet implements BattleTicks {
 
     public int hasBlank() {
         if (!isEmpty()) {
-            int step = 0;
+            byte step = 0;
             int blankPosition = -1;
             for (int i = 0; i < ships.length; i++) {
                 switch (step) {
