@@ -9,6 +9,7 @@ import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.battle.players.abilities.EffectType;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public abstract class CombatManager {
     private BattleStage battleStage; //must be set before RoundManager.launch() (see BattleScreen constructor)
@@ -16,8 +17,7 @@ public abstract class CombatManager {
     private final DuelManager duelManager;
     private boolean active = false;
     private boolean tacticalPhase = false;
-    private HashMap<Token, Token> duels = new HashMap<>();
-    private Card lastTactic;
+    private HashMap<Token, DuelManager.AttackInfo> duels = new HashMap<>();
     private CombatPlayer[] playersA;
     private CombatPlayer[] playersD;
     private CombatPlayer activePlayer;
@@ -61,7 +61,7 @@ public abstract class CombatManager {
             } else if (token != targetToken) {
                 if (canReach(token, targetToken, targetToken.getCard().getPlayer().getFleet())) {
                     duels.remove(token);
-                    duels.put(token, targetToken);
+                    duels.put(token, new DuelManager.AttackInfo(targetToken));
                 }
             }
         }
@@ -90,7 +90,6 @@ public abstract class CombatManager {
     public void startTacticalPhase() {
         getBattleStage().disableCombatEnd();
         if (duels.size() > 0) {
-            lastTactic = null;
             playersA = playersToCombatPlayers(getBattle().getAllies(battle.getWhoseTurn()));
             playersD = playersToCombatPlayers(getBattle().getEnemies(battle.getWhoseTurn()));
             preparePlayers();
@@ -123,7 +122,12 @@ public abstract class CombatManager {
     }
 
     void saveTactic(Card card, Card target) {
-        lastTactic = card;
+        if (target.getToken() != null) {
+            if (duels.containsKey(target.getToken())) {
+                DuelManager.AttackInfo attackInfo = new DuelManager.AttackInfo(duels.get(target.getToken()).getDefender(), card);
+                duels.put(target.getToken(), attackInfo);
+            }
+        }
         resetReadyStates(null);
     }
 

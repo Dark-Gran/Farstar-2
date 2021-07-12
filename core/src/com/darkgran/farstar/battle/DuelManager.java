@@ -10,13 +10,27 @@ import java.util.Map;
 import java.util.Set;
 
 public class DuelManager {
+    public static class AttackInfo {
+        private final Token defender;
+        private Card lastTactic = null;
+        public AttackInfo(Token defender) {
+            this.defender = defender;
+        }
+        public AttackInfo(Token defender, Card lastTactic) {
+            this.defender = defender;
+            this.lastTactic = lastTactic;
+        }
+        public Token getDefender() { return defender; }
+        public Card getLastTactic() { return lastTactic; }
+        public void setLastTactic(Card lastTactic) { this.lastTactic = lastTactic; }
+    }
     private CombatManager combatManager;
-    private HashMap<Token, Token> duels;
+    private HashMap<Token, AttackInfo> duels;
     private boolean active = false;
-    private Set<Map.Entry<Token, Token>> duelSet;
-    private Iterator<Map.Entry<Token, Token>> it;
+    private Set<Map.Entry<Token, AttackInfo>> duelSet;
+    private Iterator<Map.Entry<Token, AttackInfo>> it;
 
-    public void launchDuels(CombatManager combatManager, HashMap<Token, Token> duels) {
+    public void launchDuels(CombatManager combatManager, HashMap<Token, AttackInfo> duels) {
         if (duels != null && duels.size() > 0) {
             this.combatManager = combatManager;
             this.duels = duels;
@@ -33,8 +47,8 @@ public class DuelManager {
 
     private void iterateDuels() { //loop
         if (it.hasNext()) {
-            Map.Entry<Token, Token> duel = it.next();
-            exeDuel(duel.getKey().getCard(), duel.getValue().getCard());
+            Map.Entry<Token, AttackInfo> duel = it.next();
+            exeDuel(duel.getKey().getCard(), duel.getValue());
             //it.remove();
             iterateDuels();
         } else {
@@ -42,13 +56,13 @@ public class DuelManager {
         }
     }
 
-
     private void afterDuels() {
         active = false;
         combatManager.afterDuels();
     }
 
-    private void exeDuel(Card att, Card def) {
+    private void exeDuel(Card att, AttackInfo attackInfo) {
+        Card def = attackInfo.getDefender().getCard();
         exeOneSide(att, def);
         exeOneSide(def, att);
         /*if (strikePriority != null) {
