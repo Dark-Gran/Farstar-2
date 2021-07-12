@@ -361,7 +361,7 @@ public class AbilityManager {
     }
 
     private void saveEffect(Card target, Effect effect) {
-        if (getBattle().getCombatManager().getDuelManager().isActive()) {
+        if (getBattle().getCombatManager().isTacticalPhase()) {
             effect.setDuration(effect.getDuration()-1);
         }
         target.addToEffects(effect);

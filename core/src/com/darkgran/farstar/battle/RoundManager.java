@@ -116,7 +116,7 @@ public class RoundManager {
             if (!battle.activeCombatOrDuel() || cardType == CardType.TACTIC) {
                 //OUTSIDE COMBAT OR TACTIC
                 Player whoseTurn;
-                if (!battle.getCombatManager().getDuelManager().isActive()) { whoseTurn = battle.getWhoseTurn(); }
+                if (!battle.getCombatManager().isTacticalPhase()) { whoseTurn = battle.getWhoseTurn(); }
                 else { whoseTurn = battle.getCombatManager().getActivePlayer().getPlayer(); }
                 if (token.getCardListMenu().getPlayer() == whoseTurn) {
                     Card targetCard = null;
@@ -148,7 +148,7 @@ public class RoundManager {
                             if (cardType != CardType.SUPPORT) {
                                 Fleet fleet = ((FleetMenu) dropTarget).getFleet();
                                 if ((fleet == whoseTurn.getFleet() || !CardType.isShip(cardType)) && position != -1) {
-                                    if (!battle.getCombatManager().getDuelManager().isActive() || !fleet.isEmpty()) { //(fleet.getShips()[position].getToken() != null && fleet.getShips()[position].isInDuel())
+                                    if (!battle.getCombatManager().isActive() || (!fleet.isEmpty() && battle.getCombatManager().isTacticalPhase())) { //(fleet.getShips()[position].getToken() != null && fleet.getShips()[position].isInDuel())
                                         //ABILITIES
                                         postponedDeploy.setPosition(position);
                                         if (!postAbility) {

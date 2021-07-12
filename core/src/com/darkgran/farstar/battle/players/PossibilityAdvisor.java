@@ -18,7 +18,7 @@ public class PossibilityAdvisor {
     public ArrayList<PossibilityInfo> getPossibilities(Player player, Battle battle) { //also used by Automaton
         ArrayList<PossibilityInfo> possibilities = new ArrayList<>();
         boolean inCombat = battle.getCombatManager().isActive();
-        boolean inDuel = battle.getCombatManager().getDuelManager().isActive();
+        boolean inDuel = battle.getCombatManager().isTacticalPhase(); //battle.getCombatManager().getDuelManager().isActive();
         Player whoseTurn = !inDuel ? battle.getWhoseTurn() : battle.getCombatManager().getActivePlayer().getPlayer();
         if (player == whoseTurn) {
             if (!inCombat && hasPossibleAbility(player, player.getMs())) {
