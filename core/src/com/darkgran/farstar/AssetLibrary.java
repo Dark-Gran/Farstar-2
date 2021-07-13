@@ -145,6 +145,7 @@ public class AssetLibrary {
         assetManager.load("images/Space_1920.png", Texture.class, texParams);
         assetManager.load("images/tableMain_1920.png", Texture.class, texParams);
         //Battle
+        assetManager.load("images/combat_aim.png", Texture.class, texParams);
         assetManager.load("images/combat_end.png", Texture.class, texParams);
         assetManager.load("images/combat_endO.png", Texture.class, texParams);
         assetManager.load("images/deck.png", Texture.class, texParams);
