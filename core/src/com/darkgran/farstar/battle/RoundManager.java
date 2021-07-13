@@ -292,12 +292,13 @@ public class RoundManager {
 
     public void askForTargets(Token token, AbilityInfo ability, DropTarget dropTarget) {
         targetingActive = true;
-        SuperScreen.switchCursor(SuperScreen.CursorType.AIM);
         token.setPicked(true);
         postponedDeploy.saveInDeployment(token, ability, dropTarget, null);
         System.out.println("Need a Target.");
         if (battle.getWhoseTurn() instanceof Bot) {
             ((Bot) battle.getWhoseTurn()).chooseTargets(token, ability);
+        } else {
+            SuperScreen.switchCursor(SuperScreen.CursorType.AIM);
         }
     }
 
