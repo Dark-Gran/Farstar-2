@@ -88,7 +88,7 @@ public class Fleet implements BattleTicks {
     }
 
     public void checkForBlanks() {
-        int bp = hasBlank();
+        int bp = ships[3] == null && !isEmpty() ? 3 : hasBlank();
         while (bp != -1) {
             shiftShipsToBlank(bp);
             bp = hasBlank();
