@@ -9,6 +9,7 @@ import com.darkgran.farstar.battle.players.cards.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import static com.darkgran.farstar.battle.BattleSettings.BONUS_CARD_ID;
 
@@ -142,8 +143,13 @@ public class Automaton extends Bot {
                                 Card enemy;
                                 //Validate change of Type (color)
                                 if (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE || changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE) {
-                                    return false; //todo
-                                        /*if (techTypeNonsense(ally, enemy, changeStatType, changeInfo)) {
+                                    if (getBattle().getCombatManager().isTacticalPhase()) { //COMBAT ONLY
+                                        allyToken = getAlliedTarget(card.getToken(), null);
+                                        Map.Entry<Token, DuelManager.AttackInfo> duel = getBattle().getCombatManager().getDuel(allyToken);
+                                        if (duel == null) { return true; }
+                                        ally = allyToken.getCard();
+                                        enemy = getBattle().getCombatManager().getDuelOpponent(allyToken).getCard();
+                                        if (techTypeNonsense(ally, enemy, changeStatType, changeInfo)) {
                                             return true;
                                         }
                                         if (ability.isPurelyTypeChange()) {
@@ -153,20 +159,22 @@ public class Automaton extends Bot {
                                                 TechType techType = TechType.valueOf(changeInfo.toString()); //in-future: rework invalidating "switches" (changing both types at the same time)
                                                 return ((changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && techType == ally.getCardInfo().getDefenseType() || changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && techType == ally.getCardInfo().getOffenseType()));
                                             }
-                                        }*/
+                                        }
+                                    }
                                 //Validate Ability change
                                 } else if (changeStatType == EffectTypeSpecifics.ChangeStatType.ABILITY){
                                     EffectType effectType = EffectType.valueOf(changeInfo.toString());
                                     switch (effectType) {
                                         case FIRST_STRIKE:
                                             if (getBattle().getCombatManager().isTacticalPhase()) { //COMBAT ONLY
-                                                //todo
-                                                //allyToken = getAllyInDuel();
-                                                //ally = allyToken.getCard();
-                                                //enemy = getBattle().getCombatManager().getDuelManager().getOpponent(allyToken).getCard();
-                                                /*if (enemy.isMS() || (getBattle().getCombatManager().getDuelManager().getStrikePriority() != null && getBattle().getCombatManager().getDuelManager().getStrikePriority() == ally)) {
+                                                allyToken = getAlliedTarget(card.getToken(), EffectType.FIRST_STRIKE);
+                                                Map.Entry<Token, DuelManager.AttackInfo> duel = getBattle().getCombatManager().getDuel(allyToken);
+                                                if (duel == null) { return true; }
+                                                ally = allyToken.getCard();
+                                                enemy = getBattle().getCombatManager().getDuelOpponent(allyToken).getCard();
+                                                if (enemy.isMS() || (duel.getValue().getUpperStrike() != null && duel.getValue().getUpperStrike() == ally)) {
                                                     return true;
-                                                }*/
+                                                }
                                             } else { //OUTSIDE COMBAT
                                                 for (Ship ship : getFleet().getShips()) {
                                                     if (ship != null && !AbilityManager.hasAttribute(ship, EffectType.FIRST_STRIKE)) {
@@ -217,19 +225,6 @@ public class Automaton extends Bot {
         return null;
     }
 
-    /*private Token getAllyInDuel() { //todo
-        if (getBattle().getCombatManager().isTacticalPhase()) {
-            Token attacker = getBattle().getCombatManager().getDuelManager().getAttacker();
-            Token defender = getBattle().getCombatManager().getDuelManager().getDefender();
-            if (attacker.getCard().getPlayer() == this) {
-                return attacker;
-            } else {
-                return defender;
-            }
-        }
-        return null;
-    }*/
-
     private boolean techTypeNonsense(Card ally, Card enemy, EffectTypeSpecifics.ChangeStatType changeStatType, Object changeInfo) {
         return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && DuelManager.noneToInferior(ally.getCardInfo().getOffenseType()) != TechType.INFERIOR && ally.getCardInfo().getOffenseType() != enemy.getCardInfo().getDefenseType()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && ally.getCardInfo().getDefenseType() == enemy.getCardInfo().getOffenseType());
     }
@@ -273,7 +268,7 @@ public class Automaton extends Bot {
     @Override
     protected Token getAlliedTarget(Token caster, EffectType effectType) {
         if (getFleet().isEmpty()) {
-            if (!AbilityManager.hasAttribute(getMs(), effectType)) {
+            if (!AbilityManager.hasEffectType(getMs(), effectType)) {
                 return getMs().getToken();
             }
         } else {
@@ -281,7 +276,7 @@ public class Automaton extends Bot {
             for (Ship ship : getFleet().getShips()) {
                 if (ship != null) {
                     if (strongestShip == null || isBiggerShip(ship, strongestShip)) {
-                        if (!AbilityManager.hasAttribute(strongestShip, effectType)) {
+                        if (!AbilityManager.hasEffectType(strongestShip, effectType)) {
                             strongestShip = ship;
                         }
                     }

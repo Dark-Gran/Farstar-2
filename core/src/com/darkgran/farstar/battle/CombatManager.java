@@ -248,12 +248,38 @@ public abstract class CombatManager {
         return cps;
     }
 
+    public Map.Entry<Token, DuelManager.AttackInfo> getDuel(Token token) {
+        if (token != null) {
+            for (Map.Entry<Token, DuelManager.AttackInfo> entry : duels.entrySet()) {
+                if (entry.getKey() == token || entry.getValue().getDefender() == token) {
+                    return entry;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Token getDuelOpponent(Token token) {
+        if (token != null) {
+            if (duels.containsKey(token)) {
+                return duels.get(token).getDefender();
+            } else {
+                for (Map.Entry<Token, DuelManager.AttackInfo> entry : duels.entrySet()) {
+                    if (entry.getValue().getDefender() == token) {
+                        return entry.getKey();
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     void setPlayersA_OK(int ix, CombatOK combatOK) {
         if (playersA[ix] != null) { playersA[ix].setDuelOK(combatOK); }
     }
 
     void setPlayersD_OK(int ix, CombatOK combatOK) {
-        if (playersA[ix] != null) { playersD[ix].setDuelOK(combatOK); }
+        if (playersD[ix] != null) { playersD[ix].setDuelOK(combatOK); }
     }
 
     //FINISH
