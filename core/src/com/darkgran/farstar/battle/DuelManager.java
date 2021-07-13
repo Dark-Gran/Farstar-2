@@ -38,7 +38,7 @@ public class DuelManager implements Delayer {
     private boolean active = false;
     private Set<Map.Entry<Token, AttackInfo>> duelSet;
     private Iterator<Map.Entry<Token, AttackInfo>> it;
-    private final float duelDelay = 0.9f;
+    private final float duelDelay = 0.4f;
 
     void launchDuels(CombatManager combatManager, HashMap<Token, AttackInfo> duels) {
         if (duels != null && duels.size() > 0) {
@@ -50,7 +50,7 @@ public class DuelManager implements Delayer {
             delayAction(this::iterateDuels, duelDelay);
         } else {
             System.out.println("Invalid number of duels to launch (0 or null).");
-            delayAction(this::afterDuels, duelDelay);
+            //delayAction(this::afterDuels, duelDelay);
         }
     }
 
@@ -60,7 +60,8 @@ public class DuelManager implements Delayer {
             combatManager.setDuelState(duel, (byte) 1);
             delayAction(()->performDuel(duel), duelDelay);
         } else {
-            delayAction(this::afterDuels, duelDelay);
+            afterDuels();
+            //delayAction(this::afterDuels, duelDelay);
         }
     }
 
