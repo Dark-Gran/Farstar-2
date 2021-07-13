@@ -4,19 +4,12 @@ import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
 
-public class FakeToken extends Token { //temporary token for targeted deployment from shipyard
+public abstract class FakeToken extends Token implements Dragging { //temporary token
 
-    public FakeToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
-        super(card, x, y, battleStage, cardListMenu, TokenType.FAKE, false, false);
-        getCardListMenu().getPlayer().getFleet().getFleetMenu().setPredictEnabled(true);
+    public FakeToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, boolean noPics) {
+        super(card, x, y, battleStage, cardListMenu, TokenType.FAKE, noPics, false);
         setDragger(new Dragger(this));
         this.addListener(getDragger());
-        setGlowState(GlowState.POSSIBLE);
     }
 
-    @Override
-    public void destroy() {
-        super.destroy();
-        getCardListMenu().getPlayer().getFleet().getFleetMenu().setPredictEnabled(false);
-    }
 }

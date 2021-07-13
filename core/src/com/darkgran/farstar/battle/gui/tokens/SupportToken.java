@@ -20,7 +20,7 @@ public class SupportToken extends ClickToken implements DisableMark {
     }
 
     @Override
-    public void click(int button) {
+    void click(int button) {
         super.click(button);
         if (button == 0) {
             getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(this, getCard().getPlayer());

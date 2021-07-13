@@ -2,22 +2,20 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.gui.FleetMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.cards.Ship;
 
-public class FleetToken extends AnchoredToken implements DisableMark {
+public class FleetToken extends ClickToken implements DisableMark, FakingTokens {
     private FleetMenu fleetMenu;
     private Texture disableMark;
 
     public FleetToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, FleetMenu fleetMenu, boolean noPics, boolean connectCard) {
         super(card, x, y, battleStage, cardListMenu, TokenType.FLEET, noPics, connectCard);
         this.fleetMenu = fleetMenu;
-        setDragger(new ManagedDragger(this, battleStage.getBattleScreen().getBattle().getRoundManager(), true));
-        this.addListener(getDragger());
         if (!noPics) { setMark(Farstar.ASSET_LIBRARY.get("images/tokens/disable_F.png")); }
     }
 
@@ -33,7 +31,18 @@ public class FleetToken extends AnchoredToken implements DisableMark {
     }
 
     @Override
-    public void click(int button) {
+    boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        if (button == 0 && (getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && !getBattleStage().getBattleScreen().getBattle().getCombatManager().isTacticalPhase() && !getBattleStage().getBattleScreen().getBattle().isEverythingDisabled())) {
+            newFake(event, x, y, pointer, button, FakeTokenType.TARGETING);
+            return false;
+        } else {
+            return super.touchDown(event, x, y, pointer, button);
+        }
+
+    }
+
+    @Override
+    void click(int button) {
         getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(this, getFleetMenu().getPlayer());
     }
 

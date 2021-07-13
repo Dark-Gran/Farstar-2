@@ -15,7 +15,6 @@ import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 
 public class Token extends Actor implements JustFont {
     private String fontPath = "";
-    private Dragger dragger;
     private Card card;
     private final TokenDefense tokenDefense;
     private final TokenOffense tokenOffense;
@@ -136,7 +135,7 @@ public class Token extends Actor implements JustFont {
     }
 
     public void draw(Batch batch) {
-        if (card != null) {
+        if (card != null && !noPics) {
             drawGlows(batch);
             drawPortrait(batch);
             tokenDefense.draw(batch);
@@ -209,9 +208,7 @@ public class Token extends Actor implements JustFont {
 
     public CardListMenu getCardListMenu() { return cardListMenu; }
 
-    public Dragger getDragger() { return dragger; }
 
-    public void setDragger(Dragger dragger) { this.dragger = dragger; }
 
     public boolean isNoPics() {
         return noPics;

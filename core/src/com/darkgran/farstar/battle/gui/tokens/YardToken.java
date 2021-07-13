@@ -7,7 +7,7 @@ import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.YardMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
 
-public class YardToken extends ClickToken {
+public class YardToken extends ClickToken implements FakingTokens{
     private final YardMenu yardMenu;
 
     public YardToken(Card card, float x, float y, BattleStage battleStage, YardMenu yardMenu) {
@@ -20,10 +20,7 @@ public class YardToken extends ClickToken {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 if (button == 0) {
                     if (yardMenu.isOpen() && !yardMenu.getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
-                        getBattleStage().setFakeToken(new FakeToken(getCard(), getX(), getY(), getBattleStage(), getCardListMenu()));
-                        event.setRelatedActor(getBattleStage().getFakeToken());
-                        event.getStage().addTouchFocus(getBattleStage().getFakeToken().getDragger(), getBattleStage().getFakeToken(), getBattleStage().getFakeToken(), event.getPointer(), event.getButton());
-                        getBattleStage().getFakeToken().getDragger().touchDown(event, x, y, pointer, button);
+                        newFake(event, x, y, pointer, button, FakeTokenType.DEPLOYMENT);
                     }
                     return false;
                 } else {

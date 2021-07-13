@@ -14,7 +14,7 @@ public abstract class ClickToken extends Token {
     private ClickListener clickListener = new ClickListener(){
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            return true;
+            return ClickToken.this.touchDown(event, x, y, pointer, button);
         }
 
         @Override
@@ -40,7 +40,11 @@ public abstract class ClickToken extends Token {
         this.addListener(clickListener);
     }
 
-    public void click(int button) { }
+    boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        return true;
+    }
+
+    void click(int button) { }
 
     public ClickListener getClickListener() {
         return clickListener;
@@ -53,4 +57,5 @@ public abstract class ClickToken extends Token {
     public void setZoomEnabled(boolean zoomEnabled) {
         this.zoomEnabled = zoomEnabled;
     }
+
 }

@@ -67,14 +67,12 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
                 for (int i = 0; i < arr.length; i++) {
                     if (arr[i] != null) {
                         arr[i].setX(getX() + ((left > right) ? getOffset()/2 : -getOffset()/2) + getOffset() * i);
-                        arr[i].setNewAnchor(arr[i].getX(), arr[i].getY());
                     }
                 }
             } else { //odd
                 for (int i = 0; i < arr.length; i++) {
                     if (arr[i] != null) {
                         arr[i].setX(getX() + getOffset() * i);
-                        arr[i].setNewAnchor(arr[i].getX(), arr[i].getY());
                     }
                 }
             }
