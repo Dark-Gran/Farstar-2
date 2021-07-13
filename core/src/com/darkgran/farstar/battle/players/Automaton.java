@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.DuelManager;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.gui.tokens.Token;
@@ -7,6 +8,7 @@ import com.darkgran.farstar.battle.players.abilities.*;
 import com.darkgran.farstar.battle.players.cards.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.darkgran.farstar.battle.BattleSettings.BONUS_CARD_ID;
 
@@ -16,7 +18,7 @@ import static com.darkgran.farstar.battle.BattleSettings.BONUS_CARD_ID;
  *  -- No planning (atm not even the frame for it - both turn and combat work with "what comes first")
  *  -- Possibility "nonsense"-filter to substitute planning (ie. filters out some "typical bad moves")
  */
-public class Automaton extends Bot { //todo combat
+public class Automaton extends Bot {
 
     public Automaton(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard, BotTier botTier) {
         super(battleID, energy, matter, ms, deck, yard, botTier);
@@ -27,10 +29,10 @@ public class Automaton extends Bot { //todo combat
     //---------------//
 
     @Override
-    protected void turn() {
+    protected boolean turn(boolean combat, CombatOK combatOK) { //true = nothing to do (used in combat, see tactical())
         if (!isDisposed()) {
-            super.turn();
-            PossibilityInfo bestPossibility = getTurnPossibility();
+            super.turn(combat, combatOK);
+            PossibilityInfo bestPossibility = combat ? getTacticalPossibility() : getTurnPossibility();
             if (bestPossibility != null) {
                 report("Playing a card: " + bestPossibility.getCard().getCardInfo().getName());
                 boolean success;
@@ -41,15 +43,21 @@ public class Automaton extends Bot { //todo combat
                 }
                 if (!success && !isPickingAbility() && !isPickingTarget()) {
                     report("turn() failed!");
-                    cancelTurn();
+                    if (!combat) { cancelTurn(); }
+                    else { combatReady(combatOK); }
+                    return true;
                 } else {
-                    delayedTurn();
+                    if (!combat) { delayedTurn(false, null); }
+                    else { delayedTactical(combatOK); }
+                    return false;
                 }
             } else {
                 report("No possibilities.");
-                delayedEndTurn();
+                if (!combat) { delayedEndTurn(); }
+                else { combatReady(combatOK); }
             }
         }
+        return true;
     }
 
     @Override
@@ -72,7 +80,7 @@ public class Automaton extends Bot { //todo combat
             } else {
                 return 2;
             }
-        } else if (targetMenu instanceof FleetMenu && CardType.isSpell(card.getCardInfo().getCardType())){ //card.isTactic()
+        } else if (targetMenu instanceof FleetMenu && CardType.isSpell(card.getCardInfo().getCardType())){
             FleetMenu fleetMenu = (FleetMenu) targetMenu;
             Token ally = getAlliedTarget(cardToToken(card, sourceMenu), null);
             for (int i = 0; i < fleetMenu.getFleetTokens().length; i++) {
@@ -97,7 +105,7 @@ public class Automaton extends Bot { //todo combat
                 for (PossibilityInfo possibilityInfo : possibilities) {
                     if (CardType.isShip(possibilityInfo.getCard().getCardInfo().getCardType())) {
                         if (ship == null) { ship = possibilityInfo; }
-                        if (getBattle().getAbilityManager().hasAttribute(possibilityInfo.getCard(), EffectType.GUARD)) { //Guard Preference
+                        if (AbilityManager.hasAttribute(possibilityInfo.getCard(), EffectType.GUARD)) { //Guard Preference
                             return possibilityInfo;
                         }
                     }
@@ -108,7 +116,7 @@ public class Automaton extends Bot { //todo combat
             }
             //2. Play the first playable thing that's not "nonsense"
             for (PossibilityInfo possibilityInfo : possibilities) {
-                if (!isNonsense(possibilityInfo)) {
+                if (aintNonsense(possibilityInfo)) {
                     return possibilityInfo;
                 }
             }
@@ -116,8 +124,8 @@ public class Automaton extends Bot { //todo combat
         return null;
     }
 
-    private boolean isNonsense(PossibilityInfo possibilityInfo) {
-        return (possibilityInfo.getCard().isTactic() != getBattle().getCombatManager().isActive()) || abilityNonsense(possibilityInfo.getCard());
+    private boolean aintNonsense(PossibilityInfo possibilityInfo) {
+        return (possibilityInfo.getCard().isTactic() == getBattle().getCombatManager().isTacticalPhase()) && !abilityNonsense(possibilityInfo.getCard());
     }
 
     private boolean abilityNonsense(Card card) {
@@ -134,10 +142,7 @@ public class Automaton extends Bot { //todo combat
                                 Card enemy;
                                 //Validate change of Type (color)
                                 if (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE || changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE) {
-                                    if (getBattle().getCombatManager().isActive()) { //COMBAT ONLY
-                                        allyToken = getAllyInDuel();
-                                        ally = allyToken.getCard();
-                                        //enemy = getBattle().getCombatManager().getOpponent(allyToken).getCard();
+                                    return false; //todo
                                         /*if (techTypeNonsense(ally, enemy, changeStatType, changeInfo)) {
                                             return true;
                                         }
@@ -149,24 +154,22 @@ public class Automaton extends Bot { //todo combat
                                                 return ((changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && techType == ally.getCardInfo().getDefenseType() || changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && techType == ally.getCardInfo().getOffenseType()));
                                             }
                                         }*/
-                                    } else { //OUTSIDE COMBAT
-                                        //in-future: don't allow Upgrades to certain Types (= based on what the enemy has the most)
-                                    }
                                 //Validate Ability change
                                 } else if (changeStatType == EffectTypeSpecifics.ChangeStatType.ABILITY){
                                     EffectType effectType = EffectType.valueOf(changeInfo.toString());
                                     switch (effectType) {
                                         case FIRST_STRIKE:
-                                            if (getBattle().getCombatManager().isActive()) { //COMBAT ONLY
-                                                allyToken = getAllyInDuel();
-                                                ally = allyToken.getCard();
+                                            if (getBattle().getCombatManager().isTacticalPhase()) { //COMBAT ONLY
+                                                //todo
+                                                //allyToken = getAllyInDuel();
+                                                //ally = allyToken.getCard();
                                                 //enemy = getBattle().getCombatManager().getDuelManager().getOpponent(allyToken).getCard();
                                                 /*if (enemy.isMS() || (getBattle().getCombatManager().getDuelManager().getStrikePriority() != null && getBattle().getCombatManager().getDuelManager().getStrikePriority() == ally)) {
                                                     return true;
                                                 }*/
                                             } else { //OUTSIDE COMBAT
                                                 for (Ship ship : getFleet().getShips()) {
-                                                    if (ship != null && !getBattle().getAbilityManager().hasAttribute(ship, EffectType.FIRST_STRIKE)) {
+                                                    if (ship != null && !AbilityManager.hasAttribute(ship, EffectType.FIRST_STRIKE)) {
                                                         return false;
                                                     }
                                                 }
@@ -181,9 +184,9 @@ public class Automaton extends Bot { //todo combat
                             return getWoundedAlly()==null;
                         case CHANGE_RESOURCE:
                             if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
-                                Object changeInfo = effect.getEffectInfo().get(1);
+                                //Object changeInfo = effect.getEffectInfo().get(1);
                                 EffectTypeSpecifics.ChangeResourceType resource = EffectTypeSpecifics.ChangeResourceType.valueOf(effect.getEffectInfo().get(0).toString());
-                                int change = getBattle().getAbilityManager().floatObjectToInt(changeInfo);
+                                //int change = AbilityManager.floatObjectToInt(changeInfo);
                                 switch (resource) {
                                     case ENERGY:
                                         return getEnergy() > getMatter();
@@ -214,8 +217,8 @@ public class Automaton extends Bot { //todo combat
         return null;
     }
 
-    private Token getAllyInDuel() {
-        /*if (getBattle().getCombatManager().getDuelManager().isActive()) {
+    /*private Token getAllyInDuel() { //todo
+        if (getBattle().getCombatManager().isTacticalPhase()) {
             Token attacker = getBattle().getCombatManager().getDuelManager().getAttacker();
             Token defender = getBattle().getCombatManager().getDuelManager().getDefender();
             if (attacker.getCard().getPlayer() == this) {
@@ -223,9 +226,9 @@ public class Automaton extends Bot { //todo combat
             } else {
                 return defender;
             }
-        }*/
+        }
         return null;
-    }
+    }*/
 
     private boolean techTypeNonsense(Card ally, Card enemy, EffectTypeSpecifics.ChangeStatType changeStatType, Object changeInfo) {
         return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && DuelManager.noneToInferior(ally.getCardInfo().getOffenseType()) != TechType.INFERIOR && ally.getCardInfo().getOffenseType() != enemy.getCardInfo().getDefenseType()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && ally.getCardInfo().getDefenseType() == enemy.getCardInfo().getOffenseType());
@@ -241,12 +244,12 @@ public class Automaton extends Bot { //todo combat
                 case ANY_ALLY:
                 case ALLIED_FLEET:
                     EffectType attribute = null;
-                    if (getBattle().getAbilityManager().hasAttribute(token.getCard(), EffectType.FIRST_STRIKE)) { //in-future: check for changing all abilities (no ability givers in game atm except the ones with Attribute)
+                    if (AbilityManager.hasAttribute(token.getCard(), EffectType.FIRST_STRIKE)) { //in-future: check for changing all abilities (no ability givers in game atm except the ones with Attribute)
                         attribute = EffectType.FIRST_STRIKE;
-                    } else if (getBattle().getAbilityManager().hasAttribute(token.getCard(), EffectType.GUARD)) {
+                    } else if (AbilityManager.hasAttribute(token.getCard(), EffectType.GUARD)) {
                         attribute = EffectType.GUARD;
                     }
-                    if (getBattle().getAbilityManager().hasEffectType(token.getCard(), EffectType.REPAIR)) {
+                    if (AbilityManager.hasEffectType(token.getCard(), EffectType.REPAIR)) {
                         target = getWoundedAlly();
                     } else {
                         target = getAlliedTarget(token, attribute); //in-future: check against field of attributes instead of the first attribute (again, does not matter with "prototype cards")
@@ -270,7 +273,7 @@ public class Automaton extends Bot { //todo combat
     @Override
     protected Token getAlliedTarget(Token caster, EffectType effectType) {
         if (getFleet().isEmpty()) {
-            if (!getBattle().getAbilityManager().hasAttribute(getMs(), effectType)) {
+            if (!AbilityManager.hasAttribute(getMs(), effectType)) {
                 return getMs().getToken();
             }
         } else {
@@ -278,7 +281,7 @@ public class Automaton extends Bot { //todo combat
             for (Ship ship : getFleet().getShips()) {
                 if (ship != null) {
                     if (strongestShip == null || isBiggerShip(ship, strongestShip)) {
-                        if (!getBattle().getAbilityManager().hasAttribute(strongestShip, effectType)) {
+                        if (!AbilityManager.hasAttribute(strongestShip, effectType)) {
                             strongestShip = ship;
                         }
                     }
@@ -338,53 +341,33 @@ public class Automaton extends Bot { //todo combat
     //--------//
 
     @Override
-    protected void combat() {
+    protected void combat() { //duel-pick
         super.combat();
-        if (getBattle().getCombatManager().isActive()) {
-            for (Ship ship : getFleet().getShips()) {
-                if (ship != null) {
-                    delayedLaunchDuel(ship);
-                    break;
+        HashMap<Token, DuelManager.AttackInfo> duels = new HashMap<>();
+        Token enemy;
+        for (Ship ship : getFleet().getShips()) {
+            if (ship != null) {
+                enemy = getEnemyTarget(ship.getToken(), true);
+                if (enemy != null && getBattle().getCombatManager().canReach(ship.getToken(), enemy, enemy.getCard().getPlayer().getFleet())) {
+                    duels.put(ship.getToken(), new DuelManager.AttackInfo(enemy));
                 }
             }
         }
-    }
-
-    @Override
-    protected void duel(CombatOK combatOK) { //atm expects all Tactics to be meant for allies
-        super.duel(combatOK);
-        boolean success = false;
-        PossibilityInfo bestPossibility = getDuelPossibility();
-        if (bestPossibility != null) {
-            report("Playing a tactic: " + bestPossibility.getCard().getCardInfo().getName());
-            int position = -1;
-            for (int i = 0; i < getFleet().getFleetMenu().getFleetTokens().length; i++) {
-                if (getFleet().getFleetMenu().getFleetTokens()[i] != null) {
-                    if (getFleet().getFleetMenu().getFleetTokens()[i].getCard().isInDuel()) {
-                        position = i;
-                        break;
-                    }
-                }
-            }
-            if (deploy(bestPossibility.getCard(), bestPossibility.getMenu(), position)) {
-                success = true;
-                delayedDuel(combatOK);
-            } else {
-                report("Failed to deploy the tactic!");
-                success = false;
-            }
+        if (duels.size() > 0) {
+            getBattle().getCombatManager().setDuels(duels);
+            getBattle().getCombatManager().startTacticalPhase();
         } else {
-            report("No duel possibilities.");
+            report("No possible duels.");
+            delayedCombatEnd();
         }
-        if (!success) { duelReady(combatOK); }
     }
 
-    private PossibilityInfo getDuelPossibility() {
+    private PossibilityInfo getTacticalPossibility() {
         ArrayList<PossibilityInfo> possibilities = getBattle().getRoundManager().getPossibilityAdvisor().getPossibilities(this, getBattle());
         if (possibilities.size() > 0) {
             //1. Play the first playable thing that's not "nonsense"
             for (PossibilityInfo possibilityInfo : possibilities) {
-                if (!isNonsense(possibilityInfo)) {
+                if (aintNonsense(possibilityInfo)) {
                     return possibilityInfo;
                 }
             }

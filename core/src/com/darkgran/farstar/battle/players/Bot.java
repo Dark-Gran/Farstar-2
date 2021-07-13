@@ -1,7 +1,5 @@
 package com.darkgran.farstar.battle.players;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Timer;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.gui.tokens.HandToken;
 import com.darkgran.farstar.battle.gui.tokens.Token;
@@ -17,7 +15,7 @@ import com.darkgran.farstar.util.Delayer;
 
 import java.util.ArrayList;
 
-public abstract class Bot extends Player implements BotSettings, Delayer { //todo combat
+public abstract class Bot extends Player implements BotSettings, Delayer {
     private final BotTier botTier;
     private final float timerDelay;
     private boolean pickingTarget = false;
@@ -33,18 +31,13 @@ public abstract class Bot extends Player implements BotSettings, Delayer { //tod
 
     public void newTurn() {
         report("My Turn Began!");
-        delayedTurn();
+        delayedTurn(false, null);
     }
 
-    public void endTurn() {
-        if (!disposed) {
-            getBattle().getRoundManager().endTurn();
-        }
-    }
-
-    protected void turn() {
+    protected boolean turn(boolean combat, CombatOK combatOK) {
         setPickingTarget(false);
         setPickingAbility(false);
+        return true;
     }
 
     public void chooseTargets(Token token, AbilityInfo ability) {
@@ -55,9 +48,15 @@ public abstract class Bot extends Player implements BotSettings, Delayer { //tod
         setPickingAbility(true);
     }
 
+    public void endTurn() {
+        if (!disposed) {
+            getBattle().getRoundManager().endTurn();
+        }
+    }
+
     public void newCombat() {
         report("Time for my attack!");
-        combat();
+        delayedCombat();
     }
 
     protected void combat() {
@@ -65,13 +64,14 @@ public abstract class Bot extends Player implements BotSettings, Delayer { //tod
         setPickingAbility(false);
     }
 
-    public void newDuelOK(CombatOK combatOK) {
-        delayedDuel(combatOK);
+    public void newCombatOK(CombatOK combatOK) {
+        delayedTactical(combatOK);
     }
 
-    protected void duel(CombatOK combatOK) {
+    protected void tactical(CombatOK combatOK) {
         setPickingTarget(false);
         setPickingAbility(false);
+        turn(true, combatOK);
     }
 
     protected Token getEnemyTarget(Token attacker, boolean checkReach) { return null; }
@@ -82,7 +82,7 @@ public abstract class Bot extends Player implements BotSettings, Delayer { //tod
 
     public void gameOver(int winnerID) { report("GG"); }
 
-    //EXECUTIONS + UTILITIES
+    //EXECUTIONS + UTILITIES (ie. no logic - no need to override)
 
     protected void cancelTurn() {
         setPickingAbility(false);
@@ -94,8 +94,8 @@ public abstract class Bot extends Player implements BotSettings, Delayer { //tod
         getBattle().getCombatManager().endCombat();
     }
 
-    protected void delayedTurn() {
-        delayAction(this::turn, timerDelay);
+    protected void delayedTurn(boolean combat, CombatOK combatOK) {
+        delayAction(()->turn(combat, combatOK), timerDelay);
     }
 
     protected void delayedEndTurn() {
@@ -110,16 +110,12 @@ public abstract class Bot extends Player implements BotSettings, Delayer { //tod
         delayAction(this::combat, timerDelay);
     }
 
-    protected void delayedLaunchDuel(Ship ship) {
-        delayAction(()->launchDuel(ship), timerDelay);
-    }
-
-    protected void delayedDuel(CombatOK combatOK) {
-        delayAction(()->duel(combatOK), timerDelay);
+    protected void delayedTactical(CombatOK combatOK) {
+        delayAction(()-> tactical(combatOK), timerDelay);
     }
 
     protected void delayedDuelReady(CombatOK combatOK) {
-        delayAction(()->duelReady(combatOK), timerDelay);
+        delayAction(()-> combatReady(combatOK), timerDelay);
     }
 
     protected boolean deploy(Card card, Menu menu, int position) {
@@ -145,17 +141,7 @@ public abstract class Bot extends Player implements BotSettings, Delayer { //tod
         return true;
     }
 
-    protected void launchDuel(Ship ship) {
-        Token enemy = getEnemyTarget(ship.getToken(), true);
-        if (enemy != null && getBattle().getCombatManager().canReach(ship.getToken(), enemy, enemy.getCard().getPlayer().getFleet())) {
-            //getBattle().getCombatManager().getDuelManager().launchDuel(getBattle().getCombatManager(), ship.getToken(), enemy, new CombatPlayer[]{getBattle().getCombatManager().playerToCombatPlayer(ship.getPlayer())}, new CombatPlayer[]{getBattle().getCombatManager().playerToCombatPlayer(enemy.getCard().getPlayer())});
-        } else {
-            report("getEnemyTarget() for Duel failed! (enemy: "+enemy+") Ending Combat.");
-            delayedCombatEnd();
-        }
-    }
-
-    protected void duelReady(CombatOK combatOK) {
+    protected void combatReady(CombatOK combatOK) {
         getBattle().getCombatManager().tacticalOK(combatOK);
     }
 

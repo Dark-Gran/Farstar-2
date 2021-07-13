@@ -14,7 +14,7 @@ public class CombatPlayer {
         this.player = player;
     }
 
-    public CombatOK getDuelButton() {
+    public CombatOK getCombatButton() {
         return combatOK;
     }
 

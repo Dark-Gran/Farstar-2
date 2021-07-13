@@ -93,11 +93,11 @@ public abstract class CombatManager {
             tacticalPhase = true;
             System.out.println("Tactical Phase started.");
             if (!(activePlayer.getPlayer() instanceof Bot)) {
-                combatMenu.addOK(activePlayer.getDuelButton());
+                combatMenu.addOK(activePlayer.getCombatButton());
                 battle.getRoundManager().getPossibilityAdvisor().refresh(activePlayer.getPlayer(), battle);
-            }/* else {
-            ((Bot) this.playersA[0].getPlayer()).newDuelOK(this.playersA[0].getDuelButton());
-        }*/
+            } else {
+                ((Bot) this.playersA[0].getPlayer()).newCombatOK(this.playersA[0].getCombatButton());
+            }
         } else {
             activePlayer = null;
             endCombat();
@@ -149,9 +149,9 @@ public abstract class CombatManager {
         } else {
             switchActivePlayer();
             if (activePlayer.getPlayer() instanceof Bot) {
-                //((Bot) activePlayer.getPlayer()).newDuelOK(activePlayer.getDuelButton());
+                ((Bot) activePlayer.getPlayer()).newCombatOK(activePlayer.getCombatButton());
             } else {
-                combatMenu.addOK(activePlayer.getDuelButton());
+                combatMenu.addOK(activePlayer.getCombatButton());
                 battle.getRoundManager().getPossibilityAdvisor().refresh(activePlayer.getPlayer(), battle);
             }
         }
@@ -306,4 +306,7 @@ public abstract class CombatManager {
         return duels;
     }
 
+    public void setDuels(HashMap<Token, DuelManager.AttackInfo> duels) {
+        this.duels = duels;
+    }
 }

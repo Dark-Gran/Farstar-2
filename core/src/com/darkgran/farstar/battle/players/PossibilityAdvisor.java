@@ -18,8 +18,8 @@ public class PossibilityAdvisor {
     public ArrayList<PossibilityInfo> getPossibilities(Player player, Battle battle) { //also used by Automaton
         ArrayList<PossibilityInfo> possibilities = new ArrayList<>();
         boolean inCombat = battle.getCombatManager().isActive();
-        boolean inDuel = battle.getCombatManager().isTacticalPhase(); //battle.getCombatManager().getDuelManager().isActive();
-        Player whoseTurn = !inDuel ? battle.getWhoseTurn() : battle.getCombatManager().getActivePlayer().getPlayer();
+        boolean tacticalPhase = battle.getCombatManager().isTacticalPhase(); //battle.getCombatManager().getDuelManager().isActive();
+        Player whoseTurn = !tacticalPhase ? battle.getWhoseTurn() : battle.getCombatManager().getActivePlayer().getPlayer();
         if (player == whoseTurn) {
             if (!inCombat && hasPossibleAbility(player, player.getMs())) {
                 possibilities.add(new PossibilityInfo(player.getMs(), null));
@@ -30,18 +30,18 @@ public class PossibilityAdvisor {
                 }
             }
             for (Card card : player.getHand()) {
-                if ((!inCombat || (card.isTactic() && inDuel)) && isPossibleToDeploy(player, whoseTurn, card, true, battle)) {
+                if ((!inCombat || (card.isTactic() && tacticalPhase && !player.getFleet().isEmpty())) && isPossibleToDeploy(player, whoseTurn, card, true, battle)) {
                     possibilities.add(new PossibilityInfo(card, player.getHand().getCardListMenu()));
                 }
             }
             for (int i = player.getYard().size()-1; i >= 0; i--) {
-                if ((!inCombat || (player.getYard().get(i).isTactic() && inDuel)) && isPossibleToDeploy(player, whoseTurn, player.getYard().get(i), true, battle)) {
+                if ((!inCombat || (player.getYard().get(i).isTactic() && tacticalPhase)) && isPossibleToDeploy(player, whoseTurn, player.getYard().get(i), true, battle)) {
                     possibilities.add(new PossibilityInfo(player.getYard().get(i), player.getYard().getCardListMenu()));
                 }
             }
             for (Ship ship : player.getFleet().getShips()) {
                 if (ship != null) {
-                    if ((!inCombat && hasPossibleAbility(player, ship)) || (inCombat && !inDuel)) {
+                    if ((!inCombat && hasPossibleAbility(player, ship)) || (inCombat && !tacticalPhase)) {
                         possibilities.add(new PossibilityInfo(ship, player.getFleet().getFleetMenu()));
                     }
                 }

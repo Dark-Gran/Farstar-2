@@ -188,6 +188,9 @@ public class RoundManager {
                     if (success || postAbility) {
                         //System.out.println("Drop Success.");
                         if (payPrice) { whoseTurn.payday(token.getCard()); }
+                        /*if (!postAbility && targetCard != null && getBattle().getCombatManager().isTacticalPhase() && token.getCard().getCardInfo().getCardType() == CardType.TACTIC) {
+                            battle.getCombatManager().saveTactic(token.getCard(), targetCard);
+                        }*/
                         if (!(token instanceof FakeToken) && !CardType.isShip(cardType)) { token.addCardToJunk(); }
                     } else if (dropTarget instanceof JunkButton && token instanceof HandToken) { //Target: Discard
                         Junkpile junkpile = ((JunkButton) dropTarget).getPlayer().getJunkpile();
