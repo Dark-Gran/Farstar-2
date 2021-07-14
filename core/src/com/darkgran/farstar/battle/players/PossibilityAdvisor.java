@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.gui.Menu;
+import com.darkgran.farstar.battle.gui.YardMenu;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.battle.players.abilities.AbilityTargets;
@@ -113,7 +114,7 @@ public class PossibilityAdvisor {
             boolean yardToo = false;
             for (PossibilityInfo possibility : possibilities) {
                 possibility.getCard().setPossible(true);
-                if (!yardToo && possibility.getCard().getCardInfo().getCardType() == CardType.YARDPRINT) {
+                if (!yardToo && possibility.getMenu() instanceof YardMenu) {
                     yardToo = true;
                 }
             }

@@ -95,6 +95,8 @@ public abstract class CombatManager {
             playersD = playersToCombatPlayers(getBattle().getEnemies(battle.getWhoseTurn()));
             preparePlayers();
             tacticalPhase = true;
+            setFSGlows(false);
+            markFSGlows();
             System.out.println("Tactical Phase started.");
             if (!(activePlayer.getPlayer() instanceof Bot)) {
                 combatMenu.addOK(activePlayer.getCombatButton());
@@ -122,9 +124,54 @@ public abstract class CombatManager {
         }
     }
 
+    private void setFSGlows(boolean picked) {
+        for (CombatPlayer cp : playersA) {
+            setFSGlowOnPlayer(cp.getPlayer(), picked);
+        }
+        for (CombatPlayer cp : playersD) {
+            setFSGlowOnPlayer(cp.getPlayer(), picked);
+        }
+    }
+
+    private void setFSGlowOnPlayer(Player player, boolean picked) {
+        setFSGlowOnTokens(player.getFleet().getFleetMenu().getFleetTokens(), picked);
+    }
+
+    private void setFSGlowOnTokens(Token[] tokens, boolean picked) {
+        for (Token token : tokens) {
+            if (token != null) {
+                token.setPicked(picked);
+            }
+        }
+    }
+
+    private void markFSGlows() { //uses setPicked()
+        for (Map.Entry<Token, DuelManager.AttackInfo> entry : duels.entrySet()) {
+            if (entry.getValue().getUpperStrike() != null) {
+                entry.getValue().getUpperStrike().getToken().setPicked(true);
+                if (entry.getValue().getUpperStrike().getToken() == entry.getValue().getDefender()) {
+                    entry.getKey().setPicked(false);
+                } else {
+                    entry.getValue().getDefender().setPicked(false);
+                }
+            } else {
+                boolean attFS = AbilityManager.hasAttribute(entry.getKey().getCard(), EffectType.FIRST_STRIKE);
+                boolean defFS = AbilityManager.hasAttribute(entry.getValue().getDefender().getCard(), EffectType.FIRST_STRIKE);
+                if (attFS != defFS) {
+                    entry.getKey().setPicked(attFS);
+                    entry.getValue().getDefender().setPicked(defFS);
+                } else {
+                    entry.getKey().setPicked(false);
+                    entry.getValue().getDefender().setPicked(false);
+                }
+            }
+        }
+    }
+
     void saveTactic(Card card, Card target) {
         if (AbilityManager.upgradesFirstStrike(card)) {
             saveUpperStrike(target);
+            markFSGlows();
         }
         resetReadyStates(null);
     }
@@ -217,9 +264,11 @@ public abstract class CombatManager {
     void afterDuels() {
         for (CombatPlayer cp : playersA) {
             checkPlayerForAftermath(cp.getPlayer());
+            setFSGlowOnPlayer(cp.getPlayer(), false);
         }
         for (CombatPlayer cp : playersD) {
             checkPlayerForAftermath(cp.getPlayer());
+            setFSGlowOnPlayer(cp.getPlayer(), false);
         }
         endCombat();
     }

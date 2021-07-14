@@ -200,7 +200,7 @@ public class Token extends Actor implements JustFont {
 
     public void setPicked(boolean picked) {
         this.picked = picked;
-        glowState = GlowState.PICKED;
+        if (picked) { glowState = GlowState.PICKED; }
     }
 
     public boolean isPicked() {
