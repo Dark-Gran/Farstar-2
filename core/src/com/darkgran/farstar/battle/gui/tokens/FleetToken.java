@@ -7,6 +7,7 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.gui.FleetMenu;
+import com.darkgran.farstar.battle.players.LocalPlayer;
 import com.darkgran.farstar.battle.players.cards.Card;
 
 public class FleetToken extends ClickToken implements DisableMark, FakingTokens {
@@ -32,7 +33,7 @@ public class FleetToken extends ClickToken implements DisableMark, FakingTokens 
 
     @Override
     boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        if (button == 0 && (getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && !getBattleStage().getBattleScreen().getBattle().getCombatManager().isTacticalPhase() && !getBattleStage().getBattleScreen().getBattle().isEverythingDisabled())) {
+        if (button == 0 && (getCard().getPlayer() instanceof LocalPlayer && getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && !getBattleStage().getBattleScreen().getBattle().getCombatManager().isTacticalPhase() && !getBattleStage().getBattleScreen().getBattle().isEverythingDisabled())) {
             newFake(event, x, y, pointer, button, FakeTokenType.TARGETING);
             return false;
         } else {

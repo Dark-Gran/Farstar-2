@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.YardMenu;
+import com.darkgran.farstar.battle.players.LocalPlayer;
 import com.darkgran.farstar.battle.players.cards.Card;
 
 public class YardToken extends ClickToken implements FakingTokens{
@@ -19,7 +20,7 @@ public class YardToken extends ClickToken implements FakingTokens{
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 if (button == 0) {
-                    if (yardMenu.isOpen() && !yardMenu.getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
+                    if (yardMenu.isOpen() && getCard().getPlayer() instanceof LocalPlayer && !yardMenu.getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
                         newFake(event, x, y, pointer, button, FakeTokenType.DEPLOYMENT);
                     }
                     return false;
