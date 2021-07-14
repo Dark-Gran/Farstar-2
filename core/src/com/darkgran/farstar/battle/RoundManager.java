@@ -298,8 +298,9 @@ public class RoundManager {
         token.setPicked(true);
         postponedDeploy.saveInDeployment(token, ability, dropTarget, null);
         System.out.println("Need a Target.");
-        if (battle.getWhoseTurn() instanceof Bot) {
-            ((Bot) battle.getWhoseTurn()).chooseTargets(token, ability);
+        Player whoseTurn = getBattle().getCombatManager().isTacticalPhase() ? getBattle().getCombatManager().getActivePlayer().getPlayer() : battle.getWhoseTurn();
+        if (whoseTurn instanceof Bot) {
+            ((Bot) whoseTurn).chooseTargets(token, ability);
         } else {
             SuperScreen.switchCursor(SuperScreen.CursorType.AIM);
         }
