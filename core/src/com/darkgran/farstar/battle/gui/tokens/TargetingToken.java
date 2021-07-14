@@ -1,7 +1,11 @@
 package com.darkgran.farstar.battle.gui.tokens;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.darkgran.farstar.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
@@ -19,9 +23,22 @@ public class TargetingToken extends FakeToken {
     }
 
     @Override
-    public void draw(Batch batch) {
+    public void draw(Batch batch, ShapeRenderer shapeRenderer) {
         super.draw(batch);
+        batch.end();
+        drawConnection(shapeRenderer);
+        batch.begin();
         batch.draw(aimPic, getX(), getY());
+    }
+
+    private void drawConnection(ShapeRenderer shapeRenderer) {
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(ColorPalette.LIGHT);
+        Vector2 start = new Vector2(getCard().getToken().getX()+getCard().getToken().getWidth()/2, getCard().getToken().getY()+getCard().getToken().getHeight()/2);
+        Vector2 end = new Vector2(getX()+getWidth()/2, getY()+getHeight()/2);
+        shapeRenderer.rectLine(start, end, 2f);
+        shapeRenderer.setColor(Color.WHITE);
+        shapeRenderer.end();
     }
 
     @Override

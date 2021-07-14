@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class DuelManager implements Delayer {
-    private final float duelDelay = 0.1f;
+    private final float duelDelay = 0.3f;
 
     public static class AttackInfo {
         private final Token defender;

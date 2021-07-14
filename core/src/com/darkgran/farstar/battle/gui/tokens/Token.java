@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.BattleStage;
@@ -132,6 +133,10 @@ public class Token extends Actor implements JustFont {
     public void setBounds(float x, float y, float width, float height) {
         super.setBounds(x, y, width, height);
         setParts();
+    }
+
+    public void draw(Batch batch, ShapeRenderer shapeRenderer) {
+        draw(batch);
     }
 
     public void draw(Batch batch) {

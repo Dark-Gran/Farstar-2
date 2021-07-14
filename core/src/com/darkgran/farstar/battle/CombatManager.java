@@ -64,6 +64,10 @@ public abstract class CombatManager {
         }
     }
 
+    public void cancelDuel(Token token) {
+        duels.remove(token);
+    }
+
     public boolean canReach(Token attacker, Token targetToken, Fleet targetFleet) {
         if (targetToken instanceof FleetToken && AbilityManager.hasAttribute(targetToken.getCard(), EffectType.GUARD)) {
             return true;

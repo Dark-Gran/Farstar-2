@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.gui.FleetMenu;
@@ -33,7 +34,9 @@ public class FleetToken extends ClickToken implements DisableMark, FakingTokens 
 
     @Override
     boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        if (button == 0 && (getCard().getPlayer() instanceof LocalPlayer && getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && !getBattleStage().getBattleScreen().getBattle().getCombatManager().isTacticalPhase() && !getBattleStage().getBattleScreen().getBattle().isEverythingDisabled())) {
+        Battle battle = getBattleStage().getBattleScreen().getBattle();
+        if (button == 0 && (getCard().getPlayer() instanceof LocalPlayer && battle.getCombatManager().isActive() && !battle.getCombatManager().getDuelManager().isActive() && !battle.getCombatManager().isTacticalPhase() && !getBattleStage().getBattleScreen().getBattle().isEverythingDisabled())) {
+            battle.getCombatManager().cancelDuel(this);
             newFake(event, x, y, pointer, button, FakeTokenType.TARGETING);
             return false;
         } else {
