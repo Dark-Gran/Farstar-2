@@ -186,7 +186,6 @@ public abstract class CombatManager {
                     Token att = entry.getKey();
                     DuelManager.AttackInfo attackInfo = new DuelManager.AttackInfo(entry.getValue().getDefender(), target);
                     duels.put(att, attackInfo);
-                    break;
                 }
             }
         }
