@@ -31,26 +31,14 @@ public class Automaton extends Bot {
 
     @Override
     protected boolean turn(boolean combat, CombatOK combatOK) { //true = nothing to do (used in combat, see tactical())
-        if (!isDisposed()) {
+        if (!isDisposed() && !getBattle().isEverythingDisabled()) {
             super.turn(combat, combatOK);
             PossibilityInfo bestPossibility = combat ? getTacticalPossibility() : getTurnPossibility();
             if (bestPossibility != null) {
-                report("Playing a card: " + bestPossibility.getCard().getCardInfo().getName());
-                boolean success;
-                if (isDeploymentMenu(bestPossibility.getMenu()) || bestPossibility.getCard().getCardInfo().getCardType() == CardType.MS) {
-                    success = useAbility(bestPossibility.getCard(), bestPossibility.getMenu());
+                if (!combat) {
+                    return playCardInDeployment(bestPossibility);
                 } else {
-                    success = deploy(bestPossibility.getCard(), bestPossibility.getMenu(), getBestPosition(bestPossibility.getCard(), bestPossibility.getMenu(), getBattle().getRoundManager().getPossibilityAdvisor().getTargetMenu(bestPossibility.getCard(), this)));
-                }
-                if (!success && !isPickingAbility() && !isPickingTarget()) {
-                    report("turn() failed!");
-                    if (!combat) { cancelTurn(); }
-                    else { combatReady(combatOK); }
-                    return true;
-                } else {
-                    if (!combat) { delayedTurn(false, null); }
-                    else { delayedTactical(combatOK); }
-                    return false;
+                    return playCardInTactical(bestPossibility, combatOK);
                 }
             } else {
                 report("No possibilities.");
@@ -59,6 +47,40 @@ public class Automaton extends Bot {
             }
         }
         return true;
+    }
+
+    private boolean playCardInDeployment(PossibilityInfo possibilityInfo) {
+        report("Playing a card: " + possibilityInfo.getCard().getCardInfo().getName());
+        boolean success;
+        if (isDeploymentMenu(possibilityInfo.getMenu()) || possibilityInfo.getCard().getCardInfo().getCardType() == CardType.MS) {
+            success = useAbility(possibilityInfo.getCard(), possibilityInfo.getMenu());
+        } else {
+            success = deploy(possibilityInfo.getCard(), possibilityInfo.getMenu(), getBestPosition(possibilityInfo.getCard(), possibilityInfo.getMenu(), getBattle().getRoundManager().getPossibilityAdvisor().getTargetMenu(possibilityInfo.getCard(), this)));
+        }
+        if (!success && !isPickingAbility() && !isPickingTarget()) {
+            report("error: playCardInDeployment() failed!");
+            cancelTurn();
+            return true;
+        } else {
+            delayedTurn(false, null);
+            return false;
+        }
+    }
+
+    private boolean playCardInTactical(PossibilityInfo possibilityInfo, CombatOK combatOK) {
+        report("Playing a tactic: " + possibilityInfo.getCard().getCardInfo().getName());
+        boolean success;
+        //in-future consider outcomes of all duels instead of the classic position-pick
+        int position = getBestPosition(possibilityInfo.getCard(), possibilityInfo.getMenu(), getBattle().getRoundManager().getPossibilityAdvisor().getTargetMenu(possibilityInfo.getCard(), this));
+        success = deploy(possibilityInfo.getCard(), possibilityInfo.getMenu(), position);
+        if (!success && !isPickingAbility() && !isPickingTarget()) {
+            report("error: playCardInTactical() failed!");
+            cancelTactical(combatOK);
+            return true;
+        } else {
+            delayedTactical(combatOK);
+            return false;
+        }
     }
 
     @Override
@@ -239,7 +261,7 @@ public class Automaton extends Bot {
                 case ANY_ALLY:
                 case ALLIED_FLEET:
                     EffectType attribute = null;
-                    if (AbilityManager.hasAttribute(token.getCard(), EffectType.FIRST_STRIKE)) { //in-future: check for changing all abilities (no ability givers in game atm except the ones with Attribute)
+                    if (AbilityManager.upgradesFirstStrike(token.getCard())) { //in-future: check for changing all abilities (no ability givers in game atm except the ones with Attribute)
                         attribute = EffectType.FIRST_STRIKE;
                     } else if (AbilityManager.hasAttribute(token.getCard(), EffectType.GUARD)) {
                         attribute = EffectType.GUARD;
@@ -260,14 +282,14 @@ public class Automaton extends Bot {
         if (target != null) {
             getBattle().getRoundManager().processTarget(target);
         } else {
-            report("chooseTargets() failed!");
+            report("error: chooseTargets() failed!");
             cancelTurn();
         }
     }
 
     @Override
     protected Token getAlliedTarget(Token caster, EffectType effectType) {
-        if (getFleet().isEmpty()) {
+        if (getFleet().isEmpty() && !EffectType.isAttribute(effectType)) {
             if (!AbilityManager.hasEffectType(getMs(), effectType)) {
                 return getMs().getToken();
             }
@@ -276,7 +298,7 @@ public class Automaton extends Bot {
             for (Ship ship : getFleet().getShips()) {
                 if (ship != null) {
                     if (strongestShip == null || isBiggerShip(ship, strongestShip)) {
-                        if (!AbilityManager.hasEffectType(strongestShip, effectType)) {
+                        if (strongestShip == null || !AbilityManager.hasEffectType(strongestShip, effectType)) {
                             strongestShip = ship;
                         }
                     }
@@ -326,7 +348,7 @@ public class Automaton extends Bot {
                 getBattle().getRoundManager().processPick(options.get(0));
             }
         } else {
-            report("pickAbility() failed!");
+            report("error: pickAbility() failed!");
             cancelTurn();
         }
     }

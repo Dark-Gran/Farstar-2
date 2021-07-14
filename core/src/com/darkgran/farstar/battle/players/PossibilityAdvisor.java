@@ -1,9 +1,7 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.Battle;
-import com.darkgran.farstar.battle.gui.BaseMenu;
 import com.darkgran.farstar.battle.gui.Menu;
-import com.darkgran.farstar.battle.gui.YardMenu;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
 import com.darkgran.farstar.battle.players.abilities.AbilityTargets;
@@ -18,7 +16,7 @@ public class PossibilityAdvisor {
     public ArrayList<PossibilityInfo> getPossibilities(Player player, Battle battle) { //also used by Automaton
         ArrayList<PossibilityInfo> possibilities = new ArrayList<>();
         boolean inCombat = battle.getCombatManager().isActive();
-        boolean tacticalPhase = battle.getCombatManager().isTacticalPhase(); //battle.getCombatManager().getDuelManager().isActive();
+        boolean tacticalPhase = battle.getCombatManager().isTacticalPhase();
         Player whoseTurn = !tacticalPhase ? battle.getWhoseTurn() : battle.getCombatManager().getActivePlayer().getPlayer();
         if (player == whoseTurn) {
             if (!inCombat && hasPossibleAbility(player, player.getMs())) {
@@ -68,7 +66,7 @@ public class PossibilityAdvisor {
 
     public boolean isPossibleToDeploy(Player player, Player whoseTurn, Card card, boolean checkSpace, Battle battle) {
         if (player == whoseTurn && player.canAfford(card) && tierAllowed(card.getCardInfo().getTier(), battle) && allowedAoE(player, card, battle) && (!player.getFleet().isEmpty() || !card.isPurelyOffensiveChange())) {
-            return !checkSpace || ((player.getSupports().hasSpace() || card.getCardInfo().getCardType() != CardType.SUPPORT) && (player.getFleet().hasSpace() || card.getCardInfo().getCardType() != CardType.YARDPRINT));
+            return !checkSpace || ((player.getSupports().hasSpace() || card.getCardInfo().getCardType() != CardType.SUPPORT) && (player.getFleet().hasSpace() || (card.getCardInfo().getCardType() != CardType.YARDPRINT && card.getCardInfo().getCardType() != CardType.BLUEPRINT)));
         }
         return false;
     }

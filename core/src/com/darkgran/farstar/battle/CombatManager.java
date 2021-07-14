@@ -212,14 +212,20 @@ public abstract class CombatManager {
 
     void afterDuels() {
         for (CombatPlayer cp : playersA) {
-            checkForAftermath(cp.getPlayer().getFleet().getShips());
-            refreshFleets(cp.getPlayer());
+            checkPlayerForAftermath(cp.getPlayer());
         }
         for (CombatPlayer cp : playersD) {
-            checkForAftermath(cp.getPlayer().getFleet().getShips());
-            refreshFleets(cp.getPlayer());
+            checkPlayerForAftermath(cp.getPlayer());
         }
         endCombat();
+    }
+
+    private void checkPlayerForAftermath(Player player) {
+        checkShipsForAftermath(player.getFleet().getShips());
+        refreshFleets(player);
+        if (player.getMs().getHealth()<=0) {
+            player.getMs().death();
+        }
     }
 
     private void refreshFleets(Player player) {
@@ -228,7 +234,7 @@ public abstract class CombatManager {
         player.getFleet().getFleetMenu().updateCoordinates(player.getFleet().getFleetMenu().getFleetTokens());
     }
 
-    private void checkForAftermath(Ship[] ships) {
+    private void checkShipsForAftermath(Ship[] ships) {
         for (Ship ship : ships) {
             if (ship != null && ship.getHealth()<=0) {
                 ship.deathInAfterMath();

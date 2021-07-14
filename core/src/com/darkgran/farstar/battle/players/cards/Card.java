@@ -20,7 +20,6 @@ public class Card {
     private boolean used; //for AbilityStarter.USE
     private int damage = 0;
     private boolean possible; //for PossibilityAdvisor
-    private boolean inDuel = false;
 
     public Card(CardInfo cardInfo, Player player) {
         originalInfo = cardInfo;
@@ -137,10 +136,6 @@ public class Card {
         this.possible = possible;
         if (token != null && !token.isPicked()) { token.setGlowState(possible ? Token.GlowState.POSSIBLE : Token.GlowState.DIM); }
     }
-
-    public boolean isInDuel() { return inDuel; }
-
-    public void setInDuel(boolean inDuel) { this.inDuel = inDuel; }
 
     public Token getToken() {
         return token;

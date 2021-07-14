@@ -10,14 +10,12 @@ import com.darkgran.farstar.battle.players.abilities.EffectType;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.battle.players.cards.Mothership;
-import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.util.Delayer;
 
 import java.util.ArrayList;
 
 public abstract class Bot extends Player implements BotSettings, Delayer {
     private final BotTier botTier;
-    private final float timerDelay;
     private boolean pickingTarget = false;
     private boolean pickingAbility = false;
     private boolean disposed = false;
@@ -25,7 +23,6 @@ public abstract class Bot extends Player implements BotSettings, Delayer {
     public Bot(byte battleID, int energy, int matter, Mothership ms, Deck deck, Yard yard, BotTier botTier) {
         super(battleID, energy, matter, ms, deck, yard);
         this.botTier = botTier;
-        this.timerDelay = getTimerDelay(botTier);
         report("Hello Universe!");
     }
 
@@ -86,8 +83,16 @@ public abstract class Bot extends Player implements BotSettings, Delayer {
 
     protected void cancelTurn() {
         setPickingAbility(false);
+        setPickingTarget(false);
         getBattle().getRoundManager().tryCancel();
         getBattle().getRoundManager().endTurn();
+    }
+
+    protected void cancelTactical(CombatOK combatOK) {
+        setPickingTarget(false);
+        setPickingAbility(false);
+        getBattle().getRoundManager().tryCancel();
+        combatReady(combatOK);
     }
 
     protected void endCombat() {
@@ -95,27 +100,27 @@ public abstract class Bot extends Player implements BotSettings, Delayer {
     }
 
     protected void delayedTurn(boolean combat, CombatOK combatOK) {
-        delayAction(()->turn(combat, combatOK), timerDelay);
+        delayAction(()->turn(combat, combatOK), botTier.getTimerDelay());
     }
 
     protected void delayedEndTurn() {
-        delayAction(this::endTurn, timerDelay);
+        delayAction(this::endTurn, botTier.getTimerDelay());
     }
 
     protected void delayedCombatEnd() {
-        delayAction(this::endCombat, timerDelay);
+        delayAction(this::endCombat, botTier.getTimerDelay());
     }
 
     protected void delayedCombat() {
-        delayAction(this::combat, timerDelay);
+        delayAction(this::combat, botTier.getTimerDelay());
     }
 
     protected void delayedTactical(CombatOK combatOK) {
-        delayAction(()-> tactical(combatOK), timerDelay);
+        delayAction(()-> tactical(combatOK), botTier.getTimerDelay());
     }
 
     protected void delayedDuelReady(CombatOK combatOK) {
-        delayAction(()-> combatReady(combatOK), timerDelay);
+        delayAction(()-> combatReady(combatOK), botTier.getTimerDelay());
     }
 
     protected boolean deploy(Card card, Menu menu, int position) {

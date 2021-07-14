@@ -152,8 +152,11 @@ public class RoundManager {
                                         //ABILITIES
                                         postponedDeploy.setPosition(position);
                                         if (!postAbility) {
-                                            //success = checkAllAbilities(token, (fleet.getShips()[position] != null) ? fleet.getShips()[position].getToken() : null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
-                                            success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
+                                            /*if (token.getCard().getPlayer() instanceof Bot) {
+                                                success = checkAllAbilities(token, (fleet.getShips()[position] != null) ? fleet.getShips()[position].getToken() : null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
+                                            } else {*/
+                                                success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
+                                            //}
                                         }
                                         if (postAbility || success) {
                                             if (fleet.getShips()[position] != null) {
@@ -170,7 +173,7 @@ public class RoundManager {
                             //TARGETING MS
                         } else if (dropTarget instanceof MothershipToken) {
                             MothershipToken ms = (MothershipToken) dropTarget;
-                            if (!battle.activeCombatOrDuel() || ms.getCard().isInDuel()) {
+                            if (!getBattle().getCombatManager().getDuelManager().isActive()) {
                                 //ABILITIES
                                 if (CardType.isSpell(cardType)) {
                                     if (!postAbility) {

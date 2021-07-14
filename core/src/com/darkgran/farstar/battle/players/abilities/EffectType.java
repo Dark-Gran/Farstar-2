@@ -3,7 +3,7 @@ package com.darkgran.farstar.battle.players.abilities;
 public enum EffectType {
     NONE, CHANGE_STAT, FIRST_STRIKE, GUARD, REACH, DEAL_DMG, REPAIR, CHANGE_RESOURCE;
 
-    public boolean isAttribute(EffectType effectType) {
+    public static boolean isAttribute(EffectType effectType) {
         return effectType == FIRST_STRIKE || effectType == GUARD || effectType == REACH;
     }
 }

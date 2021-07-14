@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class DuelManager implements Delayer {
+    private final float duelDelay = 0.1f;
+
     public static class AttackInfo {
         private final Token defender;
         private Card upperStrike = null;
@@ -34,11 +36,11 @@ public class DuelManager implements Delayer {
         public byte getState() { return state; }
         public void setState(byte state) { this.state = state; }
     }
+
     private CombatManager combatManager;
     private boolean active = false;
     private Set<Map.Entry<Token, AttackInfo>> duelSet;
     private Iterator<Map.Entry<Token, AttackInfo>> it;
-    private final float duelDelay = 0.4f;
 
     void launchDuels(CombatManager combatManager, HashMap<Token, AttackInfo> duels) {
         if (duels != null && duels.size() > 0) {
@@ -47,7 +49,7 @@ public class DuelManager implements Delayer {
             duelSet = duels.entrySet();
             it = duelSet.iterator();
             System.out.println("Launching Duels.");
-            delayAction(this::iterateDuels, duelDelay);
+            delayAction(this::iterateDuels, duelDelay*2f);
         } else {
             System.out.println("Invalid number of duels to launch (0 or null).");
             //delayAction(this::afterDuels, duelDelay);
