@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class CardInfo {
     private final byte id;
     private final String name;
+    private final CardCulture culture;
     private String description;
     private final CardType cardType;
     private final CardRarity cardRarity;
@@ -20,9 +21,10 @@ public class CardInfo {
     private TechType defenseType;
     private ArrayList<AbilityInfo> abilities;
 
-    public CardInfo(byte id, String name, String description, CardType cardType, CardRarity cardRarity, int tier, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType, ArrayList<AbilityInfo> abilities) {
+    public CardInfo(byte id, String name, CardCulture culture, String description, CardType cardType, CardRarity cardRarity, int tier, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType, ArrayList<AbilityInfo> abilities) {
         this.id = id;
         this.name = name;
+        this.culture = culture;
         this.description = description;
         this.cardType = cardType;
         this.cardRarity = cardRarity;
@@ -39,6 +41,7 @@ public class CardInfo {
     public CardInfo() {
         this.id = 0;
         this.name = "X";
+        this.culture = CardCulture.NEUTRAL;
         this.description = "";
         this.cardType = CardType.ACTION;
         this.cardRarity = CardRarity.IRON;
@@ -108,4 +111,7 @@ public class CardInfo {
 
     public int getTier() { return tier; }
 
+    public CardCulture getCulture() {
+        return culture;
+    }
 }
