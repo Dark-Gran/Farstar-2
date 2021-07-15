@@ -2,15 +2,15 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 public enum TokenType {
     //Standard
-    MS(309f, 184f, "fonts/bahnschrift50b.fnt"), //Parts: 69x52 (g: 420x295)
-    FAKE(260f, 155f, "fonts/bahnschrift46b.fnt"), //60x45 (352x247)
-    FLEET(232f, 138f, "fonts/bahnschrift44b.fnt"), //54x41 (314x220)
-    YARD(216f, 129f, "fonts/bahnschrift44b.fnt"), //F (292x205)
-    SUPPORT(190f, 113f, "fonts/bahnschrift40b.fnt"), //50x38 (257x180)
+    MS(309f, 184f, "fonts/bahnschrift50.fnt"), //Parts: 69x52 (g: 420x295)
+    FAKE(260f, 155f, "fonts/bahnschrift46.fnt"), //60x45 (352x247)
+    FLEET(232f, 138f, "fonts/bahnschrift44.fnt"), //54x41 (314x220)
+    YARD(216f, 129f, "fonts/bahnschrift44.fnt"), //F (292x205)
+    SUPPORT(190f, 113f, "fonts/bahnschrift40.fnt"), //50x38 (257x180)
     //Other
-    JUNK(190f, 113f, "fonts/bahnschrift40b.fnt"), //SS
-    HAND(232f, 322f, "fonts/bahnschrift44b.fnt"), //FF (355x445)
-    PRINT(348f, 483f, "fonts/bahnschrift58b.fnt"); //81x61
+    JUNK(190f, 113f, "fonts/bahnschrift40.fnt"), //SS
+    HAND(232f, 322f, "fonts/bahnschrift44.fnt"), //FF (355x445)
+    PRINT(348f, 483f, "fonts/bahnschrift58.fnt"); //(=Z) 81x61
 
     private final float width;
     private final float height;

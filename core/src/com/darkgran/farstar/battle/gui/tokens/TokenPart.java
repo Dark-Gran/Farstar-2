@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.darkgran.farstar.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.TextDrawer;
 import com.darkgran.farstar.gui.TextLine;
@@ -55,7 +56,7 @@ public class TokenPart extends TextLine {
     public void draw(Batch batch) {
         if (isEnabled()) {
             batch.draw(pad, getX() - pad.getWidth() + offsetX, getY() + offsetY);
-            drawText(getFont(), batch, getX() - pad.getWidth() * 0.5f - textWH.getX() * 0.5f + offsetX, getY() + offsetY + pad.getHeight() * 0.5f + textWH.getY() * 0.48f, getContent());
+            drawText(getFont(), batch, getX() - pad.getWidth() * 0.5f - textWH.getX() * 0.5f + offsetX, getY() + offsetY + pad.getHeight() * 0.5f + textWH.getY() * 0.48f, getContent(), ColorPalette.BLACK);
         }
     }
 
