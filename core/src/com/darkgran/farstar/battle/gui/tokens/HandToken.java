@@ -98,6 +98,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
             if (nextState == HandState.UP) {
                 tokenType = TokenType.FAKE;
             }
+            currentState = nextState;
             setWidth(tokenType.getWidth());
             setHeight(tokenType == TokenType.HAND ? tokenType.getHeight() : 361f);
             setFont(tokenType.getFontPath());
@@ -112,7 +113,6 @@ public class HandToken extends AnchoredToken implements CardGFX {
             setPosition(getX(), getY());
             setOriginX(getWidth()/2);
             setOriginY(getHeight()/2);
-            currentState = nextState;
         }
     }
 
@@ -180,8 +180,8 @@ public class HandToken extends AnchoredToken implements CardGFX {
 
     @Override
     protected void drawPortrait(Batch batch) {
-        if (getPortrait() != null) { batch.draw(getPortrait(), getX(), getY()+getCardPic().getHeight()-getPortrait().getHeight()+PORTRAIT_OFFSET_Y); }
-        if (getFrame() != null) { batch.draw(getFrame(), getX(), getY()+getCardPic().getHeight()-getFrame().getHeight()+PORTRAIT_OFFSET_Y); }
+        if (getPortrait() != null) { batch.draw(getPortrait(), getX(), getY()+getCardPic().getHeight()-getPortrait().getHeight()+PORTRAIT_OFFSET_Y*2/3); }
+        if (getFrame() != null) { batch.draw(getFrame(), getX(), getY()+getCardPic().getHeight()-getFrame().getHeight()+PORTRAIT_OFFSET_Y*2/3); }
     }
 
     @Override

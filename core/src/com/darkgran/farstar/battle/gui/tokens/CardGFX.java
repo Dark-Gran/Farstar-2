@@ -11,7 +11,7 @@ import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.gui.TextDrawer;
 
 public interface CardGFX extends TextDrawer {
-    float PORTRAIT_OFFSET_Y = -18f;
+    float PORTRAIT_OFFSET_Y = -15f;
 
     void setCardPic(Texture texture);
     Texture getCardPic();
