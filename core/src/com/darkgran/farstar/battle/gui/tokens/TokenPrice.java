@@ -51,8 +51,8 @@ public class TokenPrice extends TokenPart {
 
     @Override
     public void setupOffset() {
-        setOffsetY(-1f-getPad().getHeight());
-        setOffsetX(1f+getPad().getWidth());
+        setOffsetY(-getPad().getHeight());
+        setOffsetX(getPad().getWidth());
     }
 
     @Override
@@ -67,23 +67,30 @@ public class TokenPrice extends TokenPart {
         if (m.equals("1")) {
             textWH2.setX(textWH2.getX()+3f);
         }
-        showUseMark = AbilityManager.hasStarter(getToken().getCard(), AbilityStarter.USE);
-        for (AbilityInfo abilityInfo : getToken().getCard().getCardInfo().getAbilities()) {
-            if (abilityInfo.getStarter() == AbilityStarter.NONE) {
-                for (Effect effect : abilityInfo.getEffects()) {
-                    switch (effect.getEffectType()) {
-                        case GUARD:
-                            showGuardMark = true;
-                            break;
-                        case FIRST_STRIKE:
-                            showFSMark = true;
-                            break;
-                        case REACH:
-                            showReachMark = true;
-                            break;
+        if (!(getToken() instanceof CardGFX)) {
+            showUseMark = AbilityManager.hasStarter(getToken().getCard(), AbilityStarter.USE);
+            for (AbilityInfo abilityInfo : getToken().getCard().getCardInfo().getAbilities()) {
+                if (abilityInfo.getStarter() == AbilityStarter.NONE) {
+                    for (Effect effect : abilityInfo.getEffects()) {
+                        switch (effect.getEffectType()) {
+                            case GUARD:
+                                showGuardMark = true;
+                                break;
+                            case FIRST_STRIKE:
+                                showFSMark = true;
+                                break;
+                            case REACH:
+                                showReachMark = true;
+                                break;
+                        }
                     }
                 }
             }
+        } else {
+            showFSMark = false;
+            showReachMark = false;
+            showUseMark = false;
+            showGuardMark = false;
         }
     }
 
@@ -113,14 +120,14 @@ public class TokenPrice extends TokenPart {
                 if (E != 0 || showUseMark) {
                     String e = Integer.toString(E);
                     batch.draw(getPad(), x, getY() + getOffsetY());
-                    drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - getTextWH().getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + getTextWH().getY() * 0.48f, e, ColorPalette.BLACK);
+                    drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - getTextWH().getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + getTextWH().getY() * 0.5f, e, ColorPalette.BLACK);
                     x += getPad().getWidth();
                 }
                 int M = getResource(false, getToken() instanceof AbilityPickerOption ? TokenType.SUPPORT : getToken().getTokenType());
                 if (M != 0) {
                     String m = Integer.toString(M);
                     batch.draw(pad2, x, getY() + getOffsetY());
-                    drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - textWH2.getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + textWH2.getY() * 0.48f, m, ColorPalette.BLACK);
+                    drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - textWH2.getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + textWH2.getY() * 0.5f, m, ColorPalette.BLACK);
                 }
             }
         }

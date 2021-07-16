@@ -2,14 +2,14 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 public enum TokenType {
     //Standard
-    MS(309f, 184f, "fonts/bahnschrift50.fnt"), //Parts: 69x52 (g: 420x295)
-    FAKE(260f, 155f, "fonts/bahnschrift46.fnt"), //60x45 (352x247)
-    FLEET(232f, 138f, "fonts/bahnschrift44.fnt"), //54x41 (314x220)
-    YARD(216f, 129f, "fonts/bahnschrift44.fnt"), //F (292x205)
-    SUPPORT(190f, 113f, "fonts/bahnschrift40.fnt"), //50x38 (257x180)
+    MS(309f, 184f, "fonts/bahnschrift48.fnt"), //Parts: 69x52 (g: 420x295)
+    FAKE(260f, 155f, "fonts/bahnschrift44.fnt"), //60x45 (352x247)
+    FLEET(232f, 138f, "fonts/bahnschrift40.fnt"), //54x41 (314x220)
+    YARD(216f, 129f, "fonts/bahnschrift40.fnt"), //F (292x205)
+    SUPPORT(190f, 113f, "fonts/bahnschrift38.fnt"), //50x38 (257x180)
     //Other
-    JUNK(190f, 113f, "fonts/bahnschrift40.fnt"), //SS
-    HAND(232f, 322f, "fonts/bahnschrift44.fnt"), //FF (355x445)
+    JUNK(190f, 113f, "fonts/bahnschrift38.fnt"), //SS
+    HAND(232f, 322f, "fonts/bahnschrift38.fnt"), //FF (355x445)
     PRINT(348f, 483f, "fonts/bahnschrift58.fnt"); //(=Z) 81x61
 
     private final float width;
@@ -30,9 +30,7 @@ public enum TokenType {
         return height;
     }
 
-    public String getFontPath() {
-        return fontPath;
-    }
+    public String getFontPath() { return fontPath; }
 
     public static boolean isDeployed(TokenType tokenType) {
         return tokenType == MS || tokenType == SUPPORT || tokenType == FLEET;

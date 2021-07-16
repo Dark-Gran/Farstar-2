@@ -93,18 +93,12 @@ public class AssetLibrary {
         assetManager.load("fonts/arial15.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift24.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift30.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/bahnschrift38.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift40.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift40b.fnt", BitmapFont.class, bmpParams);
-        //assetManager.load("fonts/bahnschrift42b.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift44.fnt", BitmapFont.class, bmpParams);
-        //assetManager.load("fonts/bahnschrift44b.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/bahnschrift46.fnt", BitmapFont.class, bmpParams);
-        //assetManager.load("fonts/bahnschrift46b.fnt", BitmapFont.class, bmpParams);
-        //assetManager.load("fonts/bahnschrift48b.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/bahnschrift50.fnt", BitmapFont.class, bmpParams);
-        //assetManager.load("fonts/bahnschrift50b.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/bahnschrift48.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift58.fnt", BitmapFont.class, bmpParams);
-        //assetManager.load("fonts/bahnschrift58b.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/orbitron36.fnt", BitmapFont.class, bmpParams);
     }
 

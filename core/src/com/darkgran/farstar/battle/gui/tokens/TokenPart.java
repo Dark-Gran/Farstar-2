@@ -28,7 +28,7 @@ public class TokenPart extends TextLine {
     }
 
     public void setupOffset() {
-        setOffsetY(1f);
+        setOffsetY(0f);
     }
 
     public void setPad(TokenType tokenType) {
@@ -56,7 +56,7 @@ public class TokenPart extends TextLine {
     public void draw(Batch batch) {
         if (isEnabled()) {
             batch.draw(pad, getX() - pad.getWidth() + offsetX, getY() + offsetY);
-            drawText(getFont(), batch, getX() - pad.getWidth() * 0.5f - textWH.getX() * 0.5f + offsetX, getY() + offsetY + pad.getHeight() * 0.5f + textWH.getY() * 0.48f, getContent(), ColorPalette.BLACK);
+            drawText(getFont(), batch, getX() - pad.getWidth() * 0.5f - textWH.getX() * 0.5f + offsetX, getY() + offsetY + pad.getHeight() * 0.5f + textWH.getY() * 0.5f, getContent(), ColorPalette.BLACK);
         }
     }
 
