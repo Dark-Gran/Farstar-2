@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.MathUtils;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.cards.Card;
+import com.darkgran.farstar.battle.players.cards.CardCulture;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.gui.TextDrawer;
 
@@ -31,6 +32,12 @@ public interface CardGFX extends TextDrawer {
             drawText(getCardFont(), batch, x, y+getCardPic().getHeight()/2f, getCardName(getCard()));
             drawText(getCardFont(), batch, x, y+getCardPic().getHeight()/2f-40f, getTierName(getCardTier(getCard()), getCardType(getCard())));
             drawText(getCardFont(), batch, x, y+getCardPic().getHeight()/2f-80f, getCardDescription(getCard()));
+        }
+    }
+
+    default void resetCulturePic(CardCulture culture, TokenType tokenType) {
+        if (tokenType != null) {
+            setCardPic(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/card" + culture.getAcronym(), tokenType, false) + ".png"));
         }
     }
 

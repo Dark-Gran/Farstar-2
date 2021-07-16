@@ -25,7 +25,7 @@ public class AssetLibrary {
 
     public String getFrameName(CardInfo cardInfo, TokenType tokenType) {
         String path = "images/tokens/";
-        String name = addTokenTypeAcronym(addRarityAcronym("frame", cardInfo), tokenType, false)+".png";
+        String name = addTokenTypeAcronym("frame"+cardInfo.getCardRarity().getAcronym(), tokenType, false)+".png";
         return path+name;
     }
 
@@ -71,16 +71,6 @@ public class AssetLibrary {
                 return pad ? string + "F" : string + "Y";
             case PRINT:
                 return string + "Z";
-        }
-    }
-
-    public String addRarityAcronym(String string, CardInfo cardInfo) {
-        switch (cardInfo.getCardRarity()) {
-            default:
-            case IRON:
-                return string + "I";
-            case BRONZE:
-                return string + "B";
         }
     }
 
@@ -169,6 +159,13 @@ public class AssetLibrary {
         assetManager.load("images/yardO.png", Texture.class, texParams);
         assetManager.load("images/yardOP.png", Texture.class, texParams);
         assetManager.load("images/yardP.png", Texture.class, texParams);
+        //Cards
+        assetManager.load("images/tokens/cardH_D.png", Texture.class, texParams);
+        assetManager.load("images/tokens/cardH_U.png", Texture.class, texParams);
+        assetManager.load("images/tokens/cardH_Z.png", Texture.class, texParams);
+        assetManager.load("images/tokens/cardN_D.png", Texture.class, texParams);
+        assetManager.load("images/tokens/cardN_U.png", Texture.class, texParams);
+        assetManager.load("images/tokens/cardN_Z.png", Texture.class, texParams);
         //Token Parts
         assetManager.load("images/tokens/abiFS_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/abiG_F.png", Texture.class, texParams);
@@ -177,9 +174,6 @@ public class AssetLibrary {
         assetManager.load("images/tokens/abiU_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/abiU_MS.png", Texture.class, texParams);
         assetManager.load("images/tokens/abiU_S.png", Texture.class, texParams);
-        assetManager.load("images/tokens/card_D.png", Texture.class, texParams);
-        assetManager.load("images/tokens/card_U.png", Texture.class, texParams);
-        assetManager.load("images/tokens/card_Z.png", Texture.class, texParams);
         assetManager.load("images/tokens/disable_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/disable_MS.png", Texture.class, texParams);
         assetManager.load("images/tokens/disable_S.png", Texture.class, texParams);

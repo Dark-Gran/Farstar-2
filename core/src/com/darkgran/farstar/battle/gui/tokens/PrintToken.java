@@ -25,7 +25,6 @@ public class PrintToken extends Token implements CardGFX {
     public PrintToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, boolean connectCard) {
         super(card, x, y, battleStage, cardListMenu, TokenType.PRINT, false, connectCard);
         setFont("fonts/bahnschrift30.fnt");
-        setCardPic(Farstar.ASSET_LIBRARY.get("images/tokens/card_Z.png"));
         setTouchable(Touchable.disabled);
     }
 
@@ -47,6 +46,7 @@ public class PrintToken extends Token implements CardGFX {
     @Override
     public void setup(Card card, TokenType targetType, SimpleVector2 targetXY) {
         super.setup(card, targetType, targetXY);
+        resetCulturePic(card.getCardInfo().getCulture(), TokenType.PRINT);
         if (!card.getToken().isPicked()) {
             if (card.isPossible()) {
                 setGlowState(GlowState.POSSIBLE);

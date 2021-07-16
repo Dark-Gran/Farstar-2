@@ -12,6 +12,7 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
+import com.darkgran.farstar.battle.players.cards.CardCulture;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.util.SimpleVector2;
 
@@ -19,7 +20,19 @@ import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
 
 public class HandToken extends AnchoredToken implements CardGFX {
     public enum HandState {
-        DOWN, UP
+
+        DOWN("D", TokenType.HAND),
+        UP("U", TokenType.FAKE);
+
+        private final String acronym;
+        private final TokenType tokenType;
+        HandState(String acronym, TokenType tokenType) {
+            this.tokenType = tokenType;
+            this.acronym = acronym;
+        }
+        public String getAcronym() { return acronym; }
+        public TokenType getTokenType() { return tokenType; }
+
     }
     private Color fontColor = ColorPalette.BLACK;
     private Texture cardPic;
@@ -56,7 +69,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
             }
         });
         this.addListener(getDragger());
-        setCardPic(Farstar.ASSET_LIBRARY.get("images/tokens/card_D.png"));
+        resetCulturePic(getCard().getCardInfo().getCulture(), null);
         setGlowOffsetX(-getGlowG().getWidth()/2f+getFrame().getWidth()/2f);
         setGlowOffsetY(-getGlowG().getHeight()/2f+getCardPic().getHeight()/2f);
         setOriginX(getWidth()/2);
@@ -64,9 +77,19 @@ public class HandToken extends AnchoredToken implements CardGFX {
     }
 
     @Override
+    public void resetCulturePic(CardCulture culture, TokenType tokenType) {
+        setCardPic(Farstar.ASSET_LIBRARY.get("images/tokens/card" + culture.getAcronym() + "_" + currentState.getAcronym() + ".png"));
+    }
+
+    @Override
     public void setGlows() {
-        setGlowG(Farstar.ASSET_LIBRARY.get("images/tokens/glowG_"+(currentState == HandState.DOWN ? "D" : "U")+".png"));
-        setGlowY(Farstar.ASSET_LIBRARY.get("images/tokens/glowY_"+(currentState == HandState.DOWN ? "D" : "U")+".png"));
+        if (getCurrentState() != null) {
+            setGlowG(Farstar.ASSET_LIBRARY.get("images/tokens/glowG_" + currentState.getAcronym() + ".png"));
+            setGlowY(Farstar.ASSET_LIBRARY.get("images/tokens/glowY_" + currentState.getAcronym() + ".png"));
+        } else {
+            setGlowG(Farstar.ASSET_LIBRARY.get("images/tokens/glowG_D.png"));
+            setGlowY(Farstar.ASSET_LIBRARY.get("images/tokens/glowY_D.png"));
+        }
     }
 
     public void refreshSize() {
@@ -78,10 +101,10 @@ public class HandToken extends AnchoredToken implements CardGFX {
             setWidth(tokenType.getWidth());
             setHeight(tokenType == TokenType.HAND ? tokenType.getHeight() : 361f);
             setFont(tokenType.getFontPath());
-            if (!isNoPics()) {
+            if (!isNoPics() && getCard() != null) {
                 setPortrait(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getPortraitName(getCard().getCardInfo(), tokenType)));
                 setFrame(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getFrameName(getCard().getCardInfo(), tokenType)));
-                setCardPic(Farstar.ASSET_LIBRARY.get("images/tokens/card_"+(nextState == HandState.UP ? "U" : "D")+".png"));
+                resetCulturePic(getCard().getCardInfo().getCulture(), null);
             }
             getTokenDefense().setPad(tokenType);
             getTokenOffense().setPad(tokenType);
@@ -200,4 +223,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
         this.fontColor = fontColor;
     }
 
+    public HandState getCurrentState() {
+        return currentState;
+    }
 }
