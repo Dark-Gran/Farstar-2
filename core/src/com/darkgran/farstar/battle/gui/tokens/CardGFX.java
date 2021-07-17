@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Align;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardCulture;
@@ -29,9 +30,9 @@ public interface CardGFX extends TextDrawer {
             batch.draw(getCardPic(), x, y);
         }
         if (getCard() != null) {
-            drawText(getCardFont(), batch, x, y+getCardPic().getHeight()/2f, getCardName(getCard()));
-            drawText(getCardFont(), batch, x, y+getCardPic().getHeight()/2f-40f, getTierName(getCardTier(getCard()), getCardType(getCard())));
-            drawText(getCardFont(), batch, x, y+getCardPic().getHeight()/2f-80f, getCardDescription(getCard()));
+            drawText(getCardFont(), batch, x, y+getCardPic().getHeight()*0.52f, getCardName(getCard()), Align.center);
+            drawText(getCardFont(), batch, x, y+getCardPic().getHeight()*0.455f, getTierName(getCardTier(getCard()), getCardType(getCard())), Align.center);
+            drawText(getCardFont(), batch, x, y+getCardPic().getHeight()*0.37f, getCardDescription(getCard()), Align.center);
         }
     }
 
