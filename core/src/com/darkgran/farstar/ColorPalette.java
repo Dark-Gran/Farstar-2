@@ -11,6 +11,8 @@ public final class ColorPalette {
     public static final Color MATTER = new Color(0.702f, 0.4f, 0.176f, 1);
     public static final Color BLACK = new Color(0.12f, 0.12f, 0.12f, 1);
     public static final Color TOTAL_BLACK = new Color(0f, 0f, 0f, 1);
+    public static final Color RED = new Color(0.8f, 0.231f, 0.243f, 1);
+    public static final Color GREEN = new Color(0.2f, 0.902f, 0.388f, 1);
 
     public static Color changeAlpha(Color color, float a) {
         return new Color(color.r, color.g, color.b, color.a*a);

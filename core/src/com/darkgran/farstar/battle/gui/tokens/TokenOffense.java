@@ -29,6 +29,17 @@ public class TokenOffense extends TokenPart {
     }
 
     @Override
+    public void resetContentState() {
+        if (getToken().getCard().hasUpgradedWeapons()) {
+            setContentState(ContentState.UPGRADED);
+        } else if (getToken().getCard().hasDamagedWeapons()) {
+            setContentState(ContentState.DAMAGED);
+        } else {
+            setContentState(ContentState.NORMAL);
+        }
+    }
+
+    @Override
     public void setupOffset() {
         if (getPad() != null) {
             setOffsetX(getPad().getWidth());

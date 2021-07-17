@@ -9,11 +9,18 @@ import com.darkgran.farstar.gui.TextLine;
 import com.darkgran.farstar.util.SimpleVector2;
 
 public class TokenPart extends TextLine {
+    enum ContentState {
+        NORMAL("black"), DAMAGED("red"), UPGRADED("green");
+        private final String font;
+        ContentState(String font) { this.font = font; }
+        public String getFontName() { return font; }
+    }
     private final Token token;
     private Texture pad;
     private SimpleVector2 textWH;
     private float offsetY = 0f;
     private float offsetX = 0f;
+    private ContentState contentState = ContentState.NORMAL;
 
     public TokenPart(String fontPath, Token token) {
         super(fontPath);
@@ -44,6 +51,7 @@ public class TokenPart extends TextLine {
             textWH = TextDrawer.getTextWH(getFont(), getContent());
             adjustTextWH();
             setPad(getToken().getTokenType());
+            resetContentState();
         }
     }
 
@@ -53,10 +61,16 @@ public class TokenPart extends TextLine {
         }
     }
 
+    public void resetContentState() {}
+
     public void draw(Batch batch) {
         if (isEnabled()) {
             batch.draw(pad, getX() - pad.getWidth() + offsetX, getY() + offsetY);
-            drawText(getFont(), batch, getX() - pad.getWidth() * 0.5f - textWH.getX() * 0.5f + offsetX, getY() + offsetY + pad.getHeight() * 0.5f + textWH.getY() * 0.5f, getContent(), ColorPalette.BLACK);
+            if (!TokenType.isDeployed(getToken().getTokenType())) {
+                drawText(getFont(), batch, getX() - pad.getWidth() * 0.5f - textWH.getX() * 0.5f + offsetX, getY() + offsetY + pad.getHeight() * 0.5f + textWH.getY() * 0.5f, getContent(), ColorPalette.BLACK);
+            } else {
+                drawText(Farstar.ASSET_LIBRARY.getFont(getToken().getTokenType().getFontSize(), getContentState().getFontName()), batch, getX() - pad.getWidth() * 0.5f - textWH.getX() * 0.5f + offsetX, getY() + offsetY + pad.getHeight() * 0.5f + textWH.getY() * 0.5f, getContent());
+            }
         }
     }
 
@@ -98,5 +112,13 @@ public class TokenPart extends TextLine {
 
     public void setTextWH(SimpleVector2 textWH) {
         this.textWH = textWH;
+    }
+
+    public ContentState getContentState() {
+        return contentState;
+    }
+
+    public void setContentState(ContentState contentState) {
+        this.contentState = contentState;
     }
 }

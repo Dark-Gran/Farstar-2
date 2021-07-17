@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.darkgran.farstar.AssetLibrary;
 import com.darkgran.farstar.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.BattleStage;
@@ -101,7 +102,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
             currentState = nextState;
             setWidth(tokenType.getWidth());
             setHeight(tokenType == TokenType.HAND ? tokenType.getHeight() : 361f);
-            setFont(tokenType.getFontPath());
+            setFont(AssetLibrary.getFontPath(tokenType.getFontSize(), "bahnschrift"));
             if (!isNoPics() && getCard() != null) {
                 setPortrait(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getPortraitName(getCard().getCardInfo(), tokenType)));
                 setFrame(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getFrameName(getCard().getCardInfo(), tokenType)));

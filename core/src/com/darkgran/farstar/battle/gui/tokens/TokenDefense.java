@@ -33,4 +33,15 @@ public class TokenDefense extends TokenPart {
         setPad((Texture) Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getTypePad(getToken().getCard().getCardInfo().getDefenseType(), tokenType)));
     }
 
+    @Override
+    public void resetContentState() {
+        if (getToken().getCard().hasUpgradedShields()) {
+            setContentState(ContentState.UPGRADED);
+        } else if (getToken().getCard().isDamaged()) {
+            setContentState(ContentState.DAMAGED);
+        } else {
+            setContentState(ContentState.NORMAL);
+        }
+    }
+
 }

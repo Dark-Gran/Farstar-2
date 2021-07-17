@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.darkgran.farstar.AssetLibrary;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
@@ -39,7 +40,7 @@ public class Token extends Actor implements JustFont {
     public Token(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, boolean noPics, boolean connectCard){
         setWidth(tokenType.getWidth());
         setHeight(tokenType.getHeight());
-        setFont(tokenType.getFontPath());
+        setFont(AssetLibrary.getFontPath(tokenType.getFontSize(), "bahnschrift"));
         this.card = card;
         this.tokenType = tokenType;
         this.noPics = noPics;

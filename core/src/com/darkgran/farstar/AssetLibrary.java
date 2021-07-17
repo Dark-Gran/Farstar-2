@@ -74,6 +74,14 @@ public class AssetLibrary {
         }
     }
 
+    public BitmapFont getFont(String fontSize, String fontName) {
+        return Farstar.ASSET_LIBRARY.get(getFontPath(fontSize, fontName));
+    }
+
+    public static String getFontPath(String fontSize, String fontName) {
+        return "fonts/"+fontName+fontSize+".fnt";
+    }
+
     public void loadAssets() {
         loadCursors();
         loadFonts();
@@ -100,6 +108,13 @@ public class AssetLibrary {
         assetManager.load("fonts/bahnschrift48.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift58.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/orbitron36.fnt", BitmapFont.class, bmpParams);
+        //Fleet Fonts
+        assetManager.load("fonts/black40.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/black48.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/green40.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/green48.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/red40.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/red48.fnt", BitmapFont.class, bmpParams);
     }
 
     private void loadTextures() {

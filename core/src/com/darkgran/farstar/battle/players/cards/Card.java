@@ -106,6 +106,14 @@ public class Card {
         return foundOffense;
     }
 
+    public boolean isDamaged() { return damage > 0; }
+
+    public boolean hasDamagedWeapons() { return getCardInfo().getOffense() < getOriginalInfo().getOffense(); }
+
+    public boolean hasUpgradedShields() { return getCardInfo().getDefense() > getOriginalInfo().getDefense(); }
+
+    public boolean hasUpgradedWeapons() { return getCardInfo().getOffense() > getOriginalInfo().getOffense(); }
+
     public boolean isTactic() { return cardInfo.getCardType() == CardType.TACTIC; }
 
     public boolean isMS() { return cardInfo.getCardType() == CardType.MS; }
