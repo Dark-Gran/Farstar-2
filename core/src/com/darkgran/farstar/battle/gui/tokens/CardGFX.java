@@ -50,7 +50,7 @@ public interface CardGFX extends TextDrawer {
             case TACTIC:
                 return "tactic";
             case MS:
-                return "mothership ";
+                return "mothership";
             case SUPPORT:
                 return "support";
             case BLUEPRINT:
