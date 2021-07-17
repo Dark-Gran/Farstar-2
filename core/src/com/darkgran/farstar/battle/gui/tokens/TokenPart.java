@@ -72,10 +72,10 @@ public class TokenPart extends TextLine {
         if (getContent().equals("1")) {
             textWH.setX(textWH.getX()+2f);
         }
-        adjustOutlinedTextWH();
+        adjustTextWHByCurrentState();
     }
 
-    public void adjustOutlinedTextWH() {
+    public void adjustTextWHByCurrentState() {
         if (getCurrentContentState() != ContentState.NORMAL) {
             switch (getToken().getTokenType()) {
                 case MS:
@@ -90,6 +90,8 @@ public class TokenPart extends TextLine {
                     getTextWH().setY(getTextWH().getY()*1.1f);
                     break;
             }
+        } else if (getToken().getTokenType() == TokenType.PRINT) {
+            getTextWH().setY(getTextWH().getY()*0.98f);
         }
     }
 

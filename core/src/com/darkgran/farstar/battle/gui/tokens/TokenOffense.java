@@ -51,7 +51,7 @@ public class TokenOffense extends TokenPart {
         if (getContent().equals("1")) {
             getTextWH().setX(getTextWH().getX()+3f);
         }
-        adjustOutlinedTextWH();
+        adjustTextWHByCurrentState();
     }
 
 }
