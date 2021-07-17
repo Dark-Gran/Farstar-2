@@ -12,9 +12,11 @@ import com.darkgran.farstar.util.SimpleVector2;
 
 public class AbilityPickerOption extends PrintToken {
     private ClickListener clickListener;
+    private final String optionDescription;
 
-    public AbilityPickerOption(Battle battle, AbilityInfo abilityInfo, Card card, float x, float y) {
+    public AbilityPickerOption(Battle battle, AbilityInfo abilityInfo, Card card, float x, float y, String optionDescription) {
         super(card, x, y, battle.getBattleScreen().getBattleStage(), null, false);
+        this.optionDescription = optionDescription;
         clickListener = new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -33,6 +35,11 @@ public class AbilityPickerOption extends PrintToken {
         addListener(clickListener);
         setTouchable(Touchable.enabled);
         setup(card, TokenType.PRINT, new SimpleVector2(x, y));
+    }
+
+    @Override
+    public String getCardDescription(Card card) {
+        return optionDescription;
     }
 
     @Override

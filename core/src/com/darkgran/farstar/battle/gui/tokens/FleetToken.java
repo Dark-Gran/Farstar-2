@@ -18,12 +18,13 @@ public class FleetToken extends ClickToken implements DisableMark, FakingTokens 
     public FleetToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, FleetMenu fleetMenu, boolean noPics, boolean connectCard) {
         super(card, x, y, battleStage, cardListMenu, TokenType.FLEET, noPics, connectCard);
         this.fleetMenu = fleetMenu;
-        if (!noPics) { setMark(Farstar.ASSET_LIBRARY.get("images/tokens/disable_F.png")); }
+        setMark(Farstar.ASSET_LIBRARY.get("images/tokens/disable_F.png"));
     }
 
     public FleetToken(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, FleetMenu fleetMenu, boolean noPics, boolean connectCard) {
         super(card, x, y, battleStage, cardListMenu, tokenType, noPics, connectCard);
         this.fleetMenu = fleetMenu;
+        setMark(Farstar.ASSET_LIBRARY.get("images/tokens/disable_F.png"));
     }
 
     @Override

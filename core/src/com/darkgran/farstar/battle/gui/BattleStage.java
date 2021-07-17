@@ -246,4 +246,7 @@ public abstract class BattleStage extends ListeningStage {
         return turnButton;
     }
 
+    public AbilityPicker getAbilityPicker() {
+        return abilityPicker;
+    }
 }

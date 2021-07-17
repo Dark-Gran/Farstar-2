@@ -23,7 +23,7 @@ public class ResourceMeter extends Actor implements JustFont {
     private SimpleVector2 matWH;
 
     public ResourceMeter(Battle battle, Player player, boolean onBottom, float x, float y) {
-        setFont("fonts/bahnschrift40b.fnt");
+        setFont("fonts/resMeter.fnt"); //bahnschrift semi-bold 60
         eneWH = TextDrawer.getTextWH(getFont(), "0 ");
         matWH = TextDrawer.getTextWH(getFont(), "0 ");
         this.battle = battle;
@@ -65,10 +65,10 @@ public class ResourceMeter extends Actor implements JustFont {
         batch.draw(enePic, getX(), getY() - (onBottom ? 0f : eneWH.getY()) - getHeight()*0.49f);
         getFont().draw(batch, Integer.toString(player.getEnergy()), getX()+enePic.getWidth()*1.5f, onBottom ? getY()+getHeight() : getY());
         getFont().setColor(ColorPalette.MATTER);
-        batch.draw(matPic, getX()+enePic.getWidth()*1.5f+eneWH.getX(), getY()-(onBottom ? 0f : eneWH.getY()) + getHeight()*0.02f);
-        getFont().draw(batch, player.getMatter()+" ", getX()+enePic.getWidth()*1.5f+eneWH.getX()+matPic.getWidth()*1.3f, onBottom ? getY()+getHeight() : getY());
+        batch.draw(matPic, getX()+enePic.getWidth()*1.5f+eneWH.getX()+10f, getY()-(onBottom ? 0f : eneWH.getY()) + getHeight()*0.02f);
+        getFont().draw(batch, player.getMatter()+" ", getX()+enePic.getWidth()*1.5f+eneWH.getX()+10f+matPic.getWidth()*1.3f, onBottom ? getY()+getHeight() : getY());
         getFont().setColor((ColorPalette.MAIN));
-        getFont().draw(batch, " +"+getIncome(), getX()+enePic.getWidth()*1.5f+eneWH.getX()+matPic.getWidth()*1.3f+matWH.getX(), onBottom ? getY()+getHeight() : getY());
+        getFont().draw(batch, " +"+getIncome(), getX()+enePic.getWidth()*1.5f+eneWH.getX()+10f+matPic.getWidth()*1.3f+matWH.getX(), onBottom ? getY()+getHeight() : getY());
         getFont().setColor(Color.WHITE);
     }
 

@@ -2,10 +2,12 @@ package com.darkgran.farstar.battle.gui;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.Player;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.cards.Card;
+import com.darkgran.farstar.gui.ActorButton;
 import com.darkgran.farstar.gui.PB2Drawer;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ public class AbilityPicker extends PB2Drawer {
     private final float originX;
     private final float originY;
     private final static float SPACE_BETWEEN = 30f;
+
 
     public AbilityPicker(float x, float y, BattleStage battleStage, Player player, Texture texture) {
         super(x, y, battleStage, player);
@@ -52,15 +55,9 @@ public class AbilityPicker extends PB2Drawer {
         if (card != null) {
             setX(originX-(((abilityInfos.size() * TokenType.PRINT.getWidth())+(abilityInfos.size()-1) * SPACE_BETWEEN)/2));
             abilityGraphics = new ArrayList<>();
-            for (AbilityInfo abilityInfo : abilityInfos) {
-                abilityGraphics.add(createOption(abilityInfo));
+            for (int i = 0; i < abilityInfos.size(); i++) {
+                abilityGraphics.add(createOption(abilityInfos.get(i), i));
             }
-        }
-    }
-
-    private void removeActors(int fromIndex, int toIndex) {
-        for (int i = fromIndex; i <= toIndex && i < abilityGraphics.size(); i++) {
-            abilityGraphics.get(i).remove();
         }
     }
 
@@ -76,10 +73,26 @@ public class AbilityPicker extends PB2Drawer {
         }
     }
 
-    private AbilityPickerOption createOption(AbilityInfo abilityInfo) {
-        AbilityPickerOption abilityPickerOption = new AbilityPickerOption(getBattleStage().getBattleScreen().getBattle(), abilityInfo, card, getX(), getY());
+    private AbilityPickerOption createOption(AbilityInfo abilityInfo, int optionNumber) {
+        AbilityPickerOption abilityPickerOption = new AbilityPickerOption(getBattleStage().getBattleScreen().getBattle(), abilityInfo, card, getX(), getY(), getOptionDescription(card.getCardInfo().getDescription(), optionNumber));
         abilityPickerOption.setBounds(getX()+(abilityGraphics.size()*(TokenType.PRINT.getWidth()+SPACE_BETWEEN)), getY(), TokenType.PRINT.getWidth(), TokenType.PRINT.getHeight());
         return abilityPickerOption;
+    }
+
+    /** Expects Hybrid-Descriptions to carry optionDescriptions on odd new-lines (\n). */
+    public String getOptionDescription(String description, int optionNumber) {
+        String optionDescription = "";
+        String[] descArr = description.split("\n");
+        int optionCount = 0;
+        for (int i = 0; i < descArr.length; i++) {
+            if (i % 2 != 0) {
+                if (optionCount == optionNumber) {
+                    optionDescription = descArr[i];
+                }
+                optionCount++;
+            }
+        }
+        return optionDescription;
     }
 
     public ArrayList<AbilityInfo> getAbilityInfos() { return abilityInfos; }

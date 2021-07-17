@@ -20,9 +20,10 @@ public class YardToken extends ClickToken implements FakingTokens{
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 if (button == 0) {
-                    if (yardMenu.isOpen() && getCard().getPlayer() instanceof LocalPlayer && !yardMenu.getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
+                    if (yardMenu.isOpen() && getCard().getPlayer() instanceof LocalPlayer &&  !getBattleStage().getAbilityPicker().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
                         newFake(event, x, y, pointer, button, FakeTokenType.DEPLOYMENT);
                     }
+                    setPicked(true);
                     return false;
                 } else {
                     return super.touchDown(event, x, y, pointer, button);

@@ -35,14 +35,18 @@ public class YardMenu extends CardListMenu {
             setOpen(!visible);
             switchVisibility();
         } else {
-            if (visible) { accessDenied(); }
+            if (visible) {
+                accessDenied();
+            }
         }
     }
 
     public void switchVisibility() {
         if (getPlayer() instanceof LocalPlayer) {
-            open = !open;
-            setTouchable(open);
+            if (!getBattleStage().getAbilityPicker().isActive()) {
+                open = !open;
+                setTouchable(open);
+            }
         } else {
             if (!open) { accessDenied(); }
         }

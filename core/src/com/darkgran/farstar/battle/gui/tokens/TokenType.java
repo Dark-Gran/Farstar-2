@@ -2,7 +2,7 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 public enum TokenType {
     //Standard
-    MS(309f, 184f, "48"), //Parts: 69x52 (g: 420x295)
+    MS(309f, 184f, "48"), //Parts: 69x52 (g: 420x295) (filters: 4.24 (F too) card9.03)
     FAKE(260f, 155f, "44"), //60x45 (352x247)
     FLEET(232f, 138f, "40"), //54x41 (314x220)
     YARD(216f, 129f, "40"), //F (292x205)

@@ -41,8 +41,19 @@ public class Card {
 
     public void refreshToken(boolean def, boolean off) {
         if (getToken() != null) {
+            if (getPlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom() != null && this == getPlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().getCard()) {
+                getPlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().setup(this, getToken().getTokenType(), getPlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().getTargetXY());
+            }
             if (def) { getToken().getTokenDefense().update(); }
             if (off) { getToken().getTokenOffense().update(); }
+        }
+    }
+
+    public void setPossible(boolean possible) {
+        this.possible = possible;
+        if (token != null && !token.isPicked()) { token.setGlowState(possible ? Token.GlowState.POSSIBLE : Token.GlowState.DIM); }
+        if (getPlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom() != null && this == getPlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().getCard()) {
+            getPlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().setGlowState(token.getGlowState());
         }
     }
 
@@ -139,11 +150,6 @@ public class Card {
     public void setPlayer(Player player) { this.player = player; }
 
     public boolean isPossible() { return possible; }
-
-    public void setPossible(boolean possible) {
-        this.possible = possible;
-        if (token != null && !token.isPicked()) { token.setGlowState(possible ? Token.GlowState.POSSIBLE : Token.GlowState.DIM); }
-    }
 
     public Token getToken() {
         return token;

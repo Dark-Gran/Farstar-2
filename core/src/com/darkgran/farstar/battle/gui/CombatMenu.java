@@ -17,17 +17,10 @@ import java.util.Map;
 public abstract class CombatMenu {
     private final CombatManager combatManager;
     private BattleStage battleStage;  //must be set after ini - before RM.launch (see BattleScreen constructor)
-    private final ActorButton cancelButton = new ActorButton(Farstar.ASSET_LIBRARY.get("images/duel_cancel.png"), Farstar.ASSET_LIBRARY.get("images/duel_cancelO.png")){
-        @Override
-        public void clicked() {
-
-        }
-    };
 
     public CombatMenu(CombatManager combatManager) {
         this.combatManager = combatManager;
         combatManager.setCombatMenu(this);
-        cancelButton.setDisabled(true);
     }
 
     public void drawDuels(Batch batch, ShapeRenderer shapeRenderer) {
@@ -63,21 +56,9 @@ public abstract class CombatMenu {
         combatOK.setDisabled(true);
     }
 
-    public void addCancel() {
-        getBattleStage().addActor(cancelButton);
-        cancelButton.setDisabled(false);
-    }
-
-    public void removeCancel() {
-        cancelButton.remove();
-        cancelButton.setDisabled(true);
-    }
-
     public CombatManager getCombatManager() { return combatManager; }
 
     public BattleStage getBattleStage() { return battleStage; }
-
-    public ActorButton getCancelButton() { return cancelButton; }
 
     public void setBattleStage(BattleStage battleStage) { this.battleStage = battleStage; }
 

@@ -47,15 +47,7 @@ public class PrintToken extends Token implements CardGFX {
     public void setup(Card card, TokenType targetType, SimpleVector2 targetXY) {
         super.setup(card, targetType, targetXY);
         resetCardGFX(card.getCardInfo().getCulture(), TokenType.PRINT);
-        if (!card.getToken().isPicked()) {
-            if (card.isPossible()) {
-                setGlowState(GlowState.POSSIBLE);
-            } else {
-                setGlowState(GlowState.DIM);
-            }
-        } else {
-            setGlowState(GlowState.PICKED);
-        }
+        setGlowState(card.getToken().getGlowState());
         this.targetType = targetType;
         this.targetXY = targetXY;
         shiftPosition();

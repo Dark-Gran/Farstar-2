@@ -110,8 +110,18 @@ public class AssetLibrary {
         assetManager.load("fonts/bahnschrift58.fnt", BitmapFont.class, bmpParams);
         //Orbitron
         assetManager.load("fonts/orbitron36.fnt", BitmapFont.class, bmpParams);
-        //Card Fonts
-        assetManager.load("fonts/orbitron_nameF.fnt", BitmapFont.class, bmpParams); //orbitron - BMFont (instead of Hiero)
+        //Bahnschrift - BMFont (instead of Hiero)
+        assetManager.load("fonts/resMeter.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/padNormal_F.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/padNormal_MS.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/padNormal_S.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/padNormal_Z.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/padOutlined_F.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/padOutlined_MS.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/padOutlined_S.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/padOutlined_Z.fnt", BitmapFont.class, bmpParams);
+        //Orbitron - BMFont
+        assetManager.load("fonts/orbitron_nameF.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/orbitron_nameFK.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/orbitron_nameZ.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/barlow_descF.fnt", BitmapFont.class, bmpParams);
@@ -120,15 +130,6 @@ public class AssetLibrary {
         assetManager.load("fonts/barlow_tierF.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/barlow_tierFK.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/barlow_tierZ.fnt", BitmapFont.class, bmpParams);
-        //Fleet Fonts
-        assetManager.load("fonts/padNormal_F.fnt", BitmapFont.class, bmpParams); //bahnschrift - BMFont
-        assetManager.load("fonts/padNormal_MS.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/padNormal_S.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/padNormal_Z.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/padOutlined_F.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/padOutlined_MS.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/padOutlined_S.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/padOutlined_Z.fnt", BitmapFont.class, bmpParams);
     }
 
     private void loadTextures() {

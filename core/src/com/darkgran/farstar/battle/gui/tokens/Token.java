@@ -202,6 +202,9 @@ public class Token extends Actor implements JustFont {
     public void setPicked(boolean picked) {
         this.picked = picked;
         if (picked) { glowState = GlowState.PICKED; }
+        else {
+            glowState = getCard().isPossible() ? GlowState.POSSIBLE : GlowState.DIM;
+        }
     }
 
     public boolean isPicked() {
@@ -213,8 +216,6 @@ public class Token extends Actor implements JustFont {
     public BattleStage getBattleStage() { return battleStage; }
 
     public CardListMenu getCardListMenu() { return cardListMenu; }
-
-
 
     public boolean isNoPics() {
         return noPics;

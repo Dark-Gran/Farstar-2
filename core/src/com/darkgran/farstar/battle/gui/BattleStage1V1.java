@@ -48,8 +48,8 @@ public class BattleStage1V1 extends BattleStage {
     public BattleStage1V1(Farstar game, Viewport viewport, BattleScreen battleScreen, CombatMenu combatMenu, Player player1, Player player2) {
         super(game, viewport, battleScreen, combatMenu);
         //Resources
-        resourceMeter1 = new ResourceMeter(getBattleScreen().getBattle(), player1, true, Farstar.STAGE_WIDTH*0.779f, Farstar.STAGE_HEIGHT*0.04f);
-        resourceMeter2 = new ResourceMeter(getBattleScreen().getBattle(), player2, false, Farstar.STAGE_WIDTH*0.779f, Farstar.STAGE_HEIGHT*0.97f);
+        resourceMeter1 = new ResourceMeter(getBattleScreen().getBattle(), player1, true, Farstar.STAGE_WIDTH*0.758f, Farstar.STAGE_HEIGHT*0.04f);
+        resourceMeter2 = new ResourceMeter(getBattleScreen().getBattle(), player2, false, Farstar.STAGE_WIDTH*0.758f, Farstar.STAGE_HEIGHT*0.97f);
         //Buttons
         turnButton.setPosition(1828f, 478f - turnButton.getHeight() * 0.5f);
         addActor(turnButton);
@@ -87,12 +87,12 @@ public class BattleStage1V1 extends BattleStage {
         addActor(deck1);
         addActor(deck2);
         //Shipyards
-        yardMenu1 = new YardMenu(player1.getShipyard(), false, 202f, Farstar.STAGE_HEIGHT*0.078f, this, player1);
-        yardButton1.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.029f);
+        yardMenu1 = new YardMenu(player1.getShipyard(), false, 223f, Farstar.STAGE_HEIGHT*0.078f, this, player1);
+        yardButton1.setPosition(Farstar.STAGE_WIDTH*0.11f, Farstar.STAGE_HEIGHT*0.029f);
         player1.getYard().setYardButton(yardButton1);
         addActor(yardButton1);
-        yardMenu2 = new YardMenu(player2.getShipyard(), true, 202f, Farstar.STAGE_HEIGHT*0.76f, this, player2);
-        yardButton2.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.91f);
+        yardMenu2 = new YardMenu(player2.getShipyard(), true, 223f, Farstar.STAGE_HEIGHT*0.76f, this, player2);
+        yardButton2.setPosition(Farstar.STAGE_WIDTH*0.11f, Farstar.STAGE_HEIGHT*0.91f);
         player2.getYard().setYardButton(yardButton2);
         addActor(yardButton2);
         //Hands

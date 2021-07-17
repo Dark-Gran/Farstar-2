@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle;
 
+import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.battle.gui.tokens.*;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
@@ -9,6 +10,7 @@ import com.darkgran.farstar.battle.players.*;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardInfo;
 import com.darkgran.farstar.battle.players.cards.CardType;
+import com.darkgran.farstar.gui.ActorButton;
 import com.darkgran.farstar.util.SimpleVector2;
 
 import java.util.ArrayList;
@@ -27,6 +29,10 @@ public class RoundManager {
     private boolean targetingActive;
     private DeploymentInfo postponedDeploy = new DeploymentInfo(); //in-future: turn into a List to enable deployment-chains (eg. on-deploy summoning (targeted) that leads to another targeted on-deploy ability; atm there are no such cards)
     private AbilityPicker abilityPicker;
+    private final ActorButton cancelButton = new ActorButton(Farstar.ASSET_LIBRARY.get("images/duel_cancel.png"), Farstar.ASSET_LIBRARY.get("images/duel_cancelO.png")){
+        @Override
+        public void clicked() { tryCancel(); }
+    };
 
     public RoundManager(Battle battle, PossibilityAdvisor possibilityAdvisor) {
         this.battle = battle;
@@ -268,6 +274,8 @@ public class RoundManager {
                 abilityPicker.getAbilityInfos().add(option);
             }
             abilityPicker.enable(caster.getCard());
+            cancelButton.setPosition(Farstar.STAGE_WIDTH*0.69f, Farstar.STAGE_HEIGHT*0.28f);
+            getBattle().getBattleScreen().getBattleStage().addActor(cancelButton);
         }
     }
 
@@ -284,7 +292,10 @@ public class RoundManager {
 
     public void processPick(AbilityInfo ability) {
         if (!battle.isEverythingDisabled() && postponedDeploy.getCaster() != null) {
-            if (abilityPicker != null) { abilityPicker.disable(); }
+            if (abilityPicker != null) {
+                abilityPicker.disable();
+                cancelButton.remove();
+            }
             if (playAbility(postponedDeploy.getCaster(), (postponedDeploy.getTarget()!=null) ? postponedDeploy.getTarget().getCard() : null, ability.getStarter(), postponedDeploy.getCaster().getCard().getPlayer(), postponedDeploy.getDrop(), ability)) {
                 processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, ability.getStarter()==AbilityStarter.DEPLOY);
                 postponedDeploy.resetInDeployment();
@@ -304,6 +315,8 @@ public class RoundManager {
             token.setPicked(true);
             SuperScreen.switchCursor(SuperScreen.CursorType.AIM);
         }
+        cancelButton.setPosition(Farstar.STAGE_WIDTH*0.62f, Farstar.STAGE_HEIGHT*0.08f);
+        getBattle().getBattleScreen().getBattleStage().addActor(cancelButton);
     }
 
     public void processClick(Token token, Player owner) {
@@ -353,6 +366,7 @@ public class RoundManager {
         if (abilityPicker.isActive()) {
             abilityPicker.disable();
             postponedDeploy.resetInDeployment();
+            cancelButton.remove();
         }
         if (!getBattle().getCombatManager().getDuelManager().isActive()) {
             battle.refreshPossibilities();
@@ -363,6 +377,7 @@ public class RoundManager {
         targetingActive = false;
         SuperScreen.switchCursor(SuperScreen.CursorType.DEFAULT);
         postponedDeploy.resetInDeployment();
+        cancelButton.remove();
     }
 
     private void callHerald(Card card, TokenType targetType, SimpleVector2 targetXY) {
