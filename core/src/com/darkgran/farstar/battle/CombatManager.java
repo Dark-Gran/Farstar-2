@@ -52,7 +52,7 @@ public abstract class CombatManager {
     }
 
     public void processDrop(Token token, Token targetToken) {
-        if (active && !tacticalPhase && !duelManager.isActive() && token.getCard().getPlayer() == battle.getWhoseTurn()) {
+        if (active && !tacticalPhase && !duelManager.isActive() && token.getCard().getPlayer() == battle.getWhoseTurn() && !token.getCard().isUsed()) {
             if (targetToken == null) {
                 duels.remove(token);
             } else if (token != targetToken) {

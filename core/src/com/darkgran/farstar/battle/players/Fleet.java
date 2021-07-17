@@ -178,7 +178,7 @@ public class Fleet implements BattleTicks {
     }
 
     public boolean noAttackers() {
-        for (Ship ship : ships) { if (ship != null) { return false; } }
+        for (Ship ship : ships) { if (ship != null && !ship.isUsed()) { return false; } }
         return true;
     }
 

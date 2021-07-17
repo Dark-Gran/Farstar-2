@@ -35,7 +35,7 @@ public class FleetToken extends ClickToken implements DisableMark, FakingTokens 
     @Override
     boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         Battle battle = getBattleStage().getBattleScreen().getBattle();
-        if (button == 0 && getCard().getPlayer() instanceof LocalPlayer && getCard().getPlayer() == battle.getWhoseTurn() && battle.getCombatManager().isActive() && !battle.getCombatManager().getDuelManager().isActive() && !battle.getCombatManager().isTacticalPhase() && !getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
+        if (button == 0 && getCard().getPlayer() instanceof LocalPlayer && getCard().getPlayer() == battle.getWhoseTurn() && battle.getCombatManager().isActive() && !battle.getCombatManager().getDuelManager().isActive() && !battle.getCombatManager().isTacticalPhase() && !getCard().isUsed() && !getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
             battle.getCombatManager().cancelDuel(this);
             newFake(event, x, y, pointer, button, FakeTokenType.TARGETING);
             return false;

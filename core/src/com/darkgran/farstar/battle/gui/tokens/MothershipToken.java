@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.gui.DropTarget;
@@ -21,6 +22,7 @@ public class MothershipToken extends ClickToken implements DropTarget, DisableMa
         this.supportMenu = supportMenu;
         setupSimpleBox2(x, y, getWidth(), getHeight());
         getCard().getPlayer().getMs().setToken(this);
+        setMark(Farstar.ASSET_LIBRARY.get("images/tokens/disable_MS.png"));
     }
 
     @Override

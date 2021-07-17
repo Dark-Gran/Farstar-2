@@ -64,7 +64,6 @@ public class TokenPart extends TextLine {
             }
             adjustTextWH();
             setPad(getToken().getTokenType());
-            if (getToken().getTokenType() == TokenType.MS) { System.out.println(textWH.getY()); }
         }
     }
 
