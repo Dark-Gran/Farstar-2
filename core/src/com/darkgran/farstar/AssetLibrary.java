@@ -120,13 +120,15 @@ public class AssetLibrary {
         assetManager.load("fonts/barlow_tierF.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/barlow_tierFK.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/barlow_tierZ.fnt", BitmapFont.class, bmpParams);
-        //Fleet Fonts (Bahnschrift)
-        assetManager.load("fonts/black40.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/black48.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/green40.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/green48.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/red40.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/red48.fnt", BitmapFont.class, bmpParams);
+        //Fleet Fonts
+        assetManager.load("fonts/padNormal_F.fnt", BitmapFont.class, bmpParams); //bahnschrift - BMFont
+        assetManager.load("fonts/padNormal_MS.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/padNormal_S.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/padNormal_Z.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/padOutlined_F.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/padOutlined_MS.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/padOutlined_S.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/padOutlined_Z.fnt", BitmapFont.class, bmpParams);
     }
 
     private void loadTextures() {

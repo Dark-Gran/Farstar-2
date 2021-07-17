@@ -31,11 +31,11 @@ public class TokenOffense extends TokenPart {
     @Override
     public void resetContentState() {
         if (getToken().getCard().hasUpgradedWeapons()) {
-            setContentState(ContentState.UPGRADED);
+            setCurrentContentState(ContentState.UPGRADED);
         } else if (getToken().getCard().hasDamagedWeapons()) {
-            setContentState(ContentState.DAMAGED);
+            setCurrentContentState(ContentState.DAMAGED);
         } else {
-            setContentState(ContentState.NORMAL);
+            setCurrentContentState(ContentState.NORMAL);
         }
     }
 
@@ -51,6 +51,7 @@ public class TokenOffense extends TokenPart {
         if (getContent().equals("1")) {
             getTextWH().setX(getTextWH().getX()+3f);
         }
+        adjustOutlinedTextWH();
     }
 
 }

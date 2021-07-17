@@ -12,6 +12,8 @@ public enum TokenType {
     HAND(232f, 322f, "38"), //FF (355x445)
     PRINT(348f, 483f, "58"); //(=Z) 81x61
 
+    //pad-font sizes: MS>F>S 68>58>48>42 (outline2)
+
     private final float width;
     private final float height;
     private final String defaultFontSize;

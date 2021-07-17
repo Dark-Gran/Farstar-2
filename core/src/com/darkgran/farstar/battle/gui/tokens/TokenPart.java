@@ -1,7 +1,9 @@
 package com.darkgran.farstar.battle.gui.tokens;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.darkgran.farstar.AssetLibrary;
 import com.darkgran.farstar.ColorPalette;
 import com.darkgran.farstar.Farstar;
@@ -11,17 +13,22 @@ import com.darkgran.farstar.util.SimpleVector2;
 
 public class TokenPart extends TextLine {
     enum ContentState {
-        NORMAL("black"), DAMAGED("red"), UPGRADED("green");
-        private final String font;
-        ContentState(String font) { this.font = font; }
-        public String getFontName() { return font; }
+        NORMAL("padNormal", ColorPalette.BLACKISH), DAMAGED("padOutlined", ColorPalette.RED), UPGRADED("padOutlined", ColorPalette.GREEN);
+        private final String fontName;
+        private final Color color;
+        ContentState(String fontName, Color color) {
+            this.fontName = fontName;
+            this.color = color;
+        }
+        public String getFontName() { return fontName; }
+        public Color getColor() { return color; }
     }
     private final Token token;
     private Texture pad;
     private SimpleVector2 textWH;
     private float offsetY = 0f;
     private float offsetX = 0f;
-    private ContentState contentState = ContentState.NORMAL;
+    private ContentState currentContentState = ContentState.NORMAL;
 
     public TokenPart(String fontPath, Token token) {
         super(fontPath);
@@ -49,16 +56,40 @@ public class TokenPart extends TextLine {
 
     public void update() {
         if (getToken().getCard() != null) {
-            textWH = TextDrawer.getTextWH(getFont(), getContent());
+            resetContentState();
+            if (!TokenType.isDeployed(getToken().getTokenType())) {
+                textWH = TextDrawer.getTextWH(getFont(), getContent());
+            } else {
+                textWH = TextDrawer.getTextWH(getContentStateFont(getCurrentContentState(), getToken().getTokenType()), getContent());
+            }
             adjustTextWH();
             setPad(getToken().getTokenType());
-            resetContentState();
+            if (getToken().getTokenType() == TokenType.MS) { System.out.println(textWH.getY()); }
         }
     }
 
     public void adjustTextWH() {
         if (getContent().equals("1")) {
             textWH.setX(textWH.getX()+2f);
+        }
+        adjustOutlinedTextWH();
+    }
+
+    public void adjustOutlinedTextWH() {
+        if (getCurrentContentState() != ContentState.NORMAL) {
+            switch (getToken().getTokenType()) {
+                case MS:
+                case FLEET:
+                    getTextWH().setY(getTextWH().getY()*1.075f);
+                    break;
+                case PRINT:
+                    getTextWH().setX(getTextWH().getX()*1.1f);
+                    getTextWH().setY(getTextWH().getY()*1.15f);
+                    break;
+                case SUPPORT:
+                    getTextWH().setY(getTextWH().getY()*1.1f);
+                    break;
+            }
         }
     }
 
@@ -67,12 +98,18 @@ public class TokenPart extends TextLine {
     public void draw(Batch batch) {
         if (isEnabled()) {
             batch.draw(pad, getX() - pad.getWidth() + offsetX, getY() + offsetY);
-            if (!TokenType.isDeployed(getToken().getTokenType())) {
-                drawText(getFont(), batch, getX() - pad.getWidth() * 0.5f - textWH.getX() * 0.5f + offsetX, getY() + offsetY + pad.getHeight() * 0.5f + textWH.getY() * 0.5f, getContent(), ColorPalette.BLACKISH);
+            float textX = getX() - pad.getWidth()/2f - textWH.getX()/2f + offsetX;
+            float textY = getY() + pad.getHeight()/2f + textWH.getY()/2f + offsetY;
+            if (!(TokenType.isDeployed(getToken().getTokenType()) || getToken().getTokenType() == TokenType.PRINT)) {
+                drawText(getFont(), batch, textX, textY, getContent(), ColorPalette.BLACKISH);
             } else {
-                drawText(Farstar.ASSET_LIBRARY.getFont(getToken().getTokenType().getDefaultFontSize(), getContentState().getFontName()), batch, getX() - pad.getWidth() * 0.5f - textWH.getX() * 0.5f + offsetX, getY() + offsetY + pad.getHeight() * 0.5f + textWH.getY() * 0.5f, getContent());
+                drawText(getContentStateFont(getCurrentContentState(), getToken().getTokenType()), batch, textX, textY, getContent(), getCurrentContentState().getColor());
             }
         }
+    }
+
+    private BitmapFont getContentStateFont(ContentState contentState, TokenType tokenType) {
+        return Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("fonts/"+ contentState.getFontName() + "_", tokenType, true)+".fnt");
     }
 
     public boolean isEnabled() {
@@ -115,11 +152,11 @@ public class TokenPart extends TextLine {
         this.textWH = textWH;
     }
 
-    public ContentState getContentState() {
-        return contentState;
+    public ContentState getCurrentContentState() {
+        return currentContentState;
     }
 
-    public void setContentState(ContentState contentState) {
-        this.contentState = contentState;
+    public void setCurrentContentState(ContentState currentContentState) {
+        this.currentContentState = currentContentState;
     }
 }

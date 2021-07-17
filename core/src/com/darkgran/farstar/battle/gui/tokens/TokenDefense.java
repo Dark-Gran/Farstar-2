@@ -36,11 +36,11 @@ public class TokenDefense extends TokenPart {
     @Override
     public void resetContentState() {
         if (getToken().getCard().hasUpgradedShields()) {
-            setContentState(ContentState.UPGRADED);
+            setCurrentContentState(ContentState.UPGRADED);
         } else if (getToken().getCard().isDamaged()) {
-            setContentState(ContentState.DAMAGED);
+            setCurrentContentState(ContentState.DAMAGED);
         } else {
-            setContentState(ContentState.NORMAL);
+            setCurrentContentState(ContentState.NORMAL);
         }
     }
 
