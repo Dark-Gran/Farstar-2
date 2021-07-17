@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.darkgran.farstar.AssetLibrary;
 import com.darkgran.farstar.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.AbilityManager;
@@ -39,9 +40,9 @@ public class TokenPrice extends TokenPart {
 
     @Override
     public void setPad(TokenType tokenType) {
-        setPad((Texture) Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padE", tokenType, true)+".png"));
-        pad2 = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padM", tokenType, true)+".png");
-        if (tokenType != TokenType.PRINT) { useMark = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/abiU", tokenType, true)+".png"); }
+        setPad((Texture) Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/padE_", tokenType, true)+".png"));
+        pad2 = Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/padM_", tokenType, true)+".png");
+        if (tokenType != TokenType.PRINT) { useMark = Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/abiU_", tokenType, true)+".png"); }
         if (tokenType == TokenType.FLEET) {
             fsMark = Farstar.ASSET_LIBRARY.get("images/tokens/abiFS_F.png");
             guardMark = Farstar.ASSET_LIBRARY.get("images/tokens/abiG_F.png");
@@ -120,14 +121,14 @@ public class TokenPrice extends TokenPart {
                 if (E != 0 || showUseMark) {
                     String e = Integer.toString(E);
                     batch.draw(getPad(), x, getY() + getOffsetY());
-                    drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - getTextWH().getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + getTextWH().getY() * 0.5f, e, ColorPalette.BLACK);
+                    drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - getTextWH().getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + getTextWH().getY() * 0.5f, e, ColorPalette.BLACKISH);
                     x += getPad().getWidth();
                 }
                 int M = getResource(false, getToken() instanceof AbilityPickerOption ? TokenType.SUPPORT : getToken().getTokenType());
                 if (M != 0) {
                     String m = Integer.toString(M);
                     batch.draw(pad2, x, getY() + getOffsetY());
-                    drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - textWH2.getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + textWH2.getY() * 0.5f, m, ColorPalette.BLACK);
+                    drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - textWH2.getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + textWH2.getY() * 0.5f, m, ColorPalette.BLACKISH);
                 }
             }
         }

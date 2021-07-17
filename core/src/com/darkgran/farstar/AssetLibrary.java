@@ -15,17 +15,17 @@ public class AssetLibrary {
 
     public String getPortraitName(CardInfo cardInfo, TokenType tokenType) {
         String path = "images/portraits/";
-        String name = addTokenTypeAcronym(Integer.toString(cardInfo.getId()), tokenType, false) + ".png";
+        String name = addTokenTypeAcronym(Integer.toString(cardInfo.getId())+"_", tokenType, false) + ".png";
         if (assetManager.contains(path+name)) {
             return path+name;
         } else {
-            return path+addTokenTypeAcronym("empty", tokenType, false)+".png";
+            return path+addTokenTypeAcronym("empty_", tokenType, false)+".png";
         }
     }
 
     public String getFrameName(CardInfo cardInfo, TokenType tokenType) {
         String path = "images/tokens/";
-        String name = addTokenTypeAcronym("frame"+cardInfo.getCardRarity().getAcronym(), tokenType, false)+".png";
+        String name = addTokenTypeAcronym("frame"+cardInfo.getCardRarity().getAcronym()+"_", tokenType, false)+".png";
         return path+name;
     }
 
@@ -50,11 +50,10 @@ public class AssetLibrary {
                 name += "S";
                 break;
         }
-        return addTokenTypeAcronym(name, tokenType, true)+".png";
+        return addTokenTypeAcronym(name+"_", tokenType, true)+".png";
     }
 
-    public String addTokenTypeAcronym(String string, TokenType tokenType, boolean pad) {
-        string += "_";
+    public static String addTokenTypeAcronym(String string, TokenType tokenType, boolean pad) {
         switch (tokenType) {
             default:
             case JUNK:
@@ -99,7 +98,9 @@ public class AssetLibrary {
         bmpParams.minFilter = Texture.TextureFilter.Linear;
         bmpParams.magFilter = Texture.TextureFilter.Linear;
         assetManager.load("fonts/arial15.fnt", BitmapFont.class, bmpParams);
+        //Bahnschrift
         assetManager.load("fonts/bahnschrift24.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/bahnschrift24p.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift30.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift38.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift40.fnt", BitmapFont.class, bmpParams);
@@ -107,8 +108,19 @@ public class AssetLibrary {
         assetManager.load("fonts/bahnschrift44.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift48.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift58.fnt", BitmapFont.class, bmpParams);
+        //Orbitron
         assetManager.load("fonts/orbitron36.fnt", BitmapFont.class, bmpParams);
-        //Fleet Fonts
+        //Card Fonts
+        assetManager.load("fonts/orbitron_nameF.fnt", BitmapFont.class, bmpParams); //orbitron - BMFont (instead of Hiero)
+        assetManager.load("fonts/orbitron_nameFK.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/orbitron_nameZ.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_descF.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_descFK.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_descZ.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_tierF.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_tierFK.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_tierZ.fnt", BitmapFont.class, bmpParams);
+        //Fleet Fonts (Bahnschrift)
         assetManager.load("fonts/black40.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/black48.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/green40.fnt", BitmapFont.class, bmpParams);

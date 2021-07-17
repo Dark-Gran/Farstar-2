@@ -14,12 +14,12 @@ public enum TokenType {
 
     private final float width;
     private final float height;
-    private final String fontSize;
+    private final String defaultFontSize;
 
-    TokenType(float width, float height, String fontSize) {
+    TokenType(float width, float height, String defaultFontSize) {
         this.width = width;
         this.height = height;
-        this.fontSize = fontSize;
+        this.defaultFontSize = defaultFontSize;
     }
 
     public float getWidth() {
@@ -30,7 +30,7 @@ public enum TokenType {
         return height;
     }
 
-    public String getFontSize() { return fontSize; }
+    public String getDefaultFontSize() { return defaultFontSize; }
 
     public static boolean isDeployed(TokenType tokenType) {
         return tokenType == MS || tokenType == SUPPORT || tokenType == FLEET;

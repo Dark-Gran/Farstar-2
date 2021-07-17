@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Align;
+import com.darkgran.farstar.AssetLibrary;
+import com.darkgran.farstar.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardCulture;
@@ -17,28 +19,27 @@ public interface CardGFX extends TextDrawer {
     void setCardPic(Texture texture);
     Texture getCardPic();
     Card getCard();
+    TokenType getTokenType();
 
-    default BitmapFont getCardFont() { return Farstar.ASSET_LIBRARY.get("fonts/bahnschrift30.fnt"); }
     @Override
     default float getWrapWidth() { return getCardPic().getWidth(); }
     @Override
     default boolean getWrap() { return true; }
 
-
-    default void drawCardGFX(Batch batch, float x, float y) {
-        if (getCardPic() != null) {
-            batch.draw(getCardPic(), x, y);
-        }
-        if (getCard() != null) {
-            drawText(getCardFont(), batch, x, y+getCardPic().getHeight()*0.52f, getCardName(getCard()), Align.center);
-            drawText(getCardFont(), batch, x, y+getCardPic().getHeight()*0.455f, getTierName(getCardTier(getCard()), getCardType(getCard())), Align.center);
-            drawText(getCardFont(), batch, x, y+getCardPic().getHeight()*0.37f, getCardDescription(getCard()), Align.center);
+    default void resetCardGFX(CardCulture culture, TokenType tokenType) {
+        if (tokenType != null) {
+            setCardPic(Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/card" + culture.getAcronym()+"_", tokenType, false) + ".png"));
         }
     }
 
-    default void resetCulturePic(CardCulture culture, TokenType tokenType) {
-        if (tokenType != null) {
-            setCardPic(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/card" + culture.getAcronym(), tokenType, false) + ".png"));
+    default void drawCardGFX(Batch batch, float x, float y, TokenType tokenType) {
+        if (getCardPic() != null) {
+            batch.draw(getCardPic(), x, y);
+            if (getCard() != null) {
+                drawText(getNameFont(tokenType), batch, x, y+getCardPic().getHeight()*0.518f, getCardName(getCard()), Align.center);
+                drawText(getTierFont(tokenType), batch, x, y+getCardPic().getHeight()*0.452f, getTierName(getCardTier(getCard()), getCardType(getCard())), Align.center);
+                drawText(getDescFont(tokenType), batch, x, y+getCardPic().getHeight()*0.37f, getCardDescription(getCard()), Align.center, ColorPalette.BLACK);
+            }
         }
     }
 
@@ -49,7 +50,7 @@ public interface CardGFX extends TextDrawer {
             case TACTIC:
                 return "tactic";
             case MS:
-                return "mothership";
+                return "mothership ";
             case SUPPORT:
                 return "support";
             case BLUEPRINT:
@@ -75,6 +76,17 @@ public interface CardGFX extends TextDrawer {
                 return "V";
         }
         return r;
+    }
+
+    default BitmapFont getNameFont(TokenType tokenType) {
+        return Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("fonts/orbitron_name", tokenType, false)+".fnt");
+    }
+
+    default BitmapFont getTierFont(TokenType tokenType) { //barlow Z>FK>F 26>20>18
+        return Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("fonts/barlow_tier", tokenType, false)+".fnt");
+    }
+    default BitmapFont getDescFont(TokenType tokenType) {
+        return Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("fonts/barlow_desc", tokenType, false)+".fnt");
     }
 
     default String getCardName(Card card) {

@@ -9,8 +9,9 @@ public final class ColorPalette {
     public static final Color LIGHT = new Color(0.43f, 0.7f, 1f, 1);
     public static final Color ENERGY = new Color(0.243f, 0.749f, 0.918f, 1);
     public static final Color MATTER = new Color(0.702f, 0.4f, 0.176f, 1);
-    public static final Color BLACK = new Color(0.12f, 0.12f, 0.12f, 1);
-    public static final Color TOTAL_BLACK = new Color(0f, 0f, 0f, 1);
+    public static final Color BLACKISH = new Color(0.11f, 0.11f, 0.11f, 1);
+    public static final Color BLACK = new Color(0.09f, 0.09f, 0.09f, 1);
+    public static final Color PITCH_BLACK = new Color(0f, 0f, 0f, 1);
     public static final Color RED = new Color(0.8f, 0.231f, 0.243f, 1);
     public static final Color GREEN = new Color(0.2f, 0.902f, 0.388f, 1);
 

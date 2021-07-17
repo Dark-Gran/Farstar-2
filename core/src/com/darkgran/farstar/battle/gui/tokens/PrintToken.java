@@ -17,7 +17,7 @@ import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
  * Used for "card-zoom" etc.
  */
 public class PrintToken extends Token implements CardGFX {
-    private Color fontColor = ColorPalette.BLACK;
+    private Color fontColor = ColorPalette.BLACKISH;
     private Texture cardPic;
     private TokenType targetType;
     private SimpleVector2 targetXY = new SimpleVector2(0, 0);
@@ -46,7 +46,7 @@ public class PrintToken extends Token implements CardGFX {
     @Override
     public void setup(Card card, TokenType targetType, SimpleVector2 targetXY) {
         super.setup(card, targetType, targetXY);
-        resetCulturePic(card.getCardInfo().getCulture(), TokenType.PRINT);
+        resetCardGFX(card.getCardInfo().getCulture(), TokenType.PRINT);
         if (!card.getToken().isPicked()) {
             if (card.isPossible()) {
                 setGlowState(GlowState.POSSIBLE);
@@ -71,7 +71,7 @@ public class PrintToken extends Token implements CardGFX {
     public void draw(Batch batch) {
         if (getCard() != null) {
             drawGlows(batch);
-            drawCardGFX(batch, getX(), getY());
+            drawCardGFX(batch, getX(), getY(), getTokenType());
             drawPortrait(batch);
             getTokenDefense().draw(batch);
             getTokenOffense().draw(batch);

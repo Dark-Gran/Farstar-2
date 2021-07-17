@@ -35,7 +35,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
         public TokenType getTokenType() { return tokenType; }
 
     }
-    private Color fontColor = ColorPalette.BLACK;
+    private Color fontColor = ColorPalette.BLACKISH;
     private Texture cardPic;
     private HandState currentState = HandState.DOWN;
     private HandState nextState = currentState;
@@ -70,7 +70,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
             }
         });
         this.addListener(getDragger());
-        resetCulturePic(getCard().getCardInfo().getCulture(), null);
+        resetCardGFX(getCard().getCardInfo().getCulture(), null);
         setGlowOffsetX(-getGlowG().getWidth()/2f+getFrame().getWidth()/2f);
         setGlowOffsetY(-getGlowG().getHeight()/2f+getCardPic().getHeight()/2f);
         setOriginX(getWidth()/2);
@@ -78,7 +78,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
     }
 
     @Override
-    public void resetCulturePic(CardCulture culture, TokenType tokenType) {
+    public void resetCardGFX(CardCulture culture, TokenType tokenType) {
         setCardPic(Farstar.ASSET_LIBRARY.get("images/tokens/card" + culture.getAcronym() + "_" + currentState.getAcronym() + ".png"));
     }
 
@@ -102,11 +102,11 @@ public class HandToken extends AnchoredToken implements CardGFX {
             currentState = nextState;
             setWidth(tokenType.getWidth());
             setHeight(tokenType == TokenType.HAND ? tokenType.getHeight() : 361f);
-            setFont(AssetLibrary.getFontPath(tokenType.getFontSize(), "bahnschrift"));
+            setFont(AssetLibrary.getFontPath(tokenType.getDefaultFontSize(), "bahnschrift"));
             if (!isNoPics() && getCard() != null) {
                 setPortrait(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getPortraitName(getCard().getCardInfo(), tokenType)));
                 setFrame(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getFrameName(getCard().getCardInfo(), tokenType)));
-                resetCulturePic(getCard().getCardInfo().getCulture(), null);
+                resetCardGFX(getCard().getCardInfo().getCulture(), tokenType);
             }
             getTokenDefense().setPad(tokenType);
             getTokenOffense().setPad(tokenType);
@@ -164,7 +164,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
             //Draw
             if (getCard() != null) {
                 drawGlows(batch);
-                drawCardGFX(batch, getX(), getY());
+                drawCardGFX(batch, getX(), getY(), currentState.getTokenType());
                 drawPortrait(batch);
                 getTokenDefense().draw(batch);
                 getTokenOffense().draw(batch);

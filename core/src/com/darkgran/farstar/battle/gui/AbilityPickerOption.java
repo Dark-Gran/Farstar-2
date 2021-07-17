@@ -5,8 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.gui.tokens.PrintToken;
+import com.darkgran.farstar.battle.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
 import com.darkgran.farstar.battle.players.cards.Card;
+import com.darkgran.farstar.util.SimpleVector2;
 
 public class AbilityPickerOption extends PrintToken {
     private ClickListener clickListener;
@@ -30,6 +32,7 @@ public class AbilityPickerOption extends PrintToken {
         };
         addListener(clickListener);
         setTouchable(Touchable.enabled);
+        setup(card, TokenType.PRINT, new SimpleVector2(x, y));
     }
 
     @Override

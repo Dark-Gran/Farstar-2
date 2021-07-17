@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.darkgran.farstar.AssetLibrary;
 import com.darkgran.farstar.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.TextDrawer;
@@ -39,7 +40,7 @@ public class TokenPart extends TextLine {
     }
 
     public void setPad(TokenType tokenType) {
-        pad = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/padI", tokenType, true)+".png");
+        pad = Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/padI_", tokenType, true)+".png");
     }
 
     public String getContent() {
@@ -67,9 +68,9 @@ public class TokenPart extends TextLine {
         if (isEnabled()) {
             batch.draw(pad, getX() - pad.getWidth() + offsetX, getY() + offsetY);
             if (!TokenType.isDeployed(getToken().getTokenType())) {
-                drawText(getFont(), batch, getX() - pad.getWidth() * 0.5f - textWH.getX() * 0.5f + offsetX, getY() + offsetY + pad.getHeight() * 0.5f + textWH.getY() * 0.5f, getContent(), ColorPalette.BLACK);
+                drawText(getFont(), batch, getX() - pad.getWidth() * 0.5f - textWH.getX() * 0.5f + offsetX, getY() + offsetY + pad.getHeight() * 0.5f + textWH.getY() * 0.5f, getContent(), ColorPalette.BLACKISH);
             } else {
-                drawText(Farstar.ASSET_LIBRARY.getFont(getToken().getTokenType().getFontSize(), getContentState().getFontName()), batch, getX() - pad.getWidth() * 0.5f - textWH.getX() * 0.5f + offsetX, getY() + offsetY + pad.getHeight() * 0.5f + textWH.getY() * 0.5f, getContent());
+                drawText(Farstar.ASSET_LIBRARY.getFont(getToken().getTokenType().getDefaultFontSize(), getContentState().getFontName()), batch, getX() - pad.getWidth() * 0.5f - textWH.getX() * 0.5f + offsetX, getY() + offsetY + pad.getHeight() * 0.5f + textWH.getY() * 0.5f, getContent());
             }
         }
     }

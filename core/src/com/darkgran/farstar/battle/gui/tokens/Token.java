@@ -40,7 +40,7 @@ public class Token extends Actor implements JustFont {
     public Token(Card card, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, boolean noPics, boolean connectCard){
         setWidth(tokenType.getWidth());
         setHeight(tokenType.getHeight());
-        setFont(AssetLibrary.getFontPath(tokenType.getFontSize(), "bahnschrift"));
+        setFont(AssetLibrary.getFontPath(tokenType.getDefaultFontSize(), "bahnschrift"));
         this.card = card;
         this.tokenType = tokenType;
         this.noPics = noPics;
@@ -82,8 +82,8 @@ public class Token extends Actor implements JustFont {
     }
 
     public void setGlows() {
-        glowG = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/glowG", tokenType, false)+".png");
-        glowY = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.addTokenTypeAcronym("images/tokens/glowY", tokenType, false)+".png");
+        glowG = Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/glowG_", tokenType, false)+".png");
+        glowY = Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/glowY_", tokenType, false)+".png");
         glowOffsetX = -glowG.getWidth()/2f+frame.getWidth()/2f;
         glowOffsetY = -glowG.getHeight()/2f+frame.getHeight()/2f;
     }
