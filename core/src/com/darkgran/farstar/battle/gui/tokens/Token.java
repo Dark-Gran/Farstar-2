@@ -172,7 +172,7 @@ public class Token extends Actor implements JustFont {
 
     protected void drawPortrait(Batch batch) {
         if (portrait != null) { batch.draw(portrait, getX(), getY()); }
-        if (frame != null) { batch.draw(frame, getX(), getY()); }
+        if (frame != null && getBattleStage().getBattleScreen().isTokenFramesEnabled()) { batch.draw(frame, getX(), getY()); }
     }
 
     public void destroy() {

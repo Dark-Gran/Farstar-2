@@ -72,12 +72,21 @@ public class TableStage extends ListeningStage {
         addActor(friendsButton);
     }
 
-    public void drawBackground(SpriteBatch batch) {
+    public void drawBackground(SpriteBatch batch, boolean tableEnabled) {
         batch.begin();
         batch.setColor(1, 1, 1, 1);
         batch.draw(space, (float) (Farstar.STAGE_WIDTH / 2 - space.getWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - space.getHeight() / 2));
-        batch.draw(table, (float) (Farstar.STAGE_WIDTH / 2 - table.getWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - table.getHeight() / 2));
+        if (tableEnabled) { batch.draw(table, (float) (Farstar.STAGE_WIDTH / 2 - table.getWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - table.getHeight() / 2)); }
         batch.end();
+    }
+
+    public void enableButtons(boolean enable) {
+        exitButton.setDisabled(!enable);
+        qualityButton.setDisabled(!enable);
+        fsButton.setDisabled(!enable);
+        soundButton.setDisabled(!enable);
+        logoutButton.setDisabled(!enable);
+        friendsButton.setDisabled(!enable);
     }
 
     @Override

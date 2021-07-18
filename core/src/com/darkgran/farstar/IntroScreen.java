@@ -17,8 +17,8 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
 
     private final static float INTRO_SPEED = 0.35f;
 
-    public IntroScreen(final Farstar game, NotificationManager notificationManager) {
-        super(game, notificationManager);
+    public IntroScreen(final Farstar game, NotificationManager notificationManager, ScreenSettings screenSettings) {
+        super(game, notificationManager, screenSettings);
         Gdx.input.setCursorCatched(true);
         delayAction(this::activate, 0.5f);
     }
@@ -29,7 +29,7 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
     }
 
     private void endIntro() {
-        getGame().setScreen(new MainScreen(getGame(), new TableStage(getGame(), getViewport()), getNotificationManager()));
+        getGame().setScreen(new MainScreen(getGame(), new TableStage(getGame(), getViewport()), getNotificationManager(), getScreenSettings()));
     }
 
     private void activate() { active = true; }

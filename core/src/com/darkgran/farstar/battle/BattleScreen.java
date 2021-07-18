@@ -40,8 +40,8 @@ public class BattleScreen extends SuperScreen {
         }
     };
 
-    public BattleScreen(final Farstar game, TableStage tableStage, Battle battle, NotificationManager notificationManager) {
-        super(game, notificationManager);
+    public BattleScreen(final Farstar game, TableStage tableStage, Battle battle, NotificationManager notificationManager, ScreenSettings screenSettings) {
+        super(game, notificationManager, screenSettings);
         setTableMenu(tableStage);
         Box2D.init();
         this.battle = battle;
@@ -60,7 +60,7 @@ public class BattleScreen extends SuperScreen {
 
     @Override
     public void userEscape() {
-        getGame().setScreen(new MainScreen(getGame(), getTableMenu(), getNotificationManager()));
+        getGame().setScreen(new MainScreen(getGame(), getTableMenu(), getNotificationManager(), getScreenSettings()));
     }
 
     @Override

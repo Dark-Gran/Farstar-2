@@ -23,7 +23,7 @@ public class Farstar extends Game {
 	public void create () {
 		ASSET_LIBRARY.loadAssets();
 		batch = new SpriteBatch();
-		this.setScreen(new IntroScreen(this, new NotificationManager()));
+		this.setScreen(new IntroScreen(this, new NotificationManager(), new SuperScreen.ScreenSettings()));
 		inputMultiplexer.addProcessor(keyboardProcessor);
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}

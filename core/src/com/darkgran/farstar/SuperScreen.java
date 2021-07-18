@@ -38,8 +38,32 @@ public abstract class SuperScreen implements Screen {
         }
         Gdx.graphics.setCursor(cursor);
     }
+    public static class ScreenSettings {
+        private boolean helpEnabled = false;
+        private boolean tableStageEnabled = true;
+        private boolean tokenFramesEnabled = true;
+        public ScreenSettings() {}
+        public ScreenSettings(boolean helpEnabled, boolean tableStageEnabled, boolean tokenFramesEnabled) {
+            this.helpEnabled = helpEnabled;
+            this.tableStageEnabled = tableStageEnabled;
+            this.tokenFramesEnabled = tokenFramesEnabled;
+        }
+    }
+    public void setTableStageEnabled(boolean tableStageEnabled) {
+        screenSettings.tableStageEnabled = tableStageEnabled;
+        if (tableStage != null) { tableStage.enableButtons(tableStageEnabled); }
+    }
+    public boolean isHelpEnabled() { return screenSettings.helpEnabled; }
+    public void setHelpEnabled(boolean helpEnabled) { screenSettings.helpEnabled = helpEnabled; }
+    public boolean isTableStageEnabled() { return screenSettings.tableStageEnabled; }
+    public boolean isTokenFramesEnabled() { return screenSettings.tokenFramesEnabled; }
+    public void setTokenFramesEnabled(boolean tokenFramesEnabled) { screenSettings.tokenFramesEnabled = tokenFramesEnabled; }
+    public ScreenSettings getScreenSettings() { return screenSettings; }
+    private ScreenSettings screenSettings;
 
-    public SuperScreen(final Farstar game, NotificationManager notificationManager) {
+
+    public SuperScreen(final Farstar game, NotificationManager notificationManager, ScreenSettings screenSettings) {
+        this.screenSettings = screenSettings;
         this.game = game;
         this.notificationManager = notificationManager;
         camera.setToOrtho(false, Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT);
@@ -91,9 +115,11 @@ public abstract class SuperScreen implements Screen {
         shapeRenderer.setProjectionMatrix(camera.combined);
 
         if (tableStage != null) { //should persist over all screens
-            tableStage.drawBackground(game.batch);
-            tableStage.act(delta);
-            tableStage.draw();
+            tableStage.drawBackground(game.batch, screenSettings.tableStageEnabled);
+            if (screenSettings.tableStageEnabled) {
+                tableStage.act(delta);
+                tableStage.draw();
+            }
         }
 
         drawMenus(delta, game.batch);
@@ -151,5 +177,4 @@ public abstract class SuperScreen implements Screen {
     public void setScreenConceder(YXQuestionBox screenConceder) { this.screenConceder = screenConceder; }
 
     public boolean isConcederActive() { return screenConceder != null; }
-
 }

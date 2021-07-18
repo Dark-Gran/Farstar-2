@@ -3,6 +3,7 @@ package com.darkgran.farstar;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.utils.IntSet;
+import com.darkgran.farstar.battle.BattleScreen;
 
 public class KeyboardProcessor extends InputAdapter {
     private IntSet keysDown = new IntSet(20);
@@ -36,6 +37,17 @@ public class KeyboardProcessor extends InputAdapter {
         keysDown.remove(keycode);
         if (keycode == Input.Keys.ESCAPE || (keycode == Input.Keys.SPACE && game.getSuperScreen() instanceof IntroScreen)) {
             if (game.getSuperScreen() != null) { game.getSuperScreen().userEscape(); }
+        } else {
+            switch (keycode) {
+                case Input.Keys.F2:
+                    game.getSuperScreen().setTableStageEnabled(!game.getSuperScreen().isTableStageEnabled());
+                    break;
+                case Input.Keys.F3:
+                    if (game.getSuperScreen() instanceof BattleScreen) {
+                        game.getSuperScreen().setTokenFramesEnabled(!game.getSuperScreen().isTokenFramesEnabled());
+                    }
+                    break;
+            }
         }
         return true;
     }

@@ -10,8 +10,8 @@ import com.darkgran.farstar.util.SimpleVector2;
 public class MainScreen extends SuperScreen {
     private final MainScreenStage mainScreenStage = new MainScreenStage(getGame(), getViewport());
 
-    public MainScreen(final Farstar game, TableStage tableMenu, NotificationManager notificationManager) {
-        super(game, notificationManager);
+    public MainScreen(final Farstar game, TableStage tableMenu, NotificationManager notificationManager, ScreenSettings screenSettings) {
+        super(game, notificationManager, screenSettings);
         setTableMenu(tableMenu);
         game.loadLibrary();
         game.getInputMultiplexer().addProcessor(mainScreenStage);
