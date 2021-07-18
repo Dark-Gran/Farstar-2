@@ -66,8 +66,6 @@ public class BattleStage1V1 extends BattleStage {
         //Fleets
         fleetMenu1 = new FleetMenu(battlePlayer1.getFleet(), Farstar.STAGE_WIDTH*0.066f, Farstar.STAGE_HEIGHT*0.255f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.25f, this, battlePlayer1, false);
         fleetMenu2 = new FleetMenu(battlePlayer2.getFleet(), Farstar.STAGE_WIDTH*0.066f, Farstar.STAGE_HEIGHT*0.505f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.25f, this, battlePlayer2, true);
-        addDropTarget(fleetMenu1);
-        addDropTarget(fleetMenu2);
         addActor(fleetMenu1);
         addActor(fleetMenu2);
         //Supports+Supports
@@ -75,8 +73,10 @@ public class BattleStage1V1 extends BattleStage {
         supportMenu2 = new SupportMenu(battlePlayer2.getSupports(), Farstar.STAGE_WIDTH*0.082f, Farstar.STAGE_HEIGHT*0.76f, 63f, 30f, Farstar.STAGE_WIDTH * 0.838f, Farstar.STAGE_HEIGHT*0.14f, true, this, battlePlayer2);
         mothershipToken1 = new MothershipToken(battlePlayer1.getMs(), (Farstar.STAGE_WIDTH - TokenType.MS.getWidth()) * 0.5f, Farstar.STAGE_HEIGHT * 0.1f, this, null, supportMenu1);
         mothershipToken2 = new MothershipToken(battlePlayer2.getMs(), (Farstar.STAGE_WIDTH - TokenType.MS.getWidth()) * 0.5f, (Farstar.STAGE_HEIGHT * 0.91f) - TokenType.MS.getHeight(), this, null, supportMenu2);
-        addDropTarget(mothershipToken1);
         addDropTarget(mothershipToken2);
+        addDropTarget(fleetMenu1);
+        addDropTarget(fleetMenu2);
+        addDropTarget(mothershipToken1);
         addDropTarget(supportMenu1);
         addDropTarget(supportMenu2);
         //Decks
