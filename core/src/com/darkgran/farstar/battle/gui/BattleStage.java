@@ -33,7 +33,7 @@ public abstract class BattleStage extends ListeningStage {
             }
         }
     };
-    private final ActorButton combatEndButton = new ActorButton(Farstar.ASSET_LIBRARY.get("images/combat_end.png"), Farstar.ASSET_LIBRARY.get("images/combat_endO.png")) {
+    private final ButtonWithExtraState combatEndButton = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.get("images/combat_end.png"), Farstar.ASSET_LIBRARY.get("images/combat_endO.png"), Farstar.ASSET_LIBRARY.get("images/combat_endA.png"), Farstar.ASSET_LIBRARY.get("images/combat_endAO.png")) {
         @Override
         public void clicked() {
             battleScreen.getBattle().getCombatManager().startTacticalPhase();
@@ -47,7 +47,7 @@ public abstract class BattleStage extends ListeningStage {
         super(game, viewport);
         this.battleScreen = battleScreen;
         this.combatMenu = combatMenu;
-        combatEndButton.setPosition(Farstar.STAGE_WIDTH*0.82f, Farstar.STAGE_HEIGHT*0.3f);
+        combatEndButton.setPosition(Farstar.STAGE_WIDTH*0.8f, Farstar.STAGE_HEIGHT*0.3f);
         combatEndButton.setDisabled(true);
         abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH/2f+5f, Farstar.STAGE_HEIGHT*0.27f, this, null, Farstar.ASSET_LIBRARY.get("images/yard.png"));
         battleScreen.getBattle().getRoundManager().setAbilityPicker(abilityPicker);
@@ -246,7 +246,7 @@ public abstract class BattleStage extends ListeningStage {
         return turnButton;
     }
 
-    public AbilityPicker getAbilityPicker() {
-        return abilityPicker;
-    }
+    public ButtonWithExtraState getCombatEndButton() { return combatEndButton; }
+
+    public AbilityPicker getAbilityPicker() { return abilityPicker; }
 }

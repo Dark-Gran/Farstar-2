@@ -48,6 +48,7 @@ public abstract class CombatManager {
                 ((Bot) battle.getWhoseTurn()).newCombat();
             } else {
                 battleStage.enableCombatEnd();
+                battleStage.getCombatEndButton().setExtraState(duels.size()>0);
                 getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Choose Your Attackers.", 3);
                 //getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "ATTACK", 3);
             }
@@ -64,6 +65,7 @@ public abstract class CombatManager {
                     duels.put(token, new DuelManager.AttackInfo(targetToken));
                 }
             }
+            battleStage.getCombatEndButton().setExtraState(duels.size()>0);
         }
     }
 
@@ -104,6 +106,7 @@ public abstract class CombatManager {
             getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "TACTICAL PHASE", 3);
             if (!(activePlayer.getPlayer() instanceof Bot)) {
                 combatMenu.addOK(activePlayer.getCombatButton());
+                activePlayer.getCombatButton().setExtraState(false);
                 battle.getRoundManager().getPossibilityAdvisor().refresh(activePlayer.getPlayer(), battle);
             } else {
                 ((Bot) this.playersA[0].getPlayer()).newCombatOK(this.playersA[0].getCombatButton());
@@ -115,11 +118,11 @@ public abstract class CombatManager {
     }
 
     void preparePlayers() {
-        resetReadyStates(null); //battle.getWhoseTurn()
+        resetReadyStates(null, true); //battle.getWhoseTurn()
         activePlayer = playersA[0];
     }
 
-    private void resetReadyStates(Player invertedPlayer) {
+    private void resetReadyStates(Player invertedPlayer, boolean first) {
         for (CombatPlayer combatPlayer : playersA) {
             combatPlayer.setReady(invertedPlayer != null && combatPlayer.getPlayer() == invertedPlayer);
         }
@@ -177,7 +180,7 @@ public abstract class CombatManager {
             saveUpperStrike(target);
             markFSGlows();
         }
-        resetReadyStates(null);
+        resetReadyStates(null, false);
     }
 
     private void saveUpperStrike(Card target) {
@@ -198,6 +201,7 @@ public abstract class CombatManager {
     public void tacticalOK(CombatOK combatOK) {
         combatOK.getDuelPlayer().setReady(true);
         combatMenu.removeOK(combatOK);
+        combatOK.setExtraState(true);
         if (areAllReady()) {
             engage();
         } else {
@@ -337,11 +341,11 @@ public abstract class CombatManager {
     }
 
     void setPlayersA_OK(int ix, CombatOK combatOK) {
-        if (playersA[ix] != null) { playersA[ix].setDuelOK(combatOK); }
+        if (playersA[ix] != null) { playersA[ix].setCombatOK(combatOK); }
     }
 
     void setPlayersD_OK(int ix, CombatOK combatOK) {
-        if (playersD[ix] != null) { playersD[ix].setDuelOK(combatOK); }
+        if (playersD[ix] != null) { playersD[ix].setCombatOK(combatOK); }
     }
 
     //FINISH

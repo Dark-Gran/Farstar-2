@@ -164,17 +164,21 @@ public class AssetLibrary {
         assetManager.load("images/Space_1920.png", Texture.class, texParams);
         assetManager.load("images/tableMain_1920.png", Texture.class, texParams);
         //Battle
+        assetManager.load("images/cancel.png", Texture.class, texParams);
+        assetManager.load("images/cancelO.png", Texture.class, texParams);
         assetManager.load("images/combat_aim.png", Texture.class, texParams);
         assetManager.load("images/combat_end.png", Texture.class, texParams);
+        assetManager.load("images/combat_endA.png", Texture.class, texParams);
+        assetManager.load("images/combat_endAO.png", Texture.class, texParams);
         assetManager.load("images/combat_endO.png", Texture.class, texParams);
         assetManager.load("images/deck.png", Texture.class, texParams);
-        assetManager.load("images/duel.png", Texture.class, texParams);
-        assetManager.load("images/duelO.png", Texture.class, texParams);
-        assetManager.load("images/duel_cancel.png", Texture.class, texParams);
-        assetManager.load("images/duel_cancelO.png", Texture.class, texParams);
         assetManager.load("images/matter.png", Texture.class, texParams);
         assetManager.load("images/energy.png", Texture.class, texParams);
         assetManager.load("images/rounds.png", Texture.class, texParams);
+        assetManager.load("images/tacticalOK.png", Texture.class, texParams);
+        assetManager.load("images/tacticalOKC.png", Texture.class, texParams);
+        assetManager.load("images/tacticalOKCO.png", Texture.class, texParams);
+        assetManager.load("images/tacticalOKO.png", Texture.class, texParams);
         assetManager.load("images/turn.png", Texture.class, texParams);
         assetManager.load("images/turnO.png", Texture.class, texParams);
         assetManager.load("images/turnOP.png", Texture.class, texParams);

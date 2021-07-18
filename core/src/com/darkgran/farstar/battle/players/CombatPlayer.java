@@ -18,7 +18,7 @@ public class CombatPlayer {
         return combatOK;
     }
 
-    public void setDuelOK(CombatOK combatOK) {
+    public void setCombatOK(CombatOK combatOK) {
         this.combatOK = combatOK;
     }
 
