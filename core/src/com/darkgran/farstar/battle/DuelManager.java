@@ -17,7 +17,7 @@ public class DuelManager implements Delayer {
     public static class AttackInfo {
         private final Token defender;
         private BattleCard upperStrike = null;
-        private byte state = 0;
+        private byte state = 0; //1: right-about-to attack, 2: attack done
         public AttackInfo(Token defender) {
             this.defender = defender;
         }
