@@ -41,15 +41,17 @@ public class DuelManager implements Delayer {
     private boolean active = false;
     private Set<Map.Entry<Token, AttackInfo>> duelSet;
     private Iterator<Map.Entry<Token, AttackInfo>> it;
+    private ShotManager shotManager;
 
-    void launchDuels(CombatManager combatManager, HashMap<Token, AttackInfo> duels) {
+    void launchDuels(CombatManager combatManager, HashMap<Token, AttackInfo> duels, ShotManager shotManager) {
+        this.shotManager = shotManager;
         if (duels != null && duels.size() > 0) {
             this.combatManager = combatManager;
             this.active = true;
             duelSet = duels.entrySet();
             it = duelSet.iterator();
             System.out.println("Launching Duels.");
-            delayAction(this::iterateDuels, duelDelay*2f);
+            delayAction(this::iterateDuels, 0.5f);
         } else {
             System.out.println("Invalid number of duels to launch (0 or null).");
             //delayAction(this::afterDuels, duelDelay);
@@ -62,8 +64,8 @@ public class DuelManager implements Delayer {
             combatManager.setDuelState(duel, (byte) 1);
             delayAction(()->performDuel(duel), duelDelay);
         } else {
-            afterDuels();
-            //delayAction(this::afterDuels, duelDelay);
+            //afterDuels();
+            delayAction(this::afterDuels, duelDelay);
         }
     }
 
@@ -110,6 +112,7 @@ public class DuelManager implements Delayer {
 
     private boolean exeOneSide(BattleCard att, BattleCard def) { //returns survival
         int dmg = getDmgAgainstShields(att.getCardInfo().getOffense(), def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
+        shotManager.newAttack(att.getToken(), def.getToken(), dmg);
         return def.receiveDMG(dmg);
     }
 

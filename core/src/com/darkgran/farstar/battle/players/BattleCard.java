@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class BattleCard extends Card {
     private BattlePlayer battlePlayer;
-    private final ArrayList<Effect> effects = new ArrayList<Effect>();
-    private final ArrayList<AbilityRecord> history = new ArrayList<AbilityRecord>();
+    private final ArrayList<Effect> effects = new ArrayList<>();
+    private final ArrayList<AbilityRecord> history = new ArrayList<>();
     private boolean used; //for AbilityStarter.USE
     private int damage = 0;
 
@@ -63,8 +63,7 @@ public class BattleCard extends Card {
     public int getHealth() { return getCardInfo().getDefense()-damage; }
 
     public void tickEffects(AbilityManager abilityManager) { //does not remove
-        for (int i = 0; i < effects.size(); i++) {
-            Effect effect = effects.get(i);
+        for (Effect effect : effects) {
             if (effect.getDuration() > 0) {
                 effect.setDuration(effect.getDuration() - 1);
             }
@@ -75,7 +74,7 @@ public class BattleCard extends Card {
         for (int i = 0; i < effects.size(); i++) {
             Effect effect = effects.get(i);
             if (effect.getDuration() == 0) {
-                if (abilityManager.executeEffect(this, effect, true)) {
+                if (abilityManager.executeEffect(this, effect, true, null)) {
                     effects.remove(effect);
                     i--;
                 }
