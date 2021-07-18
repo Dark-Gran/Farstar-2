@@ -75,8 +75,6 @@ public class BattleStage1V1 extends BattleStage {
         supportMenu2 = new SupportMenu(player2.getSupports(), Farstar.STAGE_WIDTH*0.082f, Farstar.STAGE_HEIGHT*0.76f, 63f, 30f, Farstar.STAGE_WIDTH * 0.838f, Farstar.STAGE_HEIGHT*0.14f, true, this, player2);
         mothershipToken1 = new MothershipToken(player1.getMs(), (Farstar.STAGE_WIDTH - TokenType.MS.getWidth()) * 0.5f, Farstar.STAGE_HEIGHT * 0.1f, this, null, supportMenu1);
         mothershipToken2 = new MothershipToken(player2.getMs(), (Farstar.STAGE_WIDTH - TokenType.MS.getWidth()) * 0.5f, (Farstar.STAGE_HEIGHT * 0.91f) - TokenType.MS.getHeight(), this, null, supportMenu2);
-        player1.getMs().setToken(mothershipToken1);
-        player2.getMs().setToken(mothershipToken2);
         addDropTarget(mothershipToken1);
         addDropTarget(mothershipToken2);
         addDropTarget(supportMenu1);

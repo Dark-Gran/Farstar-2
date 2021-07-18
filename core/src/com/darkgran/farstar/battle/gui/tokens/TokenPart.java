@@ -102,14 +102,14 @@ public class TokenPart extends TextLine {
             float textX = getX() - pad.getWidth()/2f - textWH.getX()/2f + offsetX;
             float textY = getY() + pad.getHeight()/2f + textWH.getY()/2f + offsetY;
             if (!(TokenType.isDeployed(getToken().getTokenType()) || getToken().getTokenType() == TokenType.PRINT)) {
-                drawText(getFont(), batch, textX, textY, getContent(), ColorPalette.BLACKISH);
+                //drawText(getFont(), batch, textX, textY, getContent(), ColorPalette.BLACKISH);
             } else {
                 drawText(getContentStateFont(getCurrentContentState(), getToken().getTokenType()), batch, textX, textY, getContent(), getCurrentContentState().getColor());
             }
         }
     }
 
-    private BitmapFont getContentStateFont(ContentState contentState, TokenType tokenType) {
+    public BitmapFont getContentStateFont(ContentState contentState, TokenType tokenType) {
         return Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("fonts/"+ contentState.getFontName() + "_", tokenType, true)+".fnt");
     }
 

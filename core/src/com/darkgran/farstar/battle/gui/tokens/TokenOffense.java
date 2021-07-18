@@ -30,10 +30,10 @@ public class TokenOffense extends TokenPart {
 
     @Override
     public void resetContentState() {
-        if (getToken().getCard().hasUpgradedWeapons()) {
-            setCurrentContentState(ContentState.UPGRADED);
-        } else if (getToken().getCard().hasDamagedWeapons()) {
+        if (getToken().getCard().hasDamagedWeapons()) { //getToken().getCard().getCardInfo().getOffense() < getToken().getCard().getOriginalInfo().getOffense()
             setCurrentContentState(ContentState.DAMAGED);
+        } else if (getToken().getCard().hasUpgradedWeapons()) { //getToken().getCard().getCardInfo().getOffense() > getToken().getCard().getOriginalInfo().getOffense()
+            setCurrentContentState(ContentState.UPGRADED);
         } else {
             setCurrentContentState(ContentState.NORMAL);
         }
