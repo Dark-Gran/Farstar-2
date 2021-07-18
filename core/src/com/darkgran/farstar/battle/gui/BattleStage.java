@@ -54,7 +54,7 @@ public abstract class BattleStage extends ListeningStage {
         roundCounter = new RoundCounter(Farstar.STAGE_WIDTH*0.003f, Farstar.STAGE_HEIGHT*0.475f, this, getBattleScreen().getBattle());
     }
 
-    protected void createTokenZooms() { } /** MUST be called in constructor (as the very last thing) and set cardZoom+herald! */
+    protected void createTopActors() { } /** MUST be called in constructor (as the very last thing) and set cardZoom+herald! */
 
     public void drawBattleStage(float delta, Batch batch) {
         roundCounter.draw(batch);

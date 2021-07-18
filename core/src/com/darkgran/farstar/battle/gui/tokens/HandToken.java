@@ -12,6 +12,7 @@ import com.darkgran.farstar.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
+import com.darkgran.farstar.battle.gui.HandMenu;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardCulture;
 import com.darkgran.farstar.battle.players.cards.CardType;
@@ -153,7 +154,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
 
     @Override
     public void draw(Batch batch) {
-        if (!(getClickListener().isOver() && currentState == HandState.DOWN)) {
+        if (!(getClickListener().isOver() && getClickListener().getPressedButton() != -1 && currentState == HandState.DOWN)) {
             //Rotate
             if (currentState == HandState.DOWN) {
                 oldMX = batch.getTransformMatrix().cpy();

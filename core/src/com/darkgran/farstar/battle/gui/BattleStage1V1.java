@@ -88,22 +88,22 @@ public class BattleStage1V1 extends BattleStage {
         addActor(deck2);
         //Shipyards
         yardMenu1 = new YardMenu(player1.getShipyard(), false, 223f, Farstar.STAGE_HEIGHT*0.078f, this, player1);
-        yardButton1.setPosition(Farstar.STAGE_WIDTH*0.11f, Farstar.STAGE_HEIGHT*0.029f);
+        yardButton1.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.029f);
         player1.getYard().setYardButton(yardButton1);
         addActor(yardButton1);
         yardMenu2 = new YardMenu(player2.getShipyard(), true, 223f, Farstar.STAGE_HEIGHT*0.76f, this, player2);
-        yardButton2.setPosition(Farstar.STAGE_WIDTH*0.11f, Farstar.STAGE_HEIGHT*0.91f);
+        yardButton2.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.91f);
         player2.getYard().setYardButton(yardButton2);
         addActor(yardButton2);
         //Hands
         handMenu1 = new HandMenu(player1.getHand(),Farstar.STAGE_WIDTH*0.5f, -Farstar.STAGE_HEIGHT*0.25f, this, player1, true);
         handMenu2 = new HandMenu(player2.getHand(),Farstar.STAGE_WIDTH*0.5f, Farstar.STAGE_HEIGHT*0.95f, this, player2, false);
         //TokenZoom
-        createTokenZooms();
+        createTopActors();
     }
 
     @Override
-    protected void createTokenZooms() {
+    protected void createTopActors() {
         setCardZoom(new TokenZoom1v1(null, 0, 0, this, null, 30));
         setHerald(new Herald(null, Farstar.STAGE_WIDTH*0.09f, Farstar.STAGE_HEIGHT*0.38f, this, null, 210));
         addActor(getHerald());
@@ -141,6 +141,8 @@ public class BattleStage1V1 extends BattleStage {
             getBattleScreen().drawDebugSimpleBox2(fleetMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
             getBattleScreen().drawDebugSimpleBox2(supportMenu1.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
             getBattleScreen().drawDebugSimpleBox2(supportMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
+            getBattleScreen().drawDebugBox(handMenu1.getClickListenerActor().getX(), handMenu1.getClickListenerActor().getY(), handMenu1.getClickListenerActor().getWidth(), handMenu1.getClickListenerActor().getHeight(), getBattleScreen().getShapeRenderer(), batch);
+            getBattleScreen().drawDebugBox(handMenu2.getClickListenerActor().getX(), handMenu2.getClickListenerActor().getY(), handMenu2.getClickListenerActor().getWidth(), handMenu2.getClickListenerActor().getHeight(), getBattleScreen().getShapeRenderer(), batch);
         }
     }
 
