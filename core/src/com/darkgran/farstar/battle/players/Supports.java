@@ -1,8 +1,5 @@
 package com.darkgran.farstar.battle.players;
 
-import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.cards.Support;
-
 public class Supports extends CardList implements BattleTicks {
 
     public Supports() {
@@ -17,9 +14,9 @@ public class Supports extends CardList implements BattleTicks {
     }
 
     @Override
-    public boolean addCard(Card card) {
+    public boolean addCard(BattleCard battleCard) {
         if (getCardListMenu() != null && size() < getMaxSize()) {
-            Support support = new Support(card.getCardInfo(), card.getPlayer());
+            Support support = new Support(battleCard.getCardInfo(), battleCard.getPlayer());
             support.setUsed(true);
             add(support);
             getCardListMenu().generateNewToken(support);

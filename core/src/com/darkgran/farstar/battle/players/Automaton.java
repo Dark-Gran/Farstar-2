@@ -1,11 +1,9 @@
 package com.darkgran.farstar.battle.players;
 
-import com.darkgran.farstar.battle.AbilityManager;
-import com.darkgran.farstar.battle.DuelManager;
-import com.darkgran.farstar.battle.gui.*;
-import com.darkgran.farstar.battle.gui.tokens.Token;
-import com.darkgran.farstar.battle.players.abilities.*;
-import com.darkgran.farstar.battle.players.cards.*;
+import com.darkgran.farstar.battle.*;
+import com.darkgran.farstar.cards.*;
+import com.darkgran.farstar.gui.battlegui.*;
+import com.darkgran.farstar.gui.tokens.Token;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,16 +94,16 @@ public class Automaton extends Bot {
         }
     }
 
-    private int getBestPosition(Card card, Menu sourceMenu, Menu targetMenu) {
-        if (CardType.isShip(card.getCardInfo().getCardType())) {
+    private int getBestPosition(BattleCard battleCard, Menu sourceMenu, Menu targetMenu) {
+        if (CardType.isShip(battleCard.getCardInfo().getCardType())) {
             if (targetMenu.isEmpty()) {
                 return 3;
             } else {
                 return 2;
             }
-        } else if (targetMenu instanceof FleetMenu && CardType.isSpell(card.getCardInfo().getCardType())){
+        } else if (targetMenu instanceof FleetMenu && CardType.isSpell(battleCard.getCardInfo().getCardType())){
             FleetMenu fleetMenu = (FleetMenu) targetMenu;
-            Token ally = getAlliedTarget(cardToToken(card, sourceMenu), null);
+            Token ally = getAlliedTarget(cardToToken(battleCard, sourceMenu), null);
             for (int i = 0; i < fleetMenu.getFleetTokens().length; i++) {
                 if (fleetMenu.getFleetTokens()[i] != null) {
                     if (fleetMenu.getFleetTokens()[i].getCard() == ally.getCard()) {
@@ -151,8 +149,8 @@ public class Automaton extends Bot {
         return (possibilityInfo.getCard().isTactic() == getBattle().getCombatManager().isTacticalPhase()) && !abilityNonsense(possibilityInfo.getCard());
     }
 
-    private boolean abilityNonsense(Card card) {
-        for (AbilityInfo ability : card.getCardInfo().getAbilities()) {
+    private boolean abilityNonsense(BattleCard battleCard) {
+        for (AbilityInfo ability : battleCard.getCardInfo().getAbilities()) {
             for (Effect effect : ability.getEffects()) {
                 if (effect != null && effect.getEffectType() != null) {
                     switch (effect.getEffectType()) {
@@ -161,12 +159,12 @@ public class Automaton extends Bot {
                                 Object changeInfo = effect.getEffectInfo().get(1);
                                 EffectTypeSpecifics.ChangeStatType changeStatType = EffectTypeSpecifics.ChangeStatType.valueOf(effect.getEffectInfo().get(0).toString());
                                 Token allyToken;
-                                Card ally;
-                                Card enemy;
+                                BattleCard ally;
+                                BattleCard enemy;
                                 //Validate change of Type (color)
                                 if (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE || changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE) {
                                     if (getBattle().getCombatManager().isTacticalPhase()) { //COMBAT ONLY
-                                        allyToken = getAlliedTarget(card.getToken(), null);
+                                        allyToken = getAlliedTarget(battleCard.getToken(), null);
                                         Map.Entry<Token, DuelManager.AttackInfo> duel = getBattle().getCombatManager().getDuel(allyToken);
                                         if (duel == null) { return true; }
                                         ally = allyToken.getCard();
@@ -189,7 +187,7 @@ public class Automaton extends Bot {
                                     switch (effectType) {
                                         case FIRST_STRIKE:
                                             if (getBattle().getCombatManager().isTacticalPhase()) { //COMBAT ONLY
-                                                allyToken = getAlliedTarget(card.getToken(), EffectType.FIRST_STRIKE);
+                                                allyToken = getAlliedTarget(battleCard.getToken(), EffectType.FIRST_STRIKE);
                                                 Map.Entry<Token, DuelManager.AttackInfo> duel = getBattle().getCombatManager().getDuel(allyToken);
                                                 if (duel == null) { return true; }
                                                 ally = allyToken.getCard();
@@ -247,7 +245,7 @@ public class Automaton extends Bot {
         return null;
     }
 
-    private boolean techTypeNonsense(Card ally, Card enemy, EffectTypeSpecifics.ChangeStatType changeStatType, Object changeInfo) {
+    private boolean techTypeNonsense(BattleCard ally, BattleCard enemy, EffectTypeSpecifics.ChangeStatType changeStatType, Object changeInfo) {
         return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && DuelManager.noneToInferior(ally.getCardInfo().getOffenseType()) != TechType.INFERIOR && ally.getCardInfo().getOffenseType() != enemy.getCardInfo().getDefenseType()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && ally.getCardInfo().getDefenseType() == enemy.getCardInfo().getOffenseType());
     }
 
@@ -269,7 +267,7 @@ public class Automaton extends Bot {
                     if (AbilityManager.hasEffectType(token.getCard(), EffectType.REPAIR)) {
                         target = getWoundedAlly();
                     } else {
-                        target = getAlliedTarget(token, attribute); //in-future: check against field of attributes instead of the first attribute (again, does not matter with "prototype cards")
+                        target = getAlliedTarget(token, attribute); //in-future: check against field of attributes instead of the first attribute (again, does not matter with "prototype battleCards")
                     }
                     break;
                 case ANY: //expects that "Upgrades" cannot be used on enemies, ergo ANY must mean ANY_ENEMY (it's "ANY" only for the whims of human player)
@@ -313,10 +311,10 @@ public class Automaton extends Bot {
 
     @Override
     protected Token getEnemyTarget(Token attacker, boolean checkReach) {
-        Player[] enemies = getBattle().getEnemies(this);
+        BattlePlayer[] enemies = getBattle().getEnemies(this);
         Token picked = null;
         Ship weakestShip = null;
-        for (Player enemy : enemies) {
+        for (BattlePlayer enemy : enemies) {
             if (picked == null && enemy.getFleet().isEmpty()) {
                 picked = enemy.getMs().getToken();
             } else {
@@ -397,7 +395,7 @@ public class Automaton extends Bot {
     //------//
 
     @Override
-    public void gameOver(Player winner) {
+    public void gameOver(BattlePlayer winner) {
         if (winner == this) {
             report("Wow, I've won! How did I do that?");
         }

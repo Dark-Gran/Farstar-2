@@ -1,12 +1,10 @@
 package com.darkgran.farstar.battle;
 
-import com.darkgran.farstar.battle.gui.*;
-import com.darkgran.farstar.battle.gui.tokens.FleetToken;
-import com.darkgran.farstar.battle.gui.tokens.Token;
+import com.darkgran.farstar.gui.battlegui.*;
+import com.darkgran.farstar.gui.tokens.FleetToken;
+import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.*;
-import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.cards.Ship;
-import com.darkgran.farstar.battle.players.abilities.EffectType;
+import com.darkgran.farstar.cards.EffectType;
 import com.darkgran.farstar.gui.Notification;
 
 import java.util.HashMap;
@@ -122,12 +120,12 @@ public abstract class CombatManager {
         activePlayer = playersA[0];
     }
 
-    private void resetReadyStates(Player invertedPlayer, boolean first) {
+    private void resetReadyStates(BattlePlayer invertedBattlePlayer, boolean first) {
         for (CombatPlayer combatPlayer : playersA) {
-            combatPlayer.setReady(invertedPlayer != null && combatPlayer.getPlayer() == invertedPlayer);
+            combatPlayer.setReady(invertedBattlePlayer != null && combatPlayer.getPlayer() == invertedBattlePlayer);
         }
         for (CombatPlayer combatPlayer : playersD) {
-            combatPlayer.setReady(invertedPlayer != null && combatPlayer.getPlayer() == invertedPlayer);
+            combatPlayer.setReady(invertedBattlePlayer != null && combatPlayer.getPlayer() == invertedBattlePlayer);
         }
     }
 
@@ -140,8 +138,8 @@ public abstract class CombatManager {
         }
     }
 
-    private void setFSGlowOnPlayer(Player player, boolean picked) {
-        setFSGlowOnTokens(player.getFleet().getFleetMenu().getFleetTokens(), picked);
+    private void setFSGlowOnPlayer(BattlePlayer battlePlayer, boolean picked) {
+        setFSGlowOnTokens(battlePlayer.getFleet().getFleetMenu().getFleetTokens(), picked);
     }
 
     private void setFSGlowOnTokens(Token[] tokens, boolean picked) {
@@ -175,15 +173,15 @@ public abstract class CombatManager {
         }
     }
 
-    void saveTactic(Card card, Card target) {
-        if (AbilityManager.upgradesFirstStrike(card)) {
+    void saveTactic(BattleCard battleCard, BattleCard target) {
+        if (AbilityManager.upgradesFirstStrike(battleCard)) {
             saveUpperStrike(target);
             markFSGlows();
         }
         resetReadyStates(null, false);
     }
 
-    private void saveUpperStrike(Card target) {
+    private void saveUpperStrike(BattleCard target) {
         if (duels.containsKey(target.getToken())) {
             DuelManager.AttackInfo attackInfo = new DuelManager.AttackInfo(duels.get(target.getToken()).getDefender(), target);
             duels.put(target.getToken(), attackInfo);
@@ -280,18 +278,18 @@ public abstract class CombatManager {
         endCombat();
     }
 
-    private void checkPlayerForAftermath(Player player) {
-        checkShipsForAftermath(player.getFleet().getShips());
-        refreshFleets(player);
-        if (player.getMs().getHealth()<=0) {
-            player.getMs().death();
+    private void checkPlayerForAftermath(BattlePlayer battlePlayer) {
+        checkShipsForAftermath(battlePlayer.getFleet().getShips());
+        refreshFleets(battlePlayer);
+        if (battlePlayer.getMs().getHealth()<=0) {
+            battlePlayer.getMs().death();
         }
     }
 
-    private void refreshFleets(Player player) {
-        player.getFleet().checkForBlanks();
-        player.getFleet().centralizeShips();
-        player.getFleet().getFleetMenu().updateCoordinates(player.getFleet().getFleetMenu().getFleetTokens());
+    private void refreshFleets(BattlePlayer battlePlayer) {
+        battlePlayer.getFleet().checkForBlanks();
+        battlePlayer.getFleet().centralizeShips();
+        battlePlayer.getFleet().getFleetMenu().updateCoordinates(battlePlayer.getFleet().getFleetMenu().getFleetTokens());
     }
 
     private void checkShipsForAftermath(Ship[] ships) {
@@ -302,14 +300,14 @@ public abstract class CombatManager {
         }
     }
 
-    CombatPlayer playerToCombatPlayer(Player player) {
-        return new CombatPlayer(player);
+    CombatPlayer playerToCombatPlayer(BattlePlayer battlePlayer) {
+        return new CombatPlayer(battlePlayer);
     }
 
-    CombatPlayer[] playersToCombatPlayers(Player[] players) {
-        CombatPlayer[] cps = new CombatPlayer[players.length];
+    CombatPlayer[] playersToCombatPlayers(BattlePlayer[] battlePlayers) {
+        CombatPlayer[] cps = new CombatPlayer[battlePlayers.length];
         for (int i = 0; i < cps.length; i++) {
-            cps[i] = new CombatPlayer(players[i]);
+            cps[i] = new CombatPlayer(battlePlayers[i]);
         }
         return cps;
     }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 /**
  *  This is only a draft setup with a test-body.
  *  Meant for future "graphical effects".
+ *  UNUSED AT THE MOMENT.
  */
 
 public class WorldManager {

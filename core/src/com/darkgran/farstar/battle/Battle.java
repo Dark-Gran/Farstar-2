@@ -2,20 +2,20 @@ package com.darkgran.farstar.battle;
 
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.battle.gui.BattleStage;
+import com.darkgran.farstar.battle.players.BattlePlayer;
+import com.darkgran.farstar.gui.battlegui.BattleStage;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
 public abstract class Battle {
     private BattleScreen battleScreen;
-    private Player whoseTurn;
+    private BattlePlayer whoseTurn;
     private RoundManager roundManager;
     private CombatManager combatManager;
     private AbilityManager abilityManager;
     private boolean everythingDisabled = false;
-    private ArrayList<Player> gameOvers = new ArrayList<Player>();
+    private ArrayList<BattlePlayer> gameOvers = new ArrayList<BattlePlayer>();
 
     public Battle() {
         System.out.println("Launching Battle...");
@@ -46,8 +46,8 @@ public abstract class Battle {
 
     protected void startingCards() { }
 
-    public void addGameOver(Player player) {
-        gameOvers.add(player);
+    public void addGameOver(BattlePlayer battlePlayer) {
+        gameOvers.add(battlePlayer);
     }
 
     public void battleEnd() {
@@ -79,15 +79,15 @@ public abstract class Battle {
         return combatManager.isActive() || combatManager.getDuelManager().isActive();
     }
 
-    public Player[] getEnemies(Player player) {
+    public BattlePlayer[] getEnemies(BattlePlayer battlePlayer) {
         return null;
     }
 
-    public Player[] getAllies(Player player) { return null; }
+    public BattlePlayer[] getAllies(BattlePlayer battlePlayer) { return null; }
 
-    public Player getWhoseTurn() { return whoseTurn; }
+    public BattlePlayer getWhoseTurn() { return whoseTurn; }
 
-    public void setWhoseTurn(Player whoseTurn) { this.whoseTurn = whoseTurn; }
+    public void setWhoseTurn(BattlePlayer whoseTurn) { this.whoseTurn = whoseTurn; }
 
     public void passTurn() { } //setWhoseTurn to next player
 
@@ -101,7 +101,7 @@ public abstract class Battle {
 
     public void setEverythingDisabled(boolean everythingDisabled) { this.everythingDisabled = everythingDisabled; }
 
-    public ArrayList<Player> getGameOvers() { return gameOvers; }
+    public ArrayList<BattlePlayer> getGameOvers() { return gameOvers; }
 
     public BattleScreen getBattleScreen() {
         return battleScreen;

@@ -2,7 +2,7 @@ package com.darkgran.farstar.battle;
 
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.battle.gui.*;
+import com.darkgran.farstar.gui.battlegui.*;
 import com.darkgran.farstar.battle.players.*;
 import com.darkgran.farstar.gui.Notification;
 import org.jetbrains.annotations.NotNull;
@@ -13,26 +13,26 @@ import static com.darkgran.farstar.battle.BattleSettings.STARTING_CARDS_ATT;
 import static com.darkgran.farstar.battle.BattleSettings.STARTING_CARDS_DEF;
 
 public class Battle1v1 extends Battle {
-    private final Player player1;
-    private final Player player2;
+    private final BattlePlayer battlePlayer1;
+    private final BattlePlayer battlePlayer2;
 
-    public Battle1v1(@NotNull Player player1, @NotNull Player player2) {
+    public Battle1v1(@NotNull BattlePlayer battlePlayer1, @NotNull BattlePlayer battlePlayer2) {
         super();
-        this.player1 = player1;
-        this.player2 = player2;
-        this.player1.setBattle(this);
-        this.player2.setBattle(this);
-        this.player1.getMs().setPlayer(player1);
-        this.player1.getDeck().setPlayerOnAll(player1);
-        this.player1.getYard().setPlayerOnAll(player1);
-        this.player2.getMs().setPlayer(player2);
-        this.player2.getDeck().setPlayerOnAll(player2);
-        this.player2.getYard().setPlayerOnAll(player2);
+        this.battlePlayer1 = battlePlayer1;
+        this.battlePlayer2 = battlePlayer2;
+        this.battlePlayer1.setBattle(this);
+        this.battlePlayer2.setBattle(this);
+        this.battlePlayer1.getMs().setPlayer(battlePlayer1);
+        this.battlePlayer1.getDeck().setPlayerOnAll(battlePlayer1);
+        this.battlePlayer1.getYard().setPlayerOnAll(battlePlayer1);
+        this.battlePlayer2.getMs().setPlayer(battlePlayer2);
+        this.battlePlayer2.getDeck().setPlayerOnAll(battlePlayer2);
+        this.battlePlayer2.getYard().setPlayerOnAll(battlePlayer2);
     }
 
     @Override
     public BattleStage createBattleStage(@NotNull Farstar game, @NotNull Viewport viewport, @NotNull BattleScreen battleScreen) {
-        return new BattleStage1V1(game, viewport, battleScreen, new CombatMenu1V1(getCombatManager()), player1, player2);
+        return new BattleStage1V1(game, viewport, battleScreen, new CombatMenu1V1(getCombatManager()), battlePlayer1, battlePlayer2);
     }
 
     @Override
@@ -42,42 +42,42 @@ public class Battle1v1 extends Battle {
 
     @Override
     protected void coinToss() {
-        setWhoseTurn((ThreadLocalRandom.current().nextInt(0, 2) == 0) ? player1 : player2);
+        setWhoseTurn((ThreadLocalRandom.current().nextInt(0, 2) == 0) ? battlePlayer1 : battlePlayer2);
     }
 
     @Override
     public void passTurn() {
-        setWhoseTurn(player1 == getWhoseTurn() ? player2 : player1);
+        setWhoseTurn(battlePlayer1 == getWhoseTurn() ? battlePlayer2 : battlePlayer1);
     }
 
     @Override
     protected void closeYards() {
-        ((YardMenu) (player1.getShipyard().getCardListMenu())).switchVisibility(false);
-        ((YardMenu) (player2.getShipyard().getCardListMenu())).switchVisibility(false);
+        ((YardMenu) (battlePlayer1.getShipyard().getCardListMenu())).switchVisibility(false);
+        ((YardMenu) (battlePlayer2.getShipyard().getCardListMenu())).switchVisibility(false);
     }
 
     @Override
     public void unMarkAllPossibilities() {
-        getRoundManager().getPossibilityAdvisor().unMarkAll(player1, this);
-        getRoundManager().getPossibilityAdvisor().unMarkAll(player2, this);
+        getRoundManager().getPossibilityAdvisor().unMarkAll(battlePlayer1, this);
+        getRoundManager().getPossibilityAdvisor().unMarkAll(battlePlayer2, this);
     }
 
     @Override
     protected void startingCards() {
-        if (getWhoseTurn() == player1) {
-            player1.getHand().drawCards(player1.getDeck(), STARTING_CARDS_ATT);
-            player2.getHand().drawCards(player2.getDeck(), STARTING_CARDS_DEF);
-            player2.getHand().drawCards(BattleSettings.BONUS_CARD_ID, 1, player2);
+        if (getWhoseTurn() == battlePlayer1) {
+            battlePlayer1.getHand().drawCards(battlePlayer1.getDeck(), STARTING_CARDS_ATT);
+            battlePlayer2.getHand().drawCards(battlePlayer2.getDeck(), STARTING_CARDS_DEF);
+            battlePlayer2.getHand().drawCards(BattleSettings.BONUS_CARD_ID, 1, battlePlayer2);
         } else {
-            player1.getHand().drawCards(player1.getDeck(), STARTING_CARDS_DEF);
-            player1.getHand().drawCards(BattleSettings.BONUS_CARD_ID, 1, player1);
-            player2.getHand().drawCards(player2.getDeck(), STARTING_CARDS_ATT);
+            battlePlayer1.getHand().drawCards(battlePlayer1.getDeck(), STARTING_CARDS_DEF);
+            battlePlayer1.getHand().drawCards(BattleSettings.BONUS_CARD_ID, 1, battlePlayer1);
+            battlePlayer2.getHand().drawCards(battlePlayer2.getDeck(), STARTING_CARDS_ATT);
         }
     }
 
     @Override
-    public void addGameOver(Player player) {
-        getGameOvers().add(player);
+    public void addGameOver(BattlePlayer battlePlayer) {
+        getGameOvers().add(battlePlayer);
         battleEnd();
     }
 
@@ -85,60 +85,60 @@ public class Battle1v1 extends Battle {
     public void battleEnd() {
         super.battleEnd();
         System.out.println("Player #"+ getWinner()+" wins!");
-        if (player1 instanceof Bot) { ((Bot) player1).gameOver(getWinner()); }
-        else { battleEndNotification(player1); }
-        if (player2 instanceof Bot) { ((Bot) player2).gameOver(getWinner()); }
-        else { battleEndNotification(player2); }
+        if (battlePlayer1 instanceof Bot) { ((Bot) battlePlayer1).gameOver(getWinner()); }
+        else { battleEndNotification(battlePlayer1); }
+        if (battlePlayer2 instanceof Bot) { ((Bot) battlePlayer2).gameOver(getWinner()); }
+        else { battleEndNotification(battlePlayer2); }
     }
 
-    protected void battleEndNotification(Player player) {
-        if (player == getWinner()) {
+    protected void battleEndNotification(BattlePlayer battlePlayer) {
+        if (battlePlayer == getWinner()) {
             getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "VICTORY", 4);
         } else {
             getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "DEFEAT", 4);
         }
     }
 
-    private Player getWinner() {
-        if (getGameOvers().contains(player1)) {
-            return player2;
+    private BattlePlayer getWinner() {
+        if (getGameOvers().contains(battlePlayer1)) {
+            return battlePlayer2;
         } else {
-            return player1;
+            return battlePlayer1;
         }
     }
 
     @Override
     public void tickEffects() {
         super.tickEffects();
-        player1.getMs().checkEffects(getAbilityManager());
-        player1.getFleet().checkEffectsOnAll(getAbilityManager());
-        player1.getSupports().checkEffectsOnAll(getAbilityManager());
-        player2.getMs().checkEffects(getAbilityManager());
-        player2.getFleet().checkEffectsOnAll(getAbilityManager());
-        player2.getSupports().checkEffectsOnAll(getAbilityManager());
+        battlePlayer1.getMs().checkEffects(getAbilityManager());
+        battlePlayer1.getFleet().checkEffectsOnAll(getAbilityManager());
+        battlePlayer1.getSupports().checkEffectsOnAll(getAbilityManager());
+        battlePlayer2.getMs().checkEffects(getAbilityManager());
+        battlePlayer2.getFleet().checkEffectsOnAll(getAbilityManager());
+        battlePlayer2.getSupports().checkEffectsOnAll(getAbilityManager());
     }
 
     @Override
-    public Player[] getEnemies(Player player) {
-        if (player == player1) {
-            return new Player[]{player2};
+    public BattlePlayer[] getEnemies(BattlePlayer battlePlayer) {
+        if (battlePlayer == battlePlayer1) {
+            return new BattlePlayer[]{battlePlayer2};
         } else {
-            return new Player[]{player1};
+            return new BattlePlayer[]{battlePlayer1};
         }
     }
 
     @Override
-    public Player[] getAllies(Player player) {
-        if (player == player1) {
-            return new Player[]{player1};
+    public BattlePlayer[] getAllies(BattlePlayer battlePlayer) {
+        if (battlePlayer == battlePlayer1) {
+            return new BattlePlayer[]{battlePlayer1};
         } else {
-            return new Player[]{player2};
+            return new BattlePlayer[]{battlePlayer2};
         }
     }
 
     @Override
     public void dispose() {
-        if (player1 instanceof Bot) { ((Bot) player1).dispose(); }
-        if (player2 instanceof Bot) { ((Bot) player2).dispose(); }
+        if (battlePlayer1 instanceof Bot) { ((Bot) battlePlayer1).dispose(); }
+        if (battlePlayer2 instanceof Bot) { ((Bot) battlePlayer2).dispose(); }
     }
 }

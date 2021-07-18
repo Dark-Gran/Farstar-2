@@ -9,8 +9,8 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.NotificationManager;
 import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.gui.TableStage;
-import com.darkgran.farstar.battle.gui.BattleStage;
-import com.darkgran.farstar.battle.players.LocalPlayer;
+import com.darkgran.farstar.gui.battlegui.BattleStage;
+import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.battle.players.PossibilityAdvisor;
 import com.darkgran.farstar.mainscreen.MainScreen;
 import com.darkgran.farstar.util.SimpleBox2;
@@ -25,7 +25,7 @@ public class BattleScreen extends SuperScreen {
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             if (button == 1) { //mouse.right
-                if (battle.getRoundManager().isLaunched() && battle.getWhoseTurn() instanceof LocalPlayer) {
+                if (battle.getRoundManager().isLaunched() && battle.getWhoseTurn() instanceof LocalBattlePlayer) {
                     battle.getRoundManager().tryCancel();
                     battle.closeYards();
                 }

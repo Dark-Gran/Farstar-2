@@ -1,9 +1,9 @@
 package com.darkgran.farstar.battle;
 
-import com.darkgran.farstar.battle.gui.tokens.Token;
-import com.darkgran.farstar.battle.players.abilities.EffectType;
-import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.TechType;
+import com.darkgran.farstar.battle.players.BattleCard;
+import com.darkgran.farstar.gui.tokens.Token;
+import com.darkgran.farstar.cards.EffectType;
+import com.darkgran.farstar.cards.TechType;
 import com.darkgran.farstar.util.Delayer;
 
 import java.util.HashMap;
@@ -16,23 +16,23 @@ public class DuelManager implements Delayer {
 
     public static class AttackInfo {
         private final Token defender;
-        private Card upperStrike = null;
+        private BattleCard upperStrike = null;
         private byte state = 0;
         public AttackInfo(Token defender) {
             this.defender = defender;
         }
-        public AttackInfo(Token defender, Card upperStrike) {
+        public AttackInfo(Token defender, BattleCard upperStrike) {
             this.defender = defender;
             this.upperStrike = upperStrike;
         }
-        public AttackInfo(Token defender, Card upperStrike, byte state) {
+        public AttackInfo(Token defender, BattleCard upperStrike, byte state) {
             this.defender = defender;
             this.upperStrike = upperStrike;
             this.state = state;
         }
         public Token getDefender() { return defender; }
-        public Card getUpperStrike() { return upperStrike; }
-        public void setUpperStrike(Card upperStrike) { this.upperStrike = upperStrike; }
+        public BattleCard getUpperStrike() { return upperStrike; }
+        public void setUpperStrike(BattleCard upperStrike) { this.upperStrike = upperStrike; }
         public byte getState() { return state; }
         public void setState(byte state) { this.state = state; }
     }
@@ -78,8 +78,8 @@ public class DuelManager implements Delayer {
         combatManager.afterDuels();
     }
 
-    private void exeDuel(Card att, AttackInfo attackInfo) {
-        Card def = attackInfo.getDefender().getCard();
+    private void exeDuel(BattleCard att, AttackInfo attackInfo) {
+        BattleCard def = attackInfo.getDefender().getCard();
         boolean attFS;
         boolean defFS;
         if (def.isMS()) {
@@ -108,7 +108,7 @@ public class DuelManager implements Delayer {
         }
     }
 
-    private boolean exeOneSide(Card att, Card def) { //returns survival
+    private boolean exeOneSide(BattleCard att, BattleCard def) { //returns survival
         int dmg = getDmgAgainstShields(att.getCardInfo().getOffense(), def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
         return def.receiveDMG(dmg);
     }

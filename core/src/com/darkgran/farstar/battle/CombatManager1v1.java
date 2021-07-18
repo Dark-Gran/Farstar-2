@@ -1,6 +1,6 @@
 package com.darkgran.farstar.battle;
 
-import com.darkgran.farstar.battle.gui.CombatMenu1V1;
+import com.darkgran.farstar.gui.battlegui.CombatMenu1V1;
 
 public class CombatManager1v1 extends CombatManager {
 

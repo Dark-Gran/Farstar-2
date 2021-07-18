@@ -1,20 +1,18 @@
 package com.darkgran.farstar.battle.players;
 
-import com.darkgran.farstar.battle.gui.*;
-import com.darkgran.farstar.battle.gui.tokens.HandToken;
-import com.darkgran.farstar.battle.gui.tokens.Token;
-import com.darkgran.farstar.battle.gui.tokens.TokenType;
-import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
-import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
-import com.darkgran.farstar.battle.players.abilities.EffectType;
-import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.cards.CardType;
-import com.darkgran.farstar.battle.players.cards.Mothership;
+import com.darkgran.farstar.gui.battlegui.*;
+import com.darkgran.farstar.gui.tokens.HandToken;
+import com.darkgran.farstar.gui.tokens.Token;
+import com.darkgran.farstar.gui.tokens.TokenType;
+import com.darkgran.farstar.cards.AbilityInfo;
+import com.darkgran.farstar.cards.AbilityStarter;
+import com.darkgran.farstar.cards.EffectType;
+import com.darkgran.farstar.cards.CardType;
 import com.darkgran.farstar.util.Delayer;
 
 import java.util.ArrayList;
 
-public abstract class Bot extends Player implements BotSettings, Delayer {
+public abstract class Bot extends BattlePlayer implements BotSettings, Delayer {
     private final BotTier botTier;
     private boolean pickingTarget = false;
     private boolean pickingAbility = false;
@@ -77,7 +75,7 @@ public abstract class Bot extends Player implements BotSettings, Delayer {
 
     protected DropTarget getDropTarget(CardType cardType) { return null; }
 
-    public void gameOver(Player winner) { report("GG"); }
+    public void gameOver(BattlePlayer winner) { report("GG"); }
 
     //EXECUTIONS + UTILITIES (ie. no logic - no need to override)
 
@@ -123,12 +121,12 @@ public abstract class Bot extends Player implements BotSettings, Delayer {
         delayAction(()-> combatReady(combatOK), botTier.getTimerDelay());
     }
 
-    protected boolean deploy(Card card, Menu menu, int position) {
-        DropTarget dropTarget = getDropTarget(card.getCardInfo().getCardType());
-        Token token = cardToToken(card, menu);
+    protected boolean deploy(BattleCard battleCard, Menu menu, int position) {
+        DropTarget dropTarget = getDropTarget(battleCard.getCardInfo().getCardType());
+        Token token = cardToToken(battleCard, menu);
         if (menu instanceof HandMenu) {
             for (Token tokenInHand : ((HandMenu) menu).getTokens()) {
-                if (tokenInHand instanceof HandToken && tokenInHand.getCard() == card) {
+                if (tokenInHand instanceof HandToken && tokenInHand.getCard() == battleCard) {
                     token = tokenInHand;
                     break;
                 }
@@ -140,8 +138,8 @@ public abstract class Bot extends Player implements BotSettings, Delayer {
         return getBattle().getRoundManager().processDrop(token, dropTarget, position, false, true);
     }
 
-    protected boolean useAbility(Card card, Menu menu) {
-        Token token = cardToToken(card, menu);
+    protected boolean useAbility(BattleCard battleCard, Menu menu) {
+        Token token = cardToToken(battleCard, menu);
         getBattle().getRoundManager().checkAllAbilities(token, null, AbilityStarter.USE, this, null);
         return true;
     }
@@ -150,9 +148,9 @@ public abstract class Bot extends Player implements BotSettings, Delayer {
         getBattle().getCombatManager().tacticalOK(combatOK);
     }
 
-    protected Token cardToToken(Card card, Menu menu) {
+    protected Token cardToToken(BattleCard battleCard, Menu menu) {
         return new Token(
-                card,
+                battleCard,
                 getFleet().getFleetMenu().getX(),
                 getFleet().getFleetMenu().getY(),
                 getHand().getCardListMenu().getBattleStage(),

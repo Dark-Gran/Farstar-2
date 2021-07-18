@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.gui.NotificationManager;
 import com.darkgran.farstar.gui.TableStage;
 import com.darkgran.farstar.gui.YXQuestionBox;

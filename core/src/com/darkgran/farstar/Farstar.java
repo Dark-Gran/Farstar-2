@@ -1,9 +1,9 @@
 package com.darkgran.farstar;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.darkgran.farstar.battle.CardLibrary;
+import com.darkgran.farstar.cards.CardLibrary;
+import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.NotificationManager;
 
 public class Farstar extends Game {

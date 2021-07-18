@@ -1,17 +1,17 @@
 package com.darkgran.farstar.battle.players;
 
-import com.darkgran.farstar.battle.gui.CombatOK;
+import com.darkgran.farstar.gui.battlegui.CombatOK;
 
 /**
  * Special combat wrapper (does not extend Player).
  */
 public class CombatPlayer {
-    private final Player player;
+    private final BattlePlayer battlePlayer;
     private CombatOK combatOK = null;
     private boolean ready = false;
 
-    public CombatPlayer(Player player) {
-        this.player = player;
+    public CombatPlayer(BattlePlayer battlePlayer) {
+        this.battlePlayer = battlePlayer;
     }
 
     public CombatOK getCombatButton() {
@@ -30,5 +30,5 @@ public class CombatPlayer {
         this.ready = ready;
     }
 
-    public Player getPlayer() { return player; }
+    public BattlePlayer getPlayer() { return battlePlayer; }
 }

@@ -1,20 +1,18 @@
 package com.darkgran.farstar.battle.players;
 
-import com.darkgran.farstar.battle.gui.BaseMenu;
-import com.darkgran.farstar.battle.gui.Menu;
-import com.darkgran.farstar.battle.players.cards.Card;
+import com.darkgran.farstar.gui.battlegui.Menu;
 
 public class PossibilityInfo {
-    private final Card card;
+    private final BattleCard battleCard;
     private final Menu menu;
 
-    public PossibilityInfo(Card card, Menu menu) {
-        this.card = card;
+    public PossibilityInfo(BattleCard battleCard, Menu menu) {
+        this.battleCard = battleCard;
         this.menu = menu;
     }
 
-    public Card getCard() {
-        return card;
+    public BattleCard getCard() {
+        return battleCard;
     }
 
     public Menu getMenu() {

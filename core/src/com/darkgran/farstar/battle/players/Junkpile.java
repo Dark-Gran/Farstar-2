@@ -1,9 +1,8 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.BattleSettings;
-import com.darkgran.farstar.battle.gui.JunkButton;
-import com.darkgran.farstar.battle.gui.tokens.TokenType;
-import com.darkgran.farstar.battle.players.cards.Card;
+import com.darkgran.farstar.gui.battlegui.JunkButton;
+import com.darkgran.farstar.gui.tokens.TokenType;
 import com.darkgran.farstar.util.SimpleVector2;
 
 //"Junkyard"/"Scrapyard"
@@ -22,11 +21,11 @@ public class Junkpile extends CardList {
     }
 
     @Override
-    public boolean addCard(Card card) {
-        add(card);
+    public boolean addCard(BattleCard battleCard) {
+        add(battleCard);
         if (junkButton != null) {
 
-            junkButton.setup(card, TokenType.JUNK, new SimpleVector2(junkButton.getX(), junkButton.getY()));
+            junkButton.setup(battleCard, TokenType.JUNK, new SimpleVector2(junkButton.getX(), junkButton.getY()));
         }
         return true;
     }
