@@ -37,7 +37,7 @@ public class PossibilityAdvisor {
                 }
             }
             for (Ship ship : battlePlayer.getFleet().getShips()) {
-                if (ship != null) {
+                if (ship != null && battle.getCombatManager().getDuel(ship.getToken()) == null) {
                     if ((!inCombat && hasPossibleAbility(battlePlayer, ship)) || (inCombat && !tacticalPhase && !ship.isUsed())) {
                         possibilities.add(new PossibilityInfo(ship, battlePlayer.getFleet().getFleetMenu()));
                     }

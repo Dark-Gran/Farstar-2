@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.players.BattleCard;
+import com.darkgran.farstar.cards.Card;
 import com.darkgran.farstar.gui.tokens.PrintToken;
 import com.darkgran.farstar.gui.tokens.TokenType;
 import com.darkgran.farstar.cards.AbilityInfo;
@@ -38,7 +39,7 @@ public class AbilityPickerOption extends PrintToken {
     }
 
     @Override
-    public String getCardDescription(BattleCard battleCard) {
+    public String getCardDescription(Card card) {
         return optionDescription;
     }
 

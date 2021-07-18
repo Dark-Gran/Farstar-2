@@ -55,7 +55,7 @@ public abstract class CombatManager {
 
     public void processDrop(Token token, Token targetToken) {
         if (active && !tacticalPhase && !duelManager.isActive() && token.getCard().getPlayer() == battle.getWhoseTurn() && !token.getCard().isUsed()) {
-            if (targetToken == null) {
+            if (targetToken == null || targetToken.getCard().getPlayer() == token.getCard().getPlayer()) {
                 duels.remove(token);
             } else if (token != targetToken) {
                 if (canReach(token, targetToken, targetToken.getCard().getPlayer().getFleet())) {
@@ -63,6 +63,7 @@ public abstract class CombatManager {
                     duels.put(token, new DuelManager.AttackInfo(targetToken));
                 }
             }
+            if (token.getCard().getPlayer() instanceof LocalBattlePlayer) { battle.getRoundManager().getPossibilityAdvisor().refresh(token.getCard().getPlayer(), battle); }
             battleStage.getCombatEndButton().setExtraState(duels.size()>0);
         }
     }

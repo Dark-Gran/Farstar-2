@@ -55,9 +55,12 @@ public abstract class BattleStage extends ListeningStage {
 
     protected void createTopActors() { } /** MUST be called in constructor (as the very last thing) and set cardZoom+herald! */
 
+    public void drawBottomActors(Batch batch) {
+        combatMenu.drawDuels(batch, getBattleScreen().getShapeRenderer());
+    }
+
     public void drawBattleStage(float delta, Batch batch) {
         roundCounter.draw(batch);
-        combatMenu.drawDuels(batch, getBattleScreen().getShapeRenderer());
         abilityPicker.draw(batch);
         if (fakeToken != null) { fakeToken.draw(batch, getBattleScreen().getShapeRenderer()); }
         cardZoom.draw(batch);

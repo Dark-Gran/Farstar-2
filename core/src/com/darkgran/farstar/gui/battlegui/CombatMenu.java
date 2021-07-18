@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.battle.DuelManager;
+import com.darkgran.farstar.gui.tokens.TargetingToken;
 import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 
@@ -24,18 +25,16 @@ public abstract class CombatMenu {
     public void drawDuels(Batch batch, ShapeRenderer shapeRenderer) {
         if (combatManager.isActive() && combatManager.getDuels().size() > 0) {
             batch.end();
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
             for (Map.Entry<Token, DuelManager.AttackInfo> entry : combatManager.getDuels().entrySet()) {
                 if (entry.getValue().getState() != 2) {
                     shapeRenderer.setColor(entry.getValue().getState() == 1 ? Color.ORANGE : ColorPalette.LIGHT);
                     Vector2 start = new Vector2(entry.getKey().getX() + entry.getKey().getWidth() / 2, entry.getKey().getY() + entry.getKey().getHeight() / 2);
                     Vector2 end = new Vector2(entry.getValue().getDefender().getX() + entry.getValue().getDefender().getWidth() / 2, entry.getValue().getDefender().getY() + entry.getValue().getDefender().getHeight() / 2);
-                    shapeRenderer.rectLine(start, end, 2f);
+                    TargetingToken.drawConnection(shapeRenderer, start, end);
                 }
             }
-            shapeRenderer.setColor(Color.WHITE);
-            shapeRenderer.end();
+
             batch.begin();
         }
     }

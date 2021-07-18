@@ -115,6 +115,7 @@ public class BattleStage1V1 extends BattleStage {
 
     @Override
     public void drawBattleStage(float delta, Batch batch) {
+        drawBottomActors(batch);
         resourceMeter1.draw(batch);
         resourceMeter2.draw(batch);
         deck1.draw(batch, getBattleScreen().getShapeRenderer());

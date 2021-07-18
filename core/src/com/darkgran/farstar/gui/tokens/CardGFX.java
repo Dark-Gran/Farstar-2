@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Align;
+import com.darkgran.farstar.cards.Card;
 import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.Farstar;
@@ -18,7 +19,7 @@ public interface CardGFX extends TextDrawer {
 
     void setCardPic(Texture texture);
     Texture getCardPic();
-    BattleCard getCard();
+    Card getCard();
     TokenType getTokenType();
 
     @Override
@@ -89,20 +90,20 @@ public interface CardGFX extends TextDrawer {
         return Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("fonts/barlow_desc", tokenType, false)+".fnt");
     }
 
-    default String getCardName(BattleCard battleCard) {
-        return battleCard.getCardInfo().getName();
+    default String getCardName(Card card) {
+        return card.getCardInfo().getName();
     }
 
-    default String getCardDescription(BattleCard battleCard) {
-        return battleCard.getCardInfo().getDescription();
+    default String getCardDescription(Card card) {
+        return card.getCardInfo().getDescription();
     }
 
-    default int getCardTier(BattleCard battleCard) {
-        return battleCard.getCardInfo().getTier();
+    default int getCardTier(Card card) {
+        return card.getCardInfo().getTier();
     }
 
-    default CardType getCardType(BattleCard battleCard) {
-        return battleCard.getCardInfo().getCardType();
+    default CardType getCardType(Card card) {
+        return card.getCardInfo().getCardType();
     }
 
     //Wrap unchangeable unless overridden

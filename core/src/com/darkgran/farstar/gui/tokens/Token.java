@@ -15,7 +15,7 @@ import com.darkgran.farstar.util.SimpleVector2;
 
 import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 
-public class Token extends Actor implements JustFont {
+public class Token extends Actor implements JustFont { //in-future: split to BattleToken and abstract Token (for Deck screen etc)
     private String fontPath = "";
     private BattleCard battleCard;
     private final TokenDefense tokenDefense;
