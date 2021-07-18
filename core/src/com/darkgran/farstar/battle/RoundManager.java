@@ -62,7 +62,7 @@ public class RoundManager {
     public void newTurn() {
         battle.getWhoseTurn().getHand().drawCards(battle.getWhoseTurn().getDeck(), CARDS_PER_TURN);
         resourceIncomes(battle.getWhoseTurn());
-        System.out.println("Player #"+battle.getWhoseTurn().getBattleID()+" may play his battleCards.");
+        System.out.println("Player #"+battle.getWhoseTurn().getBattleID()+" may play his Cards.");
         if (battle.getWhoseTurn() instanceof Bot) {
             ((Bot) battle.getWhoseTurn()).newTurn();
         } else {
