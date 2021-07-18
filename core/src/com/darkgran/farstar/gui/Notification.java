@@ -15,14 +15,23 @@ import com.darkgran.farstar.util.*;
  */
 public class Notification extends TextInTheBox {
     public enum NotificationType {
-        BOT_LEFT(Farstar.STAGE_WIDTH/10f, Farstar.STAGE_HEIGHT/5f);
+        BOT_LEFT(Farstar.STAGE_WIDTH/12f, Farstar.STAGE_HEIGHT/5f, Farstar.STAGE_WIDTH * 0.3f, 50f, -70f, "bahnschrift30"),
+        MIDDLE(Farstar.STAGE_WIDTH/2f, Farstar.STAGE_HEIGHT/2f, Farstar.STAGE_WIDTH * 0.2f, 80f, 0f, "orbitron36");
 
         private final float x;
         private final float y;
+        private final float boxWidth;
+        private final float boxHeight;
+        private final float boxOffsetX; //overwrites centralization unless set to zero
+        private final String fontName;
 
-        NotificationType(float x, float y) {
+        NotificationType(float x, float y, float boxWidth, float boxHeight, float boxOffsetX, String fontName) {
             this.x = x;
             this.y = y;
+            this.boxWidth = boxWidth;
+            this.boxHeight = boxHeight;
+            this.boxOffsetX = boxOffsetX;
+            this.fontName = fontName;
         }
     }
 
@@ -32,10 +41,17 @@ public class Notification extends TextInTheBox {
 
     /** @param duration Time in seconds. Set to MIN_DURATION unless greater duration is provided. */
     protected Notification(NotificationType notificationType, String message, int duration) {
-        super(ColorPalette.LIGHT, ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f), "fonts/bahnschrift30.fnt", message);
+        super(ColorPalette.LIGHT, ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f), "fonts/"+notificationType.fontName+".fnt", message, notificationType.x, notificationType.y, notificationType.boxWidth, notificationType.boxHeight);
         this.notificationType = notificationType;
-        SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), message);
-        setupBox(notificationType.x, notificationType.y, textWH.getX(), textWH.getY());
+        if (notificationType.boxOffsetX != 0f) {
+            getSimpleBox().setX(notificationType.x+notificationType.boxOffsetX);
+        }
+        if (notificationType == NotificationType.MIDDLE) {
+            SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), message);
+            setX(getX()-textWH.getX()/2f);
+            setY(getY()+textWH.getY());
+            centralizeBox();
+        }
         timer = new DeltaCounter(true, Math.max(duration, MIN_DURATION), 0);
     }
 
@@ -51,12 +67,12 @@ public class Notification extends TextInTheBox {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(ColorPalette.changeAlpha(getBoxColor(), a));
-        shapeRenderer.rect(notificationType.x - Farstar.STAGE_WIDTH / 19f, notificationType.y + getSimpleBox().getHeight() / 2, Farstar.STAGE_WIDTH / 3f, -getSimpleBox().getHeight() * 2.1f);
+        shapeRenderer.rect(getSimpleBox().getX(), getSimpleBox().getY(), getSimpleBox().getWidth(), getSimpleBox().getHeight());
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
         batch.begin();
-        drawText(getFont(), batch, notificationType.x, notificationType.y, getText(), ColorPalette.changeAlpha(getFontColor(), a));
+        drawText(getFont(), batch, getX(), getY(), getText(), ColorPalette.changeAlpha(getFontColor(), a));
     }
 
     private float timeToAlpha(float time, float duration) {
@@ -70,5 +86,9 @@ public class Notification extends TextInTheBox {
 
     public SimpleCounter getTimer() {
         return timer;
+    }
+
+    public NotificationType getNotificationType() {
+        return notificationType;
     }
 }

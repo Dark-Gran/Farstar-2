@@ -11,6 +11,7 @@ import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.CardInfo;
 import com.darkgran.farstar.battle.players.cards.CardType;
 import com.darkgran.farstar.gui.ActorButton;
+import com.darkgran.farstar.gui.Notification;
 import com.darkgran.farstar.util.SimpleVector2;
 
 import java.util.ArrayList;
@@ -67,6 +68,7 @@ public class RoundManager {
             ((Bot) battle.getWhoseTurn()).newTurn();
         } else {
             possibilityAdvisor.markPossibilities(battle.getWhoseTurn(), battle);
+            getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "YOUR TURN", 3);
         }
     }
 
@@ -282,6 +284,7 @@ public class RoundManager {
             abilityPicker.enable(caster.getCard());
             cancelButton.setPosition(Farstar.STAGE_WIDTH*0.69f, Farstar.STAGE_HEIGHT*0.28f);
             getBattle().getBattleScreen().getBattleStage().addActor(cancelButton);
+            getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Choose an Ability.", 3);
         }
     }
 
@@ -320,9 +323,10 @@ public class RoundManager {
         } else {
             token.setPicked(true);
             SuperScreen.switchCursor(SuperScreen.CursorType.AIM);
+            cancelButton.setPosition(Farstar.STAGE_WIDTH*0.62f, Farstar.STAGE_HEIGHT*0.08f);
+            getBattle().getBattleScreen().getBattleStage().addActor(cancelButton);
+            getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Choose a Target.", 3);
         }
-        cancelButton.setPosition(Farstar.STAGE_WIDTH*0.62f, Farstar.STAGE_HEIGHT*0.08f);
-        getBattle().getBattleScreen().getBattleStage().addActor(cancelButton);
     }
 
     public void processClick(Token token, Player owner) {

@@ -65,7 +65,7 @@ public class PossibilityAdvisor {
         return false;
     }
 
-    public boolean isPossibleToDeploy(Player player, Player whoseTurn, Card card, boolean checkSpace, Battle battle) {
+    public boolean isPossibleToDeploy(Player player, Player whoseTurn, Card card, boolean checkSpace, Battle battle) { //in-future: "spread" or parametrize to be used with Notifications (eg. "Insufficient Resources.")... (see RoundManager's call)
         if (player == whoseTurn && player.canAfford(card) && tierAllowed(card.getCardInfo().getTier(), battle) && allowedAoE(player, card, battle) && (!player.getFleet().isEmpty() || !card.isPurelyOffensiveChange())) {
             return !checkSpace || ((player.getSupports().hasSpace() || card.getCardInfo().getCardType() != CardType.SUPPORT) && (player.getFleet().hasSpace() || (card.getCardInfo().getCardType() != CardType.YARDPRINT && card.getCardInfo().getCardType() != CardType.BLUEPRINT)));
         }

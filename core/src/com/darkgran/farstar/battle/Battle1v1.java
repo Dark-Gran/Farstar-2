@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.gui.*;
 import com.darkgran.farstar.battle.players.*;
+import com.darkgran.farstar.gui.Notification;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -83,16 +84,26 @@ public class Battle1v1 extends Battle {
     @Override
     public void battleEnd() {
         super.battleEnd();
-        System.out.println("Player #"+getWinnerID()+" wins!");
-        if (player1 instanceof Bot) { ((Bot) player1).gameOver(getWinnerID()); }
-        if (player2 instanceof Bot) { ((Bot) player2).gameOver(getWinnerID()); }
+        System.out.println("Player #"+ getWinner()+" wins!");
+        if (player1 instanceof Bot) { ((Bot) player1).gameOver(getWinner()); }
+        else { battleEndNotification(player1); }
+        if (player2 instanceof Bot) { ((Bot) player2).gameOver(getWinner()); }
+        else { battleEndNotification(player2); }
     }
 
-    private int getWinnerID() {
-        if (getGameOvers().contains(player1)) {
-            return player2.getBattleID();
+    protected void battleEndNotification(Player player) {
+        if (player == getWinner()) {
+            getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "VICTORY", 4);
         } else {
-            return player1.getBattleID();
+            getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "DEFEAT", 4);
+        }
+    }
+
+    private Player getWinner() {
+        if (getGameOvers().contains(player1)) {
+            return player2;
+        } else {
+            return player1;
         }
     }
 

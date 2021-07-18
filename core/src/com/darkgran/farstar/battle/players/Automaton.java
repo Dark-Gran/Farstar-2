@@ -363,7 +363,7 @@ public class Automaton extends Bot {
         HashMap<Token, DuelManager.AttackInfo> duels = new HashMap<>();
         Token enemy;
         for (Ship ship : getFleet().getShips()) {
-            if (ship != null) {
+            if (ship != null && !ship.isUsed()) {
                 enemy = getEnemyTarget(ship.getToken(), true);
                 if (enemy != null && getBattle().getCombatManager().canReach(ship.getToken(), enemy, enemy.getCard().getPlayer().getFleet())) {
                     duels.put(ship.getToken(), new DuelManager.AttackInfo(enemy));
@@ -397,11 +397,11 @@ public class Automaton extends Bot {
     //------//
 
     @Override
-    public void gameOver(int winnerID) {
-        if (winnerID == getBattleID()) {
+    public void gameOver(Player winner) {
+        if (winner == this) {
             report("Wow, I've won! How did I do that?");
         }
-        super.gameOver(winnerID);
+        super.gameOver(winner);
     }
 
 }

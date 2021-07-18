@@ -85,7 +85,7 @@ public class Player {
 
     public int getMatter() { return matter; }
 
-    public int getBattleID() { return battleID; }
+    public Byte getBattleID() { return battleID; }
 
     public Yard getYard() { return yard; }
 

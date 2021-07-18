@@ -7,6 +7,7 @@ import com.darkgran.farstar.battle.players.*;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.cards.Ship;
 import com.darkgran.farstar.battle.players.abilities.EffectType;
+import com.darkgran.farstar.gui.Notification;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +48,8 @@ public abstract class CombatManager {
                 ((Bot) battle.getWhoseTurn()).newCombat();
             } else {
                 battleStage.enableCombatEnd();
+                getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Choose Your Attackers.", 3);
+                //getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "ATTACK", 3);
             }
         }
     }
@@ -98,6 +101,7 @@ public abstract class CombatManager {
             setFSGlows(false);
             markFSGlows();
             System.out.println("Tactical Phase started.");
+            getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "TACTICAL PHASE", 3);
             if (!(activePlayer.getPlayer() instanceof Bot)) {
                 combatMenu.addOK(activePlayer.getCombatButton());
                 battle.getRoundManager().getPossibilityAdvisor().refresh(activePlayer.getPlayer(), battle);

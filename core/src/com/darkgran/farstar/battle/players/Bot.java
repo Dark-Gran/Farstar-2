@@ -77,7 +77,7 @@ public abstract class Bot extends Player implements BotSettings, Delayer {
 
     protected DropTarget getDropTarget(CardType cardType) { return null; }
 
-    public void gameOver(int winnerID) { report("GG"); }
+    public void gameOver(Player winner) { report("GG"); }
 
     //EXECUTIONS + UTILITIES (ie. no logic - no need to override)
 
