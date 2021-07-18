@@ -21,14 +21,14 @@ import com.darkgran.farstar.util.SimpleVector2;
 import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
 
 public class HandToken extends AnchoredToken implements CardGFX {
-    public enum HandState {
+    public enum HandTokenState {
 
         DOWN("D", TokenType.HAND),
         UP("U", TokenType.FAKE);
 
         private final String acronym;
         private final TokenType tokenType;
-        HandState(String acronym, TokenType tokenType) {
+        HandTokenState(String acronym, TokenType tokenType) {
             this.tokenType = tokenType;
             this.acronym = acronym;
         }
@@ -38,8 +38,8 @@ public class HandToken extends AnchoredToken implements CardGFX {
     }
     private Color fontColor = ColorPalette.BLACKISH;
     private Texture cardPic;
-    private HandState currentState = HandState.DOWN;
-    private HandState nextState = currentState;
+    private HandTokenState currentState = HandTokenState.DOWN;
+    private HandTokenState nextState = currentState;
     Matrix4 oldMX = null;
     Matrix4 mx;
     public static SimpleVector2 getNewXYFromAngle(float currentX, float currentY, float centerX, float centerY, double rads) {
@@ -55,7 +55,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
         setDragger(new ManagedDragger(this, battleStage.getBattleScreen().getBattle().getRoundManager(), false){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                nextState = button == 0 ? HandState.UP : HandState.DOWN;
+                nextState = button == 0 ? HandTokenState.UP : HandTokenState.DOWN;
                 if (isEnabled() && button == 0 && getCard().getCardInfo().getCardType() == CardType.BLUEPRINT) {
                     getCardListMenu().getPlayer().getFleet().getFleetMenu().setPredictEnabled(true);
                 }
@@ -65,7 +65,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                nextState = HandState.DOWN;
+                nextState = HandTokenState.DOWN;
                 refreshSize();
                 super.touchUp(event, x, y, pointer, button);
             }
@@ -76,6 +76,12 @@ public class HandToken extends AnchoredToken implements CardGFX {
         setGlowOffsetY(-getGlowG().getHeight()/2f+getCardPic().getHeight()/2f);
         setOriginX(getWidth()/2);
         setOriginY(getHeight()/2);
+    }
+
+    @Override
+    public void resetPosition() {
+        float offsetY = getCardListMenu().isNegativeOffset() ? -285f : 250f;
+        setPosition(getAnchorX(), getAnchorY() + (((HandMenu)getCardListMenu()).getHandState() == HandMenu.HandMenuState.UP ? offsetY : 0f));
     }
 
     @Override
@@ -97,7 +103,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
     public void refreshSize() {
         if (currentState != nextState) {
             TokenType tokenType = TokenType.HAND;
-            if (nextState == HandState.UP) {
+            if (nextState == HandTokenState.UP) {
                 tokenType = TokenType.FAKE;
             }
             currentState = nextState;
@@ -154,9 +160,9 @@ public class HandToken extends AnchoredToken implements CardGFX {
 
     @Override
     public void draw(Batch batch) {
-        if (!(getClickListener().isOver() && getClickListener().getPressedButton() != -1 && currentState == HandState.DOWN)) {
+        if (!(getClickListener().isOver() && getClickListener().getPressedButton() != -1 && currentState == HandTokenState.DOWN)) {
             //Rotate
-            if (currentState == HandState.DOWN) {
+            if (currentState == HandTokenState.DOWN) {
                 oldMX = batch.getTransformMatrix().cpy();
                 batch.setTransformMatrix(mx);
             } else if (oldMX != null) {
@@ -188,7 +194,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
 
     @Override
     protected void debugRender(Batch batch) {
-        if (currentState == HandState.DOWN) {
+        if (currentState == HandTokenState.DOWN) {
             batch.end();
             getBattleStage().getBattleScreen().getShapeRenderer().begin(ShapeRenderer.ShapeType.Line);
             getBattleStage().getBattleScreen().getShapeRenderer().rect(getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), 1f, 1f, getRotation());
@@ -225,7 +231,7 @@ public class HandToken extends AnchoredToken implements CardGFX {
         this.fontColor = fontColor;
     }
 
-    public HandState getCurrentState() {
+    public HandTokenState getCurrentState() {
         return currentState;
     }
 }

@@ -17,7 +17,7 @@ import com.darkgran.farstar.gui.YXQuestionBox;
 import static com.darkgran.farstar.Farstar.ASSET_LIBRARY;
 
 public abstract class SuperScreen implements Screen {
-    public final static boolean DEBUG_RENDER = true;
+    public final static boolean DEBUG_RENDER = false;
     private Farstar game;
     private OrthographicCamera camera = new OrthographicCamera();
     private Viewport viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);

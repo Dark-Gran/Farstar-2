@@ -1,6 +1,5 @@
 package com.darkgran.farstar.battle.gui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -13,7 +12,6 @@ import com.darkgran.farstar.battle.players.LocalPlayer;
 import com.darkgran.farstar.battle.players.cards.Card;
 import com.darkgran.farstar.battle.players.Hand;
 import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.util.SimpleVector2;
 
 public class HandMenu extends CardListMenu {
     private float actualX;
@@ -21,25 +19,23 @@ public class HandMenu extends CardListMenu {
     private final ClickListener clickListener = new ClickListener(){
         @Override
         public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-            //setHandState(HandState.UP);
+            setHandState(HandMenuState.UP);
             super.enter(event, x, y, pointer, fromActor);
         }
         @Override
         public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-            //setHandState(HandState.IDLE);
+            setHandState(HandMenuState.IDLE);
             super.exit(event, x, y, pointer, toActor);
         }
     };
     private final Actor clickListenerActor = new Actor();
-    public enum HandState {
+    public enum HandMenuState {
         IDLE, UP;
     }
-    private HandState handState = HandState.IDLE;
-    private final SimpleVector2 basicPosition;
+    private HandMenuState handMenuState = HandMenuState.IDLE;
 
     public HandMenu(Hand hand, float x, float y, BattleStage battleStage, Player player, boolean onBottom) {
         super(hand, x, y, 0, 0, !onBottom, battleStage, player);
-        basicPosition = new SimpleVector2(x, y);
         setWidth(Farstar.STAGE_WIDTH*0.57f);
         setHeight(Farstar.STAGE_HEIGHT*0.35f);
         actualX = x;
@@ -49,32 +45,14 @@ public class HandMenu extends CardListMenu {
         battleStage.addActor(clickListenerActor);
     }
 
-    public void setHandState(HandState handState) {
-        if (!Gdx.input.isButtonPressed(0) && !Gdx.input.isButtonPressed(0)) {
-            if (getPlayer() instanceof LocalPlayer) {
-                if (this.handState != handState) {
-                    this.handState = handState;
-                    checkVerticalShift();
+    public void setHandState(HandMenuState handMenuState) {
+        if (getPlayer() instanceof LocalPlayer) {
+            if (this.handMenuState != handMenuState) {
+                this.handMenuState = handMenuState;
+                for (Token token : getTokens()) {
+                    ((AnchoredToken) token).resetPosition();
                 }
             }
-        }
-    }
-
-    public void checkVerticalShift() {
-        float shift = this.isNegativeOffset() ? -285f : 250f;
-        switch (handState) {
-            case IDLE:
-                for (Token token : getTokens()) {
-                    token.setY(token.getY() - shift);
-                    ((AnchoredToken) token).setAnchorY(token.getY());
-                }
-                break;
-            case UP:
-                for (Token token : getTokens()) {
-                    token.setY(token.getY() + shift);
-                    ((AnchoredToken) token).setAnchorY(token.getY());
-                }
-                break;
         }
     }
 
@@ -213,5 +191,9 @@ public class HandMenu extends CardListMenu {
 
     public Actor getClickListenerActor() {
         return clickListenerActor;
+    }
+
+    public HandMenuState getHandState() {
+        return handMenuState;
     }
 }

@@ -1,7 +1,6 @@
 package com.darkgran.farstar.battle.gui.tokens;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.darkgran.farstar.battle.gui.BattleStage;
 import com.darkgran.farstar.battle.gui.CardListMenu;
 import com.darkgran.farstar.battle.gui.HandMenu;
@@ -57,16 +56,16 @@ public abstract class TokenZoom extends PrintToken {
             hidden = false;
             super.enable(card, targetType, targetXY);
             explainer.refreshText(getCard());
-            if (card.getToken().getCardListMenu() instanceof HandMenu) {
-                //((HandMenu) card.getToken().getCardListMenu()).setHandState(HandMenu.HandState.UP);
+            if (targetType != TokenType.JUNK && card.getToken().getCardListMenu() instanceof HandMenu) {
+                ((HandMenu) card.getToken().getCardListMenu()).setHandState(HandMenu.HandMenuState.UP);
             }
         }
     }
 
     @Override
     public void disable() {
-        if (getCard() != null && getCard().getToken().getCardListMenu() instanceof HandMenu) {
-            //((HandMenu) getCard().getToken().getCardListMenu()).setHandState(HandMenu.HandState.IDLE);
+        if (getCard() != null && getCard().getToken().getTokenType() != TokenType.JUNK && getCard().getToken().getCardListMenu() instanceof HandMenu) {
+            ((HandMenu) getCard().getToken().getCardListMenu()).setHandState(HandMenu.HandMenuState.IDLE);
         }
         super.disable();
         hideExplainer();

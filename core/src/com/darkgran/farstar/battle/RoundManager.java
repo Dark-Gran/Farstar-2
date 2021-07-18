@@ -216,7 +216,13 @@ public class RoundManager {
             if (!success && !postAbility) {
                 ((HandToken) token).resetPosition();
             } else {
-                if (!(dropTarget instanceof JunkButton)) { callHerald(token.getCard(), token.getTokenType(), new SimpleVector2(dropTarget.getSimpleBox2().getX(), dropTarget.getSimpleBox2().getY())); } //debug: && token.getCard() != null
+                if (!(dropTarget instanceof JunkButton)) {
+                    if (dropTarget != null) {
+                        callHerald(token.getCard(), token.getTokenType(), new SimpleVector2(dropTarget.getSimpleBox2().getX(), dropTarget.getSimpleBox2().getY()));
+                    } else {
+                        callHerald(token.getCard(), token.getTokenType(), new SimpleVector2(0, 0));
+                    }
+                }
                 token.destroy();
             }
         }
