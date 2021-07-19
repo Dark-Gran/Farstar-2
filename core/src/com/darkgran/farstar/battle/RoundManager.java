@@ -202,7 +202,7 @@ public class RoundManager {
                             battle.getCombatManager().saveTactic(token.getCard(), targetCard);
                         }*/
                         if (!(token instanceof FakeToken) && !CardType.isShip(cardType)) { token.addCardToJunk(); }
-                    } else if (dropTarget instanceof JunkButton && token instanceof HandToken) { //Target: Discard
+                    } else if (dropTarget instanceof JunkButton && (token instanceof DeploymentCard || token instanceof HandToken)) { //Target: Discard
                         Junkpile junkpile = ((JunkButton) dropTarget).getPlayer().getJunkpile();
                         if (junkpile == whoseTurn.getJunkpile()) {
                             token.addCardToJunk();
@@ -213,21 +213,19 @@ public class RoundManager {
             }
         }
         //HAND ONLY
-        if (token instanceof HandToken) {
-            if (!success && !postAbility) {
-                ((HandToken) token).resetPosition();
-            } else {
+        if (token instanceof DeploymentCard || token instanceof HandToken) {
+            if (success || postAbility) {
                 if (!(dropTarget instanceof JunkButton)) {
                     if (dropTarget != null) {
-                        callHerald(token.getCard(), token.getTokenType(), new SimpleVector2(dropTarget.getSimpleBox2().getX(), dropTarget.getSimpleBox2().getY()));
+                        callHerald(token.getCard(), TokenType.HAND, new SimpleVector2(dropTarget.getSimpleBox2().getX(), dropTarget.getSimpleBox2().getY()));
                     } else {
-                        callHerald(token.getCard(), token.getTokenType(), new SimpleVector2(0, 0));
+                        callHerald(token.getCard(), TokenType.HAND, new SimpleVector2(0, 0));
                     }
                 }
-                token.destroy();
+                token.getCard().getToken().destroy();
             }
         }
-        //FAKE
+        //YARD-HERALD
         /*else if (token.getCard().getCardInfo().getCardType() == CardType.YARDPRINT) {
             if (success || postAbility) {
                 callHerald(token.getCard(), token.getTokenType(), new SimpleVector2(token.getX(), token.getY()));

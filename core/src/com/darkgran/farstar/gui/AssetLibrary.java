@@ -190,11 +190,11 @@ public class AssetLibrary {
         assetManager.load("images/yardOP.png", Texture.class, texParams);
         assetManager.load("images/yardP.png", Texture.class, texParams);
         //Cards
-        assetManager.load("images/tokens/cardH_D.png", Texture.class, texParams);
-        assetManager.load("images/tokens/cardH_U.png", Texture.class, texParams);
+        assetManager.load("images/tokens/cardH_F.png", Texture.class, texParams);
+        assetManager.load("images/tokens/cardH_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/cardH_Z.png", Texture.class, texParams);
-        assetManager.load("images/tokens/cardN_D.png", Texture.class, texParams);
-        assetManager.load("images/tokens/cardN_U.png", Texture.class, texParams);
+        assetManager.load("images/tokens/cardN_F.png", Texture.class, texParams);
+        assetManager.load("images/tokens/cardN_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/cardN_Z.png", Texture.class, texParams);
         //Token Parts
         assetManager.load("images/tokens/abiFS_F.png", Texture.class, texParams);

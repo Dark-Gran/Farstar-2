@@ -49,9 +49,6 @@ public class HandMenu extends CardListMenu {
         if (getPlayer() instanceof LocalBattlePlayer) {
             if (this.handMenuState != handMenuState) {
                 this.handMenuState = handMenuState;
-                for (Token token : getTokens()) {
-                    ((AnchoredToken) token).resetPosition();
-                }
             }
         }
     }
@@ -67,7 +64,6 @@ public class HandMenu extends CardListMenu {
             } else {
                 Token nextToken = getTokens().get(i);
                 nextToken.setX(getX() + getOffset()*i);
-                if (nextToken instanceof AnchoredToken) { ((AnchoredToken) nextToken).setAnchorX(nextToken.getX()); }
             }
         }
         centralize();
@@ -113,7 +109,6 @@ public class HandMenu extends CardListMenu {
         for (int i = 0; i < getTokens().size(); i++) {
             offsetY = getYShift(i, getTokens().size());
             getTokens().get(i).setPosition(actualX + getOffset()*i*covering, actualY+offsetY);
-            ((AnchoredToken) getTokens().get(i)).setNewAnchor(actualX + getOffset()*i*covering, actualY+offsetY);
             ((HandToken) getTokens().get(i)).refreshRotation(i, getTokens().size());
         }
     }

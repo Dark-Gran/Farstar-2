@@ -47,7 +47,7 @@ public abstract class CombatManager {
             } else {
                 battleStage.enableCombatEnd();
                 battleStage.getCombatEndButton().setExtraState(duels.size()>0);
-                getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Choose Your Attackers.", 3);
+                getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Choose Your Attacks.", 3);
                 //getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "ATTACK", 3);
             }
         }

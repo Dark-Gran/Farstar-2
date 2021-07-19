@@ -7,7 +7,7 @@ import com.darkgran.farstar.gui.battlegui.CardListMenu;
 
 public interface FakingTokens {
     enum FakeTokenType {
-        DEPLOYMENT, TARGETING
+        YARD, TARGET, HAND
     }
     BattleStage getBattleStage();
     CardListMenu getCardListMenu();
@@ -29,10 +29,12 @@ public interface FakingTokens {
 
     default FakeToken makeFake(FakeTokenType fakeTokenType) {
         switch (fakeTokenType) {
-            case DEPLOYMENT:
+            case YARD:
                 return new DeploymentToken(getCard(), getX(), getY(), getBattleStage(), getCardListMenu());
-            case TARGETING:
+            case TARGET:
                 return new TargetingToken(getCard(), getX(), getY(), getBattleStage(), getCardListMenu());
+            case HAND:
+                return new DeploymentCard(getCard(), getX(), getY(), getBattleStage(), getCardListMenu());
         }
         return null;
     }

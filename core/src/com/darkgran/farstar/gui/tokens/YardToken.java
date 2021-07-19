@@ -15,21 +15,18 @@ public class YardToken extends ClickToken implements FakingTokens{
         super(battleCard, x, y, battleStage, yardMenu, TokenType.YARD, false, true);
         this.yardMenu = yardMenu;
         setTouchable(Touchable.disabled);
-        this.addListener(new InputListener()
-        {
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                if (button == 0) {
-                    if (yardMenu.isOpen() && getCard().getPlayer() instanceof LocalBattlePlayer &&  !getBattleStage().getAbilityPicker().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
-                        newFake(event, x, y, pointer, button, FakeTokenType.DEPLOYMENT);
-                        setPicked(true);
-                    }
-                    return false;
-                } else {
-                    return super.touchDown(event, x, y, pointer, button);
-                }
-            }
-        });
     }
 
+    @Override
+    boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        if (button == 0) {
+            if (yardMenu.isOpen() && getCard().getPlayer() instanceof LocalBattlePlayer &&  !getBattleStage().getAbilityPicker().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
+                newFake(event, x, y, pointer, button, FakeTokenType.YARD);
+                setPicked(true);
+            }
+            return false;
+        } else {
+            return super.touchDown(event, x, y, pointer, button);
+        }
+    }
 }
