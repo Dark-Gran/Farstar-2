@@ -2,9 +2,10 @@
   {
     "id": 0,
     "name": "Battlestation",
-    "description": "",
+    "culture": "HUMAN",
+    "description": "Pay 2 Energy :\nDeal 1 Kinetic damage\nto any target.",
     "cardType": "MS",
-    "cardRarity": "IRON",
+    "cardRarity": "BRONZE",
     "tier": 0,
     "energy": 0,
     "matter": 0,
@@ -26,11 +27,13 @@
           "duration": -1
         }
       ]
-    }]
+    }],
+    "animatedShots": 5
   },
   {
     "id": 1,
-    "name": "Fighter",
+    "name": "Fighters",
+    "culture": "HUMAN",
     "description": "",
     "cardType": "YARDPRINT",
     "cardRarity": "IRON",
@@ -41,11 +44,13 @@
     "defense": 1,
     "offenseType": "KINETIC",
     "defenseType": "KINETIC",
-    "abilities": []
+    "abilities": [],
+    "animatedShots": 1
   },
   {
     "id": 2,
     "name": "Corvette",
+    "culture": "HUMAN",
     "description": "",
     "cardType": "YARDPRINT",
     "cardRarity": "IRON",
@@ -56,11 +61,13 @@
     "defense": 2,
     "offenseType": "KINETIC",
     "defenseType": "PARTICLE",
-    "abilities": []
+    "abilities": [],
+    "animatedShots": 1
   },
   {
     "id": 3,
     "name": "Frigate",
+    "culture": "HUMAN",
     "description": "",
     "cardType": "YARDPRINT",
     "cardRarity": "IRON",
@@ -71,11 +78,13 @@
     "defense": 3,
     "offenseType": "THERMAL",
     "defenseType": "KINETIC",
-    "abilities": []
+    "abilities": [],
+    "animatedShots": 1
   },
   {
     "id": 4,
     "name": "Cruiser",
+    "culture": "HUMAN",
     "description": "",
     "cardType": "YARDPRINT",
     "cardRarity": "IRON",
@@ -97,11 +106,13 @@
           "duration": -1
         }
       ]
-    }]
+    }],
+    "animatedShots": 1
   },
   {
     "id": 5,
     "name": "Battleship",
+    "culture": "HUMAN",
     "description": "",
     "cardType": "YARDPRINT",
     "cardRarity": "IRON",
@@ -123,12 +134,14 @@
           "duration": -1
         }
       ]
-    }]
+    }],
+    "animatedShots": 1
   },
   {
     "id": 6,
     "name": "Kinetic Shield",
-    "description": "",
+    "culture": "NEUTRAL",
+    "description": "Give something\nto an allied ship.",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
@@ -154,12 +167,14 @@
           "duration": -1
         }
       ]
-    }]
+    }],
+    "animatedShots": 0
   },
   {
     "id": 7,
     "name": "Thermal Shield",
-    "description": "",
+    "culture": "NEUTRAL",
+    "description": "Give something\nto an allied ship.",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
@@ -185,12 +200,14 @@
           "duration": -1
         }
       ]
-    }]
+    }],
+    "animatedShots": 0
   },
   {
     "id": 8,
     "name": "Particle Shield",
-    "description": "",
+    "culture": "NEUTRAL",
+    "description": "Give something\nto an allied ship.",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
@@ -216,12 +233,14 @@
           "duration": -1
         }
       ]
-    }]
+    }],
+    "animatedShots": 0
   },
   {
     "id": 9,
     "name": "Kinetic Weapons",
-    "description": "",
+    "culture": "NEUTRAL",
+    "description": "Give something\nto an allied ship.",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
@@ -247,12 +266,14 @@
           "duration": -1
         }
       ]
-    }]
+    }],
+    "animatedShots": 0
   },
   {
     "id": 10,
     "name": "Thermal Weapons",
-    "description": "",
+    "culture": "NEUTRAL",
+    "description": "Give something\nto an allied ship.",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
@@ -278,12 +299,14 @@
           "duration": -1
         }
       ]
-    }]
+    }],
+    "animatedShots": 0
   },
   {
     "id": 11,
     "name": "Particle Weapons",
-    "description": "",
+    "culture": "NEUTRAL",
+    "description": "Give something\nto an allied ship.",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
@@ -309,11 +332,13 @@
           "duration": -1
         }
       ]
-    }]
+    }],
+    "animatedShots": 0
   },
   {
     "id": 12,
     "name": "Kinetic Switch",
+    "culture": "NEUTRAL",
     "description": "",
     "cardType": "TACTIC",
     "cardRarity": "IRON",
@@ -340,11 +365,13 @@
           "duration": 1
         }
       ]
-    }]
+    }],
+    "animatedShots": 0
   },
   {
     "id": 13,
     "name": "Thermal Switch",
+    "culture": "NEUTRAL",
     "description": "",
     "cardType": "TACTIC",
     "cardRarity": "IRON",
@@ -371,11 +398,13 @@
           "duration": 1
         }
       ]
-    }]
+    }],
+    "animatedShots": 0
   },
   {
     "id": 14,
     "name": "Particle Switch",
+    "culture": "NEUTRAL",
     "description": "",
     "cardType": "TACTIC",
     "cardRarity": "IRON",
@@ -402,14 +431,16 @@
           "duration": 1
         }
       ]
-    }]
+    }],
+    "animatedShots": 0
   },
   {
     "id": 15,
     "name": "Motherstation",
+    "culture": "HUMAN",
     "description": "",
     "cardType": "MS",
-    "cardRarity": "IRON",
+    "cardRarity": "BRONZE",
     "tier": 0,
     "energy": 0,
     "matter": 0,
@@ -431,11 +462,13 @@
           "duration": -1
         }
       ]
-    }]
+    }],
+    "animatedShots": 0
   },
   {
     "id": 16,
     "name": "Furnace",
+    "culture": "HUMAN",
     "description": "",
     "cardType": "ACTION",
     "cardRarity": "IRON",
@@ -457,11 +490,13 @@
           "duration": -1
         }
       ]
-    }]
+    }],
+    "animatedShots": 0
   },
   {
     "id": 17,
     "name": "Gauss Shot",
+    "culture": "HUMAN",
     "description": "",
     "cardType": "ACTION",
     "cardRarity": "IRON",
@@ -483,11 +518,13 @@
           "duration": -1
         }
       ]
-    }]
+    }],
+    "animatedShots": 1
   },
   {
     "id": 18,
     "name": "Plasblast",
+    "culture": "HUMAN",
     "description": "",
     "cardType": "ACTION",
     "cardRarity": "IRON",
@@ -509,11 +546,13 @@
           "duration": -1
         }
       ]
-    }]
+    }],
+    "animatedShots": 1
   },
   {
     "id": 19,
     "name": "Upper Hand",
+    "culture": "NEUTRAL",
     "description": "",
     "cardType": "TACTIC",
     "cardRarity": "IRON",
@@ -535,12 +574,14 @@
           "duration": 1
         }
       ]
-    }]
+    }],
+    "animatedShots": 0
   },
   {
     "id": 20,
     "name": "Labour Deck",
-    "description": "",
+    "culture": "HUMAN",
+    "description": "Choose one:\nGain 1 Energy.\nOR\nGain 1 Matter.",
     "cardType": "SUPPORT",
     "cardRarity": "IRON",
     "tier": 1,
@@ -579,12 +620,14 @@
             "duration": -1
           }
         ]
-      }]
+      }],
+    "animatedShots": 0
   },
   {
     "id": 21,
     "name": "Spare Resources",
-    "description": "",
+    "culture": "NEUTRAL",
+    "description": "When used, choose one:\nGain 1 Energy.\nOR\nGain 1 Matter.",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
@@ -617,6 +660,7 @@
             "duration": -1
           }
         ]
-      }]
+      }],
+    "animatedShots": 0
   }
 ]

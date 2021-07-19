@@ -1,10 +1,8 @@
 package com.darkgran.farstar.gui.battlegui;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.battle.DuelManager;
 import com.darkgran.farstar.gui.tokens.TargetingToken;

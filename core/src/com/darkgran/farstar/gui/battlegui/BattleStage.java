@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.battle.ShotManager;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.gui.tokens.*;
 import com.darkgran.farstar.gui.ButtonWithExtraState;
@@ -212,6 +211,7 @@ public abstract class BattleStage extends ListeningStage {
         turnButton.removeListener(turnButton.getClickListener());
         combatEndButton.remove();
         abilityPicker.dispose();
+        shotManager.dispose();
         super.dispose();
     }
 

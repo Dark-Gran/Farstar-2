@@ -17,8 +17,9 @@ public class CardInfo {
     private TechType offenseType;
     private TechType defenseType;
     private ArrayList<AbilityInfo> abilities;
+    private final int animatedShots;
 
-    public CardInfo(byte id, String name, CardCulture culture, String description, CardType cardType, CardRarity cardRarity, int tier, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType, ArrayList<AbilityInfo> abilities) {
+    public CardInfo(byte id, String name, CardCulture culture, String description, CardType cardType, CardRarity cardRarity, int tier, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType, ArrayList<AbilityInfo> abilities, int animatedShots) {
         this.id = id;
         this.name = name;
         this.culture = culture;
@@ -33,6 +34,7 @@ public class CardInfo {
         this.defenseType = defenseType;
         this.abilities = instanceAbilities(abilities);
         this.tier = tier;
+        this.animatedShots = animatedShots;
     }
 
     public CardInfo() {
@@ -50,6 +52,7 @@ public class CardInfo {
         this.offenseType = TechType.INFERIOR;
         this.defenseType = TechType.INFERIOR;
         this.abilities = new ArrayList<>();
+        this.animatedShots = 0;
     }
 
     private ArrayList<AbilityInfo> instanceAbilities(ArrayList<AbilityInfo> abilities) {
@@ -110,5 +113,9 @@ public class CardInfo {
 
     public CardCulture getCulture() {
         return culture;
+    }
+
+    public int getAnimatedShots() {
+        return animatedShots;
     }
 }

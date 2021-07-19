@@ -61,7 +61,7 @@ public class WorldManager {
 
     //Stepping
     public void worldTimer(float delta) {
-        accumulator += Math.min(delta, 0.25f);
+        accumulator += delta;
         if (accumulator >= STEP_TIME) {
             accumulator -= STEP_TIME;
             worldTick(world);

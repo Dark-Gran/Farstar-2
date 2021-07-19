@@ -1,6 +1,7 @@
 package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.battle.players.BattleCard;
+import com.darkgran.farstar.gui.battlegui.ShotManager;
 import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.cards.EffectType;
 import com.darkgran.farstar.cards.TechType;
