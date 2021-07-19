@@ -33,7 +33,7 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
     private float glowOffsetX = 0f;
     private float glowOffsetY = 0f;
     public enum GlowState {
-        DIM, POSSIBLE, PICKED;
+        DIM, POSSIBLE, PICKED
     }
     private boolean picked;
 
@@ -306,4 +306,5 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
     public void setGlowOffsetY(float glowOffsetY) {
         this.glowOffsetY = glowOffsetY;
     }
+
 }

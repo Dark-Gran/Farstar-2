@@ -68,9 +68,9 @@ public class AbilityManager {
                         for (int i = 0; i < ability.getEffects().size(); i++) {
                             if (ability.getEffects().get(i) != null) {
                                 if (!success) {
-                                    success = executeEffect(currentTarget, ability.getEffects().get(i), false, caster.getPlayer());
+                                    success = executeEffect(currentTarget, ability.getEffects().get(i), false, caster);
                                 } else {
-                                    executeEffect(currentTarget, ability.getEffects().get(i), false, caster.getPlayer());
+                                    executeEffect(currentTarget, ability.getEffects().get(i), false, caster);
                                 }
                             }
                         }
@@ -88,7 +88,7 @@ public class AbilityManager {
     //-EFFECT-LIST-//
     //-------------//
 
-    public boolean executeEffect(BattleCard target, Effect effect, boolean reverse, BattlePlayer casterPlayer) {
+    public boolean executeEffect(BattleCard target, Effect effect, boolean reverse, BattleCard caster) {
         boolean success = false;
         if (effect.getEffectType() != null) {
             switch (effect.getEffectType()) {
@@ -100,7 +100,7 @@ public class AbilityManager {
                     else { success = reverseStat(target, effect); }
                     break;
                 case DEAL_DMG:
-                    if (!reverse) { success = dealDmg(target, effect, casterPlayer); }
+                    if (!reverse) { success = dealDmg(target, effect, caster); }
                     break;
                 case REPAIR:
                     if (!reverse) { success = repair(target, effect); }
@@ -205,13 +205,13 @@ public class AbilityManager {
     }
 
     //DEAL_DMG
-    private boolean dealDmg(BattleCard target, Effect effect, BattlePlayer casterPlayer) {
+    private boolean dealDmg(BattleCard target, Effect effect, BattleCard caster) {
         if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
-            int dmg = floatObjectToInt(effect.getEffectInfo().get(0));
+            int power = floatObjectToInt(effect.getEffectInfo().get(0));
             TechType techType = TechType.valueOf(effect.getEffectInfo().get(1).toString());
-            dmg = DuelManager.getDmgAgainstShields(dmg, target.getHealth(), techType, target.getCardInfo().getDefenseType());
-            if (casterPlayer != null) {
-                getBattle().getBattleScreen().getBattleStage().getShotManager().newAttack(casterPlayer.getMs().getToken(), target.getToken(), dmg);
+            int dmg = DuelManager.getDmgAgainstShields(power, target.getHealth(), techType, target.getCardInfo().getDefenseType());
+            if (caster != null) {
+                getBattle().getBattleScreen().getBattleStage().getShotManager().newAttack(caster.getPlayer().getMs().getToken(), target.getToken(), power, techType, caster.getCardInfo().getAnimatedShots());
             }
             if (!target.receiveDMG(dmg)) { target.death(); }
             return true;
@@ -383,11 +383,11 @@ public class AbilityManager {
         target.addToEffects(effect);
     }
 
-    private AbilityInfo effectToAbility(ArrayList<Effect> effectInfo, int effectDuration) { //creates new ability-attribute
+    private AbilityInfo effectToAbility(ArrayList effectInfo, int effectDuration) { //creates new ability-attribute
         EffectType effectType = EffectType.valueOf(effectInfo.get(1).toString());
         Effect newEffect = new Effect();
         newEffect.setEffectType(effectType);
-        ArrayList<Effect> info = new ArrayList<>(effectInfo);
+        ArrayList info = new ArrayList<>(effectInfo);
         if (info.size() >= 4) { info.set(0, effectInfo.get(4)); }
         newEffect.setEffectInfo(info);
         newEffect.setDuration(effectDuration);

@@ -7,8 +7,8 @@ import com.darkgran.farstar.battle.players.*;
 import com.darkgran.farstar.cards.EffectType;
 import com.darkgran.farstar.gui.Notification;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public abstract class CombatManager {
     private BattleStage battleStage; //must be set before RoundManager.launch() (see BattleScreen constructor)
@@ -16,7 +16,7 @@ public abstract class CombatManager {
     private final DuelManager duelManager;
     private boolean active = false;
     private boolean tacticalPhase = false;
-    private HashMap<Token, DuelManager.AttackInfo> duels = new HashMap<>();
+    private TreeMap<FleetToken, DuelManager.AttackInfo> duels = new TreeMap<>();
     private CombatPlayer[] playersA;
     private CombatPlayer[] playersD;
     private CombatPlayer activePlayer;
@@ -54,13 +54,13 @@ public abstract class CombatManager {
     }
 
     public void processDrop(Token token, Token targetToken) {
-        if (active && !tacticalPhase && !duelManager.isActive() && token.getCard().getPlayer() == battle.getWhoseTurn() && !token.getCard().isUsed()) {
+        if (token instanceof FleetToken && active && !tacticalPhase && !duelManager.isActive() && token.getCard().getPlayer() == battle.getWhoseTurn() && !token.getCard().isUsed()) {
             if (targetToken == null || targetToken.getCard().getPlayer() == token.getCard().getPlayer()) {
                 duels.remove(token);
             } else if (token != targetToken) {
                 if (canReach(token, targetToken, targetToken.getCard().getPlayer().getFleet())) {
                     duels.remove(token);
-                    duels.put(token, new DuelManager.AttackInfo(targetToken));
+                    duels.put((FleetToken) token, new DuelManager.AttackInfo(targetToken));
                 }
             }
             if (token.getCard().getPlayer() instanceof LocalBattlePlayer) { battle.getRoundManager().getPossibilityAdvisor().refresh(token.getCard().getPlayer(), battle); }
@@ -152,7 +152,7 @@ public abstract class CombatManager {
     }
 
     private void markFSGlows() { //uses setPicked()
-        for (Map.Entry<Token, DuelManager.AttackInfo> entry : duels.entrySet()) {
+        for (Map.Entry<FleetToken, DuelManager.AttackInfo> entry : duels.entrySet()) {
             if (entry.getValue().getUpperStrike() != null) {
                 entry.getValue().getUpperStrike().getToken().setPicked(true);
                 if (entry.getValue().getUpperStrike().getToken() == entry.getValue().getDefender()) {
@@ -183,15 +183,17 @@ public abstract class CombatManager {
     }
 
     private void saveUpperStrike(BattleCard target) {
-        if (duels.containsKey(target.getToken())) {
-            DuelManager.AttackInfo attackInfo = new DuelManager.AttackInfo(duels.get(target.getToken()).getDefender(), target);
-            duels.put(target.getToken(), attackInfo);
-        } else {
-            for (Map.Entry<Token, DuelManager.AttackInfo> entry : duels.entrySet()) {
-                if (entry.getValue().getDefender().getCard() == target) {
-                    Token att = entry.getKey();
-                    DuelManager.AttackInfo attackInfo = new DuelManager.AttackInfo(entry.getValue().getDefender(), target);
-                    duels.put(att, attackInfo);
+        if (target.getToken() instanceof FleetToken) {
+            if (duels.containsKey((FleetToken) target.getToken())) {
+                DuelManager.AttackInfo attackInfo = new DuelManager.AttackInfo(duels.get((FleetToken) target.getToken()).getDefender(), target);
+                duels.put((FleetToken) target.getToken(), attackInfo);
+            } else {
+                for (Map.Entry<FleetToken, DuelManager.AttackInfo> entry : duels.entrySet()) {
+                    if (entry.getValue().getDefender().getCard() == target) {
+                        FleetToken att = entry.getKey();
+                        DuelManager.AttackInfo attackInfo = new DuelManager.AttackInfo(entry.getValue().getDefender(), target);
+                        duels.put(att, attackInfo);
+                    }
                 }
             }
         }
@@ -261,7 +263,7 @@ public abstract class CombatManager {
         duelManager.launchDuels(this, duels, battleStage.getShotManager());
     }
 
-    void setDuelState(Map.Entry<Token, DuelManager.AttackInfo> duel, byte state) {
+    void setDuelState(Map.Entry<FleetToken, DuelManager.AttackInfo> duel, byte state) {
         if (duels.containsKey(duel.getKey())) {
             duels.put(duel.getKey(), new DuelManager.AttackInfo(duel.getValue().getDefender(), duel.getValue().getUpperStrike(), state));
         }
@@ -313,9 +315,9 @@ public abstract class CombatManager {
         return cps;
     }
 
-    public Map.Entry<Token, DuelManager.AttackInfo> getDuel(Token token) {
+    public Map.Entry<FleetToken, DuelManager.AttackInfo> getDuel(Token token) {
         if (token != null) {
-            for (Map.Entry<Token, DuelManager.AttackInfo> entry : duels.entrySet()) {
+            for (Map.Entry<FleetToken, DuelManager.AttackInfo> entry : duels.entrySet()) {
                 if (entry.getKey() == token || entry.getValue().getDefender() == token) {
                     return entry;
                 }
@@ -326,10 +328,10 @@ public abstract class CombatManager {
 
     public Token getDuelOpponent(Token token) {
         if (token != null) {
-            if (duels.containsKey(token)) {
+            if (token instanceof FleetToken && duels.containsKey(token)) {
                 return duels.get(token).getDefender();
             } else {
-                for (Map.Entry<Token, DuelManager.AttackInfo> entry : duels.entrySet()) {
+                for (Map.Entry<FleetToken, DuelManager.AttackInfo> entry : duels.entrySet()) {
                     if (entry.getValue().getDefender() == token) {
                         return entry.getKey();
                     }
@@ -393,11 +395,11 @@ public abstract class CombatManager {
         return activePlayer;
     }
 
-    public HashMap<Token, DuelManager.AttackInfo> getDuels() {
+    public TreeMap<FleetToken, DuelManager.AttackInfo> getDuels() {
         return duels;
     }
 
-    public void setDuels(HashMap<Token, DuelManager.AttackInfo> duels) {
+    public void setDuels(TreeMap<FleetToken, DuelManager.AttackInfo> duels) {
         this.duels = duels;
     }
 }

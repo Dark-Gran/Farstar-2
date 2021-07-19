@@ -2,18 +2,16 @@ package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.gui.battlegui.ShotManager;
+import com.darkgran.farstar.gui.tokens.FleetToken;
 import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.cards.EffectType;
 import com.darkgran.farstar.cards.TechType;
 import com.darkgran.farstar.util.Delayer;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class DuelManager implements Delayer {
-    private final float duelDelay = 0.3f;
+    private final float duelDelay = 0.4f;
 
     public static class AttackInfo {
         private final Token defender;
@@ -40,11 +38,11 @@ public class DuelManager implements Delayer {
 
     private CombatManager combatManager;
     private boolean active = false;
-    private Set<Map.Entry<Token, AttackInfo>> duelSet;
-    private Iterator<Map.Entry<Token, AttackInfo>> it;
+    private Set<Map.Entry<FleetToken, AttackInfo>> duelSet;
+    private Iterator<Map.Entry<FleetToken, AttackInfo>> it;
     private ShotManager shotManager;
 
-    void launchDuels(CombatManager combatManager, HashMap<Token, AttackInfo> duels, ShotManager shotManager) {
+    void launchDuels(CombatManager combatManager, TreeMap<FleetToken, AttackInfo> duels, ShotManager shotManager) {
         this.shotManager = shotManager;
         if (duels != null && duels.size() > 0) {
             this.combatManager = combatManager;
@@ -61,7 +59,7 @@ public class DuelManager implements Delayer {
 
     private void iterateDuels() { //loop
         if (it.hasNext()) {
-            Map.Entry<Token, AttackInfo> duel = it.next();
+            Map.Entry<FleetToken, AttackInfo> duel = it.next();
             combatManager.setDuelState(duel, (byte) 1);
             delayAction(()->performDuel(duel), duelDelay);
         } else {
@@ -70,7 +68,7 @@ public class DuelManager implements Delayer {
         }
     }
 
-    private void performDuel(Map.Entry<Token, AttackInfo> duel) {
+    private void performDuel(Map.Entry<FleetToken, AttackInfo> duel) {
         exeDuel(duel.getKey().getCard(), duel.getValue());
         combatManager.setDuelState(duel, (byte) 2);
         delayAction(this::iterateDuels, duelDelay);
@@ -113,7 +111,7 @@ public class DuelManager implements Delayer {
 
     private boolean exeOneSide(BattleCard att, BattleCard def) { //returns survival
         int dmg = getDmgAgainstShields(att.getCardInfo().getOffense(), def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
-        shotManager.newAttack(att.getToken(), def.getToken(), dmg);
+        shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots());
         return def.receiveDMG(dmg);
     }
 

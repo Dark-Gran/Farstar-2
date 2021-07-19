@@ -10,8 +10,9 @@ import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.gui.battlegui.FleetMenu;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
+import org.jetbrains.annotations.NotNull;
 
-public class FleetToken extends ClickToken implements DisableMark, FakingTokens {
+public class FleetToken extends ClickToken implements DisableMark, FakingTokens, Comparable<FleetToken> {
     private FleetMenu fleetMenu;
     private Texture disableMark;
 
@@ -76,6 +77,12 @@ public class FleetToken extends ClickToken implements DisableMark, FakingTokens 
         } else {
             return getCard().isUsed();
         }
+    }
+
+    //Tokens sorted from left to right (for the duels-execution)
+    @Override
+    public int compareTo(@NotNull FleetToken o) {
+        return Float.compare(this.getX(), o.getX());
     }
 
 }

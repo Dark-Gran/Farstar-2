@@ -3,11 +3,12 @@ package com.darkgran.farstar.battle.players;
 import com.darkgran.farstar.battle.*;
 import com.darkgran.farstar.cards.*;
 import com.darkgran.farstar.gui.battlegui.*;
+import com.darkgran.farstar.gui.tokens.FleetToken;
 import com.darkgran.farstar.gui.tokens.Token;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import static com.darkgran.farstar.battle.BattleSettings.BONUS_CARD_ID;
 
@@ -165,7 +166,7 @@ public class Automaton extends Bot {
                                 if (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE || changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE) {
                                     if (getBattle().getCombatManager().isTacticalPhase()) { //COMBAT ONLY
                                         allyToken = getAlliedTarget(battleCard.getToken(), null);
-                                        Map.Entry<Token, DuelManager.AttackInfo> duel = getBattle().getCombatManager().getDuel(allyToken);
+                                        Map.Entry<FleetToken, DuelManager.AttackInfo> duel = getBattle().getCombatManager().getDuel(allyToken);
                                         if (duel == null) { return true; }
                                         ally = allyToken.getCard();
                                         enemy = getBattle().getCombatManager().getDuelOpponent(allyToken).getCard();
@@ -188,7 +189,7 @@ public class Automaton extends Bot {
                                         case FIRST_STRIKE:
                                             if (getBattle().getCombatManager().isTacticalPhase()) { //COMBAT ONLY
                                                 allyToken = getAlliedTarget(battleCard.getToken(), EffectType.FIRST_STRIKE);
-                                                Map.Entry<Token, DuelManager.AttackInfo> duel = getBattle().getCombatManager().getDuel(allyToken);
+                                                Map.Entry<FleetToken, DuelManager.AttackInfo> duel = getBattle().getCombatManager().getDuel(allyToken);
                                                 if (duel == null) { return true; }
                                                 ally = allyToken.getCard();
                                                 enemy = getBattle().getCombatManager().getDuelOpponent(allyToken).getCard();
@@ -358,13 +359,13 @@ public class Automaton extends Bot {
     @Override
     protected void combat() { //duel-pick
         super.combat();
-        HashMap<Token, DuelManager.AttackInfo> duels = new HashMap<>();
+        TreeMap<FleetToken, DuelManager.AttackInfo> duels = new TreeMap<>();
         Token enemy;
         for (Ship ship : getFleet().getShips()) {
             if (ship != null && !ship.isUsed()) {
                 enemy = getEnemyTarget(ship.getToken(), true);
                 if (enemy != null && getBattle().getCombatManager().canReach(ship.getToken(), enemy, enemy.getCard().getPlayer().getFleet())) {
-                    duels.put(ship.getToken(), new DuelManager.AttackInfo(enemy));
+                    duels.put((FleetToken) ship.getToken(), new DuelManager.AttackInfo(enemy));
                 }
             }
         }

@@ -36,16 +36,16 @@ public class TargetingToken extends FakeToken {
         batch.end();
         Vector2 start = new Vector2(getCard().getToken().getX()+getCard().getToken().getWidth()/2, getCard().getToken().getY()+getCard().getToken().getHeight()/2);
         Vector2 end = new Vector2(getX()+getWidth()/2, getY()+getHeight()/2);
-        drawConnection(shapeRenderer, start, end);
+        drawConnection(shapeRenderer, start, end, ColorPalette.changeAlpha(ColorPalette.LIGHT, 0.25f));
         batch.begin();
         batch.draw(aimPicRegion, getX(), getY(), getWidth()/2f, getHeight()/2f, getWidth(), getHeight(), 1f, 1f, (float) Math.toDegrees(Math.atan2(start.x - end.x, end.y - start.y)));
     }
 
-    public static void drawConnection(ShapeRenderer shapeRenderer, Vector2 start, Vector2 end) {
+    public static void drawConnection(ShapeRenderer shapeRenderer, Vector2 start, Vector2 end, Color color) {
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(ColorPalette.changeAlpha(ColorPalette.LIGHT, 0.25f));
+        shapeRenderer.setColor(color);
         shapeRenderer.rectLine(start, end, 5f);
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.end();
