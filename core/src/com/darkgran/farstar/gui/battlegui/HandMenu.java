@@ -12,8 +12,9 @@ import com.darkgran.farstar.gui.tokens.HandToken;
 import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.Hand;
+import com.darkgran.farstar.util.SimpleBox2;
 
-public class HandMenu extends CardListMenu {
+public class HandMenu extends CardListMenu implements DropTarget {
     private float actualX;
     private float actualY;
     private final ClickListener clickListener = new ClickListener(){
@@ -29,6 +30,7 @@ public class HandMenu extends CardListMenu {
         }
     };
     private final Actor clickListenerActor = new Actor();
+
     public enum HandMenuState {
         IDLE, UP;
     }
@@ -195,5 +197,10 @@ public class HandMenu extends CardListMenu {
 
     public HandMenuState getHandState() {
         return handMenuState;
+    }
+
+    @Override
+    public SimpleBox2 getSimpleBox2() {
+        return this;
     }
 }

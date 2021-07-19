@@ -96,6 +96,8 @@ public class BattleStage1V1 extends BattleStage {
         //Hands
         handMenu1 = new HandMenu(battlePlayer1.getHand(),Farstar.STAGE_WIDTH*0.5f, -Farstar.STAGE_HEIGHT*0.25f, this, battlePlayer1, true);
         handMenu2 = new HandMenu(battlePlayer2.getHand(),Farstar.STAGE_WIDTH*0.5f, Farstar.STAGE_HEIGHT*0.95f, this, battlePlayer2, false);
+        addDropTarget(handMenu1);
+        addDropTarget(handMenu2);
         //TokenZoom
         createTopActors();
     }
