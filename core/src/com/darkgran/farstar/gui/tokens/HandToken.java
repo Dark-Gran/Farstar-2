@@ -7,18 +7,18 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
+import com.darkgran.farstar.gui.battlegui.HandMenu;
 import com.darkgran.farstar.util.SimpleVector2;
 
 import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
 
-public class HandToken extends ClickToken implements CardGFX, FakingTokens {
+public class HandToken extends AnchoredToken implements CardGFX, FakingTokens {
     private Color fontColor = ColorPalette.BLACKISH;
     private Texture cardPic;
     Matrix4 oldMX = null;
@@ -42,6 +42,12 @@ public class HandToken extends ClickToken implements CardGFX, FakingTokens {
     }
 
     @Override
+    public void setGlows() {
+        setGlowG(Farstar.ASSET_LIBRARY.get("images/tokens/glowG_D.png"));
+        setGlowY(Farstar.ASSET_LIBRARY.get("images/tokens/glowY_D.png"));
+    }
+
+    @Override
     boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         if (button == 0) {
             if (getCard().getPlayer() instanceof LocalBattlePlayer && !getBattleStage().getAbilityPicker().isActive() && ((!getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && getBattleStage().getBattleScreen().getBattle().getWhoseTurn() == getCard().getPlayer()) || getCard().isTactic() && getBattleStage().getBattleScreen().getBattle().getCombatManager().isTacticalPhase()) && !getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
@@ -55,9 +61,9 @@ public class HandToken extends ClickToken implements CardGFX, FakingTokens {
     }
 
     @Override
-    public void setGlows() {
-        setGlowG(Farstar.ASSET_LIBRARY.get("images/tokens/glowG_D.png"));
-        setGlowY(Farstar.ASSET_LIBRARY.get("images/tokens/glowY_D.png"));
+    public void resetPosition() {
+        float offsetY = getCardListMenu().isNegativeOffset() ? -285f : 250f;
+        setPosition(getAnchorX(), getAnchorY() + (((HandMenu)getCardListMenu()).getHandState() == HandMenu.HandMenuState.UP ? offsetY : 0f));
     }
 
     public void refreshRotation(int position, int battleCards) {

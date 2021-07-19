@@ -4,8 +4,7 @@ import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 
-public abstract class AnchoredToken extends ClickToken implements Dragging {
-    private Dragger dragger;
+public abstract class AnchoredToken extends ClickToken {
     private float anchorX;
     private float anchorY;
 
@@ -32,13 +31,4 @@ public abstract class AnchoredToken extends ClickToken implements Dragging {
 
     public void setAnchorY(float anchorY) { this.anchorY = anchorY; }
 
-    @Override
-    public Dragger getDragger() {
-        return dragger;
-    }
-
-    @Override
-    public void setDragger(Dragger dragger) {
-        this.dragger = dragger;
-    }
 }
