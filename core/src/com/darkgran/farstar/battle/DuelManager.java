@@ -96,17 +96,17 @@ public class DuelManager implements Delayer {
         boolean FSDuel = attFS || defFS;
         if (attFS != defFS) {
             if (attFS) {
-                if (exeOneSide(att, def)) {
-                    if (!def.isMS() && !def.isKilledByFirstStrike()) { exeOneSide(def, att); }
+                if (exeOneSide(att, def, false)) {
+                    if (!def.isMS() && !def.isKilledByFirstStrike()) { exeOneSide(def, att, true); }
                 }
             } else {
-                if (def.isMS() || exeOneSide(def, att)) {
-                    if (!att.isKilledByFirstStrike()) { exeOneSide(att, def); }
+                if (def.isMS() || exeOneSide(def, att, false)) {
+                    if (!att.isKilledByFirstStrike()) { exeOneSide(att, def, true); }
                 }
             }
         } else {
-            if (FSDuel || !att.isKilledByFirstStrike()) { exeOneSide(att, def); }
-            if ((FSDuel || !def.isKilledByFirstStrike()) && !def.isMS()) { exeOneSide(def, att); }
+            if (FSDuel || !att.isKilledByFirstStrike()) { exeOneSide(att, def, false); }
+            if ((FSDuel || !def.isKilledByFirstStrike()) && !def.isMS()) { exeOneSide(def, att, false); }
         }
         if (FSDuel) {
             if (att.getHealth()<=0) { att.setKilledByFirstStrike(true); }
@@ -114,9 +114,13 @@ public class DuelManager implements Delayer {
         }
     }
 
-    private boolean exeOneSide(BattleCard att, BattleCard def) { //returns survival
+    private boolean exeOneSide(BattleCard att, BattleCard def, boolean delayedAnimation) { //returns survival
+        if (!delayedAnimation) {
+            shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots());
+        } else {
+            delayAction(()->shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots()), duelDelay*1.5f);
+        }
         int dmg = getDmgAgainstShields(att.getCardInfo().getOffense(), def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
-        shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots());
         return def.receiveDMG(dmg);
     }
 

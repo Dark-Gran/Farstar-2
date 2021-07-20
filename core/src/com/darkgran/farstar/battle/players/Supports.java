@@ -16,7 +16,7 @@ public class Supports extends CardList implements BattleTicks {
     @Override
     public boolean addCard(BattleCard battleCard) {
         if (getCardListMenu() != null && size() < getMaxSize()) {
-            Support support = new Support(battleCard.getCardInfo(), battleCard.getPlayer());
+            Support support = new Support(battleCard.getCardInfo(), battleCard.getBattlePlayer());
             support.setUsed(true);
             add(support);
             getCardListMenu().generateNewToken(support);

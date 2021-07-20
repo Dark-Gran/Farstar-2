@@ -12,7 +12,7 @@ public final class ColorPalette {
     public static final Color PITCH_BLACK = new Color(0f, 0f, 0f, 1);
     public static final Color BLACK = new Color(0.09f, 0.09f, 0.09f, 1);
     public static final Color BLACKISH = new Color(0.11f, 0.11f, 0.11f, 1); //1c1c1c
-    public static final Color RED = new Color(0.6f, 0.06f, 0.06f, 1);
+    public static final Color RED = new Color(0.6f, 0.06f, 0.06f, 1); //990f0f
     public static final Color GREEN = new Color(0.066f, 0.6f, 0.066f, 1);
 
     public static final class TechColors {

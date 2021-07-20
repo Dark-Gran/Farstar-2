@@ -42,7 +42,7 @@ public class AbilityManager {
                             getBattle().getRoundManager().askForTargets(casterToken, ability, dropTarget);
                             break;
                         case ENTIRE_ENEMY_FLEET:
-                            BattlePlayer[] enemies = getBattle().getEnemies(caster.getPlayer());
+                            BattlePlayer[] enemies = getBattle().getEnemies(caster.getBattlePlayer());
                             for (BattlePlayer enemy : enemies) {
                                 for (int i = 0; i < enemy.getFleet().getShips().length; i++) {
                                     if (enemy.getFleet().getShips()[i] != null) {
@@ -52,9 +52,9 @@ public class AbilityManager {
                             }
                             break;
                         case ENTIRE_ALLIED_FLEET:
-                            for (int i = 0; i < caster.getPlayer().getFleet().getShips().length; i++) {
-                                if (caster.getPlayer().getFleet().getShips()[i] != null) {
-                                    targets.add(caster.getPlayer().getFleet().getShips()[i]);
+                            for (int i = 0; i < caster.getBattlePlayer().getFleet().getShips().length; i++) {
+                                if (caster.getBattlePlayer().getFleet().getShips()[i] != null) {
+                                    targets.add(caster.getBattlePlayer().getFleet().getShips()[i]);
                                 }
                             }
                             break;
@@ -211,7 +211,7 @@ public class AbilityManager {
             TechType techType = TechType.valueOf(effect.getEffectInfo().get(1).toString());
             int dmg = DuelManager.getDmgAgainstShields(power, target.getHealth(), techType, target.getCardInfo().getDefenseType());
             if (caster != null) {
-                getBattle().getBattleScreen().getBattleStage().getShotManager().newAttack(caster.getPlayer().getMs().getToken(), target.getToken(), power, techType, caster.getCardInfo().getAnimatedShots());
+                getBattle().getBattleScreen().getBattleStage().getShotManager().newAttack(caster.getBattlePlayer().getMs().getToken(), target.getToken(), power, techType, caster.getCardInfo().getAnimatedShots());
             }
             if (!target.receiveDMG(dmg)) { target.death(); }
             return true;
@@ -238,10 +238,10 @@ public class AbilityManager {
             if (reverse) { change *= -1; }
             switch (resource) {
                 case ENERGY:
-                    target.getPlayer().addEnergy(change);
+                    target.getBattlePlayer().addEnergy(change);
                     return true;
                 case MATTER:
-                    target.getPlayer().addMatter(change);
+                    target.getBattlePlayer().addMatter(change);
                     return true;
             }
         }
@@ -263,18 +263,18 @@ public class AbilityManager {
                 return caster==target;
             case ANY_ALLY:
             case ENTIRE_ALLIED_FLEET:
-                return caster.getPlayer()==target.getPlayer();
+                return caster.getBattlePlayer()==target.getBattlePlayer();
             case ANY_ENEMY:
             case ENTIRE_ENEMY_FLEET:
-                return caster.getPlayer()!=target.getPlayer();
+                return caster.getBattlePlayer()!=target.getBattlePlayer();
             case ALLIED_FLEET:
-                return caster.getPlayer()==target.getPlayer() && !(target instanceof Mothership);
+                return caster.getBattlePlayer()==target.getBattlePlayer() && !(target instanceof Mothership);
             case ENEMY_FLEET:
-                return caster.getPlayer()!=target.getPlayer() && !(target instanceof Mothership);
+                return caster.getBattlePlayer()!=target.getBattlePlayer() && !(target instanceof Mothership);
             case ALLIED_MS:
-                return caster.getPlayer()==target.getPlayer() && target instanceof Mothership;
+                return caster.getBattlePlayer()==target.getBattlePlayer() && target instanceof Mothership;
             case ENEMY_MS:
-                return caster.getPlayer()!=target.getPlayer() && target instanceof Mothership;
+                return caster.getBattlePlayer()!=target.getBattlePlayer() && target instanceof Mothership;
 
         }
     }

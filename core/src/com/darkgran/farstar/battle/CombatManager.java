@@ -54,22 +54,22 @@ public abstract class CombatManager {
     }
 
     public void processDrop(Token token, Token targetToken) {
-        if (token instanceof FleetToken && active && !tacticalPhase && !duelManager.isActive() && token.getCard().getPlayer() == battle.getWhoseTurn() && !token.getCard().isUsed()) {
-            if (targetToken == null || targetToken.getCard().getPlayer() == token.getCard().getPlayer()) {
+        if (token instanceof FleetToken && active && !tacticalPhase && !duelManager.isActive() && token.getCard().getBattlePlayer() == battle.getWhoseTurn() && !token.getCard().isUsed()) {
+            if (targetToken == null || targetToken.getCard().getBattlePlayer() == token.getCard().getBattlePlayer()) {
                 duels.remove(token);
             } else if (token != targetToken) {
-                if (canReach(token, targetToken, targetToken.getCard().getPlayer().getFleet())) {
+                if (canReach(token, targetToken, targetToken.getCard().getBattlePlayer().getFleet())) {
                     duels.remove(token);
                     duels.put((FleetToken) token, new DuelManager.AttackInfo(targetToken));
                 }
             }
-            if (token.getCard().getPlayer() instanceof LocalBattlePlayer) { battle.getRoundManager().getPossibilityAdvisor().refresh(token.getCard().getPlayer(), battle); }
+            if (token.getCard().getBattlePlayer() instanceof LocalBattlePlayer) { battle.getRoundManager().getPossibilityAdvisor().refresh(token.getCard().getBattlePlayer(), battle); }
             battleStage.getCombatEndButton().setExtraState(duels.size()>0);
         }
     }
 
     public void cancelDuel(Token token) {
-        duels.remove(token);
+        duels.remove((FleetToken) token);
     }
 
     public boolean canReach(Token attacker, Token targetToken, Fleet targetFleet) {
@@ -103,12 +103,12 @@ public abstract class CombatManager {
             markFSGlows();
             System.out.println("Tactical Phase started.");
             getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "TACTICAL PHASE", 3);
-            if (!(activePlayer.getPlayer() instanceof Bot)) {
+            if (!(activePlayer.getBattlePlayer() instanceof Bot)) {
                 combatMenu.addOK(activePlayer.getCombatButton());
                 activePlayer.getCombatButton().setExtraState(false);
-                battle.getRoundManager().getPossibilityAdvisor().refresh(activePlayer.getPlayer(), battle);
+                battle.getRoundManager().getPossibilityAdvisor().refresh(activePlayer.getBattlePlayer(), battle);
             } else {
-                ((Bot) this.playersA[0].getPlayer()).newCombatOK(this.playersA[0].getCombatButton());
+                ((Bot) this.playersA[0].getBattlePlayer()).newCombatOK(this.playersA[0].getCombatButton());
             }
         } else {
             activePlayer = null;
@@ -123,19 +123,19 @@ public abstract class CombatManager {
 
     private void resetReadyStates(BattlePlayer invertedBattlePlayer, boolean first) {
         for (CombatPlayer combatPlayer : playersA) {
-            combatPlayer.setReady(invertedBattlePlayer != null && combatPlayer.getPlayer() == invertedBattlePlayer);
+            combatPlayer.setReady(invertedBattlePlayer != null && combatPlayer.getBattlePlayer() == invertedBattlePlayer);
         }
         for (CombatPlayer combatPlayer : playersD) {
-            combatPlayer.setReady(invertedBattlePlayer != null && combatPlayer.getPlayer() == invertedBattlePlayer);
+            combatPlayer.setReady(invertedBattlePlayer != null && combatPlayer.getBattlePlayer() == invertedBattlePlayer);
         }
     }
 
     private void setFSGlows(boolean picked) {
         for (CombatPlayer cp : playersA) {
-            setFSGlowOnPlayer(cp.getPlayer(), picked);
+            setFSGlowOnPlayer(cp.getBattlePlayer(), picked);
         }
         for (CombatPlayer cp : playersD) {
-            setFSGlowOnPlayer(cp.getPlayer(), picked);
+            setFSGlowOnPlayer(cp.getBattlePlayer(), picked);
         }
     }
 
@@ -207,11 +207,11 @@ public abstract class CombatManager {
             engage();
         } else {
             switchActivePlayer();
-            if (activePlayer.getPlayer() instanceof Bot) {
-                ((Bot) activePlayer.getPlayer()).newCombatOK(activePlayer.getCombatButton());
+            if (activePlayer.getBattlePlayer() instanceof Bot) {
+                ((Bot) activePlayer.getBattlePlayer()).newCombatOK(activePlayer.getCombatButton());
             } else {
                 combatMenu.addOK(activePlayer.getCombatButton());
-                battle.getRoundManager().getPossibilityAdvisor().refresh(activePlayer.getPlayer(), battle);
+                battle.getRoundManager().getPossibilityAdvisor().refresh(activePlayer.getBattlePlayer(), battle);
             }
         }
     }
@@ -271,12 +271,12 @@ public abstract class CombatManager {
 
     void afterDuels() {
         for (CombatPlayer cp : playersA) {
-            checkPlayerForAftermath(cp.getPlayer());
-            setFSGlowOnPlayer(cp.getPlayer(), false);
+            checkPlayerForAftermath(cp.getBattlePlayer());
+            setFSGlowOnPlayer(cp.getBattlePlayer(), false);
         }
         for (CombatPlayer cp : playersD) {
-            checkPlayerForAftermath(cp.getPlayer());
-            setFSGlowOnPlayer(cp.getPlayer(), false);
+            checkPlayerForAftermath(cp.getBattlePlayer());
+            setFSGlowOnPlayer(cp.getBattlePlayer(), false);
         }
         endCombat();
     }

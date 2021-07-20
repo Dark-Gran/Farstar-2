@@ -50,7 +50,7 @@ public class HandToken extends AnchoredToken implements CardGFX, FakingTokens { 
     @Override
     boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         if (button == 0) {
-            if (getCard().getPlayer() instanceof LocalBattlePlayer && !getBattleStage().getAbilityPicker().isActive() && ((!getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && getBattleStage().getBattleScreen().getBattle().getWhoseTurn() == getCard().getPlayer()) || getCard().isTactic() && getBattleStage().getBattleScreen().getBattle().getCombatManager().isTacticalPhase()) && !getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
+            if (getCard().getBattlePlayer() instanceof LocalBattlePlayer && !getBattleStage().getAbilityPicker().isActive() && ((!getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && getBattleStage().getBattleScreen().getBattle().getWhoseTurn() == getCard().getBattlePlayer()) || getCard().isTactic() && getBattleStage().getBattleScreen().getBattle().getCombatManager().isTacticalPhase()) && !getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
                 newFake(event, x, y, pointer, button, FakeTokenType.HAND);
                 setHidden(true);
             }
@@ -165,7 +165,7 @@ public class HandToken extends AnchoredToken implements CardGFX, FakingTokens { 
 
     @Override
     public boolean isBackside() {
-        return !(getCard().getPlayer() instanceof LocalBattlePlayer || getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION);
+        return !(getCard().getBattlePlayer() instanceof LocalBattlePlayer || getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION);
     }
 
 }

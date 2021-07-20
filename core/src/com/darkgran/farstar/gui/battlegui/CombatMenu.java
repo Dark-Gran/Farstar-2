@@ -9,7 +9,6 @@ import com.darkgran.farstar.battle.DuelManager;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.gui.tokens.FleetToken;
 import com.darkgran.farstar.gui.tokens.TargetingToken;
-import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 
 import java.util.Map;
@@ -41,7 +40,7 @@ public abstract class CombatMenu {
     }
 
     public void addOK(CombatOK combatOK) {
-        if (combatOK.getDuelPlayer().getPlayer() instanceof LocalBattlePlayer) {
+        if (combatOK.getDuelPlayer().getBattlePlayer() instanceof LocalBattlePlayer) {
             getBattleStage().addActor(combatOK);
             combatOK.setDisabled(false);
         }

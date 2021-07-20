@@ -25,7 +25,7 @@ public class SupportToken extends ClickToken implements DisableMark {
     void click(int button) {
         super.click(button);
         if (button == 0) {
-            getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(this, getCard().getPlayer());
+            getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(this, getCard().getBattlePlayer());
         }
     }
 

@@ -1,7 +1,6 @@
 package com.darkgran.farstar.gui.tokens;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.battle.players.BattleCard;
@@ -20,9 +19,9 @@ public class YardToken extends ClickToken implements FakingTokens{
     @Override
     boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         if (button == 0) {
-            if (yardMenu.isOpen() && getCard().getPlayer() instanceof LocalBattlePlayer &&  !getBattleStage().getAbilityPicker().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
+            if (yardMenu.isOpen() && getCard().getBattlePlayer() instanceof LocalBattlePlayer &&  !getBattleStage().getAbilityPicker().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
                 newFake(event, x, y, pointer, button, FakeTokenType.YARD);
-                if (getCard().getPlayer().getFleet().countShips() >= 5) {
+                if (getCard().getBattlePlayer().getFleet().countShips() >= 5) {
                     yardMenu.setOpen(false);
                 }
                 setPicked(true);

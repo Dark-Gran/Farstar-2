@@ -47,7 +47,7 @@ public class CardSource extends Actor {
     }
 
     public void update() {
-        info.setText(drawer.getPlayer().getDeck().size()+" Cards remaining.");
+        info.setText(drawer.getBattlePlayer().getDeck().size()+" Cards remaining.");
     }
 
     public void draw(Batch batch, ShapeRenderer shapeRenderer) {

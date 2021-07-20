@@ -31,7 +31,7 @@ public class YardMenu extends CardListMenu {
     }
 
     public void switchVisibility(boolean visible) {
-        if (getPlayer() instanceof LocalBattlePlayer) {
+        if (getBattlePlayer() instanceof LocalBattlePlayer) {
             setOpen(!visible);
             switchVisibility();
         } else {
@@ -42,7 +42,7 @@ public class YardMenu extends CardListMenu {
     }
 
     public void switchVisibility() {
-        if (getPlayer() instanceof LocalBattlePlayer) {
+        if (getBattlePlayer() instanceof LocalBattlePlayer) {
             if (!getBattleStage().getAbilityPicker().isActive()) {
                 open = !open;
                 setTouchable(open);

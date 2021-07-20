@@ -32,7 +32,7 @@ public class HandMenu extends CardListMenu implements DropTarget {
     private final Actor clickListenerActor = new Actor();
 
     public enum HandMenuState {
-        IDLE, UP;
+        IDLE, UP
     }
     private HandMenuState handMenuState = HandMenuState.IDLE;
     private final float menuShiftY;
@@ -50,7 +50,7 @@ public class HandMenu extends CardListMenu implements DropTarget {
     }
 
     public void setHandState(HandMenuState handMenuState) {
-        if (getPlayer() instanceof LocalBattlePlayer) {
+        if (getBattlePlayer() instanceof LocalBattlePlayer) {
             if (this.handMenuState != handMenuState) {
                 this.handMenuState = handMenuState;
                 centralize();

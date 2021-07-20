@@ -45,19 +45,19 @@ public class Deck extends CardList {
         if (size() > 0) {
             BattleCard battleCard = get(0);
             remove(0);
-            getPlayer().getBattle().getBattleScreen().getBattleStage().updateDeckInfos();
+            getBattlePlayer().getBattle().getBattleScreen().getBattleStage().updateDeckInfos();
             return battleCard;
         } else { return null; }
     }
 
     public void eatJunk() {
-        ArrayList<BattleCard> junkBattleCards = getPlayer().getJunkpile();
-        for (BattleCard junk : junkBattleCards) { add(junk); }
-        getPlayer().getJunkpile().clear();
+        ArrayList<BattleCard> junkBattleCards = getBattlePlayer().getJunkpile();
+        this.addAll(junkBattleCards);
+        getBattlePlayer().getJunkpile().clear();
     }
 
     private void shuffle() {
-        ArrayList<BattleCard> list = (ArrayList<BattleCard>) this.clone();
+        ArrayList<BattleCard> list = (CardList) this.clone();
         Collections.shuffle(list);
         clear();
         addAll(list);

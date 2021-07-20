@@ -4,6 +4,7 @@ import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.battle.RoundManager;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 
+@Deprecated
 public class ManagedDragger extends Dragger {
     private final RoundManager roundManager;
     private final CombatManager combatManager;
@@ -31,13 +32,11 @@ public class ManagedDragger extends Dragger {
     }
 
     public boolean isEnabled() {
-        if (getToken().getCard().getPlayer() instanceof LocalBattlePlayer && !roundManager.getBattle().isEverythingDisabled() && !roundManager.isTargetingActive() && !roundManager.getAbilityPicker().isActive()) {
+        if (getToken().getCard().getBattlePlayer() instanceof LocalBattlePlayer && !roundManager.getBattle().isEverythingDisabled() && !roundManager.isTargetingActive() && !roundManager.getAbilityPicker().isActive()) {
             if (!getToken().getCard().isUsed()) {
-                if (!combatManager.getDuelManager().isActive() && RoundManager.ownsToken(roundManager.getBattle().getWhoseTurn(), getToken()) && (!combatManager.isActive() || (combatManager.isTacticalPhase() && this.getToken().getCard().isTactic()))) { //forCombat == combatManager.isActive()
+                if (!combatManager.getDuelManager().isActive() && RoundManager.ownsToken(roundManager.getBattle().getWhoseTurn(), getToken()) && (!combatManager.isActive() || (combatManager.isTacticalPhase() && this.getToken().getCard().isTactic()))) {
                     return true;
-                } else if (!combatManager.getDuelManager().isActive() && this.getToken().getCard().isTactic() && combatManager.isTacticalPhase() && RoundManager.ownsToken(combatManager.getActivePlayer().getPlayer(), getToken())) {
-                    return true;
-                }
+                } else return !combatManager.getDuelManager().isActive() && this.getToken().getCard().isTactic() && combatManager.isTacticalPhase() && RoundManager.ownsToken(combatManager.getActivePlayer().getBattlePlayer(), getToken());
             }
         }
         return false;

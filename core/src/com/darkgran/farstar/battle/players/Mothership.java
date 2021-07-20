@@ -6,8 +6,8 @@ public class Mothership extends BattleCard {
 
     @Override
     public void death() {
-        if (getPlayer() != null) {
-            getToken().getBattleStage().getBattleScreen().getBattle().addGameOver(getPlayer());
+        if (getBattlePlayer() != null) {
+            getToken().getBattleStage().getBattleScreen().getBattle().addGameOver(getBattlePlayer());
         }
     }
 

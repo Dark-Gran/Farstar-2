@@ -87,7 +87,7 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
             Ship[] shipsPrediction = new Ship[7];
             for (int c = 0; c < fleet.getShips().length; c++) {
                 if (fleet.getShips()[c] != null) {
-                    shipsPrediction[c] = new Ship(fleet, fleet.getShips()[c].getCardInfo(), getPlayer());
+                    shipsPrediction[c] = new Ship(fleet, fleet.getShips()[c].getCardInfo(), getBattlePlayer());
                     shipsPrediction[c].setToken(fleet.getShips()[c].getToken());
                 } else {
                     shipsPrediction[c] = null;
@@ -103,7 +103,7 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
             }
             int end = side ? -1 : 7;
             int change = side ? -1 : 1;
-            Ship shipToSet = new Ship(getFleet(), new CardInfo(), getPlayer()); // = null;
+            Ship shipToSet = new Ship(getFleet(), new CardInfo(), getBattlePlayer()); // = null;
             shipToSet.setToken(new FleetToken(null, getX(), getBaseY(), getBattleStage(), null, TokenType.FLEET, this, true, false));
             shipToSet.getToken().setTouchable(Touchable.disabled);
             int i;
@@ -201,9 +201,9 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
     }
 
     private void drawShips(FleetToken[] arr, Batch batch) {
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] != null) {
-                arr[i].draw(batch);
+        for (FleetToken fleetToken : arr) {
+            if (fleetToken != null) {
+                fleetToken.draw(batch);
             }
         }
     }

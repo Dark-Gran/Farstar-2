@@ -22,10 +22,10 @@ public class Battle1v1 extends Battle {
         this.battlePlayer2 = battlePlayer2;
         this.battlePlayer1.setBattle(this);
         this.battlePlayer2.setBattle(this);
-        this.battlePlayer1.getMs().setPlayer(battlePlayer1);
+        this.battlePlayer1.getMs().setBattlePlayer(battlePlayer1);
         this.battlePlayer1.getDeck().setPlayerOnAll(battlePlayer1);
         this.battlePlayer1.getYard().setPlayerOnAll(battlePlayer1);
-        this.battlePlayer2.getMs().setPlayer(battlePlayer2);
+        this.battlePlayer2.getMs().setBattlePlayer(battlePlayer2);
         this.battlePlayer2.getDeck().setPlayerOnAll(battlePlayer2);
         this.battlePlayer2.getYard().setPlayerOnAll(battlePlayer2);
     }

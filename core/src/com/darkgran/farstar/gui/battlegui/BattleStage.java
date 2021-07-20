@@ -26,12 +26,20 @@ public abstract class BattleStage extends ListeningStage {
     private final AbilityPicker abilityPicker;
     private final RoundCounter roundCounter;
     public final ButtonWithExtraState turnButton = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.get("images/turn.png"), Farstar.ASSET_LIBRARY.get("images/turnO.png"), Farstar.ASSET_LIBRARY.get("images/turnP.png"), Farstar.ASSET_LIBRARY.get("images/turnOP.png")){
-        private final Texture turnButtonBackground = Farstar.ASSET_LIBRARY.get("images/turn_b.png");
+        private final Texture turnBackground = Farstar.ASSET_LIBRARY.get("images/turn_b.png");
+        private final Texture turnCombat = Farstar.ASSET_LIBRARY.get("images/turn_combat.png");
+        private final Texture turnWait = Farstar.ASSET_LIBRARY.get("images/turn_wait.png");
         @Override
         public void draw(Batch batch, float parentAlpha) {
-            batch.draw(turnButtonBackground, getX(), getY());
+            batch.draw(turnBackground, getX(), getY());
             if (!isDisabled()) {
                 super.draw(batch, parentAlpha);
+            } else {
+                if (getBattleScreen().getBattle().getCombatManager().isActive()) {
+                    batch.draw(turnCombat, getX(), getY());
+                } else {
+                    batch.draw(turnWait, getX(), getY());
+                }
             }
         }
         @Override

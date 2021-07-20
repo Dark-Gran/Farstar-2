@@ -54,7 +54,7 @@ public abstract class TokenZoom extends PrintToken {
 
     @Override
     public void enable(BattleCard battleCard, TokenType targetType, SimpleVector2 targetXY) {
-        if (getCard() != battleCard && (targetType != TokenType.HAND || battleCard.getPlayer() instanceof LocalBattlePlayer || getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION)) {
+        if (getCard() != battleCard && (targetType != TokenType.HAND || battleCard.getBattlePlayer() instanceof LocalBattlePlayer || getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION)) {
             counter.setEnabled(true);
             counting = true;
             hidden = false;
@@ -62,7 +62,7 @@ public abstract class TokenZoom extends PrintToken {
             explainer.refreshText(getCard());
             if (targetType != TokenType.JUNK && battleCard.getToken().getCardListMenu() instanceof HandMenu) {
                 ((HandMenu) battleCard.getToken().getCardListMenu()).setHandState(HandMenu.HandMenuState.UP);
-                if (battleCard.getPlayer() instanceof LocalBattlePlayer && !Gdx.input.isButtonPressed(Input.Buttons.LEFT) && battleCard.getPlayer() == getBattleStage().getBattleScreen().getBattle().getWhoseTurn()) { ((HandToken) battleCard.getToken()).setHidden(true); }
+                if (battleCard.getBattlePlayer() instanceof LocalBattlePlayer && !Gdx.input.isButtonPressed(Input.Buttons.LEFT) && battleCard.getBattlePlayer() == getBattleStage().getBattleScreen().getBattle().getWhoseTurn()) { ((HandToken) battleCard.getToken()).setHidden(true); }
             }
         }
     }
@@ -71,7 +71,7 @@ public abstract class TokenZoom extends PrintToken {
     public void disable() {
         if (getCard() != null && getCard().getToken().getTokenType() != TokenType.JUNK && getCard().getToken().getCardListMenu() instanceof HandMenu) {
             ((HandMenu) getCard().getToken().getCardListMenu()).setHandState(HandMenu.HandMenuState.IDLE);
-            if (getCard().getPlayer() instanceof LocalBattlePlayer && !Gdx.input.isButtonPressed(Input.Buttons.LEFT)) { ((HandToken) getCard().getToken()).setHidden(false); }
+            if (getCard().getBattlePlayer() instanceof LocalBattlePlayer && !Gdx.input.isButtonPressed(Input.Buttons.LEFT)) { ((HandToken) getCard().getToken()).setHidden(false); }
         }
         super.disable();
         hideExplainer();

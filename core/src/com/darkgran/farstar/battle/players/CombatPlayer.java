@@ -30,5 +30,5 @@ public class CombatPlayer {
         this.ready = ready;
     }
 
-    public BattlePlayer getPlayer() { return battlePlayer; }
+    public BattlePlayer getBattlePlayer() { return battlePlayer; }
 }

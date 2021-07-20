@@ -21,7 +21,7 @@ public class MothershipToken extends ClickToken implements DropTarget, DisableMa
         super(battleCard, x, y, battleStage, cardListMenu, TokenType.MS, false, true);
         this.supportMenu = supportMenu;
         setupSimpleBox2(x, y, getWidth(), getHeight());
-        getCard().getPlayer().getMs().setToken(this);
+        getCard().getBattlePlayer().getMs().setToken(this);
         setMark(Farstar.ASSET_LIBRARY.get("images/tokens/disable_MS.png"));
     }
 
@@ -37,7 +37,7 @@ public class MothershipToken extends ClickToken implements DropTarget, DisableMa
     void click(int button) {
         super.click(button);
         if (button == 0) {
-            getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(this, getCard().getPlayer());
+            getBattleStage().getBattleScreen().getBattle().getRoundManager().processClick(this, getCard().getBattlePlayer());
         }
     }
 

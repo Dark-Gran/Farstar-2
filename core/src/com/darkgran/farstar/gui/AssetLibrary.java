@@ -183,7 +183,9 @@ public class AssetLibrary {
         assetManager.load("images/tacticalOKCO.png", Texture.class, texParams);
         assetManager.load("images/tacticalOKO.png", Texture.class, texParams);
         assetManager.load("images/turn.png", Texture.class, texParams);
+        assetManager.load("images/turn_combat.png", Texture.class, texParams);
         assetManager.load("images/turn_b.png", Texture.class, texParams);
+        assetManager.load("images/turn_wait.png", Texture.class, texParams);
         assetManager.load("images/turnO.png", Texture.class, texParams);
         assetManager.load("images/turnOP.png", Texture.class, texParams);
         assetManager.load("images/turnP.png", Texture.class, texParams);

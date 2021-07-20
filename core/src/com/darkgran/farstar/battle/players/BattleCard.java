@@ -32,8 +32,8 @@ public class BattleCard extends Card {
     @Override
     public void refreshToken(boolean def, boolean off) {
         if (getToken() != null) {
-            if (getPlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom() != null && this == getPlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().getCard()) {
-                getPlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().setup(this, getToken().getTokenType(), getPlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().getTargetXY());
+            if (getBattlePlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom() != null && this == getBattlePlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().getCard()) {
+                getBattlePlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().setup(this, getToken().getTokenType(), getBattlePlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().getTargetXY());
             }
             if (def) { getToken().getTokenDefense().update(); }
             if (off) { getToken().getTokenOffense().update(); }
@@ -44,8 +44,8 @@ public class BattleCard extends Card {
     public void setPossible(boolean possible) {
         super.setPossible(possible);
         if (getToken() != null && !getToken().isPicked()) { getToken().setGlowState(possible ? Token.GlowState.POSSIBLE : Token.GlowState.DIM); }
-        if (getPlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom() != null && this == getPlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().getCard()) {
-            getPlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().setGlowState(getToken().getGlowState());
+        if (getBattlePlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom() != null && this == getBattlePlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().getCard()) {
+            getBattlePlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().setGlowState(getToken().getGlowState());
         }
     }
 
@@ -112,9 +112,9 @@ public class BattleCard extends Card {
 
     public void setDamage(int damage) { this.damage = damage; }
 
-    public BattlePlayer getPlayer() { return battlePlayer; }
+    public BattlePlayer getBattlePlayer() { return battlePlayer; }
 
-    public void setPlayer(BattlePlayer battlePlayer) { this.battlePlayer = battlePlayer; }
+    public void setBattlePlayer(BattlePlayer battlePlayer) { this.battlePlayer = battlePlayer; }
 
     public boolean isKilledByFirstStrike() {
         return killedByFirstStrike;

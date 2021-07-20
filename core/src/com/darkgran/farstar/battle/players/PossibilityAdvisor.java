@@ -16,7 +16,7 @@ public class PossibilityAdvisor {
         ArrayList<PossibilityInfo> possibilities = new ArrayList<>();
         boolean inCombat = battle.getCombatManager().isActive();
         boolean tacticalPhase = battle.getCombatManager().isTacticalPhase();
-        BattlePlayer whoseTurn = !tacticalPhase ? battle.getWhoseTurn() : battle.getCombatManager().getActivePlayer().getPlayer();
+        BattlePlayer whoseTurn = battle.getWhoseTurn();
         if (battlePlayer == whoseTurn) {
             if (!inCombat && hasPossibleAbility(battlePlayer, battlePlayer.getMs())) {
                 possibilities.add(new PossibilityInfo(battlePlayer.getMs(), null));

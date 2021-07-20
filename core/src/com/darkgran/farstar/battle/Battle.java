@@ -15,7 +15,7 @@ public abstract class Battle {
     private CombatManager combatManager;
     private AbilityManager abilityManager;
     private boolean everythingDisabled = false;
-    private ArrayList<BattlePlayer> gameOvers = new ArrayList<BattlePlayer>();
+    private ArrayList<BattlePlayer> gameOvers = new ArrayList<>();
 
     public Battle() {
         System.out.println("Launching Battle...");
@@ -79,13 +79,15 @@ public abstract class Battle {
         return combatManager.isActive() || combatManager.getDuelManager().isActive();
     }
 
+    public BattlePlayer getWhoseTurn() {
+        return getCombatManager().isTacticalPhase() ? getCombatManager().getActivePlayer().getBattlePlayer() : whoseTurn;
+    }
+
     public BattlePlayer[] getEnemies(BattlePlayer battlePlayer) {
         return null;
     }
 
     public BattlePlayer[] getAllies(BattlePlayer battlePlayer) { return null; }
-
-    public BattlePlayer getWhoseTurn() { return whoseTurn; }
 
     public void setWhoseTurn(BattlePlayer whoseTurn) { this.whoseTurn = whoseTurn; }
 

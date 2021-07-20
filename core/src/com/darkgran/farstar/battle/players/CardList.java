@@ -39,9 +39,9 @@ public abstract class CardList extends ArrayList<BattleCard> {
     }
 
     public void setPlayerOnAll(BattlePlayer battlePlayer) {
-        setPlayer(battlePlayer);
+        setBattlePlayer(battlePlayer);
         for (BattleCard battleCard : this) {
-            battleCard.setPlayer(battlePlayer);
+            battleCard.setBattlePlayer(battlePlayer);
         }
     }
 
@@ -68,8 +68,8 @@ public abstract class CardList extends ArrayList<BattleCard> {
 
     public CardListMenu getCardListMenu() { return cardListMenu; }
 
-    public BattlePlayer getPlayer() { return battlePlayer; }
+    public BattlePlayer getBattlePlayer() { return battlePlayer; }
 
-    public void setPlayer(BattlePlayer battlePlayer) { this.battlePlayer = battlePlayer; }
+    public void setBattlePlayer(BattlePlayer battlePlayer) { this.battlePlayer = battlePlayer; }
 
 }

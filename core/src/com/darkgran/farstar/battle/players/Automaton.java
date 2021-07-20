@@ -364,7 +364,7 @@ public class Automaton extends Bot {
         for (Ship ship : getFleet().getShips()) {
             if (ship != null && !ship.isUsed()) {
                 enemy = getEnemyTarget(ship.getToken(), true);
-                if (enemy != null && getBattle().getCombatManager().canReach(ship.getToken(), enemy, enemy.getCard().getPlayer().getFleet())) {
+                if (enemy != null && getBattle().getCombatManager().canReach(ship.getToken(), enemy, enemy.getCard().getBattlePlayer().getFleet())) {
                     duels.put((FleetToken) ship.getToken(), new DuelManager.AttackInfo(enemy));
                 }
             }

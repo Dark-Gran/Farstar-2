@@ -190,7 +190,7 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
         getCard().setPossible(false);
         setPicked(false);
         if (getCardListMenu() != null) {
-            getCardListMenu().getPlayer().getJunkpile().addCard(this.getCard());
+            getCardListMenu().getBattlePlayer().getJunkpile().addCard(this.getCard());
         } else if (this instanceof FleetToken) {
             FleetToken fleetToken = (FleetToken) this;
             if (fleetToken.getFleetMenu() != null) {

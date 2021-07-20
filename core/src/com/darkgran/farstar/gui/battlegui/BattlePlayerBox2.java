@@ -21,8 +21,8 @@ public abstract class BattlePlayerBox2 extends SimpleBox2 {
 
     public BattleStage getBattleStage() { return battleStage; }
 
-    public BattlePlayer getPlayer() { return battlePlayer; }
+    public BattlePlayer getBattlePlayer() { return battlePlayer; }
 
-    public void setPlayer(BattlePlayer battlePlayer) { this.battlePlayer = battlePlayer; }
+    public void setBattlePlayer(BattlePlayer battlePlayer) { this.battlePlayer = battlePlayer; }
 
 }

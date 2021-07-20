@@ -53,7 +53,7 @@ public class JunkButton extends ClickToken implements DropTarget {
         return new SimpleBox2(getX(), getY(), getWidth(), getHeight());
     }
 
-    public BattlePlayer getPlayer() {
+    public BattlePlayer getBattlePlayer() {
         return battlePlayer;
     }
 
