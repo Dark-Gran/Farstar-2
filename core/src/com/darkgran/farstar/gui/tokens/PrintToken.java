@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.darkgran.farstar.battle.BattleType;
+import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
@@ -95,6 +97,11 @@ public class PrintToken extends Token implements CardGFX {
 
     public Texture getCardPic() {
         return cardPic;
+    }
+
+    @Override
+    public boolean isBackside() {
+        return false;
     }
 
     @Override

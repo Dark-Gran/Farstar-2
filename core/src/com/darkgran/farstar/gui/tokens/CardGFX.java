@@ -9,7 +9,6 @@ import com.darkgran.farstar.cards.Card;
 import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.cards.CardCulture;
 import com.darkgran.farstar.cards.CardType;
 import com.darkgran.farstar.gui.TextDrawer;
@@ -21,6 +20,7 @@ public interface CardGFX extends TextDrawer {
     Texture getCardPic();
     Card getCard();
     TokenType getTokenType();
+    boolean isBackside();
 
     @Override
     default float getWrapWidth() { return getCardPic().getWidth(); }
@@ -29,14 +29,18 @@ public interface CardGFX extends TextDrawer {
 
     default void resetCardGFX(CardCulture culture, TokenType tokenType) {
         if (tokenType != null) {
-            setCardPic(Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/card" + culture.getAcronym()+"_", tokenType, false) + ".png"));
+            if (!isBackside()) {
+                setCardPic(Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/card" + culture.getAcronym() + "_", tokenType, false) + ".png"));
+            } else {
+                setCardPic(Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/cardB_", tokenType, false) + ".png"));
+            }
         }
     }
 
     default void drawCardGFX(Batch batch, float x, float y, TokenType tokenType) {
         if (getCardPic() != null) {
             batch.draw(getCardPic(), x, y);
-            if (getCard() != null) {
+            if (getCard() != null && !isBackside()) {
                 drawText(getNameFont(tokenType), batch, x, y+getCardPic().getHeight()*0.518f, getCardName(getCard()), Align.center);
                 drawText(getTierFont(tokenType), batch, x, y+getCardPic().getHeight()*0.452f, getTierName(getCardTier(getCard()), getCardType(getCard())), Align.center);
                 drawText(getDescFont(tokenType), batch, x, y+getCardPic().getHeight()*0.37f, getCardDescription(getCard()), Align.center, ColorPalette.BLACK);

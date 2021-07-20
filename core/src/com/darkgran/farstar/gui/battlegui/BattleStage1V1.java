@@ -54,8 +54,8 @@ public class BattleStage1V1 extends BattleStage {
         turnButton.setPosition(1828f, 478f - turnButton.getHeight() * 0.5f);
         addActor(turnButton);
         //Tiers
-        tier1 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.083f, Farstar.STAGE_HEIGHT*0.064f);
-        tier2 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.083f, Farstar.STAGE_HEIGHT*0.95f);
+        tier1 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.079f, Farstar.STAGE_HEIGHT*0.064f);
+        tier2 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.079f, Farstar.STAGE_HEIGHT*0.946f);
         //Discards / Junkpiles
         junkButton1 = new JunkButton(Farstar.STAGE_WIDTH*0.871f, Farstar.STAGE_HEIGHT*0.13f, this, battlePlayer1);
         junkButton2 = new JunkButton(Farstar.STAGE_WIDTH*0.871f, Farstar.STAGE_HEIGHT*0.88f - TokenType.JUNK.getHeight(), this, battlePlayer2);
@@ -85,16 +85,16 @@ public class BattleStage1V1 extends BattleStage {
         addActor(deck1);
         addActor(deck2);
         //Shipyards
-        yardMenu1 = new YardMenu(battlePlayer1.getShipyard(), false, 223f, Farstar.STAGE_HEIGHT*0.078f, this, battlePlayer1);
-        yardButton1.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.029f);
+        yardMenu1 = new YardMenu(battlePlayer1.getShipyard(), false, 194f, Farstar.STAGE_HEIGHT*0.078f, this, battlePlayer1);
+        yardButton1.setPosition(Farstar.STAGE_WIDTH*0.094f, Farstar.STAGE_HEIGHT*0.029f);
         battlePlayer1.getYard().setYardButton(yardButton1);
         addActor(yardButton1);
-        yardMenu2 = new YardMenu(battlePlayer2.getShipyard(), true, 223f, Farstar.STAGE_HEIGHT*0.76f, this, battlePlayer2);
-        yardButton2.setPosition(Farstar.STAGE_WIDTH*0.1f, Farstar.STAGE_HEIGHT*0.91f);
+        yardMenu2 = new YardMenu(battlePlayer2.getShipyard(), true, 194f, Farstar.STAGE_HEIGHT*0.76f, this, battlePlayer2);
+        yardButton2.setPosition(Farstar.STAGE_WIDTH*0.094f, Farstar.STAGE_HEIGHT*0.91f);
         battlePlayer2.getYard().setYardButton(yardButton2);
         addActor(yardButton2);
         //Hands
-        handMenu1 = new HandMenu(battlePlayer1.getHand(),Farstar.STAGE_WIDTH*0.5f, -Farstar.STAGE_HEIGHT*0.25f, this, battlePlayer1, true);
+        handMenu1 = new HandMenu(battlePlayer1.getHand(),Farstar.STAGE_WIDTH*0.5f, -Farstar.STAGE_HEIGHT*0.35f, this, battlePlayer1, true);
         handMenu2 = new HandMenu(battlePlayer2.getHand(),Farstar.STAGE_WIDTH*0.5f, Farstar.STAGE_HEIGHT*0.95f, this, battlePlayer2, false);
         addDropTarget(handMenu1);
         addDropTarget(handMenu2);

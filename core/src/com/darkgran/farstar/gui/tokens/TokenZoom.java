@@ -1,7 +1,11 @@
 package com.darkgran.farstar.gui.tokens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.darkgran.farstar.battle.BattleType;
 import com.darkgran.farstar.battle.players.BattleCard;
+import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.gui.battlegui.HandMenu;
@@ -50,7 +54,7 @@ public abstract class TokenZoom extends PrintToken {
 
     @Override
     public void enable(BattleCard battleCard, TokenType targetType, SimpleVector2 targetXY) {
-        if (getCard() != battleCard) {
+        if (getCard() != battleCard && (targetType != TokenType.HAND || battleCard.getPlayer() instanceof LocalBattlePlayer || getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION)) {
             counter.setEnabled(true);
             counting = true;
             hidden = false;
@@ -58,6 +62,7 @@ public abstract class TokenZoom extends PrintToken {
             explainer.refreshText(getCard());
             if (targetType != TokenType.JUNK && battleCard.getToken().getCardListMenu() instanceof HandMenu) {
                 ((HandMenu) battleCard.getToken().getCardListMenu()).setHandState(HandMenu.HandMenuState.UP);
+                if (battleCard.getPlayer() instanceof LocalBattlePlayer && !Gdx.input.isButtonPressed(Input.Buttons.LEFT) && battleCard.getPlayer() == getBattleStage().getBattleScreen().getBattle().getWhoseTurn()) { ((HandToken) battleCard.getToken()).setHidden(true); }
             }
         }
     }
@@ -66,6 +71,7 @@ public abstract class TokenZoom extends PrintToken {
     public void disable() {
         if (getCard() != null && getCard().getToken().getTokenType() != TokenType.JUNK && getCard().getToken().getCardListMenu() instanceof HandMenu) {
             ((HandMenu) getCard().getToken().getCardListMenu()).setHandState(HandMenu.HandMenuState.IDLE);
+            if (getCard().getPlayer() instanceof LocalBattlePlayer && !Gdx.input.isButtonPressed(Input.Buttons.LEFT)) { ((HandToken) getCard().getToken()).setHidden(false); }
         }
         super.disable();
         hideExplainer();

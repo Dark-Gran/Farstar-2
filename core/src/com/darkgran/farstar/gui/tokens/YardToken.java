@@ -22,6 +22,9 @@ public class YardToken extends ClickToken implements FakingTokens{
         if (button == 0) {
             if (yardMenu.isOpen() && getCard().getPlayer() instanceof LocalBattlePlayer &&  !getBattleStage().getAbilityPicker().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && !yardMenu.getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
                 newFake(event, x, y, pointer, button, FakeTokenType.YARD);
+                if (getCard().getPlayer().getFleet().countShips() >= 5) {
+                    yardMenu.setOpen(false);
+                }
                 setPicked(true);
             }
             return false;

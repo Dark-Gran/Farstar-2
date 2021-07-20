@@ -3,6 +3,8 @@ package com.darkgran.farstar.mainscreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.darkgran.farstar.battle.Battle;
+import com.darkgran.farstar.battle.BattleType;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.ListeningStage;
@@ -19,34 +21,15 @@ public class MainScreenStage extends ListeningStage {
 
     private final ActorButton startButton = new ActorButton(Farstar.ASSET_LIBRARY.get("images/solitary.png"), Farstar.ASSET_LIBRARY.get("images/solitaryO.png")){
         @Override
-        public void clicked() {
-            System.out.println("Starting Solitary.");
-            getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(),
-                    new Battle1v1(
-                            playerFactory.getPlayer("LOCAL", 1, 0),
-                            playerFactory.getPlayer("LOCAL", 2, 15)),
-                    getGame().getSuperScreen().getNotificationManager(), getGame().getSuperScreen().getScreenSettings()));
-        }
+        public void clicked() { launchBattleScreen(BattleType.SOLITARY); }
     };
     private final ActorButton botButton = new ActorButton(Farstar.ASSET_LIBRARY.get("images/skirmish.png"), Farstar.ASSET_LIBRARY.get("images/skirmishO.png")){
         @Override
-        public void clicked() {
-            System.out.println("Starting Skirmish.");
-            getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(),
-                    new Battle1v1(playerFactory.getPlayer("LOCAL", 1, 0),
-                            playerFactory.getPlayer("AUTO", 2, 15)),
-                    getGame().getSuperScreen().getNotificationManager(), getGame().getSuperScreen().getScreenSettings()));
-        }
+        public void clicked() { launchBattleScreen(BattleType.SKIRMISH); }
     };
     private final ActorButton simButton = new ActorButton(Farstar.ASSET_LIBRARY.get("images/sim.png"), Farstar.ASSET_LIBRARY.get("images/simO.png")){
         @Override
-        public void clicked() {
-            System.out.println("Starting Simulation.");
-            getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(),
-                    new Battle1v1(playerFactory.getPlayer("AUTO", 1, 0),
-                            playerFactory.getPlayer("AUTO", 2, 15)),
-                    getGame().getSuperScreen().getNotificationManager(), getGame().getSuperScreen().getScreenSettings()));
-        }
+        public void clicked() { launchBattleScreen(BattleType.SIMULATION); }
     };
     private final ActorButton webButton = new ActorButton(Farstar.ASSET_LIBRARY.get("images/web.png"), Farstar.ASSET_LIBRARY.get("images/webO.png")){
         @Override
@@ -55,6 +38,7 @@ public class MainScreenStage extends ListeningStage {
             Gdx.net.openURI("https://github.com/Dark-Gran/Farstar-2");
         }
     };
+
 
     public MainScreenStage(final Farstar game, Viewport viewport) {
         super(game, viewport);
@@ -80,6 +64,34 @@ public class MainScreenStage extends ListeningStage {
             addActor(startButton);
             addActor(botButton);
             addActor(simButton);
+        }
+    }
+
+    private void launchBattleScreen(BattleType battleType) {
+        System.out.println("Starting "+battleType.getName()+".");
+        Battle battle = null;
+        switch (battleType) {
+            case SKIRMISH:
+                battle = new Battle1v1(
+                        playerFactory.getPlayer("LOCAL", 1, 0),
+                        playerFactory.getPlayer("AUTO", 2, 15)
+                );
+                break;
+            case SIMULATION:
+                battle = new Battle1v1(
+                        playerFactory.getPlayer("AUTO", 1, 0),
+                        playerFactory.getPlayer("AUTO", 2, 15)
+                );
+                break;
+            case SOLITARY:
+                battle = new Battle1v1(
+                        playerFactory.getPlayer("LOCAL", 1, 0),
+                        playerFactory.getPlayer("LOCAL", 2, 15)
+                );
+                break;
+        }
+        if (battle != null) {
+            getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), battle, battleType, getGame().getSuperScreen().getNotificationManager(), getGame().getSuperScreen().getScreenSettings()));
         }
     }
 

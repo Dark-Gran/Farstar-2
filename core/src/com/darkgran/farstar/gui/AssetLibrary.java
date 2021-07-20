@@ -183,6 +183,7 @@ public class AssetLibrary {
         assetManager.load("images/tacticalOKCO.png", Texture.class, texParams);
         assetManager.load("images/tacticalOKO.png", Texture.class, texParams);
         assetManager.load("images/turn.png", Texture.class, texParams);
+        assetManager.load("images/turn_b.png", Texture.class, texParams);
         assetManager.load("images/turnO.png", Texture.class, texParams);
         assetManager.load("images/turnOP.png", Texture.class, texParams);
         assetManager.load("images/turnP.png", Texture.class, texParams);
@@ -191,6 +192,7 @@ public class AssetLibrary {
         assetManager.load("images/yardOP.png", Texture.class, texParams);
         assetManager.load("images/yardP.png", Texture.class, texParams);
         //Cards
+        assetManager.load("images/tokens/cardB_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/cardH_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/cardH_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/cardH_Z.png", Texture.class, texParams);

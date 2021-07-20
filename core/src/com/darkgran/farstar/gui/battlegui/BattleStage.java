@@ -1,5 +1,6 @@
 package com.darkgran.farstar.gui.battlegui;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -25,6 +26,14 @@ public abstract class BattleStage extends ListeningStage {
     private final AbilityPicker abilityPicker;
     private final RoundCounter roundCounter;
     public final ButtonWithExtraState turnButton = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.get("images/turn.png"), Farstar.ASSET_LIBRARY.get("images/turnO.png"), Farstar.ASSET_LIBRARY.get("images/turnP.png"), Farstar.ASSET_LIBRARY.get("images/turnOP.png")){
+        private final Texture turnButtonBackground = Farstar.ASSET_LIBRARY.get("images/turn_b.png");
+        @Override
+        public void draw(Batch batch, float parentAlpha) {
+            batch.draw(turnButtonBackground, getX(), getY());
+            if (!isDisabled()) {
+                super.draw(batch, parentAlpha);
+            }
+        }
         @Override
         public void clicked() {
             if (battleScreen.getBattle().getWhoseTurn() instanceof LocalBattlePlayer) {

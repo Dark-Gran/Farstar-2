@@ -57,4 +57,5 @@ public class Herald extends TokenZoom {
             setup(battleCard, targetType, targetXY);
         }
     }
+
 }

@@ -20,31 +20,33 @@ public class BattleScreen extends SuperScreen {
     private final WorldManager worldManager = new WorldManager();
     private final Battle battle;
     private final BattleStage battleStage;
+    private final BattleType battleType;
 
     private final InputAdapter battleAdapter = new InputAdapter() {
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            battleStage.getCardZoom().reactivate();
+            return super.touchUp(screenX, screenY, pointer, button);
+        }
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             if (button == 1) { //mouse.right
                 if (battle.getRoundManager().isLaunched() && battle.getWhoseTurn() instanceof LocalBattlePlayer) {
                     battle.getRoundManager().tryCancel();
                     battle.closeYards();
                 }
             }
-            battleStage.getCardZoom().reactivate();
-            return super.touchUp(screenX, screenY, pointer, button);
-        }
-        @Override
-        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             battleStage.getCardZoom().deactivate(button==1);
             return super.touchDown(screenX, screenY, pointer, button);
         }
     };
 
-    public BattleScreen(final Farstar game, TableStage tableStage, Battle battle, NotificationManager notificationManager, ScreenSettings screenSettings) {
+    public BattleScreen(final Farstar game, TableStage tableStage, Battle battle, BattleType battleType, NotificationManager notificationManager, ScreenSettings screenSettings) {
         super(game, notificationManager, screenSettings);
         setTableMenu(tableStage);
         Box2D.init();
         this.battle = battle;
+        this.battleType = battleType;
         battle.startingSetup(this,
                 new RoundManager(battle, new PossibilityAdvisor()),
                 battle.createCombatManager(),
@@ -122,4 +124,7 @@ public class BattleScreen extends SuperScreen {
 
     public BattleStage getBattleStage() { return battleStage; }
 
+    public BattleType getBattleType() {
+        return battleType;
+    }
 }

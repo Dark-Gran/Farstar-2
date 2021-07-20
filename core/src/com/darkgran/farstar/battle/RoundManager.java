@@ -66,11 +66,13 @@ public class RoundManager {
         if (battle.getWhoseTurn() instanceof LocalBattlePlayer) {
             possibilityAdvisor.markPossibilities(battle.getWhoseTurn(), battle);
             getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "YOUR TURN", 3);
+            getBattle().getBattleScreen().getBattleStage().getTurnButton().setDisabled(false);
         } else {
             if (battle.getWhoseTurn() instanceof Bot) {
                 ((Bot) battle.getWhoseTurn()).newTurn();
             }
             getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "ENEMY TURN", 3);
+            getBattle().getBattleScreen().getBattleStage().getTurnButton().setDisabled(true);
         }
     }
 
@@ -95,6 +97,7 @@ public class RoundManager {
     public void endTurn() {
         if (!battle.getCombatManager().isActive() && !battle.isEverythingDisabled() && !targetingActive) {
             battle.closeYards();
+            getBattle().getBattleScreen().getBattleStage().getTurnButton().setDisabled(true);
             battle.getCombatManager().launchCombat();
             battle.refreshPossibilities();
         }
@@ -162,11 +165,7 @@ public class RoundManager {
                                         //ABILITIES
                                         postponedDeploy.setPosition(position);
                                         if (!postAbility) {
-                                            /*if (token.getCard().getPlayer() instanceof Bot) {
-                                                success = checkAllAbilities(token, (fleet.getShips()[position] != null) ? fleet.getShips()[position].getToken() : null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
-                                            } else {*/
-                                                success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
-                                            //}
+                                            success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
                                         }
                                         if (postAbility || success) {
                                             if (fleet.getShips()[position] != null) {
@@ -201,14 +200,11 @@ public class RoundManager {
                     if (success || postAbility) {
                         //System.out.println("Drop Success.");
                         if (payPrice) { whoseTurn.payday(token.getCard()); }
-                        /*if (!postAbility && targetCard != null && getBattle().getCombatManager().isTacticalPhase() && token.getCard().getCardInfo().getCardType() == CardType.TACTIC) {
-                            battle.getCombatManager().saveTactic(token.getCard(), targetCard);
-                        }*/
-                        if (!(token instanceof FakeToken) && !CardType.isShip(cardType) && cardType != CardType.SUPPORT && cardType != CardType.MS) { token.addCardToJunk(); }
+                        if (!CardType.isShip(cardType) && cardType != CardType.SUPPORT && cardType != CardType.MS) { token.getCard().getToken().addCardToJunk(); }
                     } else if (dropTarget instanceof JunkButton && (token instanceof DeploymentCard || token instanceof HandToken)) { //Target: Discard
                         Junkpile junkpile = ((JunkButton) dropTarget).getPlayer().getJunkpile();
                         if (junkpile == whoseTurn.getJunkpile()) {
-                            token.addCardToJunk();
+                            token.getCard().getToken().addCardToJunk();
                             success = true;
                         }
                     }

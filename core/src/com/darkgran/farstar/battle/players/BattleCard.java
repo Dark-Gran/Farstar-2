@@ -12,6 +12,7 @@ public class BattleCard extends Card {
     private final ArrayList<AbilityRecord> history = new ArrayList<>();
     private boolean used; //for AbilityStarter.USE
     private int damage = 0;
+    private boolean killedByFirstStrike;
 
     public BattleCard(CardInfo cardInfo, BattlePlayer battlePlayer) {
         super(cardInfo);
@@ -115,4 +116,11 @@ public class BattleCard extends Card {
 
     public void setPlayer(BattlePlayer battlePlayer) { this.battlePlayer = battlePlayer; }
 
+    public boolean isKilledByFirstStrike() {
+        return killedByFirstStrike;
+    }
+
+    public void setKilledByFirstStrike(boolean killedByFirstStrike) {
+        this.killedByFirstStrike = killedByFirstStrike;
+    }
 }

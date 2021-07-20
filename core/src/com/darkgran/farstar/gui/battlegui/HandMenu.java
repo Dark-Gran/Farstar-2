@@ -35,13 +35,15 @@ public class HandMenu extends CardListMenu implements DropTarget {
         IDLE, UP;
     }
     private HandMenuState handMenuState = HandMenuState.IDLE;
+    private final float menuShiftY;
 
     public HandMenu(Hand hand, float x, float y, BattleStage battleStage, BattlePlayer battlePlayer, boolean onBottom) {
         super(hand, x, y, 0, 0, !onBottom, battleStage, battlePlayer);
-        setWidth(Farstar.STAGE_WIDTH*0.57f);
-        setHeight(Farstar.STAGE_HEIGHT*0.35f);
+        setWidth(Farstar.STAGE_WIDTH*0.59f);
+        setHeight(Farstar.STAGE_HEIGHT*0.45f);
         actualX = x;
-        actualY = y;
+        actualY = !onBottom ? y : y + Farstar.STAGE_HEIGHT*0.1f;
+        menuShiftY = isNegativeOffset() ? -285f : 250f;
         clickListenerActor.addListener(clickListener);
         clickListenerActor.setBounds(getX()-getWidth()/2, getY(), getWidth(), getHeight());
         battleStage.addActor(clickListenerActor);
@@ -51,9 +53,7 @@ public class HandMenu extends CardListMenu implements DropTarget {
         if (getPlayer() instanceof LocalBattlePlayer) {
             if (this.handMenuState != handMenuState) {
                 this.handMenuState = handMenuState;
-                for (Token token : getTokens()) {
-                    ((AnchoredToken) token).resetPosition();
-                }
+                centralize();
             }
         }
     }
@@ -75,7 +75,7 @@ public class HandMenu extends CardListMenu implements DropTarget {
         centralize();
     }
 
-    private void centralize() {
+    public void centralize() {
         float covering = 1f;
         if (getTokens().size() > 1) {
             switch (getTokens().size()) {
@@ -114,7 +114,7 @@ public class HandMenu extends CardListMenu implements DropTarget {
         float offsetY;
         for (int i = 0; i < getTokens().size(); i++) {
             offsetY = getYShift(i, getTokens().size());
-            getTokens().get(i).setPosition(actualX + getOffset()*i*covering, actualY+offsetY);
+            getTokens().get(i).setPosition(actualX + getOffset()*i*covering, actualY+offsetY+(handMenuState == HandMenuState.UP ? menuShiftY : 0f));
             ((AnchoredToken) getTokens().get(i)).setNewAnchor(actualX + getOffset()*i*covering, actualY+offsetY);
             ((HandToken) getTokens().get(i)).refreshRotation(i, getTokens().size());
         }
@@ -202,5 +202,9 @@ public class HandMenu extends CardListMenu implements DropTarget {
     @Override
     public SimpleBox2 getSimpleBox2() {
         return this;
+    }
+
+    public float getMenuShiftY() {
+        return menuShiftY;
     }
 }

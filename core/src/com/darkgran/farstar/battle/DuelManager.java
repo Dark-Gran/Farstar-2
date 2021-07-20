@@ -93,19 +93,24 @@ public class DuelManager implements Delayer {
             attFS = attackInfo.getUpperStrike() == att;
             defFS = !attFS;
         }
+        boolean FSDuel = attFS || defFS;
         if (attFS != defFS) {
             if (attFS) {
                 if (exeOneSide(att, def)) {
-                    if (!def.isMS()) { exeOneSide(def, att); }
+                    if (!def.isMS() && !def.isKilledByFirstStrike()) { exeOneSide(def, att); }
                 }
             } else {
                 if (def.isMS() || exeOneSide(def, att)) {
-                    exeOneSide(att, def);
+                    if (!att.isKilledByFirstStrike()) { exeOneSide(att, def); }
                 }
             }
         } else {
-            exeOneSide(att, def);
-            if (!def.isMS()) { exeOneSide(def, att); }
+            if (FSDuel || !att.isKilledByFirstStrike()) { exeOneSide(att, def); }
+            if ((FSDuel || !def.isKilledByFirstStrike()) && !def.isMS()) { exeOneSide(def, att); }
+        }
+        if (FSDuel) {
+            if (att.getHealth()<=0) { att.setKilledByFirstStrike(true); }
+            if (def.getHealth()<=0) { def.setKilledByFirstStrike(true); }
         }
     }
 

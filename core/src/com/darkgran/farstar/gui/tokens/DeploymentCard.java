@@ -79,4 +79,10 @@ public class DeploymentCard extends DeploymentToken implements CardGFX {
     public void setFontColor(Color fontColor) {
         this.fontColor = fontColor;
     }
+
+    @Override
+    public boolean isBackside() {
+        return false;
+    }
+
 }

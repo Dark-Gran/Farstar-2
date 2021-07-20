@@ -84,7 +84,7 @@ public class ShotManager {
             if (numberOfShots < 1) { numberOfShots = 1; }
             float zoomedDamage = dmg*2f;
             float shotDamage = zoomedDamage / numberOfShots;
-            if (shotDamage > 2f) { shotDamage = 2f + (shotDamage-2f)/ (techType.getShotType() == ShotType.BULLET ? 3f : 2.5f); }
+            if (shotDamage > 2f) { shotDamage = 2f + (shotDamage-2f)/ (techType.getShotType() == ShotType.BULLET ? 6f : 5f); }
             float scale = 0.5f + (shotDamage / 2f);
             for (int i = 0; i < numberOfShots; i++) {
                 aniShots.add(aniAttack.createAniShot(i*0.4f, scale));

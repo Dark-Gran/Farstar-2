@@ -7,23 +7,23 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.darkgran.farstar.battle.BattleType;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
-import com.darkgran.farstar.gui.battlegui.HandMenu;
 import com.darkgran.farstar.util.SimpleVector2;
 
 import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
 
-public class HandToken extends AnchoredToken implements CardGFX, FakingTokens {
+public class HandToken extends AnchoredToken implements CardGFX, FakingTokens { //possibly in-future: use a slightly smaller version for the top side of the table (to simulate some visual perspective), but only if it's not a LocalPlayer (ie. outside Simulation)
     private Color fontColor = ColorPalette.BLACKISH;
     private Texture cardPic;
     Matrix4 oldMX = null;
     Matrix4 mx;
-    private boolean hidden = false;
+    private boolean hidden;
     public static SimpleVector2 getNewXYFromAngle(float currentX, float currentY, float centerX, float centerY, double rads) {
         return new SimpleVector2(
                 (float) ((currentX-centerX) * Math.cos(rads) - (currentY-centerY) * Math.sin(rads) + centerX),
@@ -58,12 +58,6 @@ public class HandToken extends AnchoredToken implements CardGFX, FakingTokens {
         } else {
             return super.touchDown(event, x, y, pointer, button);
         }
-    }
-
-    @Override
-    public void resetPosition() {
-        float offsetY = getCardListMenu().isNegativeOffset() ? -285f : 250f;
-        setPosition(getAnchorX(), getAnchorY() + (((HandMenu)getCardListMenu()).getHandState() == HandMenu.HandMenuState.UP ? offsetY : 0f));
     }
 
     public void refreshRotation(int position, int battleCards) {
@@ -110,10 +104,12 @@ public class HandToken extends AnchoredToken implements CardGFX, FakingTokens {
             if (getCard() != null) {
                 drawGlows(batch);
                 drawCardGFX(batch, getX(), getY(), getTokenType());
-                drawPortrait(batch);
-                getTokenDefense().draw(batch);
-                getTokenOffense().draw(batch);
-                getTokenPrice().draw(batch);
+                if (!isBackside()) {
+                    drawPortrait(batch);
+                    getTokenDefense().draw(batch);
+                    getTokenOffense().draw(batch);
+                    getTokenPrice().draw(batch);
+                }
             }
             if (DEBUG_RENDER) {
                 debugRender(batch);
@@ -166,4 +162,10 @@ public class HandToken extends AnchoredToken implements CardGFX, FakingTokens {
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
     }
+
+    @Override
+    public boolean isBackside() {
+        return !(getCard().getPlayer() instanceof LocalBattlePlayer || getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION);
+    }
+
 }
