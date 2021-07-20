@@ -11,7 +11,7 @@ import com.darkgran.farstar.util.Delayer;
 import java.util.*;
 
 public class DuelManager implements Delayer {
-    private final float duelDelay = 0.4f;
+    private final float duelDelay = 0.3f;
 
     public static class AttackInfo {
         private final Token defender;
@@ -64,7 +64,7 @@ public class DuelManager implements Delayer {
             delayAction(()->performDuel(duel), duelDelay);
         } else {
             //afterDuels();
-            delayAction(this::afterDuels, duelDelay);
+            delayAction(this::afterDuels, 0.5f);
         }
     }
 

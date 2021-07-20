@@ -63,11 +63,14 @@ public class RoundManager {
         battle.getWhoseTurn().getHand().drawCards(battle.getWhoseTurn().getDeck(), CARDS_PER_TURN);
         resourceIncomes(battle.getWhoseTurn());
         System.out.println("Player #"+battle.getWhoseTurn().getBattleID()+" may play his Cards.");
-        if (battle.getWhoseTurn() instanceof Bot) {
-            ((Bot) battle.getWhoseTurn()).newTurn();
-        } else {
+        if (battle.getWhoseTurn() instanceof LocalBattlePlayer) {
             possibilityAdvisor.markPossibilities(battle.getWhoseTurn(), battle);
             getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "YOUR TURN", 3);
+        } else {
+            if (battle.getWhoseTurn() instanceof Bot) {
+                ((Bot) battle.getWhoseTurn()).newTurn();
+            }
+            getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "ENEMY TURN", 3);
         }
     }
 
@@ -201,7 +204,7 @@ public class RoundManager {
                         /*if (!postAbility && targetCard != null && getBattle().getCombatManager().isTacticalPhase() && token.getCard().getCardInfo().getCardType() == CardType.TACTIC) {
                             battle.getCombatManager().saveTactic(token.getCard(), targetCard);
                         }*/
-                        if (!(token instanceof FakeToken) && !CardType.isShip(cardType)) { token.addCardToJunk(); }
+                        if (!(token instanceof FakeToken) && !CardType.isShip(cardType) && cardType != CardType.SUPPORT && cardType != CardType.MS) { token.addCardToJunk(); }
                     } else if (dropTarget instanceof JunkButton && (token instanceof DeploymentCard || token instanceof HandToken)) { //Target: Discard
                         Junkpile junkpile = ((JunkButton) dropTarget).getPlayer().getJunkpile();
                         if (junkpile == whoseTurn.getJunkpile()) {
