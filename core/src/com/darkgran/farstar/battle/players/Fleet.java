@@ -53,7 +53,7 @@ public class Fleet implements BattleTicks {
                             position += change;
                         }
                     } else {
-                        setShip(shipToSet, i, null);
+                        setShip(shipToSet, i, shipToSet != null ? (FleetToken) shipToSet.getToken() : null);
                         success = true;
                         break;
                     }
@@ -216,8 +216,9 @@ public class Fleet implements BattleTicks {
 
     private void setShip(Ship ship, int position, FleetToken fleetToken) {
         ships[position] = ship;
-        if (fleetToken == null) { ship.setToken(getFleetMenu().addShip(ship, position)); }
-        else {
+        if (fleetToken == null) {
+            ship.setToken(getFleetMenu().addShip(ship, position));
+        } else {
             ship.setToken(fleetToken);
             getFleetMenu().overwriteToken(position, fleetToken);
         }

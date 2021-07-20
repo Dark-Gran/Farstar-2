@@ -210,6 +210,16 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
         }
     }
 
+    public static int getFleetTokenCount(FleetToken[] tokens) {
+        int count = 0;
+        for (FleetToken fleetToken : tokens) {
+            if (fleetToken != null) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     @Override
     public void setupOffset() {
         setOffset(TokenType.FLEET.getWidth()*1.03f);

@@ -176,6 +176,7 @@ public class AssetLibrary {
         assetManager.load("images/matter.png", Texture.class, texParams);
         assetManager.load("images/energy.png", Texture.class, texParams);
         assetManager.load("images/rounds.png", Texture.class, texParams);
+        assetManager.load("images/shot_beam.png", Texture.class, texParams);
         assetManager.load("images/shot_bullet.png", Texture.class, texParams);
         assetManager.load("images/tacticalOK.png", Texture.class, texParams);
         assetManager.load("images/tacticalOKC.png", Texture.class, texParams);

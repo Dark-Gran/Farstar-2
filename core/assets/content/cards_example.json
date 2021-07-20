@@ -28,7 +28,7 @@
         }
       ]
     }],
-    "animatedShots": 5
+    "animatedShots": 1
   },
   {
     "id": 1,
@@ -45,7 +45,7 @@
     "offenseType": "KINETIC",
     "defenseType": "KINETIC",
     "abilities": [],
-    "animatedShots": 1
+    "animatedShots": 2
   },
   {
     "id": 2,
@@ -62,7 +62,7 @@
     "offenseType": "KINETIC",
     "defenseType": "PARTICLE",
     "abilities": [],
-    "animatedShots": 1
+    "animatedShots": 2
   },
   {
     "id": 3,
@@ -79,7 +79,7 @@
     "offenseType": "THERMAL",
     "defenseType": "KINETIC",
     "abilities": [],
-    "animatedShots": 1
+    "animatedShots": 2
   },
   {
     "id": 4,
@@ -107,7 +107,7 @@
         }
       ]
     }],
-    "animatedShots": 1
+    "animatedShots": 2
   },
   {
     "id": 5,
@@ -135,7 +135,7 @@
         }
       ]
     }],
-    "animatedShots": 1
+    "animatedShots": 2
   },
   {
     "id": 6,
@@ -523,7 +523,7 @@
   },
   {
     "id": 18,
-    "name": "Plasblast",
+    "name": "Plasma Barrage",
     "culture": "HUMAN",
     "description": "",
     "cardType": "ACTION",

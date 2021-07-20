@@ -13,8 +13,9 @@ import java.util.ArrayList;
 
 /** Responsible for all shot animations. */
 public class ShotManager {
-    private enum ShotType {
-        BULLET("shot_bullet", 5000f);
+    public enum ShotType {
+        BULLET("shot_bullet", 4000f),
+        BLAST("shot_beam", 2000f);
         private final String shotPicName;
         private final float speed;
         ShotType(String shotPicName, float speed) {
@@ -26,7 +27,7 @@ public class ShotManager {
         public class AniShot {
             private final AniAttack aniAttack;
             private final float scale;
-            private SimpleVector2 position;
+            private final SimpleVector2 position;
             private float timer;
             private boolean active = false;
             private boolean done = false;
@@ -46,10 +47,11 @@ public class ShotManager {
         private final SimpleVector2 end;
         private final float directionX;
         private final float directionY;
+        private final float angle;
         private final TechType techType;
         private ArrayList<AniShot> aniShots;
         private boolean done = false;
-        public AniAttack(ShotType shotType, Token att, Token def, int dmg, SimpleVector2 start, SimpleVector2 end, float directionX, float directionY, TechType techType) {
+        public AniAttack(ShotType shotType, Token att, Token def, int dmg, SimpleVector2 start, SimpleVector2 end, float directionX, float directionY, float angle, TechType techType) {
             this.shotType = shotType;
             this.att = att;
             this.def = def;
@@ -59,6 +61,7 @@ public class ShotManager {
             shotPic = new TextureRegion((Texture) Farstar.ASSET_LIBRARY.get("images/"+shotType.shotPicName+".png"));
             this.directionX = directionX;
             this.directionY = directionY;
+            this.angle = angle;
             this.techType = techType;
         }
         public AniShot createAniShot(float delay, float scale) { return new AniShot(this, start, delay, scale); }
@@ -68,17 +71,20 @@ public class ShotManager {
 
     public void newAttack(Token att, Token def, int dmg, TechType techType, int numberOfShots) {
         if (att != def) {
-            SimpleVector2 start = new SimpleVector2(att.getX()+att.getTokenOffense().getPad().getWidth()/2f, att.getY()+att.getTokenOffense().getPad().getHeight()/2f);
-            SimpleVector2 end = new SimpleVector2(def.getX()+def.getWidth()-def.getTokenDefense().getPad().getWidth()/2f, def.getY()+def.getTokenDefense().getPad().getHeight()/2f);
-            double distance = Math.sqrt(Math.pow(end.getX()-start.getX(),2)+Math.pow(end.getY()-start.getY(),2));
-            double directionX = (end.getX()-start.getX()) / distance;
-            double directionY = (end.getY()-start.getY()) / distance;
-            AniAttack aniAttack = new AniAttack(ShotType.BULLET, att, def, dmg, start, end, (float) directionX, (float) directionY, techType);
+            SimpleVector2 start = new SimpleVector2(att.getX()+att.getTokenOffense().getPad().getWidth(), att.getY()+att.getTokenOffense().getPad().getHeight()/2f);
+            SimpleVector2 end = new SimpleVector2(def.getX()+def.getWidth()/2f, def.getY()+def.getHeight()/2f);
+            float x = end.getX()-start.getX();
+            float y = end.getY()-start.getY();
+            double distance = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+            double directionX = x / distance;
+            double directionY = y / distance;
+            float angle = (float) Math.toDegrees(Math.atan2(y, x))+90f;
+            AniAttack aniAttack = new AniAttack(techType.getShotType(), att, def, dmg, start, end, (float) directionX, (float) directionY, angle, techType);
             ArrayList<AniAttack.AniShot> aniShots = new ArrayList<>();
             if (numberOfShots < 1) { numberOfShots = 1; }
             float zoomedDamage = dmg*2f;
             float shotDamage = zoomedDamage / numberOfShots;
-            if (techType == TechType.KINETIC && shotDamage > 2f) { shotDamage = 2f + (shotDamage-2f)/3f; }
+            if (shotDamage > 2f) { shotDamage = 2f + (shotDamage-2f)/ (techType.getShotType() == ShotType.BULLET ? 3f : 2.5f); }
             float scale = 0.5f + (shotDamage / 2f);
             for (int i = 0; i < numberOfShots; i++) {
                 aniShots.add(aniAttack.createAniShot(i*0.4f, scale));
@@ -109,7 +115,7 @@ public class ShotManager {
             for (AniAttack.AniShot aniShot : aniAttack.aniShots) {
                  updateShot(aniShot, delta);
                 if (aniShot.active && !aniShot.done) {
-                    batch.draw(aniAttack.shotPic, aniShot.position.getX(), aniShot.position.getY(), aniAttack.shotPic.getRegionWidth()/2f, aniAttack.shotPic.getRegionHeight()/2f, aniAttack.shotPic.getRegionWidth(), aniAttack.shotPic.getRegionHeight(), aniShot.scale, aniShot.scale, 0);
+                    batch.draw(aniAttack.shotPic, aniShot.position.getX(), aniShot.position.getY(), aniAttack.shotPic.getRegionWidth()/2f, aniAttack.shotPic.getRegionHeight()/2f, aniAttack.shotPic.getRegionWidth(), aniAttack.shotPic.getRegionHeight(), aniShot.scale, aniShot.scale, aniAttack.angle);
                 } else if (aniShot.done) {
                     forDeletion.add(aniShot);
                 }
