@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.gui.ColorPalette;
@@ -21,7 +22,7 @@ import static com.darkgran.farstar.Farstar.ASSET_LIBRARY;
 public abstract class SuperScreen implements Screen {
     public final static boolean DEBUG_RENDER = false;
     private Farstar game;
-    private OrthographicCamera camera = new OrthographicCamera();
+    private static OrthographicCamera camera = new OrthographicCamera();
     private Viewport viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
     private TableStage tableStage;
@@ -41,7 +42,9 @@ public abstract class SuperScreen implements Screen {
         Gdx.graphics.setCursor(cursor);
     }
     public static SimpleVector2 getMouseCoordinates() {
-        return new SimpleVector2(Gdx.input.getX(), Gdx.input.getY());
+        Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(pos);
+        return new SimpleVector2(pos.x, Farstar.STAGE_HEIGHT-pos.y);
     }
     public static class ScreenSettings {
         private boolean helpEnabled = false;
