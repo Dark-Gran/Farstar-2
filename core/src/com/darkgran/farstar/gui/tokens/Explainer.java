@@ -22,18 +22,18 @@ public class Explainer extends TextInTheBox {
     }
 
     public void setShiftedPosition(float x, float y) {
-        setX(x+TokenType.PRINT.getWidth()*1.1f);
-        setY(y+TokenType.PRINT.getHeight()*0.95f);
+        this.x = (x+TokenType.PRINT.getWidth()*1.1f);
+        this.y = (y+TokenType.PRINT.getHeight()*0.95f);
     }
 
     private void setupBox() {
         SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), getText(), getWrapWidth(), getWrap());
-        if (textWH.getX() < getWrapWidth()) {
-            setX(getX() + (getWrapWidth() - textWH.getX())/2);
+        if (textWH.x < getWrapWidth()) {
+            x = (x + (getWrapWidth() - textWH.x)/2);
         }
-        setupBox(getX(), getY(), getWrapWidth()+40f, textWH.getY()+40f);
+        setupBox(x, y, getWrapWidth()+40f, textWH.y+40f);
         centralizeBox();
-        //getSimpleBox().setY(getSimpleBox().getY()-1f);
+        //getSimpleBox().setY(getSimpleBox().y-1f);
     }
 
     public void refreshText(BattleCard battleCard) {

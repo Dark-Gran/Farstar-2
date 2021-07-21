@@ -14,6 +14,7 @@ import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.gui.NotificationManager;
 import com.darkgran.farstar.gui.TableStage;
 import com.darkgran.farstar.gui.YXQuestionBox;
+import com.darkgran.farstar.util.SimpleVector2;
 
 import static com.darkgran.farstar.Farstar.ASSET_LIBRARY;
 
@@ -28,7 +29,7 @@ public abstract class SuperScreen implements Screen {
     private final NotificationManager notificationManager;
     private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.0885), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN);
     public enum CursorType {
-        DEFAULT, AIM;
+        DEFAULT, AIM
     }
     public static void switchCursor(CursorType cursorType) {
         Cursor cursor = Gdx.graphics.newCursor(ASSET_LIBRARY.get("images/cursor_default.png"), 0, 0);
@@ -137,6 +138,10 @@ public abstract class SuperScreen implements Screen {
 
     protected void update(float delta) {
         notificationManager.update(delta);
+    }
+
+    public static SimpleVector2 getMouseCoordinates() {
+        return new SimpleVector2(Gdx.input.getX(), Gdx.input.getY());
     }
 
     @Override

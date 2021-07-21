@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.battle.players.BattlePlayer;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.gui.tokens.FleetToken;
@@ -81,7 +82,8 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
 
 
     private void predictCoordinates() {
-        int pos = getBattleStage().getRoundDropPosition(Gdx.input.getX(), Gdx.input.getY(), this, CardType.YARDPRINT);
+        SimpleVector2 coords = SuperScreen.getMouseCoordinates();
+        int pos = getBattleStage().getRoundDropPosition(coords.x, coords.y, this, CardType.YARDPRINT);
         if (fleet.hasSpace() && pos > -1 && pos < 7) { //fleet.addShip() validation
             //Copy ships
             Ship[] shipsPrediction = new Ship[7];
@@ -98,7 +100,7 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
             int start = side ? 2 : 4;
             if (pos == 3) {
                 SimpleVector2 lr = getFleet().getSideSizes(shipsPrediction);
-                side = lr.getX() < lr.getY();
+                side = lr.x < lr.y;
                 start = 3;
             }
             int end = side ? -1 : 7;
@@ -179,7 +181,8 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
     public void drawTokens(Batch batch) {
         if (!fleet.isEmpty() && predictEnabled) {
             boolean overToken = false;
-            Vector2 mousePosition = screenToLocalCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+            SimpleVector2 coords = SuperScreen.getMouseCoordinates();
+            Vector2 mousePosition = screenToLocalCoordinates(new Vector2(coords.x, coords.y));
             for (FleetToken fleetToken : fleetTokens) {
                 if (fleetToken != null && fleetToken.getClickListener().isOver(fleetToken, mousePosition.x, mousePosition.y)) {
                     overToken = true;

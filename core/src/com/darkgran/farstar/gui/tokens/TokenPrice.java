@@ -62,10 +62,10 @@ public class TokenPrice extends TokenPart {
         setTextWH(TextDrawer.getTextWH(getFont(), e));
         textWH2 = TextDrawer.getTextWH(getFont(), m);
         if (e.equals("1")) {
-            getTextWH().setX(getTextWH().getX()+3f);
+            getTextWH().x = getTextWH().x+3f;
         }
         if (m.equals("1")) {
-            textWH2.setX(textWH2.getX()+3f);
+            textWH2.x = textWH2.x+3f;
         }
         if (!(getToken() instanceof CardGFX)) {
             showUseMark = AbilityManager.hasStarter(getToken().getCard(), AbilityStarter.USE);
@@ -100,34 +100,34 @@ public class TokenPrice extends TokenPart {
     @Override
     public void draw(Batch batch) {
         if (isEnabled()) {
-            float x = getX() - getPad().getWidth() + getOffsetX();
+            float x = this.x - getPad().getWidth() + getOffsetX();
             if ((showUseMark && !isMouseOver()) || (showGuardMark && guardMark != null) || (showReachMark && reachMark != null) || (showFSMark && fsMark != null)) {
                 if (showUseMark && useMark != null) {
-                    batch.draw(useMark, x, getY() + getOffsetY());
+                    batch.draw(useMark, x, this.y + getOffsetY());
                     x += getPad().getWidth();
                 }
                 if (showGuardMark && guardMark != null) {
-                    batch.draw(guardMark, x, getY() + getOffsetY());
+                    batch.draw(guardMark, x, this.y + getOffsetY());
                     x += getPad().getWidth();
                 }
                 if (showReachMark && reachMark != null) {
-                    batch.draw(reachMark, x, getY() + getOffsetY());
+                    batch.draw(reachMark, x, this.y + getOffsetY());
                     x += getPad().getWidth();
                 }
-                if (showFSMark && fsMark != null) { batch.draw(fsMark, x, getY() + getOffsetY()); }
+                if (showFSMark && fsMark != null) { batch.draw(fsMark, x, this.y + getOffsetY()); }
             } else {
                 int E = getResource(true, getToken() instanceof AbilityPickerOption ? TokenType.SUPPORT : getToken().getTokenType());
                 if (E != 0 || showUseMark) {
                     String e = Integer.toString(E);
-                    batch.draw(getPad(), x, getY() + getOffsetY());
-                    drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - getTextWH().getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + getTextWH().getY() * 0.5f, e, ColorPalette.BLACKISH);
+                    batch.draw(getPad(), x, this.y + getOffsetY());
+                    drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - getTextWH().x * 0.5f, this.y + getOffsetY() + getPad().getHeight() * 0.5f + getTextWH().y * 0.5f, e, ColorPalette.BLACKISH);
                     x += getPad().getWidth();
                 }
                 int M = getResource(false, getToken() instanceof AbilityPickerOption ? TokenType.SUPPORT : getToken().getTokenType());
                 if (M != 0) {
                     String m = Integer.toString(M);
-                    batch.draw(pad2, x, getY() + getOffsetY());
-                    drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - textWH2.getX() * 0.5f, getY() + getOffsetY() + getPad().getHeight() * 0.5f + textWH2.getY() * 0.5f, m, ColorPalette.BLACKISH);
+                    batch.draw(pad2, x, this.y + getOffsetY());
+                    drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - textWH2.x * 0.5f, this.y + getOffsetY() + getPad().getHeight() * 0.5f + textWH2.y * 0.5f, m, ColorPalette.BLACKISH);
                 }
             }
         }

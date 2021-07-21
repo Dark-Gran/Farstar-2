@@ -15,7 +15,7 @@ public class TierCounter extends TextLine {
 
     @Override
     public void drawText(Batch batch) {
-        drawText(getFont(), batch, getX(), getY(), getTierText(), getFontColor());
+        drawText(getFont(), batch, x, y, getTierText(), getFontColor());
     }
 
     private String getTierText() {

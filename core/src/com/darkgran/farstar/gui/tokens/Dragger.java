@@ -1,9 +1,10 @@
 package com.darkgran.farstar.gui.tokens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.SuperScreen;
+import com.darkgran.farstar.util.SimpleVector2;
 
 public class Dragger extends InputListener {
     private final Token token;
@@ -39,11 +40,13 @@ public class Dragger extends InputListener {
     }
 
     protected void drag(float x, float y) {
-        token.setPosition(Gdx.input.getX()-token.getWidth()/2, Farstar.STAGE_HEIGHT-(Gdx.input.getY()+token.getHeight()/2));
+        SimpleVector2 coords = SuperScreen.getMouseCoordinates();
+        token.setPosition(coords.x-token.getWidth()/2, Farstar.STAGE_HEIGHT-(coords.y+token.getHeight()/2));
     }
 
     protected void drop(float x, float y) {
-        token.getBattleStage().processDrop(Gdx.input.getX(), Farstar.STAGE_HEIGHT-Gdx.input.getY(), token);
+        SimpleVector2 coords = SuperScreen.getMouseCoordinates();
+        token.getBattleStage().processDrop(coords.x, Farstar.STAGE_HEIGHT-coords.y, token);
     }
 
     public Token getToken() { return token; }

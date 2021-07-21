@@ -31,8 +31,8 @@ public class ResourceMeter extends Actor implements JustFont {
         this.onBottom = onBottom;
         String res = "E 123 M 456";
         SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), res);
-        setWidth(textWH.getX());
-        setHeight(textWH.getY());
+        setWidth(textWH.x);
+        setHeight(textWH.y);
         setX(x);
         setY(y);
         update();
@@ -62,13 +62,13 @@ public class ResourceMeter extends Actor implements JustFont {
 
     public void draw(Batch batch) {
         getFont().setColor(ColorPalette.ENERGY);
-        batch.draw(enePic, getX(), getY() - (onBottom ? 0f : eneWH.getY()) - getHeight()*0.49f);
+        batch.draw(enePic, getX(), getY() - (onBottom ? 0f : eneWH.y) - getHeight()*0.49f);
         getFont().draw(batch, Integer.toString(battlePlayer.getEnergy()), getX()+enePic.getWidth()*1.5f, onBottom ? getY()+getHeight() : getY());
         getFont().setColor(ColorPalette.MATTER);
-        batch.draw(matPic, getX()+enePic.getWidth()*1.5f+eneWH.getX()+10f, getY()-(onBottom ? 0f : eneWH.getY()) + getHeight()*0.02f);
-        getFont().draw(batch, battlePlayer.getMatter()+" ", getX()+enePic.getWidth()*1.5f+eneWH.getX()+10f+matPic.getWidth()*1.3f, onBottom ? getY()+getHeight() : getY());
+        batch.draw(matPic, getX()+enePic.getWidth()*1.5f+eneWH.x+10f, getY()-(onBottom ? 0f : eneWH.y) + getHeight()*0.02f);
+        getFont().draw(batch, battlePlayer.getMatter()+" ", getX()+enePic.getWidth()*1.5f+eneWH.x+10f+matPic.getWidth()*1.3f, onBottom ? getY()+getHeight() : getY());
         getFont().setColor((ColorPalette.MAIN));
-        getFont().draw(batch, " +"+getIncome(), getX()+enePic.getWidth()*1.5f+eneWH.getX()+10f+matPic.getWidth()*1.3f+matWH.getX(), onBottom ? getY()+getHeight() : getY());
+        getFont().draw(batch, " +"+getIncome(), getX()+enePic.getWidth()*1.5f+eneWH.x+10f+matPic.getWidth()*1.3f+matWH.x, onBottom ? getY()+getHeight() : getY());
         getFont().setColor(Color.WHITE);
     }
 

@@ -213,7 +213,7 @@ public class RoundManager {
             if (success || postAbility) {
                 if (!(dropTarget instanceof JunkButton)) {
                     if (dropTarget != null) {
-                        callHerald(token.getCard(), TokenType.HAND, new SimpleVector2(dropTarget.getSimpleBox2().getX(), dropTarget.getSimpleBox2().getY()));
+                        callHerald(token.getCard(), TokenType.HAND, new SimpleVector2(dropTarget.getSimpleBox2().x, dropTarget.getSimpleBox2().y));
                     } else {
                         callHerald(token.getCard(), TokenType.HAND, new SimpleVector2(0, 0));
                     }

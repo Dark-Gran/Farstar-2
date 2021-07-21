@@ -11,8 +11,8 @@ public abstract class BattlePlayerBox2 extends SimpleBox2 {
     private BattlePlayer battlePlayer;
 
     public BattlePlayerBox2(float x, float y, BattleStage battleStage, BattlePlayer battlePlayer) {
-        setX(x);
-        setY(y);
+        this.x = x;
+        this.y = y;
         this.battlePlayer = battlePlayer;
         this.battleStage = battleStage;
     }

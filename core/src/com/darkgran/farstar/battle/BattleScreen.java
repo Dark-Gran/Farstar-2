@@ -93,7 +93,7 @@ public class BattleScreen extends SuperScreen {
     public void drawDebugSimpleBox2(SimpleBox2 simpleBox2, ShapeRenderer shapeRenderer, Batch batch) {
         batch.end();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.rect(simpleBox2.getX(), simpleBox2.getY(), simpleBox2.getWidth(), simpleBox2.getHeight());
+        shapeRenderer.rect(simpleBox2.x, simpleBox2.y, simpleBox2.getWidth(), simpleBox2.getHeight());
         shapeRenderer.end();
         batch.begin();
     }

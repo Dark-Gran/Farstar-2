@@ -49,7 +49,7 @@ public class TokenOffense extends TokenPart {
     @Override
     public void adjustTextWH() {
         if (getContent().equals("1")) {
-            getTextWH().setX(getTextWH().getX()+3f);
+            getTextWH().x = getTextWH().x+3f;
         }
         adjustTextWHByCurrentState();
     }

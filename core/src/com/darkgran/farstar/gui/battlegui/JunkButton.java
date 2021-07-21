@@ -23,7 +23,7 @@ public class JunkButton extends ClickToken implements DropTarget {
         setupSimpleBox2(x, y, TokenType.JUNK.getWidth(), TokenType.JUNK.getHeight());
         mx.rotate(new Vector3(0, 0, 1), angle);
         SimpleVector2 newXY = HandToken.getNewXYFromAngle(0, 0, getX()+getWidth()/2, getY()+getHeight()/2, Math.toRadians(angle));
-        mx.trn(newXY.getX(), newXY.getY(), 0);
+        mx.trn(newXY.x, newXY.y, 0);
         setOriginX(getWidth()/2);
         setOriginY(getHeight()/2);
         setRotation(angle);

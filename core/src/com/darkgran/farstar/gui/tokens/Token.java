@@ -89,12 +89,13 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
     }
 
     public void setParts() {
-        tokenDefense.setX(getX() + getWidth());
-        tokenDefense.setY(getY());
-        tokenOffense.setX(getX());
-        tokenOffense.setY(getY());
-        tokenPrice.setX(getX());
-        tokenPrice.setY(getY() + getHeight());
+        tokenDefense.x = getX() + getWidth();
+        tokenDefense.x = getX() + getWidth();
+        tokenDefense.y = getY();
+        tokenOffense.x = getX();
+        tokenOffense.y = getY();
+        tokenPrice.x = getX();
+        tokenPrice.y = getY() + getHeight();
     }
 
     public void setup(BattleCard battleCard, TokenType targetType, SimpleVector2 targetXY) { //used only by non-standard tokens (that do not connectCard)

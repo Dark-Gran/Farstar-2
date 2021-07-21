@@ -45,7 +45,7 @@ public class HandMenu extends CardListMenu implements DropTarget {
         actualY = !onBottom ? y : y + Farstar.STAGE_HEIGHT*0.1f;
         menuShiftY = isNegativeOffset() ? -285f : 250f;
         clickListenerActor.addListener(clickListener);
-        clickListenerActor.setBounds(getX()-getWidth()/2, getY(), getWidth(), getHeight());
+        clickListenerActor.setBounds(this.x-getWidth()/2, this.y, getWidth(), getHeight());
         battleStage.addActor(clickListenerActor);
     }
 
@@ -68,7 +68,7 @@ public class HandMenu extends CardListMenu implements DropTarget {
                 found = true;
             } else {
                 Token nextToken = getTokens().get(i);
-                nextToken.setX(getX() + getOffset()*i);
+                nextToken.setX(this.x + getOffset()*i);
                 if (nextToken instanceof AnchoredToken) { ((AnchoredToken) nextToken).setAnchorX(nextToken.getX()); }
             }
         }
@@ -106,7 +106,7 @@ public class HandMenu extends CardListMenu implements DropTarget {
             }
         }
         float offset = ((TokenType.HAND.getWidth() * getTokens().size())-TokenType.HAND.getWidth()*(1f-covering)*(getTokens().size()-1)) * 0.5f;
-        actualX = getX()-offset;
+        actualX = this.x-offset;
         refreshTokenPositions(covering);
     }
 

@@ -173,9 +173,9 @@ public abstract class BattleStage extends ListeningStage {
             SimpleVector2 lr = fleetMenu.getFleet().getSideSizes(fleetMenu.getFleet().getShips());
             int count = fleetMenu.getFleet().countShips();
             if (!deployment || count % 2 != 0) {
-                if (lr.getX() > lr.getY()) {
+                if (lr.x > lr.y) {
                     shift = fleetMenu.getOffset() / 2;
-                } else if ((!deployment && lr.getX() < lr.getY()) || (deployment && lr.getX() <= lr.getY())) {
+                } else if ((!deployment && lr.x < lr.y) || (deployment && lr.x <= lr.y)) {
                     shift = -fleetMenu.getOffset() / 2;
                 }
             }
@@ -183,9 +183,9 @@ public abstract class BattleStage extends ListeningStage {
                 if (x > shift + fleetMenu.getX() + fleetMenu.getOffset() * i && x < shift + fleetMenu.getX() + fleetMenu.getOffset() * (i + 1)) {
                     if (deployment) {
                         if (count != 6) {
-                            if (lr.getX() > lr.getY() && (i < 3 && i > 0)) {
+                            if (lr.x > lr.y && (i < 3 && i > 0)) {
                                 i--;
-                            } else if (lr.getX() < lr.getY() && i > 3 && i < 6) {
+                            } else if (lr.x < lr.y && i > 3 && i < 6) {
                                 i++;
                             } else if (count % 2 != 0) {
                                 if (i < 3 && i > 0) {
@@ -203,11 +203,11 @@ public abstract class BattleStage extends ListeningStage {
 
     public int getSupportDropPosition(float x, float y, SupportMenu supportMenu) {
         for (int i = 0; i < 7; i++) {
-            if (x > supportMenu.getX() + (supportMenu.getOffset() * i) && x < supportMenu.getX() + (supportMenu.getOffset() * (8))) {
+            if (x > supportMenu.x + (supportMenu.getOffset() * i) && x < supportMenu.x + (supportMenu.getOffset() * (8))) {
                 if (i != 3) {
                     return i;
                 } else {
-                    if (x < supportMenu.getX() + supportMenu.getWidth() / 2) {
+                    if (x < supportMenu.x + supportMenu.getWidth() / 2) {
                         return 2;
                     } else {
                         return 4;
@@ -219,7 +219,7 @@ public abstract class BattleStage extends ListeningStage {
     }
 
     public boolean isInBox(SimpleBox2 simpleBox2, float x, float y) {
-        Rectangle rectangle = new Rectangle((int) simpleBox2.getX(), (int) simpleBox2.getY(), (int) simpleBox2.getWidth(), (int) simpleBox2.getHeight());
+        Rectangle rectangle = new Rectangle((int) simpleBox2.x, (int) simpleBox2.y, (int) simpleBox2.getWidth(), (int) simpleBox2.getHeight());
         return rectangle.contains(x, y);
     }
 

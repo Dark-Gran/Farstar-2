@@ -24,8 +24,8 @@ public class RoundCounter extends SimpleBox2 implements TextDrawer {
     public RoundCounter(float x, float y, BattleStage battleStage, Battle battle) {
         this.fontColor = ColorPalette.MAIN;
         setFont(fontPath);
-        setX(x);
-        setY(y);
+        this.x = x;
+        this.y = y;
         this.battle = battle;
         this.battleStage = battleStage;
     }
@@ -36,13 +36,13 @@ public class RoundCounter extends SimpleBox2 implements TextDrawer {
     }
 
     public void draw(Batch batch) {
-        batch.draw(pic, getX(), getY());
+        batch.draw(pic, x, y);
         drawText(batch);
     }
 
     @Override
     public void drawText(Batch batch) {
-        drawText(getFont(), batch, (getX()+pic.getWidth()*0.5f) - textWH.getX()*0.5f, (getY()+pic.getHeight()*0.5f) + textWH.getY()*0.5f, text, getFontColor());
+        drawText(getFont(), batch, (x+pic.getWidth()*0.5f) - textWH.x*0.5f, (y+pic.getHeight()*0.5f) + textWH.y*0.5f, text, getFontColor());
     }
 
     @Override

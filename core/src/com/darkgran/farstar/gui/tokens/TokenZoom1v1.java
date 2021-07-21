@@ -14,8 +14,8 @@ public class TokenZoom1v1 extends TokenZoom {
     @Override
     public void shiftPosition() {
         if (getTargetXY() != null) {
-            float newX = getTargetXY().getX()+getTargetType().getWidth()+5f;
-            float newY = getTargetXY().getY();
+            float newX = getTargetXY().x+getTargetType().getWidth()+5f;
+            float newY = getTargetXY().y;
             switch (getTargetType()) {
                 case SUPPORT:
                 case MS:
@@ -33,7 +33,7 @@ public class TokenZoom1v1 extends TokenZoom {
                     newY = (getCard().getBattlePlayer().getBattleID() == 1) ? 0f : Farstar.STAGE_HEIGHT-getCardPic().getHeight();
                     break;
                 case JUNK:
-                    newX = getTargetXY().getX()-getTargetType().getWidth()*1.5f-5f;
+                    newX = getTargetXY().x-getTargetType().getWidth()*1.5f-5f;
                     newY -= (getCard().getBattlePlayer().getBattleID() == 1) ? 0f : getCardPic().getHeight()-TokenType.JUNK.getWidth()/2f;
                     break;
             }

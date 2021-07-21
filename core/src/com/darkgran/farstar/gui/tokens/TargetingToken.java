@@ -14,6 +14,7 @@ import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
+import com.darkgran.farstar.util.SimpleVector2;
 
 public class TargetingToken extends FakeToken {
     private Dragger dragger;
@@ -26,7 +27,8 @@ public class TargetingToken extends FakeToken {
         aimPicRegion = new TextureRegion(aimPic);
         setWidth(aimPic.getWidth());
         setHeight(aimPic.getHeight());
-        setPosition(Gdx.input.getX()-getWidth()/2, Farstar.STAGE_HEIGHT-(Gdx.input.getY()+getHeight()/2));
+        SimpleVector2 coords = SuperScreen.getMouseCoordinates();
+        setPosition(coords.x-getWidth()/2, coords.y+getHeight()/2);
         battleCard.getToken().setPicked(true);
     }
 

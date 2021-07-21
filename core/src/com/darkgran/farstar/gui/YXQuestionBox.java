@@ -28,8 +28,8 @@ public class YXQuestionBox extends TextInTheBox {
         this.runX = runX;
         this.runY = runY;
         SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), message);
-        yBut.setPosition(x+textWH.getX()/2-yBut.getWidth(), y-textWH.getY()*4);
-        xBut.setPosition(x+textWH.getX()/2, y-textWH.getY()*4);
+        yBut.setPosition(x+textWH.x/2-yBut.getWidth(), y-textWH.y*4);
+        xBut.setPosition(x+textWH.x/2, y-textWH.y*4);
         stage.addActor(yBut);
         stage.addActor(xBut);
     }
@@ -37,9 +37,9 @@ public class YXQuestionBox extends TextInTheBox {
     @Override
     public void centralizeBox() {
         SimpleVector2 boxOrigin = new SimpleVector2(
-                (getX() + TextDrawer.getTextWH(getFont(), getText()).getX()/2) - getSimpleBox().getWidth()/2,
-                (getY() - TextDrawer.getTextWH(getFont(), getText()).getY()*5/3) - getSimpleBox().getHeight()/2);
-        setupBox(boxOrigin.getX(), boxOrigin.getY(), getSimpleBox().getWidth(), getSimpleBox().getHeight());
+                (this.x + TextDrawer.getTextWH(getFont(), getText()).x/2) - getSimpleBox().getWidth()/2,
+                (this.y - TextDrawer.getTextWH(getFont(), getText()).y*5/3) - getSimpleBox().getHeight()/2);
+        setupBox(boxOrigin.x, boxOrigin.y, getSimpleBox().getWidth(), getSimpleBox().getHeight());
     }
 
     public void dispose() {

@@ -13,7 +13,7 @@ public class PerfMeter extends TextLine {
 
     @Override
     public void drawText(Batch batch) {
-        drawText(getFont(), batch, getX(), getY(), getPerfText(), getFontColor());
+        drawText(getFont(), batch, x, y, getPerfText(), getFontColor());
     }
 
     private String getPerfText() {

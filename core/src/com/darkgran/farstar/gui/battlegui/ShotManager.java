@@ -33,7 +33,7 @@ public class ShotManager {
             private boolean done = false;
             public AniShot(AniAttack aniAttack, SimpleVector2 start, float delay, float scale) {
                 this.aniAttack = aniAttack;
-                this.position = new SimpleVector2(start.getX(), start.getY());
+                this.position = new SimpleVector2(start.x, start.y);
                 this.scale = MathUtils.clamp(scale, 1f, 10f);
                 timer = delay;
             }
@@ -73,8 +73,8 @@ public class ShotManager {
         if (att != def) {
             SimpleVector2 start = new SimpleVector2(att.getX()+att.getTokenOffense().getPad().getWidth(), att.getY()+att.getTokenOffense().getPad().getHeight()/2f);
             SimpleVector2 end = new SimpleVector2(def.getX()+def.getWidth()/2f, def.getY()+def.getHeight()/2f);
-            float x = end.getX()-start.getX();
-            float y = end.getY()-start.getY();
+            float x = end.x-start.x;
+            float y = end.y-start.y;
             double distance = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
             double directionX = x / distance;
             double directionY = y / distance;
@@ -115,7 +115,7 @@ public class ShotManager {
             for (AniAttack.AniShot aniShot : aniAttack.aniShots) {
                  updateShot(aniShot, delta);
                 if (aniShot.active && !aniShot.done) {
-                    batch.draw(aniAttack.shotPic, aniShot.position.getX(), aniShot.position.getY(), aniAttack.shotPic.getRegionWidth()/2f, aniAttack.shotPic.getRegionHeight()/2f, aniAttack.shotPic.getRegionWidth(), aniAttack.shotPic.getRegionHeight(), aniShot.scale, aniShot.scale, aniAttack.angle);
+                    batch.draw(aniAttack.shotPic, aniShot.position.x, aniShot.position.y, aniAttack.shotPic.getRegionWidth()/2f, aniAttack.shotPic.getRegionHeight()/2f, aniAttack.shotPic.getRegionWidth(), aniAttack.shotPic.getRegionHeight(), aniShot.scale, aniShot.scale, aniAttack.angle);
                 } else if (aniShot.done) {
                     forDeletion.add(aniShot);
                 }
@@ -136,10 +136,10 @@ public class ShotManager {
             }
         }
         if (aniShot.active && !aniShot.done) {
-            double distance = Math.sqrt(Math.pow(aniShot.aniAttack.end.getX()-aniShot.position.getX(),2)+Math.pow(aniShot.aniAttack.end.getY()-aniShot.position.getY(),2));
+            double distance = Math.sqrt(Math.pow(aniShot.aniAttack.end.x-aniShot.position.x,2)+Math.pow(aniShot.aniAttack.end.y-aniShot.position.y,2));
             if (distance >= aniShot.aniAttack.shotType.speed * delta) {
-                aniShot.position.setX(aniShot.position.getX() + ((aniShot.aniAttack.shotType.speed * aniShot.aniAttack.directionX) * delta));
-                aniShot.position.setY(aniShot.position.getY() + ((aniShot.aniAttack.shotType.speed * aniShot.aniAttack.directionY) * delta));
+                aniShot.position.x = aniShot.position.x + ((aniShot.aniAttack.shotType.speed * aniShot.aniAttack.directionX) * delta);
+                aniShot.position.y = aniShot.position.y + ((aniShot.aniAttack.shotType.speed * aniShot.aniAttack.directionY) * delta);
             } else {
                 aniShot.done = true;
             }

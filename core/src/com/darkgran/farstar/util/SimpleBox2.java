@@ -10,13 +10,13 @@ public class SimpleBox2 extends SimpleVector2 {
     public SimpleBox2(float x, float y, float width, float height) {
         this.width = width;
         this.height = height;
-        setX(x);
-        setY(y);
+        this.x = x;
+        this.y = y;
     }
 
     public void setupBox(float x, float y, float width, float height) {
-        setX(x);
-        setY(y);
+        this.x = x;
+        this.y = y;
         setHeight(height);
         setWidth(width);
     }
@@ -28,4 +28,5 @@ public class SimpleBox2 extends SimpleVector2 {
     public float getHeight() { return height; }
 
     public void setHeight(float height) { this.height = height; }
+
 }

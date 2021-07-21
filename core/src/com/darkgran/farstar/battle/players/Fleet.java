@@ -26,7 +26,7 @@ public class Fleet implements BattleTicks {
                 int start = side ? 2 : 4;
                 if (position == 3) {
                     SimpleVector2 lr = getSideSizes(ships);
-                    side = lr.getX() < lr.getY();
+                    side = lr.x < lr.y;
                     start = 3;
                 }
                 int end = side ? -1 : 7;
@@ -81,8 +81,8 @@ public class Fleet implements BattleTicks {
 
     public void centralizeShips() {
         SimpleVector2 lr = getSideSizes(getShips());
-        if (Math.abs(lr.getX()-lr.getY()) > 1) {
-            shiftAllShips(lr.getX() > lr.getY(), false);
+        if (Math.abs(lr.x-lr.y) > 1) {
+            shiftAllShips(lr.x > lr.y, false);
         }
     }
 
@@ -142,7 +142,7 @@ public class Fleet implements BattleTicks {
             boolean direction = blankPosition < 3;
             if (blankPosition == 3) {
                 SimpleVector2 lr = getSideSizes(ships);
-                if (lr.getY() < lr.getX()) {
+                if (lr.y < lr.x) {
                     direction = true;
                 }
             }

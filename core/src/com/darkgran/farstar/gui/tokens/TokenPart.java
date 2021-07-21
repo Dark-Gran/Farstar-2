@@ -69,7 +69,7 @@ public class TokenPart extends TextLine {
 
     public void adjustTextWH() {
         if (getContent().equals("1")) {
-            textWH.setX(textWH.getX()+2f);
+            textWH.x = (textWH.x+2f);
         }
         adjustTextWHByCurrentState();
     }
@@ -79,18 +79,18 @@ public class TokenPart extends TextLine {
             switch (getToken().getTokenType()) {
                 case MS:
                 case FLEET:
-                    getTextWH().setY(getTextWH().getY()*1.075f);
+                    getTextWH().y = getTextWH().y*1.075f;
                     break;
                 case PRINT:
-                    getTextWH().setX(getTextWH().getX()*1.1f);
-                    getTextWH().setY(getTextWH().getY()*1.15f);
+                    getTextWH().x = getTextWH().x*1.1f;
+                    getTextWH().y = getTextWH().y*1.15f;
                     break;
                 case SUPPORT:
-                    getTextWH().setY(getTextWH().getY()*1.1f);
+                    getTextWH().y = getTextWH().y*1.1f;
                     break;
             }
         } else if (getToken().getTokenType() == TokenType.PRINT) {
-            getTextWH().setY(getTextWH().getY()*0.98f);
+            getTextWH().y = getTextWH().y*0.98f;
         }
     }
 
@@ -98,9 +98,9 @@ public class TokenPart extends TextLine {
 
     public void draw(Batch batch) {
         if (isEnabled()) {
-            batch.draw(pad, getX() - pad.getWidth() + offsetX, getY() + offsetY);
-            float textX = getX() - pad.getWidth()/2f - textWH.getX()/2f + offsetX;
-            float textY = getY() + pad.getHeight()/2f + textWH.getY()/2f + offsetY;
+            batch.draw(pad, x - pad.getWidth() + offsetX, y + offsetY);
+            float textX = x - pad.getWidth()/2f - textWH.x/2f + offsetX;
+            float textY = y + pad.getHeight()/2f + textWH.y/2f + offsetY;
             if (!(TokenType.isDeployed(getToken().getTokenType()) || getToken().getTokenType() == TokenType.PRINT)) {
                 drawText(getFont(), batch, textX, textY, getContent(), ColorPalette.BLACKISH);
             } else {

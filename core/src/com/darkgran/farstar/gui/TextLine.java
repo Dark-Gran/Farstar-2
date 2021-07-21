@@ -7,7 +7,7 @@ import com.darkgran.farstar.util.SimpleVector2;
 public class TextLine extends SimpleVector2 implements TextDrawer { //in-future: TextActor variant/implementation
     private boolean wrap = false;
     private float wrapWidth = 0f;
-    private Color fontColor = new Color();
+    private Color fontColor;
     private String fontPath = "";
     private String text = "";
 
@@ -17,8 +17,8 @@ public class TextLine extends SimpleVector2 implements TextDrawer { //in-future:
 
     public TextLine(Color fontColor, String fontPath, float x, float y, String text) {
         this.fontColor = fontColor;
-        setX(x);
-        setY(y);
+        this.x = x;
+        this.y = y;
         setFont(fontPath);
         this.text = text;
     }
@@ -31,7 +31,7 @@ public class TextLine extends SimpleVector2 implements TextDrawer { //in-future:
     @Override
     public void drawText(Batch batch) {
         if (!getFontPath().equals("")) {
-            drawText(getFont(), batch, getX(), getY(), text, getFontColor());
+            drawText(getFont(), batch, x, y, text, getFontColor());
         }
     }
 

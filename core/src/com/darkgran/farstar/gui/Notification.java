@@ -43,12 +43,12 @@ public class Notification extends TextInTheBox {
         super(ColorPalette.LIGHT, ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f), "fonts/"+notificationType.fontName+".fnt", message, notificationType.x, notificationType.y, notificationType.boxWidth, notificationType.boxHeight);
         this.notificationType = notificationType;
         if (notificationType.boxOffsetX != 0f) {
-            getSimpleBox().setX(notificationType.x+notificationType.boxOffsetX);
+            getSimpleBox().x = notificationType.x+notificationType.boxOffsetX;
         }
         if (notificationType == NotificationType.MIDDLE) {
             SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), message);
-            setX(getX()-textWH.getX()/2f);
-            setY(getY()+textWH.getY());
+            this.x = this.x-textWH.x/2f;
+            this.y = this.y+textWH.y;
             centralizeBox();
         }
         timer = new DeltaCounter(true, Math.max(duration, MIN_DURATION), 0);
@@ -66,12 +66,12 @@ public class Notification extends TextInTheBox {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(ColorPalette.changeAlpha(getBoxColor(), a));
-        shapeRenderer.rect(getSimpleBox().getX(), getSimpleBox().getY(), getSimpleBox().getWidth(), getSimpleBox().getHeight());
+        shapeRenderer.rect(getSimpleBox().x, getSimpleBox().y, getSimpleBox().getWidth(), getSimpleBox().getHeight());
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
         batch.begin();
-        drawText(getFont(), batch, getX(), getY(), getText(), ColorPalette.changeAlpha(getFontColor(), a));
+        drawText(getFont(), batch, this.x, this.y, getText(), ColorPalette.changeAlpha(getFontColor(), a));
     }
 
     private float timeToAlpha(float time, float duration) {

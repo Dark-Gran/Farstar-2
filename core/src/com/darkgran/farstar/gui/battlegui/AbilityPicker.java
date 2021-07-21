@@ -50,7 +50,7 @@ public class AbilityPicker extends BPB2DrawerBattle {
 
     private void refreshOptions() {
         if (battleCard != null) {
-            setX(originX-(((abilityInfos.size() * TokenType.PRINT.getWidth())+(abilityInfos.size()-1) * SPACE_BETWEEN)/2));
+            this.x = (originX-(((abilityInfos.size() * TokenType.PRINT.getWidth())+(abilityInfos.size()-1) * SPACE_BETWEEN)/2));
             abilityGraphics = new ArrayList<>();
             for (int i = 0; i < abilityInfos.size(); i++) {
                 abilityGraphics.add(createOption(abilityInfos.get(i), i));
@@ -71,8 +71,8 @@ public class AbilityPicker extends BPB2DrawerBattle {
     }
 
     private AbilityPickerOption createOption(AbilityInfo abilityInfo, int optionNumber) {
-        AbilityPickerOption abilityPickerOption = new AbilityPickerOption(getBattleStage().getBattleScreen().getBattle(), abilityInfo, battleCard, getX(), getY(), getOptionDescription(battleCard.getCardInfo().getDescription(), optionNumber));
-        abilityPickerOption.setBounds(getX()+(abilityGraphics.size()*(TokenType.PRINT.getWidth()+SPACE_BETWEEN)), getY(), TokenType.PRINT.getWidth(), TokenType.PRINT.getHeight());
+        AbilityPickerOption abilityPickerOption = new AbilityPickerOption(getBattleStage().getBattleScreen().getBattle(), abilityInfo, battleCard, x, y, getOptionDescription(battleCard.getCardInfo().getDescription(), optionNumber));
+        abilityPickerOption.setBounds(x+(abilityGraphics.size()*(TokenType.PRINT.getWidth()+SPACE_BETWEEN)), y, TokenType.PRINT.getWidth(), TokenType.PRINT.getHeight());
         return abilityPickerOption;
     }
 
