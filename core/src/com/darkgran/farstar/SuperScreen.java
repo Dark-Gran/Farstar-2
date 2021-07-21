@@ -40,6 +40,9 @@ public abstract class SuperScreen implements Screen {
         }
         Gdx.graphics.setCursor(cursor);
     }
+    public static SimpleVector2 getMouseCoordinates() {
+        return new SimpleVector2(Gdx.input.getX(), Gdx.input.getY());
+    }
     public static class ScreenSettings {
         private boolean helpEnabled = false;
         private boolean tableStageEnabled = true;
@@ -138,10 +141,6 @@ public abstract class SuperScreen implements Screen {
 
     protected void update(float delta) {
         notificationManager.update(delta);
-    }
-
-    public static SimpleVector2 getMouseCoordinates() {
-        return new SimpleVector2(Gdx.input.getX(), Gdx.input.getY());
     }
 
     @Override
