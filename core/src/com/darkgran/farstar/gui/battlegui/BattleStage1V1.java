@@ -5,10 +5,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.BattlePlayer;
-import com.darkgran.farstar.gui.tokens.Herald;
-import com.darkgran.farstar.gui.tokens.MothershipToken;
-import com.darkgran.farstar.gui.tokens.TokenType;
-import com.darkgran.farstar.gui.tokens.TokenZoom1v1;
+import com.darkgran.farstar.gui.tokens.*;
 import com.darkgran.farstar.gui.ButtonWithExtraState;
 
 import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
@@ -65,7 +62,7 @@ public class BattleStage1V1 extends BattleStage {
         addDropTarget(junkButton2);
         //Fleets
         fleetMenu1 = new FleetMenu(battlePlayer1.getFleet(), Farstar.STAGE_WIDTH*0.066f, Farstar.STAGE_HEIGHT*0.252f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.25f, this, battlePlayer1, false);
-        fleetMenu2 = new FleetMenu(battlePlayer2.getFleet(), Farstar.STAGE_WIDTH*0.066f, Farstar.STAGE_HEIGHT*0.506f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.25f, this, battlePlayer2, true);
+        fleetMenu2 = new FleetMenu(battlePlayer2.getFleet(), Farstar.STAGE_WIDTH*0.066f, Farstar.STAGE_HEIGHT*0.507f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.25f, this, battlePlayer2, true);
         addActor(fleetMenu1);
         addActor(fleetMenu2);
         //Supports+Supports
@@ -132,6 +129,10 @@ public class BattleStage1V1 extends BattleStage {
         fleetMenu2.drawTokens(batch);
         supportMenu1.drawTokens(batch);
         supportMenu2.drawTokens(batch);
+        if (getBattleScreen().isNetEnabled()) {
+            supportMenu1.drawNetSpots(batch);
+            supportMenu2.drawNetSpots(batch);
+        }
         if (yardMenu1.isOpen()) { yardMenu1.drawTokens(batch); }
         if (yardMenu2.isOpen()) { yardMenu2.drawTokens(batch); }
         handMenu1.drawTokens(batch);

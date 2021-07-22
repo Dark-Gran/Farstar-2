@@ -1,19 +1,21 @@
-package com.darkgran.farstar.gui.battlegui;
+package com.darkgran.farstar.gui.tokens;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
+import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.BattlePlayer;
-import com.darkgran.farstar.gui.tokens.ClickToken;
-import com.darkgran.farstar.gui.tokens.HandToken;
-import com.darkgran.farstar.gui.tokens.TokenType;
+import com.darkgran.farstar.gui.battlegui.BattleStage;
+import com.darkgran.farstar.gui.battlegui.DropTarget;
 import com.darkgran.farstar.util.SimpleBox2;
 import com.darkgran.farstar.util.SimpleVector2;
 
 public class JunkButton extends ClickToken implements DropTarget {
     private final float angle = -90f;
     private final BattlePlayer battlePlayer;
+    private Texture netSpot = Farstar.ASSET_LIBRARY.get("images/tokens/netspot_S.png");
     private Matrix4 mx = new Matrix4();
     private Matrix4 oldMX;
 
@@ -35,6 +37,7 @@ public class JunkButton extends ClickToken implements DropTarget {
         oldMX = batch.getTransformMatrix().cpy();
         batch.setTransformMatrix(mx);
         //Draw
+        if (getCard() == null) { batch.draw(netSpot, getX(), getY()); }
         super.draw(batch);
         batch.setTransformMatrix(oldMX);
     }

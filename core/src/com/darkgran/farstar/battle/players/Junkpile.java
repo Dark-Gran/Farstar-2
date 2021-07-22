@@ -1,7 +1,7 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.BattleSettings;
-import com.darkgran.farstar.gui.battlegui.JunkButton;
+import com.darkgran.farstar.gui.tokens.JunkButton;
 import com.darkgran.farstar.gui.tokens.TokenType;
 import com.darkgran.farstar.util.SimpleVector2;
 

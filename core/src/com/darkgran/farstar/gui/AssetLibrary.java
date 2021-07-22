@@ -244,6 +244,7 @@ public class AssetLibrary {
         assetManager.load("images/tokens/glowY_U.png", Texture.class, texParams);
         assetManager.load("images/tokens/glowY_Y.png", Texture.class, texParams);
         assetManager.load("images/tokens/glowY_Z.png", Texture.class, texParams);
+        assetManager.load("images/tokens/netspot_S.png", Texture.class, texParams);
         assetManager.load("images/tokens/padE_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/padE_FK.png", Texture.class, texParams);
         assetManager.load("images/tokens/padE_MS.png", Texture.class, texParams);

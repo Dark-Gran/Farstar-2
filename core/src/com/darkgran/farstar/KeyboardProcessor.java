@@ -43,12 +43,12 @@ public class KeyboardProcessor extends InputAdapter {
                     break;
                 case Input.Keys.F3:
                     if (game.getSuperScreen() instanceof BattleScreen) {
-                        game.getSuperScreen().setNetEnabled(!game.getSuperScreen().isNetEnabled());
+                        game.getSuperScreen().setTokenFramesEnabled(!game.getSuperScreen().isTokenFramesEnabled());
                     }
                     break;
                 case Input.Keys.F4:
                     if (game.getSuperScreen() instanceof BattleScreen) {
-                        game.getSuperScreen().setTokenFramesEnabled(!game.getSuperScreen().isTokenFramesEnabled());
+                        game.getSuperScreen().setNetEnabled(!game.getSuperScreen().isNetEnabled());
                     }
                     break;
             }
