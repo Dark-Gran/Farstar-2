@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Handles all png-animations except for Attacks/Shots (see ShotManager).
  */
 public class AnimationManager {
-    private class DeathEffect {
+    private class DeathAnimation {
         private final TextureRegion deathPic;
         private final float x;
         private final float y;
@@ -21,7 +21,7 @@ public class AnimationManager {
         private boolean finished = false;
         private float alpha = 1f;
         private float scale = 1f;
-        public DeathEffect(TextureRegion deathPic, float x, float y) {
+        public DeathAnimation(TextureRegion deathPic, float x, float y) {
             this.deathPic = deathPic;
             this.x = x;
             this.y = y;
@@ -40,29 +40,29 @@ public class AnimationManager {
             }
         }
     }
-    private ArrayList<DeathEffect> deathEffects = new ArrayList<>();
+    private ArrayList<DeathAnimation> deathAnimations = new ArrayList<>();
 
     public void newDeathEffect(float x, float y, TokenType tokenType) {
         Texture texture = Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/death_", tokenType, false)+".png");
-        deathEffects.add(new DeathEffect(new TextureRegion(texture), x+tokenType.getWidth()/2f-texture.getWidth()/2f, y+tokenType.getHeight()/2f-texture.getHeight()/2f));
+        deathAnimations.add(new DeathAnimation(new TextureRegion(texture), x+tokenType.getWidth()/2f-texture.getWidth()/2f, y+tokenType.getHeight()/2f-texture.getHeight()/2f));
     }
 
     public void draw(Batch batch, float delta) {
-        ArrayList<DeathEffect> forDeletion = new ArrayList<>();
-        for (DeathEffect deathEffect : deathEffects) {
-            if (!deathEffect.finished) {
-                deathEffect.draw(batch, delta);
+        ArrayList<DeathAnimation> forDeletion = new ArrayList<>();
+        for (DeathAnimation deathAnimation : deathAnimations) {
+            if (!deathAnimation.finished) {
+                deathAnimation.draw(batch, delta);
             } else {
-                forDeletion.add(deathEffect);
+                forDeletion.add(deathAnimation);
             }
         }
-        for (DeathEffect deathEffect : forDeletion) {
-            deathEffects.remove(deathEffect);
+        for (DeathAnimation deathAnimation : forDeletion) {
+            deathAnimations.remove(deathAnimation);
         }
     }
 
     public void dispose() {
-        deathEffects.clear();
+        deathAnimations.clear();
     }
 
 }
