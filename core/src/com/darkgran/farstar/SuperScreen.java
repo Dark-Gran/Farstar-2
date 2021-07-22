@@ -72,7 +72,7 @@ public abstract class SuperScreen implements Screen {
             SimpleVector2 coords = getMouseCoordinates();
             if (game.MWQ.isMouseInsideWindow()) {
                 HDOn = true;
-                batch.draw(HDCursor, coords.x + HDCursorOffsetX, Farstar.STAGE_HEIGHT - (coords.y + HDCursorOffsetY) - HDCursor.getHeight());
+                batch.draw(HDCursor, coords.x - HDCursorOffsetX, Farstar.STAGE_HEIGHT - (coords.y - HDCursorOffsetY) - HDCursor.getHeight());
             } else {
                 HDOn = false;
             }
