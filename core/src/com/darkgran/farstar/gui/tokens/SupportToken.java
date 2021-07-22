@@ -35,6 +35,7 @@ public class SupportToken extends ClickToken implements DisableMark {
         if (getCardListMenu()!=null) {
             getCardListMenu().getTokens().remove(this);
             getCardListMenu().getCardList().remove(getCard());
+            getCardListMenu().getBattleStage().getAnimationManager().newDeathEffect(getX(), getY(), TokenType.SUPPORT);
         }
     }
 

@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
+import com.darkgran.farstar.gui.AnimationManager;
 import com.darkgran.farstar.gui.tokens.*;
 import com.darkgran.farstar.gui.ButtonWithExtraState;
 import com.darkgran.farstar.gui.ListeningStage;
@@ -58,6 +59,7 @@ public abstract class BattleStage extends ListeningStage {
     private TokenZoom cardZoom;
     private Herald herald;
     private ShotManager shotManager = new ShotManager();
+    private AnimationManager animationManager = new AnimationManager();
 
 
     public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen, CombatMenu combatMenu) {
@@ -79,6 +81,7 @@ public abstract class BattleStage extends ListeningStage {
 
     public void drawBattleStage(float delta, Batch batch) {
         roundCounter.draw(batch);
+        animationManager.draw(batch, delta);
         shotManager.drawAttacks(batch, delta);
         abilityPicker.draw(batch);
         if (fakeToken != null) { fakeToken.draw(batch, getBattleScreen().getShapeRenderer()); }
@@ -276,7 +279,7 @@ public abstract class BattleStage extends ListeningStage {
         return shotManager;
     }
 
-    public void setShotManager(ShotManager shotManager) {
-        this.shotManager = shotManager;
+    public AnimationManager getAnimationManager() {
+        return animationManager;
     }
 }

@@ -54,6 +54,7 @@ public class FleetToken extends ClickToken implements DisableMark, FakingTokens,
     @Override
     public void destroy() {
         remove();
+        getFleetMenu().getBattleStage().getAnimationManager().newDeathEffect(getX(), getY(), TokenType.FLEET);
     }
 
     public FleetMenu getFleetMenu() { return fleetMenu; }

@@ -137,14 +137,14 @@ public class AssetLibrary {
         TextureLoader.TextureParameter texParams = new TextureLoader.TextureParameter();
         texParams.minFilter = Texture.TextureFilter.Linear;
         texParams.magFilter = Texture.TextureFilter.Linear;
-        //All-Screens
+        //- All-Screens
         assetManager.load("images/x.png", Texture.class, texParams);
         assetManager.load("images/xO.png", Texture.class, texParams);
         assetManager.load("images/y.png", Texture.class, texParams);
         assetManager.load("images/yO.png", Texture.class, texParams);
-        //Intro
+        //- Intro
         assetManager.load("images/logo.jpg", Texture.class, texParams);
-        //MainScreenStage
+        //- MainScreenStage
         assetManager.load("images/FSlogo.png", Texture.class, texParams);
         assetManager.load("images/skirmish.png", Texture.class, texParams);
         assetManager.load("images/skirmishO.png", Texture.class, texParams);
@@ -154,7 +154,7 @@ public class AssetLibrary {
         assetManager.load("images/solitaryO.png", Texture.class, texParams);
         assetManager.load("images/web.png", Texture.class, texParams);
         assetManager.load("images/webO.png", Texture.class, texParams);
-        //TableStage
+        //- TableStage
         assetManager.load("images/empty.png", Texture.class, texParams);
         assetManager.load("images/exit.png", Texture.class, texParams);
         assetManager.load("images/friends.png", Texture.class, texParams);
@@ -164,7 +164,7 @@ public class AssetLibrary {
         assetManager.load("images/sound.png", Texture.class, texParams);
         assetManager.load("images/Space_1920.png", Texture.class, texParams);
         assetManager.load("images/tableMain_1920.png", Texture.class, texParams);
-        //Battle
+        //- Battle
         assetManager.load("images/cancel.png", Texture.class, texParams);
         assetManager.load("images/cancelO.png", Texture.class, texParams);
         assetManager.load("images/combat_aim.png", Texture.class, texParams);
@@ -193,6 +193,10 @@ public class AssetLibrary {
         assetManager.load("images/yardO.png", Texture.class, texParams);
         assetManager.load("images/yardOP.png", Texture.class, texParams);
         assetManager.load("images/yardP.png", Texture.class, texParams);
+        //Animations etc
+        assetManager.load("images/tokens/death_F.png", Texture.class, texParams);
+        assetManager.load("images/tokens/death_MS.png", Texture.class, texParams);
+        assetManager.load("images/tokens/death_S.png", Texture.class, texParams);
         //Cards
         assetManager.load("images/tokens/cardB_F.png", Texture.class, texParams);
         assetManager.load("images/tokens/cardH_F.png", Texture.class, texParams);
