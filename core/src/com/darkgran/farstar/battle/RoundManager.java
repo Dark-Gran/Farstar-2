@@ -315,7 +315,7 @@ public class RoundManager {
             ((Bot) whoseTurn).chooseTargets(token, ability);
         } else {
             token.setPicked(true);
-            SuperScreen.switchCursor(SuperScreen.CursorType.AIM);
+            getBattle().getBattleScreen().switchCursor(SuperScreen.CursorType.AIM);
             cancelButton.setPosition(Farstar.STAGE_WIDTH*0.62f, Farstar.STAGE_HEIGHT*0.08f);
             getBattle().getBattleScreen().getBattleStage().addActor(cancelButton);
             getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Choose a Target.", 3);
@@ -346,7 +346,7 @@ public class RoundManager {
                     } else {
                         //System.out.println("Reprocessing original drop...");
                         targetingActive = false;
-                        SuperScreen.switchCursor(SuperScreen.CursorType.DEFAULT);
+                        getBattle().getBattleScreen().switchCursor(SuperScreen.CursorType.DEFAULT);
                         processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, postponedDeploy.getAbility().getStarter()==AbilityStarter.DEPLOY);
                         if (target.getCard() != null && battle.getCombatManager().isTacticalPhase() && postponedDeploy.getCaster().getCard().getCardInfo().getCardType() == CardType.TACTIC) {
                             battle.getCombatManager().saveTactic(postponedDeploy.getCaster().getCard(), target.getCard());
@@ -378,7 +378,7 @@ public class RoundManager {
 
     private void endTargeting() {
         targetingActive = false;
-        SuperScreen.switchCursor(SuperScreen.CursorType.DEFAULT);
+        getBattle().getBattleScreen().switchCursor(SuperScreen.CursorType.DEFAULT);
         postponedDeploy.resetInDeployment();
         cancelButton.remove();
     }

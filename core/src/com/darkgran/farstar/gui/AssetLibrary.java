@@ -83,15 +83,9 @@ public class AssetLibrary {
     }
 
     public void loadAssets() {
-        loadCursors();
         loadFonts();
         loadTextures();
         assetManager.finishLoading();
-    }
-
-    private void loadCursors() {
-        assetManager.load("images/cursor_aim.png", Pixmap.class);
-        assetManager.load("images/cursor_default.png", Pixmap.class);
     }
 
     private void loadFonts() {
@@ -138,6 +132,11 @@ public class AssetLibrary {
         texParams.minFilter = Texture.TextureFilter.Linear;
         texParams.magFilter = Texture.TextureFilter.Linear;
         //- All-Screens
+        assetManager.load("images/cursor_aim.png", Texture.class, texParams);
+        assetManager.load("images/cursor_default.png", Texture.class, texParams);
+        assetManager.load("images/cursor_transparent.png", Pixmap.class);
+        //assetManager.load("images/cursor_aim.png", Pixmap.class);
+        //assetManager.load("images/cursor_default.png", Pixmap.class);
         assetManager.load("images/x.png", Texture.class, texParams);
         assetManager.load("images/xO.png", Texture.class, texParams);
         assetManager.load("images/y.png", Texture.class, texParams);

@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
@@ -32,14 +33,59 @@ public abstract class SuperScreen implements Screen {
     public enum CursorType {
         DEFAULT, AIM
     }
-    public static void switchCursor(CursorType cursorType) {
-        Cursor cursor = Gdx.graphics.newCursor(ASSET_LIBRARY.get("images/cursor_default.png"), 0, 0);
+    //For some reason, there is a drastic loss of image quality between pixmap (which are what the Gdx.graphics.setCursor accepts) and png.
+    //In-future: Look into Gdx.graphics and either find how to use the system cursor while keeping the quality OR make low-quality cursors for "low quality graphic settings" and use it only then.
+    /*public static void switchCursor(CursorType cursorType) {
+        Gdx.graphics.setCursor(getCursor(cursorType));
+    }
+    public static Cursor getCursor(CursorType cursorType) {
         switch (cursorType) {
+            default:
+            case DEFAULT:
+                return Gdx.graphics.newCursor(ASSET_LIBRARY.get("images/cursor_default.png"), 0, 0);
             case AIM:
-                cursor = Gdx.graphics.newCursor(ASSET_LIBRARY.get("images/cursor_aim.png"), 16, 16);
+                return Gdx.graphics.newCursor(ASSET_LIBRARY.get("images/cursor_aim.png"), 16, 16);
+        }
+    }*/
+    private Texture HDCursor;
+    private int HDCursorOffsetX;
+    private int HDCursorOffsetY;
+    private boolean HDCursorInUse;
+    public void switchCursor(CursorType cursorType) {
+        switch (cursorType) {
+            default:
+            case DEFAULT:
+                HDCursor = ASSET_LIBRARY.get("images/cursor_default.png");
+                HDCursorOffsetX = 0;
+                HDCursorOffsetY = 0;
+                break;
+            case AIM:
+                HDCursor = ASSET_LIBRARY.get("images/cursor_aim.png");
+                HDCursorOffsetX = 16;
+                HDCursorOffsetY = 16;
                 break;
         }
-        Gdx.graphics.setCursor(cursor);
+    }
+    private void drawCursor(Batch batch) {
+        boolean HDOn = false;
+        if ( HDCursor != null) {
+            SimpleVector2 coords = getMouseCoordinates();
+            if (game.MWQ.isMouseInsideWindow()) {
+                HDOn = true;
+                batch.draw(HDCursor, coords.x + HDCursorOffsetX, Farstar.STAGE_HEIGHT - (coords.y + HDCursorOffsetY) - HDCursor.getHeight());
+            } else {
+                HDOn = false;
+            }
+        }
+        if (HDOn != HDCursorInUse) {
+            HDCursorInUse = HDOn;
+            hideCursor(HDOn);
+        }
+    }
+    public static void hideCursor(boolean hide) {
+        if (hide) {
+            Gdx.graphics.setCursor(Gdx.graphics.newCursor(ASSET_LIBRARY.get("images/cursor_transparent.png"), 0, 0));
+        } else { Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow); }
     }
     public static SimpleVector2 getMouseCoordinates() {
         Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -136,6 +182,7 @@ public abstract class SuperScreen implements Screen {
         game.batch.setColor(1, 1, 1, 1);
         drawContent(delta, game.batch);
         drawSigns(game.batch);
+        drawCursor(game.batch);
         game.batch.end();
 
         update(delta);

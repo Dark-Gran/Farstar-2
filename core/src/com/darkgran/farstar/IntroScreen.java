@@ -19,7 +19,7 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
 
     public IntroScreen(final Farstar game, NotificationManager notificationManager, ScreenSettings screenSettings) {
         super(game, notificationManager, screenSettings);
-        Gdx.input.setCursorCatched(true);
+        hideCursor(true);
         delayAction(this::activate, 0.5f);
     }
 

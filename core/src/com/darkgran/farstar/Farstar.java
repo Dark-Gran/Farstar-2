@@ -16,6 +16,11 @@ public class Farstar extends Game {
 	private final KeyboardProcessor keyboardProcessor = new KeyboardProcessor(this);
 	protected SuperScreen superScreen;
 	SpriteBatch batch;
+	public final MouseWindowQuery MWQ;
+
+	public Farstar(MouseWindowQuery MWQ) {
+		this.MWQ = MWQ;
+	}
 
 	public void loadLibrary() { CARD_LIBRARY.loadLocal("content/cards.json"); }
 
