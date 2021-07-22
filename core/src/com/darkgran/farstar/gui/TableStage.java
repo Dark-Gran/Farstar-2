@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
+import com.darkgran.farstar.battle.BattleScreen;
+import com.darkgran.farstar.util.SimpleVector2;
 
 public class TableStage extends ListeningStage {
     private final Texture empty = Farstar.ASSET_LIBRARY.get("images/empty.png");
@@ -16,6 +18,7 @@ public class TableStage extends ListeningStage {
     private final Texture friends = Farstar.ASSET_LIBRARY.get("images/friends.png");
     private final Texture table = Farstar.ASSET_LIBRARY.get("images/tableMain_1920.png");
     private final Texture space = Farstar.ASSET_LIBRARY.get("images/Space_1920.png");
+    private final Texture net = Farstar.ASSET_LIBRARY.get("images/net_1920.png"); //atm only for 1v1
 
     private final ActorButton exitButton = new ActorButton(empty, empty, exit){
         @Override
@@ -54,6 +57,8 @@ public class TableStage extends ListeningStage {
         }
     };
 
+    private final SimpleVector2 tableCoords;
+
     public TableStage(final Farstar game, Viewport viewport) {
         super(game, viewport);
         float rightSideX = Farstar.STAGE_WIDTH - Farstar.STAGE_WIDTH/33.5f;
@@ -70,13 +75,15 @@ public class TableStage extends ListeningStage {
         addActor(soundButton);
         addActor(logoutButton);
         addActor(friendsButton);
+        tableCoords = new SimpleVector2(Farstar.STAGE_WIDTH / 2f - table.getWidth() / 2f, Farstar.STAGE_HEIGHT / 2f - table.getHeight() / 2f);
     }
 
-    public void drawBackground(SpriteBatch batch, boolean tableEnabled) {
+    public void drawBackground(SpriteBatch batch, boolean tableEnabled, boolean netEnabled) {
         batch.begin();
         batch.setColor(1, 1, 1, 1);
-        batch.draw(space, (float) (Farstar.STAGE_WIDTH / 2 - space.getWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - space.getHeight() / 2));
-        if (tableEnabled) { batch.draw(table, (float) (Farstar.STAGE_WIDTH / 2 - table.getWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - table.getHeight() / 2)); }
+        batch.draw(space, 0, 0);
+        if (netEnabled && getGame().getSuperScreen() instanceof BattleScreen) { batch.draw(net, 0, 0); }
+        if (tableEnabled) { batch.draw(table, tableCoords.x, tableCoords.y); }
         batch.end();
     }
 

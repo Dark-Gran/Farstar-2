@@ -95,11 +95,13 @@ public abstract class SuperScreen implements Screen {
     public static class ScreenSettings {
         private boolean helpEnabled = false;
         private boolean tableStageEnabled = true;
+        private boolean netEnabled = true;
         private boolean tokenFramesEnabled = true;
         public ScreenSettings() {}
-        public ScreenSettings(boolean helpEnabled, boolean tableStageEnabled, boolean tokenFramesEnabled) {
+        public ScreenSettings(boolean helpEnabled, boolean tableStageEnabled, boolean netEnabled, boolean tokenFramesEnabled) {
             this.helpEnabled = helpEnabled;
             this.tableStageEnabled = tableStageEnabled;
+            this.netEnabled = netEnabled;
             this.tokenFramesEnabled = tokenFramesEnabled;
         }
     }
@@ -107,11 +109,13 @@ public abstract class SuperScreen implements Screen {
         screenSettings.tableStageEnabled = tableStageEnabled;
         if (tableStage != null) { tableStage.enableButtons(tableStageEnabled); }
     }
-    public boolean isHelpEnabled() { return screenSettings.helpEnabled; }
-    public void setHelpEnabled(boolean helpEnabled) { screenSettings.helpEnabled = helpEnabled; }
     public boolean isTableStageEnabled() { return screenSettings.tableStageEnabled; }
-    public boolean isTokenFramesEnabled() { return screenSettings.tokenFramesEnabled; }
+    public void setHelpEnabled(boolean helpEnabled) { screenSettings.helpEnabled = helpEnabled; }
+    public boolean isHelpEnabled() { return screenSettings.helpEnabled; }
+    public void setNetEnabled(boolean netEnabled) { screenSettings.netEnabled = netEnabled; }
+    public boolean isNetEnabled() { return screenSettings.netEnabled; }
     public void setTokenFramesEnabled(boolean tokenFramesEnabled) { screenSettings.tokenFramesEnabled = tokenFramesEnabled; }
+    public boolean isTokenFramesEnabled() { return screenSettings.tokenFramesEnabled; }
     public ScreenSettings getScreenSettings() { return screenSettings; }
     private ScreenSettings screenSettings;
 
@@ -169,7 +173,7 @@ public abstract class SuperScreen implements Screen {
         shapeRenderer.setProjectionMatrix(camera.combined);
 
         if (tableStage != null) { //should persist over all screens
-            tableStage.drawBackground(game.batch, screenSettings.tableStageEnabled);
+            tableStage.drawBackground(game.batch, screenSettings.tableStageEnabled, screenSettings.netEnabled);
             if (screenSettings.tableStageEnabled) {
                 tableStage.act(delta);
                 tableStage.draw();

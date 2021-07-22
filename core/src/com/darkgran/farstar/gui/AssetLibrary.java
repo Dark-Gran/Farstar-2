@@ -159,6 +159,7 @@ public class AssetLibrary {
         assetManager.load("images/friends.png", Texture.class, texParams);
         assetManager.load("images/fs.png", Texture.class, texParams);
         assetManager.load("images/logout.png", Texture.class, texParams);
+        assetManager.load("images/net_1920.png", Texture.class, texParams);
         assetManager.load("images/quality.png", Texture.class, texParams);
         assetManager.load("images/sound.png", Texture.class, texParams);
         assetManager.load("images/Space_1920.png", Texture.class, texParams);

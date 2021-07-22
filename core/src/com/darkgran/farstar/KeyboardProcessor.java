@@ -34,21 +34,26 @@ public class KeyboardProcessor extends InputAdapter {
 
     @Override
     public boolean keyUp(int keycode) {
-        keysDown.remove(keycode);
         if (keycode == Input.Keys.ESCAPE || (keycode == Input.Keys.SPACE && game.getSuperScreen() instanceof IntroScreen)) {
             if (game.getSuperScreen() != null) { game.getSuperScreen().userEscape(); }
-        } else {
+        } else if (keysDown.size == 1) {
             switch (keycode) {
                 case Input.Keys.F2:
                     game.getSuperScreen().setTableStageEnabled(!game.getSuperScreen().isTableStageEnabled());
                     break;
                 case Input.Keys.F3:
                     if (game.getSuperScreen() instanceof BattleScreen) {
+                        game.getSuperScreen().setNetEnabled(!game.getSuperScreen().isNetEnabled());
+                    }
+                    break;
+                case Input.Keys.F4:
+                    if (game.getSuperScreen() instanceof BattleScreen) {
                         game.getSuperScreen().setTokenFramesEnabled(!game.getSuperScreen().isTokenFramesEnabled());
                     }
                     break;
             }
         }
+        keysDown.remove(keycode);
         return true;
     }
 
