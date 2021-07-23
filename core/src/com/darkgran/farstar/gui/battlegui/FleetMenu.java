@@ -1,7 +1,6 @@
 package com.darkgran.farstar.gui.battlegui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.darkgran.farstar.SuperScreen;
@@ -25,6 +24,8 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
     private ClickListener clickListener = new ClickListener(){};
     private boolean predicting;
     private boolean predictEnabled;
+    private SimpleVector2 lastPredictedCoords = new SimpleVector2(0, 0);
+    private int lastPredictedPos = -1;
 
     public FleetMenu(Fleet fleet, float x, float y, float width, float height, BattleStage battleStage, BattlePlayer battlePlayer, boolean negativeOffset) {
         super(x, y, negativeOffset, battleStage, battlePlayer);
@@ -38,7 +39,7 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
     }
 
     private float getBaseY() {
-        return isNegativeOffset() ? getY() + getHeight() - TokenType.FLEET.getHeight() - 80f : getY() + 80f;
+        return isNegativeOffset() ? getY() + getHeight() - TokenType.FLEET.getHeight() - 81f : getY() + 81f;
     }
 
     public FleetToken addShip(BattleCard battleCard, int position) {
@@ -80,68 +81,71 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
 
 
 
-    private void predictCoordinates() {
-        SimpleVector2 coords = SuperScreen.getMouseCoordinates();
+    private void predictDeployPosition(SimpleVector2 coords) { //simulates fleet.addShip
         int pos = getBattleStage().getRoundDropPosition(coords.x, coords.y, this, CardType.YARDPRINT);
-        if (fleet.hasSpace() && pos > -1 && pos < 7) { //fleet.addShip() validation
-            //Copy ships
-            Ship[] shipsPrediction = new Ship[7];
-            for (int c = 0; c < fleet.getShips().length; c++) {
-                if (fleet.getShips()[c] != null) {
-                    shipsPrediction[c] = new Ship(fleet, fleet.getShips()[c].getCardInfo(), getBattlePlayer());
-                    shipsPrediction[c].setToken(fleet.getShips()[c].getToken());
-                } else {
-                    shipsPrediction[c] = null;
-                }
-            }
-            //Proceed with fleet.addShip()
-            boolean side = pos < 3;
-            int start = side ? 2 : 4;
-            if (pos == 3) {
-                SimpleVector2 lr = getFleet().getSideSizes(shipsPrediction);
-                side = lr.x < lr.y;
-                start = 3;
-            }
-            int end = side ? -1 : 7;
-            int change = side ? -1 : 1;
-            Ship shipToSet = new Ship(getFleet(), new CardInfo(), getBattlePlayer()); // = null;
-            shipToSet.setToken(new FleetToken(null, getX(), getBaseY(), getBattleStage(), null, TokenType.FLEET, this, true, false));
-            shipToSet.getToken().setTouchable(Touchable.disabled);
-            int i;
-            boolean sideHasSpace = false;
-            for (i = start; i != end; i += change) {
-                if (shipsPrediction[i] == null) {
-                    sideHasSpace = true;
-                    break;
-                }
-            }
-            if (!sideHasSpace) {
-                shiftAllPredictions(shipsPrediction, tokensPrediction, side);
-            }
-            for (i = start; i != end; i += change) {
-                if (shipsPrediction[i] != null) {
-                    if (i == pos) {
-                        Ship holder = shipsPrediction[i];
-                        shipsPrediction[i] = shipToSet;
-                        shipToSet = holder;
-                        pos += change;
+        if (lastPredictedPos != pos) {
+            if (fleet.hasSpace() && pos > -1 && pos < 7) {
+                //System.out.println("Predicting...");
+                lastPredictedPos = pos;
+                //Copy ships
+                Ship[] shipsPrediction = new Ship[7];
+                for (int c = 0; c < fleet.getShips().length; c++) {
+                    if (fleet.getShips()[c] != null) {
+                        shipsPrediction[c] = new Ship(fleet, fleet.getShips()[c].getCardInfo(), getBattlePlayer());
+                        shipsPrediction[c].setToken(fleet.getShips()[c].getToken());
+                    } else {
+                        shipsPrediction[c] = null;
                     }
-                } else {
-                    shipsPrediction[i] = shipToSet;
-                    break;
                 }
-            }
-            centralizePredictions(shipsPrediction, tokensPrediction);
-            for (int c = 0; c < shipsPrediction.length; c++) {
-                if (shipsPrediction[c] == null) {
-                    tokensPrediction[c] = null;
-                } else {
-                    FleetToken token = (FleetToken) shipsPrediction[c].getToken();
-                    tokensPrediction[c] = new FleetToken(token.getCard(), token.getX(), token.getY(), token.getBattleStage(), null, TokenType.FLEET, this, token.isNoPics(), false);
-                    tokensPrediction[c].setTouchable(Touchable.disabled);
+                //Proceed with fleet.addShip()
+                boolean side = pos < 3;
+                int start = side ? 2 : 4;
+                if (pos == 3) {
+                    SimpleVector2 lr = getFleet().getSideSizes(shipsPrediction);
+                    side = lr.x < lr.y;
+                    start = 3;
                 }
+                int end = side ? -1 : 7;
+                int change = side ? -1 : 1;
+                Ship shipToSet = new Ship(getFleet(), new CardInfo(), getBattlePlayer()); // = null;
+                shipToSet.setToken(new FleetToken(null, getX(), getBaseY(), getBattleStage(), null, TokenType.FLEET, this, true, false));
+                shipToSet.getToken().setTouchable(Touchable.disabled);
+                int i;
+                boolean sideHasSpace = false;
+                for (i = start; i != end; i += change) {
+                    if (shipsPrediction[i] == null) {
+                        sideHasSpace = true;
+                        break;
+                    }
+                }
+                if (!sideHasSpace) {
+                    shiftAllPredictions(shipsPrediction, tokensPrediction, side);
+                }
+                for (i = start; i != end; i += change) {
+                    if (shipsPrediction[i] != null) {
+                        if (i == pos) {
+                            Ship holder = shipsPrediction[i];
+                            shipsPrediction[i] = shipToSet;
+                            shipToSet = holder;
+                            pos += change;
+                        }
+                    } else {
+                        shipsPrediction[i] = shipToSet;
+                        break;
+                    }
+                }
+                centralizePredictions(shipsPrediction, tokensPrediction);
+                for (int c = 0; c < shipsPrediction.length; c++) {
+                    if (shipsPrediction[c] == null) {
+                        tokensPrediction[c] = null;
+                    } else {
+                        FleetToken token = (FleetToken) shipsPrediction[c].getToken();
+                        tokensPrediction[c] = new FleetToken(token.getCard(), token.getX(), token.getY(), token.getBattleStage(), null, TokenType.FLEET, this, token.isNoPics(), false);
+                        tokensPrediction[c].setTouchable(Touchable.disabled);
+                    }
+                }
+                updateCoordinates(tokensPrediction);
             }
-            updateCoordinates(tokensPrediction);
         }
     }
 
@@ -178,19 +182,13 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
     }
 
     public void drawTokens(Batch batch) {
-        if (!fleet.isEmpty() && predictEnabled) {
-            boolean overToken = false;
+        if (predictEnabled) {
             SimpleVector2 coords = SuperScreen.getMouseCoordinates();
-            Vector2 mousePosition = screenToLocalCoordinates(new Vector2(coords.x, coords.y));
-            for (FleetToken fleetToken : fleetTokens) {
-                if (fleetToken != null && fleetToken.getClickListener().isOver(fleetToken, mousePosition.x, mousePosition.y)) {
-                    overToken = true;
-                    break;
-                }
-            }
-            predicting = clickListener.isOver(this, mousePosition.x, mousePosition.y) || overToken;
-            if (predicting) {
-                predictCoordinates();
+            predicting = getBattleStage().coordsOverFleetMenus(coords.x, coords.y);
+            if (predicting && !lastPredictedCoords.isSame(coords)) {
+                lastPredictedCoords.x = coords.x;
+                lastPredictedCoords.y = coords.y;
+                predictDeployPosition(coords);
             }
         } else {
             predicting = false;
@@ -258,4 +256,7 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
     @Override
     public SimpleBox2 getSimpleBox2() { return new SimpleBox2(getX(), getY(), getWidth(), getHeight()); }
 
+    public ClickListener getClickListener() {
+        return clickListener;
+    }
 }

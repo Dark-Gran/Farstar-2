@@ -12,4 +12,9 @@ public class SimpleVector2 {
         this.y = y;
     }
 
+    public boolean isSame(SimpleVector2 otherVector) {
+        if (otherVector == null) { return false; }
+        return x == otherVector.x && y == otherVector.y;
+    }
+
 }

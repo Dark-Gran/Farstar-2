@@ -1,5 +1,7 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.gui.battlegui.SupportMenu;
+
 public class Supports extends CardList implements BattleTicks {
 
     public Supports() {
@@ -28,6 +30,10 @@ public class Supports extends CardList implements BattleTicks {
     @Override
     public CardList getCardList() {
         return this;
+    }
+
+    public SupportMenu getSupportMenu() {
+        return (SupportMenu) getCardListMenu();
     }
 
 }

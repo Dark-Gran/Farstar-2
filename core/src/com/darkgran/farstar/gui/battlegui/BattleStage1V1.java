@@ -61,8 +61,8 @@ public class BattleStage1V1 extends BattleStage {
         addDropTarget(junkButton1);
         addDropTarget(junkButton2);
         //Fleets
-        fleetMenu1 = new FleetMenu(battlePlayer1.getFleet(), Farstar.STAGE_WIDTH*0.066f, Farstar.STAGE_HEIGHT*0.252f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.25f, this, battlePlayer1, false);
-        fleetMenu2 = new FleetMenu(battlePlayer2.getFleet(), Farstar.STAGE_WIDTH*0.066f, Farstar.STAGE_HEIGHT*0.507f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.25f, this, battlePlayer2, true);
+        fleetMenu1 = new FleetMenu(battlePlayer1.getFleet(), Farstar.STAGE_WIDTH*0.066f, Farstar.STAGE_HEIGHT*0.252f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.255f, this, battlePlayer1, false);
+        fleetMenu2 = new FleetMenu(battlePlayer2.getFleet(), Farstar.STAGE_WIDTH*0.066f, Farstar.STAGE_HEIGHT*0.507f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.255f, this, battlePlayer2, true);
         addActor(fleetMenu1);
         addActor(fleetMenu2);
         //Supports+Supports
@@ -104,6 +104,18 @@ public class BattleStage1V1 extends BattleStage {
         setCardZoom(new TokenZoom1v1(null, 0, 0, this, null, 30));
         setHerald(new Herald(null, Farstar.STAGE_WIDTH*0.09f, Farstar.STAGE_HEIGHT*0.38f, this, null, 210));
         addActor(getHerald());
+    }
+
+    @Override
+    public boolean coordsOverFleetMenus(float x, float y) {
+        boolean over = isInBox(fleetMenu1.getSimpleBox2(), x, y) || isInBox(fleetMenu2.getSimpleBox2(), x, y);
+        if (!over) {
+            over = coordsOverClickTokens(fleetMenu1.getFleetTokens(), x, y);
+        }
+        if (!over) {
+            over = coordsOverClickTokens(fleetMenu2.getFleetTokens(), x, y);
+        }
+        return over;
     }
 
     @Override

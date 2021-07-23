@@ -10,7 +10,11 @@ public class DeploymentToken extends FakeToken {
 
     public DeploymentToken(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
         super(battleCard, x, y, battleStage, cardListMenu, false);
-        getCardListMenu().getBattlePlayer().getFleet().getFleetMenu().setPredictEnabled(CardType.isShip(battleCard.getCardInfo().getCardType()));
+        if (!getCardListMenu().getBattlePlayer().getFleet().isEmpty()) {
+            getCardListMenu().getBattlePlayer().getFleet().getFleetMenu().setPredictEnabled(CardType.isShip(battleCard.getCardInfo().getCardType()));
+        } else {
+            getCardListMenu().getBattlePlayer().getFleet().getFleetMenu().setPredictEnabled(false);
+        }
     }
 
     @Override

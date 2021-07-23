@@ -13,6 +13,7 @@ public class SupportToken extends ClickToken implements DisableMark {
     public SupportToken(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
         super(battleCard, x, y, battleStage, cardListMenu, TokenType.SUPPORT, false, true);
         setMark(Farstar.ASSET_LIBRARY.get("images/tokens/disable_S.png"));
+        setZIndex(0);
     }
 
     @Override

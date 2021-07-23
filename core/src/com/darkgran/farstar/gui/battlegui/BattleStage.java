@@ -75,6 +75,8 @@ public abstract class BattleStage extends ListeningStage {
 
     protected void createTopActors() { } /** MUST be called in constructor (as the very last thing) and set cardZoom+herald! */
 
+    public void updateDeckInfos() { }
+
     public void drawBottomActors(Batch batch) {
         combatMenu.drawDuels(batch, getBattleScreen().getShapeRenderer());
     }
@@ -96,8 +98,6 @@ public abstract class BattleStage extends ListeningStage {
         super.act(delta);
     }
 
-    public void updateDeckInfos() { }
-
     public void enableCombatEnd() {
         if (battleScreen.getBattle().getWhoseTurn() instanceof LocalBattlePlayer) {
             combatEndButton.setDisabled(false);
@@ -108,6 +108,19 @@ public abstract class BattleStage extends ListeningStage {
     public void disableCombatEnd() {
         combatEndButton.setDisabled(true);
         combatEndButton.remove();
+    }
+
+    public boolean coordsOverFleetMenus(float x, float y) {
+        return false;
+    }
+
+    public static boolean coordsOverClickTokens(ClickToken[] clickTokens, float x, float y) {
+        for (ClickToken clickToken : clickTokens) {
+            if (clickToken != null && isInBox(new SimpleBox2(clickToken.getX(), clickToken.getY(), clickToken.getWidth(), clickToken.getHeight()), x, y)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public DropTarget returnDropTarget(float x, float y) {
@@ -125,9 +138,20 @@ public abstract class BattleStage extends ListeningStage {
         if (token != null) {
             CombatManager combatManager = getBattleScreen().getBattle().getCombatManager();
             DropTarget targetHit = returnDropTarget(x, y);
-            if (targetHit instanceof MothershipToken && token.getCard().getCardInfo().getCardType() == CardType.SUPPORT) {
-                targetHit = ((MothershipToken) targetHit).getSupportMenu();
+            //Deploy-Retargeting
+            if (token.getCard().getCardInfo().getCardType() == CardType.SUPPORT) {
+                if (targetHit instanceof MothershipToken) {
+                    targetHit = ((MothershipToken) targetHit).getSupportMenu();
+                } else if (targetHit instanceof FleetMenu) {
+                    targetHit = token.getCard().getBattlePlayer().getSupports().getSupportMenu();
+                }
             }
+            if (CardType.isShip(token.getCard().getCardInfo().getCardType())) {
+                if (targetHit instanceof FleetMenu) {
+                    targetHit = token.getCard().getBattlePlayer().getFleet().getFleetMenu();
+                }
+            }
+            //Process
             if (targetHit != null || CardType.isSpell(token.getCard().getCardInfo().getCardType())) {
                 if (CardType.isShip(token.getCard().getCardInfo().getCardType()) && combatManager.isActive() && !combatManager.isTacticalPhase() && !combatManager.getDuelManager().isActive()) {
                     combatManager.processDrop(token instanceof TargetingToken ? token.getCard().getToken() : token, getCombatDropToken(x, y, targetHit));
@@ -221,7 +245,7 @@ public abstract class BattleStage extends ListeningStage {
         return -1;
     }
 
-    public boolean isInBox(SimpleBox2 simpleBox2, float x, float y) {
+    public static boolean isInBox(SimpleBox2 simpleBox2, float x, float y) {
         Rectangle rectangle = new Rectangle((int) simpleBox2.x, (int) simpleBox2.y, (int) simpleBox2.getWidth(), (int) simpleBox2.getHeight());
         return rectangle.contains(x, y);
     }
