@@ -4,6 +4,7 @@ import com.darkgran.farstar.cards.CardInfo;
 
 public class Ship extends JunkableBattleCard {
     private final Fleet fleet;
+    private int dmgDoneThisBattle = 0;
 
     public Ship(Fleet fleet, CardInfo cardInfo, BattlePlayer battlePlayer) {
         super(cardInfo, battlePlayer);
@@ -23,4 +24,11 @@ public class Ship extends JunkableBattleCard {
 
     public Fleet getFleet() { return fleet; }
 
+    public int getDmgDoneThisBattle() {
+        return dmgDoneThisBattle;
+    }
+
+    public void setDmgDoneThisBattle(int dmgDoneThisBattle) {
+        this.dmgDoneThisBattle = dmgDoneThisBattle;
+    }
 }

@@ -14,4 +14,5 @@ public final class BattleSettings {
     public static final int MAX_IN_HAND = 8;
     public static final int DECK_SIZE = 30;
     public static final int YARD_SIZE = 5;
+    public static final boolean OUTNUMBERED_DEBUFF_ENABLED = false;
 }

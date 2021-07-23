@@ -1,6 +1,7 @@
 package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.battle.players.BattleCard;
+import com.darkgran.farstar.battle.players.Ship;
 import com.darkgran.farstar.gui.battlegui.ShotManager;
 import com.darkgran.farstar.gui.tokens.FleetToken;
 import com.darkgran.farstar.gui.tokens.Token;
@@ -115,12 +116,23 @@ public class DuelManager implements Delayer {
     }
 
     private boolean exeOneSide(BattleCard att, BattleCard def, boolean delayedAnimation) { //returns survival
-        if (!delayedAnimation) {
-            shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots());
-        } else {
-            delayAction(()->shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots()), duelDelay*1.5f);
+        int dmg = att.getCardInfo().getOffense();
+        if (att instanceof Ship && BattleSettings.OUTNUMBERED_DEBUFF_ENABLED) {
+            Ship ship = (Ship) att;
+            dmg -= ship.getDmgDoneThisBattle();
+            ship.setDmgDoneThisBattle(ship.getDmgDoneThisBattle()+att.getCardInfo().getOffense());
+            if (att.getCardInfo().getOffense() > def.getHealth()) {
+                ship.setDmgDoneThisBattle(ship.getDmgDoneThisBattle()-(att.getCardInfo().getOffense()-def.getHealth()));
+            }
         }
-        int dmg = getDmgAgainstShields(att.getCardInfo().getOffense(), def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
+        if (dmg > 0) {
+            dmg = getDmgAgainstShields(dmg, def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
+            if (!delayedAnimation) {
+                shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots());
+            } else {
+                delayAction(() -> shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots()), duelDelay * 1.5f);
+            }
+        }
         return def.receiveDMG(dmg);
     }
 

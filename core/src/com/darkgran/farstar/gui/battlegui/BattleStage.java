@@ -139,16 +139,18 @@ public abstract class BattleStage extends ListeningStage {
             CombatManager combatManager = getBattleScreen().getBattle().getCombatManager();
             DropTarget targetHit = returnDropTarget(x, y);
             //Deploy-Retargeting
-            if (token.getCard().getCardInfo().getCardType() == CardType.SUPPORT) {
-                if (targetHit instanceof MothershipToken) {
-                    targetHit = ((MothershipToken) targetHit).getSupportMenu();
-                } else if (targetHit instanceof FleetMenu) {
-                    targetHit = token.getCard().getBattlePlayer().getSupports().getSupportMenu();
+            if (!(token instanceof TargetingToken)) {
+                if (token.getCard().getCardInfo().getCardType() == CardType.SUPPORT) {
+                    if (targetHit instanceof MothershipToken) {
+                        targetHit = ((MothershipToken) targetHit).getSupportMenu();
+                    } else if (targetHit instanceof FleetMenu) {
+                        targetHit = token.getCard().getBattlePlayer().getSupports().getSupportMenu();
+                    }
                 }
-            }
-            if (CardType.isShip(token.getCard().getCardInfo().getCardType())) {
-                if (targetHit instanceof FleetMenu) {
-                    targetHit = token.getCard().getBattlePlayer().getFleet().getFleetMenu();
+                if (CardType.isShip(token.getCard().getCardInfo().getCardType())) {
+                    if (targetHit instanceof FleetMenu) {
+                        targetHit = token.getCard().getBattlePlayer().getFleet().getFleetMenu();
+                    }
                 }
             }
             //Process

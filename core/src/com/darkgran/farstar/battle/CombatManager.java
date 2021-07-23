@@ -297,8 +297,11 @@ public abstract class CombatManager {
 
     private void checkShipsForAftermath(Ship[] ships) {
         for (Ship ship : ships) {
-            if (ship != null && ship.getHealth()<=0) {
-                ship.deathInAfterMath();
+            if (ship != null) {
+                ship.setDmgDoneThisBattle(0);
+                if (ship.getHealth() <= 0) {
+                    ship.deathInAfterMath();
+                }
             }
         }
     }
