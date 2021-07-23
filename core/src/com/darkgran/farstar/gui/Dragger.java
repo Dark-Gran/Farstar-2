@@ -1,9 +1,12 @@
-package com.darkgran.farstar.gui.tokens;
+package com.darkgran.farstar.gui;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
+import com.darkgran.farstar.gui.tokens.AnchoredToken;
+import com.darkgran.farstar.gui.tokens.FakeToken;
+import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.util.SimpleVector2;
 
 public class Dragger extends InputListener {
@@ -39,7 +42,7 @@ public class Dragger extends InputListener {
         this.token = token;
     }
 
-    protected void drag(float x, float y) {
+    protected void drag(float x, float y) { //in-future: look into why the coordinates given by Libgdx seem to be lagging/glitching (huge differences between even and odd steps) - if possible, use them for dragging (instead of Gdx.input)
         SimpleVector2 coords = SuperScreen.getMouseCoordinates();
         token.setPosition(coords.x-token.getWidth()/2, Farstar.STAGE_HEIGHT-(coords.y+token.getHeight()/2));
     }

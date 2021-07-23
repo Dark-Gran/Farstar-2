@@ -1,8 +1,10 @@
-package com.darkgran.farstar.gui.tokens;
+package com.darkgran.farstar.gui;
 
 import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.battle.RoundManager;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
+import com.darkgran.farstar.gui.Dragger;
+import com.darkgran.farstar.gui.tokens.Token;
 
 @Deprecated
 public class ManagedDragger extends Dragger {

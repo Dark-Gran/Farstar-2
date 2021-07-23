@@ -201,7 +201,7 @@ public class HandMenu extends CardListMenu implements DropTarget {
 
     @Override
     public SimpleBox2 getSimpleBox2() {
-        return this;
+        return new SimpleBox2(x-getWidth()/2f, actualY, getWidth(), getHeight());
     }
 
     public float getMenuShiftY() {

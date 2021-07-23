@@ -1,4 +1,4 @@
-package com.darkgran.farstar.gui.tokens;
+package com.darkgran.farstar.gui;
 
 public interface Dragging {
     Dragger getDragger();

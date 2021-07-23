@@ -12,6 +12,7 @@ import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.gui.Dragger;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.util.SimpleVector2;

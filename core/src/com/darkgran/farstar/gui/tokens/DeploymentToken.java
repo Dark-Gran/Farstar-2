@@ -1,6 +1,7 @@
 package com.darkgran.farstar.gui.tokens;
 
 import com.darkgran.farstar.cards.CardType;
+import com.darkgran.farstar.gui.Dragger;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.battle.players.BattleCard;
