@@ -124,6 +124,7 @@ public class DuelManager implements Delayer {
             if (att.getCardInfo().getOffense() > def.getHealth()) {
                 ship.setDmgDoneThisBattle(ship.getDmgDoneThisBattle()-(att.getCardInfo().getOffense()-def.getHealth()));
             }
+            if (dmg < 0) { dmg = 0; }
         }
         if (dmg > 0) {
             dmg = getDmgAgainstShields(dmg, def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());

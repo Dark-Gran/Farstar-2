@@ -166,10 +166,10 @@ public class Automaton extends Bot {
                                 if (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE || changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE) {
                                     if (getBattle().getCombatManager().isTacticalPhase()) { //COMBAT ONLY
                                         allyToken = getAlliedTarget(battleCard.getToken(), null);
-                                        Map.Entry<FleetToken, DuelManager.AttackInfo> duel = getBattle().getCombatManager().getDuel(allyToken);
+                                        Map.Entry<FleetToken, DuelManager.AttackInfo> duel = CombatManager.getDuel(allyToken, getBattle().getCombatManager().getDuels());
                                         if (duel == null) { return true; }
                                         ally = allyToken.getCard();
-                                        enemy = getBattle().getCombatManager().getDuelOpponent(allyToken).getCard();
+                                        enemy = CombatManager.getDuelOpponent(allyToken, getBattle().getCombatManager().getDuels()).getCard();
                                         if (techTypeNonsense(ally, enemy, changeStatType, changeInfo)) {
                                             return true;
                                         }
@@ -189,10 +189,10 @@ public class Automaton extends Bot {
                                         case FIRST_STRIKE:
                                             if (getBattle().getCombatManager().isTacticalPhase()) { //COMBAT ONLY
                                                 allyToken = getAlliedTarget(battleCard.getToken(), EffectType.FIRST_STRIKE);
-                                                Map.Entry<FleetToken, DuelManager.AttackInfo> duel = getBattle().getCombatManager().getDuel(allyToken);
+                                                Map.Entry<FleetToken, DuelManager.AttackInfo> duel = CombatManager.getDuel(allyToken, getBattle().getCombatManager().getDuels());
                                                 if (duel == null) { return true; }
                                                 ally = allyToken.getCard();
-                                                enemy = getBattle().getCombatManager().getDuelOpponent(allyToken).getCard();
+                                                enemy = CombatManager.getDuelOpponent(allyToken, getBattle().getCombatManager().getDuels()).getCard();
                                                 if (enemy.isMS() || (duel.getValue().getUpperStrike() != null && duel.getValue().getUpperStrike() == ally)) {
                                                     return true;
                                                 }
@@ -319,17 +319,34 @@ public class Automaton extends Bot {
             if (picked == null && enemy.getFleet().isEmpty()) {
                 picked = enemy.getMs().getToken();
             } else {
-                for (Ship ship : enemy.getFleet().getShips()) {
-                    if (ship != null) {
-                        if ((weakestShip == null || isBiggerShip(weakestShip, ship)) && (!checkReach || getBattle().getCombatManager().canReach(attacker, ship.getToken(), enemy.getFleet()))) {
-                            weakestShip = ship;
-                            picked = ship.getToken();
+                boolean pickFirstValid = !(getBattle().getCombatManager().isActive() && !getBattle().getCombatManager().isTacticalPhase());
+                //in-future: remake duel picking (atm ships on left don't count with allies on right (that might be more suitable for a target that ends up being the left ship's opponent))
+                //while (picked == null) {
+                    for (Ship ship : enemy.getFleet().getShips()) {
+                        if (ship != null) {
+                            if ((pickFirstValid || !isAlreadyTargetedFatally(ship.getToken(), duels)) && (weakestShip == null || isBiggerShip(weakestShip, ship)) && (!checkReach || getBattle().getCombatManager().canReach(attacker, ship.getToken(), enemy.getFleet()))) {
+                                weakestShip = ship;
+                                picked = ship.getToken();
+                            }
                         }
                     }
-                }
+                    if (picked == null) {
+                        picked = enemy.getMs().getToken(); //alt.: pickFirstValid = true;
+                    }
+                //}
             }
         }
         return picked;
+    }
+
+    //returns whether the token has an opponent that will (supposedly) destroy it
+    private boolean isAlreadyTargetedFatally(Token token, TreeMap<FleetToken, DuelManager.AttackInfo> duelMap) {
+        Token opponent = CombatManager.getDuelOpponent(token, duelMap);
+        if (opponent != null) {
+            int dmg = DuelManager.getDmgAgainstShields(opponent.getCard().getCardInfo().getOffense(), token.getCard().getHealth(), opponent.getCard().getCardInfo().getOffenseType(), token.getCard().getCardInfo().getDefenseType());
+            return dmg >= token.getCard().getHealth();
+        }
+        return false;
     }
 
     private boolean isBiggerShip(Ship A, Ship B) { //return A>B (in-future: consider abilities)
@@ -356,15 +373,16 @@ public class Automaton extends Bot {
     //-COMBAT-//
     //--------//
 
+    private final TreeMap<FleetToken, DuelManager.AttackInfo> duels = new TreeMap<>();
+
     @Override
     protected void combat() { //duel-pick
         super.combat();
-        TreeMap<FleetToken, DuelManager.AttackInfo> duels = new TreeMap<>();
         Token enemy;
         for (Ship ship : getFleet().getShips()) {
             if (ship != null && !ship.isUsed()) {
                 enemy = getEnemyTarget(ship.getToken(), true);
-                if (enemy != null && getBattle().getCombatManager().canReach(ship.getToken(), enemy, enemy.getCard().getBattlePlayer().getFleet())) {
+                if (enemy != null) {
                     duels.put((FleetToken) ship.getToken(), new DuelManager.AttackInfo(enemy));
                 }
             }
@@ -372,6 +390,7 @@ public class Automaton extends Bot {
         if (duels.size() > 0) {
             getBattle().getCombatManager().setDuels(duels);
             getBattle().getCombatManager().startTacticalPhase();
+            duels.clear();
         } else {
             report("No possible duels.");
             delayedCombatEnd();

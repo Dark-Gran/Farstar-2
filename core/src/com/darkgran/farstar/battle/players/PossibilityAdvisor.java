@@ -1,6 +1,7 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.Battle;
+import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.gui.battlegui.Menu;
 import com.darkgran.farstar.gui.battlegui.YardMenu;
 import com.darkgran.farstar.cards.AbilityInfo;
@@ -37,7 +38,7 @@ public class PossibilityAdvisor {
                 }
             }
             for (Ship ship : battlePlayer.getFleet().getShips()) {
-                if (ship != null && battle.getCombatManager().getDuel(ship.getToken()) == null) {
+                if (ship != null && CombatManager.getDuel(ship.getToken(), battle.getCombatManager().getDuels()) == null) {
                     if ((!inCombat && hasPossibleAbility(battlePlayer, ship)) || (inCombat && !tacticalPhase && !ship.isUsed())) {
                         possibilities.add(new PossibilityInfo(ship, battlePlayer.getFleet().getFleetMenu()));
                     }

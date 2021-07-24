@@ -318,9 +318,9 @@ public abstract class CombatManager {
         return cps;
     }
 
-    public Map.Entry<FleetToken, DuelManager.AttackInfo> getDuel(Token token) {
+    public static Map.Entry<FleetToken, DuelManager.AttackInfo> getDuel(Token token, TreeMap<FleetToken, DuelManager.AttackInfo> duelMap) {
         if (token != null) {
-            for (Map.Entry<FleetToken, DuelManager.AttackInfo> entry : duels.entrySet()) {
+            for (Map.Entry<FleetToken, DuelManager.AttackInfo> entry : duelMap.entrySet()) {
                 if (entry.getKey() == token || entry.getValue().getDefender() == token) {
                     return entry;
                 }
@@ -329,12 +329,12 @@ public abstract class CombatManager {
         return null;
     }
 
-    public Token getDuelOpponent(Token token) {
+    public static Token getDuelOpponent(Token token, TreeMap<FleetToken, DuelManager.AttackInfo> duelMap) {
         if (token != null) {
-            if (token instanceof FleetToken && duels.containsKey(token)) {
-                return duels.get(token).getDefender();
+            if (token instanceof FleetToken && duelMap.containsKey(token)) {
+                return duelMap.get(token).getDefender();
             } else {
-                for (Map.Entry<FleetToken, DuelManager.AttackInfo> entry : duels.entrySet()) {
+                for (Map.Entry<FleetToken, DuelManager.AttackInfo> entry : duelMap.entrySet()) {
                     if (entry.getValue().getDefender() == token) {
                         return entry.getKey();
                     }
@@ -403,6 +403,6 @@ public abstract class CombatManager {
     }
 
     public void setDuels(TreeMap<FleetToken, DuelManager.AttackInfo> duels) {
-        this.duels = duels;
+        this.duels = new TreeMap<>(duels);
     }
 }
