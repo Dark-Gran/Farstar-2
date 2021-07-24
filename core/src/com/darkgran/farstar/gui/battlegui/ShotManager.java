@@ -12,7 +12,7 @@ import com.darkgran.farstar.util.SimpleVector2;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-/** Responsible for all shot animations. */
+/** Responsible for all shot animations. (see AnimationManager for other) */
 public class ShotManager {
     public enum ShotType {
         BULLET("shot-bullet", 4000f),
@@ -86,7 +86,7 @@ public class ShotManager {
             private boolean recoilFinished = false;
             private AniShot(AniAttack aniAttack, SimpleVector2 start, float delay, float scale) {
                 this.aniAttack = aniAttack;
-                this.position = new SimpleVector2(start.x, start.y);
+                this.position = new SimpleVector2(start.x-shotPic.getRegionWidth()/2f, start.y-shotPic.getRegionHeight()/2f);
                 this.scale = MathUtils.clamp(scale, 1f, 10f);
                 timer = delay;
                 aniRecoil = new AniRecoil(start, scale);
