@@ -64,7 +64,7 @@ public class ShotManager {
                     alpha -= delta*4f;
                     position.x += speed.x * delta;
                     position.y += speed.y * delta;
-                    rotation += delta*150f;
+                    rotation += delta*500f;
                     if (alpha <= 0) {
                         exploded = true;
                     }
