@@ -58,7 +58,7 @@ public class ShotManager {
                 private AniShrapnel(SimpleVector2 origin, SimpleVector2 speed, float startingRotation) {
                     this.speed = speed;
                     rotation = startingRotation;
-                    position = new SimpleVector2(origin.x, origin.y);
+                    position = new SimpleVector2(origin.x-shrapnelPic.getRegionWidth()/2f, origin.y-shrapnelPic.getRegionHeight()/2f);
                 }
                 private void update(float delta) {
                     alpha -= delta*4f;
