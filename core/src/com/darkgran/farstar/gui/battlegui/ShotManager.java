@@ -1,6 +1,5 @@
 package com.darkgran.farstar.gui.battlegui;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -11,6 +10,7 @@ import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.util.SimpleVector2;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 /** Responsible for all shot animations. */
 public class ShotManager {
@@ -40,19 +40,17 @@ public class ShotManager {
                     position = new SimpleVector2(origin.x, origin.y);
                 }
                 private void update(float delta) {
-                    alpha -= delta*4;
+                    alpha -= delta*4f;
                     position.x += speed.x * delta;
                     position.y += speed.y * delta;
-                    speed.x -= delta;
-                    speed.y -= delta;
-                    rotation += delta;
+                    rotation += delta*150f;
                     if (alpha <= 0) {
                         done = true;
                     }
                 }
                 private void draw(Batch batch) {
                     batch.setColor(ColorPalette.changeAlpha(techType.getColor(), alpha));
-                    batch.draw(shrapnelPic, position.x, position.y, shrapnelPic.getRegionWidth() / 2f, shrapnelPic.getRegionHeight() / 2f, shrapnelPic.getRegionWidth(), shrapnelPic.getRegionHeight(), scale, scale, angle);
+                    batch.draw(shrapnelPic, position.x, position.y, shrapnelPic.getRegionWidth() / 2f, shrapnelPic.getRegionHeight() / 2f, shrapnelPic.getRegionWidth(), shrapnelPic.getRegionHeight(), scale, scale, rotation);
                     //batch.setColor(1, 1, 1, 1);
                 }
             }
@@ -85,9 +83,18 @@ public class ShotManager {
                             position.y = position.y + ((aniAttack.shotType.speed * aniAttack.directionY) * delta);
                         } else {
                             shrapnels = new ArrayList<>();
-                            shrapnels.add(new AniShrapnel(end, new SimpleVector2(100f, 100f), 0f));
-                            shrapnels.add(new AniShrapnel(end, new SimpleVector2(-100f, 100f), 0f));
-                            shrapnels.add(new AniShrapnel(end, new SimpleVector2(-100f, -100f), 0f));
+                            float shrapnelSpeed = 100f;
+                            //"Shrapnel Trio"
+                            float rotation = ThreadLocalRandom.current().nextInt(0, 359);
+                            float velocityX = (float) (shrapnelSpeed*Math.cos(Math.toRadians(60f+rotation)));
+                            float velocityY = (float) (shrapnelSpeed*Math.sin(Math.toRadians(60f+rotation)));
+                            shrapnels.add(new AniShrapnel(end, new SimpleVector2(velocityX, velocityY), 60f+rotation));
+                            velocityX = (float) (shrapnelSpeed*Math.cos(Math.toRadians(180f+rotation)));
+                            velocityY = (float) (shrapnelSpeed*Math.sin(Math.toRadians(180f+rotation)));
+                            shrapnels.add(new AniShrapnel(end, new SimpleVector2(velocityX, velocityY), 180f+rotation));
+                            velocityX = (float) (shrapnelSpeed*Math.cos(Math.toRadians(300f+rotation)));
+                            velocityY = (float) (shrapnelSpeed*Math.sin(Math.toRadians(300f+rotation)));
+                            shrapnels.add(new AniShrapnel(end, new SimpleVector2(velocityX, velocityY), 300f+rotation));
                         }
                     } else {
                         for (AniShrapnel shrapnel : shrapnels) {
