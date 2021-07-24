@@ -3,10 +3,10 @@ package com.darkgran.farstar.gui;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.tokens.TokenType;
 import com.darkgran.farstar.cards.TechType;
@@ -17,7 +17,8 @@ public class AssetLibrary {
 
     public String getPortraitName(CardInfo cardInfo, TokenType tokenType) {
         String name = addTokenTypeAcronym(Integer.toString(cardInfo.getId())+"-", tokenType, false);
-        if (assetManager.contains(name)) {
+        TextureRegion portrait = ((TextureAtlas) assetManager.get("images/fs2atlas.atlas")).findRegion(name);
+        if (portrait != null) {
             return name;
         } else {
             return addTokenTypeAcronym("empty-", tokenType, false);
@@ -87,7 +88,9 @@ public class AssetLibrary {
         assetManager.finishLoading();
     }
 
-    private void loadFonts() { //todo
+    //For some reason, when using Atlas for the font dependencies, BitmapFontLoader/AssetManager throws IndexOutOfBoundException when the font uses more than 1 png file.
+    //In-future: use Atlas anyway ie. either "fix" BitmapFontLoader/AssetManager or make all fonts use only 1 png file.
+    private void loadFonts() {
         BitmapFontLoader.BitmapFontParameter bmpParams = new BitmapFontLoader.BitmapFontParameter();
         bmpParams.minFilter = Texture.TextureFilter.Linear;
         bmpParams.magFilter = Texture.TextureFilter.Linear;
@@ -127,12 +130,9 @@ public class AssetLibrary {
     }
 
     private void loadTextures() {
-        //assetManager.load("images/cursor-aim.png", Pixmap.class);
-        //assetManager.load("images/cursor-default.png", Pixmap.class);
         TextureLoader.TextureParameter texParams = new TextureLoader.TextureParameter();
         texParams.minFilter = Texture.TextureFilter.Linear;
         texParams.magFilter = Texture.TextureFilter.Linear;
-        assetManager.load("images/cursor-transparent.png", Pixmap.class); //todo
         assetManager.load("images/tableMain-1920.png", Texture.class, texParams);
         //Atlas
         assetManager.load("images/fs2atlas.atlas", TextureAtlas.class);

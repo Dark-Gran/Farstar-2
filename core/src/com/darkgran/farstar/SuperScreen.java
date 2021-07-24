@@ -3,10 +3,7 @@ package com.darkgran.farstar;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Cursor;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -85,7 +82,8 @@ public abstract class SuperScreen implements Screen {
     }
     public static void hideCursor(boolean hide) {
         if (hide) {
-            Gdx.graphics.setCursor(Gdx.graphics.newCursor(ASSET_LIBRARY.get("images/cursor-transparent.png"), 0, 0));
+            Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+            Gdx.graphics.setCursor(Gdx.graphics.newCursor(pixmap, 0, 0));
         } else { Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow); }
     }
     public static SimpleVector2 getMouseCoordinates() {
