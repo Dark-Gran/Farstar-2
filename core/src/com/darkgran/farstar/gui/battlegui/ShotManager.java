@@ -26,15 +26,36 @@ public class ShotManager {
     }
     public class AniAttack {
         public class AniShot {
+            private class AniRecoil {
+                private final SimpleVector2 position;
+                private float scaleX;
+                private float scaleY;
+                private float alpha = 1f;
+                public AniRecoil(SimpleVector2 position, float scale) {
+                    this.scaleX = scale;
+                    this.scaleY = scale;
+                    this.position = new SimpleVector2(position.x-recoilPic.getRegionWidth() / 2f, position.y-recoilPic.getRegionHeight() / 2f);
+                }
+                private void update(float delta) {
+                    alpha -= delta*3f;
+                    scaleX += delta*10f;
+                    scaleY += delta;
+                    if (alpha <= 0) {
+                        recoilFinished = true;
+                    }
+                }
+                private void draw(Batch batch) {
+                    batch.setColor(ColorPalette.changeAlpha(techType.getColor(), alpha));
+                    batch.draw(recoilPic, position.x, position.y, recoilPic.getRegionWidth() / 2f, recoilPic.getRegionHeight() / 2f, recoilPic.getRegionWidth(), recoilPic.getRegionHeight(), scaleX, scaleY, 0);
+                    //batch.setColor(1, 1, 1, 1);
+                }
+            }
             private class AniShrapnel {
-                private final TextureRegion shrapnelPic = Farstar.ASSET_LIBRARY.getAtlasRegion("shrapnel");
-                private final SimpleVector2 origin;
                 private final SimpleVector2 speed;
                 private SimpleVector2 position;
                 private float rotation;
                 private float alpha = 1f;
                 private AniShrapnel(SimpleVector2 origin, SimpleVector2 speed, float startingRotation) {
-                    this.origin = origin;
                     this.speed = speed;
                     rotation = startingRotation;
                     position = new SimpleVector2(origin.x, origin.y);
@@ -45,7 +66,7 @@ public class ShotManager {
                     position.y += speed.y * delta;
                     rotation += delta*150f;
                     if (alpha <= 0) {
-                        done = true;
+                        exploded = true;
                     }
                 }
                 private void draw(Batch batch) {
@@ -59,13 +80,16 @@ public class ShotManager {
             private final SimpleVector2 position;
             private float timer;
             private boolean active = false;
+            private final AniRecoil aniRecoil;
             private ArrayList<AniShrapnel> shrapnels = null;
-            private boolean done = false;
+            private boolean exploded = false;
+            private boolean recoilFinished = false;
             private AniShot(AniAttack aniAttack, SimpleVector2 start, float delay, float scale) {
                 this.aniAttack = aniAttack;
                 this.position = new SimpleVector2(start.x, start.y);
                 this.scale = MathUtils.clamp(scale, 1f, 10f);
                 timer = delay;
+                aniRecoil = new AniRecoil(start, scale);
             }
             private void update(float delta) {
                 if (!active) {
@@ -75,40 +99,57 @@ public class ShotManager {
                         active = true;
                     }
                 }
-                if (active && !done) {
-                    if (shrapnels == null) {
-                        double distance = Math.sqrt(Math.pow(aniAttack.end.x - position.x, 2) + Math.pow(aniAttack.end.y - position.y, 2));
-                        if (distance >= aniAttack.shotType.speed * delta) {
-                            position.x = position.x + ((aniAttack.shotType.speed * aniAttack.directionX) * delta);
-                            position.y = position.y + ((aniAttack.shotType.speed * aniAttack.directionY) * delta);
-                        } else {
-                            shrapnels = new ArrayList<>();
-                            float shrapnelSpeed = 100f;
-                            //"Shrapnel Trio"
-                            float rotation = ThreadLocalRandom.current().nextInt(0, 359);
-                            float velocityX = (float) (shrapnelSpeed*Math.cos(Math.toRadians(60f+rotation)));
-                            float velocityY = (float) (shrapnelSpeed*Math.sin(Math.toRadians(60f+rotation)));
-                            shrapnels.add(new AniShrapnel(end, new SimpleVector2(velocityX, velocityY), 60f+rotation));
-                            velocityX = (float) (shrapnelSpeed*Math.cos(Math.toRadians(180f+rotation)));
-                            velocityY = (float) (shrapnelSpeed*Math.sin(Math.toRadians(180f+rotation)));
-                            shrapnels.add(new AniShrapnel(end, new SimpleVector2(velocityX, velocityY), 180f+rotation));
-                            velocityX = (float) (shrapnelSpeed*Math.cos(Math.toRadians(300f+rotation)));
-                            velocityY = (float) (shrapnelSpeed*Math.sin(Math.toRadians(300f+rotation)));
-                            shrapnels.add(new AniShrapnel(end, new SimpleVector2(velocityX, velocityY), 300f+rotation));
+                if (active) {
+                    if (!exploded) {
+                        if (!recoilOnly) {
+                            if (shrapnels == null) {
+                                double distance = Math.sqrt(Math.pow(aniAttack.end.x - position.x, 2) + Math.pow(aniAttack.end.y - position.y, 2));
+                                if (distance >= aniAttack.shotType.speed * delta) {
+                                    position.x = position.x + ((aniAttack.shotType.speed * aniAttack.directionX) * delta);
+                                    position.y = position.y + ((aniAttack.shotType.speed * aniAttack.directionY) * delta);
+                                } else {
+                                    shrapnels = new ArrayList<>();
+                                    float shrapnelSpeed = 100f;
+                                    //"Shrapnel Trio"
+                                    float rotation = ThreadLocalRandom.current().nextInt(0, 359);
+                                    float velocityX = (float) (shrapnelSpeed * Math.cos(Math.toRadians(60f + rotation)));
+                                    float velocityY = (float) (shrapnelSpeed * Math.sin(Math.toRadians(60f + rotation)));
+                                    shrapnels.add(new AniShrapnel(end, new SimpleVector2(velocityX, velocityY), 60f + rotation));
+                                    velocityX = (float) (shrapnelSpeed * Math.cos(Math.toRadians(180f + rotation)));
+                                    velocityY = (float) (shrapnelSpeed * Math.sin(Math.toRadians(180f + rotation)));
+                                    shrapnels.add(new AniShrapnel(end, new SimpleVector2(velocityX, velocityY), 180f + rotation));
+                                    velocityX = (float) (shrapnelSpeed * Math.cos(Math.toRadians(300f + rotation)));
+                                    velocityY = (float) (shrapnelSpeed * Math.sin(Math.toRadians(300f + rotation)));
+                                    shrapnels.add(new AniShrapnel(end, new SimpleVector2(velocityX, velocityY), 300f + rotation));
+                                }
+                            } else {
+                                for (AniShrapnel shrapnel : shrapnels) {
+                                    shrapnel.update(delta);
+                                }
+                            }
                         }
-                    } else {
-                        for (AniShrapnel shrapnel : shrapnels) {
-                            shrapnel.update(delta);
-                        }
+                    }
+                    if (!recoilFinished) {
+                        aniRecoil.update(delta);
                     }
                 }
             }
-            private void draw(Batch batch) {
+            private void drawAniShot(Batch batch) {
                 batch.draw(shotPic, position.x, position.y, shotPic.getRegionWidth() / 2f, shotPic.getRegionHeight() / 2f, shotPic.getRegionWidth(), shotPic.getRegionHeight(), scale, scale, angle);
+            }
+            private void drawRecoil(Batch batch) {
+                aniRecoil.draw(batch);
+            }
+            private void drawShrapnels(Batch batch) {
+                for (AniShrapnel shrapnel : shrapnels) {
+                    shrapnel.draw(batch);
+                }
             }
         }
         private final ShotType shotType;
         private final TextureRegion shotPic;
+        private final TextureRegion shrapnelPic = Farstar.ASSET_LIBRARY.getAtlasRegion("shrapnel");
+        private final TextureRegion recoilPic = Farstar.ASSET_LIBRARY.getAtlasRegion("recoil");
         private final Token att;
         private final Token def;
         private final int dmg;
@@ -120,7 +161,8 @@ public class ShotManager {
         private final TechType techType;
         private ArrayList<AniShot> aniShots;
         private boolean done = false;
-        public AniAttack(ShotType shotType, Token att, Token def, int dmg, SimpleVector2 start, SimpleVector2 end, float directionX, float directionY, float angle, TechType techType) {
+        private final boolean recoilOnly;
+        public AniAttack(ShotType shotType, Token att, Token def, int dmg, SimpleVector2 start, SimpleVector2 end, float directionX, float directionY, float angle, TechType techType, boolean recoilOnly) {
             this.shotType = shotType;
             this.att = att;
             this.def = def;
@@ -132,6 +174,7 @@ public class ShotManager {
             this.directionY = directionY;
             this.angle = angle;
             this.techType = techType;
+            this.recoilOnly = recoilOnly;
         }
         public AniShot createAniShot(float delay, float scale) {
             return new AniShot(this, start, delay, scale);
@@ -141,14 +184,20 @@ public class ShotManager {
                 ArrayList<AniAttack.AniShot> forDeletion = new ArrayList<>();
                 batch.setColor(techType.getColor());
                 for (AniAttack.AniShot aniShot : aniShots) {
-                    if (aniShot.active && aniShot.shrapnels==null) {
-                        aniShot.draw(batch);
-                    } else if (aniShot.shrapnels != null && !aniShot.done) {
-                        for (AniShot.AniShrapnel shrapnel : aniShot.shrapnels) {
-                            shrapnel.draw(batch);
+                    if (aniShot.active) {
+                        if (!aniShot.recoilFinished) {
+                            aniShot.drawRecoil(batch);
                         }
-                    } else if (aniShot.done) {
-                        forDeletion.add(aniShot);
+                        if (!recoilOnly) {
+                            if (aniShot.shrapnels == null) {
+                                aniShot.drawAniShot(batch);
+                            } else if (!aniShot.exploded) {
+                                aniShot.drawShrapnels(batch);
+                            }
+                        }
+                        if ((aniShot.exploded || recoilOnly) && aniShot.recoilFinished) {
+                            forDeletion.add(aniShot);
+                        }
                     }
                     aniShot.update(delta);
                 }
@@ -163,28 +212,30 @@ public class ShotManager {
 
 
     public void newAttack(Token att, Token def, int dmg, TechType techType, int numberOfShots) {
-        if (att != def) {
-            SimpleVector2 start = new SimpleVector2(att.getX()+att.getTokenOffense().getPad().getRegionWidth(), att.getY()+att.getTokenOffense().getPad().getRegionHeight()/2f);
-            SimpleVector2 end = new SimpleVector2(def.getX()+def.getWidth()/2f, def.getY()+def.getHeight()/2f);
-            float x = end.x-start.x;
-            float y = end.y-start.y;
-            double distance = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
-            double directionX = x / distance;
-            double directionY = y / distance;
-            float angle = (float) Math.toDegrees(Math.atan2(y, x))+90f;
-            AniAttack aniAttack = new AniAttack(techType.getShotType(), att, def, dmg, start, end, (float) directionX, (float) directionY, angle, techType);
-            ArrayList<AniAttack.AniShot> aniShots = new ArrayList<>();
-            if (numberOfShots < 1) { numberOfShots = 1; }
-            float zoomedDamage = dmg*2f;
-            float shotDamage = zoomedDamage / numberOfShots;
-            if (shotDamage > 2f) { shotDamage = 2f + (shotDamage-2f)/ (techType.getShotType() == ShotType.BULLET ? 6f : 5f); }
-            float scale = 0.5f + (shotDamage / 2f);
-            for (int i = 0; i < numberOfShots; i++) {
-                aniShots.add(aniAttack.createAniShot(i*0.4f, scale));
-            }
-            aniAttack.aniShots = aniShots;
-            aniAttacks.add(aniAttack);
+        SimpleVector2 start = new SimpleVector2(att.getX() + att.getTokenOffense().getPad().getRegionWidth() / 2f, att.getY() + att.getTokenOffense().getPad().getRegionHeight() / 2f);
+        SimpleVector2 end = new SimpleVector2(def.getX() + def.getWidth() / 2f, def.getY() + def.getHeight() / 2f);
+        float x = end.x - start.x;
+        float y = end.y - start.y;
+        double distance = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+        double directionX = x / distance;
+        double directionY = y / distance;
+        float angle = (float) Math.toDegrees(Math.atan2(y, x)) + 90f;
+        AniAttack aniAttack = new AniAttack(techType.getShotType(), att, def, dmg, start, end, (float) directionX, (float) directionY, angle, techType, att==def);
+        ArrayList<AniAttack.AniShot> aniShots = new ArrayList<>();
+        if (numberOfShots < 1) {
+            numberOfShots = 1;
         }
+        float zoomedDamage = dmg * 2f;
+        float shotDamage = zoomedDamage / numberOfShots;
+        if (shotDamage > 2f) {
+            shotDamage = 2f + (shotDamage - 2f) / (techType.getShotType() == ShotType.BULLET ? 6f : 5f);
+        }
+        float scale = 0.5f + (shotDamage / 2f);
+        for (int i = 0; i < numberOfShots; i++) {
+            aniShots.add(aniAttack.createAniShot(i * 0.4f, scale));
+        }
+        aniAttack.aniShots = aniShots;
+        aniAttacks.add(aniAttack);
     }
 
     public void drawAttacks(Batch batch, float delta) {
