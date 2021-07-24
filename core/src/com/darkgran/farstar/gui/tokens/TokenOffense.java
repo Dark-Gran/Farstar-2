@@ -1,6 +1,5 @@
 package com.darkgran.farstar.gui.tokens;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.cards.TechType;
 
@@ -25,7 +24,7 @@ public class TokenOffense extends TokenPart {
 
     @Override
     public void setPad(TokenType tokenType) {
-        setPad((Texture) Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getTypePad(getToken().getCard().getCardInfo().getOffenseType(), tokenType)));
+        setPad(Farstar.ASSET_LIBRARY.getAtlasRegion(Farstar.ASSET_LIBRARY.getTypePad(getToken().getCard().getCardInfo().getOffenseType(), tokenType)));
     }
 
     @Override
@@ -42,7 +41,7 @@ public class TokenOffense extends TokenPart {
     @Override
     public void setupOffset() {
         if (getPad() != null) {
-            setOffsetX(getPad().getWidth());
+            setOffsetX(getPad().getRegionWidth());
         }
     }
 

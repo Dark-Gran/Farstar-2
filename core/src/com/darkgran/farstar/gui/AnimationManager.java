@@ -1,6 +1,5 @@
 package com.darkgran.farstar.gui;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.darkgran.farstar.Farstar;
@@ -43,8 +42,8 @@ public class AnimationManager {
     private ArrayList<DeathAnimation> deathAnimations = new ArrayList<>();
 
     public void newDeathEffect(float x, float y, TokenType tokenType) {
-        Texture texture = Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/death_", tokenType, false)+".png");
-        deathAnimations.add(new DeathAnimation(new TextureRegion(texture), x+tokenType.getWidth()/2f-texture.getWidth()/2f, y+tokenType.getHeight()/2f-texture.getHeight()/2f));
+        TextureRegion texture = Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("death-", tokenType, false));
+        deathAnimations.add(new DeathAnimation(texture, x+tokenType.getWidth()/2f-texture.getRegionWidth()/2f, y+tokenType.getHeight()/2f-texture.getRegionHeight()/2f));
     }
 
     public void draw(Batch batch, float delta) {

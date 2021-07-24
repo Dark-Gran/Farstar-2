@@ -1,22 +1,22 @@
 package com.darkgran.farstar.gui;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class ButtonWithExtraState extends ActorButton {
-    private final Texture extraUp;
-    private final Texture extraOver;
-    private final Texture extraDown;
+    private final TextureRegion extraUp;
+    private final TextureRegion extraOver;
+    private final TextureRegion extraDown;
     private boolean extraState;
 
-    public ButtonWithExtraState(Texture imageUp, Texture imageOver, Texture extraUp, Texture extraOver) {
+    public ButtonWithExtraState(TextureRegion imageUp, TextureRegion imageOver, TextureRegion extraUp, TextureRegion extraOver) {
         super(imageUp, imageOver);
         this.extraUp = extraUp;
         this.extraOver = extraOver;
         this.extraDown = extraOver;
     }
 
-    public ButtonWithExtraState(Texture imageUp, Texture imageOver, Texture imageDown, Texture extraUp, Texture extraOver, Texture extraDown) {
+    public ButtonWithExtraState(TextureRegion imageUp, TextureRegion imageOver, TextureRegion imageDown, TextureRegion extraUp, TextureRegion extraOver, TextureRegion extraDown) {
         super(imageUp, imageOver, imageDown);
         this.extraUp = extraUp;
         this.extraOver = extraOver;

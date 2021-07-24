@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.tokens.TokenType;
 import com.darkgran.farstar.cards.TechType;
@@ -15,23 +16,21 @@ public class AssetLibrary {
     private final AssetManager assetManager = new AssetManager();
 
     public String getPortraitName(CardInfo cardInfo, TokenType tokenType) {
-        String path = "images/portraits/";
-        String name = addTokenTypeAcronym(Integer.toString(cardInfo.getId())+"_", tokenType, false) + ".png";
-        if (assetManager.contains(path+name)) {
-            return path+name;
+        String name = addTokenTypeAcronym(Integer.toString(cardInfo.getId())+"-", tokenType, false);
+        if (assetManager.contains(name)) {
+            return name;
         } else {
-            return path+addTokenTypeAcronym("empty_", tokenType, false)+".png";
+            return addTokenTypeAcronym("empty-", tokenType, false);
         }
     }
 
     public String getFrameName(CardInfo cardInfo, TokenType tokenType) {
-        String path = "images/tokens/";
-        String name = addTokenTypeAcronym("frame"+cardInfo.getCardRarity().getAcronym()+"_", tokenType, false)+".png";
-        return path+name;
+        String name = addTokenTypeAcronym("frame"+cardInfo.getCardRarity().getAcronym()+"-", tokenType, false);
+        return name;
     }
 
     public String getTypePad(TechType techType, TokenType tokenType) {
-        String name = "images/tokens/pad";
+        String name = "pad";
         switch (techType) {
             default:
             case NONE:
@@ -51,7 +50,7 @@ public class AssetLibrary {
                 name += "S";
                 break;
         }
-        return addTokenTypeAcronym(name+"_", tokenType, true)+".png";
+        return addTokenTypeAcronym(name+"-", tokenType, true);
     }
 
     public static String addTokenTypeAcronym(String string, TokenType tokenType, boolean pad) {
@@ -88,7 +87,7 @@ public class AssetLibrary {
         assetManager.finishLoading();
     }
 
-    private void loadFonts() {
+    private void loadFonts() { //todo
         BitmapFontLoader.BitmapFontParameter bmpParams = new BitmapFontLoader.BitmapFontParameter();
         bmpParams.minFilter = Texture.TextureFilter.Linear;
         bmpParams.magFilter = Texture.TextureFilter.Linear;
@@ -128,169 +127,19 @@ public class AssetLibrary {
     }
 
     private void loadTextures() {
+        //assetManager.load("images/cursor-aim.png", Pixmap.class);
+        //assetManager.load("images/cursor-default.png", Pixmap.class);
         TextureLoader.TextureParameter texParams = new TextureLoader.TextureParameter();
         texParams.minFilter = Texture.TextureFilter.Linear;
         texParams.magFilter = Texture.TextureFilter.Linear;
-        //- All-Screens
-        assetManager.load("images/cursor_aim.png", Texture.class, texParams);
-        assetManager.load("images/cursor_default.png", Texture.class, texParams);
-        assetManager.load("images/cursor_transparent.png", Pixmap.class);
-        //assetManager.load("images/cursor_aim.png", Pixmap.class);
-        //assetManager.load("images/cursor_default.png", Pixmap.class);
-        assetManager.load("images/x.png", Texture.class, texParams);
-        assetManager.load("images/xO.png", Texture.class, texParams);
-        assetManager.load("images/y.png", Texture.class, texParams);
-        assetManager.load("images/yO.png", Texture.class, texParams);
-        //- Intro
-        assetManager.load("images/logo.jpg", Texture.class, texParams);
-        //- MainScreenStage
-        assetManager.load("images/FSlogo.png", Texture.class, texParams);
-        assetManager.load("images/skirmish.png", Texture.class, texParams);
-        assetManager.load("images/skirmishO.png", Texture.class, texParams);
-        assetManager.load("images/sim.png", Texture.class, texParams);
-        assetManager.load("images/simO.png", Texture.class, texParams);
-        assetManager.load("images/solitary.png", Texture.class, texParams);
-        assetManager.load("images/solitaryO.png", Texture.class, texParams);
-        assetManager.load("images/web.png", Texture.class, texParams);
-        assetManager.load("images/webO.png", Texture.class, texParams);
-        //- TableStage
-        assetManager.load("images/empty.png", Texture.class, texParams);
-        assetManager.load("images/exit.png", Texture.class, texParams);
-        assetManager.load("images/friends.png", Texture.class, texParams);
-        assetManager.load("images/fs.png", Texture.class, texParams);
-        assetManager.load("images/logout.png", Texture.class, texParams);
-        assetManager.load("images/net_1920.png", Texture.class, texParams);
-        assetManager.load("images/quality.png", Texture.class, texParams);
-        assetManager.load("images/sound.png", Texture.class, texParams);
-        assetManager.load("images/Space_1920.png", Texture.class, texParams);
-        assetManager.load("images/tableMain_1920.png", Texture.class, texParams);
-        //- Battle
-        assetManager.load("images/cancel.png", Texture.class, texParams);
-        assetManager.load("images/cancelO.png", Texture.class, texParams);
-        assetManager.load("images/combat_aim.png", Texture.class, texParams);
-        assetManager.load("images/combat_end.png", Texture.class, texParams);
-        assetManager.load("images/combat_endA.png", Texture.class, texParams);
-        assetManager.load("images/combat_endAO.png", Texture.class, texParams);
-        assetManager.load("images/combat_endO.png", Texture.class, texParams);
-        assetManager.load("images/deck.png", Texture.class, texParams);
-        assetManager.load("images/matter.png", Texture.class, texParams);
-        assetManager.load("images/energy.png", Texture.class, texParams);
-        assetManager.load("images/rounds.png", Texture.class, texParams);
-        assetManager.load("images/shot_beam.png", Texture.class, texParams);
-        assetManager.load("images/shot_bullet.png", Texture.class, texParams);
-        assetManager.load("images/tacticalOK.png", Texture.class, texParams);
-        assetManager.load("images/tacticalOKC.png", Texture.class, texParams);
-        assetManager.load("images/tacticalOKCO.png", Texture.class, texParams);
-        assetManager.load("images/tacticalOKO.png", Texture.class, texParams);
-        assetManager.load("images/turn.png", Texture.class, texParams);
-        assetManager.load("images/turn_combat.png", Texture.class, texParams);
-        assetManager.load("images/turn_b.png", Texture.class, texParams);
-        assetManager.load("images/turn_wait.png", Texture.class, texParams);
-        assetManager.load("images/turnO.png", Texture.class, texParams);
-        assetManager.load("images/turnOP.png", Texture.class, texParams);
-        assetManager.load("images/turnP.png", Texture.class, texParams);
-        assetManager.load("images/yard.png", Texture.class, texParams);
-        assetManager.load("images/yardO.png", Texture.class, texParams);
-        assetManager.load("images/yardOP.png", Texture.class, texParams);
-        assetManager.load("images/yardP.png", Texture.class, texParams);
-        //Animations etc
-        assetManager.load("images/tokens/death_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/death_MS.png", Texture.class, texParams);
-        assetManager.load("images/tokens/death_S.png", Texture.class, texParams);
-        //Cards
-        assetManager.load("images/tokens/cardB_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/cardH_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/cardH_FK.png", Texture.class, texParams);
-        assetManager.load("images/tokens/cardH_Z.png", Texture.class, texParams);
-        assetManager.load("images/tokens/cardN_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/cardN_FK.png", Texture.class, texParams);
-        assetManager.load("images/tokens/cardN_Z.png", Texture.class, texParams);
-        //Token Parts
-        assetManager.load("images/tokens/abiFS_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/abiG_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/abiR_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/abiU_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/abiU_FK.png", Texture.class, texParams);
-        assetManager.load("images/tokens/abiU_MS.png", Texture.class, texParams);
-        assetManager.load("images/tokens/abiU_S.png", Texture.class, texParams);
-        assetManager.load("images/tokens/disable_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/disable_MS.png", Texture.class, texParams);
-        assetManager.load("images/tokens/disable_S.png", Texture.class, texParams);
-        assetManager.load("images/tokens/frameB_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/frameB_FK.png", Texture.class, texParams);
-        assetManager.load("images/tokens/frameB_MS.png", Texture.class, texParams);
-        assetManager.load("images/tokens/frameB_S.png", Texture.class, texParams);
-        assetManager.load("images/tokens/frameB_Y.png", Texture.class, texParams);
-        assetManager.load("images/tokens/frameB_Z.png", Texture.class, texParams);
-        assetManager.load("images/tokens/frameI_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/frameI_FK.png", Texture.class, texParams);
-        assetManager.load("images/tokens/frameI_MS.png", Texture.class, texParams);
-        assetManager.load("images/tokens/frameI_S.png", Texture.class, texParams);
-        assetManager.load("images/tokens/frameI_Y.png", Texture.class, texParams);
-        assetManager.load("images/tokens/frameI_Z.png", Texture.class, texParams);
-        assetManager.load("images/tokens/glowG_D.png", Texture.class, texParams);
-        assetManager.load("images/tokens/glowG_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/glowG_FK.png", Texture.class, texParams);
-        assetManager.load("images/tokens/glowG_MS.png", Texture.class, texParams);
-        assetManager.load("images/tokens/glowG_S.png", Texture.class, texParams);
-        assetManager.load("images/tokens/glowG_U.png", Texture.class, texParams);
-        assetManager.load("images/tokens/glowG_Y.png", Texture.class, texParams);
-        assetManager.load("images/tokens/glowG_Z.png", Texture.class, texParams);
-        assetManager.load("images/tokens/glowY_D.png", Texture.class, texParams);
-        assetManager.load("images/tokens/glowY_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/glowY_FK.png", Texture.class, texParams);
-        assetManager.load("images/tokens/glowY_MS.png", Texture.class, texParams);
-        assetManager.load("images/tokens/glowY_S.png", Texture.class, texParams);
-        assetManager.load("images/tokens/glowY_U.png", Texture.class, texParams);
-        assetManager.load("images/tokens/glowY_Y.png", Texture.class, texParams);
-        assetManager.load("images/tokens/glowY_Z.png", Texture.class, texParams);
-        assetManager.load("images/tokens/netspot_S.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padE_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padE_FK.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padE_MS.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padE_S.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padE_Z.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padI_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padI_FK.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padI_MS.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padI_S.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padI_Z.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padK_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padK_FK.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padK_MS.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padK_S.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padK_Z.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padM_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padM_FK.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padM_MS.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padM_S.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padM_Z.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padT_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padT_FK.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padT_MS.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padT_S.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padT_Z.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padP_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padP_FK.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padP_MS.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padP_S.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padP_Z.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padS_F.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padS_FK.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padS_MS.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padS_S.png", Texture.class, texParams);
-        assetManager.load("images/tokens/padS_Z.png", Texture.class, texParams);
-        //Portraits
-        assetManager.load("images/portraits/empty_F.png", Texture.class, texParams);
-        assetManager.load("images/portraits/empty_FK.png", Texture.class, texParams);
-        assetManager.load("images/portraits/empty_MS.png", Texture.class, texParams);
-        assetManager.load("images/portraits/empty_S.png", Texture.class, texParams);
-        assetManager.load("images/portraits/empty_Y.png", Texture.class, texParams);
-        assetManager.load("images/portraits/empty_Z.png", Texture.class, texParams);
-        assetManager.load("images/portraits/1_F.png", Texture.class, texParams);
-        assetManager.load("images/portraits/1_FK.png", Texture.class, texParams);
-        assetManager.load("images/portraits/1_Y.png", Texture.class, texParams);
-        assetManager.load("images/portraits/1_Z.png", Texture.class, texParams);
+        assetManager.load("images/cursor-transparent.png", Pixmap.class); //todo
+        assetManager.load("images/tableMain-1920.png", Texture.class, texParams);
+        //Atlas
+        assetManager.load("images/fs2atlas.atlas", TextureAtlas.class);
+    }
+
+    public TextureAtlas.AtlasRegion getAtlasRegion(String filename) {
+        return ((TextureAtlas) assetManager.get("images/fs2atlas.atlas")).findRegion(filename);
     }
 
     public <T> T get(String filename) {

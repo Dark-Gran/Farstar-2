@@ -1,8 +1,8 @@
 package com.darkgran.farstar.gui.tokens;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.gui.ColorPalette;
@@ -13,15 +13,15 @@ import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
 
 public class DeploymentCard extends DeploymentToken implements CardGFX {
     private Color fontColor = ColorPalette.BLACKISH;
-    private Texture cardPic;
+    private TextureRegion cardPic;
 
     public DeploymentCard(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
         super(battleCard, x, y, battleStage, cardListMenu);
         setWidth(TokenType.FAKE.getWidth());
         setHeight(361f);
         resetCardGFX(getCard().getCardInfo().getCulture(), TokenType.FAKE);
-        setGlowOffsetX(-getGlowG().getWidth()/2f+getFrame().getWidth()/2f);
-        setGlowOffsetY(-getGlowG().getHeight()/2f+getCardPic().getHeight()/2f);
+        setGlowOffsetX(-getGlowG().getRegionWidth()/2f+getFrame().getRegionWidth()/2f);
+        setGlowOffsetY(-getGlowG().getRegionHeight()/2f+getCardPic().getRegionHeight()/2f);
         setOriginX(getWidth()/2);
         setOriginY(getHeight()/2);
         setParts();
@@ -29,8 +29,8 @@ public class DeploymentCard extends DeploymentToken implements CardGFX {
 
     @Override
     public void setGlows() {
-        setGlowG(Farstar.ASSET_LIBRARY.get("images/tokens/glowG_U.png"));
-        setGlowY(Farstar.ASSET_LIBRARY.get("images/tokens/glowY_U.png"));
+        setGlowG(Farstar.ASSET_LIBRARY.getAtlasRegion("glowG-U"));
+        setGlowY(Farstar.ASSET_LIBRARY.getAtlasRegion("glowY-U"));
     }
 
     @Override
@@ -50,8 +50,8 @@ public class DeploymentCard extends DeploymentToken implements CardGFX {
 
     @Override
     protected void drawPortrait(Batch batch) {
-        if (getPortrait() != null) { batch.draw(getPortrait(), getX(), getY()+getCardPic().getHeight()-getPortrait().getHeight()+PORTRAIT_OFFSET_Y*2/3); }
-        if (getFrame() != null) { batch.draw(getFrame(), getX(), getY()+getCardPic().getHeight()-getFrame().getHeight()+PORTRAIT_OFFSET_Y*2/3); }
+        if (getPortrait() != null) { batch.draw(getPortrait(), getX(), getY()+getCardPic().getRegionHeight()-getPortrait().getRegionHeight()+PORTRAIT_OFFSET_Y*2/3); }
+        if (getFrame() != null) { batch.draw(getFrame(), getX(), getY()+getCardPic().getRegionHeight()-getFrame().getRegionHeight()+PORTRAIT_OFFSET_Y*2/3); }
     }
 
     @Override
@@ -61,12 +61,12 @@ public class DeploymentCard extends DeploymentToken implements CardGFX {
     }
 
     @Override
-    public void setCardPic(Texture texture) {
+    public void setCardPic(TextureRegion texture) {
         cardPic = texture;
     }
 
     @Override
-    public Texture getCardPic() {
+    public TextureRegion getCardPic() {
         return cardPic;
     }
 

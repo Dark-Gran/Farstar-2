@@ -29,13 +29,13 @@ public class BattleStage1V1 extends BattleStage {
     private final CardSource deck2;
     private final TierCounter tier1;
     private final TierCounter tier2;
-    private final ButtonWithExtraState yardButton1 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.get("images/yard.png"), Farstar.ASSET_LIBRARY.get("images/yardO.png"), Farstar.ASSET_LIBRARY.get("images/yardP.png"), Farstar.ASSET_LIBRARY.get("images/yardOP.png")){
+    private final ButtonWithExtraState yardButton1 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAtlasRegion("yard"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardO"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardP"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardOP")){
         @Override
         public void clicked() {
             yardMenu1.switchVisibility();
         }
     };
-    private final ButtonWithExtraState yardButton2 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.get("images/yard.png"), Farstar.ASSET_LIBRARY.get("images/yardO.png"), Farstar.ASSET_LIBRARY.get("images/yardP.png"), Farstar.ASSET_LIBRARY.get("images/yardOP.png")){
+    private final ButtonWithExtraState yardButton2 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAtlasRegion("yard"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardO"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardP"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardOP")){
         @Override
         public void clicked() {
             yardMenu2.switchVisibility();

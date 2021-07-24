@@ -1,7 +1,7 @@
 package com.darkgran.farstar.gui.tokens;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
@@ -15,14 +15,14 @@ import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 public class MothershipToken extends ClickToken implements DropTarget, DisableMark {
     private final SimpleBox2 simpleBox2 = new SimpleBox2();
     private final SupportMenu supportMenu;
-    private Texture disableMark;
+    private TextureRegion disableMark;
 
     public MothershipToken(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, SupportMenu supportMenu) {
         super(battleCard, x, y, battleStage, cardListMenu, TokenType.MS, false, true);
         this.supportMenu = supportMenu;
         setupSimpleBox2(x, y, getWidth(), getHeight());
         getCard().getBattlePlayer().getMs().setToken(this);
-        setMark(Farstar.ASSET_LIBRARY.get("images/tokens/disable_MS.png"));
+        setMark(Farstar.ASSET_LIBRARY.getAtlasRegion("disable-MS"));
     }
 
     @Override
@@ -49,12 +49,12 @@ public class MothershipToken extends ClickToken implements DropTarget, DisableMa
     }
 
     @Override
-    public Texture getMark() {
+    public TextureRegion getMark() {
         return disableMark;
     }
 
     @Override
-    public void setMark(Texture texture) {
+    public void setMark(TextureRegion texture) {
         disableMark = texture;
     }
 

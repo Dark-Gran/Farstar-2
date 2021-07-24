@@ -1,9 +1,9 @@
 package com.darkgran.farstar.gui.tokens;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.Farstar;
@@ -24,7 +24,7 @@ public class TokenPart extends TextLine {
         public Color getColor() { return color; }
     }
     private final Token token;
-    private Texture pad;
+    private TextureRegion pad;
     private SimpleVector2 textWH;
     private float offsetY = 0f;
     private float offsetX = 0f;
@@ -47,7 +47,7 @@ public class TokenPart extends TextLine {
     }
 
     public void setPad(TokenType tokenType) {
-        pad = Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/padI_", tokenType, true)+".png");
+        pad = Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("padI-", tokenType, true));
     }
 
     public String getContent() {
@@ -98,9 +98,9 @@ public class TokenPart extends TextLine {
 
     public void draw(Batch batch) {
         if (isEnabled()) {
-            batch.draw(pad, x - pad.getWidth() + offsetX, y + offsetY);
-            float textX = x - pad.getWidth()/2f - textWH.x/2f + offsetX;
-            float textY = y + pad.getHeight()/2f + textWH.y/2f + offsetY;
+            batch.draw(pad, x - pad.getRegionWidth() + offsetX, y + offsetY);
+            float textX = x - pad.getRegionWidth()/2f - textWH.x/2f + offsetX;
+            float textY = y + pad.getRegionHeight()/2f + textWH.y/2f + offsetY;
             if (!(TokenType.isDeployed(getToken().getTokenType()) || getToken().getTokenType() == TokenType.PRINT)) {
                 drawText(getFont(), batch, textX, textY, getContent(), ColorPalette.BLACKISH);
             } else {
@@ -121,11 +121,11 @@ public class TokenPart extends TextLine {
         return token;
     }
 
-    public Texture getPad() {
+    public TextureRegion getPad() {
         return pad;
     }
 
-    public void setPad(Texture pad) {
+    public void setPad(TextureRegion pad) {
         this.pad = pad;
     }
 

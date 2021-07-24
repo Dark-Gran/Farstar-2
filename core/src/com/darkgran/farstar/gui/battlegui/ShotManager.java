@@ -14,8 +14,8 @@ import java.util.ArrayList;
 /** Responsible for all shot animations. */
 public class ShotManager {
     public enum ShotType {
-        BULLET("shot_bullet", 4000f),
-        BLAST("shot_beam", 2000f);
+        BULLET("shot-bullet", 4000f),
+        BLAST("shot-beam", 2000f);
         private final String shotPicName;
         private final float speed;
         ShotType(String shotPicName, float speed) {
@@ -58,7 +58,7 @@ public class ShotManager {
             this.dmg = dmg;
             this.start = start;
             this.end = end;
-            shotPic = new TextureRegion((Texture) Farstar.ASSET_LIBRARY.get("images/"+shotType.shotPicName+".png"));
+            shotPic = new TextureRegion(Farstar.ASSET_LIBRARY.getAtlasRegion(shotType.shotPicName));
             this.directionX = directionX;
             this.directionY = directionY;
             this.angle = angle;
@@ -71,7 +71,7 @@ public class ShotManager {
 
     public void newAttack(Token att, Token def, int dmg, TechType techType, int numberOfShots) {
         if (att != def) {
-            SimpleVector2 start = new SimpleVector2(att.getX()+att.getTokenOffense().getPad().getWidth(), att.getY()+att.getTokenOffense().getPad().getHeight()/2f);
+            SimpleVector2 start = new SimpleVector2(att.getX()+att.getTokenOffense().getPad().getRegionWidth(), att.getY()+att.getTokenOffense().getPad().getRegionHeight()/2f);
             SimpleVector2 end = new SimpleVector2(def.getX()+def.getWidth()/2f, def.getY()+def.getHeight()/2f);
             float x = end.x-start.x;
             float y = end.y-start.y;

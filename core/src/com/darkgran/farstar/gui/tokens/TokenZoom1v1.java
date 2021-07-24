@@ -19,22 +19,22 @@ public class TokenZoom1v1 extends TokenZoom {
             switch (getTargetType()) {
                 case SUPPORT:
                 case MS:
-                    newY += (getCard().getBattlePlayer().getBattleID() == 1) ? getTargetType().getHeight()*0.25f : -getCardPic().getHeight()*0.8f;
+                    newY += (getCard().getBattlePlayer().getBattleID() == 1) ? getTargetType().getHeight()*0.25f : -getCardPic().getRegionHeight()*0.8f;
                     break;
                 case FLEET:
-                    newY += getTargetType().getHeight()/2-getCardPic().getHeight() * ((getCard().getBattlePlayer().getBattleID() == 1) ? 0.5f : 0.6f);
+                    newY += getTargetType().getHeight()/2-getCardPic().getRegionHeight() * ((getCard().getBattlePlayer().getBattleID() == 1) ? 0.5f : 0.6f);
                     break;
                 case YARD:
                     newX += 5f;
                     newY = (getCard().getBattlePlayer().getBattleID() == 1) ? Farstar.STAGE_HEIGHT*0.15f : Farstar.STAGE_HEIGHT*0.4f;
                     break;
                 case HAND:
-                    newX -= getTargetType().getWidth()/2f+getCardPic().getWidth()/2f;
-                    newY = (getCard().getBattlePlayer().getBattleID() == 1) ? 0f : Farstar.STAGE_HEIGHT-getCardPic().getHeight();
+                    newX -= getTargetType().getWidth()/2f+getCardPic().getRegionWidth()/2f;
+                    newY = (getCard().getBattlePlayer().getBattleID() == 1) ? 0f : Farstar.STAGE_HEIGHT-getCardPic().getRegionHeight();
                     break;
                 case JUNK:
                     newX = getTargetXY().x-getTargetType().getWidth()*1.5f-5f;
-                    newY -= (getCard().getBattlePlayer().getBattleID() == 1) ? 0f : getCardPic().getHeight()-TokenType.JUNK.getWidth()/2f;
+                    newY -= (getCard().getBattlePlayer().getBattleID() == 1) ? 0f : getCardPic().getRegionHeight()-TokenType.JUNK.getWidth()/2f;
                     break;
             }
             setPosition(newX, newY);

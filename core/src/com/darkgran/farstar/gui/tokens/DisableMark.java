@@ -1,11 +1,11 @@
 package com.darkgran.farstar.gui.tokens;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public interface DisableMark {
-    Texture getMark();
-    void setMark(Texture texture);
+    TextureRegion getMark();
+    void setMark(TextureRegion texture);
     boolean isDisabled();
 
     default void drawMark(Batch batch, float x, float y) {

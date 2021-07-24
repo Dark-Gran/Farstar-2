@@ -1,8 +1,8 @@
 package com.darkgran.farstar.gui.tokens;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
@@ -20,7 +20,7 @@ import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
 
 public class HandToken extends AnchoredToken implements CardGFX, FakingTokens { //possibly in-future: use a slightly smaller version for the top side of the table (to simulate some visual perspective), but only if it's not a LocalPlayer (ie. outside Simulation)
     private Color fontColor = ColorPalette.BLACKISH;
-    private Texture cardPic;
+    private TextureRegion cardPic;
     Matrix4 oldMX = null;
     Matrix4 mx;
     private boolean hidden;
@@ -35,16 +35,16 @@ public class HandToken extends AnchoredToken implements CardGFX, FakingTokens { 
     public HandToken(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
         super(battleCard, x, y, battleStage, cardListMenu, TokenType.HAND, false, true);
         resetCardGFX(getCard().getCardInfo().getCulture(), TokenType.HAND);
-        setGlowOffsetX(-getGlowG().getWidth()/2f+getFrame().getWidth()/2f);
-        setGlowOffsetY(-getGlowG().getHeight()/2f+getCardPic().getHeight()/2f);
+        setGlowOffsetX(-getGlowG().getRegionWidth()/2f+getFrame().getRegionWidth()/2f);
+        setGlowOffsetY(-getGlowG().getRegionHeight()/2f+getCardPic().getRegionHeight()/2f);
         setOriginX(getWidth()/2);
         setOriginY(getHeight()/2);
     }
 
     @Override
     public void setGlows() {
-        setGlowG(Farstar.ASSET_LIBRARY.get("images/tokens/glowG_D.png"));
-        setGlowY(Farstar.ASSET_LIBRARY.get("images/tokens/glowY_D.png"));
+        setGlowG(Farstar.ASSET_LIBRARY.getAtlasRegion("glowG-D"));
+        setGlowY(Farstar.ASSET_LIBRARY.getAtlasRegion("glowY-D"));
     }
 
     @Override
@@ -122,8 +122,8 @@ public class HandToken extends AnchoredToken implements CardGFX, FakingTokens { 
 
     @Override
     protected void drawPortrait(Batch batch) {
-        if (getPortrait() != null) { batch.draw(getPortrait(), getX(), getY()+getCardPic().getHeight()-getPortrait().getHeight()+PORTRAIT_OFFSET_Y*2/3); }
-        if (getFrame() != null) { batch.draw(getFrame(), getX(), getY()+getCardPic().getHeight()-getFrame().getHeight()+PORTRAIT_OFFSET_Y*2/3); }
+        if (getPortrait() != null) { batch.draw(getPortrait(), getX(), getY()+getCardPic().getRegionHeight()-getPortrait().getRegionHeight()+PORTRAIT_OFFSET_Y*2/3); }
+        if (getFrame() != null) { batch.draw(getFrame(), getX(), getY()+getCardPic().getRegionHeight()-getFrame().getRegionHeight()+PORTRAIT_OFFSET_Y*2/3); }
     }
 
     @Override
@@ -136,12 +136,12 @@ public class HandToken extends AnchoredToken implements CardGFX, FakingTokens { 
     }
 
     @Override
-    public void setCardPic(Texture texture) {
+    public void setCardPic(TextureRegion texture) {
         cardPic = texture;
     }
 
     @Override
-    public Texture getCardPic() {
+    public TextureRegion getCardPic() {
         return cardPic;
     }
 

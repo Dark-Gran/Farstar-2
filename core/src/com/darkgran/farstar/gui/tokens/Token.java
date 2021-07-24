@@ -1,7 +1,7 @@
 package com.darkgran.farstar.gui.tokens;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.darkgran.farstar.battle.players.BattleCard;
@@ -25,11 +25,11 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
     private final CardListMenu cardListMenu;
     private final TokenType tokenType;
     private boolean noPics;
-    private Texture portrait;
-    private Texture frame;
+    private TextureRegion portrait;
+    private TextureRegion frame;
     private GlowState glowState = GlowState.DIM;
-    private Texture glowG;
-    private Texture glowY;
+    private TextureRegion glowG;
+    private TextureRegion glowY;
     private float glowOffsetX = 0f;
     private float glowOffsetY = 0f;
     public enum GlowState {
@@ -46,8 +46,8 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
         this.noPics = noPics;
         if (!noPics) {
             if (battleCard != null) {
-                portrait = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getPortraitName(battleCard.getCardInfo(), tokenType));
-                frame = Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getFrameName(battleCard.getCardInfo(), tokenType));
+                portrait = Farstar.ASSET_LIBRARY.getAtlasRegion(Farstar.ASSET_LIBRARY.getPortraitName(battleCard.getCardInfo(), tokenType));
+                frame = Farstar.ASSET_LIBRARY.getAtlasRegion(Farstar.ASSET_LIBRARY.getFrameName(battleCard.getCardInfo(), tokenType));
                 setGlows();
             }
         }
@@ -82,10 +82,10 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
     }
 
     public void setGlows() {
-        glowG = Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/glowG_", tokenType, false)+".png");
-        glowY = Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/glowY_", tokenType, false)+".png");
-        glowOffsetX = -glowG.getWidth()/2f+frame.getWidth()/2f;
-        glowOffsetY = -glowG.getHeight()/2f+frame.getHeight()/2f;
+        glowG = Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("glowG-", tokenType, false));
+        glowY = Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("glowY-", tokenType, false));
+        glowOffsetX = -glowG.getRegionWidth()/2f+frame.getRegionWidth()/2f;
+        glowOffsetY = -glowG.getRegionHeight()/2f+frame.getRegionHeight()/2f;
     }
 
     public void setParts() {
@@ -100,8 +100,8 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
 
     public void setup(BattleCard battleCard, TokenType targetType, SimpleVector2 targetXY) { //used only by non-standard tokens (that do not connectCard)
         setCard(battleCard);
-        setPortrait(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getPortraitName(battleCard.getCardInfo(), getTokenType())));
-        setFrame(Farstar.ASSET_LIBRARY.get(Farstar.ASSET_LIBRARY.getFrameName(battleCard.getCardInfo(), getTokenType())));
+        setPortrait(Farstar.ASSET_LIBRARY.getAtlasRegion(Farstar.ASSET_LIBRARY.getPortraitName(battleCard.getCardInfo(), getTokenType())));
+        setFrame(Farstar.ASSET_LIBRARY.getAtlasRegion(Farstar.ASSET_LIBRARY.getFrameName(battleCard.getCardInfo(), getTokenType())));
         getTokenDefense().update();
         getTokenDefense().setPad(getTokenType());
         getTokenDefense().setupOffset();
@@ -248,19 +248,19 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
         fontPath = path;
     }
 
-    public Texture getPortrait() {
+    public TextureRegion getPortrait() {
         return portrait;
     }
 
-    public Texture getFrame() {
+    public TextureRegion getFrame() {
         return frame;
     }
 
-    public void setPortrait(Texture portrait) {
+    public void setPortrait(TextureRegion portrait) {
         this.portrait = portrait;
     }
 
-    public void setFrame(Texture frame) {
+    public void setFrame(TextureRegion frame) {
         this.frame = frame;
     }
 
@@ -276,19 +276,19 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
         return glowState;
     }
 
-    public Texture getGlowG() {
+    public TextureRegion getGlowG() {
         return glowG;
     }
 
-    public void setGlowG(Texture glowG) {
+    public void setGlowG(TextureRegion glowG) {
         this.glowG = glowG;
     }
 
-    public Texture getGlowY() {
+    public TextureRegion getGlowY() {
         return glowY;
     }
 
-    public void setGlowY(Texture glowY) {
+    public void setGlowY(TextureRegion glowY) {
         this.glowY = glowY;
     }
 

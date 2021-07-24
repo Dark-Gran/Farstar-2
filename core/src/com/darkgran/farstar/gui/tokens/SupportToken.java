@@ -1,18 +1,18 @@
 package com.darkgran.farstar.gui.tokens;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 
 public class SupportToken extends ClickToken implements DisableMark {
-    private Texture disableMark;
+    private TextureRegion disableMark;
 
     public SupportToken(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
         super(battleCard, x, y, battleStage, cardListMenu, TokenType.SUPPORT, false, true);
-        setMark(Farstar.ASSET_LIBRARY.get("images/tokens/disable_S.png"));
+        setMark(Farstar.ASSET_LIBRARY.getAtlasRegion("disable-S"));
         setZIndex(0);
     }
 
@@ -41,12 +41,12 @@ public class SupportToken extends ClickToken implements DisableMark {
     }
 
     @Override
-    public Texture getMark() {
+    public TextureRegion getMark() {
         return disableMark;
     }
 
     @Override
-    public void setMark(Texture texture) {
+    public void setMark(TextureRegion texture) {
         disableMark = texture;
     }
 

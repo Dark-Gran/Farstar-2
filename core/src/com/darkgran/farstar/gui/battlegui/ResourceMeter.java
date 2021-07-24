@@ -1,8 +1,8 @@
 package com.darkgran.farstar.gui.battlegui;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.darkgran.farstar.battle.players.BattlePlayer;
 import com.darkgran.farstar.gui.ColorPalette;
@@ -17,8 +17,8 @@ public class ResourceMeter extends Actor implements JustFont {
     private final BattlePlayer battlePlayer;
     private final boolean onBottom;
     private String fontPath = "";
-    private Texture enePic = Farstar.ASSET_LIBRARY.get("images/energy.png");
-    private Texture matPic = Farstar.ASSET_LIBRARY.get("images/matter.png");
+    private TextureRegion enePic = Farstar.ASSET_LIBRARY.getAtlasRegion("energy");
+    private TextureRegion matPic = Farstar.ASSET_LIBRARY.getAtlasRegion("matter");
     private SimpleVector2 eneWH;
     private SimpleVector2 matWH;
 
@@ -63,12 +63,12 @@ public class ResourceMeter extends Actor implements JustFont {
     public void draw(Batch batch) {
         getFont().setColor(ColorPalette.ENERGY);
         batch.draw(enePic, getX(), getY() - (onBottom ? 0f : eneWH.y) - getHeight()*0.49f);
-        getFont().draw(batch, Integer.toString(battlePlayer.getEnergy()), getX()+enePic.getWidth()*1.5f, onBottom ? getY()+getHeight() : getY());
+        getFont().draw(batch, Integer.toString(battlePlayer.getEnergy()), getX()+enePic.getRegionWidth()*1.5f, onBottom ? getY()+getHeight() : getY());
         getFont().setColor(ColorPalette.MATTER);
-        batch.draw(matPic, getX()+enePic.getWidth()*1.5f+eneWH.x+10f, getY()-(onBottom ? 0f : eneWH.y) + getHeight()*0.02f);
-        getFont().draw(batch, battlePlayer.getMatter()+" ", getX()+enePic.getWidth()*1.5f+eneWH.x+10f+matPic.getWidth()*1.3f, onBottom ? getY()+getHeight() : getY());
+        batch.draw(matPic, getX()+enePic.getRegionWidth()*1.5f+eneWH.x+10f, getY()-(onBottom ? 0f : eneWH.y) + getHeight()*0.02f);
+        getFont().draw(batch, battlePlayer.getMatter()+" ", getX()+enePic.getRegionWidth()*1.5f+eneWH.x+10f+matPic.getRegionWidth()*1.3f, onBottom ? getY()+getHeight() : getY());
         getFont().setColor((ColorPalette.MAIN));
-        getFont().draw(batch, " +"+getIncome(), getX()+enePic.getWidth()*1.5f+eneWH.x+10f+matPic.getWidth()*1.3f+matWH.x, onBottom ? getY()+getHeight() : getY());
+        getFont().draw(batch, " +"+getIncome(), getX()+enePic.getRegionWidth()*1.5f+eneWH.x+10f+matPic.getRegionWidth()*1.3f+matWH.x, onBottom ? getY()+getHeight() : getY());
         getFont().setColor(Color.WHITE);
     }
 

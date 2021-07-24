@@ -1,7 +1,7 @@
 package com.darkgran.farstar.gui.battlegui;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.gui.tokens.SupportToken;
@@ -14,7 +14,7 @@ import com.darkgran.farstar.util.SimpleVector2;
 
 public class SupportMenu extends CardListMenu implements DropTarget {
     private final SimpleBox2 simpleBox2 = new SimpleBox2();
-    private Texture netSpot = Farstar.ASSET_LIBRARY.get("images/tokens/netspot_S.png");
+    private TextureRegion netSpot = Farstar.ASSET_LIBRARY.getAtlasRegion("netspot_S");
     private SimpleVector2[] netSpotPositions = new SimpleVector2[6];
 
     public SupportMenu(CardList cardList, float x, float y, float tokensX, float tokensY, float width, float height, boolean negativeOffset, BattleStage battleStage, BattlePlayer battlePlayer) {

@@ -2,6 +2,7 @@ package com.darkgran.farstar.gui;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
@@ -9,16 +10,16 @@ import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.util.SimpleVector2;
 
 public class TableStage extends ListeningStage {
-    private final Texture empty = Farstar.ASSET_LIBRARY.get("images/empty.png");
-    private final Texture exit = Farstar.ASSET_LIBRARY.get("images/exit.png");
-    private final Texture quality = Farstar.ASSET_LIBRARY.get("images/quality.png");
-    private final Texture fs = Farstar.ASSET_LIBRARY.get("images/fs.png");
-    private final Texture sound = Farstar.ASSET_LIBRARY.get("images/sound.png");
-    private final Texture logout = Farstar.ASSET_LIBRARY.get("images/logout.png");
-    private final Texture friends = Farstar.ASSET_LIBRARY.get("images/friends.png");
-    private final Texture table = Farstar.ASSET_LIBRARY.get("images/tableMain_1920.png");
-    private final Texture space = Farstar.ASSET_LIBRARY.get("images/Space_1920.png");
-    private final Texture net = Farstar.ASSET_LIBRARY.get("images/net_1920.png"); //atm only for 1v1
+    private final Texture table = Farstar.ASSET_LIBRARY.get("images/tableMain-1920.png");
+    private final TextureRegion empty = Farstar.ASSET_LIBRARY.getAtlasRegion("empty");
+    private final TextureRegion exit = Farstar.ASSET_LIBRARY.getAtlasRegion("exit");
+    private final TextureRegion quality = Farstar.ASSET_LIBRARY.getAtlasRegion("quality");
+    private final TextureRegion fs = Farstar.ASSET_LIBRARY.getAtlasRegion("fs");
+    private final TextureRegion sound = Farstar.ASSET_LIBRARY.getAtlasRegion("sound");
+    private final TextureRegion logout = Farstar.ASSET_LIBRARY.getAtlasRegion("logout");
+    private final TextureRegion friends = Farstar.ASSET_LIBRARY.getAtlasRegion("friends");
+    private final TextureRegion space = Farstar.ASSET_LIBRARY.getAtlasRegion("Space-1920");
+    private final TextureRegion net = Farstar.ASSET_LIBRARY.getAtlasRegion("net-1920"); //atm only for 1v1
 
     private final ActorButton exitButton = new ActorButton(empty, empty, exit){
         @Override
@@ -66,7 +67,7 @@ public class TableStage extends ListeningStage {
         qualityButton.setPosition(rightSideX, Farstar.STAGE_HEIGHT/7.98f);
         fsButton.setPosition(rightSideX, Farstar.STAGE_HEIGHT/5.41f);
         soundButton.setPosition(rightSideX, Farstar.STAGE_HEIGHT/4.11f);
-        float leftSideX = empty.getWidth()/30f;
+        float leftSideX = empty.getRegionWidth()/30f;
         logoutButton.setPosition(leftSideX, Farstar.STAGE_HEIGHT/15f);
         friendsButton.setPosition(leftSideX, Farstar.STAGE_HEIGHT/7.98f);
         addActor(exitButton);

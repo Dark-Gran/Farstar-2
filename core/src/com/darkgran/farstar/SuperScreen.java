@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -47,7 +48,7 @@ public abstract class SuperScreen implements Screen {
                 return Gdx.graphics.newCursor(ASSET_LIBRARY.get("images/cursor_aim.png"), 16, 16);
         }
     }*/
-    private Texture HDCursor;
+    private TextureRegion HDCursor;
     private int HDCursorOffsetX;
     private int HDCursorOffsetY;
     private boolean HDCursorInUse;
@@ -55,12 +56,12 @@ public abstract class SuperScreen implements Screen {
         switch (cursorType) {
             default:
             case DEFAULT:
-                HDCursor = ASSET_LIBRARY.get("images/cursor_default.png");
+                HDCursor = ASSET_LIBRARY.getAtlasRegion("cursor-default");
                 HDCursorOffsetX = 0;
                 HDCursorOffsetY = 0;
                 break;
             case AIM:
-                HDCursor = ASSET_LIBRARY.get("images/cursor_aim.png");
+                HDCursor = ASSET_LIBRARY.getAtlasRegion("cursor-aim");
                 HDCursorOffsetX = 16;
                 HDCursorOffsetY = 16;
                 break;
@@ -68,11 +69,11 @@ public abstract class SuperScreen implements Screen {
     }
     private void drawCursor(Batch batch) {
         boolean HDOn = false;
-        if ( HDCursor != null) {
+        if (HDCursor != null) {
             SimpleVector2 coords = getMouseCoordinates();
             if (game.MWQ.isMouseInsideWindow()) {
                 HDOn = true;
-                batch.draw(HDCursor, coords.x - HDCursorOffsetX, Farstar.STAGE_HEIGHT - (coords.y - HDCursorOffsetY) - HDCursor.getHeight());
+                batch.draw(HDCursor, coords.x - HDCursorOffsetX, Farstar.STAGE_HEIGHT - (coords.y - HDCursorOffsetY) - HDCursor.getRegionHeight());
             } else {
                 HDOn = false;
             }
@@ -84,7 +85,7 @@ public abstract class SuperScreen implements Screen {
     }
     public static void hideCursor(boolean hide) {
         if (hide) {
-            Gdx.graphics.setCursor(Gdx.graphics.newCursor(ASSET_LIBRARY.get("images/cursor_transparent.png"), 0, 0));
+            Gdx.graphics.setCursor(Gdx.graphics.newCursor(ASSET_LIBRARY.get("images/cursor-transparent.png"), 0, 0));
         } else { Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow); }
     }
     public static SimpleVector2 getMouseCoordinates() {

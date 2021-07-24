@@ -1,7 +1,7 @@
 package com.darkgran.farstar.gui.battlegui;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
@@ -26,10 +26,10 @@ public abstract class BattleStage extends ListeningStage {
     private ArrayList<DropTarget> dropTargets = new ArrayList<>();
     private final AbilityPicker abilityPicker;
     private final RoundCounter roundCounter;
-    public final ButtonWithExtraState turnButton = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.get("images/turn.png"), Farstar.ASSET_LIBRARY.get("images/turnO.png"), Farstar.ASSET_LIBRARY.get("images/turnP.png"), Farstar.ASSET_LIBRARY.get("images/turnOP.png")){
-        private final Texture turnBackground = Farstar.ASSET_LIBRARY.get("images/turn_b.png");
-        private final Texture turnCombat = Farstar.ASSET_LIBRARY.get("images/turn_combat.png");
-        private final Texture turnWait = Farstar.ASSET_LIBRARY.get("images/turn_wait.png");
+    public final ButtonWithExtraState turnButton = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAtlasRegion("turn"), Farstar.ASSET_LIBRARY.getAtlasRegion("turnO"), Farstar.ASSET_LIBRARY.getAtlasRegion("turnP"), Farstar.ASSET_LIBRARY.getAtlasRegion("turnOP")){
+        private final TextureRegion turnBackground = Farstar.ASSET_LIBRARY.getAtlasRegion("turn-b");
+        private final TextureRegion turnCombat = Farstar.ASSET_LIBRARY.getAtlasRegion("turn-combat");
+        private final TextureRegion turnWait = Farstar.ASSET_LIBRARY.getAtlasRegion("turn-wait");
         @Override
         public void draw(Batch batch, float parentAlpha) {
             batch.draw(turnBackground, getX(), getY());
@@ -50,7 +50,7 @@ public abstract class BattleStage extends ListeningStage {
             }
         }
     };
-    private final ButtonWithExtraState combatEndButton = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.get("images/combat_end.png"), Farstar.ASSET_LIBRARY.get("images/combat_endO.png"), Farstar.ASSET_LIBRARY.get("images/combat_endA.png"), Farstar.ASSET_LIBRARY.get("images/combat_endAO.png")) {
+    private final ButtonWithExtraState combatEndButton = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAtlasRegion("combat-end"), Farstar.ASSET_LIBRARY.getAtlasRegion("combat-endO"), Farstar.ASSET_LIBRARY.getAtlasRegion("combat-endA"), Farstar.ASSET_LIBRARY.getAtlasRegion("combat-endAO")) {
         @Override
         public void clicked() {
             battleScreen.getBattle().getCombatManager().startTacticalPhase();
@@ -68,9 +68,9 @@ public abstract class BattleStage extends ListeningStage {
         this.combatMenu = combatMenu;
         combatEndButton.setPosition(Farstar.STAGE_WIDTH*0.8f, Farstar.STAGE_HEIGHT*0.3f);
         combatEndButton.setDisabled(true);
-        abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH/2f+5f, Farstar.STAGE_HEIGHT*0.27f, this, null, Farstar.ASSET_LIBRARY.get("images/yard.png"));
+        abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH/2f+5f, Farstar.STAGE_HEIGHT*0.27f, this, null, Farstar.ASSET_LIBRARY.getAtlasRegion("yard"));
         battleScreen.getBattle().getRoundManager().setAbilityPicker(abilityPicker);
-        roundCounter = new RoundCounter(Farstar.STAGE_WIDTH*0.003f, Farstar.STAGE_HEIGHT*0.475f, this, getBattleScreen().getBattle());
+        roundCounter = new RoundCounter(Farstar.STAGE_WIDTH*0.003f, Farstar.STAGE_HEIGHT*0.475f, getBattleScreen().getBattle());
     }
 
     protected void createTopActors() { } /** MUST be called in constructor (as the very last thing) and set cardZoom+herald! */

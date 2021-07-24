@@ -1,7 +1,7 @@
 package com.darkgran.farstar.gui.tokens;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.Battle;
@@ -14,18 +14,18 @@ import org.jetbrains.annotations.NotNull;
 
 public class FleetToken extends ClickToken implements DisableMark, FakingTokens, Comparable<FleetToken> {
     private FleetMenu fleetMenu;
-    private Texture disableMark;
+    private TextureRegion disableMark;
 
     public FleetToken(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, FleetMenu fleetMenu, boolean noPics, boolean connectCard) {
         super(battleCard, x, y, battleStage, cardListMenu, TokenType.FLEET, noPics, connectCard);
         this.fleetMenu = fleetMenu;
-        setMark(Farstar.ASSET_LIBRARY.get("images/tokens/disable_F.png"));
+        setMark(Farstar.ASSET_LIBRARY.getAtlasRegion("disable-F"));
     }
 
     public FleetToken(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, FleetMenu fleetMenu, boolean noPics, boolean connectCard) {
         super(battleCard, x, y, battleStage, cardListMenu, tokenType, noPics, connectCard);
         this.fleetMenu = fleetMenu;
-        setMark(Farstar.ASSET_LIBRARY.get("images/tokens/disable_F.png"));
+        setMark(Farstar.ASSET_LIBRARY.getAtlasRegion("disable-F"));
     }
 
     @Override
@@ -62,12 +62,12 @@ public class FleetToken extends ClickToken implements DisableMark, FakingTokens,
     public void setFleetMenu(FleetMenu fleetMenu) { this.fleetMenu = fleetMenu; }
 
     @Override
-    public Texture getMark() {
+    public TextureRegion getMark() {
         return disableMark;
     }
 
     @Override
-    public void setMark(Texture texture) {
+    public void setMark(TextureRegion texture) {
         disableMark = texture;
     }
 

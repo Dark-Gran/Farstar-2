@@ -9,13 +9,13 @@ public class YXQuestionBox extends TextInTheBox {
     private final ListeningStage stage;
     private final Runnable runY;
     private final Runnable runX;
-    private final ActorButton yBut = new ActorButton(Farstar.ASSET_LIBRARY.get("images/y.png"), Farstar.ASSET_LIBRARY.get("images/yO.png"), Farstar.ASSET_LIBRARY.get("images/yO.png")){
+    private final ActorButton yBut = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("y"), Farstar.ASSET_LIBRARY.getAtlasRegion("yO"), Farstar.ASSET_LIBRARY.getAtlasRegion("yO")){
         @Override
         public void clicked() {
             Gdx.app.postRunnable(runY);
         }
     };
-    private final ActorButton xBut = new ActorButton(Farstar.ASSET_LIBRARY.get("images/x.png"), Farstar.ASSET_LIBRARY.get("images/xO.png"), Farstar.ASSET_LIBRARY.get("images/xO.png")){
+    private final ActorButton xBut = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("x"), Farstar.ASSET_LIBRARY.getAtlasRegion("xO"), Farstar.ASSET_LIBRARY.getAtlasRegion("xO")){
         @Override
         public void clicked() {
             Gdx.app.postRunnable(runX);

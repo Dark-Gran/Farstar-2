@@ -1,7 +1,7 @@
 package com.darkgran.farstar.gui.tokens;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.Farstar;
@@ -17,12 +17,12 @@ import com.darkgran.farstar.util.SimpleVector2;
  * Actually a group of pads: Handles the entire top-left corner (ie. ability-pads too)
  */
 public class TokenPrice extends TokenPart {
-    private Texture pad2;
+    private TextureRegion pad2;
     private SimpleVector2 textWH2;
-    private Texture useMark;
-    private Texture guardMark;
-    private Texture reachMark;
-    private Texture fsMark;
+    private TextureRegion useMark;
+    private TextureRegion guardMark;
+    private TextureRegion reachMark;
+    private TextureRegion fsMark;
     private boolean showUseMark;
     private boolean showGuardMark;
     private boolean showReachMark;
@@ -39,20 +39,20 @@ public class TokenPrice extends TokenPart {
 
     @Override
     public void setPad(TokenType tokenType) {
-        setPad((Texture) Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/padE_", tokenType, true)+".png"));
-        pad2 = Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/padM_", tokenType, true)+".png");
-        if (tokenType != TokenType.PRINT) { useMark = Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("images/tokens/abiU_", tokenType, true)+".png"); }
+        setPad(Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("padE-", tokenType, true)));
+        pad2 = Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("padM-", tokenType, true));
+        if (tokenType != TokenType.PRINT) { useMark = Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("abiU-", tokenType, true)); }
         if (tokenType == TokenType.FLEET) {
-            fsMark = Farstar.ASSET_LIBRARY.get("images/tokens/abiFS_F.png");
-            guardMark = Farstar.ASSET_LIBRARY.get("images/tokens/abiG_F.png");
-            reachMark = Farstar.ASSET_LIBRARY.get("images/tokens/abiR_F.png");
+            fsMark = Farstar.ASSET_LIBRARY.getAtlasRegion("abiFS-F");
+            guardMark = Farstar.ASSET_LIBRARY.getAtlasRegion("abiG-F");
+            reachMark = Farstar.ASSET_LIBRARY.getAtlasRegion("abiR-F");
         }
     }
 
     @Override
     public void setupOffset() {
-        setOffsetY(-getPad().getHeight());
-        setOffsetX(getPad().getWidth());
+        setOffsetY(-getPad().getRegionHeight());
+        setOffsetX(getPad().getRegionWidth());
     }
 
     @Override
@@ -100,19 +100,19 @@ public class TokenPrice extends TokenPart {
     @Override
     public void draw(Batch batch) {
         if (isEnabled()) {
-            float x = this.x - getPad().getWidth() + getOffsetX();
+            float x = this.x - getPad().getRegionWidth() + getOffsetX();
             if ((showUseMark && !isMouseOver()) || (showGuardMark && guardMark != null) || (showReachMark && reachMark != null) || (showFSMark && fsMark != null)) {
                 if (showUseMark && useMark != null) {
                     batch.draw(useMark, x, this.y + getOffsetY());
-                    x += getPad().getWidth();
+                    x += getPad().getRegionWidth();
                 }
                 if (showGuardMark && guardMark != null) {
                     batch.draw(guardMark, x, this.y + getOffsetY());
-                    x += getPad().getWidth();
+                    x += getPad().getRegionWidth();
                 }
                 if (showReachMark && reachMark != null) {
                     batch.draw(reachMark, x, this.y + getOffsetY());
-                    x += getPad().getWidth();
+                    x += getPad().getRegionWidth();
                 }
                 if (showFSMark && fsMark != null) { batch.draw(fsMark, x, this.y + getOffsetY()); }
             } else {
@@ -120,14 +120,14 @@ public class TokenPrice extends TokenPart {
                 if (E != 0 || showUseMark) {
                     String e = Integer.toString(E);
                     batch.draw(getPad(), x, this.y + getOffsetY());
-                    drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - getTextWH().x * 0.5f, this.y + getOffsetY() + getPad().getHeight() * 0.5f + getTextWH().y * 0.5f, e, ColorPalette.BLACKISH);
-                    x += getPad().getWidth();
+                    drawText(getFont(), batch, x + getPad().getRegionWidth() * 0.5f - getTextWH().x * 0.5f, this.y + getOffsetY() + getPad().getRegionHeight() * 0.5f + getTextWH().y * 0.5f, e, ColorPalette.BLACKISH);
+                    x += getPad().getRegionWidth();
                 }
                 int M = getResource(false, getToken() instanceof AbilityPickerOption ? TokenType.SUPPORT : getToken().getTokenType());
                 if (M != 0) {
                     String m = Integer.toString(M);
                     batch.draw(pad2, x, this.y + getOffsetY());
-                    drawText(getFont(), batch, x + getPad().getWidth() * 0.5f - textWH2.x * 0.5f, this.y + getOffsetY() + getPad().getHeight() * 0.5f + textWH2.y * 0.5f, m, ColorPalette.BLACKISH);
+                    drawText(getFont(), batch, x + getPad().getRegionWidth() * 0.5f - textWH2.x * 0.5f, this.y + getOffsetY() + getPad().getRegionHeight() * 0.5f + textWH2.y * 0.5f, m, ColorPalette.BLACKISH);
                 }
             }
         }

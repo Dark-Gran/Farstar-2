@@ -3,7 +3,6 @@ package com.darkgran.farstar.gui.tokens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -19,15 +18,15 @@ import com.darkgran.farstar.util.SimpleVector2;
 
 public class TargetingToken extends FakeToken {
     private Dragger dragger;
-    private Texture aimPic;
+    private TextureRegion aimPic;
     private TextureRegion aimPicRegion;
 
     public TargetingToken(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
         super(battleCard, x, y, battleStage, cardListMenu, true);
-        aimPic = Farstar.ASSET_LIBRARY.get("images/combat_aim.png");
+        aimPic = Farstar.ASSET_LIBRARY.getAtlasRegion("combat-aim");
         aimPicRegion = new TextureRegion(aimPic);
-        setWidth(aimPic.getWidth());
-        setHeight(aimPic.getHeight());
+        setWidth(aimPic.getRegionWidth());
+        setHeight(aimPic.getRegionHeight());
         SimpleVector2 coords = SuperScreen.getMouseCoordinates();
         setPosition(coords.x-getWidth()/2, coords.y+getHeight()/2);
         battleCard.getToken().setPicked(true);

@@ -1,11 +1,9 @@
 package com.darkgran.farstar.gui.tokens;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.darkgran.farstar.battle.BattleType;
-import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
@@ -20,7 +18,7 @@ import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
  */
 public class PrintToken extends Token implements CardGFX {
     private Color fontColor = ColorPalette.BLACKISH;
-    private Texture cardPic;
+    private TextureRegion cardPic;
     private TokenType targetType;
     private SimpleVector2 targetXY = new SimpleVector2(0, 0);
 
@@ -39,10 +37,10 @@ public class PrintToken extends Token implements CardGFX {
 
     @Override
     public void setGlows() {
-        setGlowG(Farstar.ASSET_LIBRARY.get("images/tokens/glowG_Z.png"));
-        setGlowY(Farstar.ASSET_LIBRARY.get("images/tokens/glowY_Z.png"));
-        setGlowOffsetX(-getGlowG().getWidth()/2f+getFrame().getWidth()/2f);
-        setGlowOffsetY(-getGlowG().getHeight()/2f+getCardPic().getHeight()/2f);
+        setGlowG(Farstar.ASSET_LIBRARY.getAtlasRegion("glowG-Z"));
+        setGlowY(Farstar.ASSET_LIBRARY.getAtlasRegion("glowY-Z"));
+        setGlowOffsetX(-getGlowG().getRegionWidth()/2f+getFrame().getRegionWidth()/2f);
+        setGlowOffsetY(-getGlowG().getRegionHeight()/2f+getCardPic().getRegionHeight()/2f);
     }
 
     @Override
@@ -78,8 +76,8 @@ public class PrintToken extends Token implements CardGFX {
 
     @Override
     protected void drawPortrait(Batch batch) {
-        if (getPortrait() != null) { batch.draw(getPortrait(), getX(), getY()+getCardPic().getHeight()-getPortrait().getHeight()+PORTRAIT_OFFSET_Y); }
-        if (getFrame() != null) { batch.draw(getFrame(), getX(), getY()+getCardPic().getHeight()-getFrame().getHeight()+PORTRAIT_OFFSET_Y); }
+        if (getPortrait() != null) { batch.draw(getPortrait(), getX(), getY()+getCardPic().getRegionHeight()-getPortrait().getRegionHeight()+PORTRAIT_OFFSET_Y); }
+        if (getFrame() != null) { batch.draw(getFrame(), getX(), getY()+getCardPic().getRegionHeight()-getFrame().getRegionHeight()+PORTRAIT_OFFSET_Y); }
     }
 
     public TokenType getTargetType() {
@@ -91,11 +89,11 @@ public class PrintToken extends Token implements CardGFX {
     }
 
     @Override
-    public void setCardPic(Texture texture) {
+    public void setCardPic(TextureRegion texture) {
         cardPic = texture;
     }
 
-    public Texture getCardPic() {
+    public TextureRegion getCardPic() {
         return cardPic;
     }
 
