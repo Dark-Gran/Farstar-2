@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.cards.TechType;
+import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.util.SimpleVector2;
 
@@ -25,17 +26,78 @@ public class ShotManager {
     }
     public class AniAttack {
         public class AniShot {
+            private class AniShrapnel {
+                private final TextureRegion shrapnelPic = Farstar.ASSET_LIBRARY.getAtlasRegion("shrapnel");
+                private final SimpleVector2 origin;
+                private final SimpleVector2 speed;
+                private SimpleVector2 position;
+                private float rotation;
+                private float alpha = 1f;
+                private AniShrapnel(SimpleVector2 origin, SimpleVector2 speed, float startingRotation) {
+                    this.origin = origin;
+                    this.speed = speed;
+                    rotation = startingRotation;
+                    position = new SimpleVector2(origin.x, origin.y);
+                }
+                private void update(float delta) {
+                    alpha -= delta*4;
+                    position.x += speed.x * delta;
+                    position.y += speed.y * delta;
+                    speed.x -= delta;
+                    speed.y -= delta;
+                    rotation += delta;
+                    if (alpha <= 0) {
+                        done = true;
+                    }
+                }
+                private void draw(Batch batch) {
+                    batch.setColor(ColorPalette.changeAlpha(techType.getColor(), alpha));
+                    batch.draw(shrapnelPic, position.x, position.y, shrapnelPic.getRegionWidth() / 2f, shrapnelPic.getRegionHeight() / 2f, shrapnelPic.getRegionWidth(), shrapnelPic.getRegionHeight(), scale, scale, angle);
+                    //batch.setColor(1, 1, 1, 1);
+                }
+            }
             private final AniAttack aniAttack;
             private final float scale;
             private final SimpleVector2 position;
             private float timer;
             private boolean active = false;
+            private ArrayList<AniShrapnel> shrapnels = null;
             private boolean done = false;
-            public AniShot(AniAttack aniAttack, SimpleVector2 start, float delay, float scale) {
+            private AniShot(AniAttack aniAttack, SimpleVector2 start, float delay, float scale) {
                 this.aniAttack = aniAttack;
                 this.position = new SimpleVector2(start.x, start.y);
                 this.scale = MathUtils.clamp(scale, 1f, 10f);
                 timer = delay;
+            }
+            private void update(float delta) {
+                if (!active) {
+                    timer -= delta;
+                    if (timer <= 0f) {
+                        timer = 0f;
+                        active = true;
+                    }
+                }
+                if (active && !done) {
+                    if (shrapnels == null) {
+                        double distance = Math.sqrt(Math.pow(aniAttack.end.x - position.x, 2) + Math.pow(aniAttack.end.y - position.y, 2));
+                        if (distance >= aniAttack.shotType.speed * delta) {
+                            position.x = position.x + ((aniAttack.shotType.speed * aniAttack.directionX) * delta);
+                            position.y = position.y + ((aniAttack.shotType.speed * aniAttack.directionY) * delta);
+                        } else {
+                            shrapnels = new ArrayList<>();
+                            shrapnels.add(new AniShrapnel(end, new SimpleVector2(100f, 100f), 0f));
+                            shrapnels.add(new AniShrapnel(end, new SimpleVector2(-100f, 100f), 0f));
+                            shrapnels.add(new AniShrapnel(end, new SimpleVector2(-100f, -100f), 0f));
+                        }
+                    } else {
+                        for (AniShrapnel shrapnel : shrapnels) {
+                            shrapnel.update(delta);
+                        }
+                    }
+                }
+            }
+            private void draw(Batch batch) {
+                batch.draw(shotPic, position.x, position.y, shotPic.getRegionWidth() / 2f, shotPic.getRegionHeight() / 2f, shotPic.getRegionWidth(), shotPic.getRegionHeight(), scale, scale, angle);
             }
         }
         private final ShotType shotType;
@@ -64,7 +126,31 @@ public class ShotManager {
             this.angle = angle;
             this.techType = techType;
         }
-        public AniShot createAniShot(float delay, float scale) { return new AniShot(this, start, delay, scale); }
+        public AniShot createAniShot(float delay, float scale) {
+            return new AniShot(this, start, delay, scale);
+        }
+        public void draw(Batch batch, float delta) {
+            if (aniShots != null && aniShots.size() > 0) {
+                ArrayList<AniAttack.AniShot> forDeletion = new ArrayList<>();
+                batch.setColor(techType.getColor());
+                for (AniAttack.AniShot aniShot : aniShots) {
+                    if (aniShot.active && aniShot.shrapnels==null) {
+                        aniShot.draw(batch);
+                    } else if (aniShot.shrapnels != null && !aniShot.done) {
+                        for (AniShot.AniShrapnel shrapnel : aniShot.shrapnels) {
+                            shrapnel.draw(batch);
+                        }
+                    } else if (aniShot.done) {
+                        forDeletion.add(aniShot);
+                    }
+                    aniShot.update(delta);
+                }
+                batch.setColor(1, 1, 1, 1);
+                aniShots.removeAll(forDeletion);
+            } else {
+                done = true;
+            }
+        }
     }
     private final ArrayList<AniAttack> aniAttacks = new ArrayList<>();
 
@@ -99,50 +185,12 @@ public class ShotManager {
             ArrayList<AniAttack> forDeletion = new ArrayList<>();
             for (AniAttack aniAttack : aniAttacks) {
                 if (!aniAttack.done) {
-                    drawAttack(batch, delta, aniAttack);
+                    aniAttack.draw(batch, delta);
                 } else {
                     forDeletion.add(aniAttack);
                 }
             }
             aniAttacks.removeAll(forDeletion);
-        }
-    }
-
-    private void drawAttack(Batch batch, float delta, AniAttack aniAttack) {
-        if (aniAttack.aniShots != null && aniAttack.aniShots.size() > 0) {
-            ArrayList<AniAttack.AniShot> forDeletion = new ArrayList<>();
-            batch.setColor(aniAttack.techType.getColor());
-            for (AniAttack.AniShot aniShot : aniAttack.aniShots) {
-                 updateShot(aniShot, delta);
-                if (aniShot.active && !aniShot.done) {
-                    batch.draw(aniAttack.shotPic, aniShot.position.x, aniShot.position.y, aniAttack.shotPic.getRegionWidth()/2f, aniAttack.shotPic.getRegionHeight()/2f, aniAttack.shotPic.getRegionWidth(), aniAttack.shotPic.getRegionHeight(), aniShot.scale, aniShot.scale, aniAttack.angle);
-                } else if (aniShot.done) {
-                    forDeletion.add(aniShot);
-                }
-            }
-            batch.setColor(1, 1, 1, 1);
-            aniAttack.aniShots.removeAll(forDeletion);
-        } else {
-            aniAttack.done = true;
-        }
-    }
-
-    private void updateShot(AniAttack.AniShot aniShot, float delta) {
-        if (!aniShot.active) {
-            aniShot.timer -= delta;
-            if (aniShot.timer <= 0f) {
-                aniShot.timer = 0f;
-                aniShot.active = true;
-            }
-        }
-        if (aniShot.active && !aniShot.done) {
-            double distance = Math.sqrt(Math.pow(aniShot.aniAttack.end.x-aniShot.position.x,2)+Math.pow(aniShot.aniAttack.end.y-aniShot.position.y,2));
-            if (distance >= aniShot.aniAttack.shotType.speed * delta) {
-                aniShot.position.x = aniShot.position.x + ((aniShot.aniAttack.shotType.speed * aniShot.aniAttack.directionX) * delta);
-                aniShot.position.y = aniShot.position.y + ((aniShot.aniAttack.shotType.speed * aniShot.aniAttack.directionY) * delta);
-            } else {
-                aniShot.done = true;
-            }
         }
     }
 
