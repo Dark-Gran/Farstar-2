@@ -7,6 +7,7 @@ import com.darkgran.farstar.battle.players.*;
 import com.darkgran.farstar.cards.EffectType;
 import com.darkgran.farstar.gui.Notification;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -329,17 +330,19 @@ public abstract class CombatManager {
         return null;
     }
 
-    public static Token getDuelOpponent(Token token, TreeMap<FleetToken, DuelManager.AttackInfo> duelMap) {
+    public static ArrayList<Token> getDuelOpponent(Token token, TreeMap<FleetToken, DuelManager.AttackInfo> duelMap) {
         if (token != null) {
+            ArrayList<Token> opponents = new ArrayList<>();
             if (token instanceof FleetToken && duelMap.containsKey(token)) {
-                return duelMap.get(token).getDefender();
+                opponents.add(duelMap.get(token).getDefender());
             } else {
                 for (Map.Entry<FleetToken, DuelManager.AttackInfo> entry : duelMap.entrySet()) {
                     if (entry.getValue().getDefender() == token) {
-                        return entry.getKey();
+                        opponents.add(entry.getKey());
                     }
                 }
             }
+            return opponents;
         }
         return null;
     }

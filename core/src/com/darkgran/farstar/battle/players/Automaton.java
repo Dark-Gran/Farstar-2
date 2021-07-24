@@ -16,7 +16,7 @@ import static com.darkgran.farstar.battle.BattleSettings.BONUS_CARD_ID;
  *  "Just Play Something":
  *  -- No sensors beyond PossibilityAdvisor
  *  -- No planning (atm not even the frame for it - both turn and combat work with "what comes first")
- *  -- Possibility "nonsense"-filter to substitute planning (ie. filters out some "typical bad moves")
+ *  -- Possibility "nonsense"-filter to substitute planning (ie. filters out some "typical bad moves"); In combat, attempts to pick unique targets for each ship.
  */
 public class Automaton extends Bot {
 
@@ -161,6 +161,7 @@ public class Automaton extends Bot {
                                 EffectTypeSpecifics.ChangeStatType changeStatType = EffectTypeSpecifics.ChangeStatType.valueOf(effect.getEffectInfo().get(0).toString());
                                 Token allyToken;
                                 BattleCard ally;
+                                ArrayList<Token> enemies;
                                 BattleCard enemy;
                                 //Validate change of Type (color)
                                 if (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE || changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE) {
@@ -169,7 +170,9 @@ public class Automaton extends Bot {
                                         Map.Entry<FleetToken, DuelManager.AttackInfo> duel = CombatManager.getDuel(allyToken, getBattle().getCombatManager().getDuels());
                                         if (duel == null) { return true; }
                                         ally = allyToken.getCard();
-                                        enemy = CombatManager.getDuelOpponent(allyToken, getBattle().getCombatManager().getDuels()).getCard();
+                                        enemies = CombatManager.getDuelOpponent(allyToken, getBattle().getCombatManager().getDuels());
+                                        if (enemies == null || enemies.size() == 0) { return true; }
+                                        enemy = enemies.get(0).getCard();
                                         if (techTypeNonsense(ally, enemy, changeStatType, changeInfo)) {
                                             return true;
                                         }
@@ -192,7 +195,9 @@ public class Automaton extends Bot {
                                                 Map.Entry<FleetToken, DuelManager.AttackInfo> duel = CombatManager.getDuel(allyToken, getBattle().getCombatManager().getDuels());
                                                 if (duel == null) { return true; }
                                                 ally = allyToken.getCard();
-                                                enemy = CombatManager.getDuelOpponent(allyToken, getBattle().getCombatManager().getDuels()).getCard();
+                                                enemies = CombatManager.getDuelOpponent(allyToken, getBattle().getCombatManager().getDuels());
+                                                if (enemies == null || enemies.size() == 0) { return true; }
+                                                enemy = enemies.get(0).getCard();
                                                 if (enemy.isMS() || (duel.getValue().getUpperStrike() != null && duel.getValue().getUpperStrike() == ally)) {
                                                     return true;
                                                 }
@@ -315,41 +320,31 @@ public class Automaton extends Bot {
         BattlePlayer[] enemies = getBattle().getEnemies(this);
         Token picked = null;
         Ship weakestShip = null;
-        for (BattlePlayer enemy : enemies) {
-            if (picked == null && enemy.getFleet().isEmpty()) {
-                picked = enemy.getMs().getToken();
-            } else {
-                boolean pickFirstValid = !(getBattle().getCombatManager().isActive() && !getBattle().getCombatManager().isTacticalPhase());
-                //in-future: remake duel picking (atm ships on left don't count with allies on right (that might be more suitable for a target that ends up being the left ship's opponent))
-                //while (picked == null) {
+        boolean desperate = false;
+        while (picked == null) {
+            for (BattlePlayer enemy : enemies) {
+                if (picked == null && enemy.getFleet().isEmpty()) {
+                    picked = enemy.getMs().getToken();
+                } else {
                     for (Ship ship : enemy.getFleet().getShips()) {
                         if (ship != null) {
-                            if ((pickFirstValid || !isAlreadyTargetedFatally(ship.getToken(), duels)) && (weakestShip == null || isBiggerShip(weakestShip, ship)) && (!checkReach || getBattle().getCombatManager().canReach(attacker, ship.getToken(), enemy.getFleet()))) {
+                            if ((weakestShip == null || isBiggerShip(weakestShip, ship)) && (!checkReach || getBattle().getCombatManager().canReach(attacker, ship.getToken(), enemy.getFleet()))) {
                                 weakestShip = ship;
                                 picked = ship.getToken();
                             }
                         }
                     }
-                    if (picked == null) {
-                        picked = enemy.getMs().getToken(); //alt.: pickFirstValid = true;
+                    if (picked == null && desperate) {
+                        picked = enemy.getMs().getToken();
                     }
-                //}
+                }
             }
+            desperate = true;
         }
         return picked;
     }
 
-    //returns whether the token has an opponent that will (supposedly) destroy it
-    private boolean isAlreadyTargetedFatally(Token token, TreeMap<FleetToken, DuelManager.AttackInfo> duelMap) {
-        Token opponent = CombatManager.getDuelOpponent(token, duelMap);
-        if (opponent != null) {
-            int dmg = DuelManager.getDmgAgainstShields(opponent.getCard().getCardInfo().getOffense(), token.getCard().getHealth(), opponent.getCard().getCardInfo().getOffenseType(), token.getCard().getCardInfo().getDefenseType());
-            return dmg >= token.getCard().getHealth();
-        }
-        return false;
-    }
-
-    private boolean isBiggerShip(Ship A, Ship B) { //return A>B (in-future: consider abilities)
+    private boolean isBiggerShip(Ship A, Ship B) { //return A>B (in-future: consider abilities etc)
         return A.getCardInfo().getOffense() + A.getCardInfo().getDefense() - A.getDamage() > B.getCardInfo().getOffense() + B.getCardInfo().getDefense() - B.getDamage();
     }
 
@@ -376,17 +371,37 @@ public class Automaton extends Bot {
     private final TreeMap<FleetToken, DuelManager.AttackInfo> duels = new TreeMap<>();
 
     @Override
-    protected void combat() { //duel-pick
+    protected void combat() { //Duel-picking
         super.combat();
         Token enemy;
+        //First "draft"
         for (Ship ship : getFleet().getShips()) {
             if (ship != null && !ship.isUsed()) {
-                enemy = getEnemyTarget(ship.getToken(), true);
+                enemy = getDuelTarget(ship.getToken());
                 if (enemy != null) {
                     duels.put((FleetToken) ship.getToken(), new DuelManager.AttackInfo(enemy));
                 }
             }
         }
+        //Retarget overkills
+        for (Ship ship : getFleet().getShips()) {
+            if (ship != null && !ship.isUsed()) {
+                ArrayList<Token> enemies = CombatManager.getDuelOpponent(ship.getToken(), duels);
+                if (enemies != null && enemies.size() > 0) {
+                    Token currentEnemy = enemies.get(0); //Attackers always have only one target
+                    if (isAlreadyTargetedFatally(currentEnemy, duels, ship.getToken())) {
+                        duels.remove((FleetToken) ship.getToken());
+                        enemy = getDuelTarget(ship.getToken());
+                        if (enemy != null) {
+                            if (enemy != currentEnemy) { //"don't attack (= receive dmg) for no reason"
+                                duels.put((FleetToken) ship.getToken(), new DuelManager.AttackInfo(enemy));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //Post
         if (duels.size() > 0) {
             getBattle().getCombatManager().setDuels(duels);
             getBattle().getCombatManager().startTacticalPhase();
@@ -397,6 +412,57 @@ public class Automaton extends Bot {
         }
     }
 
+    private Token getDuelTarget(Token attacker) {
+        BattlePlayer[] enemies = getBattle().getEnemies(this);
+        Token picked = null;
+        Ship weakestShip = null;
+        boolean desperate = false;
+        boolean noTargets = false;
+        while (picked == null && !noTargets) {
+            for (BattlePlayer enemy : enemies) {
+                if (!desperate || picked == null) {
+                    if (desperate) {
+                        if (getBattle().getCombatManager().canReach(attacker, enemy.getMs().getToken(), enemy.getFleet())) {
+                            picked = enemy.getMs().getToken();
+                        }
+                    }
+                    if (picked == null) {
+                        for (Ship ship : enemy.getFleet().getShips()) {
+                            if (ship != null) {
+                                if ((desperate || !isAlreadyTargetedFatally(ship.getToken(), duels, null)) && (weakestShip == null || isBiggerShip(weakestShip, ship)) && getBattle().getCombatManager().canReach(attacker, ship.getToken(), enemy.getFleet())) {
+                                    weakestShip = ship;
+                                    picked = ship.getToken();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (!desperate) {
+                desperate = true;
+            } else {
+                noTargets = true;
+            }
+        }
+        return picked;
+    }
+
+    //returns whether the token has an opponent that will (supposedly) destroy it
+    private boolean isAlreadyTargetedFatally(Token token, TreeMap<FleetToken, DuelManager.AttackInfo> duelMap, Token exclude) {
+        ArrayList<Token> opponents = CombatManager.getDuelOpponent(token, duelMap);
+        if (opponents != null) {
+            int dmg = 0;
+            for (Token opponent : opponents) {
+                if (exclude != opponent) {
+                    dmg += DuelManager.getDmgAgainstShields(opponent.getCard().getCardInfo().getOffense(), token.getCard().getHealth(), opponent.getCard().getCardInfo().getOffenseType(), token.getCard().getCardInfo().getDefenseType());
+                }
+            }
+            return dmg >= token.getCard().getHealth();
+        }
+        return false;
+    }
+
+    //TACTICAL PHASE
     private PossibilityInfo getTacticalPossibility() {
         ArrayList<PossibilityInfo> possibilities = getBattle().getRoundManager().getPossibilityAdvisor().getPossibilities(this, getBattle());
         if (possibilities.size() > 0) {
