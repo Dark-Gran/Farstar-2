@@ -39,7 +39,7 @@ public class TargetingToken extends FakeToken {
         batch.end();
         Vector2 start = new Vector2(getCard().getToken().getX()+getCard().getToken().getWidth()/2, getCard().getToken().getY()+getCard().getToken().getHeight()/2);
         Vector2 end = new Vector2(getX()+getWidth()/2, getY()+getHeight()/2);
-        drawConnection(shapeRenderer, start, end, ColorPalette.changeAlpha(ColorPalette.LIGHT, 0.25f));
+        drawConnection(shapeRenderer, start, end, ColorPalette.changeAlpha(ColorPalette.LIGHT, 0.3f));
         batch.begin();
         batch.draw(aimPicRegion, getX(), getY(), getWidth()/2f, getHeight()/2f, getWidth(), getHeight(), 1f, 1f, (float) Math.toDegrees(Math.atan2(start.x - end.x, end.y - start.y)));
     }
