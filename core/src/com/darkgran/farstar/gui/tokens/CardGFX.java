@@ -41,7 +41,7 @@ public interface CardGFX extends TextDrawer {
         if (getCardPic() != null) {
             batch.draw(getCardPic(), x, y);
             if (getCard() != null && !isBackside()) {
-                drawText(getNameFont(tokenType), batch, x, y+getCardPic().getRegionHeight()*0.518f, getCardName(getCard()), Align.center);
+                drawText(getNameFont(tokenType), batch, x, y+getCardPic().getRegionHeight()*0.516f, getCardName(getCard()), Align.center);
                 drawText(getTierFont(tokenType), batch, x, y+getCardPic().getRegionHeight()*0.452f, getTierName(getCardTier(getCard()), getCardType(getCard())), Align.center);
                 drawText(getDescFont(tokenType), batch, x, y+getCardPic().getRegionHeight()*0.37f, getCardDescription(getCard()), Align.center, ColorPalette.BLACK);
             }
