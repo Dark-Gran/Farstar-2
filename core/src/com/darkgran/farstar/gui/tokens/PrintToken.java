@@ -45,6 +45,9 @@ public class PrintToken extends Token implements CardGFX {
 
     @Override
     public void setup(BattleCard battleCard, TokenType targetType, SimpleVector2 targetXY) {
+        if (targetXY.x+targetType.getWidth()+5f+TokenType.PRINT.getWidth() > Farstar.STAGE_WIDTH) {
+            targetXY.x -= targetType.getWidth()+10f+TokenType.PRINT.getWidth();
+        }
         super.setup(battleCard, targetType, targetXY);
         resetCardGFX(battleCard.getCardInfo().getCulture(), TokenType.PRINT);
         setGlowState(battleCard.getToken().getGlowState());

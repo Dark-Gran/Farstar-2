@@ -30,6 +30,7 @@ public abstract class TokenZoom extends PrintToken {
         if (counting && !counter.isEnabled()) {
             counting = false;
             showExplainer = true;
+            explainer.setShiftedPosition(getX(), getY());
         }
     }
 
