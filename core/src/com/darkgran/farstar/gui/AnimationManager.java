@@ -18,8 +18,9 @@ public class AnimationManager {
         private final float originX;
         private final float originY;
         private boolean finished = false;
-        private float alpha = 1f;
-        private float scale = 1f;
+        private float alpha = 0.8f;
+        private float scaleX = 0.8f;
+        private float scaleY = 0.8f;
         public DeathAnimation(TextureRegion deathPic, float x, float y) {
             this.deathPic = deathPic;
             this.x = x;
@@ -30,33 +31,36 @@ public class AnimationManager {
         public void draw(Batch batch, float delta) {
             if (alpha > 0) {
                 batch.setColor(1, 1, 1, alpha);
-                batch.draw(deathPic, x, y, originX, originY, deathPic.getRegionWidth(), deathPic.getRegionHeight(), scale, scale, 0);
+                batch.draw(deathPic, x, y, originX, originY, deathPic.getRegionWidth(), deathPic.getRegionHeight(), scaleX, scaleY, 0);
                 batch.setColor(1, 1, 1, 1);
-                alpha -= delta*2;
-                scale += delta;
+                alpha -= delta*(2f-(1f-alpha));
+                scaleX += delta*1.5f;
+                scaleY += delta/1.5f;
             } else {
                 finished = true;
             }
         }
     }
-    private ArrayList<DeathAnimation> deathAnimations = new ArrayList<>();
+    private final ArrayList<DeathAnimation> deathAnimations = new ArrayList<>();
 
     public void newDeathEffect(float x, float y, TokenType tokenType) {
         TextureRegion texture = Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("death-", tokenType, false));
         deathAnimations.add(new DeathAnimation(texture, x+tokenType.getWidth()/2f-texture.getRegionWidth()/2f, y+tokenType.getHeight()/2f-texture.getRegionHeight()/2f));
     }
 
-    public void draw(Batch batch, float delta) {
-        ArrayList<DeathAnimation> forDeletion = new ArrayList<>();
-        for (DeathAnimation deathAnimation : deathAnimations) {
-            if (!deathAnimation.finished) {
-                deathAnimation.draw(batch, delta);
-            } else {
-                forDeletion.add(deathAnimation);
+    public void draw(Batch batch, float delta, boolean bottom) {
+        if (bottom) {
+            ArrayList<DeathAnimation> forDeletion = new ArrayList<>();
+            for (DeathAnimation deathAnimation : deathAnimations) {
+                if (!deathAnimation.finished) {
+                    deathAnimation.draw(batch, delta);
+                } else {
+                    forDeletion.add(deathAnimation);
+                }
             }
-        }
-        for (DeathAnimation deathAnimation : forDeletion) {
-            deathAnimations.remove(deathAnimation);
+            for (DeathAnimation deathAnimation : forDeletion) {
+                deathAnimations.remove(deathAnimation);
+            }
         }
     }
 

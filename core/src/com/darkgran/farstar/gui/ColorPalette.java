@@ -18,9 +18,9 @@ public final class ColorPalette {
     public static final class TechColors {
         private TechColors(){}
         public static final Color INFERIOR = new Color(0.5f, 0.5f, 0.5f, 1);
-        public static final Color KINETIC = new Color(0.898f, 0.502f, 0.102f, 1); //e5801a
-        public static final Color THERMAL = new Color(0.622f, 0.115f, 0.115f, 1); //9f1d1d (different for pad)
-        public static final Color PARTICLE = new Color(0.243f, 0.51f, 0.918f, 1); //3e82ea
+        public static final Color KINETIC = new Color(0.8f, 0.442f, 0.08f, 1); //cc7114
+        public static final Color THERMAL = new Color(0.8f, 0.08f, 0.08f, 1); //cc1414
+        public static final Color PARTICLE = new Color(0.08f, 0.368f, 0.8f, 1); //145ecc
         public static final Color SUPERIOR = new Color(0.8f, 0.8f, 0.8f, 1);
     }
 

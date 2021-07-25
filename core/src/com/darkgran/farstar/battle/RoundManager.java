@@ -71,7 +71,9 @@ public class RoundManager {
             if (battle.getWhoseTurn() instanceof Bot) {
                 ((Bot) battle.getWhoseTurn()).newTurn();
             }
-            getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "ENEMY TURN", 3);
+            if (getBattle().getBattleScreen().getBattleType() != BattleType.SIMULATION) {
+                getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "ENEMY TURN", 3);
+            }
             getBattle().getBattleScreen().getBattleStage().getTurnButton().setDisabled(true);
         }
     }
@@ -278,6 +280,7 @@ public class RoundManager {
             cancelButton.setPosition(Farstar.STAGE_WIDTH*0.69f, Farstar.STAGE_HEIGHT*0.28f);
             getBattle().getBattleScreen().getBattleStage().addActor(cancelButton);
             getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Choose an Ability.", 3);
+            ((YardMenu) caster.getCard().getBattlePlayer().getYard().getCardListMenu()).setOpen(false);
         }
     }
 
@@ -319,6 +322,7 @@ public class RoundManager {
             cancelButton.setPosition(Farstar.STAGE_WIDTH*0.62f, Farstar.STAGE_HEIGHT*0.08f);
             getBattle().getBattleScreen().getBattleStage().addActor(cancelButton);
             getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Choose a Target.", 3);
+            ((YardMenu) whoseTurn.getYard().getCardListMenu()).setOpen(false);
         }
     }
 

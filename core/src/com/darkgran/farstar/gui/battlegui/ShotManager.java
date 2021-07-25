@@ -47,16 +47,20 @@ public class ShotManager {
                 private void draw(Batch batch) {
                     batch.setColor(ColorPalette.changeAlpha(techType.getColor(), alpha));
                     batch.draw(recoilPic, position.x, position.y, recoilPic.getRegionWidth() / 2f, recoilPic.getRegionHeight() / 2f, recoilPic.getRegionWidth(), recoilPic.getRegionHeight(), scaleX, scaleY, 0);
-                    //batch.setColor(1, 1, 1, 1);
+                    batch.setColor(1, 1, 1, 1);
                 }
             }
             private class AniShrapnel {
                 private final SimpleVector2 speed;
+                private final boolean negativeSpin;
                 private SimpleVector2 position;
                 private float rotation;
                 private float alpha = 1f;
-                private AniShrapnel(SimpleVector2 origin, SimpleVector2 speed, float startingRotation) {
+                private final float shrapnelSize;
+                private AniShrapnel(SimpleVector2 origin, SimpleVector2 speed, float startingRotation, boolean negativeSpin, float shrapnelSize) {
+                    this.shrapnelSize = shrapnelSize;
                     this.speed = speed;
+                    this.negativeSpin = negativeSpin;
                     rotation = startingRotation;
                     position = new SimpleVector2(origin.x-shrapnelPic.getRegionWidth()/2f, origin.y-shrapnelPic.getRegionHeight()/2f);
                 }
@@ -64,14 +68,14 @@ public class ShotManager {
                     alpha -= delta*4f;
                     position.x += speed.x * delta;
                     position.y += speed.y * delta;
-                    rotation += delta*500f;
+                    rotation += (delta*500f) * (negativeSpin ? -1f : 1f);
                     if (alpha <= 0) {
                         exploded = true;
                     }
                 }
                 private void draw(Batch batch) {
                     batch.setColor(ColorPalette.changeAlpha(techType.getColor(), alpha));
-                    batch.draw(shrapnelPic, position.x, position.y, shrapnelPic.getRegionWidth() / 2f, shrapnelPic.getRegionHeight() / 2f, shrapnelPic.getRegionWidth(), shrapnelPic.getRegionHeight(), scale, scale, rotation);
+                    batch.draw(shrapnelPic, position.x, position.y, shrapnelPic.getRegionWidth() / 2f, shrapnelPic.getRegionHeight() / 2f, shrapnelPic.getRegionWidth(), shrapnelPic.getRegionHeight(), shrapnelSize, shrapnelSize, rotation);
                     //batch.setColor(1, 1, 1, 1);
                 }
             }
@@ -109,18 +113,16 @@ public class ShotManager {
                                     position.y = position.y + ((aniAttack.shotType.speed * aniAttack.directionY) * delta);
                                 } else {
                                     shrapnels = new ArrayList<>();
-                                    float shrapnelSpeed = 100f;
-                                    //"Shrapnel Trio"
-                                    float rotation = ThreadLocalRandom.current().nextInt(0, 359);
-                                    float velocityX = (float) (shrapnelSpeed * Math.cos(Math.toRadians(60f + rotation)));
-                                    float velocityY = (float) (shrapnelSpeed * Math.sin(Math.toRadians(60f + rotation)));
-                                    shrapnels.add(new AniShrapnel(end, new SimpleVector2(velocityX, velocityY), 60f + rotation));
-                                    velocityX = (float) (shrapnelSpeed * Math.cos(Math.toRadians(180f + rotation)));
-                                    velocityY = (float) (shrapnelSpeed * Math.sin(Math.toRadians(180f + rotation)));
-                                    shrapnels.add(new AniShrapnel(end, new SimpleVector2(velocityX, velocityY), 180f + rotation));
-                                    velocityX = (float) (shrapnelSpeed * Math.cos(Math.toRadians(300f + rotation)));
-                                    velocityY = (float) (shrapnelSpeed * Math.sin(Math.toRadians(300f + rotation)));
-                                    shrapnels.add(new AniShrapnel(end, new SimpleVector2(velocityX, velocityY), 300f + rotation));
+                                    float rotationShift = 30f;
+                                    float rotation = ThreadLocalRandom.current().nextInt(0, 360);
+                                    for (int i = 0; i < 6; i++) {
+                                        float shrapnelSpeed = 50f + ThreadLocalRandom.current().nextInt(0, 101);
+                                        float velocityX = (float) (shrapnelSpeed * Math.cos(Math.toRadians(rotationShift + rotation)));
+                                        float velocityY = (float) (shrapnelSpeed * Math.sin(Math.toRadians(rotationShift + rotation)));
+                                        boolean spinAdjust = ThreadLocalRandom.current().nextInt(0, 2) == 0;
+                                        shrapnels.add(new AniShrapnel(end, new SimpleVector2(velocityX, velocityY), ThreadLocalRandom.current().nextInt(0, 359), spinAdjust, scale*(ThreadLocalRandom.current().nextInt(5, 15)/10f)));
+                                        rotationShift += 60f;
+                                    }
                                 }
                             } else {
                                 for (AniShrapnel shrapnel : shrapnels) {
@@ -185,9 +187,6 @@ public class ShotManager {
                 batch.setColor(techType.getColor());
                 for (AniAttack.AniShot aniShot : aniShots) {
                     if (aniShot.active) {
-                        if (!aniShot.recoilFinished) {
-                            aniShot.drawRecoil(batch);
-                        }
                         if (!recoilOnly) {
                             if (aniShot.shrapnels == null) {
                                 aniShot.drawAniShot(batch);
@@ -238,17 +237,34 @@ public class ShotManager {
         aniAttacks.add(aniAttack);
     }
 
-    public void drawAttacks(Batch batch, float delta) {
+    public void drawAttacks(Batch batch, float delta, boolean bottom) {
         if (aniAttacks.size() > 0) {
             ArrayList<AniAttack> forDeletion = new ArrayList<>();
             for (AniAttack aniAttack : aniAttacks) {
                 if (!aniAttack.done) {
                     aniAttack.draw(batch, delta);
-                } else {
+                } else{
                     forDeletion.add(aniAttack);
                 }
             }
             aniAttacks.removeAll(forDeletion);
+        }
+    }
+
+    public void drawRecoil(Batch batch, Token token) {
+        for (AniAttack aniAttack : aniAttacks) {
+            if (aniAttack.att == token) {
+                if (!aniAttack.done) {
+                    for (AniAttack.AniShot aniShot : aniAttack.aniShots) {
+                        if (aniShot.active) {
+                            if (!aniShot.recoilFinished) {
+                                aniShot.drawRecoil(batch);
+                            }
+                        }
+                    }
+                }
+                break;
+            }
         }
     }
 

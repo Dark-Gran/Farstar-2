@@ -77,18 +77,22 @@ public abstract class BattleStage extends ListeningStage {
 
     public void updateDeckInfos() { }
 
-    public void drawBottomActors(Batch batch) {
+    public void drawBottomActors(float delta, Batch batch) {
         combatMenu.drawDuels(batch, getBattleScreen().getShapeRenderer());
+        animationManager.draw(batch, delta, true);
     }
 
     public void drawBattleStage(float delta, Batch batch) {
         roundCounter.draw(batch);
-        animationManager.draw(batch, delta);
-        shotManager.drawAttacks(batch, delta);
+        animationManager.draw(batch, delta, false);
+        shotManager.drawAttacks(batch, delta, false);
         abilityPicker.draw(batch);
+        herald.draw(batch);
+    }
+
+    public void drawZoomed(Batch batch) {
         if (fakeToken != null) { fakeToken.draw(batch, getBattleScreen().getShapeRenderer()); }
         cardZoom.draw(batch);
-        herald.draw(batch);
     }
 
     @Override

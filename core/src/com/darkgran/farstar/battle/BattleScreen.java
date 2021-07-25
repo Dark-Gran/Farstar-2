@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -12,6 +13,7 @@ import com.darkgran.farstar.gui.TableStage;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.battle.players.PossibilityAdvisor;
+import com.darkgran.farstar.gui.tokens.TokenType;
 import com.darkgran.farstar.mainscreen.MainScreen;
 import com.darkgran.farstar.util.SimpleBox2;
 
@@ -37,6 +39,7 @@ public class BattleScreen extends SuperScreen {
                 }
             }
             battleStage.getCardZoom().deactivate(button==1);
+            battleStage.getAnimationManager().newDeathEffect(Gdx.input.getX(), Gdx.input.getY(), TokenType.FLEET);
             return super.touchDown(screenX, screenY, pointer, button);
         }
     };
@@ -68,6 +71,7 @@ public class BattleScreen extends SuperScreen {
     @Override
     protected void drawContent(float delta, Batch batch) {
         battleStage.drawBattleStage(delta, batch);
+        battleStage.drawZoomed(batch);
         //if (DEBUG_RENDER) { drawBox2DDebug(batch); } //draws boundaries of world-bodies
         //worldManager.worldTimer(delta); //world stepping
     }

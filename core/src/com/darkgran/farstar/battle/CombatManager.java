@@ -103,7 +103,9 @@ public abstract class CombatManager {
             setFSGlows(false);
             markFSGlows();
             System.out.println("Tactical Phase started.");
-            getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "TACTICAL PHASE", 3);
+            if (getBattle().getBattleScreen().getBattleType() != BattleType.SIMULATION) {
+                getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "TACTICAL PHASE", 3);
+            }
             if (!(activePlayer.getBattlePlayer() instanceof Bot)) {
                 combatMenu.addOK(activePlayer.getCombatButton());
                 activePlayer.getCombatButton().setExtraState(false);

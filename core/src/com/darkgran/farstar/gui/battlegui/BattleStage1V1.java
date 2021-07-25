@@ -126,7 +126,7 @@ public class BattleStage1V1 extends BattleStage {
 
     @Override
     public void drawBattleStage(float delta, Batch batch) {
-        drawBottomActors(batch);
+        drawBottomActors(delta, batch);
         resourceMeter1.draw(batch);
         resourceMeter2.draw(batch);
         deck1.draw(batch, getBattleScreen().getShapeRenderer());
@@ -145,11 +145,11 @@ public class BattleStage1V1 extends BattleStage {
             supportMenu1.drawNetSpots(batch);
             supportMenu2.drawNetSpots(batch);
         }
+        super.drawBattleStage(delta, batch);
         if (yardMenu1.isOpen()) { yardMenu1.drawTokens(batch); }
         if (yardMenu2.isOpen()) { yardMenu2.drawTokens(batch); }
         handMenu1.drawTokens(batch);
         handMenu2.drawTokens(batch);
-        super.drawBattleStage(delta, batch);
         if (DEBUG_RENDER) {
             getBattleScreen().drawDebugSimpleBox2(fleetMenu1.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
             getBattleScreen().drawDebugSimpleBox2(fleetMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
