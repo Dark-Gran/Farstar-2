@@ -7,7 +7,7 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.cards.TechType;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.gui.tokens.Token;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;

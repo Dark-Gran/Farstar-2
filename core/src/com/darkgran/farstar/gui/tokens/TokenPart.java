@@ -9,7 +9,7 @@ import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.TextDrawer;
 import com.darkgran.farstar.gui.TextLine;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 public class TokenPart extends TextLine {
     enum ContentState {

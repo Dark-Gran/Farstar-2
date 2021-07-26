@@ -9,8 +9,8 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.BattlePlayer;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.DropTarget;
-import com.darkgran.farstar.util.SimpleBox2;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleBox2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 public class JunkButton extends ClickToken implements DropTarget {
     private final float angle = -90f;

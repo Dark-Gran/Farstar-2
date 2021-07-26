@@ -12,7 +12,7 @@ import com.darkgran.farstar.gui.tokens.HandToken;
 import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.Hand;
-import com.darkgran.farstar.util.SimpleBox2;
+import com.darkgran.farstar.gui.SimpleBox2;
 
 public class HandMenu extends CardListMenu implements DropTarget {
     private float actualX;

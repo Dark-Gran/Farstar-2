@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.battle.players.BattleCard;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 /**
  * TokenZoom with an instant but limited show-up and a ClickListener.

@@ -14,7 +14,7 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.Dragger;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 public class TargetingToken extends FakeToken {
     private Dragger dragger;

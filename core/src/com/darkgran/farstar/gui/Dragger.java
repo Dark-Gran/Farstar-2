@@ -7,7 +7,6 @@ import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.gui.tokens.AnchoredToken;
 import com.darkgran.farstar.gui.tokens.FakeToken;
 import com.darkgran.farstar.gui.tokens.Token;
-import com.darkgran.farstar.util.SimpleVector2;
 
 public class Dragger extends InputListener {
     private final Token token;

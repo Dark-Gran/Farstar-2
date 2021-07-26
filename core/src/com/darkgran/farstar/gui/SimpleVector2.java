@@ -1,4 +1,4 @@
-package com.darkgran.farstar.util;
+package com.darkgran.farstar.gui;
 
 public class SimpleVector2 {
     public float x;

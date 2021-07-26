@@ -10,7 +10,7 @@ import com.darkgran.farstar.cards.Effect;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.gui.TextDrawer;
 import com.darkgran.farstar.gui.TextInTheBox;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 public class Explainer extends TextInTheBox {
 

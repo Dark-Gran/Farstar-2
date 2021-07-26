@@ -12,8 +12,8 @@ import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.cards.CardInfo;
 import com.darkgran.farstar.cards.CardType;
 import com.darkgran.farstar.battle.players.Ship;
-import com.darkgran.farstar.util.SimpleBox2;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleBox2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 //The only "Menu" that does NOT extend CardListMenu! (ie. Fleet is not a CardList!)
 //(uses Array instead of ArrayList)

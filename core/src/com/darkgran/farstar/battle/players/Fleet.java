@@ -4,7 +4,7 @@ import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.gui.battlegui.FleetMenu;
 import com.darkgran.farstar.gui.tokens.FleetToken;
 import com.darkgran.farstar.gui.tokens.Token;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 public class Fleet implements BattleTicks {
     private final Junkpile junkpile;

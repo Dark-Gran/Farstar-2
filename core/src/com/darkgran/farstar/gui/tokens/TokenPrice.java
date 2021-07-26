@@ -11,7 +11,7 @@ import com.darkgran.farstar.cards.AbilityInfo;
 import com.darkgran.farstar.cards.AbilityStarter;
 import com.darkgran.farstar.cards.Effect;
 import com.darkgran.farstar.gui.TextDrawer;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 /**
  * Actually a group of pads: Handles the entire top-left corner (ie. ability-pads too)

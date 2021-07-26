@@ -3,7 +3,6 @@ package com.darkgran.farstar.gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.util.SimpleVector2;
 
 public class YXQuestionBox extends TextInTheBox {
     private final ListeningStage stage;

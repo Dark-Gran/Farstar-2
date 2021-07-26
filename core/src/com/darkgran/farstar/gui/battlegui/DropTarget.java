@@ -1,6 +1,6 @@
 package com.darkgran.farstar.gui.battlegui;
 
-import com.darkgran.farstar.util.SimpleBox2;
+import com.darkgran.farstar.gui.SimpleBox2;
 
 public interface DropTarget {
     SimpleBox2 getSimpleBox2();

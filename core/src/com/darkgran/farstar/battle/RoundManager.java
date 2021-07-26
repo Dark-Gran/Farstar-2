@@ -11,7 +11,7 @@ import com.darkgran.farstar.cards.CardInfo;
 import com.darkgran.farstar.cards.CardType;
 import com.darkgran.farstar.gui.ActorButton;
 import com.darkgran.farstar.gui.Notification;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 import java.util.ArrayList;
 

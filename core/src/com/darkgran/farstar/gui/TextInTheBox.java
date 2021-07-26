@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.darkgran.farstar.util.SimpleBox2;
-import com.darkgran.farstar.util.SimpleVector2;
 
 /**
  * Text at coordinates with a box around it.

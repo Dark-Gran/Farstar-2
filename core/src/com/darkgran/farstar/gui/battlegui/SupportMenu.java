@@ -9,8 +9,8 @@ import com.darkgran.farstar.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.CardList;
 import com.darkgran.farstar.battle.players.BattlePlayer;
 import com.darkgran.farstar.battle.players.Support;
-import com.darkgran.farstar.util.SimpleBox2;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleBox2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 public class SupportMenu extends CardListMenu implements DropTarget {
     private final SimpleBox2 simpleBox2 = new SimpleBox2();

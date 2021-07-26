@@ -9,7 +9,7 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.battle.players.BattleCard;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
 

@@ -1,4 +1,4 @@
-package com.darkgran.farstar.util;
+package com.darkgran.farstar.gui;
 
 public class SimpleBox2 extends SimpleVector2 {
     private float width;

@@ -14,7 +14,7 @@ import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.gui.NotificationManager;
 import com.darkgran.farstar.gui.TableStage;
 import com.darkgran.farstar.gui.YXQuestionBox;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 import static com.darkgran.farstar.Farstar.ASSET_LIBRARY;
 

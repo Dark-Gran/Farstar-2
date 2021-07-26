@@ -13,8 +13,8 @@ import com.darkgran.farstar.gui.ListeningStage;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.cards.CardType;
-import com.darkgran.farstar.util.SimpleBox2;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleBox2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 import java.awt.*;
 import java.util.ArrayList;

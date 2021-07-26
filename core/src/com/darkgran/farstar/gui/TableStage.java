@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.battle.BattleScreen;
-import com.darkgran.farstar.util.SimpleVector2;
 
 public class TableStage extends ListeningStage {
     private final Texture table = Farstar.ASSET_LIBRARY.get("images/tableMain-1920.png");

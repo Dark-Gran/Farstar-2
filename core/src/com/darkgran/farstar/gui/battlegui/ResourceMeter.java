@@ -9,7 +9,7 @@ import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.gui.JustFont;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleVector2;
 import com.darkgran.farstar.gui.TextDrawer;
 
 public class ResourceMeter extends Actor implements JustFont {

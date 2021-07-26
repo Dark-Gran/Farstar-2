@@ -1,15 +1,14 @@
 package com.darkgran.farstar.gui.battlegui;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.gui.TextDrawer;
-import com.darkgran.farstar.util.SimpleBox2;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleBox2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 public class RoundCounter extends SimpleBox2 implements TextDrawer {
     private boolean wrap = false;

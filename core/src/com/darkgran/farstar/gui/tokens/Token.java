@@ -10,8 +10,8 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.gui.JustFont;
-import com.darkgran.farstar.util.SimpleBox2;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleBox2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 

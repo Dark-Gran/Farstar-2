@@ -7,7 +7,7 @@ import com.darkgran.farstar.gui.Dragger;
 import com.darkgran.farstar.gui.Dragging;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 public abstract class FakeToken extends Token implements Dragging { //temporary token
 

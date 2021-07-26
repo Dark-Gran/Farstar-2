@@ -1,7 +1,7 @@
 package com.darkgran.farstar.gui.battlegui;
 
 import com.darkgran.farstar.battle.players.BattlePlayer;
-import com.darkgran.farstar.util.SimpleBox2;
+import com.darkgran.farstar.gui.SimpleBox2;
 
 /**
  * SimpleBox2 with battleStage+player (for simple drawing use PB2Drawer).

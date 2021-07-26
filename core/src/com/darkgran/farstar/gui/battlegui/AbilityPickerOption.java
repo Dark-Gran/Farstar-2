@@ -9,7 +9,7 @@ import com.darkgran.farstar.cards.Card;
 import com.darkgran.farstar.gui.tokens.PrintToken;
 import com.darkgran.farstar.gui.tokens.TokenType;
 import com.darkgran.farstar.cards.AbilityInfo;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 public class AbilityPickerOption extends PrintToken {
     private ClickListener clickListener;

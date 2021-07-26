@@ -10,7 +10,7 @@ import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.gui.battlegui.HandMenu;
 import com.darkgran.farstar.util.SimpleCounter;
-import com.darkgran.farstar.util.SimpleVector2;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 public abstract class TokenZoom extends PrintToken {
     private final SimpleCounter counter;

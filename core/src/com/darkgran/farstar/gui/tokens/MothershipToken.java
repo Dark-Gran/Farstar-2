@@ -8,7 +8,7 @@ import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.gui.battlegui.DropTarget;
 import com.darkgran.farstar.gui.battlegui.SupportMenu;
 import com.darkgran.farstar.battle.players.BattleCard;
-import com.darkgran.farstar.util.SimpleBox2;
+import com.darkgran.farstar.gui.SimpleBox2;
 
 import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 
