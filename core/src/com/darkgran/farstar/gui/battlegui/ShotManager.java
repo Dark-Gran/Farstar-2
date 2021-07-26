@@ -233,7 +233,7 @@ public class ShotManager {
         }
         float scale = 0.5f + (shotDamage / 2f);
         for (int i = 0; i < numberOfShots; i++) {
-            aniShots.add(aniAttack.createAniShot(i * 0.4f, scale));
+            aniShots.add(aniAttack.createAniShot(i * 0.4f, scale)); //in-future: lower delay-coefficient for high numberOfShots
         }
         aniAttack.aniShots = aniShots;
         aniAttacks.add(aniAttack);
