@@ -144,9 +144,7 @@ public abstract class SuperScreen implements Screen {
     protected void drawMenus(float delta, Batch batch) { //for all screens except intro
         batch.begin();
         perfMeter.drawText(batch);
-        if (screenConceder != null) {
-            screenConceder.draw(batch, shapeRenderer);
-        }
+        if (screenConceder != null) { screenConceder.draw(batch, shapeRenderer); }
         batch.end();
     }
 
@@ -179,11 +177,12 @@ public abstract class SuperScreen implements Screen {
             }
         }
 
-        drawMenus(delta, game.batch);
-
         game.batch.begin();
         game.batch.setColor(1, 1, 1, 1);
         drawContent(delta, game.batch);
+        game.batch.end();
+        drawMenus(delta, game.batch);
+        game.batch.begin();
         drawSigns(game.batch);
         drawCursor(game.batch);
         game.batch.end();

@@ -134,8 +134,12 @@ public class PossibilityAdvisor {
             battleCard.setPossible(false);
         }
         //Abilities
-        for (BattleCard battleCard : battlePlayer.getFleet().getShips()) {
-            if (battleCard != null) { battleCard.setPossible(false); }
+        if (!battle.getCombatManager().isTacticalPhase()) {
+            for (BattleCard battleCard : battlePlayer.getFleet().getShips()) {
+                if (battleCard != null) {
+                    battleCard.setPossible(false);
+                }
+            }
         }
         for (BattleCard battleCard : battlePlayer.getSupports()) {
             battleCard.setPossible(false);

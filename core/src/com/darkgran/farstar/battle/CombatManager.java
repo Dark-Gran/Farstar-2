@@ -154,7 +154,7 @@ public abstract class CombatManager {
         }
     }
 
-    private void markFSGlows() { //uses setPicked()
+    private void markFSGlows() {
         for (Map.Entry<FleetToken, DuelManager.AttackInfo> entry : duels.entrySet()) {
             if (entry.getValue().getUpperStrike() != null) {
                 entry.getValue().getUpperStrike().getToken().setPicked(true);
@@ -163,16 +163,14 @@ public abstract class CombatManager {
                 } else {
                     entry.getValue().getDefender().setPicked(false);
                 }
-            } else {
-                boolean attFS = AbilityManager.hasAttribute(entry.getKey().getCard(), EffectType.FIRST_STRIKE);
-                boolean defFS = AbilityManager.hasAttribute(entry.getValue().getDefender().getCard(), EffectType.FIRST_STRIKE);
-                if (attFS != defFS) {
-                    entry.getKey().setPicked(attFS);
-                    entry.getValue().getDefender().setPicked(defFS);
-                } else {
-                    entry.getKey().setPicked(false);
-                    entry.getValue().getDefender().setPicked(false);
-                }
+            }
+            boolean attFS = AbilityManager.hasAttribute(entry.getKey().getCard(), EffectType.FIRST_STRIKE);
+            boolean defFS = AbilityManager.hasAttribute(entry.getValue().getDefender().getCard(), EffectType.FIRST_STRIKE);
+            if (attFS) {
+                entry.getKey().getCard().setPossible(true);
+            }
+            if (defFS) {
+                entry.getValue().getDefender().getCard().setPossible(true);
             }
         }
     }
@@ -187,15 +185,24 @@ public abstract class CombatManager {
 
     private void saveUpperStrike(BattleCard target) {
         if (target.getToken() instanceof FleetToken) {
-            if (duels.containsKey((FleetToken) target.getToken())) {
-                DuelManager.AttackInfo attackInfo = new DuelManager.AttackInfo(duels.get((FleetToken) target.getToken()).getDefender(), target);
-                duels.put((FleetToken) target.getToken(), attackInfo);
-            } else {
+            BattleCard countered = null;
+            for (Map.Entry<FleetToken, DuelManager.AttackInfo> entry : duels.entrySet()) {
+                if (entry.getKey().getCard() == target) {
+                    DuelManager.AttackInfo attackInfo = new DuelManager.AttackInfo(entry.getValue().getDefender(), target);
+                    duels.put((FleetToken) target.getToken(), attackInfo);
+                    countered = entry.getValue().getDefender().getCard();
+                } else if (entry.getValue().getDefender().getCard() == target) {
+                    DuelManager.AttackInfo attackInfo = new DuelManager.AttackInfo(entry.getValue().getDefender(), target);
+                    duels.put(entry.getKey(), attackInfo);
+                    countered = entry.getKey().getCard();
+                }
+            }
+            if (countered != null) {
+                if (countered.getToken() != null) { countered.getToken().setPicked(false); }
                 for (Map.Entry<FleetToken, DuelManager.AttackInfo> entry : duels.entrySet()) {
-                    if (entry.getValue().getDefender().getCard() == target) {
-                        FleetToken att = entry.getKey();
-                        DuelManager.AttackInfo attackInfo = new DuelManager.AttackInfo(entry.getValue().getDefender(), target);
-                        duels.put(att, attackInfo);
+                    if (entry.getValue().getUpperStrike() == countered) {
+                        DuelManager.AttackInfo attackInfo = new DuelManager.AttackInfo(entry.getValue().getDefender(), null);
+                        duels.put(entry.getKey(), attackInfo);
                     }
                 }
             }

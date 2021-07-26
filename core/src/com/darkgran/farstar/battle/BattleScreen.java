@@ -2,18 +2,19 @@ package com.darkgran.farstar.battle;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.*;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.gui.NotificationManager;
+import com.darkgran.farstar.gui.*;
 import com.darkgran.farstar.SuperScreen;
-import com.darkgran.farstar.gui.TableStage;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.battle.players.PossibilityAdvisor;
 import com.darkgran.farstar.mainscreen.MainScreen;
 import com.darkgran.farstar.util.SimpleBox2;
+import com.darkgran.farstar.util.SimpleVector2;
 
 public class BattleScreen extends SuperScreen {
     private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
@@ -62,7 +63,28 @@ public class BattleScreen extends SuperScreen {
 
     @Override
     public void userEscape() {
-        getGame().setScreen(new MainScreen(getGame(), getTableMenu(), getNotificationManager(), getScreenSettings()));
+        /*if (!isConcederActive()) {
+            String txt = "CONCEDE?";
+            String fontPath = "fonts/orbitron36.fnt";
+            SimpleVector2 textWH = TextDrawer.getTextWH(Farstar.ASSET_LIBRARY.getAssetManager().get(fontPath, BitmapFont.class), txt);
+            setScreenConceder(new YXQuestionBox(
+                    ColorPalette.LIGHT,
+                    ColorPalette.DARK,
+                    fontPath,
+                    txt,
+                    Farstar.STAGE_WIDTH / 2f - textWH.x / 2,
+                    Farstar.STAGE_HEIGHT / 2f + textWH.y / 2 + textWH.y * 2,
+                    textWH.x+20f,
+                    textWH.y*4f+20f,
+                    false,
+                    battleStage,
+                    this::userEscape,
+                    ()->*/getGame().setScreen(new MainScreen(getGame(), getTableMenu(), getNotificationManager(), getScreenSettings()))
+            /*))*/;/*
+        } else {
+            getScreenConceder().dispose();
+            setScreenConceder(null);
+        }*/
     }
 
     @Override

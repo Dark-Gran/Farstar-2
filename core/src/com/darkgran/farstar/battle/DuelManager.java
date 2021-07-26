@@ -8,13 +8,14 @@ import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.cards.EffectType;
 import com.darkgran.farstar.cards.TechType;
 import com.darkgran.farstar.util.Delayer;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 public class DuelManager implements Delayer {
     private final float duelDelay = 0.3f;
 
-    public static class AttackInfo {
+    public static class AttackInfo implements Comparable<AttackInfo> {
         private final Token defender;
         private BattleCard upperStrike = null;
         private byte state = 0; //1: right-about-to attack, 2: attack done
@@ -35,6 +36,23 @@ public class DuelManager implements Delayer {
         public void setUpperStrike(BattleCard upperStrike) { this.upperStrike = upperStrike; }
         public byte getState() { return state; }
         public void setState(byte state) { this.state = state; }
+
+        @Override
+        public int compareTo(@NotNull DuelManager.AttackInfo o) {
+            boolean thisFS = upperStrike != null;
+            boolean oFS = o.upperStrike != null;
+            return Boolean.compare(oFS, thisFS);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof AttackInfo)) {
+                return super.equals(obj);
+            }
+            boolean thisFS = upperStrike != null;
+            boolean oFS = ((AttackInfo) obj).upperStrike != null;
+            return Boolean.compare(oFS, thisFS) == 0;
+        }
     }
 
     private CombatManager combatManager;
@@ -43,12 +61,28 @@ public class DuelManager implements Delayer {
     private Iterator<Map.Entry<FleetToken, AttackInfo>> it;
     private ShotManager shotManager;
 
+    static <K extends Comparable<? super K>,V extends Comparable<? super V>> SortedSet<Map.Entry<K,V>> entriesSortedByValuesThenKeys(Map<K,V> map) {
+        SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<>(
+                new Comparator<Map.Entry<K, V>>() {
+                    @Override
+                    public int compare(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
+                        if (!e1.getValue().equals(e2.getValue())) {
+                            return e1.getValue().compareTo(e2.getValue());
+                        }
+                        return e1.getKey().compareTo(e2.getKey());
+                    }
+                }
+        );
+        sortedEntries.addAll(map.entrySet());
+        return sortedEntries;
+    }
+
     void launchDuels(CombatManager combatManager, TreeMap<FleetToken, AttackInfo> duels, ShotManager shotManager) {
         this.shotManager = shotManager;
         if (duels != null && duels.size() > 0) {
             this.combatManager = combatManager;
             this.active = true;
-            duelSet = duels.entrySet();
+            duelSet = entriesSortedByValuesThenKeys(duels);
             it = duelSet.iterator();
             System.out.println("Launching Duels.");
             delayAction(this::iterateDuels, 0.5f);
@@ -62,7 +96,7 @@ public class DuelManager implements Delayer {
         if (it.hasNext()) {
             Map.Entry<FleetToken, AttackInfo> duel = it.next();
             combatManager.setDuelState(duel, (byte) 1);
-            delayAction(()->performDuel(duel), duelDelay);
+            delayAction(() -> performDuel(duel), duelDelay);
         } else {
             //afterDuels();
             delayAction(this::afterDuels, 0.5f);

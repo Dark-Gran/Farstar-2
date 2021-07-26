@@ -57,8 +57,8 @@ public class BattleCard extends Card {
 
     public void repairDMG(int dmg) {
         damage -= dmg;
-        refreshToken(true, false);
         if (damage < 0) { damage = 0; }
+        refreshToken(true, false);
     }
 
     public int getHealth() { return getCardInfo().getDefense()-damage; }

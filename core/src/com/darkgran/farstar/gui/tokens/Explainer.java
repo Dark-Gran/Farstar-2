@@ -55,10 +55,11 @@ public class Explainer extends TextInTheBox {
             str.append("Current/Max. Shields: ").append(battleCard.getHealth()).append("/").append(battleCard.getCardInfo().getDefense()).append("          \n");
             first = false;
         }
+        String shipOrSupport = battleCard.getCardInfo().getCardType() == CardType.SUPPORT ? "support" : "ship";
         if (battleCard.isUsed()) {
             if (!first) { str.append("\n"); }
             else { first = false; }
-            str.append("Disabled:\nThis ship cannot attack or use abilities until next Turn.\n");
+            str.append("Disabled:\nThis ").append(shipOrSupport).append(" cannot attack or use abilities until next Turn.\n");
         }
         if (battleCard.getCardInfo().getCardType() == CardType.TACTIC) {
             if (!first) { str.append("\n"); }
@@ -66,6 +67,7 @@ public class Explainer extends TextInTheBox {
             str.append("Tactic:\nTactics may be played both in Your Turn and in the Tactical Phase.\n");
         }
         boolean FSpresent = false;
+        boolean USEpresent = false;
         for (AbilityInfo abilityInfo : battleCard.getCardInfo().getAbilities()) {
             for (Effect effect : abilityInfo.getEffects()) {
                 switch (effect.getEffectType()) {
@@ -80,17 +82,13 @@ public class Explainer extends TextInTheBox {
                         str.append("Reach:\nAllows targeting over Guards, but only if the Reach is same as (or greater than) number of Guards.\n");
                         break;
                     case FIRST_STRIKE:
-                        if (!first) { str.append("\n"); }
-                        else { first = false; }
                         FSpresent = true;
                         break;
                 }
             }
             switch (abilityInfo.getStarter()) {
                 case USE:
-                    if (!first) { str.append("\n"); }
-                    else { first = false; }
-                    str.append("Usable Ability:\nMay be used only once per Turn.\n");
+                    USEpresent = true;
                     break;
                 /*case DEPLOY:
                     if (!first) { str += "\n"; }
@@ -99,11 +97,16 @@ public class Explainer extends TextInTheBox {
                     break;*/
             }
         }
+        if (USEpresent) {
+            if (!first) { str.append("\n"); }
+            else { first = false; }
+            str.append("Usable Ability:\nMay be used only once per Turn.\n");
+        }
         if (!FSpresent) { FSpresent = AbilityManager.upgradesFirstStrike(battleCard); }
         if (FSpresent) {
             if (!first) { str.append("\n"); }
             //else { first = false; }
-            str.append("First-Strike:\nShips with First-Strike always shoot first: if the opposing ship is destroyed by First-Strike, it will not retaliate.\n");
+            str.append("First-Strike:\nShips with First-Strike always shoot first: if a ship is destroyed by First-Strike, it will not retaliate.\n");
         }
         return str.toString();
     }
