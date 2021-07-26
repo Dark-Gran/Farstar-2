@@ -38,7 +38,7 @@ public class DuelManager implements Delayer {
         public void setState(byte state) { this.state = state; }
 
         @Override
-        public int compareTo(@NotNull DuelManager.AttackInfo o) {
+        public int compareTo(@NotNull DuelManager.AttackInfo o) { //todo "natural" FirstStrike
             boolean thisFS = upperStrike != null;
             boolean oFS = o.upperStrike != null;
             return Boolean.compare(oFS, thisFS);
@@ -114,7 +114,7 @@ public class DuelManager implements Delayer {
         combatManager.afterDuels();
     }
 
-    private void exeDuel(BattleCard att, AttackInfo attackInfo) {
+    private void exeDuel(BattleCard att, AttackInfo attackInfo) { //todo reconsider FS "phases"
         BattleCard def = attackInfo.getDefender().getCard();
         boolean attFS;
         boolean defFS;
