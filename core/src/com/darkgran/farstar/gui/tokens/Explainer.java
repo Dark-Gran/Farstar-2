@@ -3,7 +3,6 @@ package com.darkgran.farstar.gui.tokens;
 import com.badlogic.gdx.graphics.Color;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.AbilityManager;
-import com.darkgran.farstar.cards.Card;
 import com.darkgran.farstar.cards.CardType;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.cards.AbilityInfo;
@@ -103,7 +102,7 @@ public class Explainer extends TextInTheBox {
         if (!FSpresent) { FSpresent = AbilityManager.upgradesFirstStrike(battleCard); }
         if (FSpresent) {
             if (!first) { str.append("\n"); }
-            else { first = false; }
+            //else { first = false; }
             str.append("First-Strike:\nShips with First-Strike always shoot first: if the opposing ship is destroyed by First-Strike, it will not retaliate.\n");
         }
         return str.toString();
