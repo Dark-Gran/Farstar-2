@@ -45,7 +45,7 @@ public class BattleStage1V1 extends BattleStage {
     public BattleStage1V1(Farstar game, Viewport viewport, BattleScreen battleScreen, CombatMenu combatMenu, BattlePlayer battlePlayer1, BattlePlayer battlePlayer2) {
         super(game, viewport, battleScreen, combatMenu);
         //Resources
-        resourceMeter1 = new ResourceMeter(getBattleScreen().getBattle(), battlePlayer1, true, Farstar.STAGE_WIDTH*0.758f, Farstar.STAGE_HEIGHT*0.04f);
+        resourceMeter1 = new ResourceMeter(getBattleScreen().getBattle(), battlePlayer1, true, Farstar.STAGE_WIDTH*0.758f, Farstar.STAGE_HEIGHT*0.038f);
         resourceMeter2 = new ResourceMeter(getBattleScreen().getBattle(), battlePlayer2, false, Farstar.STAGE_WIDTH*0.758f, Farstar.STAGE_HEIGHT*0.97f);
         //Buttons
         turnButton.setPosition(1828f, 478f - turnButton.getHeight() * 0.5f);
@@ -53,13 +53,6 @@ public class BattleStage1V1 extends BattleStage {
         //Tiers
         tier1 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.079f, Farstar.STAGE_HEIGHT*0.064f);
         tier2 = new TierCounter(getBattleScreen().getBattle(), Farstar.STAGE_WIDTH*0.079f, Farstar.STAGE_HEIGHT*0.948f);
-        //Discards / Junkpiles
-        junkButton1 = new JunkButton(Farstar.STAGE_WIDTH*0.871f, Farstar.STAGE_HEIGHT*0.15f, this, battlePlayer1);
-        junkButton2 = new JunkButton(Farstar.STAGE_WIDTH*0.871f, Farstar.STAGE_HEIGHT*0.85f - TokenType.JUNK.getHeight(), this, battlePlayer2);
-        battlePlayer1.getJunkpile().setJunkButton(junkButton1);
-        battlePlayer2.getJunkpile().setJunkButton(junkButton2);
-        addDropTarget(junkButton1);
-        addDropTarget(junkButton2);
         //Fleets
         fleetMenu1 = new FleetMenu(battlePlayer1.getFleet(), Farstar.STAGE_WIDTH*0.066f, Farstar.STAGE_HEIGHT*0.252f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.255f, this, battlePlayer1, false);
         fleetMenu2 = new FleetMenu(battlePlayer2.getFleet(), Farstar.STAGE_WIDTH*0.066f, Farstar.STAGE_HEIGHT*0.507f, Farstar.STAGE_WIDTH*0.87f, Farstar.STAGE_HEIGHT*0.255f, this, battlePlayer2, true);
@@ -76,6 +69,13 @@ public class BattleStage1V1 extends BattleStage {
         addDropTarget(mothershipToken1);
         addDropTarget(supportMenu1);
         addDropTarget(supportMenu2);
+        //Discards / Junkpiles
+        junkButton1 = new JunkButton(Farstar.STAGE_WIDTH*0.871f, Farstar.STAGE_HEIGHT*0.15f, this, battlePlayer1);
+        junkButton2 = new JunkButton(Farstar.STAGE_WIDTH*0.871f, Farstar.STAGE_HEIGHT*0.85f - TokenType.JUNK.getHeight(), this, battlePlayer2);
+        battlePlayer1.getJunkpile().setJunkButton(junkButton1);
+        battlePlayer2.getJunkpile().setJunkButton(junkButton2);
+        addDropTarget(junkButton1);
+        addDropTarget(junkButton2);
         //Decks
         deck1 = new CardSource(Farstar.STAGE_WIDTH*0.96f, Farstar.STAGE_HEIGHT*0.4f,this, battlePlayer1, true);
         deck2 = new CardSource(Farstar.STAGE_WIDTH*0.96f, Farstar.STAGE_HEIGHT*0.559f, this, battlePlayer2, false);

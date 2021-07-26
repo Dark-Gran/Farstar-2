@@ -33,7 +33,7 @@ public class TokenZoom1v1 extends TokenZoom {
                     newY = (getCard().getBattlePlayer().getBattleID() == 1) ? 0f : Farstar.STAGE_HEIGHT-getCardPic().getRegionHeight();
                     break;
                 case JUNK:
-                    newX = getTargetXY().x-getTargetType().getWidth()*1.5f-5f;
+                    newX += 37f;
                     newY -= (getCard().getBattlePlayer().getBattleID() == 1) ? 0f : getCardPic().getRegionHeight()-TokenType.JUNK.getWidth()/2f;
                     break;
             }
