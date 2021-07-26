@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.Battle;
+import com.darkgran.farstar.battle.RoundManager;
 import com.darkgran.farstar.battle.players.BattleCard;
+import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.gui.battlegui.FleetMenu;
-import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import org.jetbrains.annotations.NotNull;
 
 public class FleetToken extends ClickToken implements DisableMark, FakingTokens, Comparable<FleetToken> {
@@ -37,9 +38,11 @@ public class FleetToken extends ClickToken implements DisableMark, FakingTokens,
     @Override
     boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         Battle battle = getBattleStage().getBattleScreen().getBattle();
-        if (button == 0 && getCard().getBattlePlayer() instanceof LocalBattlePlayer && getCard().getBattlePlayer() == battle.getWhoseTurn() && battle.getCombatManager().isActive() && !battle.getCombatManager().getDuelManager().isActive() && !battle.getCombatManager().isTacticalPhase() && !getCard().isUsed() && !getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
-            battle.getCombatManager().cancelDuel(this);
-            newFake(event, x, y, pointer, button, FakeTokenType.TARGET);
+        if (button == 0) {
+            if (battle.getRoundManager().isCombatMoveEnabled(this)) {
+                battle.getCombatManager().cancelDuel(this);
+                newFake(event, x, y, pointer, button, FakeTokenType.TARGET);
+            }
             return false;
         } else {
             return super.touchDown(event, x, y, pointer, button);

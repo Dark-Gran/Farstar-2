@@ -19,7 +19,7 @@ public class TokenZoom1v1 extends TokenZoom {
             switch (getTargetType()) {
                 case SUPPORT:
                 case MS:
-                    newY += (getCard().getBattlePlayer().getBattleID() == 1) ? getTargetType().getHeight()*0.25f : -getCardPic().getRegionHeight()*0.8f;
+                    newY += (getCard().getBattlePlayer().getBattleID() == 1) ? getTargetType().getHeight()*0.25f : -getCardPic().getRegionHeight()*0.75f;
                     break;
                 case FLEET:
                     newY += getTargetType().getHeight()/2-getCardPic().getRegionHeight() * ((getCard().getBattlePlayer().getBattleID() == 1) ? 0.5f : 0.6f);
@@ -33,8 +33,7 @@ public class TokenZoom1v1 extends TokenZoom {
                     newY = (getCard().getBattlePlayer().getBattleID() == 1) ? 0f : Farstar.STAGE_HEIGHT-getCardPic().getRegionHeight();
                     break;
                 case JUNK:
-                    newX += 37f;
-                    newY -= (getCard().getBattlePlayer().getBattleID() == 1) ? 0f : getCardPic().getRegionHeight()-TokenType.JUNK.getWidth()/2f;
+                    newY -= (getCard().getBattlePlayer().getBattleID() == 1) ? 0f : getCardPic().getRegionHeight()-TokenType.JUNK.getHeight()*3/4f;
                     break;
             }
             setPosition(newX, newY);

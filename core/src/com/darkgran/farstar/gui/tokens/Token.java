@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.Farstar;
@@ -64,6 +65,7 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
     }
 
     public Token(BattleCard battleCard, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, boolean connectCard) {
+        noPics = true;
         setWidth(tokenType.getWidth());
         setHeight(tokenType.getHeight());
         setX(0);
@@ -168,7 +170,7 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
     }
 
     protected void debugRender(Batch batch) {
-        battleStage.getBattleScreen().drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch);
+        BattleScreen.drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch);
     }
 
     protected void drawPortrait(Batch batch) {

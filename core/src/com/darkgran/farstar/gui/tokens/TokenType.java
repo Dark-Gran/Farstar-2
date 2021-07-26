@@ -8,7 +8,7 @@ public enum TokenType {
     YARD(216f, 129f, "40"), //F (292x205)
     SUPPORT(190f, 113f, "38"), //50x38 (257x180)
     //Other
-    JUNK(190f, 113f, "38"), //SS
+    JUNK(113f, 190f, "38"), //SS
     HAND(232f, 322f, "38"), //FF (355x445)
     PRINT(348f, 483f, "58"); //(=Z) 81x61
 

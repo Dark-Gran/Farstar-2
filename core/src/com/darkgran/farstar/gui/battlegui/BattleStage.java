@@ -90,6 +90,8 @@ public abstract class BattleStage extends ListeningStage {
         herald.draw(batch);
     }
 
+    public void drawTopBattleStage(float delta, Batch batch) { }
+
     public void drawZoomed(Batch batch) {
         if (fakeToken != null) { fakeToken.draw(batch, getBattleScreen().getShapeRenderer()); }
         cardZoom.draw(batch);
@@ -127,17 +129,6 @@ public abstract class BattleStage extends ListeningStage {
         return false;
     }
 
-    public DropTarget returnDropTarget(float x, float y) {
-        for (DropTarget dropTarget : dropTargets) {
-            if (isInBox(dropTarget.getSimpleBox2(), x, y)) { return dropTarget; }
-        }
-        return null;
-    }
-
-    public void addDropTarget(DropTarget dropTarget) {
-        dropTargets.add(dropTarget);
-    }
-
     public void processDrop(float x, float y, Token token) {
         if (token != null) {
             CombatManager combatManager = getBattleScreen().getBattle().getCombatManager();
@@ -173,13 +164,24 @@ public abstract class BattleStage extends ListeningStage {
         }
     }
 
+    public void addDropTarget(DropTarget dropTarget) {
+        dropTargets.add(dropTarget);
+    }
+
+    public DropTarget returnDropTarget(float x, float y) {
+        for (DropTarget dropTarget : dropTargets) {
+            if (isInBox(dropTarget.getSimpleBox2(), x, y)) { return dropTarget; }
+        }
+        return null;
+    }
+
     public int getRoundDropPosition(float x, float y, DropTarget dropTarget, CardType cardType) {
-        if (dropTarget instanceof FleetMenu) {
+        if (dropTarget instanceof JunkButton) {
+            return 8;
+        } else if (dropTarget instanceof FleetMenu) {
             return getFleetDropPosition(x, y, (FleetMenu) dropTarget, CardType.isShip(cardType), true);
         } else if (dropTarget instanceof SupportMenu) {
             return getSupportDropPosition(x, y, (SupportMenu) dropTarget);
-        } else if (dropTarget instanceof JunkButton) {
-            return 8;
         }
         return -1;
     }

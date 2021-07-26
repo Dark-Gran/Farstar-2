@@ -386,8 +386,28 @@ public class RoundManager {
     //-UTILITIES-//
     //-----------//
 
+    public boolean isTokenMoveEnabled(Token token) { //Turn and Tactical Only
+        if (token.getCard() != null && token.getCard().getBattlePlayer() instanceof LocalBattlePlayer && RoundManager.ownsToken(getBattle().getWhoseTurn(), token) && (!getBattle().getCombatManager().isActive() || (getBattle().getCombatManager().isTacticalPhase() && token.getCard().isTactic()))) {
+            return areMovesEnabled();
+        }
+        return false;
+    }
+
+    public boolean isCombatMoveEnabled(Token token) { //Duel-Picking Only
+        if (token.getCard() != null && token.getCard().getBattlePlayer() instanceof LocalBattlePlayer && RoundManager.ownsToken(getBattle().getWhoseTurn(), token) && getBattle().getCombatManager().isActive() && !getBattle().getCombatManager().isTacticalPhase()) {
+            return areMovesEnabled();
+        }
+        return false;
+    }
+
+    public boolean areMovesEnabled() {
+        return !getBattle().isEverythingDisabled() && !isTargetingActive() && !getAbilityPicker().isActive() && !getBattle().getBattleScreen().isConcederActive() && !getBattle().getCombatManager().getDuelManager().isActive();
+    }
+
     public static boolean ownsToken(BattlePlayer battlePlayer, Token token) {
-        if (token instanceof FleetToken) {
+        if (token instanceof TargetingToken)  {
+            return battlePlayer == ((FleetToken) token.getCard().getToken()).getFleetMenu().getBattlePlayer();
+        } else if (token instanceof FleetToken) {
             return battlePlayer == ((FleetToken) token).getFleetMenu().getBattlePlayer();
         } else {
             return battlePlayer == token.getCardListMenu().getBattlePlayer();

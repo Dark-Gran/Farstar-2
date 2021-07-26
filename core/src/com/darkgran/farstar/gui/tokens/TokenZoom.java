@@ -65,7 +65,7 @@ public abstract class TokenZoom extends PrintToken {
             super.enable(battleCard, targetType, targetXY);
             if (targetType != TokenType.JUNK && battleCard.getToken().getCardListMenu() instanceof HandMenu) {
                 ((HandMenu) battleCard.getToken().getCardListMenu()).setHandState(HandMenu.HandMenuState.UP);
-                if (battleCard.getBattlePlayer() instanceof LocalBattlePlayer && !Gdx.input.isButtonPressed(Input.Buttons.LEFT) && battleCard.getBattlePlayer() == getBattleStage().getBattleScreen().getBattle().getWhoseTurn()) { ((HandToken) battleCard.getToken()).setHidden(true); }
+                if (battleCard.getBattlePlayer() instanceof LocalBattlePlayer && battleCard.getToken() != null && getBattleStage().getBattleScreen().getBattle().getRoundManager().isTokenMoveEnabled(battleCard.getToken()) && !Gdx.input.isButtonPressed(Input.Buttons.LEFT) && battleCard.getBattlePlayer() == getBattleStage().getBattleScreen().getBattle().getWhoseTurn()) { ((HandToken) battleCard.getToken()).setHidden(true); }
             }
         }
     }

@@ -28,7 +28,7 @@ public class TargetingToken extends FakeToken {
         setWidth(aimPic.getRegionWidth());
         setHeight(aimPic.getRegionHeight());
         SimpleVector2 coords = SuperScreen.getMouseCoordinates();
-        setPosition(coords.x-getWidth()/2, coords.y+getHeight()/2);
+        setPosition(coords.x-getWidth()/2f, Farstar.STAGE_HEIGHT-(coords.y+getHeight()/2f));
         battleCard.getToken().setPicked(true);
     }
 

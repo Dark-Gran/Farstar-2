@@ -87,8 +87,8 @@ public class BattleScreen extends SuperScreen {
 
     @Override
     protected void drawContent(float delta, Batch batch) {
+        super.drawContent(delta, batch);
         battleStage.drawBattleStage(delta, batch);
-        battleStage.drawZoomed(batch);
         //if (DEBUG_RENDER) { drawBox2DDebug(batch); } //draws boundaries of world-bodies
         //worldManager.worldTimer(delta); //world stepping
     }
@@ -96,10 +96,15 @@ public class BattleScreen extends SuperScreen {
     @Override
     protected void drawMenus(float delta, Batch batch) { //Stage-menus use their own Batch
         super.drawMenus(delta, batch);
-        if (battleStage != null) {
-            battleStage.act(delta);
-            battleStage.draw();
-        }
+        battleStage.act(delta);
+        battleStage.draw();
+    }
+
+    @Override
+    protected void drawTopContent(float delta, Batch batch) {
+        super.drawTopContent(delta, batch);
+        battleStage.drawTopBattleStage(delta, batch);
+        battleStage.drawZoomed(batch);
     }
 
     private void drawBox2DDebug(Batch batch) {
@@ -111,15 +116,11 @@ public class BattleScreen extends SuperScreen {
         batch.begin();
     }
 
-    public void drawDebugSimpleBox2(SimpleBox2 simpleBox2, ShapeRenderer shapeRenderer, Batch batch) {
-        batch.end();
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.rect(simpleBox2.x, simpleBox2.y, simpleBox2.getWidth(), simpleBox2.getHeight());
-        shapeRenderer.end();
-        batch.begin();
+    public static void drawDebugSimpleBox2(SimpleBox2 simpleBox2, ShapeRenderer shapeRenderer, Batch batch) {
+        drawDebugBox(simpleBox2.x, simpleBox2.y, simpleBox2.getWidth(), simpleBox2.getHeight(), shapeRenderer, batch);
     }
 
-    public void drawDebugBox(float x, float y, float width, float height, ShapeRenderer shapeRenderer, Batch batch) {
+    public static void drawDebugBox(float x, float y, float width, float height, ShapeRenderer shapeRenderer, Batch batch) {
         batch.end();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.rect(x, y, width, height);

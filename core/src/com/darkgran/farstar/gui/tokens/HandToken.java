@@ -50,7 +50,7 @@ public class HandToken extends AnchoredToken implements CardGFX, FakingTokens { 
     @Override
     boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         if (button == 0) {
-            if (getCard().getBattlePlayer() instanceof LocalBattlePlayer && !getBattleStage().getAbilityPicker().isActive() && ((!getBattleStage().getBattleScreen().getBattle().getCombatManager().isActive() && getBattleStage().getBattleScreen().getBattle().getWhoseTurn() == getCard().getBattlePlayer()) || getCard().isTactic() && getBattleStage().getBattleScreen().getBattle().getCombatManager().isTacticalPhase()) && !getBattleStage().getBattleScreen().getBattle().isEverythingDisabled()) {
+            if (getBattleStage().getBattleScreen().getBattle().getRoundManager().isTokenMoveEnabled(this)) {
                 newFake(event, x, y, pointer, button, FakeTokenType.HAND);
                 setHidden(true);
             }
