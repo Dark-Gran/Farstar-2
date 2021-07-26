@@ -63,14 +63,11 @@ public class DuelManager implements Delayer {
 
     static <K extends Comparable<? super K>,V extends Comparable<? super V>> SortedSet<Map.Entry<K,V>> entriesSortedByValuesThenKeys(Map<K,V> map) {
         SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<>(
-                new Comparator<Map.Entry<K, V>>() {
-                    @Override
-                    public int compare(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
-                        if (!e1.getValue().equals(e2.getValue())) {
-                            return e1.getValue().compareTo(e2.getValue());
-                        }
-                        return e1.getKey().compareTo(e2.getKey());
+                (e1, e2) -> {
+                    if (!e1.getValue().equals(e2.getValue())) {
+                        return e1.getValue().compareTo(e2.getValue());
                     }
+                    return e1.getKey().compareTo(e2.getKey());
                 }
         );
         sortedEntries.addAll(map.entrySet());
