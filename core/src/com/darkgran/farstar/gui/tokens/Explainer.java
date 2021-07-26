@@ -50,38 +50,38 @@ public class Explainer extends TextInTheBox {
     }
 
     protected String getExplanation(BattleCard battleCard) {
-        String str = "";
+        StringBuilder str = new StringBuilder();
         boolean first = true;
         if (CardType.needsDefense(battleCard.getCardInfo().getCardType()) && battleCard.getDamage() > 0) {
-            str += "Current/Max. Shields: "+battleCard.getHealth()+"/"+battleCard.getCardInfo().getDefense()+"          \n";
+            str.append("Current/Max. Shields: ").append(battleCard.getHealth()).append("/").append(battleCard.getCardInfo().getDefense()).append("          \n");
             first = false;
         }
         if (battleCard.isUsed()) {
-            if (!first) { str += "\n"; }
+            if (!first) { str.append("\n"); }
             else { first = false; }
-            str += "Disabled:\nThis ship cannot attack or use abilities until next Turn.\n";
+            str.append("Disabled:\nThis ship cannot attack or use abilities until next Turn.\n");
         }
         if (battleCard.getCardInfo().getCardType() == CardType.TACTIC) {
-            if (!first) { str += "\n"; }
+            if (!first) { str.append("\n"); }
             else { first = false; }
-            str += "Tactic:\nTactics may be played both in Your Turn and in the Tactical Phase.\n";
+            str.append("Tactic:\nTactics may be played both in Your Turn and in the Tactical Phase.\n");
         }
         boolean FSpresent = false;
         for (AbilityInfo abilityInfo : battleCard.getCardInfo().getAbilities()) {
             for (Effect effect : abilityInfo.getEffects()) {
                 switch (effect.getEffectType()) {
                     case GUARD:
-                        if (!first) { str += "\n"; }
+                        if (!first) { str.append("\n"); }
                         else { first = false; }
-                        str += "Guard:\nAttackers without Reach must always target Guards first.\n";
+                        str.append("Guard:\nAttackers without Reach must always target Guards first.\n");
                         break;
                     case REACH:
-                        if (!first) { str += "\n"; }
+                        if (!first) { str.append("\n"); }
                         else { first = false; }
-                        str += "Reach:\nAllows targeting over Guards, but only if the Reach is same as (or greater than) number of Guards.\n";
+                        str.append("Reach:\nAllows targeting over Guards, but only if the Reach is same as (or greater than) number of Guards.\n");
                         break;
                     case FIRST_STRIKE:
-                        if (!first) { str += "\n"; }
+                        if (!first) { str.append("\n"); }
                         else { first = false; }
                         FSpresent = true;
                         break;
@@ -89,9 +89,9 @@ public class Explainer extends TextInTheBox {
             }
             switch (abilityInfo.getStarter()) {
                 case USE:
-                    if (!first) { str += "\n"; }
+                    if (!first) { str.append("\n"); }
                     else { first = false; }
-                    str += "Usable Ability:\nMay be used only once per Turn.\n";
+                    str.append("Usable Ability:\nMay be used only once per Turn.\n");
                     break;
                 /*case DEPLOY:
                     if (!first) { str += "\n"; }
@@ -102,11 +102,11 @@ public class Explainer extends TextInTheBox {
         }
         if (!FSpresent) { FSpresent = AbilityManager.upgradesFirstStrike(battleCard); }
         if (FSpresent) {
-            if (!first) { str += "\n"; }
+            if (!first) { str.append("\n"); }
             else { first = false; }
-            str += "First-Strike:\nShips with First-Strike always shoot first: if the opposing ship is destroyed by First-Strike, it will not retaliate.\n";
+            str.append("First-Strike:\nShips with First-Strike always shoot first: if the opposing ship is destroyed by First-Strike, it will not retaliate.\n");
         }
-        return str;
+        return str.toString();
     }
 
 
