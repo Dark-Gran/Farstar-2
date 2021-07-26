@@ -30,6 +30,7 @@ public abstract class TokenZoom extends PrintToken {
         if (counting && !counter.isEnabled()) {
             counting = false;
             showExplainer = true;
+            explainer.refreshText(getCard());
             explainer.setShiftedPosition(getX(), getY());
         }
     }
@@ -50,6 +51,8 @@ public abstract class TokenZoom extends PrintToken {
         enabled = true;
         if (getCard() != null && getTargetType() != null) {
             hidden = false;
+            counter.setEnabled(true);
+            counting = true;
         }
     }
 
@@ -60,7 +63,6 @@ public abstract class TokenZoom extends PrintToken {
             counting = true;
             hidden = false;
             super.enable(battleCard, targetType, targetXY);
-            explainer.refreshText(getCard());
             if (targetType != TokenType.JUNK && battleCard.getToken().getCardListMenu() instanceof HandMenu) {
                 ((HandMenu) battleCard.getToken().getCardListMenu()).setHandState(HandMenu.HandMenuState.UP);
                 if (battleCard.getBattlePlayer() instanceof LocalBattlePlayer && !Gdx.input.isButtonPressed(Input.Buttons.LEFT) && battleCard.getBattlePlayer() == getBattleStage().getBattleScreen().getBattle().getWhoseTurn()) { ((HandToken) battleCard.getToken()).setHidden(true); }

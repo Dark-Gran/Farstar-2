@@ -143,8 +143,10 @@ public class ShotManager {
                 aniRecoil.draw(batch);
             }
             private void drawShrapnels(Batch batch) {
-                for (AniShrapnel shrapnel : shrapnels) {
-                    shrapnel.draw(batch);
+                if (shrapnels.size() > 0) {
+                    for (AniShrapnel shrapnel : shrapnels) {
+                        shrapnel.draw(batch);
+                    }
                 }
             }
         }
@@ -252,18 +254,20 @@ public class ShotManager {
     }
 
     public void drawRecoil(Batch batch, Token token) {
-        for (AniAttack aniAttack : aniAttacks) {
-            if (aniAttack.att == token) {
-                if (!aniAttack.done) {
-                    for (AniAttack.AniShot aniShot : aniAttack.aniShots) {
-                        if (aniShot.active) {
-                            if (!aniShot.recoilFinished) {
-                                aniShot.drawRecoil(batch);
+        if (aniAttacks.size() > 0) {
+            for (AniAttack aniAttack : aniAttacks) {
+                if (aniAttack.att == token) {
+                    if (!aniAttack.done) {
+                        for (AniAttack.AniShot aniShot : aniAttack.aniShots) {
+                            if (aniShot.active) {
+                                if (!aniShot.recoilFinished) {
+                                    aniShot.drawRecoil(batch);
+                                }
                             }
                         }
                     }
+                    break;
                 }
-                break;
             }
         }
     }

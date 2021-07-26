@@ -60,7 +60,7 @@ public class RoundManager {
     }
 
     public void newTurn() {
-        battle.getWhoseTurn().getHand().drawCards(battle.getWhoseTurn().getDeck(), CARDS_PER_TURN);
+        battle.getWhoseTurn().getHand().getNewCards(battle.getWhoseTurn().getDeck(), CARDS_PER_TURN);
         resourceIncomes(battle.getWhoseTurn());
         System.out.println("Player #"+battle.getWhoseTurn().getBattleID()+" may play his Cards.");
         if (battle.getWhoseTurn() instanceof LocalBattlePlayer) {
@@ -131,7 +131,6 @@ public class RoundManager {
                 //OUTSIDE COMBAT OR TACTIC
                 BattlePlayer whoseTurn = battle.getWhoseTurn();
                 if (token.getCardListMenu().getBattlePlayer() == whoseTurn) {
-                    BattleCard targetBattleCard = null;
                     if (possibilityAdvisor.isPossibleToDeploy(whoseTurn, whoseTurn, token.getCard(), false, battle)) {
                         //DEPLOYING ANYWHERE FOR SPELLS
                         if (CardType.isSpell(cardType) && !(dropTarget instanceof JunkButton)) {
@@ -167,9 +166,6 @@ public class RoundManager {
                                             success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
                                         }
                                         if (postAbility || success) {
-                                            if (fleet.getShips()[position] != null) {
-                                                targetBattleCard = fleet.getShips()[position].getToken().getCard();
-                                            }
                                             //DEPLOYMENT
                                             if (CardType.isShip(cardType)) {
                                                 success = fleet.addShip(token, position);
@@ -180,16 +176,11 @@ public class RoundManager {
                             }
                             //TARGETING MS
                         } else if (dropTarget instanceof MothershipToken) {
-                            MothershipToken ms = (MothershipToken) dropTarget;
                             if (!getBattle().getCombatManager().getDuelManager().isActive()) {
                                 //ABILITIES
                                 if (CardType.isSpell(cardType)) {
                                     if (!postAbility) {
-                                        //success = checkAllAbilities(token, ms, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
                                         success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
-                                    }
-                                    if (postAbility || success) {
-                                        targetBattleCard = ms.getCard();
                                     }
                                 }
                             }

@@ -284,7 +284,7 @@ public abstract class CombatManager {
         endCombat();
     }
 
-    private void checkPlayerForAftermath(BattlePlayer battlePlayer) {
+    public void checkPlayerForAftermath(BattlePlayer battlePlayer) {
         checkShipsForAftermath(battlePlayer.getFleet().getShips());
         refreshFleets(battlePlayer);
         if (battlePlayer.getMs().getHealth()<=0) {

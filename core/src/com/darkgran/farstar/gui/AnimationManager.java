@@ -50,16 +50,18 @@ public class AnimationManager {
 
     public void draw(Batch batch, float delta, boolean bottom) {
         if (bottom) {
-            ArrayList<DeathAnimation> forDeletion = new ArrayList<>();
-            for (DeathAnimation deathAnimation : deathAnimations) {
-                if (!deathAnimation.finished) {
-                    deathAnimation.draw(batch, delta);
-                } else {
-                    forDeletion.add(deathAnimation);
+            if (deathAnimations.size() > 0) {
+                ArrayList<DeathAnimation> forDeletion = new ArrayList<>();
+                for (DeathAnimation deathAnimation : deathAnimations) {
+                    if (!deathAnimation.finished) {
+                        deathAnimation.draw(batch, delta);
+                    } else {
+                        forDeletion.add(deathAnimation);
+                    }
                 }
-            }
-            for (DeathAnimation deathAnimation : forDeletion) {
-                deathAnimations.remove(deathAnimation);
+                for (DeathAnimation deathAnimation : forDeletion) {
+                    deathAnimations.remove(deathAnimation);
+                }
             }
         }
     }

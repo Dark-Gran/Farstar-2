@@ -63,6 +63,7 @@ public class AbilityManager {
                     targets.add(target);
                 }
                 //EXECUTION
+                ArrayList<BattlePlayer> targetedPlayers = new ArrayList<>();
                 for (BattleCard currentTarget : targets) {
                     if (currentTarget != null) {
                         for (int i = 0; i < ability.getEffects().size(); i++) {
@@ -76,8 +77,14 @@ public class AbilityManager {
                         }
                         if (success) {
                             currentTarget.addToHistory(caster, ability);
+                            if (!targetedPlayers.contains(currentTarget.getBattlePlayer())) {
+                                targetedPlayers.add(currentTarget.getBattlePlayer());
+                            }
                         }
                     }
+                }
+                for (BattlePlayer targetPlayer : targetedPlayers) {
+                    getBattle().getCombatManager().checkPlayerForAftermath(targetPlayer);
                 }
             }
         }
@@ -213,7 +220,11 @@ public class AbilityManager {
             if (caster != null) {
                 getBattle().getBattleScreen().getBattleStage().getShotManager().newAttack(caster.getBattlePlayer().getMs().getToken(), target.getToken(), power, techType, caster.getCardInfo().getAnimatedShots());
             }
-            if (!target.receiveDMG(dmg)) { target.death(); }
+            if (target instanceof Ship) {
+                target.receiveDMG(dmg);
+            } else {
+                if (!target.receiveDMG(dmg)) { target.death(); }
+            }
             return true;
         }
         return false;

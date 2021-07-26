@@ -22,9 +22,9 @@ public class WorldManager {
     public static float CAMERA_CLOSEUP_X = 0.2f;
     public static float CAMERA_CLOSEUP_Y = 0.1f;
     private float accumulator = 0;
-    private World world = new World(new Vector2(0, 0), true);
-    private ArrayList corpses = new ArrayList();
-    //private CollisionListener collisionListener = new CollisionListener();
+    private final World world = new World(new Vector2(0, 0), true);
+    private final ArrayList<Body> corpses = new ArrayList<>();
+    //private final CollisionListener collisionListener = new CollisionListener();
 
     public WorldManager() {
         //world.setContactListener(collisionListener);
@@ -52,8 +52,8 @@ public class WorldManager {
     private void reap(World world) { //destroys all marked bodies
         for (int i = 0; i < corpses.size(); i++) {
             if (corpses.get(i) != null) {
-                Object corpse = corpses.get(i);
-                //world.destroyBody(item.body);
+                Body corpse = corpses.get(i);
+                world.destroyBody(corpse);
                 corpses.remove(corpse);
             }
         }

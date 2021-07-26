@@ -30,8 +30,10 @@ public class AbilityPicker extends BPB2DrawerBattle {
     @Override
     public void draw(Batch batch) {
         if (active) {
-            for (AbilityPickerOption option : abilityGraphics) {
-                option.draw(batch);
+            if (abilityGraphics.size() > 0) {
+                for (AbilityPickerOption option : abilityGraphics) {
+                    option.draw(batch);
+                }
             }
         }
     }

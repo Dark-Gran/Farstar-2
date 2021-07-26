@@ -65,13 +65,13 @@ public class Battle1v1 extends Battle {
     @Override
     protected void startingCards() {
         if (getWhoseTurn() == battlePlayer1) {
-            battlePlayer1.getHand().drawCards(battlePlayer1.getDeck(), STARTING_CARDS_ATT);
-            battlePlayer2.getHand().drawCards(battlePlayer2.getDeck(), STARTING_CARDS_DEF);
-            battlePlayer2.getHand().drawCards(BattleSettings.BONUS_CARD_ID, 1, battlePlayer2);
+            battlePlayer1.getHand().getNewCards(battlePlayer1.getDeck(), STARTING_CARDS_ATT);
+            battlePlayer2.getHand().getNewCards(battlePlayer2.getDeck(), STARTING_CARDS_DEF);
+            battlePlayer2.getHand().getNewCards(BattleSettings.BONUS_CARD_ID, 1, battlePlayer2);
         } else {
-            battlePlayer1.getHand().drawCards(battlePlayer1.getDeck(), STARTING_CARDS_DEF);
-            battlePlayer1.getHand().drawCards(BattleSettings.BONUS_CARD_ID, 1, battlePlayer1);
-            battlePlayer2.getHand().drawCards(battlePlayer2.getDeck(), STARTING_CARDS_ATT);
+            battlePlayer1.getHand().getNewCards(battlePlayer1.getDeck(), STARTING_CARDS_DEF);
+            battlePlayer1.getHand().getNewCards(BattleSettings.BONUS_CARD_ID, 1, battlePlayer1);
+            battlePlayer2.getHand().getNewCards(battlePlayer2.getDeck(), STARTING_CARDS_ATT);
         }
     }
 

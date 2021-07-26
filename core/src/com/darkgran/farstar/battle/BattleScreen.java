@@ -17,7 +17,7 @@ import com.darkgran.farstar.util.SimpleBox2;
 
 public class BattleScreen extends SuperScreen {
     private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
-    private final WorldManager worldManager = new WorldManager();
+    //private final WorldManager worldManager = new WorldManager();
     private final Battle battle;
     private final BattleStage battleStage;
     private final BattleType battleType;
@@ -87,7 +87,7 @@ public class BattleScreen extends SuperScreen {
         Matrix4 debugMatrix = new Matrix4(getCamera().combined);
         debugMatrix.scale(1f, 1f, 1f);
         debugRenderer.setDrawBodies(true);
-        debugRenderer.render(worldManager.getWorld(), debugMatrix);
+        //debugRenderer.render(worldManager.getWorld(), debugMatrix);
         batch.begin();
     }
 
@@ -110,7 +110,7 @@ public class BattleScreen extends SuperScreen {
     @Override
     public void dispose() {
         battle.dispose();
-        worldManager.disposeWorld();
+        //worldManager.disposeWorld();
         getGame().getInputMultiplexer().removeProcessor(battleAdapter);
         getGame().getInputMultiplexer().removeProcessor(battleStage);
         battleStage.dispose();
@@ -121,7 +121,7 @@ public class BattleScreen extends SuperScreen {
 
     public Battle getBattle() { return battle; }
 
-    public WorldManager getWorldManager() { return worldManager; }
+    //public WorldManager getWorldManager() { return worldManager; }
 
     public BattleStage getBattleStage() { return battleStage; }
 

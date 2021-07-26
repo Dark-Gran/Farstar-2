@@ -3,6 +3,8 @@ package com.darkgran.farstar.gui.tokens;
 import com.badlogic.gdx.graphics.Color;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.AbilityManager;
+import com.darkgran.farstar.cards.Card;
+import com.darkgran.farstar.cards.CardType;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.cards.AbilityInfo;
 import com.darkgran.farstar.cards.Effect;
@@ -50,11 +52,19 @@ public class Explainer extends TextInTheBox {
     protected String getExplanation(BattleCard battleCard) {
         String str = "";
         boolean first = true;
-        switch (battleCard.getCardInfo().getCardType()) {
-            case TACTIC:
-                str += "Tactic:\nTactics may be played both in Your Turn and in the Tactical Phase.\n";
-                first = false;
-                break;
+        if (CardType.needsDefense(battleCard.getCardInfo().getCardType()) && battleCard.getDamage() > 0) {
+            str += "Current/Max. Shields: "+battleCard.getHealth()+"/"+battleCard.getCardInfo().getDefense()+"          \n";
+            first = false;
+        }
+        if (battleCard.isUsed()) {
+            if (!first) { str += "\n"; }
+            else { first = false; }
+            str += "Disabled:\nThis ship cannot attack or use abilities until next Turn.\n";
+        }
+        if (battleCard.getCardInfo().getCardType() == CardType.TACTIC) {
+            if (!first) { str += "\n"; }
+            else { first = false; }
+            str += "Tactic:\nTactics may be played both in Your Turn and in the Tactical Phase.\n";
         }
         boolean FSpresent = false;
         for (AbilityInfo abilityInfo : battleCard.getCardInfo().getAbilities()) {
@@ -63,7 +73,7 @@ public class Explainer extends TextInTheBox {
                     case GUARD:
                         if (!first) { str += "\n"; }
                         else { first = false; }
-                        str += "Guard:\nAlways must be targeted first by attackers without Reach.\n";
+                        str += "Guard:\nAttackers without Reach must always target Guards first.\n";
                         break;
                     case REACH:
                         if (!first) { str += "\n"; }

@@ -37,8 +37,10 @@ public abstract class CardListMenu extends BaseMenu {
     }
 
     public void drawTokens(Batch batch) {
-        for (int i = 0; i < getTokens().size(); i++) {
-            getTokens().get(i).draw(batch);
+        if (getTokens().size() > 0) {
+            for (int i = 0; i < getTokens().size(); i++) {
+                getTokens().get(i).draw(batch);
+            }
         }
     }
 

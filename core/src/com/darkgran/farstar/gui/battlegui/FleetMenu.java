@@ -201,9 +201,11 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
     }
 
     private void drawShips(FleetToken[] arr, Batch batch) {
-        for (FleetToken fleetToken : arr) {
-            if (fleetToken != null) {
-                fleetToken.draw(batch);
+        if (arr.length > 0) {
+            for (FleetToken fleetToken : arr) {
+                if (fleetToken != null) {
+                    fleetToken.draw(batch);
+                }
             }
         }
     }

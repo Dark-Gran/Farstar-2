@@ -14,9 +14,11 @@ public class NotificationManager {
     private final EnumMap<Notification.NotificationType, ArrayList<Notification>> notifications = new EnumMap<>(Notification.NotificationType.class);
 
     public void drawAll(Batch batch, ShapeRenderer shapeRenderer) {
-        for (Map.Entry<Notification.NotificationType, ArrayList<Notification>> entry : notifications.entrySet()) {
-            if (entry.getValue().size() > 0) {
-                entry.getValue().get(0).draw(batch, shapeRenderer);
+        if (notifications.size() > 0) {
+            for (Map.Entry<Notification.NotificationType, ArrayList<Notification>> entry : notifications.entrySet()) {
+                if (entry.getValue().size() > 0) {
+                    entry.getValue().get(0).draw(batch, shapeRenderer);
+                }
             }
         }
     }
