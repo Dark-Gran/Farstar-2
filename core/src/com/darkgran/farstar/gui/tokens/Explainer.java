@@ -38,7 +38,7 @@ public class Explainer extends TextInTheBox {
         if (textWH.x < getWrapWidth()) {
             x = (x + (getWrapWidth() - textWH.x)/2);
         }
-        setupBox(x, y, getWrapWidth()+30f, textWH.y+40f);
+        setupBox(x, y, getWrapWidth()+20f, textWH.y+40f);
         centralizeBox();
         //getSimpleBox().setY(getSimpleBox().y-1f);
     }
