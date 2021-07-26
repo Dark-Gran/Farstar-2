@@ -47,12 +47,14 @@ public abstract class BattleStage extends ListeningStage {
         public void clicked() {
             if (battleScreen.getBattle().getWhoseTurn() instanceof LocalBattlePlayer) {
                 battleScreen.getBattle().getRoundManager().endTurn();
+                battleScreen.hideScreenConceder();
             }
         }
     };
     private final ButtonWithExtraState combatEndButton = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAtlasRegion("combat-end"), Farstar.ASSET_LIBRARY.getAtlasRegion("combat-endO"), Farstar.ASSET_LIBRARY.getAtlasRegion("combat-endA"), Farstar.ASSET_LIBRARY.getAtlasRegion("combat-endAO")) {
         @Override
         public void clicked() {
+            battleScreen.hideScreenConceder();
             battleScreen.getBattle().getCombatManager().startTacticalPhase();
         }
     };
@@ -149,7 +151,7 @@ public abstract class BattleStage extends ListeningStage {
                 }
             }
             //Process
-            if (targetHit != null || CardType.isSpell(token.getCard().getCardInfo().getCardType())) {
+            if (!getBattleScreen().isConcederActive() && (targetHit != null || CardType.isSpell(token.getCard().getCardInfo().getCardType()))) {
                 if (CardType.isShip(token.getCard().getCardInfo().getCardType()) && combatManager.isActive() && !combatManager.isTacticalPhase() && !combatManager.getDuelManager().isActive()) {
                     combatManager.processDrop(token instanceof TargetingToken ? token.getCard().getToken() : token, getCombatDropToken(x, y, targetHit));
                 } else if (!combatManager.getDuelManager().isActive()) {

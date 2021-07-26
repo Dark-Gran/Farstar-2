@@ -51,4 +51,12 @@ public class NotificationManager {
         return true;
     }
 
+    public void clear(Notification.NotificationType notificationType) {
+        notifications.remove(notificationType);
+    }
+
+    public void clearAll() {
+        notifications.clear();
+    }
+
 }

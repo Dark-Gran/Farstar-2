@@ -107,7 +107,7 @@ public class ShotManager {
                     if (!exploded) {
                         if (!recoilOnly) {
                             if (shrapnels == null) {
-                                double distance = Math.sqrt(Math.pow(aniAttack.end.x - position.x, 2) + Math.pow(aniAttack.end.y - position.y, 2));
+                                double distance = Math.sqrt(Math.pow(aniAttack.end.x - position.x, 2) + Math.pow(aniAttack.end.y - position.y - (shotPic.getRegionHeight()/2f * (end.y<start.y ? 0f : 1f)), 2)); //in-future: don't use RegionHeight, use height of a _rotated_ region
                                 if (distance >= aniAttack.shotType.speed * delta) {
                                     position.x = position.x + ((aniAttack.shotType.speed * aniAttack.directionX) * delta);
                                     position.y = position.y + ((aniAttack.shotType.speed * aniAttack.directionY) * delta);

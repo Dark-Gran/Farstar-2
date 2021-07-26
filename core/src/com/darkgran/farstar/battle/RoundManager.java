@@ -318,6 +318,7 @@ public class RoundManager {
     }
 
     public void processClick(Token token, BattlePlayer owner) {
+        getBattle().getBattleScreen().hideScreenConceder();
         if (!abilityPicker.isActive() && (!battle.activeCombatOrDuel() || (battle.getCombatManager().isTacticalPhase() && targetingActive)) && !battle.isEverythingDisabled() && getBattle().getWhoseTurn() instanceof LocalBattlePlayer) {
             if (targetingActive) {
                 processTarget(token);
@@ -401,7 +402,7 @@ public class RoundManager {
     }
 
     public boolean areMovesEnabled() {
-        return !getBattle().isEverythingDisabled() && !isTargetingActive() && !getAbilityPicker().isActive() && !getBattle().getBattleScreen().isConcederActive() && !getBattle().getCombatManager().getDuelManager().isActive();
+        return !getBattle().isEverythingDisabled() && !isTargetingActive() && !getAbilityPicker().isActive() && !getBattle().getCombatManager().getDuelManager().isActive();
     }
 
     public static boolean ownsToken(BattlePlayer battlePlayer, Token token) {

@@ -29,6 +29,10 @@ public abstract class Battle {
         return null;
     }
 
+    protected boolean areYardsOpen() {
+        return false;
+    }
+
     protected void closeYards() { }
 
     public void dispose() {}

@@ -60,8 +60,8 @@ public class BattleStage1V1 extends BattleStage {
         supportMenu2 = new SupportMenu(battlePlayer2.getSupports(), Farstar.STAGE_WIDTH*0.082f, Farstar.STAGE_HEIGHT*0.75f, 63f, 30f, Farstar.STAGE_WIDTH * 0.838f, Farstar.STAGE_HEIGHT*0.14f, true, this, battlePlayer2);
         mothershipToken1 = new MothershipToken(battlePlayer1.getMs(), (Farstar.STAGE_WIDTH - TokenType.MS.getWidth()) * 0.5f, Farstar.STAGE_HEIGHT * 0.1f, this, null, supportMenu1);
         mothershipToken2 = new MothershipToken(battlePlayer2.getMs(), (Farstar.STAGE_WIDTH - TokenType.MS.getWidth()) * 0.5f, (Farstar.STAGE_HEIGHT * 0.91f) - TokenType.MS.getHeight(), this, null, supportMenu2);
-        junkButton1 = new JunkButton(Farstar.STAGE_WIDTH*0.89f, Farstar.STAGE_HEIGHT*0.12f, this, battlePlayer1);
-        junkButton2 = new JunkButton(Farstar.STAGE_WIDTH*0.89f, Farstar.STAGE_HEIGHT*0.88f - TokenType.JUNK.getHeight(), this, battlePlayer2);
+        junkButton1 = new JunkButton(Farstar.STAGE_WIDTH*0.89f, Farstar.STAGE_HEIGHT*0.1f, this, battlePlayer1);
+        junkButton2 = new JunkButton(Farstar.STAGE_WIDTH*0.89f, Farstar.STAGE_HEIGHT*0.9f - TokenType.JUNK.getHeight(), this, battlePlayer2);
         battlePlayer1.getJunkpile().setJunkButton(junkButton1);
         battlePlayer2.getJunkpile().setJunkButton(junkButton2);
         addDropTarget(junkButton1);

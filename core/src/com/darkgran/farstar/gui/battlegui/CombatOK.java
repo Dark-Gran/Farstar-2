@@ -18,6 +18,7 @@ public class CombatOK extends ButtonWithExtraState {
 
     @Override
     public void clicked() {
+        combatManager.getBattleStage().getBattleScreen().hideScreenConceder();
         combatManager.tacticalOK(this);
     }
 

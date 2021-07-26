@@ -39,8 +39,7 @@ public class MainScreen extends SuperScreen {
             ));
         } else {
             mainScreenStage.enableMainButtons(false);
-            getScreenConceder().dispose();
-            setScreenConceder(null);
+            hideScreenConceder();
         }
     }
 

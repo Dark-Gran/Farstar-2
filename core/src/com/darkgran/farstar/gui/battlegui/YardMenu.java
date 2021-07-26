@@ -42,6 +42,9 @@ public class YardMenu extends CardListMenu {
     }
 
     public void switchVisibility() {
+        if (!open) {
+             getBattleStage().getBattleScreen().hideScreenConceder();
+        }
         if (getBattlePlayer() instanceof LocalBattlePlayer) {
             if (!getBattleStage().getAbilityPicker().isActive()) {
                 open = !open;

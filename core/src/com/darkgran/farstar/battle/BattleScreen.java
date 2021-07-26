@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.*;
@@ -61,28 +62,33 @@ public class BattleScreen extends SuperScreen {
 
     @Override
     public void userEscape() {
-        /*if (!isConcederActive()) {
-            String txt = "CONCEDE?";
-            String fontPath = "fonts/orbitron36.fnt";
-            SimpleVector2 textWH = TextDrawer.getTextWH(Farstar.ASSET_LIBRARY.getAssetManager().get(fontPath, BitmapFont.class), txt);
-            setScreenConceder(new YXQuestionBox(
-                    ColorPalette.LIGHT,
-                    ColorPalette.DARK,
-                    fontPath,
-                    txt,
-                    Farstar.STAGE_WIDTH / 2f - textWH.x / 2,
-                    Farstar.STAGE_HEIGHT / 2f + textWH.y / 2 + textWH.y * 2,
-                    textWH.x+20f,
-                    textWH.y*4f+20f,
-                    false,
-                    battleStage,
-                    this::userEscape,
-                    ()->*/getGame().setScreen(new MainScreen(getGame(), getTableMenu(), getNotificationManager(), getScreenSettings()))
-            /*))*/;/*
+        getNotificationManager().clear(Notification.NotificationType.MIDDLE);
+        if (!isConcederActive()) {
+            if (getBattle().areYardsOpen() || getBattle().getRoundManager().isTargetingActive() || getBattleStage().getAbilityPicker().isActive()) {
+                getBattle().getRoundManager().tryCancel();
+                getBattle().closeYards();
+            } else {
+                String txt = getBattle().isEverythingDisabled() ? "LEAVE?" : "CONCEDE?";
+                String fontPath = "fonts/orbitron36.fnt";
+                SimpleVector2 textWH = TextDrawer.getTextWH(Farstar.ASSET_LIBRARY.getAssetManager().get(fontPath, BitmapFont.class), txt);
+                setScreenConceder(new YXQuestionBox(
+                        ColorPalette.LIGHT,
+                        ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f),
+                        fontPath,
+                        txt,
+                        Farstar.STAGE_WIDTH / 2f - textWH.x / 2,
+                        Farstar.STAGE_HEIGHT / 2f + textWH.y / 2 + textWH.y * 2,
+                        textWH.x * 1.5f,
+                        textWH.y * 5.75f,
+                        false,
+                        battleStage,
+                        this::userEscape,
+                        () -> getGame().setScreen(new MainScreen(getGame(), getTableMenu(), getNotificationManager(), getScreenSettings()))
+                ));
+            }
         } else {
-            getScreenConceder().dispose();
-            setScreenConceder(null);
-        }*/
+            hideScreenConceder();
+        }
     }
 
     @Override

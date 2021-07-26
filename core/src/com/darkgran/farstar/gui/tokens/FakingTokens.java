@@ -16,6 +16,7 @@ public interface FakingTokens {
     float getY();
 
     default void newFake(InputEvent event, float x, float y, int pointer, int button, FakeTokenType fakeTokenType) {
+        getBattleStage().getBattleScreen().hideScreenConceder();
         FakeToken fakeToken = makeFake(fakeTokenType);
         if (fakeToken != null) {
             getBattleStage().setFakeToken(fakeToken);

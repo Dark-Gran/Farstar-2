@@ -218,7 +218,14 @@ public abstract class SuperScreen implements Screen {
     public void hide() { }
 
     @Override
-    public void dispose() { }
+    public void dispose() { hideScreenConceder(); }
+
+    public void hideScreenConceder() {
+        if (isConcederActive()) {
+            getScreenConceder().dispose();
+            setScreenConceder(null);
+        }
+    }
 
     public Farstar getGame() { return game; }
 
