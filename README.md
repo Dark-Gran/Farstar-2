@@ -27,6 +27,7 @@ Customizable Decks, proper Tutorials and Campaigns, and Server Application with 
 Card Portraits 'import'  
 Game-Rules Summary (F1)  
 Finishing touches (eg. card and AI revision)  
+(LAN?)
 
 
 ### Credits
