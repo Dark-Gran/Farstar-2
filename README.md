@@ -23,8 +23,8 @@ Server Application with user registrations, matchmaking and direct card-trading 
 ~~Prototype (Java + LibGDX)~~  
 ~~On-screen gameplay tests and Basic AI for more tests~~  
 ~~General (Table) and MainScreen GUI+GFX 'import'~~  
-~~Battle GUI+GFX 'import'~~
-_following to be revised asap_
+~~Battle GUI+GFX 'import'~~  
+_following to be revised asap_  
 Collection and Deck Building Screen  
 Remaining Cards ('import')  
 Tutorial Pop-Up and/or 1 Tutorial Mission  
