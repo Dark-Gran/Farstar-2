@@ -67,7 +67,7 @@ public class BattleScreen extends SuperScreen {
                 getBattle().getRoundManager().tryCancel();
                 getBattle().closeYards();
             } else {
-                String txt = getBattle().isEverythingDisabled() ? "LEAVE?" : "CONCEDE?";
+                String txt = getBattle().isEverythingDisabled() || getBattleType() == BattleType.SIMULATION ? "LEAVE?" : "CONCEDE?";
                 String fontPath = "fonts/orbitron36.fnt";
                 SimpleVector2 textWH = TextDrawer.getTextWH(Farstar.ASSET_LIBRARY.getAssetManager().get(fontPath, BitmapFont.class), txt);
                 setScreenConceder(new YXQuestionBox(

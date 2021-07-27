@@ -12,20 +12,21 @@ import com.darkgran.farstar.battle.Battle1v1;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.PlayerFactory;
 import com.darkgran.farstar.gui.ActorButton;
+import com.darkgran.farstar.gui.SimpleImage;
 
 public class MainScreenStage extends ListeningStage {
     private final PlayerFactory playerFactory = new PlayerFactory();
-    private final TextureRegion FSLogo = Farstar.ASSET_LIBRARY.getAtlasRegion("FSLogo");
+    private final SimpleImage FSLogo;
     private final VersionInfo versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN);
-    private final ActorButton startButton = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("solitary"), Farstar.ASSET_LIBRARY.getAtlasRegion("solitaryO")){
+    private final ActorButton solitaryButton = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("solitary"), Farstar.ASSET_LIBRARY.getAtlasRegion("solitaryO")){
         @Override
         public void clicked() { launchBattleScreen(BattleType.SOLITARY); }
     };
-    private final ActorButton botButton = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("skirmish"), Farstar.ASSET_LIBRARY.getAtlasRegion("skirmishO")){
+    private final ActorButton skirmishButton = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("skirmish"), Farstar.ASSET_LIBRARY.getAtlasRegion("skirmishO")){
         @Override
         public void clicked() { launchBattleScreen(BattleType.SKIRMISH); }
     };
-    private final ActorButton simButton = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("sim"), Farstar.ASSET_LIBRARY.getAtlasRegion("simO")){
+    private final ActorButton simulationButton = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("sim"), Farstar.ASSET_LIBRARY.getAtlasRegion("simO")){
         @Override
         public void clicked() { launchBattleScreen(BattleType.SIMULATION); }
     };
@@ -36,33 +37,39 @@ public class MainScreenStage extends ListeningStage {
             Gdx.net.openURI("https://github.com/Dark-Gran/Farstar-2");
         }
     };
+    private final SimpleImage otherModesPic;
 
 
     public MainScreenStage(final Farstar game, Viewport viewport) {
         super(game, viewport);
+        TextureRegion tr = Farstar.ASSET_LIBRARY.getAtlasRegion("FSLogo");
+        FSLogo = new SimpleImage((float) (Farstar.STAGE_WIDTH/2-tr.getRegionWidth()/2), (float) (Farstar.STAGE_HEIGHT*0.8), tr);
         TextureRegion measureTexture = Farstar.ASSET_LIBRARY.getAtlasRegion("solitary");
-        botButton.setPosition((float) (Farstar.STAGE_WIDTH/2- measureTexture.getRegionWidth()/2), (float) (Farstar.STAGE_HEIGHT/2+ measureTexture.getRegionHeight()/2));
-        simButton.setPosition((float) (Farstar.STAGE_WIDTH/2- measureTexture.getRegionWidth()/2), (float) (Farstar.STAGE_HEIGHT/2- measureTexture.getRegionHeight()/2));
-        startButton.setPosition((float) (Farstar.STAGE_WIDTH/2- measureTexture.getRegionWidth()/2), (float) (Farstar.STAGE_HEIGHT/2- measureTexture.getRegionHeight()*1.499));
+        skirmishButton.setPosition(Farstar.STAGE_WIDTH/2f - skirmishButton.getWidth()/2, (float) (Farstar.STAGE_HEIGHT/2 - measureTexture.getRegionHeight()*0.5));
+        tr = Farstar.ASSET_LIBRARY.getAtlasRegion("otherModes");
+        float otherY = (float) (Farstar.STAGE_HEIGHT * 0.18);
+        otherModesPic = new SimpleImage((float) (Farstar.STAGE_WIDTH / 2 - tr.getRegionWidth() / 2), otherY, tr);
+        solitaryButton.setPosition((float) (Farstar.STAGE_WIDTH/2 - measureTexture.getRegionWidth()/2), (float) (otherY - simulationButton.getHeight()*0.8));
+        simulationButton.setPosition(Farstar.STAGE_WIDTH/2f - simulationButton.getWidth()/2, (float) (otherY - simulationButton.getHeight()*1.6));
         webButton.setPosition((float) (Farstar.STAGE_WIDTH*0.0725), (float) (Farstar.STAGE_HEIGHT*0.012));
-        addActor(startButton);
-        addActor(botButton);
-        addActor(simButton);
+        addActor(skirmishButton);
+        addActor(solitaryButton);
+        addActor(simulationButton);
         addActor(webButton);
     }
 
     public void enableMainButtons(boolean disable) {
-        startButton.setDisabled(disable);
-        botButton.setDisabled(disable);
-        simButton.setDisabled(disable);
+        solitaryButton.setDisabled(disable);
+        skirmishButton.setDisabled(disable);
+        simulationButton.setDisabled(disable);
         if (disable) {
-            startButton.remove();
-            botButton.remove();
-            simButton.remove();
+            solitaryButton.remove();
+            skirmishButton.remove();
+            simulationButton.remove();
         } else {
-            addActor(startButton);
-            addActor(botButton);
-            addActor(simButton);
+            addActor(solitaryButton);
+            addActor(skirmishButton);
+            addActor(simulationButton);
         }
     }
 
@@ -95,22 +102,25 @@ public class MainScreenStage extends ListeningStage {
     }
 
     @Override
-    public void draw() {
+    public void draw() { //uses Stage batch
         super.draw();
         getBatch().begin();
-        getBatch().draw(FSLogo, (float) (Farstar.STAGE_WIDTH/2-FSLogo.getRegionWidth()/2), (float) (Farstar.STAGE_HEIGHT*0.8));
+        if (!getGame().getSuperScreen().isConcederActive()) {
+            otherModesPic.draw(getBatch());
+        }
+        FSLogo.draw(getBatch());
         versionInfo.drawText(getBatch());
         getBatch().end();
     }
 
     @Override
     public void dispose() {
-        startButton.remove();
-        startButton.dispose();
-        botButton.remove();
-        botButton.dispose();
-        simButton.remove();
-        simButton.dispose();
+        solitaryButton.remove();
+        solitaryButton.dispose();
+        skirmishButton.remove();
+        skirmishButton.dispose();
+        simulationButton.remove();
+        simulationButton.dispose();
         webButton.remove();
         webButton.dispose();
         super.dispose();
