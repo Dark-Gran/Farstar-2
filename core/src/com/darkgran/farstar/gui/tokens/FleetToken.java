@@ -20,6 +20,7 @@ public class FleetToken extends ClickToken implements DisableMark, FakingTokens,
         this.fleetMenu = fleetMenu;
         setMark(Farstar.ASSET_LIBRARY.getAtlasRegion("disable-F"));
         setZIndex(0);
+        fleetMenu.setZIndex(0);
     }
 
     public FleetToken(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, FleetMenu fleetMenu, boolean noPics, boolean connectCard) {
@@ -27,6 +28,7 @@ public class FleetToken extends ClickToken implements DisableMark, FakingTokens,
         this.fleetMenu = fleetMenu;
         setMark(Farstar.ASSET_LIBRARY.getAtlasRegion("disable-F"));
         setZIndex(0);
+        fleetMenu.setZIndex(0);
     }
 
     @Override
