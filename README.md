@@ -30,9 +30,9 @@ Finishing touches (eg. card and AI revision)
 (LAN?)
 
 
-### Credits
+### Font Credits
 
-**All fonts** used in the game belong to their respective authors, and so do my thanks for publishing these fonts under Open Font License or similar:  
+**ALL FONTS** used in the game belong to their respective authors, and so do my thanks for publishing these fonts under Open Font License or similar:  
 Bahnschrift - Aaron Bell  
 Barlow - Jeremy Tribby  
 Good Times (edited; non-embed) - Ray Larabie  
