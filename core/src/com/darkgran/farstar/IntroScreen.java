@@ -5,13 +5,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.darkgran.farstar.gui.NotificationManager;
-import com.darkgran.farstar.gui.SimpleImage;
+import com.darkgran.farstar.gui.SimpleImage2;
 import com.darkgran.farstar.gui.TableStage;
 import com.darkgran.farstar.mainscreen.MainScreen;
 import com.darkgran.farstar.util.Delayer;
 
 public class IntroScreen extends SuperScreen implements Delayer { //Animation used only once on app-launch
-    private final SimpleImage logo;
+    private final SimpleImage2 logo;
     private boolean active = false;
     private float alpha = 0;
     private boolean fadeDirection = true; //true in, false out
@@ -23,7 +23,7 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
         hideCursor(true);
         delayAction(this::activate, 0.5f);
         TextureRegion ltr = Farstar.ASSET_LIBRARY.getAtlasRegion("logo");
-        logo = new SimpleImage((float) (Farstar.STAGE_WIDTH / 2 - ltr.getRegionWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - ltr.getRegionHeight() / 2), ltr);
+        logo = new SimpleImage2((float) (Farstar.STAGE_WIDTH / 2 - ltr.getRegionWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - ltr.getRegionHeight() / 2), ltr);
     }
 
     @Override

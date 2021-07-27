@@ -12,11 +12,11 @@ import com.darkgran.farstar.battle.Battle1v1;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.PlayerFactory;
 import com.darkgran.farstar.gui.ActorButton;
-import com.darkgran.farstar.gui.SimpleImage;
+import com.darkgran.farstar.gui.SimpleImage2;
 
 public class MainScreenStage extends ListeningStage {
     private final PlayerFactory playerFactory = new PlayerFactory();
-    private final SimpleImage FSLogo;
+    private final SimpleImage2 FSLogo;
     private final VersionInfo versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN);
     private final ActorButton solitaryButton = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("solitary"), Farstar.ASSET_LIBRARY.getAtlasRegion("solitaryO")){
         @Override
@@ -37,18 +37,18 @@ public class MainScreenStage extends ListeningStage {
             Gdx.net.openURI("https://github.com/Dark-Gran/Farstar-2");
         }
     };
-    private final SimpleImage otherModesPic;
+    private final SimpleImage2 otherModesPic;
 
 
     public MainScreenStage(final Farstar game, Viewport viewport) {
         super(game, viewport);
         TextureRegion tr = Farstar.ASSET_LIBRARY.getAtlasRegion("FSLogo");
-        FSLogo = new SimpleImage((float) (Farstar.STAGE_WIDTH/2-tr.getRegionWidth()/2), (float) (Farstar.STAGE_HEIGHT*0.8), tr);
+        FSLogo = new SimpleImage2((float) (Farstar.STAGE_WIDTH/2-tr.getRegionWidth()/2), (float) (Farstar.STAGE_HEIGHT*0.8), tr);
         TextureRegion measureTexture = Farstar.ASSET_LIBRARY.getAtlasRegion("solitary");
         skirmishButton.setPosition(Farstar.STAGE_WIDTH/2f - skirmishButton.getWidth()/2, (float) (Farstar.STAGE_HEIGHT/2 - measureTexture.getRegionHeight()*0.5));
         tr = Farstar.ASSET_LIBRARY.getAtlasRegion("otherModes");
         float otherY = (float) (Farstar.STAGE_HEIGHT * 0.18);
-        otherModesPic = new SimpleImage((float) (Farstar.STAGE_WIDTH / 2 - tr.getRegionWidth() / 2), otherY, tr);
+        otherModesPic = new SimpleImage2((float) (Farstar.STAGE_WIDTH / 2 - tr.getRegionWidth() / 2), otherY, tr);
         solitaryButton.setPosition((float) (Farstar.STAGE_WIDTH/2 - measureTexture.getRegionWidth()/2), (float) (otherY - simulationButton.getHeight()*0.8));
         simulationButton.setPosition(Farstar.STAGE_WIDTH/2f - simulationButton.getWidth()/2, (float) (otherY - simulationButton.getHeight()*1.6));
         webButton.setPosition((float) (Farstar.STAGE_WIDTH*0.0725), (float) (Farstar.STAGE_HEIGHT*0.012));
