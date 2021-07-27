@@ -10,23 +10,29 @@ I've always enjoyed card games (both collectible and 'classic'), so after an att
   
 With that in mind (and with feedback in hands), game's rules have been _drastically_ changed, therefore the entire application is being 'rewritten' from the scratch.  
   
-This time in Java. One of the main reasons behind the original choice of Adobe Air (in which the original game has been written) was the fact that it is cross-platform, however such is the case with Java as well. For applications of this size, Java is also a more lightweight (performance-wise) solution.  
-  
+This time in Java (with LibGDX for OpenGL). One of the main reasons behind the original choice of Adobe Air (in which the original game has been written) was the fact that it is cross-platform, however such is the case with Java as well. For applications of this size, Java is also a more lightweight (performance-wise) solution.
+
   
 ## Progress  
   
-**_Current goal of this project is to create an 'offline version' of the original game._**  
+**_Current goal is to create an 'offline demo' of the reworked gameplay._**  
   
-Server Application with user registrations, matchmaking and direct card-trading between players (all are features of the original game) may be added in the future (depends on game's reception).
+Customizable Decks, proper Tutorials and Campaigns, and Server Application with user registrations, matchmaking, a shop for card packs, and direct card-trading between players (all are features of the original game) will be added depending on reception.
   
 ~~Paper-Prototype~~  
 ~~Prototype (Java + LibGDX)~~  
 ~~On-screen gameplay tests and Basic AI for more tests~~  
 ~~General (Table) and MainScreen GUI+GFX 'import'~~  
 ~~Battle GUI+GFX 'import'~~  
-_following to be revised asap_  
-Collection and Deck Building Screen  
-Remaining Cards ('import')  
-Tutorial Pop-Up and/or 1 Tutorial Mission  
-(LAN Multiplayer)  
-  
+Card Portraits 'import'  
+Game-Rules Summary (F1)  
+Finishing touches (eg. card and AI revision)  
+
+
+### Credits
+
+**All fonts** used in the game belong to their respective authors, and so do my thanks for publishing these fonts under Open Font License or similar:  
+Bahnschrift - Aaron Bell  
+Barlow - Jeremy Tribby  
+Good Times (edited; non-embed) - Ray Larabie  
+Orbitron - Matt McInerney  
