@@ -48,7 +48,7 @@ public class MainScreenStage extends ListeningStage {
         skirmishButton.setPosition(Farstar.STAGE_WIDTH/2f - skirmishButton.getWidth()/2, (float) (Farstar.STAGE_HEIGHT/2 - measureTexture.getRegionHeight()*0.5));
         tr = Farstar.ASSET_LIBRARY.getAtlasRegion("otherModes");
         float otherY = (float) (Farstar.STAGE_HEIGHT * 0.18);
-        otherModesPic = new SimpleImage2((float) (Farstar.STAGE_WIDTH / 2 - tr.getRegionWidth() / 2), otherY, tr);
+        otherModesPic = new SimpleImage2((float) (Farstar.STAGE_WIDTH / 2 - tr.getRegionWidth() / 2), (float) (otherY - simulationButton.getHeight()*0.05), tr);
         solitaryButton.setPosition((float) (Farstar.STAGE_WIDTH/2 - measureTexture.getRegionWidth()/2), (float) (otherY - simulationButton.getHeight()*0.8));
         simulationButton.setPosition(Farstar.STAGE_WIDTH/2f - simulationButton.getWidth()/2, (float) (otherY - simulationButton.getHeight()*1.6));
         webButton.setPosition((float) (Farstar.STAGE_WIDTH*0.0725), (float) (Farstar.STAGE_HEIGHT*0.012));
