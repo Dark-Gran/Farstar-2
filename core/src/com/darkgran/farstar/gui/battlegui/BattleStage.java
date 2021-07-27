@@ -194,7 +194,7 @@ public abstract class BattleStage extends ListeningStage {
         } else if (dropTarget instanceof FleetMenu) {
             int pos = getFleetDropPosition(x, y, (FleetMenu) dropTarget, false, false);
             Token[] ships = ((FleetMenu) dropTarget).getFleetTokens();
-            if (pos > 0 && pos < ships.length && ships[pos] != null) {
+            if (pos >= 0 && pos < ships.length && ships[pos] != null) {
                 return ships[pos];
             }
         }

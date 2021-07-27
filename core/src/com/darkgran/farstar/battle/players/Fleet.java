@@ -64,7 +64,7 @@ public class Fleet implements BattleTicks {
         return success;
     }
 
-    public SimpleVector2 getSideSizes(Ship[] arr) {
+    public static SimpleVector2 getSideSizes(Ship[] arr) {
         int left = 0;
         int right = 0;
         for (int i = 0; i < arr.length; i++) {
@@ -82,6 +82,9 @@ public class Fleet implements BattleTicks {
     public void centralizeShips() {
         SimpleVector2 lr = getSideSizes(getShips());
         if (Math.abs(lr.x-lr.y) > 1) {
+            shiftAllShips(lr.x > lr.y, false);
+        }
+        while (getShips()[3] == null && (lr.x > 0 || lr.y > 0)) {
             shiftAllShips(lr.x > lr.y, false);
         }
     }

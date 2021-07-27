@@ -16,7 +16,7 @@ import com.darkgran.farstar.gui.SimpleBox2;
 import com.darkgran.farstar.gui.SimpleVector2;
 
 //The only "Menu" that does NOT extend CardListMenu! (ie. Fleet is not a CardList!)
-//(uses Array instead of ArrayList)
+//(uses Array instead of ArrayList... in-future: maybe it should use ArrayList because of non1v1 modes (and variability in general))
 public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
     private final Fleet fleet;
     private FleetToken[] fleetTokens = new FleetToken[7]; //in-future: consider removing (FleetToken is held by the Ship itself)
@@ -45,6 +45,7 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
     public FleetToken addShip(BattleCard battleCard, int position) {
         fleetTokens[position] = new FleetToken(battleCard, getX()+getOffset()*(position), getBaseY(), getBattleStage(), null, this, false, true);
         updateCoordinates(fleetTokens);
+        lastPredictedPos = -1;
         return fleetTokens[position];
     }
 
@@ -93,8 +94,12 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
                     if (fleet.getShips()[c] != null) {
                         shipsPrediction[c] = new Ship(fleet, fleet.getShips()[c].getCardInfo(), getBattlePlayer());
                         shipsPrediction[c].setToken(fleet.getShips()[c].getToken());
+                        /*FleetToken token = (FleetToken) fleet.getShips()[c].getToken();
+                        tokensPrediction[c] = new FleetToken(token.getCard(), token.getX(), token.getY(), token.getBattleStage(), null, TokenType.FLEET, this, token.isNoPics(), false);
+                        tokensPrediction[c].setTouchable(Touchable.disabled);*/
                     } else {
                         shipsPrediction[c] = null;
+                        //tokensPrediction[c] = null;
                     }
                 }
                 //Proceed with fleet.addShip()
@@ -165,19 +170,9 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
     }
 
     private void centralizePredictions(Ship[] shipArr, FleetToken[] tokenArr) { //"Simulates" Fleet.centralizeShips()
-        int left = 0;
-        int right = 0;
-        for (int i = 0; i < shipArr.length; i++) {
-            if (shipArr[i] != null) {
-                if (i < 3) {
-                    left++;
-                } else if (i > 3) {
-                    right++;
-                }
-            }
-        }
-        if (Math.abs(left-right) > 1) {
-            shiftAllPredictions(shipArr, tokenArr, left > right);
+        SimpleVector2 lr = Fleet.getSideSizes(shipArr);
+        if (Math.abs(lr.x-lr.y) > 1) {
+            shiftAllPredictions(shipArr, tokenArr, lr.x > lr.y);
         }
     }
 
