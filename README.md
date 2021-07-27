@@ -28,6 +28,7 @@ Customizable Decks, proper Tutorials and Campaigns, better and/or more visual ef
 Card Portraits 'import'  
 Game-Rules Summary (F1)  
 Finishing touches (eg. card and AI revision)  
+Alpha Release  
 
 
 ### Font Credits
