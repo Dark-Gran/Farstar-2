@@ -8,7 +8,7 @@ import com.darkgran.farstar.gui.SimpleVector2;
 
 public class Fleet implements BattleTicks {
     private final Junkpile junkpile;
-    private Ship[] ships = new Ship[7];
+    private Ship[] ships = new Ship[7]; //in-future: possibly use ArrayList (see FleetMenu top comment)
     private FleetMenu fleetMenu;
 
     public Fleet(Junkpile junkpile) { this.junkpile = junkpile; }
