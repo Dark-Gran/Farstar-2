@@ -16,8 +16,9 @@ This time in Java (with LibGDX for OpenGL). One of the main reasons behind the o
 ## Progress  
   
 **_Current goal is to create an 'offline demo' of the reworked gameplay (incl. artwork and basic effects)._**  
-  
-Customizable Decks, proper Tutorials and Campaigns, better and/or more visual effects, and Server Application with user registrations, matchmaking, a shop for card packs, and direct card-trading between players (all are features of the original game) will be added depending on reception.
+LAN support will be added after the first release.  
+
+Customizable Decks, proper Tutorials and Campaigns, better and/or more visual effects, mobile support, and Server Application with user registrations, matchmaking, a shop for card packs, and direct card-trading between players (all are features of the original game) will be added depending on reception.
   
 ~~Paper-Prototype~~  
 ~~Prototype (Java + LibGDX)~~  
@@ -27,7 +28,6 @@ Customizable Decks, proper Tutorials and Campaigns, better and/or more visual ef
 Card Portraits 'import'  
 Game-Rules Summary (F1)  
 Finishing touches (eg. card and AI revision)  
-(LAN?)
 
 
 ### Font Credits
