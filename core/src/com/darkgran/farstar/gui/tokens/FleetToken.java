@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.Battle;
-import com.darkgran.farstar.battle.RoundManager;
 import com.darkgran.farstar.battle.players.BattleCard;
-import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.gui.battlegui.FleetMenu;
@@ -21,12 +19,14 @@ public class FleetToken extends ClickToken implements DisableMark, FakingTokens,
         super(battleCard, x, y, battleStage, cardListMenu, TokenType.FLEET, noPics, connectCard);
         this.fleetMenu = fleetMenu;
         setMark(Farstar.ASSET_LIBRARY.getAtlasRegion("disable-F"));
+        setZIndex(0);
     }
 
     public FleetToken(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, FleetMenu fleetMenu, boolean noPics, boolean connectCard) {
         super(battleCard, x, y, battleStage, cardListMenu, tokenType, noPics, connectCard);
         this.fleetMenu = fleetMenu;
         setMark(Farstar.ASSET_LIBRARY.getAtlasRegion("disable-F"));
+        setZIndex(0);
     }
 
     @Override
