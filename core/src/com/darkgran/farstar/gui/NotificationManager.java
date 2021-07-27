@@ -14,9 +14,11 @@ public class NotificationManager {
     private final EnumMap<Notification.NotificationType, ArrayList<Notification>> notifications = new EnumMap<>(Notification.NotificationType.class);
 
     public void drawAll(Batch batch, ShapeRenderer shapeRenderer) {
-        for (Map.Entry<Notification.NotificationType, ArrayList<Notification>> entry : notifications.entrySet()) {
-            if (entry.getValue().size() > 0) {
-                entry.getValue().get(0).draw(batch, shapeRenderer);
+        if (notifications.size() > 0) {
+            for (Map.Entry<Notification.NotificationType, ArrayList<Notification>> entry : notifications.entrySet()) {
+                if (entry.getValue().size() > 0) {
+                    entry.getValue().get(0).draw(batch, shapeRenderer);
+                }
             }
         }
     }
@@ -47,6 +49,14 @@ public class NotificationManager {
         n.add(new Notification(notificationType, message, duration));
         notifications.put(notificationType, n);
         return true;
+    }
+
+    public void clear(Notification.NotificationType notificationType) {
+        notifications.remove(notificationType);
+    }
+
+    public void clearAll() {
+        notifications.clear();
     }
 
 }

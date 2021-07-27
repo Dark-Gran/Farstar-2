@@ -1,56 +1,60 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.Battle;
-import com.darkgran.farstar.battle.gui.BaseMenu;
-import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
-import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
-import com.darkgran.farstar.battle.players.abilities.AbilityTargets;
-import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.cards.CardType;
+import com.darkgran.farstar.battle.CombatManager;
+import com.darkgran.farstar.gui.battlegui.Menu;
+import com.darkgran.farstar.gui.battlegui.YardMenu;
+import com.darkgran.farstar.cards.AbilityInfo;
+import com.darkgran.farstar.cards.AbilityStarter;
+import com.darkgran.farstar.cards.AbilityTargets;
+import com.darkgran.farstar.cards.CardType;
 
 import java.util.ArrayList;
 
 public class PossibilityAdvisor {
 
-    public ArrayList<PossibilityInfo> getPossibilities(Player player, Battle battle) { //also used by Automaton
+    public ArrayList<PossibilityInfo> getPossibilities(BattlePlayer battlePlayer, Battle battle) { //also used by Automaton
         ArrayList<PossibilityInfo> possibilities = new ArrayList<>();
-        boolean activeDuel = battle.getCombatManager().getDuelManager().isActive();
-        Player whoseTurn = !activeDuel ? battle.getWhoseTurn() : battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer();
-        if (player == whoseTurn) {
-            if (!activeDuel && hasPossibleAbility(player, player.getMs())) {
-                possibilities.add(new PossibilityInfo(player.getMs(), null));
+        boolean inCombat = battle.getCombatManager().isActive();
+        boolean tacticalPhase = battle.getCombatManager().isTacticalPhase();
+        BattlePlayer whoseTurn = battle.getWhoseTurn();
+        if (battlePlayer == whoseTurn) {
+            if (!inCombat && hasPossibleAbility(battlePlayer, battlePlayer.getMs())) {
+                possibilities.add(new PossibilityInfo(battlePlayer.getMs(), null));
             }
-            for (Card card : player.getSupports()) {
-                if (!activeDuel && hasPossibleAbility(player, card)) {
-                    possibilities.add(new PossibilityInfo(card, player.getSupports().getCardListMenu()));
+            for (BattleCard battleCard : battlePlayer.getSupports()) {
+                if (!inCombat && hasPossibleAbility(battlePlayer, battleCard)) {
+                    possibilities.add(new PossibilityInfo(battleCard, battlePlayer.getSupports().getCardListMenu()));
                 }
             }
-            for (Card card : player.getHand()) {
-                if ((!activeDuel || card.isTactic()) && isPossibleToDeploy(player, whoseTurn, card, true, battle)) {
-                    possibilities.add(new PossibilityInfo(card, player.getHand().getCardListMenu()));
+            for (BattleCard battleCard : battlePlayer.getHand()) {
+                if ((!inCombat || (battleCard.isTactic() && tacticalPhase && !battlePlayer.getFleet().isEmpty())) && isPossibleToDeploy(battlePlayer, whoseTurn, battleCard, true, battle)) {
+                    possibilities.add(new PossibilityInfo(battleCard, battlePlayer.getHand().getCardListMenu()));
                 }
             }
-            for (int i = player.getYard().size()-1; i >= 0; i--) {
-                if ((!activeDuel || player.getYard().get(i).isTactic()) && isPossibleToDeploy(player, whoseTurn, player.getYard().get(i), true, battle)) {
-                    possibilities.add(new PossibilityInfo(player.getYard().get(i), player.getYard().getCardListMenu()));
+            for (int i = battlePlayer.getYard().size()-1; i >= 0; i--) {
+                if ((!inCombat || (battlePlayer.getYard().get(i).isTactic() && tacticalPhase)) && isPossibleToDeploy(battlePlayer, whoseTurn, battlePlayer.getYard().get(i), true, battle)) {
+                    possibilities.add(new PossibilityInfo(battlePlayer.getYard().get(i), battlePlayer.getYard().getCardListMenu()));
                 }
             }
-            for (Card card : player.getFleet().getShips()) {
-                if (!activeDuel && hasPossibleAbility(player, card)) {
-                    possibilities.add(new PossibilityInfo(card, player.getFleet().getFleetMenu()));
+            for (Ship ship : battlePlayer.getFleet().getShips()) {
+                if (ship != null && CombatManager.getDuel(ship.getToken(), battle.getCombatManager().getDuels()) == null) {
+                    if ((!inCombat && hasPossibleAbility(battlePlayer, ship)) || (inCombat && !tacticalPhase && !ship.isUsed())) {
+                        possibilities.add(new PossibilityInfo(ship, battlePlayer.getFleet().getFleetMenu()));
+                    }
                 }
             }
         }
         return possibilities;
     }
 
-    public boolean hasPossibleAbility(Player player, Card card) {
-        if (card != null && !card.isUsed()) {
-            for (int i = 0; i < card.getCardInfo().getAbilities().size(); i++) {
-                if (card.getCardInfo().getAbilities().get(i) != null) {
-                    if (card.getCardInfo().getAbilities().get(i).getStarter() == AbilityStarter.USE) {
-                        AbilityInfo abilityInfo = card.getCardInfo().getAbilities().get(i);
-                        if (player.canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
+    public boolean hasPossibleAbility(BattlePlayer battlePlayer, BattleCard battleCard) {
+        if (battleCard != null && !battleCard.isUsed()) {
+            for (int i = 0; i < battleCard.getCardInfo().getAbilities().size(); i++) {
+                if (battleCard.getCardInfo().getAbilities().get(i) != null) {
+                    if (battleCard.getCardInfo().getAbilities().get(i).getStarter() == AbilityStarter.USE) {
+                        AbilityInfo abilityInfo = battleCard.getCardInfo().getAbilities().get(i);
+                        if (battlePlayer.canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
                             return true;
                         }
                     }
@@ -60,18 +64,18 @@ public class PossibilityAdvisor {
         return false;
     }
 
-    public boolean isPossibleToDeploy(Player player, Player whoseTurn, Card card, boolean checkSpace, Battle battle) {
-        if (player == whoseTurn && player.canAfford(card) && tierAllowed(card.getCardInfo().getTier(), battle) && allowedAoE(player, card, battle) && (!player.getFleet().isEmpty() || !card.isPurelyOffensiveChange())) {
-            return !checkSpace || ((player.getSupports().hasSpace() || card.getCardInfo().getCardType() != CardType.SUPPORT) && (player.getFleet().hasSpace() || card.getCardInfo().getCardType() != CardType.YARDPRINT));
+    public boolean isPossibleToDeploy(BattlePlayer battlePlayer, BattlePlayer whoseTurn, BattleCard battleCard, boolean checkSpace, Battle battle) { //in-future: "spread" or parametrize to be used with Notifications (eg. "Insufficient Resources.")... (see RoundManager's call)
+        if (battlePlayer == whoseTurn && battlePlayer.canAfford(battleCard) && tierAllowed(battleCard.getCardInfo().getTier(), battle) && allowedAoE(battlePlayer, battleCard, battle) && (!battlePlayer.getFleet().isEmpty() || !battleCard.isPurelyOffensiveChange())) {
+            return !checkSpace || ((battlePlayer.getSupports().hasSpace() || battleCard.getCardInfo().getCardType() != CardType.SUPPORT) && (battlePlayer.getFleet().hasSpace() || (battleCard.getCardInfo().getCardType() != CardType.YARDPRINT && battleCard.getCardInfo().getCardType() != CardType.BLUEPRINT)));
         }
         return false;
     }
 
-    public boolean allowedAoE (Player player, Card card, Battle battle) {
-        for (AbilityInfo ability : card.getCardInfo().getAbilities()) {
+    public boolean allowedAoE (BattlePlayer battlePlayer, BattleCard battleCard, Battle battle) {
+        for (AbilityInfo ability : battleCard.getCardInfo().getAbilities()) {
             if (AbilityTargets.isAoE(ability.getTargets())) {
-                Player[] enemies = battle.getEnemies(player);
-                for (Player enemy : enemies) {
+                BattlePlayer[] enemies = battle.getEnemies(battlePlayer);
+                for (BattlePlayer enemy : enemies) {
                     if (!enemy.getFleet().isEmpty()) {
                         return true;
                     }
@@ -86,48 +90,63 @@ public class PossibilityAdvisor {
         return tier <= battle.getRoundManager().getRoundNum();
     }
 
-    public BaseMenu getTargetMenu(Card card, Player player) {
-        if (card.getCardInfo().getCardType() == CardType.SUPPORT) {
-            return player.getSupports().getCardListMenu();
+    public Menu getTargetMenu(BattleCard battleCard, BattlePlayer battlePlayer) {
+        if (battleCard.getCardInfo().getCardType() == CardType.SUPPORT) {
+            return battlePlayer.getSupports().getCardListMenu();
         } else {
-            return player.getFleet().getFleetMenu();
+            return battlePlayer.getFleet().getFleetMenu();
         }
     }
 
     //POSSIBILITY SETTERS FOR CARDS
 
-    public void refresh(Player currentPlayer, Battle battle) {
+    public void refresh(BattlePlayer currentBattlePlayer, Battle battle) {
         battle.unMarkAllPossibilities();
-        if (!(currentPlayer instanceof Bot)) {
-            markPossibilities(currentPlayer, battle);
+        if (!(currentBattlePlayer instanceof Bot)) {
+            markPossibilities(currentBattlePlayer, battle);
         }
     }
 
-    public void markPossibilities(Player player, Battle battle) {
-        ArrayList<PossibilityInfo> possibilities = getPossibilities(player, battle);
-        for (PossibilityInfo possibility : possibilities) {
-            possibility.getCard().setPossible(true);
+    public void markPossibilities(BattlePlayer battlePlayer, Battle battle) {
+        ArrayList<PossibilityInfo> possibilities = getPossibilities(battlePlayer, battle);
+        if (possibilities.size() != 0) {
+            boolean yardToo = false;
+            for (PossibilityInfo possibility : possibilities) {
+                possibility.getCard().setPossible(true);
+                if (!yardToo && possibility.getMenu() instanceof YardMenu) {
+                    yardToo = true;
+                }
+            }
+            if (yardToo) {
+                battlePlayer.getYard().getYardButton().setExtraState(true);
+            }
+        } else if (!battle.getCombatManager().isActive()){
+            battle.getBattleScreen().getBattleStage().getTurnButton().setExtraState(true);
         }
     }
 
-    public void unMarkAll(Player player, Battle battle) {
+    public void unMarkAll(BattlePlayer battlePlayer, Battle battle) {
         //Deployment
-        for (Card card : player.getYard()) {
-            card.setPossible(false);
+        for (BattleCard battleCard : battlePlayer.getYard()) {
+            battleCard.setPossible(false);
         }
-        for (Card card : player.getHand()) {
-            card.setPossible(false);
+        for (BattleCard battleCard : battlePlayer.getHand()) {
+            battleCard.setPossible(false);
         }
         //Abilities
-        for (Card card : player.getFleet().getShips()) {
-            if (card != null) { card.setPossible(false); }
+        if (!battle.getCombatManager().isTacticalPhase()) {
+            for (BattleCard battleCard : battlePlayer.getFleet().getShips()) {
+                if (battleCard != null) {
+                    battleCard.setPossible(false);
+                }
+            }
         }
-        for (Card card : player.getSupports()) {
-            card.setPossible(false);
+        for (BattleCard battleCard : battlePlayer.getSupports()) {
+            battleCard.setPossible(false);
         }
-        player.getMs().setPossible(false);
+        battlePlayer.getMs().setPossible(false);
+        battlePlayer.getYard().getYardButton().setExtraState(false);
+        battle.getBattleScreen().getBattleStage().getTurnButton().setExtraState(false);
     }
-
-
 
 }

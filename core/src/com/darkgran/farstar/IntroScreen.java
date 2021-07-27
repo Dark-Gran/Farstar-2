@@ -3,23 +3,23 @@ package com.darkgran.farstar;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.darkgran.farstar.gui.NotificationManager;
 import com.darkgran.farstar.gui.TableStage;
 import com.darkgran.farstar.mainscreen.MainScreen;
 import com.darkgran.farstar.util.Delayer;
 
 public class IntroScreen extends SuperScreen implements Delayer { //Animation used only once on app-launch
-    private final Texture logo = Farstar.ASSET_LIBRARY.getAssetManager().get("images/logo.jpg");
+    private final TextureRegion logo = Farstar.ASSET_LIBRARY.getAtlasRegion("logo");
     private boolean active = false;
     private float alpha = 0;
     private boolean fadeDirection = true; //true in, false out
 
     private final static float INTRO_SPEED = 0.35f;
 
-    public IntroScreen(final Farstar game, NotificationManager notificationManager) {
-        super(game, notificationManager);
-        Gdx.input.setCursorCatched(true);
+    public IntroScreen(final Farstar game, NotificationManager notificationManager, ScreenSettings screenSettings) {
+        super(game, notificationManager, screenSettings);
+        hideCursor(true);
         delayAction(this::activate, 0.5f);
     }
 
@@ -29,7 +29,7 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
     }
 
     private void endIntro() {
-        getGame().setScreen(new MainScreen(getGame(), new TableStage(getGame(), getViewport()), getNotificationManager()));
+        getGame().setScreen(new MainScreen(getGame(), new TableStage(getGame(), getViewport()), getNotificationManager(), getScreenSettings()));
     }
 
     private void activate() { active = true; }
@@ -70,7 +70,7 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
         getGame().batch.begin();
         getGame().batch.setColor(1, 1, 1, (active || !fadeDirection) ? alpha : 0);
 
-        getGame().batch.draw(logo, (float) (Farstar.STAGE_WIDTH / 2 - logo.getWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - logo.getHeight() / 2));
+        getGame().batch.draw(logo, (float) (Farstar.STAGE_WIDTH / 2 - logo.getRegionWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - logo.getRegionHeight() / 2));
 
         drawSigns(getGame().batch);
         getGame().batch.end();

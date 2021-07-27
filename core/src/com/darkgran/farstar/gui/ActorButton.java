@@ -1,15 +1,15 @@
 package com.darkgran.farstar.gui;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class ActorButton extends Actor {
-    private final Texture imageUp;
-    private final Texture imageOver;
-    private final Texture imageDown;
+    private final TextureRegion imageUp;
+    private final TextureRegion imageOver;
+    private final TextureRegion imageDown;
     private boolean disabled = false;
     private final ClickListener clickListener = new ClickListener(){
         @Override
@@ -21,21 +21,21 @@ public class ActorButton extends Actor {
         }
     };
 
-    public ActorButton(Texture imageUp, Texture imageOver) {
+    public ActorButton(TextureRegion imageUp, TextureRegion imageOver) {
         this.imageUp = imageUp;
         this.imageOver = imageOver;
         this.imageDown = imageOver;
-        setWidth(imageOver.getWidth());
-        setHeight(imageOver.getHeight());
+        setWidth(imageOver.getRegionWidth());
+        setHeight(imageOver.getRegionHeight());
         addListener(clickListener);
     }
 
-    public ActorButton(Texture imageUp, Texture imageOver, Texture imageDown) {
+    public ActorButton(TextureRegion imageUp, TextureRegion imageOver, TextureRegion imageDown) {
         this.imageUp = imageUp;
         this.imageOver = imageOver;
         this.imageDown = imageDown;
-        setWidth(imageOver.getWidth());
-        setHeight(imageOver.getHeight());
+        setWidth(imageOver.getRegionWidth());
+        setHeight(imageOver.getRegionHeight());
         addListener(clickListener);
     }
 
@@ -64,4 +64,7 @@ public class ActorButton extends Actor {
         this.disabled = disabled;
     }
 
+    public ClickListener getClickListener() {
+        return clickListener;
+    }
 }

@@ -1,129 +1,169 @@
 package com.darkgran.farstar.battle;
 
-import com.darkgran.farstar.battle.gui.DuelMenu;
-import com.darkgran.farstar.battle.gui.DuelOK;
-import com.darkgran.farstar.battle.gui.tokens.Token;
-import com.darkgran.farstar.battle.players.Bot;
-import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.DuelPlayer;
-import com.darkgran.farstar.battle.players.cards.Ship;
-import com.darkgran.farstar.battle.players.TechType;
-import com.darkgran.farstar.battle.players.abilities.EffectType;
+import com.darkgran.farstar.battle.players.BattleCard;
+import com.darkgran.farstar.battle.players.Ship;
+import com.darkgran.farstar.gui.battlegui.ShotManager;
+import com.darkgran.farstar.gui.tokens.FleetToken;
+import com.darkgran.farstar.gui.tokens.Token;
+import com.darkgran.farstar.cards.EffectType;
+import com.darkgran.farstar.cards.TechType;
+import com.darkgran.farstar.util.Delayer;
+import org.jetbrains.annotations.NotNull;
 
-public abstract class DuelManager {
-    private CombatManager combatManager;
-    private DuelMenu duelMenu;
-    private boolean active = false;
-    private boolean engaged = false;
-    private Token attacker;
-    private Token defender;
-    private DuelPlayer[] playersA;
-    private DuelPlayer[] playersD;
-    private Card lastTactic;
-    private DuelPlayer activePlayer;
-    private Card strikePriority;
+import java.util.*;
 
-    public void launchDuel(CombatManager combatManager, Token attacker, Token defender, DuelPlayer[] playersA, DuelPlayer[] playersD) {
-        if (!engaged && attacker != null && defender != null) {
-            combatManager.getBattleStage().disableCombatEnd();
-            active = true;
-            this.combatManager = combatManager;
-            this.attacker = attacker;
+public class DuelManager implements Delayer {
+    private final float duelDelay = 0.3f;
+
+    public static class AttackInfo implements Comparable<AttackInfo> {
+        private final Token defender;
+        private BattleCard upperStrike = null;
+        private byte state = 0; //1: right-about-to attack, 2: attack done
+        public AttackInfo(Token defender) {
             this.defender = defender;
-            attacker.getCard().setInDuel(true);
-            defender.getCard().setInDuel(true);
-            this.playersA = playersA;
-            this.playersD = playersD;
-            preparePlayers();
-            iniStrikePriority(this.attacker.getCard(), this.defender.getCard());
-            lastTactic = null;
-            activePlayer = this.playersA[0];
-            if (!(this.playersA[0].getPlayer() instanceof Bot)) {
-                duelMenu.addCancel();
-                duelMenu.addOK(this.playersA[0].getDuelButton());
-                this.combatManager.getBattle().getRoundManager().getPossibilityAdvisor().refresh(this.combatManager.getDuelManager().getActivePlayer().getPlayer(), this.combatManager.getBattle());
-            } else {
-                ((Bot) this.playersA[0].getPlayer()).newDuelOK(this.playersA[0].getDuelButton());
+        }
+        public AttackInfo(Token defender, BattleCard upperStrike) {
+            this.defender = defender;
+            this.upperStrike = upperStrike;
+        }
+        public AttackInfo(Token defender, BattleCard upperStrike, byte state) {
+            this.defender = defender;
+            this.upperStrike = upperStrike;
+            this.state = state;
+        }
+        public Token getDefender() { return defender; }
+        public BattleCard getUpperStrike() { return upperStrike; }
+        public void setUpperStrike(BattleCard upperStrike) { this.upperStrike = upperStrike; }
+        public byte getState() { return state; }
+        public void setState(byte state) { this.state = state; }
+
+        @Override
+        public int compareTo(@NotNull DuelManager.AttackInfo o) { //todo "natural" FirstStrike
+            boolean thisFS = upperStrike != null;
+            boolean oFS = o.upperStrike != null;
+            return Boolean.compare(oFS, thisFS);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof AttackInfo)) {
+                return super.equals(obj);
             }
+            boolean thisFS = upperStrike != null;
+            boolean oFS = ((AttackInfo) obj).upperStrike != null;
+            return Boolean.compare(oFS, thisFS) == 0;
         }
     }
 
-    private void iniStrikePriority(Card att, Card def) {
-        boolean attShootsFirst = combatManager.getBattle().getAbilityManager().hasAttribute(att, EffectType.FIRST_STRIKE);
-        boolean defShootsFirst = combatManager.getBattle().getAbilityManager().hasAttribute(def, EffectType.FIRST_STRIKE);
-        if (attShootsFirst != defShootsFirst) {
-            if (attShootsFirst) { strikePriority = att; }
-            else { strikePriority = def; }
-        } else {
-            strikePriority = null;
-        }
-    }
+    private CombatManager combatManager;
+    private boolean active = false;
+    private Iterator<Map.Entry<FleetToken, AttackInfo>> it;
+    private ShotManager shotManager;
 
-    void saveTactic(Card card, Card target) {
-        lastTactic = card;
-        resetAllPlayersReady();
-        if (combatManager.getBattle().getAbilityManager().hasAttribute(target, EffectType.FIRST_STRIKE)) {
-            strikePriority = target;
-        }
-    }
-
-    protected void preparePlayers() { resetAllPlayersReady(); }
-
-    void resetAllPlayersReady() {
-        for (DuelPlayer player : playersA) { player.setReady(false); }
-        for (DuelPlayer player : playersD) { player.setReady(false); }
-    }
-
-    public void OK(DuelOK duelOK) {
-        duelMenu.removeCancel();
-        nextOK(duelOK);
-        if (areAllReady()) {
-            engage();
-        } else if (activePlayer.getPlayer() instanceof Bot) {
-            ((Bot) activePlayer.getPlayer()).newDuelOK(activePlayer.getDuelButton());
-        } else {
-            combatManager.getBattle().getRoundManager().getPossibilityAdvisor().refresh(combatManager.getDuelManager().getActivePlayer().getPlayer(), combatManager.getBattle());
-        }
-    }
-
-    private void engage() {
-        if (!engaged) {
-            engaged = true;
-            if (attacker != null && defender != null) { exeDuel(attacker.getCard(), defender.getCard()); }
-            endDuel();
-        }
-    }
-
-    protected void exeDuel(Card att, Card def) {
-        if (strikePriority != null) {
-            if (strikePriority == att || def.isMS()) {
-                if (!exeOneSide(att, def)) { def.death(); }
-                else {
-                    if (!def.isMS()) {
-                        if (!exeOneSide(def, att)) {
-                            att.death();
-                        }
+    static <K extends Comparable<? super K>,V extends Comparable<? super V>> SortedSet<Map.Entry<K,V>> entriesSortedByValuesThenKeys(Map<K,V> map) {
+        SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<>(
+                (e1, e2) -> {
+                    if (!e1.getValue().equals(e2.getValue())) {
+                        return e1.getValue().compareTo(e2.getValue());
                     }
+                    return e1.getKey().compareTo(e2.getKey());
+                }
+        );
+        sortedEntries.addAll(map.entrySet());
+        return sortedEntries;
+    }
+
+    void launchDuels(CombatManager combatManager, TreeMap<FleetToken, AttackInfo> duels, ShotManager shotManager) {
+        this.shotManager = shotManager;
+        if (duels != null && duels.size() > 0) {
+            this.combatManager = combatManager;
+            this.active = true;
+            Set<Map.Entry<FleetToken, AttackInfo>> duelSet = entriesSortedByValuesThenKeys(duels);
+            it = duelSet.iterator();
+            System.out.println("Launching Duels.");
+            delayAction(this::iterateDuels, 0.5f);
+        } else {
+            System.out.println("Invalid number of duels to launch (0 or null).");
+            //delayAction(this::afterDuels, duelDelay);
+        }
+    }
+
+    private void iterateDuels() { //loop
+        if (it.hasNext()) {
+            Map.Entry<FleetToken, AttackInfo> duel = it.next();
+            combatManager.setDuelState(duel, (byte) 1);
+            delayAction(() -> performDuel(duel), duelDelay);
+        } else {
+            //afterDuels();
+            delayAction(this::afterDuels, 0.5f);
+        }
+    }
+
+    private void performDuel(Map.Entry<FleetToken, AttackInfo> duel) {
+        exeDuel(duel.getKey().getCard(), duel.getValue());
+        combatManager.setDuelState(duel, (byte) 2);
+        delayAction(this::iterateDuels, duelDelay);
+    }
+
+    private void afterDuels() {
+        active = false;
+        combatManager.afterDuels();
+    }
+
+    private void exeDuel(BattleCard att, AttackInfo attackInfo) { //todo reconsider FS "phases"
+        BattleCard def = attackInfo.getDefender().getCard();
+        boolean attFS;
+        boolean defFS;
+        if (def.isMS()) {
+            attFS = AbilityManager.hasAttribute(att, EffectType.FIRST_STRIKE);
+            defFS = false;
+        } else if (attackInfo.getUpperStrike() == null) {
+            attFS = AbilityManager.hasAttribute(att, EffectType.FIRST_STRIKE);
+            defFS = AbilityManager.hasAttribute(def, EffectType.FIRST_STRIKE);
+        } else {
+            attFS = attackInfo.getUpperStrike() == att;
+            defFS = !attFS;
+        }
+        boolean FSDuel = attFS || defFS;
+        if (attFS != defFS) {
+            if (attFS) {
+                if (exeOneSide(att, def, false)) {
+                    if (!def.isMS() && !def.isKilledByFirstStrike()) { exeOneSide(def, att, true); }
                 }
             } else {
-                if (!exeOneSide(def, att)) { att.death(); }
-                else {
-                    if (!exeOneSide(att, def)) { def.death(); }
+                if (def.isMS() || exeOneSide(def, att, false)) {
+                    if (!att.isKilledByFirstStrike()) { exeOneSide(att, def, true); }
                 }
             }
         } else {
-            if (!exeOneSide(att, def)) { def.death(); }
-            if (!def.isMS()) {
-                if (!exeOneSide(def, att)) {
-                    att.death();
-                }
-            }
+            if (FSDuel || !att.isKilledByFirstStrike()) { exeOneSide(att, def, false); }
+            if ((FSDuel || !def.isKilledByFirstStrike()) && !def.isMS()) { exeOneSide(def, att, false); }
         }
-        if (att instanceof Ship) { ((Ship) att).setFought(true); }
+        if (FSDuel) {
+            if (att.getHealth()<=0) { att.setKilledByFirstStrike(true); }
+            if (def.getHealth()<=0) { def.setKilledByFirstStrike(true); }
+        }
     }
 
-    protected boolean exeOneSide(Card att, Card def) { //returns survival
-        int dmg = getDmgAgainstShields(att.getCardInfo().getOffense(), def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
+    private boolean exeOneSide(BattleCard att, BattleCard def, boolean delayedAnimation) { //returns survival
+        int dmg = att.getCardInfo().getOffense();
+        if (att instanceof Ship && BattleSettings.OUTNUMBERED_DEBUFF_ENABLED) {
+            Ship ship = (Ship) att;
+            dmg -= ship.getDmgDoneThisBattle();
+            ship.setDmgDoneThisBattle(ship.getDmgDoneThisBattle()+att.getCardInfo().getOffense());
+            if (att.getCardInfo().getOffense() > def.getHealth()) {
+                ship.setDmgDoneThisBattle(ship.getDmgDoneThisBattle()-(att.getCardInfo().getOffense()-def.getHealth()));
+            }
+            if (dmg < 0) { dmg = 0; }
+        }
+        if (dmg > 0) {
+            dmg = getDmgAgainstShields(dmg, def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
+            if (!delayedAnimation) {
+                shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots());
+            } else {
+                delayAction(() -> shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots()), duelDelay * 1.5f);
+            }
+        }
         return def.receiveDMG(dmg);
     }
 
@@ -143,109 +183,8 @@ public abstract class DuelManager {
         return techType;
     }
 
-    public void cancelDuel() {
-        duelMenu.removeCancel();
-        endDuel();
+    public boolean isActive() {
+        return active;
     }
-
-    public void endDuel() {
-        engaged = false;
-        duelMenu.removeAllOKs();
-        attacker.getCard().setInDuel(false);
-        defender.getCard().setInDuel(false);
-        active = false;
-        combatManager.afterDuel();
-    }
-
-    private void nextOK(DuelOK duelOK) {
-        boolean next = false;
-        int i;
-        for (i = 0; i < playersA.length && !next; i++) {
-            if (playersA[i] == activePlayer) {
-                playersA[i].setReady(true);
-                duelMenu.removeOK(duelOK);
-                next = true;
-            }
-        }
-        if (next) {
-            if (i+1 < playersA.length) {
-                duelMenu.addOK(playersA[i+1].getDuelButton());
-                activePlayer = playersA[i+1];
-            } else {
-                duelMenu.addOK(playersD[0].getDuelButton());
-                activePlayer = playersD[0];
-            }
-        } else {
-            for (i = 0; i < playersD.length && !next; i++) {
-                if (playersD[i] == activePlayer) {
-                    playersD[i].setReady(true);
-                    duelMenu.removeOK(duelOK);
-                }
-            }
-            if (i+1 < playersD.length) {
-                duelMenu.addOK(playersD[i+1].getDuelButton());
-                activePlayer = playersD[i+1];
-            } else {
-                duelMenu.addOK(playersA[0].getDuelButton());
-                activePlayer = playersA[0];
-            }
-        }
-    }
-
-    private boolean areAllReady() {
-        for (DuelPlayer player : playersA) {
-            if (!player.isReady()) { return false; }
-        }
-        for (DuelPlayer player : playersD) {
-            if (!player.isReady()) { return false; }
-        }
-        return true;
-    }
-
-    public Token getOpponent(Token token) {
-        if (token == attacker) {
-            return defender;
-        } else {
-            return attacker;
-        }
-    }
-
-    public Token getOpponent(Card card) {
-        if (card == attacker.getCard()) {
-            return defender;
-        } else {
-            return attacker;
-        }
-    }
-
-    public void setPlayersA_OK(int ix, DuelOK duelOK) {
-        if (playersA[ix] != null) { playersA[ix].setDuelOK(duelOK); }
-    }
-
-    public void setPlayersD_OK(int ix, DuelOK duelOK) {
-        if (playersA[ix] != null) { playersD[ix].setDuelOK(duelOK); }
-    }
-
-    public void receiveDuelMenu(DuelMenu duelMenu) { this.duelMenu = duelMenu; }
-
-    public DuelMenu getDuelMenu() { return duelMenu; }
-
-    public boolean isActive() { return active; }
-
-    public void setActive(boolean active) { this.active = active; }
-
-    public Token getAttacker() { return attacker; }
-
-    public Token getDefender() { return defender; }
-
-    public DuelPlayer[] getPlayersA() { return playersA; }
-
-    public DuelPlayer[] getPlayersD() { return playersD; }
-
-    public DuelPlayer getActivePlayer() { return activePlayer; }
-
-    public Card getLastTactic() { return lastTactic; }
-
-    public Card getStrikePriority() { return strikePriority; }
 
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 /**
  *  This is only a draft setup with a test-body.
  *  Meant for future "graphical effects".
+ *  UNUSED AT THE MOMENT.
  */
 
 public class WorldManager {
@@ -16,14 +17,14 @@ public class WorldManager {
     public static float STEP_TIME = 1f / FPS;
     public static int VELOCITY_ITERATIONS = 15;
     public static int POSITION_ITERATIONS = 12;
-    public static float WORLD_WIDTH = 9.6f;
+    /*public static float WORLD_WIDTH = 9.6f;
     public static float WORLD_HEIGHT = 4.8f;
     public static float CAMERA_CLOSEUP_X = 0.2f;
-    public static float CAMERA_CLOSEUP_Y = 0.1f;
+    public static float CAMERA_CLOSEUP_Y = 0.1f;*/
     private float accumulator = 0;
-    private World world = new World(new Vector2(0, 0), true);
-    private ArrayList corpses = new ArrayList();
-    //private CollisionListener collisionListener = new CollisionListener();
+    private final World world = new World(new Vector2(0, 0), true);
+    private final ArrayList<Body> corpses = new ArrayList<>();
+    //private final CollisionListener collisionListener = new CollisionListener();
 
     public WorldManager() {
         //world.setContactListener(collisionListener);
@@ -51,8 +52,8 @@ public class WorldManager {
     private void reap(World world) { //destroys all marked bodies
         for (int i = 0; i < corpses.size(); i++) {
             if (corpses.get(i) != null) {
-                Object corpse = corpses.get(i);
-                //world.destroyBody(item.body);
+                Body corpse = corpses.get(i);
+                world.destroyBody(corpse);
                 corpses.remove(corpse);
             }
         }
@@ -60,7 +61,7 @@ public class WorldManager {
 
     //Stepping
     public void worldTimer(float delta) {
-        accumulator += Math.min(delta, 0.25f);
+        accumulator += delta;
         if (accumulator >= STEP_TIME) {
             accumulator -= STEP_TIME;
             worldTick(world);

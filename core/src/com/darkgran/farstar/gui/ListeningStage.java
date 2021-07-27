@@ -14,9 +14,4 @@ public abstract class ListeningStage extends Stage {
 
     public Farstar getGame() { return game; }
 
-    @Deprecated
-    protected void setupListeners() {
-
-    }
-
 }

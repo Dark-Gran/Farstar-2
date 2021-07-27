@@ -2,7 +2,8 @@ package com.darkgran.farstar;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.darkgran.farstar.battle.CardLibrary;
+import com.darkgran.farstar.cards.CardLibrary;
+import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.NotificationManager;
 
 public class Farstar extends Game {
@@ -15,6 +16,11 @@ public class Farstar extends Game {
 	private final KeyboardProcessor keyboardProcessor = new KeyboardProcessor(this);
 	protected SuperScreen superScreen;
 	SpriteBatch batch;
+	public final MouseWindowQuery MWQ;
+
+	public Farstar(MouseWindowQuery MWQ) {
+		this.MWQ = MWQ;
+	}
 
 	public void loadLibrary() { CARD_LIBRARY.loadLocal("content/cards.json"); }
 
@@ -22,7 +28,7 @@ public class Farstar extends Game {
 	public void create () {
 		ASSET_LIBRARY.loadAssets();
 		batch = new SpriteBatch();
-		this.setScreen(new IntroScreen(this, new NotificationManager()));
+		this.setScreen(new IntroScreen(this, new NotificationManager(), new SuperScreen.ScreenSettings()));
 		inputMultiplexer.addProcessor(keyboardProcessor);
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
@@ -32,11 +38,6 @@ public class Farstar extends Game {
 		if (superScreen != null) { superScreen.dispose(); }
 		this.superScreen = (SuperScreen) screen;
 		super.setScreen(screen);
-	}
-
-	@Override
-	public void render () {
-		super.render();
 	}
 	
 	@Override

@@ -2,20 +2,20 @@ package com.darkgran.farstar.battle;
 
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.battle.players.Player;
-import com.darkgran.farstar.battle.gui.BattleStage;
-import com.darkgran.farstar.battle.players.cards.Ship;
+import com.darkgran.farstar.battle.players.BattlePlayer;
+import com.darkgran.farstar.gui.battlegui.BattleStage;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
 public abstract class Battle {
-    private Player whoseTurn;
+    private BattleScreen battleScreen;
+    private BattlePlayer whoseTurn;
     private RoundManager roundManager;
     private CombatManager combatManager;
     private AbilityManager abilityManager;
     private boolean everythingDisabled = false;
-    private ArrayList<Player> gameOvers = new ArrayList<Player>();
+    private final ArrayList<BattlePlayer> gameOvers = new ArrayList<>();
 
     public Battle() {
         System.out.println("Launching Battle...");
@@ -25,21 +25,22 @@ public abstract class Battle {
         return null;
     }
 
-    public DuelManager createDuelManager() {
+    public CombatManager createCombatManager() {
         return null;
+    }
+
+    protected boolean areYardsOpen() {
+        return false;
     }
 
     protected void closeYards() { }
 
     public void dispose() {}
 
-    public void unMarkAllPossibilities() {
-        getRoundManager().getPossibilityAdvisor().unMarkAll(whoseTurn, this);
-    }
-
-    public void startingSetup(@NotNull RoundManager roundManager, @NotNull CombatManager combatManager, @NotNull AbilityManager abilityManager) {
+    public void startingSetup(@NotNull BattleScreen battleScreen, @NotNull RoundManager roundManager, @NotNull CombatManager combatManager, @NotNull AbilityManager abilityManager) {
+        this.battleScreen = battleScreen;
         coinToss();
-        startingCards();
+        roundManager.setStartingPlayer(whoseTurn);
         this.roundManager = roundManager;
         this.combatManager = combatManager;
         this.abilityManager = abilityManager;
@@ -49,14 +50,8 @@ public abstract class Battle {
 
     protected void startingCards() { }
 
-    public void setUsedForAllFleets(boolean used) { }
-
-    public void setUsedForFleet(Player player, boolean used) {
-        for (Ship ship : player.getFleet().getShips()) { if (ship != null) { ship.setFought(used); } }
-    }
-
-    public void addGameOver(Player player) {
-        gameOvers.add(player);
+    public void addGameOver(BattlePlayer battlePlayer) {
+        gameOvers.add(battlePlayer);
     }
 
     public void battleEnd() {
@@ -76,17 +71,29 @@ public abstract class Battle {
         whoseTurn.getSupports().setUsedOnAll(false);
     }
 
+    public void unMarkAllPossibilities() {
+        getRoundManager().getPossibilityAdvisor().unMarkAll(whoseTurn, this);
+    }
+
+    public void refreshPossibilities() {
+        getRoundManager().getPossibilityAdvisor().refresh(whoseTurn, this);
+    }
+
     public boolean activeCombatOrDuel() {
         return combatManager.isActive() || combatManager.getDuelManager().isActive();
     }
 
-    public Player[] getEnemies(Player player) {
+    public BattlePlayer getWhoseTurn() {
+        return getCombatManager().isTacticalPhase() ? getCombatManager().getActivePlayer().getBattlePlayer() : whoseTurn;
+    }
+
+    public BattlePlayer[] getEnemies(BattlePlayer battlePlayer) {
         return null;
     }
 
-    public Player getWhoseTurn() { return whoseTurn; }
+    public BattlePlayer[] getAllies(BattlePlayer battlePlayer) { return null; }
 
-    public void setWhoseTurn(Player whoseTurn) { this.whoseTurn = whoseTurn; }
+    public void setWhoseTurn(BattlePlayer whoseTurn) { this.whoseTurn = whoseTurn; }
 
     public void passTurn() { } //setWhoseTurn to next player
 
@@ -100,6 +107,9 @@ public abstract class Battle {
 
     public void setEverythingDisabled(boolean everythingDisabled) { this.everythingDisabled = everythingDisabled; }
 
-    public ArrayList<Player> getGameOvers() { return gameOvers; }
+    public ArrayList<BattlePlayer> getGameOvers() { return gameOvers; }
 
+    public BattleScreen getBattleScreen() {
+        return battleScreen;
+    }
 }

@@ -1,7 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
-import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.cards.Support;
+import com.darkgran.farstar.gui.battlegui.SupportMenu;
 
 public class Supports extends CardList implements BattleTicks {
 
@@ -17,9 +16,9 @@ public class Supports extends CardList implements BattleTicks {
     }
 
     @Override
-    public boolean addCard(Card card) {
+    public boolean addCard(BattleCard battleCard) {
         if (getCardListMenu() != null && size() < getMaxSize()) {
-            Support support = new Support(card.getCardInfo(), card.getPlayer());
+            Support support = new Support(battleCard.getCardInfo(), battleCard.getBattlePlayer());
             support.setUsed(true);
             add(support);
             getCardListMenu().generateNewToken(support);
@@ -31,6 +30,10 @@ public class Supports extends CardList implements BattleTicks {
     @Override
     public CardList getCardList() {
         return this;
+    }
+
+    public SupportMenu getSupportMenu() {
+        return (SupportMenu) getCardListMenu();
     }
 
 }

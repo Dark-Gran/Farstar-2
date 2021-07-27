@@ -10,7 +10,7 @@ public class DeltaCounter extends SimpleCounter {
 
     public void update(float delta) {
         if (isEnabled()) {
-            accumulator += Math.min(delta, 0.25f);
+            accumulator += delta;
             if (accumulator > 1f) {
                 accumulator -= 1f;
                 update();

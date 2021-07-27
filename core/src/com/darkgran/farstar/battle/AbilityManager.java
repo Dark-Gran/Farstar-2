@@ -1,17 +1,15 @@
 package com.darkgran.farstar.battle;
 
-import com.darkgran.farstar.battle.gui.DropTarget;
-import com.darkgran.farstar.battle.gui.tokens.Token;
+import com.darkgran.farstar.cards.*;
+import com.darkgran.farstar.gui.battlegui.DropTarget;
+import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.*;
-import com.darkgran.farstar.battle.players.abilities.*;
-import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.cards.Mothership;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE;
-import static com.darkgran.farstar.battle.players.abilities.EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE;
+import static com.darkgran.farstar.cards.EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE;
+import static com.darkgran.farstar.cards.EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE;
 
 public class AbilityManager {
     private final Battle battle;
@@ -20,13 +18,13 @@ public class AbilityManager {
         this.battle = battle;
     }
 
-    public boolean playAbility(Token casterToken, Card target, AbilityInfo ability, DropTarget dropTarget) {
+    public boolean playAbility(Token casterToken, BattleCard target, AbilityInfo ability, DropTarget dropTarget) { //in-future: use List for "target" to enable multi-targeting (atm no such battleCards)
         boolean success = false;
-        Card caster = casterToken.getCard();
+        BattleCard caster = casterToken.getCard();
         if (caster != null && caster.getCardInfo().getAbilities() != null) {
             if (ability != null && ability.getEffects() != null) {
                 //TARGETING
-                ArrayList<Card> targets = new ArrayList<>();
+                ArrayList<BattleCard> targets = new ArrayList<>();
                 if (target == null) {
                     AbilityTargets abilityTargets = ability.getTargets();
                     switch (abilityTargets) {
@@ -44,8 +42,8 @@ public class AbilityManager {
                             getBattle().getRoundManager().askForTargets(casterToken, ability, dropTarget);
                             break;
                         case ENTIRE_ENEMY_FLEET:
-                            Player[] enemies = getBattle().getEnemies(caster.getPlayer());
-                            for (Player enemy : enemies) {
+                            BattlePlayer[] enemies = getBattle().getEnemies(caster.getBattlePlayer());
+                            for (BattlePlayer enemy : enemies) {
                                 for (int i = 0; i < enemy.getFleet().getShips().length; i++) {
                                     if (enemy.getFleet().getShips()[i] != null) {
                                         targets.add(enemy.getFleet().getShips()[i]);
@@ -54,9 +52,9 @@ public class AbilityManager {
                             }
                             break;
                         case ENTIRE_ALLIED_FLEET:
-                            for (int i = 0; i < caster.getPlayer().getFleet().getShips().length; i++) {
-                                if (caster.getPlayer().getFleet().getShips()[i] != null) {
-                                    targets.add(caster.getPlayer().getFleet().getShips()[i]);
+                            for (int i = 0; i < caster.getBattlePlayer().getFleet().getShips().length; i++) {
+                                if (caster.getBattlePlayer().getFleet().getShips()[i] != null) {
+                                    targets.add(caster.getBattlePlayer().getFleet().getShips()[i]);
                                 }
                             }
                             break;
@@ -65,21 +63,28 @@ public class AbilityManager {
                     targets.add(target);
                 }
                 //EXECUTION
-                for (Card currentTarget : targets) {
+                ArrayList<BattlePlayer> targetedPlayers = new ArrayList<>();
+                for (BattleCard currentTarget : targets) {
                     if (currentTarget != null) {
                         for (int i = 0; i < ability.getEffects().size(); i++) {
                             if (ability.getEffects().get(i) != null) {
                                 if (!success) {
-                                    success = executeEffect(currentTarget, ability.getEffects().get(i), false);
+                                    success = executeEffect(currentTarget, ability.getEffects().get(i), false, caster);
                                 } else {
-                                    executeEffect(currentTarget, ability.getEffects().get(i), false);
+                                    executeEffect(currentTarget, ability.getEffects().get(i), false, caster);
                                 }
                             }
                         }
                         if (success) {
                             currentTarget.addToHistory(caster, ability);
+                            if (!targetedPlayers.contains(currentTarget.getBattlePlayer())) {
+                                targetedPlayers.add(currentTarget.getBattlePlayer());
+                            }
                         }
                     }
+                }
+                for (BattlePlayer targetPlayer : targetedPlayers) {
+                    getBattle().getCombatManager().checkPlayerForAftermath(targetPlayer);
                 }
             }
         }
@@ -90,7 +95,7 @@ public class AbilityManager {
     //-EFFECT-LIST-//
     //-------------//
 
-    public boolean executeEffect(Card target, Effect effect, boolean reverse) {
+    public boolean executeEffect(BattleCard target, Effect effect, boolean reverse, BattleCard caster) {
         boolean success = false;
         if (effect.getEffectType() != null) {
             switch (effect.getEffectType()) {
@@ -102,7 +107,7 @@ public class AbilityManager {
                     else { success = reverseStat(target, effect); }
                     break;
                 case DEAL_DMG:
-                    if (!reverse) { success = dealDmg(target, effect); }
+                    if (!reverse) { success = dealDmg(target, effect, caster); }
                     break;
                 case REPAIR:
                     if (!reverse) { success = repair(target, effect); }
@@ -116,9 +121,9 @@ public class AbilityManager {
     }
 
     //CHANGE_STAT
-    private boolean changeStat(Card target, Effect effect) {
+    private boolean changeStat(BattleCard target, Effect effect) {
         boolean success = false;
-        boolean dontSaveEffect = false;
+        boolean doNotSaveEffect = false;
         if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
             Object changeInfo = effect.getEffectInfo().get(1);
             EffectTypeSpecifics.ChangeStatType changeStatType = EffectTypeSpecifics.ChangeStatType.valueOf(effect.getEffectInfo().get(0).toString());
@@ -126,20 +131,24 @@ public class AbilityManager {
             switch (changeStatType) {
                 case OFFENSE:
                     target.getCardInfo().changeOffense(floatObjectToInt(changeInfo));
+                    target.refreshToken(false, true);
                     success = true;
                     break;
                 case DEFENSE:
                     target.getCardInfo().changeDefense(floatObjectToInt(changeInfo));
+                    target.refreshToken(true, false);
                     success = true;
                     break;
                 case OFFENSE_TYPE:
                     techType = TechType.valueOf(changeInfo.toString());
                     target.getCardInfo().setOffenseType(techType);
+                    target.refreshToken(false, true);
                     success = true;
                     break;
                 case DEFENSE_TYPE:
                     techType = TechType.valueOf(changeInfo.toString());
                     target.getCardInfo().setDefenseType(techType);
+                    target.refreshToken(true, false);
                     success = true;
                     break;
                 case ABILITY:
@@ -148,7 +157,7 @@ public class AbilityManager {
                         for (int i = 0; i < target.getCardInfo().getAbilities().size() && !success; i++) {
                             if (isTheSameAbility(target.getCardInfo().getAbilities().get(i), newAbility)) {
                                 success = true;
-                                dontSaveEffect = true;
+                                doNotSaveEffect = true;
                             }
                         }
                         if (!success) {
@@ -158,7 +167,7 @@ public class AbilityManager {
                     }
                     break;
             }
-            if (!dontSaveEffect) {
+            if (!doNotSaveEffect) {
                 saveEffect(target, instanceEffect(effect));
             }
         }
@@ -166,7 +175,7 @@ public class AbilityManager {
     }
 
     //belongs to CHANGE_STAT
-    private boolean reverseStat(Card target, Effect effect) {
+    private boolean reverseStat(BattleCard target, Effect effect) {
         boolean success = false;
         if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
             Object changeInfo = effect.getEffectInfo().get(1);
@@ -174,15 +183,18 @@ public class AbilityManager {
             switch (changeStatType) {
                 case OFFENSE:
                     target.getCardInfo().changeOffense(-floatObjectToInt(changeInfo));
+                    target.refreshToken(false, true);
                     success = true;
                     break;
                 case DEFENSE:
                     target.getCardInfo().changeDefense(-floatObjectToInt(changeInfo));
+                    target.refreshToken(true, false);
                     success = true;
                     break;
                 case OFFENSE_TYPE:
                 case DEFENSE_TYPE:
                     reverseType(target, effect, changeStatType);
+                    target.refreshToken(changeStatType == DEFENSE_TYPE, changeStatType == OFFENSE_TYPE);
                     success = true;
                     break;
                 case ABILITY:
@@ -200,19 +212,26 @@ public class AbilityManager {
     }
 
     //DEAL_DMG
-    private boolean dealDmg(Card target, Effect effect) {
+    private boolean dealDmg(BattleCard target, Effect effect, BattleCard caster) {
         if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
-            int dmg = floatObjectToInt(effect.getEffectInfo().get(0));
+            int power = floatObjectToInt(effect.getEffectInfo().get(0));
             TechType techType = TechType.valueOf(effect.getEffectInfo().get(1).toString());
-            dmg = DuelManager.getDmgAgainstShields(dmg, target.getHealth(), techType, target.getCardInfo().getDefenseType());
-            if (!target.receiveDMG(dmg)) { target.death(); }
+            int dmg = DuelManager.getDmgAgainstShields(power, target.getHealth(), techType, target.getCardInfo().getDefenseType());
+            if (caster != null) {
+                getBattle().getBattleScreen().getBattleStage().getShotManager().newAttack(caster.getBattlePlayer().getMs().getToken(), target.getToken(), power, techType, caster.getCardInfo().getAnimatedShots());
+            }
+            if (target instanceof Ship) {
+                target.receiveDMG(dmg);
+            } else {
+                if (!target.receiveDMG(dmg)) { target.death(); }
+            }
             return true;
         }
         return false;
     }
 
     //REPAIR
-    private boolean repair(Card target, Effect effect) {
+    private boolean repair(BattleCard target, Effect effect) {
         if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 1 && effect.getEffectInfo().get(0) != null) {
             int dmg = floatObjectToInt(effect.getEffectInfo().get(0));
             target.repairDMG(dmg);
@@ -222,7 +241,7 @@ public class AbilityManager {
     }
 
     //CHANGE_RESOURCE
-    private boolean changeResource(Card target, Effect effect, boolean reverse) {
+    private boolean changeResource(BattleCard target, Effect effect, boolean reverse) {
         if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
             Object changeInfo = effect.getEffectInfo().get(1);
             EffectTypeSpecifics.ChangeResourceType resource = EffectTypeSpecifics.ChangeResourceType.valueOf(effect.getEffectInfo().get(0).toString());
@@ -230,10 +249,10 @@ public class AbilityManager {
             if (reverse) { change *= -1; }
             switch (resource) {
                 case ENERGY:
-                    target.getPlayer().addEnergy(change);
+                    target.getBattlePlayer().addEnergy(change);
                     return true;
                 case MATTER:
-                    target.getPlayer().addMatter(change);
+                    target.getBattlePlayer().addMatter(change);
                     return true;
             }
         }
@@ -244,7 +263,7 @@ public class AbilityManager {
     //-UTILITIES-//
     //-----------//
 
-    public boolean validAbilityTarget(AbilityInfo abilityInfo, Card caster, Card target) { //in-future: support for other modes than 1v1
+    public static boolean validAbilityTarget(AbilityInfo abilityInfo, BattleCard caster, BattleCard target) { //in-future: support for other modes than 1v1
         switch (abilityInfo.getTargets()) {
             default:
                 return false;
@@ -255,24 +274,24 @@ public class AbilityManager {
                 return caster==target;
             case ANY_ALLY:
             case ENTIRE_ALLIED_FLEET:
-                return caster.getPlayer()==target.getPlayer();
+                return caster.getBattlePlayer()==target.getBattlePlayer();
             case ANY_ENEMY:
             case ENTIRE_ENEMY_FLEET:
-                return caster.getPlayer()!=target.getPlayer();
+                return caster.getBattlePlayer()!=target.getBattlePlayer();
             case ALLIED_FLEET:
-                return caster.getPlayer()==target.getPlayer() && !(target instanceof Mothership);
+                return caster.getBattlePlayer()==target.getBattlePlayer() && !(target instanceof Mothership);
             case ENEMY_FLEET:
-                return caster.getPlayer()!=target.getPlayer() && !(target instanceof Mothership);
+                return caster.getBattlePlayer()!=target.getBattlePlayer() && !(target instanceof Mothership);
             case ALLIED_MS:
-                return caster.getPlayer()==target.getPlayer() && target instanceof Mothership;
+                return caster.getBattlePlayer()==target.getBattlePlayer() && target instanceof Mothership;
             case ENEMY_MS:
-                return caster.getPlayer()!=target.getPlayer() && target instanceof Mothership;
+                return caster.getBattlePlayer()!=target.getBattlePlayer() && target instanceof Mothership;
 
         }
     }
 
-    public boolean hasStarter(Card card, AbilityStarter abilityStarter) {
-        for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
+    public static boolean hasStarter(BattleCard battleCard, AbilityStarter abilityStarter) {
+        for (AbilityInfo abilityInfo : battleCard.getCardInfo().getAbilities()) {
             if (abilityInfo.getStarter() == abilityStarter) {
                 return true;
             }
@@ -280,9 +299,9 @@ public class AbilityManager {
         return false;
     }
 
-    public boolean hasEffectType(Card card, EffectType effectType) {
+    public static boolean hasEffectType(BattleCard battleCard, EffectType effectType) {
         if (effectType != null) {
-            for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
+            for (AbilityInfo abilityInfo : battleCard.getCardInfo().getAbilities()) {
                 for (Effect effect : abilityInfo.getEffects()) {
                     if (effect.getEffectType() == effectType) {
                         return true;
@@ -293,9 +312,9 @@ public class AbilityManager {
         return false;
     }
 
-    public boolean hasAttribute(Card card, EffectType effectType) { //checks for abilities with "starter=NONE" (old "attributes")
+    public static boolean hasAttribute(BattleCard battleCard, EffectType effectType) { //checks for abilities with "starter=NONE" (old "attributes")
         if (effectType != null) {
-            for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
+            for (AbilityInfo abilityInfo : battleCard.getCardInfo().getAbilities()) {
                 if (abilityInfo.getStarter() == AbilityStarter.NONE) {
                     for (Effect effect : abilityInfo.getEffects()) {
                         if (effect.getEffectType() == effectType) {
@@ -308,8 +327,8 @@ public class AbilityManager {
         return false;
     }
 
-    public int getReach(Card card) {
-        for (AbilityInfo abilityInfo : card.getCardInfo().getAbilities()) {
+    public static int getReach(BattleCard battleCard) {
+        for (AbilityInfo abilityInfo : battleCard.getCardInfo().getAbilities()) {
             if (abilityInfo.getStarter() == AbilityStarter.NONE) {
                 for (Effect effect : abilityInfo.getEffects()) {
                     if (effect.getEffectType() == EffectType.REACH) {
@@ -323,14 +342,37 @@ public class AbilityManager {
         return 0;
     }
 
-    private boolean isTheSameAbility(AbilityInfo abilityA, AbilityInfo abilityB) {
+    public static boolean upgradesFirstStrike(BattleCard battleCard) {
+        for (AbilityInfo abilityInfo : battleCard.getCardInfo().getAbilities()) {
+            for (Effect effect : abilityInfo.getEffects()) {
+                if (effect.getEffectType() == EffectType.CHANGE_STAT) {
+                    if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
+                        if (effect.getEffectInfo().get(0).toString().equals("ABILITY") && effect.getEffectInfo().get(1).toString().equals("FIRST_STRIKE")) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static int floatObjectToInt(Object obj) {
+        if (obj instanceof Float) {
+            float f = (Float) obj;
+            return (int) f;
+        }
+        return 0;
+    }
+
+    private static boolean isTheSameAbility(AbilityInfo abilityA, AbilityInfo abilityB) {
         if (abilityA != null && abilityB != null) {
             return (abilityA.getStarter() == abilityB.getStarter()) && isTheSameEffectsList(abilityA.getEffects(), abilityB.getEffects());
         }
         return (abilityA == abilityB);
     }
 
-    private boolean isTheSameEffectsList(ArrayList<Effect> effectsA, ArrayList<Effect> effectsB) {
+    private static boolean isTheSameEffectsList(ArrayList<Effect> effectsA, ArrayList<Effect> effectsB) {
         if (effectsA != null && effectsB != null) {
             if (effectsA.size() == effectsB.size()) {
                 for (int i = 0; i < effectsA.size(); i++) {
@@ -345,19 +387,19 @@ public class AbilityManager {
         return (effectsA == effectsB);
     }
 
-    private void saveEffect(Card target, Effect effect) {
-        if (getBattle().getCombatManager().getDuelManager().isActive()) {
+    private void saveEffect(BattleCard target, Effect effect) {
+        if (getBattle().getCombatManager().isTacticalPhase()) {
             effect.setDuration(effect.getDuration()-1);
         }
         target.addToEffects(effect);
     }
 
+    /** Only Strings and Floats are expected: See CardLibrary jsonReader for comment on this raw type */
     private AbilityInfo effectToAbility(ArrayList effectInfo, int effectDuration) { //creates new ability-attribute
         EffectType effectType = EffectType.valueOf(effectInfo.get(1).toString());
         Effect newEffect = new Effect();
         newEffect.setEffectType(effectType);
-        ArrayList info = new ArrayList();
-        info.addAll(effectInfo);
+        ArrayList info = new ArrayList<>(effectInfo);
         if (info.size() >= 4) { info.set(0, effectInfo.get(4)); }
         newEffect.setEffectInfo(info);
         newEffect.setDuration(effectDuration);
@@ -368,7 +410,7 @@ public class AbilityManager {
         return new AbilityInfo(AbilityStarter.valueOf(effectInfo.get(2).toString()), newAbilityEffects, new ResourcePrice(), abilityTargets);
     }
 
-    private void reverseType(Card target, Effect effect, EffectTypeSpecifics.ChangeStatType type) {
+    private void reverseType(BattleCard target, Effect effect, EffectTypeSpecifics.ChangeStatType type) {
         boolean success = false;
         ListIterator<Effect> li = target.getEffects().listIterator(target.getEffects().size());
         Effect otherEffect;
@@ -398,14 +440,6 @@ public class AbilityManager {
 
     private Effect instanceEffect(Effect effect) {
         return new Effect(effect.getEffectType(), effect.getEffectInfo(), effect.getDuration());
-    }
-
-    public int floatObjectToInt(Object obj) {
-        if (obj instanceof Float) {
-            float f = (Float) obj;
-            return (int) f;
-        }
-        return 0;
     }
 
     public Battle getBattle() { return battle; }

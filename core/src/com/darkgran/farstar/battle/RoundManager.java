@@ -1,31 +1,38 @@
 package com.darkgran.farstar.battle;
 
-import com.darkgran.farstar.battle.gui.tokens.FleetToken;
-import com.darkgran.farstar.battle.gui.tokens.HandToken;
-import com.darkgran.farstar.battle.gui.tokens.MothershipToken;
-import com.darkgran.farstar.battle.gui.tokens.Token;
-import com.darkgran.farstar.battle.players.abilities.AbilityInfo;
-import com.darkgran.farstar.battle.players.abilities.AbilityStarter;
-import com.darkgran.farstar.battle.gui.*;
+import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.SuperScreen;
+import com.darkgran.farstar.gui.tokens.*;
+import com.darkgran.farstar.cards.AbilityInfo;
+import com.darkgran.farstar.cards.AbilityStarter;
+import com.darkgran.farstar.gui.battlegui.*;
 import com.darkgran.farstar.battle.players.*;
-import com.darkgran.farstar.battle.players.cards.Card;
-import com.darkgran.farstar.battle.players.cards.CardInfo;
-import com.darkgran.farstar.battle.players.cards.CardType;
+import com.darkgran.farstar.cards.CardInfo;
+import com.darkgran.farstar.cards.CardType;
+import com.darkgran.farstar.gui.ActorButton;
+import com.darkgran.farstar.gui.Notification;
+import com.darkgran.farstar.gui.SimpleVector2;
 
 import java.util.ArrayList;
 
 import static com.darkgran.farstar.battle.BattleSettings.CARDS_PER_TURN;
 import static com.darkgran.farstar.battle.BattleSettings.MAX_TECH_INCOME;
 
+//in-future: depending on how other mods than 1v1 treat combat-phase, split into abstract+RoundManager1v1 might be required (probably not needed unless combat shared between allies)
 public class RoundManager {
     private final Battle battle;
     private final PossibilityAdvisor possibilityAdvisor;
+    private BattlePlayer startingBattlePlayer;
     private boolean launched = false;
     private boolean firstTurnThisRound;
     private int roundNum = 0;
     private boolean targetingActive;
-    private DeploymentInfo postponedDeploy = new DeploymentInfo();
+    private final DeploymentInfo postponedDeploy = new DeploymentInfo(); //in-future: turn into a List to enable deployment-chains (eg. on-deploy summoning (targeted) that leads to another targeted on-deploy ability; atm there are no such battleCards)
     private AbilityPicker abilityPicker;
+    private final ActorButton cancelButton = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("cancel"), Farstar.ASSET_LIBRARY.getAtlasRegion("cancelO")){
+        @Override
+        public void clicked() { tryCancel(); }
+    };
 
     public RoundManager(Battle battle, PossibilityAdvisor possibilityAdvisor) {
         this.battle = battle;
@@ -39,46 +46,66 @@ public class RoundManager {
     public void launch() {
         roundNum = 0;
         endTargeting();
+        battle.startingCards();
         launched = true;
         newRound();
     }
 
     public void newRound() {
         roundNum++;
+        getBattle().getBattleScreen().getBattleStage().getRoundCounter().update();
         System.out.println("R#"+roundNum);
         firstTurnThisRound = true;
         newTurn();
     }
 
     public void newTurn() {
-        battle.getWhoseTurn().getHand().drawCards(battle.getWhoseTurn().getDeck(), CARDS_PER_TURN);
+        battle.getWhoseTurn().getHand().getNewCards(battle.getWhoseTurn().getDeck(), CARDS_PER_TURN);
         resourceIncomes(battle.getWhoseTurn());
-        System.out.println("Player #"+battle.getWhoseTurn().getBattleID()+" may play his cards.");
-        if (battle.getWhoseTurn() instanceof Bot) {
-            ((Bot) battle.getWhoseTurn()).newTurn();
-        } else {
+        System.out.println("Player #"+battle.getWhoseTurn().getBattleID()+" may play his Cards.");
+        if (battle.getWhoseTurn() instanceof LocalBattlePlayer) {
             possibilityAdvisor.markPossibilities(battle.getWhoseTurn(), battle);
+            getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "YOUR TURN", 3);
+            getBattle().getBattleScreen().getBattleStage().getTurnButton().setDisabled(false);
+        } else {
+            if (battle.getWhoseTurn() instanceof Bot) {
+                ((Bot) battle.getWhoseTurn()).newTurn();
+            }
+            if (getBattle().getBattleScreen().getBattleType() != BattleType.SIMULATION) {
+                getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "ENEMY TURN", 3);
+            }
+            getBattle().getBattleScreen().getBattleStage().getTurnButton().setDisabled(true);
         }
     }
 
-    public void resourceIncomes(Player player) {
-        int income = roundNum;
+    public void resourceIncomes(BattlePlayer battlePlayer) {
+        int income = capIncome(getIncome());
+        battlePlayer.setEnergy(income);
+        battlePlayer.addMatter(income);
+    }
+
+    public int getIncome() {
+        return roundNum;
+    }
+
+    public int capIncome(int income) {
         if (income > MAX_TECH_INCOME) {
             income = MAX_TECH_INCOME;
         }
-        player.setEnergy(income);
-        player.addMatter(income);
+        return income;
     }
 
     public void endTurn() {
         if (!battle.getCombatManager().isActive() && !battle.isEverythingDisabled() && !targetingActive) {
             battle.closeYards();
-            battle.unMarkAllPossibilities();
+            getBattle().getBattleScreen().getBattleStage().getTurnButton().setDisabled(true);
             battle.getCombatManager().launchCombat();
+            battle.refreshPossibilities();
         }
     }
 
     public void afterCombat() {
+        battle.unMarkAllPossibilities();
         if (!battle.isEverythingDisabled()) {
             battle.tickEffects();
             battle.refreshUsedShips();
@@ -98,18 +125,15 @@ public class RoundManager {
 
     public boolean processDrop(Token token, DropTarget dropTarget, int position, boolean postAbility, boolean payPrice) {
         boolean success = false;
-        if (!targetingActive && !abilityPicker.isActive() && token.getCardListMenu() != null) {
+        if (!targetingActive && !abilityPicker.isActive() && token.getCardListMenu() != null && !(dropTarget instanceof HandMenu)) {
             CardType cardType = token.getCard().getCardInfo().getCardType();
             if (!battle.activeCombatOrDuel() || cardType == CardType.TACTIC) {
                 //OUTSIDE COMBAT OR TACTIC
-                Player whoseTurn;
-                if (!battle.getCombatManager().getDuelManager().isActive()) { whoseTurn = battle.getWhoseTurn(); }
-                else { whoseTurn = battle.getCombatManager().getDuelManager().getActivePlayer().getPlayer(); }
-                if (token.getCardListMenu().getPlayer() == whoseTurn) {
-                    Card targetCard = null;
+                BattlePlayer whoseTurn = battle.getWhoseTurn();
+                if (token.getCardListMenu().getBattlePlayer() == whoseTurn) {
                     if (possibilityAdvisor.isPossibleToDeploy(whoseTurn, whoseTurn, token.getCard(), false, battle)) {
-                        //TARGETING ANYWHERE FOR ACTION-CARDS
-                        if (cardType == CardType.ACTION) {
+                        //DEPLOYING ANYWHERE FOR SPELLS
+                        if (CardType.isSpell(cardType) && !(dropTarget instanceof JunkButton)) {
                             if (!postAbility) {
                                 success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
                             }
@@ -135,16 +159,13 @@ public class RoundManager {
                             if (cardType != CardType.SUPPORT) {
                                 Fleet fleet = ((FleetMenu) dropTarget).getFleet();
                                 if ((fleet == whoseTurn.getFleet() || !CardType.isShip(cardType)) && position != -1) {
-                                    if (!battle.getCombatManager().getDuelManager().isActive() || (fleet.getShips()[position].getToken() != null && fleet.getShips()[position].isInDuel())) {
+                                    if (!battle.getCombatManager().isActive() || (!fleet.isEmpty() && battle.getCombatManager().isTacticalPhase())) { //(fleet.getShips()[position].getToken() != null && fleet.getShips()[position].isInDuel())
                                         //ABILITIES
                                         postponedDeploy.setPosition(position);
                                         if (!postAbility) {
-                                            success = checkAllAbilities(token, (fleet.getShips()[position] != null) ? fleet.getShips()[position].getToken() : null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
+                                            success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
                                         }
                                         if (postAbility || success) {
-                                            if (fleet.getShips()[position] != null) {
-                                                targetCard = fleet.getShips()[position].getToken().getCard();
-                                            }
                                             //DEPLOYMENT
                                             if (CardType.isShip(cardType)) {
                                                 success = fleet.addShip(token, position);
@@ -155,15 +176,11 @@ public class RoundManager {
                             }
                             //TARGETING MS
                         } else if (dropTarget instanceof MothershipToken) {
-                            MothershipToken ms = (MothershipToken) dropTarget;
-                            if (!battle.activeCombatOrDuel() || ms.getCard().isInDuel()) {
+                            if (!getBattle().getCombatManager().getDuelManager().isActive()) {
                                 //ABILITIES
                                 if (CardType.isSpell(cardType)) {
                                     if (!postAbility) {
-                                        success = checkAllAbilities(token, ms, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
-                                    }
-                                    if (postAbility || success) {
-                                        targetCard = ms.getCard();
+                                        success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
                                     }
                                 }
                             }
@@ -172,16 +189,12 @@ public class RoundManager {
                     //PAYMENT + DISCARD (incl. targeting discard)
                     if (success || postAbility) {
                         //System.out.println("Drop Success.");
-                        if (targetCard != null && cardType == CardType.TACTIC && battle.getCombatManager().getDuelManager().isActive()) {
-                            battle.getCombatManager().getDuelManager().saveTactic(token.getCard(), targetCard);
-                        }
                         if (payPrice) { whoseTurn.payday(token.getCard()); }
-                        token.addCardToJunk();
-                        possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
-                    } else if (dropTarget instanceof JunkButton && token instanceof HandToken) { //Target: Discard
-                        Junkpile junkpile = ((JunkButton) dropTarget).getPlayer().getJunkpile();
+                        if (!CardType.isShip(cardType) && cardType != CardType.SUPPORT && cardType != CardType.MS) { token.getCard().getToken().addCardToJunk(); }
+                    } else if (dropTarget instanceof JunkButton && (token instanceof DeploymentCard || token instanceof HandToken)) { //Target: Discard
+                        Junkpile junkpile = ((JunkButton) dropTarget).getBattlePlayer().getJunkpile();
                         if (junkpile == whoseTurn.getJunkpile()) {
-                            token.addCardToJunk();
+                            token.getCard().getToken().addCardToJunk();
                             success = true;
                         }
                     }
@@ -189,23 +202,35 @@ public class RoundManager {
             }
         }
         //HAND ONLY
-        if (token instanceof HandToken) {
-            if (!success && !postAbility) {
-                ((HandToken) token).resetPosition();
-            } else {
-                token.destroy();
+        if (token instanceof DeploymentCard || token instanceof HandToken) {
+            if (success || postAbility) {
+                if (!(dropTarget instanceof JunkButton)) {
+                    if (dropTarget != null) {
+                        callHerald(token.getCard(), TokenType.HAND, new SimpleVector2(dropTarget.getSimpleBox2().x, dropTarget.getSimpleBox2().y));
+                    } else {
+                        callHerald(token.getCard(), TokenType.HAND, new SimpleVector2(0, 0));
+                    }
+                }
+                token.getCard().getToken().destroy();
             }
         }
+        //YARD-HERALD
+        /*else if (token.getCard().getCardInfo().getCardType() == CardType.YARDPRINT) {
+            if (success || postAbility) {
+                callHerald(token.getCard(), token.getTokenType(), new SimpleVector2(token.getX(), token.getY()));
+            }
+        }*/
+        battle.refreshPossibilities();
         return success;
     }
 
-    public boolean checkAllAbilities(Token caster, Token target, AbilityStarter abilityStarter, Player owner, DropTarget dropTarget) {
+    public boolean checkAllAbilities(Token caster, Token target, AbilityStarter abilityStarter, BattlePlayer owner, DropTarget dropTarget) {
         if (abilityStarter != AbilityStarter.USE || !caster.getCard().isUsed()) {
             CardInfo cardInfo = caster.getCard().getCardInfo();
             ArrayList<AbilityInfo> options = new ArrayList<>();
             for (int i = 0; i < cardInfo.getAbilities().size(); i++) {
                 if (cardInfo.getAbilities().get(i) != null) {
-                    if (cardInfo.getAbilities().get(i).getStarter() == abilityStarter) { //cardType == CardType.UPGRADE || cardType == CardType.TACTIC ||
+                    if (cardInfo.getAbilities().get(i).getStarter() == abilityStarter) {
                         AbilityInfo abilityInfo = cardInfo.getAbilities().get(i);
                         if (owner.canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
                             options.add(abilityInfo);
@@ -237,32 +262,40 @@ public class RoundManager {
         if (battle.getWhoseTurn() instanceof Bot) {
             ((Bot) battle.getWhoseTurn()).pickAbility(caster, target, dropTarget, options);
         } else if (abilityPicker != null) {
+            caster.setPicked(true);
             abilityPicker.setAbilityInfos(new ArrayList<>());
             for (AbilityInfo option : options) {
                 abilityPicker.getAbilityInfos().add(option);
             }
-            abilityPicker.enable();
+            abilityPicker.enable(caster.getCard());
+            cancelButton.setPosition(Farstar.STAGE_WIDTH*0.69f, Farstar.STAGE_HEIGHT*0.28f);
+            getBattle().getBattleScreen().getBattleStage().addActor(cancelButton);
+            getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Choose an Ability.", 3);
+            ((YardMenu) caster.getCard().getBattlePlayer().getYard().getCardListMenu()).setOpen(false);
         }
     }
 
-    public boolean playAbility(Token caster, Card target, AbilityStarter abilityStarter, Player owner, DropTarget dropTarget, AbilityInfo ability) {
+    public boolean playAbility(Token caster, BattleCard target, AbilityStarter abilityStarter, BattlePlayer owner, DropTarget dropTarget, AbilityInfo ability) {
         boolean success = battle.getAbilityManager().playAbility(caster, target, ability, dropTarget);
         if (success) {
             if (owner != null) { owner.payday(ability.getResourcePrice().getEnergy(), ability.getResourcePrice().getMatter()); }
             if (abilityStarter == AbilityStarter.USE) {
                 caster.getCard().setUsed(true);
             }
-            possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
         }
         return success;
     }
 
     public void processPick(AbilityInfo ability) {
         if (!battle.isEverythingDisabled() && postponedDeploy.getCaster() != null) {
-            if (abilityPicker != null) { abilityPicker.disable(); }
-            if (playAbility(postponedDeploy.getCaster(), (postponedDeploy.getTarget()!=null) ? postponedDeploy.getTarget().getCard() : null, ability.getStarter(), postponedDeploy.getCaster().getCard().getPlayer(), postponedDeploy.getDrop(), ability)) {
+            if (abilityPicker != null) {
+                abilityPicker.disable();
+                cancelButton.remove();
+            }
+            if (playAbility(postponedDeploy.getCaster(), (postponedDeploy.getTarget()!=null) ? postponedDeploy.getTarget().getCard() : null, ability.getStarter(), postponedDeploy.getCaster().getCard().getBattlePlayer(), postponedDeploy.getDrop(), ability)) {
                 processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, ability.getStarter()==AbilityStarter.DEPLOY);
                 postponedDeploy.resetInDeployment();
+                battle.refreshPossibilities();
             }
         }
     }
@@ -271,39 +304,53 @@ public class RoundManager {
         targetingActive = true;
         postponedDeploy.saveInDeployment(token, ability, dropTarget, null);
         System.out.println("Need a Target.");
-        if (battle.getWhoseTurn() instanceof Bot) {
-            ((Bot) battle.getWhoseTurn()).chooseTargets(token, ability);
+        BattlePlayer whoseTurn = battle.getWhoseTurn();
+        if (whoseTurn instanceof Bot) {
+            ((Bot) whoseTurn).chooseTargets(token, ability);
+        } else {
+            token.setPicked(true);
+            getBattle().getBattleScreen().switchCursor(SuperScreen.CursorType.AIM);
+            cancelButton.setPosition(Farstar.STAGE_WIDTH*0.62f, Farstar.STAGE_HEIGHT*0.08f);
+            getBattle().getBattleScreen().getBattleStage().addActor(cancelButton);
+            getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Choose a Target.", 3);
+            ((YardMenu) whoseTurn.getYard().getCardListMenu()).setOpen(false);
         }
     }
 
-    public void processClick(Token token, Player owner) {
-        if (!battle.isEverythingDisabled() && !battle.activeCombatOrDuel() && getBattle().getWhoseTurn() instanceof LocalPlayer) {
+    public void processClick(Token token, BattlePlayer owner) {
+        getBattle().getBattleScreen().hideScreenConceder();
+        if (!abilityPicker.isActive() && (!battle.activeCombatOrDuel() || (battle.getCombatManager().isTacticalPhase() && targetingActive)) && !battle.isEverythingDisabled() && getBattle().getWhoseTurn() instanceof LocalBattlePlayer) {
             if (targetingActive) {
                 processTarget(token);
-            } else if (possibilityAdvisor.isPossibleToDeploy(owner, battle.getWhoseTurn(), token.getCard(), false, battle)) {
+            } else if (owner == battle.getWhoseTurn() && token != null && possibilityAdvisor.hasPossibleAbility(owner, token.getCard())) {
                 checkAllAbilities(token, null, AbilityStarter.USE, owner, null);
+                battle.refreshPossibilities();
             }
         }
     }
 
     public void processTarget(Token target) {
         if (targetingActive && postponedDeploy.getCaster() != null) {
-            if (battle.getAbilityManager().validAbilityTarget(postponedDeploy.getAbility(), postponedDeploy.getCaster().getCard(), target.getCard())) {
+            if (AbilityManager.validAbilityTarget(postponedDeploy.getAbility(), postponedDeploy.getCaster().getCard(), target.getCard())) {
                 //System.out.println("Playing ability...");
                 if (battle.getAbilityManager().playAbility(postponedDeploy.getCaster(), target.getCard(), postponedDeploy.getAbility(), postponedDeploy.getDrop())) {
                     System.out.println("Targeted-Ability Success!");
                     if (postponedDeploy.getAbility().getStarter() == AbilityStarter.USE) {
                         battle.getWhoseTurn().payday(postponedDeploy.getAbility().getResourcePrice().getEnergy(), postponedDeploy.getAbility().getResourcePrice().getMatter());
                         postponedDeploy.getCaster().getCard().setUsed(true);
-                        possibilityAdvisor.refresh(battle.getWhoseTurn(), battle);
                         //System.out.println("Ability price paid.");
                     } else {
                         //System.out.println("Reprocessing original drop...");
                         targetingActive = false;
+                        getBattle().getBattleScreen().switchCursor(SuperScreen.CursorType.DEFAULT);
                         processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, postponedDeploy.getAbility().getStarter()==AbilityStarter.DEPLOY);
+                        if (target.getCard() != null && battle.getCombatManager().isTacticalPhase() && postponedDeploy.getCaster().getCard().getCardInfo().getCardType() == CardType.TACTIC) {
+                            battle.getCombatManager().saveTactic(postponedDeploy.getCaster().getCard(), target.getCard());
+                        }
                     }
                     endTargeting();
                 }
+                battle.refreshPossibilities();
             } else {
                 System.out.println("Invalid Target.");
             }
@@ -318,23 +365,53 @@ public class RoundManager {
         if (abilityPicker.isActive()) {
             abilityPicker.disable();
             postponedDeploy.resetInDeployment();
+            cancelButton.remove();
+        }
+        if (!getBattle().getCombatManager().getDuelManager().isActive()) {
+            battle.refreshPossibilities();
         }
     }
 
     private void endTargeting() {
         targetingActive = false;
+        getBattle().getBattleScreen().switchCursor(SuperScreen.CursorType.DEFAULT);
         postponedDeploy.resetInDeployment();
+        cancelButton.remove();
+    }
+
+    private void callHerald(BattleCard battleCard, TokenType targetType, SimpleVector2 targetXY) {
+        getBattle().getBattleScreen().getBattleStage().getHerald().enable(battleCard, targetType, targetXY);
     }
 
     //-----------//
     //-UTILITIES-//
     //-----------//
 
-    public static boolean ownsToken(Player player, Token token) {
-        if (token instanceof FleetToken) {
-            return player == ((FleetToken) token).getFleetMenu().getPlayer();
+    public boolean isTokenMoveEnabled(Token token) { //Turn and Tactical Only
+        if (token.getCard() != null && token.getCard().getBattlePlayer() instanceof LocalBattlePlayer && RoundManager.ownsToken(getBattle().getWhoseTurn(), token) && (!getBattle().getCombatManager().isActive() || (getBattle().getCombatManager().isTacticalPhase() && token.getCard().isTactic()))) {
+            return areMovesEnabled();
+        }
+        return false;
+    }
+
+    public boolean isCombatMoveEnabled(Token token) { //Duel-Picking Only
+        if (token.getCard() != null && token.getCard().getBattlePlayer() instanceof LocalBattlePlayer && RoundManager.ownsToken(getBattle().getWhoseTurn(), token) && getBattle().getCombatManager().isActive() && !getBattle().getCombatManager().isTacticalPhase()) {
+            return areMovesEnabled();
+        }
+        return false;
+    }
+
+    public boolean areMovesEnabled() {
+        return !getBattle().isEverythingDisabled() && !isTargetingActive() && !getAbilityPicker().isActive() && !getBattle().getCombatManager().getDuelManager().isActive();
+    }
+
+    public static boolean ownsToken(BattlePlayer battlePlayer, Token token) {
+        if (token instanceof TargetingToken)  {
+            return battlePlayer == ((FleetToken) token.getCard().getToken()).getFleetMenu().getBattlePlayer();
+        } else if (token instanceof FleetToken) {
+            return battlePlayer == ((FleetToken) token).getFleetMenu().getBattlePlayer();
         } else {
-            return player == token.getCardListMenu().getPlayer();
+            return battlePlayer == token.getCardListMenu().getBattlePlayer();
         }
     }
 
@@ -354,4 +431,7 @@ public class RoundManager {
 
     public PossibilityAdvisor getPossibilityAdvisor() { return possibilityAdvisor; }
 
+    public BattlePlayer getStartingPlayer() { return startingBattlePlayer; }
+
+    protected void setStartingPlayer(BattlePlayer startingBattlePlayer) { this.startingBattlePlayer = startingBattlePlayer; }
 }

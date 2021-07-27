@@ -9,7 +9,7 @@ import com.darkgran.farstar.Farstar;
 public interface JustFont {
 
     default void setFont(String path) { //Must be set
-        if (path != "") {
+        if (!path.equals("")) {
             setFontPath(path);
         } else {
             setFontPath("fonts/arial15.fnt");

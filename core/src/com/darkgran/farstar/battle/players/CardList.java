@@ -1,13 +1,12 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.battle.gui.CardListMenu;
-import com.darkgran.farstar.battle.players.cards.Card;
+import com.darkgran.farstar.gui.battlegui.CardListMenu;
 
 import java.util.ArrayList;
 
-public abstract class CardList extends ArrayList<Card> {
-    private Player player;
+public abstract class CardList extends ArrayList<BattleCard> {
+    private BattlePlayer battlePlayer;
     private int maxSize;
     private CardListMenu cardListMenu;
 
@@ -15,10 +14,10 @@ public abstract class CardList extends ArrayList<Card> {
         setMaxSize(0);
     }
 
-    public CardList(ArrayList<Card> cards) {
+    public CardList(ArrayList<BattleCard> battleCards) {
         super();
         setupSize();
-        addAll(cards);
+        addAll(battleCards);
     }
 
     public CardList() {
@@ -26,7 +25,7 @@ public abstract class CardList extends ArrayList<Card> {
         setupSize();
         clear();
         for (int i = 0; i < maxSize; i++) {
-            add(new Card(Farstar.CARD_LIBRARY.getCard(2), null));
+            add(new BattleCard(Farstar.CARD_LIBRARY.getCard(2), null));
         }
     }
 
@@ -35,21 +34,21 @@ public abstract class CardList extends ArrayList<Card> {
         setupSize();
         clear();
         for (int i = 0; i < maxSize; i++) {
-            add(new Card(Farstar.CARD_LIBRARY.getCard(id), null));
+            add(new BattleCard(Farstar.CARD_LIBRARY.getCard(id), null));
         }
     }
 
-    public void setPlayerOnAll(Player player) {
-        setPlayer(player);
-        for (Card card : this) {
-            card.setPlayer(player);
+    public void setPlayerOnAll(BattlePlayer battlePlayer) {
+        setBattlePlayer(battlePlayer);
+        for (BattleCard battleCard : this) {
+            battleCard.setBattlePlayer(battlePlayer);
         }
     }
 
-    public boolean addCard(Card card) {
+    public boolean addCard(BattleCard battleCard) {
         if (cardListMenu != null && size() < maxSize) {
-            add(card);
-            cardListMenu.generateNewToken(card);
+            add(battleCard);
+            cardListMenu.generateNewToken(battleCard);
             return true;
         }
         return false;
@@ -69,8 +68,8 @@ public abstract class CardList extends ArrayList<Card> {
 
     public CardListMenu getCardListMenu() { return cardListMenu; }
 
-    public Player getPlayer() { return player; }
+    public BattlePlayer getBattlePlayer() { return battlePlayer; }
 
-    public void setPlayer(Player player) { this.player = player; }
+    public void setBattlePlayer(BattlePlayer battlePlayer) { this.battlePlayer = battlePlayer; }
 
 }

@@ -2,15 +2,14 @@ package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.BattleSettings;
-import com.darkgran.farstar.battle.players.cards.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Deck extends CardList {
 
-    public Deck(ArrayList<Card> cards) {
-        super(cards);
+    public Deck(ArrayList<BattleCard> battleCards) {
+        super(battleCards);
         shuffle();
     }
 
@@ -23,7 +22,7 @@ public class Deck extends CardList {
                 19, 19
         };
         for (int i = 0; i < getMaxSize(); i++) {
-            add(new Card(Farstar.CARD_LIBRARY.getCard(ids[i]), null));
+            add(new BattleCard(Farstar.CARD_LIBRARY.getCard(ids[i]), null));
         }
         shuffle();
     }
@@ -38,26 +37,27 @@ public class Deck extends CardList {
         setMaxSize(BattleSettings.DECK_SIZE);
     }
 
-    public Card drawCard() {
+    public BattleCard drawCard() {
         if (size() == 0) {
             eatJunk();
             shuffle();
         }
         if (size() > 0) {
-            Card card = get(0);
+            BattleCard battleCard = get(0);
             remove(0);
-            return card;
+            getBattlePlayer().getBattle().getBattleScreen().getBattleStage().updateDeckInfos();
+            return battleCard;
         } else { return null; }
     }
 
     public void eatJunk() {
-        ArrayList<Card> junkCards = getPlayer().getJunkpile();
-        for (Card junk : junkCards) { add(junk); }
-        getPlayer().getJunkpile().clear();
+        ArrayList<BattleCard> junkBattleCards = getBattlePlayer().getJunkpile();
+        this.addAll(junkBattleCards);
+        getBattlePlayer().getJunkpile().clear();
     }
 
     private void shuffle() {
-        ArrayList<Card> list = (ArrayList<Card>) this.clone();
+        ArrayList<BattleCard> list = (CardList) this.clone();
         Collections.shuffle(list);
         clear();
         addAll(list);

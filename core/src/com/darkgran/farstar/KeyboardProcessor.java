@@ -3,9 +3,10 @@ package com.darkgran.farstar;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.utils.IntSet;
+import com.darkgran.farstar.battle.BattleScreen;
 
 public class KeyboardProcessor extends InputAdapter {
-    private IntSet keysDown = new IntSet(20);
+    private final IntSet keysDown = new IntSet(20);
     private final Farstar game;
 
     public KeyboardProcessor(Farstar game) {
@@ -33,10 +34,26 @@ public class KeyboardProcessor extends InputAdapter {
 
     @Override
     public boolean keyUp(int keycode) {
-        keysDown.remove(keycode);
-        if (keycode == Input.Keys.ESCAPE) {
+        if (keycode == Input.Keys.ESCAPE || (keycode == Input.Keys.SPACE && game.getSuperScreen() instanceof IntroScreen)) {
             if (game.getSuperScreen() != null) { game.getSuperScreen().userEscape(); }
+        } else if (keysDown.size == 1) {
+            switch (keycode) {
+                case Input.Keys.F2:
+                    game.getSuperScreen().setTableStageEnabled(!game.getSuperScreen().isTableStageEnabled());
+                    break;
+                case Input.Keys.F3:
+                    if (game.getSuperScreen() instanceof BattleScreen) {
+                        game.getSuperScreen().setTokenFramesEnabled(!game.getSuperScreen().isTokenFramesEnabled());
+                    }
+                    break;
+                case Input.Keys.F4:
+                    if (game.getSuperScreen() instanceof BattleScreen) {
+                        game.getSuperScreen().setNetEnabled(!game.getSuperScreen().isNetEnabled());
+                    }
+                    break;
+            }
         }
+        keysDown.remove(keycode);
         return true;
     }
 
