@@ -5,14 +5,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.BattleType;
-import com.darkgran.farstar.gui.ColorPalette;
+import com.darkgran.farstar.gui.*;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.gui.ListeningStage;
 import com.darkgran.farstar.battle.Battle1v1;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.PlayerFactory;
-import com.darkgran.farstar.gui.ActorButton;
-import com.darkgran.farstar.gui.SimpleImage2;
 
 public class MainScreenStage extends ListeningStage {
     private final PlayerFactory playerFactory = new PlayerFactory();
@@ -88,12 +85,15 @@ public class MainScreenStage extends ListeningStage {
                         playerFactory.getPlayer("AUTO", 1, 0),
                         playerFactory.getPlayer("AUTO", 2, 15)
                 );
+                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Game Mode: AI vs AI.", 5);
                 break;
             case SOLITARY:
+
                 battle = new Battle1v1(
                         playerFactory.getPlayer("LOCAL", 1, 0),
                         playerFactory.getPlayer("LOCAL", 2, 15)
                 );
+                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Game Mode: Local Player vs Local Player.", 5);
                 break;
         }
         if (battle != null) {

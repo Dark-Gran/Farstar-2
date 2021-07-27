@@ -14,7 +14,7 @@ import com.darkgran.farstar.util.*;
  */
 public class Notification extends TextInTheBox {
     public enum NotificationType {
-        BOT_LEFT(Farstar.STAGE_WIDTH/12f, Farstar.STAGE_HEIGHT/5f, Farstar.STAGE_WIDTH * 0.385f, 50f, -70f, "bahnschrift30"),
+        BOT_LEFT(Farstar.STAGE_WIDTH/12f, Farstar.STAGE_HEIGHT/5f, Farstar.STAGE_WIDTH * 0.36f, 50f, -70f, "bahnschrift30"),
         MIDDLE(Farstar.STAGE_WIDTH/2f, Farstar.STAGE_HEIGHT/2f, Farstar.STAGE_WIDTH * 0.2f, 80f, 0f, "orbitron36");
 
         private final float x;
