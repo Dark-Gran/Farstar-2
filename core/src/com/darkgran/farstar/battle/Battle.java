@@ -15,7 +15,7 @@ public abstract class Battle {
     private CombatManager combatManager;
     private AbilityManager abilityManager;
     private boolean everythingDisabled = false;
-    private ArrayList<BattlePlayer> gameOvers = new ArrayList<>();
+    private final ArrayList<BattlePlayer> gameOvers = new ArrayList<>();
 
     public Battle() {
         System.out.println("Launching Battle...");

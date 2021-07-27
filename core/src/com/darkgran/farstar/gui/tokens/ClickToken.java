@@ -11,7 +11,7 @@ import com.darkgran.farstar.gui.SimpleVector2;
 public abstract class ClickToken extends Token {
     private boolean zoomEnabled = true;
 
-    private ClickListener clickListener = new ClickListener(){
+    private final ClickListener clickListener = new ClickListener(){
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             return ClickToken.this.touchDown(event, x, y, pointer, button);

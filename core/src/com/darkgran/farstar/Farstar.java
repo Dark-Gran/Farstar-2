@@ -39,11 +39,6 @@ public class Farstar extends Game {
 		this.superScreen = (SuperScreen) screen;
 		super.setScreen(screen);
 	}
-
-	@Override
-	public void render () {
-		super.render();
-	}
 	
 	@Override
 	public void dispose () {

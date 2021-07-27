@@ -24,8 +24,8 @@ public class ShotManager {
             this.speed = speed;
         }
     }
-    public class AniAttack {
-        public class AniShot {
+    public static class AniAttack {
+        private class AniShot {
             private class AniRecoil {
                 private final SimpleVector2 position;
                 private float scaleX;
@@ -53,7 +53,7 @@ public class ShotManager {
             private class AniShrapnel {
                 private final SimpleVector2 speed;
                 private final boolean negativeSpin;
-                private SimpleVector2 position;
+                private final SimpleVector2 position;
                 private float rotation;
                 private float alpha = 1f;
                 private final float shrapnelSize;

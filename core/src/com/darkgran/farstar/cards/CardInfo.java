@@ -9,14 +9,14 @@ public class CardInfo {
     private String description;
     private final CardType cardType;
     private final CardRarity cardRarity;
-    private int tier;
+    private final int tier;
     private int energy; //resource-price
     private int matter; //resource-price
     private int offense;
     private int defense;
     private TechType offenseType;
     private TechType defenseType;
-    private ArrayList<AbilityInfo> abilities;
+    private final ArrayList<AbilityInfo> abilities;
     private final int animatedShots;
 
     public CardInfo(byte id, String name, CardCulture culture, String description, CardType cardType, CardRarity cardRarity, int tier, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType, ArrayList<AbilityInfo> abilities, int animatedShots) {
@@ -56,9 +56,7 @@ public class CardInfo {
     }
 
     private ArrayList<AbilityInfo> instanceAbilities(ArrayList<AbilityInfo> abilities) {
-        ArrayList<AbilityInfo> newAbilities = new ArrayList<>();
-        newAbilities.addAll(abilities);
-        return newAbilities;
+        return new ArrayList<>(abilities);
     }
 
     public byte getId() { return id; }

@@ -17,10 +17,10 @@ public class WorldManager {
     public static float STEP_TIME = 1f / FPS;
     public static int VELOCITY_ITERATIONS = 15;
     public static int POSITION_ITERATIONS = 12;
-    public static float WORLD_WIDTH = 9.6f;
+    /*public static float WORLD_WIDTH = 9.6f;
     public static float WORLD_HEIGHT = 4.8f;
     public static float CAMERA_CLOSEUP_X = 0.2f;
-    public static float CAMERA_CLOSEUP_Y = 0.1f;
+    public static float CAMERA_CLOSEUP_Y = 0.1f;*/
     private float accumulator = 0;
     private final World world = new World(new Vector2(0, 0), true);
     private final ArrayList<Body> corpses = new ArrayList<>();

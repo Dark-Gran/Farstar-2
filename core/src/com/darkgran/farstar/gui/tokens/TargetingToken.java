@@ -18,13 +18,11 @@ import com.darkgran.farstar.gui.SimpleVector2;
 
 public class TargetingToken extends FakeToken {
     private Dragger dragger;
-    private TextureRegion aimPic;
-    private TextureRegion aimPicRegion;
+    private final TextureRegion aimPic;
 
     public TargetingToken(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
         super(battleCard, x, y, battleStage, cardListMenu, true);
         aimPic = Farstar.ASSET_LIBRARY.getAtlasRegion("combat-aim");
-        aimPicRegion = new TextureRegion(aimPic);
         setWidth(aimPic.getRegionWidth());
         setHeight(aimPic.getRegionHeight());
         SimpleVector2 coords = SuperScreen.getMouseCoordinates();
@@ -40,7 +38,7 @@ public class TargetingToken extends FakeToken {
         Vector2 end = new Vector2(getX()+getWidth()/2, getY()+getHeight()/2);
         drawConnection(shapeRenderer, start, end, ColorPalette.changeAlpha(ColorPalette.LIGHT, 0.3f));
         batch.begin();
-        batch.draw(aimPicRegion, getX(), getY(), getWidth()/2f, getHeight()/2f, getWidth(), getHeight(), 1f, 1f, (float) Math.toDegrees(Math.atan2(start.x - end.x, end.y - start.y)));
+        batch.draw(aimPic, getX(), getY(), getWidth()/2f, getHeight()/2f, getWidth(), getHeight(), 1f, 1f, (float) Math.toDegrees(Math.atan2(start.x - end.x, end.y - start.y)));
     }
 
     public static void drawConnection(ShapeRenderer shapeRenderer, Vector2 start, Vector2 end, Color color) {

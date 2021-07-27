@@ -19,12 +19,12 @@ import com.darkgran.farstar.gui.SimpleVector2;
 //(uses Array instead of ArrayList... in-future: maybe it should use ArrayList because of non1v1 modes (and variability in general))
 public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
     private final Fleet fleet;
-    private FleetToken[] fleetTokens = new FleetToken[7]; //in-future: consider removing (FleetToken is held by the Ship itself)
-    private FleetToken[] tokensPrediction = new FleetToken[7];
-    private ClickListener clickListener = new ClickListener(){};
+    private final FleetToken[] fleetTokens = new FleetToken[7]; //in-future: consider removing (FleetToken is held by the Ship itself)
+    private final FleetToken[] tokensPrediction = new FleetToken[7];
+    private final ClickListener clickListener = new ClickListener(){};
     private boolean predicting;
     private boolean predictEnabled;
-    private SimpleVector2 lastPredictedCoords = new SimpleVector2(0, 0);
+    private final SimpleVector2 lastPredictedCoords = new SimpleVector2(0, 0);
     private int lastPredictedPos = -1;
 
     public FleetMenu(Fleet fleet, float x, float y, float width, float height, BattleStage battleStage, BattlePlayer battlePlayer, boolean negativeOffset) {
@@ -106,7 +106,7 @@ public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
                 boolean side = pos < 3;
                 int start = side ? 2 : 4;
                 if (pos == 3) {
-                    SimpleVector2 lr = getFleet().getSideSizes(shipsPrediction);
+                    SimpleVector2 lr = Fleet.getSideSizes(shipsPrediction);
                     side = lr.x < lr.y;
                     start = 3;
                 }

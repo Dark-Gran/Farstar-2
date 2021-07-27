@@ -1,6 +1,7 @@
 package com.darkgran.farstar.gui.battlegui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.BattlePlayer;
 
 import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
@@ -15,7 +16,7 @@ public class BPB2DrawerBattle extends BattlePlayerBox2 {
     }
 
     public void draw(Batch batch) {
-        if (DEBUG_RENDER) { getBattleStage().getBattleScreen().drawDebugSimpleBox2(this, getBattleStage().getBattleScreen().getShapeRenderer(), batch); }
+        if (DEBUG_RENDER) { BattleScreen.drawDebugSimpleBox2(this, getBattleStage().getBattleScreen().getShapeRenderer(), batch); }
     }
 
 }

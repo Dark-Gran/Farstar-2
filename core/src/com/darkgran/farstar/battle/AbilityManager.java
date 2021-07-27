@@ -123,7 +123,7 @@ public class AbilityManager {
     //CHANGE_STAT
     private boolean changeStat(BattleCard target, Effect effect) {
         boolean success = false;
-        boolean dontSaveEffect = false;
+        boolean doNotSaveEffect = false;
         if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
             Object changeInfo = effect.getEffectInfo().get(1);
             EffectTypeSpecifics.ChangeStatType changeStatType = EffectTypeSpecifics.ChangeStatType.valueOf(effect.getEffectInfo().get(0).toString());
@@ -157,7 +157,7 @@ public class AbilityManager {
                         for (int i = 0; i < target.getCardInfo().getAbilities().size() && !success; i++) {
                             if (isTheSameAbility(target.getCardInfo().getAbilities().get(i), newAbility)) {
                                 success = true;
-                                dontSaveEffect = true;
+                                doNotSaveEffect = true;
                             }
                         }
                         if (!success) {
@@ -167,7 +167,7 @@ public class AbilityManager {
                     }
                     break;
             }
-            if (!dontSaveEffect) {
+            if (!doNotSaveEffect) {
                 saveEffect(target, instanceEffect(effect));
             }
         }
@@ -394,6 +394,7 @@ public class AbilityManager {
         target.addToEffects(effect);
     }
 
+    /** Only Strings and Floats are expected: See CardLibrary jsonReader for comment on this raw type */
     private AbilityInfo effectToAbility(ArrayList effectInfo, int effectDuration) { //creates new ability-attribute
         EffectType effectType = EffectType.valueOf(effectInfo.get(1).toString());
         Effect newEffect = new Effect();

@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Handles all png-animations except for Attacks/Shots (see ShotManager).
  */
 public class AnimationManager {
-    private class DeathAnimation {
+    private static class DeathAnimation {
         private final TextureRegion deathPic;
         private final float x;
         private final float y;

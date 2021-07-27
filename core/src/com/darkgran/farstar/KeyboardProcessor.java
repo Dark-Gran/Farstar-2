@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.IntSet;
 import com.darkgran.farstar.battle.BattleScreen;
 
 public class KeyboardProcessor extends InputAdapter {
-    private IntSet keysDown = new IntSet(20);
+    private final IntSet keysDown = new IntSet(20);
     private final Farstar game;
 
     public KeyboardProcessor(Farstar game) {

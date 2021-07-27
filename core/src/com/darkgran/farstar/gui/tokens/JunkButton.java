@@ -2,7 +2,6 @@ package com.darkgran.farstar.gui.tokens;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.darkgran.farstar.Farstar;
@@ -14,15 +13,15 @@ import com.darkgran.farstar.gui.SimpleBox2;
 import com.darkgran.farstar.gui.SimpleVector2;
 
 public class JunkButton extends ClickToken implements DropTarget {
-    private final float angle = 90f;
     private final BattlePlayer battlePlayer;
     private TextureRegion netSpot = Farstar.ASSET_LIBRARY.getAtlasRegion("netspot-S");
-    private Matrix4 mx = new Matrix4();
+    private final Matrix4 mx = new Matrix4();
     private Matrix4 oldMX;
 
     public JunkButton(float x, float y, BattleStage battleStage, BattlePlayer battlePlayer) {
         super(null, x, y, battleStage, null, TokenType.JUNK, false, false);
         this.battlePlayer = battlePlayer;
+        float angle = 90f;
         mx.rotate(new Vector3(0, 0, 1), angle);
         SimpleVector2 newXY = HandToken.getNewXYFromAngle(0, 0, getX(), getY(), Math.toRadians(angle));
         mx.trn(newXY.x+getWidth(), newXY.y, 0);

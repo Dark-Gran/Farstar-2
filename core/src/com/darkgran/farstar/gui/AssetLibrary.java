@@ -26,8 +26,7 @@ public class AssetLibrary {
     }
 
     public String getFrameName(CardInfo cardInfo, TokenType tokenType) {
-        String name = addTokenTypeAcronym("frame"+cardInfo.getCardRarity().getAcronym()+"-", tokenType, false);
-        return name;
+        return addTokenTypeAcronym("frame"+cardInfo.getCardRarity().getAcronym()+"-", tokenType, false);
     }
 
     public String getTypePad(TechType techType, TokenType tokenType) {

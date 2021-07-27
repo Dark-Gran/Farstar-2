@@ -17,20 +17,7 @@ import com.darkgran.farstar.gui.SimpleBox2;
 public class HandMenu extends CardListMenu implements DropTarget {
     private float actualX;
     private float actualY;
-    private final ClickListener clickListener = new ClickListener(){
-        @Override
-        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-            setHandState(HandMenuState.UP);
-            super.enter(event, x, y, pointer, fromActor);
-        }
-        @Override
-        public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-            setHandState(HandMenuState.IDLE);
-            super.exit(event, x, y, pointer, toActor);
-        }
-    };
     private final Actor clickListenerActor = new Actor();
-
     public enum HandMenuState {
         IDLE, UP
     }
@@ -44,6 +31,19 @@ public class HandMenu extends CardListMenu implements DropTarget {
         actualX = x;
         actualY = !onBottom ? y : y + Farstar.STAGE_HEIGHT*0.1f;
         menuShiftY = isNegativeOffset() ? -285f : 250f;
+        ClickListener clickListener = new ClickListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                setHandState(HandMenuState.UP);
+                super.enter(event, x, y, pointer, fromActor);
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                setHandState(HandMenuState.IDLE);
+                super.exit(event, x, y, pointer, toActor);
+            }
+        };
         clickListenerActor.addListener(clickListener);
         clickListenerActor.setBounds(this.x-getWidth()/2, this.y, getWidth(), getHeight());
         battleStage.addActor(clickListenerActor);

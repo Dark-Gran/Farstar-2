@@ -27,7 +27,7 @@ public class RoundManager {
     private boolean firstTurnThisRound;
     private int roundNum = 0;
     private boolean targetingActive;
-    private DeploymentInfo postponedDeploy = new DeploymentInfo(); //in-future: turn into a List to enable deployment-chains (eg. on-deploy summoning (targeted) that leads to another targeted on-deploy ability; atm there are no such battleCards)
+    private final DeploymentInfo postponedDeploy = new DeploymentInfo(); //in-future: turn into a List to enable deployment-chains (eg. on-deploy summoning (targeted) that leads to another targeted on-deploy ability; atm there are no such battleCards)
     private AbilityPicker abilityPicker;
     private final ActorButton cancelButton = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("cancel"), Farstar.ASSET_LIBRARY.getAtlasRegion("cancelO")){
         @Override

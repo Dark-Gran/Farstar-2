@@ -12,7 +12,7 @@ import com.darkgran.farstar.cards.AbilityInfo;
 import com.darkgran.farstar.gui.SimpleVector2;
 
 public class AbilityPickerOption extends PrintToken {
-    private ClickListener clickListener;
+    private final ClickListener clickListener;
     private final String optionDescription;
 
     public AbilityPickerOption(Battle battle, AbilityInfo abilityInfo, BattleCard battleCard, float x, float y, String optionDescription) {

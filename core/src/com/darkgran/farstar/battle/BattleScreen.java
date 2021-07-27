@@ -13,7 +13,6 @@ import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.battle.players.PossibilityAdvisor;
 import com.darkgran.farstar.mainscreen.MainScreen;
-import com.darkgran.farstar.gui.SimpleBox2;
 
 public class BattleScreen extends SuperScreen {
     private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();

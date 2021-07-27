@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.darkgran.farstar.Farstar;
 
 public class YXQuestionBox extends TextInTheBox {
-    private final ListeningStage stage;
     private final Runnable runY;
     private final Runnable runX;
     private final ActorButton yBut = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("y"), Farstar.ASSET_LIBRARY.getAtlasRegion("yO"), Farstar.ASSET_LIBRARY.getAtlasRegion("yO")){
@@ -23,7 +22,6 @@ public class YXQuestionBox extends TextInTheBox {
 
     public YXQuestionBox(Color fontColor, Color boxColor, String fontPath, String message, float x, float y, float width, float height, boolean noBox, ListeningStage stage, Runnable runX, Runnable runY) {
         super(fontColor, boxColor, fontPath, message, x, y, width, height, noBox);
-        this.stage = stage;
         this.runX = runX;
         this.runY = runY;
         SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), message);

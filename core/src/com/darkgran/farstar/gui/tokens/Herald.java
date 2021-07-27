@@ -14,17 +14,17 @@ import com.darkgran.farstar.gui.SimpleVector2;
  */
 
 public class Herald extends TokenZoom {
-    private final ClickListener clickListener = new ClickListener() {
-        @Override
-        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            Herald.this.touched();
-            return super.touchDown(event, x, y, pointer, button);
-        }
-    };
 
     public Herald(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, int counterCap) {
         super(battleCard, x, y, battleStage, cardListMenu, counterCap);
         setTouchable(Touchable.disabled);
+        ClickListener clickListener = new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Herald.this.touched();
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        };
         addListener(clickListener);
     }
 

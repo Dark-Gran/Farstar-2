@@ -1,7 +1,6 @@
 package com.darkgran.farstar.gui.battlegui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.darkgran.farstar.battle.players.BattlePlayer;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.gui.tokens.TokenType;
@@ -14,17 +13,15 @@ public class AbilityPicker extends BPB2DrawerBattle {
     private BattleCard battleCard = null;
     private ArrayList<AbilityInfo> abilityInfos = new ArrayList<>();
     private ArrayList<AbilityPickerOption> abilityGraphics = new ArrayList<>();
-    private final TextureRegion texture;
     private final float originX;
     private final float originY;
     private final static float SPACE_BETWEEN = 30f;
 
 
-    public AbilityPicker(float x, float y, BattleStage battleStage, BattlePlayer battlePlayer, TextureRegion texture) {
+    public AbilityPicker(float x, float y, BattleStage battleStage, BattlePlayer battlePlayer) {
         super(x, y, battleStage, battlePlayer);
         originX = x;
         originY = y;
-        this.texture = texture;
     }
 
     @Override

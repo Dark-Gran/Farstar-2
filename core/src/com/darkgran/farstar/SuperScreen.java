@@ -20,10 +20,10 @@ import static com.darkgran.farstar.Farstar.ASSET_LIBRARY;
 
 public abstract class SuperScreen implements Screen {
     public final static boolean DEBUG_RENDER = false;
-    private Farstar game;
-    private static OrthographicCamera camera = new OrthographicCamera();
-    private Viewport viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);
-    private ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private final Farstar game;
+    private final static OrthographicCamera camera = new OrthographicCamera();
+    private final Viewport viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);
+    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
     private TableStage tableStage;
     private YXQuestionBox screenConceder = null;
     private final NotificationManager notificationManager;
@@ -116,6 +116,7 @@ public abstract class SuperScreen implements Screen {
     public void setTokenFramesEnabled(boolean tokenFramesEnabled) { screenSettings.tokenFramesEnabled = tokenFramesEnabled; }
     public boolean isTokenFramesEnabled() { return screenSettings.tokenFramesEnabled; }
     public ScreenSettings getScreenSettings() { return screenSettings; }
+    public void setScreenSettings(ScreenSettings screenSettings) { this.screenSettings = screenSettings; }
     private ScreenSettings screenSettings;
 
 

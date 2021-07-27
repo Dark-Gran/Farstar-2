@@ -3,6 +3,7 @@ package com.darkgran.farstar.gui.tokens;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.gui.battlegui.DropTarget;
@@ -30,7 +31,7 @@ public class MothershipToken extends ClickToken implements DropTarget, DisableMa
         super.draw(batch);
         drawMark(batch, getX(), getY());
         //Draws DropTarget SimpleBox2
-        if (DEBUG_RENDER) { getBattleStage().getBattleScreen().drawDebugSimpleBox2(getSimpleBox2(), getBattleStage().getBattleScreen().getShapeRenderer(), batch); }
+        if (DEBUG_RENDER) { BattleScreen.drawDebugSimpleBox2(getSimpleBox2(), getBattleStage().getBattleScreen().getShapeRenderer(), batch); }
     }
 
     @Override

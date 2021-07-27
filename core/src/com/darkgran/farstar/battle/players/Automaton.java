@@ -30,15 +30,15 @@ public class Automaton extends Bot {
     //---------------//
 
     @Override
-    protected boolean turn(boolean combat, CombatOK combatOK) { //true = nothing to do (used in combat, see tactical())
+    protected void turn(boolean combat, CombatOK combatOK) { //true = nothing to do (used in combat, see tactical())
         if (!isDisposed() && !getBattle().isEverythingDisabled()) {
             super.turn(combat, combatOK);
             PossibilityInfo bestPossibility = combat ? getTacticalPossibility() : getTurnPossibility();
             if (bestPossibility != null) {
                 if (!combat) {
-                    return playCardInDeployment(bestPossibility);
+                    playCardInDeployment(bestPossibility);
                 } else {
-                    return playCardInTactical(bestPossibility, combatOK);
+                    playCardInTactical(bestPossibility, combatOK);
                 }
             } else {
                 report("No possibilities.");
@@ -46,10 +46,9 @@ public class Automaton extends Bot {
                 else { combatReady(combatOK); }
             }
         }
-        return true;
     }
 
-    private boolean playCardInDeployment(PossibilityInfo possibilityInfo) {
+    private void playCardInDeployment(PossibilityInfo possibilityInfo) {
         report("Playing a card: " + possibilityInfo.getCard().getCardInfo().getName());
         boolean success;
         if (isDeploymentMenu(possibilityInfo.getMenu()) || possibilityInfo.getCard().getCardInfo().getCardType() == CardType.MS) {
@@ -60,14 +59,12 @@ public class Automaton extends Bot {
         if (!success && !isPickingAbility() && !isPickingTarget()) {
             report("error: playCardInDeployment() failed!");
             cancelTurn();
-            return true;
         } else {
             delayedTurn(false, null);
-            return false;
         }
     }
 
-    private boolean playCardInTactical(PossibilityInfo possibilityInfo, CombatOK combatOK) {
+    private void playCardInTactical(PossibilityInfo possibilityInfo, CombatOK combatOK) {
         report("Playing a tactic: " + possibilityInfo.getCard().getCardInfo().getName());
         boolean success;
         //in-future consider outcomes of all duels instead of the classic position-pick
@@ -76,10 +73,8 @@ public class Automaton extends Bot {
         if (!success && !isPickingAbility() && !isPickingTarget()) {
             report("error: playCardInTactical() failed!");
             cancelTactical(combatOK);
-            return true;
         } else {
             delayedTactical(combatOK);
-            return false;
         }
     }
 
@@ -189,7 +184,7 @@ public class Automaton extends Bot {
                                 //Validate Ability change
                                 } else if (changeStatType == EffectTypeSpecifics.ChangeStatType.ABILITY){
                                     EffectType effectType = EffectType.valueOf(changeInfo.toString());
-                                    switch (effectType) {
+                                    switch (effectType) { //more cases will be added in future
                                         case FIRST_STRIKE:
                                             if (getBattle().getCombatManager().isTacticalPhase()) { //COMBAT ONLY
                                                 allyToken = getAlliedTarget(battleCard.getToken(), EffectType.FIRST_STRIKE);

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.gui.AnimationManager;
 import com.darkgran.farstar.gui.tokens.*;
@@ -23,7 +24,7 @@ public abstract class BattleStage extends ListeningStage {
     private final BattleScreen battleScreen;
     private FakeToken fakeToken;
     private final CombatMenu combatMenu;
-    private ArrayList<DropTarget> dropTargets = new ArrayList<>();
+    private final ArrayList<DropTarget> dropTargets = new ArrayList<>();
     private final AbilityPicker abilityPicker;
     private final RoundCounter roundCounter;
     public final ButtonWithExtraState turnButton = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAtlasRegion("turn"), Farstar.ASSET_LIBRARY.getAtlasRegion("turnO"), Farstar.ASSET_LIBRARY.getAtlasRegion("turnP"), Farstar.ASSET_LIBRARY.getAtlasRegion("turnOP")){
@@ -60,8 +61,8 @@ public abstract class BattleStage extends ListeningStage {
     };
     private TokenZoom cardZoom;
     private Herald herald;
-    private ShotManager shotManager = new ShotManager();
-    private AnimationManager animationManager = new AnimationManager();
+    private final ShotManager shotManager = new ShotManager();
+    private final AnimationManager animationManager = new AnimationManager();
 
 
     public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen, CombatMenu combatMenu) {
@@ -70,7 +71,7 @@ public abstract class BattleStage extends ListeningStage {
         this.combatMenu = combatMenu;
         combatEndButton.setPosition(Farstar.STAGE_WIDTH*0.8f, Farstar.STAGE_HEIGHT*0.3f);
         combatEndButton.setDisabled(true);
-        abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH/2f+5f, Farstar.STAGE_HEIGHT*0.27f, this, null, Farstar.ASSET_LIBRARY.getAtlasRegion("yard"));
+        abilityPicker = new AbilityPicker(Farstar.STAGE_WIDTH/2f+5f, Farstar.STAGE_HEIGHT*0.27f, this, null);
         battleScreen.getBattle().getRoundManager().setAbilityPicker(abilityPicker);
         roundCounter = new RoundCounter(Farstar.STAGE_WIDTH*0.003f, Farstar.STAGE_HEIGHT*0.475f, getBattleScreen().getBattle());
     }
@@ -207,7 +208,7 @@ public abstract class BattleStage extends ListeningStage {
             return 3;
         } else {
             float shift = 0f;
-            SimpleVector2 lr = fleetMenu.getFleet().getSideSizes(fleetMenu.getFleet().getShips());
+            SimpleVector2 lr = Fleet.getSideSizes(fleetMenu.getFleet().getShips());
             int count = fleetMenu.getFleet().countShips();
             if (!deployment || count % 2 != 0) {
                 if (lr.x > lr.y) {

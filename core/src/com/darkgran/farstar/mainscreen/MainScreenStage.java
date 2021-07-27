@@ -15,10 +15,8 @@ import com.darkgran.farstar.gui.ActorButton;
 
 public class MainScreenStage extends ListeningStage {
     private final PlayerFactory playerFactory = new PlayerFactory();
-    private final TextureRegion measureTexture = Farstar.ASSET_LIBRARY.getAtlasRegion("solitary");
     private final TextureRegion FSLogo = Farstar.ASSET_LIBRARY.getAtlasRegion("FSLogo");
     private final VersionInfo versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN);
-
     private final ActorButton startButton = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("solitary"), Farstar.ASSET_LIBRARY.getAtlasRegion("solitaryO")){
         @Override
         public void clicked() { launchBattleScreen(BattleType.SOLITARY); }
@@ -42,6 +40,7 @@ public class MainScreenStage extends ListeningStage {
 
     public MainScreenStage(final Farstar game, Viewport viewport) {
         super(game, viewport);
+        TextureRegion measureTexture = Farstar.ASSET_LIBRARY.getAtlasRegion("solitary");
         botButton.setPosition((float) (Farstar.STAGE_WIDTH/2- measureTexture.getRegionWidth()/2), (float) (Farstar.STAGE_HEIGHT/2+ measureTexture.getRegionHeight()/2));
         simButton.setPosition((float) (Farstar.STAGE_WIDTH/2- measureTexture.getRegionWidth()/2), (float) (Farstar.STAGE_HEIGHT/2- measureTexture.getRegionHeight()/2));
         startButton.setPosition((float) (Farstar.STAGE_WIDTH/2- measureTexture.getRegionWidth()/2), (float) (Farstar.STAGE_HEIGHT/2- measureTexture.getRegionHeight()*1.499));

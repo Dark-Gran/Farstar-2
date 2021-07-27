@@ -1,6 +1,6 @@
 package com.darkgran.farstar.gui.tokens;
 
-import com.badlogic.gdx.scenes.scene2d.InputEvent;;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.gui.Dragger;

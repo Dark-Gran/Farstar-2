@@ -17,8 +17,6 @@ public abstract class BattlePlayerBox2 extends SimpleBox2 {
         this.battleStage = battleStage;
     }
 
-    public boolean isEmpty() { return true; }
-
     public BattleStage getBattleStage() { return battleStage; }
 
     public BattlePlayer getBattlePlayer() { return battlePlayer; }

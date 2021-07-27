@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.darkgran.farstar.*;
 import com.darkgran.farstar.gui.*;
-import com.darkgran.farstar.gui.SimpleVector2;
 
 public class MainScreen extends SuperScreen {
     private final MainScreenStage mainScreenStage = new MainScreenStage(getGame(), getViewport());

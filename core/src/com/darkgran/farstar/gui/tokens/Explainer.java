@@ -86,7 +86,7 @@ public class Explainer extends TextInTheBox {
                         break;
                 }
             }
-            switch (abilityInfo.getStarter()) {
+            switch (abilityInfo.getStarter()) { //more cases will be added in future
                 case USE:
                     USEpresent = true;
                     break;

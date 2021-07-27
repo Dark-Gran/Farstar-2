@@ -2,7 +2,6 @@ package com.darkgran.farstar.gui.tokens;
 
 import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.battle.RoundManager;
-import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 
 public class ManagedTokenDragger extends TokenDragger {
     private final RoundManager roundManager;

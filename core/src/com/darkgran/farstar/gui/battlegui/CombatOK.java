@@ -7,7 +7,7 @@ import com.darkgran.farstar.gui.ButtonWithExtraState;
 
 public class CombatOK extends ButtonWithExtraState {
     private CombatPlayer combatPlayer;
-    private CombatManager combatManager;
+    private final CombatManager combatManager;
 
     public CombatOK(TextureRegion imageUp, TextureRegion imageOver, TextureRegion extraUp, TextureRegion extraOver, CombatManager combatManager) {
         super(imageUp, imageOver, extraUp, extraOver);

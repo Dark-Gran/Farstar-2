@@ -29,10 +29,9 @@ public abstract class Bot extends BattlePlayer implements BotSettings, Delayer {
         delayedTurn(false, null);
     }
 
-    protected boolean turn(boolean combat, CombatOK combatOK) {
+    protected void turn(boolean combat, CombatOK combatOK) {
         setPickingTarget(false);
         setPickingAbility(false);
-        return true;
     }
 
     public void chooseTargets(Token token, AbilityInfo ability) {
@@ -140,8 +139,7 @@ public abstract class Bot extends BattlePlayer implements BotSettings, Delayer {
 
     protected boolean useAbility(BattleCard battleCard, Menu menu) {
         Token token = cardToToken(battleCard, menu);
-        getBattle().getRoundManager().checkAllAbilities(token, null, AbilityStarter.USE, this, null);
-        return true;
+        return getBattle().getRoundManager().checkAllAbilities(token, null, AbilityStarter.USE, this, null);
     }
 
     protected void combatReady(CombatOK combatOK) {

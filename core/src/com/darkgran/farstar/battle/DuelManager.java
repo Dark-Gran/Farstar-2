@@ -57,7 +57,6 @@ public class DuelManager implements Delayer {
 
     private CombatManager combatManager;
     private boolean active = false;
-    private Set<Map.Entry<FleetToken, AttackInfo>> duelSet;
     private Iterator<Map.Entry<FleetToken, AttackInfo>> it;
     private ShotManager shotManager;
 
@@ -79,7 +78,7 @@ public class DuelManager implements Delayer {
         if (duels != null && duels.size() > 0) {
             this.combatManager = combatManager;
             this.active = true;
-            duelSet = entriesSortedByValuesThenKeys(duels);
+            Set<Map.Entry<FleetToken, AttackInfo>> duelSet = entriesSortedByValuesThenKeys(duels);
             it = duelSet.iterator();
             System.out.println("Launching Duels.");
             delayAction(this::iterateDuels, 0.5f);

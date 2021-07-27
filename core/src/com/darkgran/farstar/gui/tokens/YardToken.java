@@ -2,7 +2,6 @@ package com.darkgran.farstar.gui.tokens;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.YardMenu;
