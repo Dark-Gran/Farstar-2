@@ -10,7 +10,7 @@ I've always enjoyed card games (both collectible and 'classic'), so after an att
   
 With that in mind (and with feedback in hands), game's rules have been _drastically_ changed, therefore the entire application is being 'rewritten' from the scratch.  
   
-This time in Java. One of the main reasons behind the original choice of Adobe Air (in which the original game was written) was the fact that it is cross-platform, however such is the case with Java as well. For applications of this size, Java is also a more lightweight (performance-wise) solution.  
+This time in Java. One of the main reasons behind the original choice of Adobe Air (in which the original game has been written) was the fact that it is cross-platform, however such is the case with Java as well. For applications of this size, Java is also a more lightweight (performance-wise) solution.  
   
   
 ## Progress  
@@ -23,7 +23,8 @@ Server Application with user registrations, matchmaking and direct card-trading 
 ~~Prototype (Java + LibGDX)~~  
 ~~On-screen gameplay tests and Basic AI for more tests~~  
 ~~General (Table) and MainScreen GUI+GFX 'import'~~  
-Battle GUI+GFX 'import' (including card-portraits)  
+~~Battle GUI+GFX 'import'~~
+_following to be revised asap_
 Collection and Deck Building Screen  
 Remaining Cards ('import')  
 Tutorial Pop-Up and/or 1 Tutorial Mission  
