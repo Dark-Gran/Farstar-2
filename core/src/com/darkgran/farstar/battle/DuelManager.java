@@ -124,17 +124,10 @@ public class DuelManager implements Delayer {
 
     private void exeDuel(BattleCard att, AttackInfo attackInfo) {
         BattleCard def = attackInfo.getDefender().getCard();
-        boolean attFS;
-        boolean defFS;
+        boolean attFS = !att.isMS() && AbilityManager.hasAttribute(att, EffectType.FIRST_STRIKE);
+        boolean defFS = !def.isMS() && AbilityManager.hasAttribute(def, EffectType.FIRST_STRIKE);
         boolean attTop = attackInfo.getUpperStrike() == att;
         boolean defTop = attackInfo.getUpperStrike() == def;
-        if (def.isMS()) {
-            attFS = AbilityManager.hasAttribute(att, EffectType.FIRST_STRIKE);
-            defFS = false;
-        } else {
-            attFS = AbilityManager.hasAttribute(att, EffectType.FIRST_STRIKE);
-            defFS = AbilityManager.hasAttribute(def, EffectType.FIRST_STRIKE);
-        }
         if (attTop || defTop) {
             if (exeOneSide(attTop ? att : def, attTop ? def : att, false)) {
                 exeOneSide(attTop ? def : att, attTop ? att : def, true);
