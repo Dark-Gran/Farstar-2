@@ -13,6 +13,7 @@ public class MainScreen extends SuperScreen {
         setTableMenu(tableMenu);
         game.loadLibrary();
         game.getInputMultiplexer().addProcessor(mainScreenStage);
+        getNotificationManager().clear(Notification.NotificationType.MIDDLE);
     }
 
     @Override
