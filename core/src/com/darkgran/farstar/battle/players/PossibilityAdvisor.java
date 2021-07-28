@@ -86,7 +86,7 @@ public class PossibilityAdvisor {
         return true;
     }
 
-    public boolean tierAllowed(int tier, Battle battle) {
+    public static boolean tierAllowed(int tier, Battle battle) {
         return tier <= battle.getRoundManager().getRoundNum();
     }
 

@@ -388,7 +388,7 @@ public class RoundManager {
     //-----------//
 
     public boolean isTokenMoveEnabled(Token token) { //Turn and Tactical Only
-        if (token.getCard() != null && token.getCard().getBattlePlayer() instanceof LocalBattlePlayer && RoundManager.ownsToken(getBattle().getWhoseTurn(), token) && (!getBattle().getCombatManager().isActive() || (getBattle().getCombatManager().isTacticalPhase() && token.getCard().isTactic()))) {
+        if (token.getCard() != null && token.getCard().getBattlePlayer() instanceof LocalBattlePlayer && RoundManager.ownsToken(getBattle().getWhoseTurn(), token) && PossibilityAdvisor.tierAllowed(token.getCard().getCardInfo().getTier(), battle) && getBattle().getWhoseTurn().canAfford(token.getCard()) && (!getBattle().getCombatManager().isActive() || (getBattle().getCombatManager().isTacticalPhase() && token.getCard().isTactic()))) {
             return areMovesEnabled();
         }
         return false;
