@@ -375,7 +375,7 @@ public class Automaton extends Bot {
             if (ship != null && !ship.isUsed()) {
                 enemy = getDuelTarget(ship.getToken());
                 if (enemy != null) {
-                    duels.put((FleetToken) ship.getToken(), new DuelManager.AttackInfo(enemy));
+                    duels.put((FleetToken) ship.getToken(), new DuelManager.AttackInfo(ship.getToken(), enemy));
                 }
             }
         }
@@ -390,7 +390,7 @@ public class Automaton extends Bot {
                         enemy = getDuelTarget(ship.getToken());
                         if (enemy != null) {
                             if (enemy != currentEnemy) { //"don't attack (= receive dmg) for no reason"
-                                duels.put((FleetToken) ship.getToken(), new DuelManager.AttackInfo(enemy));
+                                duels.put((FleetToken) ship.getToken(), new DuelManager.AttackInfo(ship.getToken(), enemy));
                             }
                         }
                     }

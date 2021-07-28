@@ -16,21 +16,26 @@ public class DuelManager implements Delayer {
     private final float duelDelay = 0.3f;
 
     public static class AttackInfo implements Comparable<AttackInfo> {
+        private final Token attacker;
         private final Token defender;
         private BattleCard upperStrike = null;
         private byte state = 0; //1: right-about-to attack, 2: attack done
-        public AttackInfo(Token defender) {
+        public AttackInfo(Token attacker, Token defender) {
+            this.attacker = attacker;
             this.defender = defender;
         }
-        public AttackInfo(Token defender, BattleCard upperStrike) {
+        public AttackInfo(Token attacker, Token defender, BattleCard upperStrike) {
+            this.attacker = attacker;
             this.defender = defender;
             this.upperStrike = upperStrike;
         }
-        public AttackInfo(Token defender, BattleCard upperStrike, byte state) {
+        public AttackInfo(Token attacker, Token defender, BattleCard upperStrike, byte state) {
+            this.attacker = attacker;
             this.defender = defender;
             this.upperStrike = upperStrike;
             this.state = state;
         }
+        public Token getAttacker() { return attacker; }
         public Token getDefender() { return defender; }
         public BattleCard getUpperStrike() { return upperStrike; }
         public void setUpperStrike(BattleCard upperStrike) { this.upperStrike = upperStrike; }
@@ -38,9 +43,14 @@ public class DuelManager implements Delayer {
         public void setState(byte state) { this.state = state; }
 
         @Override
-        public int compareTo(@NotNull DuelManager.AttackInfo o) { //todo "natural" FirstStrike
-            boolean thisFS = upperStrike != null;
-            boolean oFS = o.upperStrike != null;
+        public int compareTo(@NotNull DuelManager.AttackInfo o) {
+            boolean thisTopStrike = upperStrike != null;
+            boolean oTopStrike = o.upperStrike != null;
+            if (thisTopStrike != oTopStrike) {
+                return Boolean.compare(oTopStrike, thisTopStrike);
+            }
+            boolean thisFS = AbilityManager.hasAttribute(this.attacker.getCard(), EffectType.FIRST_STRIKE) || AbilityManager.hasAttribute(this.defender.getCard(), EffectType.FIRST_STRIKE);
+            boolean oFS = AbilityManager.hasAttribute(o.attacker.getCard(), EffectType.FIRST_STRIKE) || AbilityManager.hasAttribute(o.defender.getCard(), EffectType.FIRST_STRIKE);
             return Boolean.compare(oFS, thisFS);
         }
 
@@ -49,9 +59,11 @@ public class DuelManager implements Delayer {
             if (!(obj instanceof AttackInfo)) {
                 return super.equals(obj);
             }
-            boolean thisFS = upperStrike != null;
-            boolean oFS = ((AttackInfo) obj).upperStrike != null;
-            return Boolean.compare(oFS, thisFS) == 0;
+            boolean thisTopStrike = upperStrike != null;
+            boolean oTopStrike = ((AttackInfo) obj).upperStrike != null;
+            boolean thisFS = AbilityManager.hasAttribute(this.attacker.getCard(), EffectType.FIRST_STRIKE) || AbilityManager.hasAttribute(this.defender.getCard(), EffectType.FIRST_STRIKE);
+            boolean oFS = AbilityManager.hasAttribute(((AttackInfo) obj).attacker.getCard(), EffectType.FIRST_STRIKE) || AbilityManager.hasAttribute(((AttackInfo) obj).defender.getCard(), EffectType.FIRST_STRIKE);
+            return Boolean.compare(oTopStrike, thisTopStrike) == 0 && Boolean.compare(oFS, thisFS) == 0;
         }
     }
 
@@ -110,61 +122,68 @@ public class DuelManager implements Delayer {
         combatManager.afterDuels();
     }
 
-    private void exeDuel(BattleCard att, AttackInfo attackInfo) { //todo reconsider FS "phases"
+    private void exeDuel(BattleCard att, AttackInfo attackInfo) {
         BattleCard def = attackInfo.getDefender().getCard();
         boolean attFS;
         boolean defFS;
+        boolean attTop = attackInfo.getUpperStrike() == att;
+        boolean defTop = attackInfo.getUpperStrike() == def;
         if (def.isMS()) {
             attFS = AbilityManager.hasAttribute(att, EffectType.FIRST_STRIKE);
             defFS = false;
-        } else if (attackInfo.getUpperStrike() == null) {
+        } else {
             attFS = AbilityManager.hasAttribute(att, EffectType.FIRST_STRIKE);
             defFS = AbilityManager.hasAttribute(def, EffectType.FIRST_STRIKE);
-        } else {
-            attFS = attackInfo.getUpperStrike() == att;
-            defFS = !attFS;
         }
-        boolean FSDuel = attFS || defFS;
-        if (attFS != defFS) {
+        if (attTop || defTop) {
+            if (exeOneSide(attTop ? att : def, attTop ? def : att, false)) {
+                exeOneSide(attTop ? def : att, attTop ? att : def, true);
+            }
+        } else if (attFS != defFS) {
             if (attFS) {
-                if (exeOneSide(att, def, false)) {
-                    if (!def.isMS() && !def.isKilledByFirstStrike()) { exeOneSide(def, att, true); }
+                if (att.isKilledByFirstStrike() || exeOneSide(att, def, false)) {
+                    if (!def.isKilledByFirstStrike()) { exeOneSide(def, att, true); }
                 }
             } else {
-                if (def.isMS() || exeOneSide(def, att, false)) {
+                if (def.isKilledByFirstStrike() || exeOneSide(def, att, false)) {
                     if (!att.isKilledByFirstStrike()) { exeOneSide(att, def, true); }
                 }
             }
         } else {
-            if (FSDuel || !att.isKilledByFirstStrike()) { exeOneSide(att, def, false); }
-            if ((FSDuel || !def.isKilledByFirstStrike()) && !def.isMS()) { exeOneSide(def, att, false); }
+            if (!att.isKilledByFirstStrike()) { exeOneSide(att, def, false); }
+            if (!def.isKilledByFirstStrike()) { exeOneSide(def, att, false); }
         }
-        if (FSDuel) {
+        if (attFS || defFS || attTop || defTop) {
             if (att.getHealth()<=0) { att.setKilledByFirstStrike(true); }
             if (def.getHealth()<=0) { def.setKilledByFirstStrike(true); }
         }
     }
 
     private boolean exeOneSide(BattleCard att, BattleCard def, boolean delayedAnimation) { //returns survival
-        int dmg = att.getCardInfo().getOffense();
-        if (att instanceof Ship && BattleSettings.OUTNUMBERED_DEBUFF_ENABLED) {
-            Ship ship = (Ship) att;
-            dmg -= ship.getDmgDoneThisBattle();
-            ship.setDmgDoneThisBattle(ship.getDmgDoneThisBattle()+att.getCardInfo().getOffense());
-            if (att.getCardInfo().getOffense() > def.getHealth()) {
-                ship.setDmgDoneThisBattle(ship.getDmgDoneThisBattle()-(att.getCardInfo().getOffense()-def.getHealth()));
+        if (!att.isMS()) {
+            int dmg = att.getCardInfo().getOffense();
+            if (att instanceof Ship && BattleSettings.OUTNUMBERED_DEBUFF_ENABLED) {
+                Ship ship = (Ship) att;
+                dmg -= ship.getDmgDoneThisBattle();
+                ship.setDmgDoneThisBattle(ship.getDmgDoneThisBattle() + att.getCardInfo().getOffense());
+                if (att.getCardInfo().getOffense() > def.getHealth()) {
+                    ship.setDmgDoneThisBattle(ship.getDmgDoneThisBattle() - (att.getCardInfo().getOffense() - def.getHealth()));
+                }
+                if (dmg < 0) {
+                    dmg = 0;
+                }
             }
-            if (dmg < 0) { dmg = 0; }
-        }
-        if (dmg > 0) {
-            dmg = getDmgAgainstShields(dmg, def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
-            if (!delayedAnimation) {
-                shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots());
-            } else {
-                delayAction(() -> shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots()), duelDelay * 1.5f);
+            if (dmg > 0) {
+                dmg = getDmgAgainstShields(dmg, def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
+                if (!delayedAnimation) {
+                    shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots());
+                } else {
+                    delayAction(() -> shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots()), duelDelay * 1.5f);
+                }
             }
+            return def.receiveDMG(dmg);
         }
-        return def.receiveDMG(dmg);
+        return true;
     }
 
     public static int getDmgAgainstShields(int dmg, int health, TechType dmgType, TechType shieldType) {
