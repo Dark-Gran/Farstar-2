@@ -10,6 +10,11 @@ import com.darkgran.farstar.gui.ButtonWithExtraState;
 
 import static com.darkgran.farstar.battle.BattleScreen.DEBUG_RENDER;
 
+/**
+ * in-future: if the STAGE_HEIGHT+WIDTH remain fixed and the scaling remains handled by viewport (and camera),
+ * then the positioning of _everything_ must always be without a floating point (= rewrite current),
+ * otherwise the images become blurry (thanks to rounding).
+ */
 public class BattleStage1V1 extends BattleStage {
     private final ResourceMeter resourceMeter1;
     private final ResourceMeter resourceMeter2;
@@ -58,8 +63,8 @@ public class BattleStage1V1 extends BattleStage {
         addActor(fleetMenu2);
         supportMenu1 = new SupportMenu(battlePlayer1.getSupports(), Farstar.STAGE_WIDTH*0.082f, Farstar.STAGE_HEIGHT*0.11f, 63f, 10f, Farstar.STAGE_WIDTH * 0.838f, Farstar.STAGE_HEIGHT*0.14f, false, this, battlePlayer1);
         supportMenu2 = new SupportMenu(battlePlayer2.getSupports(), Farstar.STAGE_WIDTH*0.082f, Farstar.STAGE_HEIGHT*0.75f, 63f, 30f, Farstar.STAGE_WIDTH * 0.838f, Farstar.STAGE_HEIGHT*0.14f, true, this, battlePlayer2);
-        mothershipToken1 = new MothershipToken(battlePlayer1.getMs(), (Farstar.STAGE_WIDTH - TokenType.MS.getWidth()) * 0.5f, Farstar.STAGE_HEIGHT * 0.1f, this, null, supportMenu1);
-        mothershipToken2 = new MothershipToken(battlePlayer2.getMs(), (Farstar.STAGE_WIDTH - TokenType.MS.getWidth()) * 0.5f, (Farstar.STAGE_HEIGHT * 0.91f) - TokenType.MS.getHeight(), this, null, supportMenu2);
+        mothershipToken1 = new MothershipToken(battlePlayer1.getMs(), (float) ((Farstar.STAGE_WIDTH - TokenType.MS.getWidth()) * 0.5), (float) (Farstar.STAGE_HEIGHT * 0.1), this, null, supportMenu1);
+        mothershipToken2 = new MothershipToken(battlePlayer2.getMs(), (float) ((Farstar.STAGE_WIDTH - TokenType.MS.getWidth()) * 0.5), (float) ((Farstar.STAGE_HEIGHT * 0.91) - TokenType.MS.getHeight()), this, null, supportMenu2);
         junkButton1 = new JunkButton(Farstar.STAGE_WIDTH*0.89f, Farstar.STAGE_HEIGHT*0.1f, this, battlePlayer1);
         junkButton2 = new JunkButton(Farstar.STAGE_WIDTH*0.89f, Farstar.STAGE_HEIGHT*0.9f - TokenType.JUNK.getHeight(), this, battlePlayer2);
         battlePlayer1.getJunkpile().setJunkButton(junkButton1);
