@@ -15,9 +15,17 @@ import com.darkgran.farstar.cards.CardInfo;
 public class AssetLibrary {
     private final AssetManager assetManager = new AssetManager();
 
+    public TextureRegion getPortrait(CardInfo cardInfo, TokenType tokenType) {
+        return ((TextureAtlas) assetManager.get("images/fs2nearest.atlas")).findRegion(getPortraitName(cardInfo, tokenType));
+    }
+
     public String getPortraitName(CardInfo cardInfo, TokenType tokenType) {
-        String name = addTokenTypeAcronym(Integer.toString(cardInfo.getId())+"-", tokenType, false);
-        TextureRegion portrait = ((TextureAtlas) assetManager.get("images/fs2atlas.atlas")).findRegion(name);
+        return getPortraitName(cardInfo.getId(), tokenType);
+    }
+
+    public String getPortraitName(byte id, TokenType tokenType) {
+        String name = addTokenTypeAcronym(Integer.toString(id)+"-", tokenType, false);
+        TextureRegion portrait = ((TextureAtlas) assetManager.get("images/fs2nearest.atlas")).findRegion(name);
         if (portrait != null) {
             return name;
         } else {
@@ -133,12 +141,17 @@ public class AssetLibrary {
         texParams.minFilter = Texture.TextureFilter.Linear;
         texParams.magFilter = Texture.TextureFilter.Linear;
         assetManager.load("images/tableMain-1920.png", Texture.class, texParams);
-        //Atlas
-        assetManager.load("images/fs2atlas.atlas", TextureAtlas.class);
+        //Atlases
+        assetManager.load("images/fs2linear.atlas", TextureAtlas.class);
+        assetManager.load("images/fs2nearest.atlas", TextureAtlas.class);
     }
 
     public TextureAtlas.AtlasRegion getAtlasRegion(String filename) {
-        return ((TextureAtlas) assetManager.get("images/fs2atlas.atlas")).findRegion(filename);
+        if (((TextureAtlas) assetManager.get("images/fs2linear.atlas")).findRegion(filename) != null) {
+            return ((TextureAtlas) assetManager.get("images/fs2linear.atlas")).findRegion(filename);
+        } else {
+            return ((TextureAtlas) assetManager.get("images/fs2nearest.atlas")).findRegion(filename);
+        }
     }
 
     public <T> T get(String filename) {

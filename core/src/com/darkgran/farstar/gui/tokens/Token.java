@@ -47,7 +47,7 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
         this.noPics = noPics;
         if (!noPics) {
             if (battleCard != null) {
-                portrait = Farstar.ASSET_LIBRARY.getAtlasRegion(Farstar.ASSET_LIBRARY.getPortraitName(battleCard.getCardInfo(), tokenType));
+                portrait = Farstar.ASSET_LIBRARY.getPortrait(battleCard.getCardInfo(), tokenType);
                 frame = Farstar.ASSET_LIBRARY.getAtlasRegion(Farstar.ASSET_LIBRARY.getFrameName(battleCard.getCardInfo(), tokenType));
                 setGlows();
             }
@@ -102,7 +102,7 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
 
     public void setup(BattleCard battleCard, TokenType targetType, SimpleVector2 targetXY) { //used only by non-standard tokens (that do not connectCard)
         setCard(battleCard);
-        setPortrait(Farstar.ASSET_LIBRARY.getAtlasRegion(Farstar.ASSET_LIBRARY.getPortraitName(battleCard.getCardInfo(), getTokenType())));
+        setPortrait(Farstar.ASSET_LIBRARY.getPortrait(battleCard.getCardInfo(), getTokenType()));
         setFrame(Farstar.ASSET_LIBRARY.getAtlasRegion(Farstar.ASSET_LIBRARY.getFrameName(battleCard.getCardInfo(), getTokenType())));
         getTokenDefense().update();
         getTokenDefense().setPad(getTokenType());
