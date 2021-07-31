@@ -16,16 +16,19 @@ public class AssetLibrary {
     private final AssetManager assetManager = new AssetManager();
 
     public TextureRegion getPortrait(CardInfo cardInfo, TokenType tokenType) {
-        return ((TextureAtlas) assetManager.get("images/fs2nearest.atlas")).findRegion(getPortraitName(cardInfo, tokenType));
+        return getAtlasRegion(getPortraitName(cardInfo, tokenType));
     }
 
     public String getPortraitName(CardInfo cardInfo, TokenType tokenType) {
         return getPortraitName(cardInfo.getId(), tokenType);
     }
 
-    public String getPortraitName(byte id, TokenType tokenType) {
+    public String getPortraitName(byte id, TokenType tokenType) { //in-future: make hand use a "different F tokenType/portrait" instead of giving F portrait "worse" filtering (does not matter until cards with ships in hand (ie. blueprints) - atm none are present)
         String name = addTokenTypeAcronym(Integer.toString(id)+"-", tokenType, false);
         TextureRegion portrait = ((TextureAtlas) assetManager.get("images/fs2nearest.atlas")).findRegion(name);
+        if (portrait == null) {
+            portrait = ((TextureAtlas) assetManager.get("images/fs2linear.atlas")).findRegion(name);
+        }
         if (portrait != null) {
             return name;
         } else {
