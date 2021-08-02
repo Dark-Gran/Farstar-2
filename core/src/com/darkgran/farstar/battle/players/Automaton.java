@@ -30,7 +30,7 @@ public class Automaton extends Bot {
     //---------------//
 
     @Override
-    protected void turn(boolean combat, CombatOK combatOK) { //true = nothing to do (used in combat, see tactical())
+    protected void turn(boolean combat, CombatOK combatOK) {
         if (!isDisposed() && !getBattle().isEverythingDisabled()) {
             super.turn(combat, combatOK);
             PossibilityInfo bestPossibility = combat ? getTacticalPossibility() : getTurnPossibility();
@@ -349,6 +349,7 @@ public class Automaton extends Bot {
     public void pickAbility(Token caster, Token target, DropTarget dropTarget, ArrayList<AbilityInfo> options) {
         if (options.size() > 0) {
             setPickingAbility(true);
+            //in-future: consider eco obviously
             if (caster.getCard().getCardInfo().getId() == BONUS_CARD_ID) {
                 getBattle().getRoundManager().processPick(options.get(1));
             } else { //atm there is only Labour Deck
