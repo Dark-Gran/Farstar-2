@@ -94,7 +94,7 @@ public abstract class SuperScreen implements Screen {
     public static class ScreenSettings {
         private boolean helpEnabled = false;
         private boolean tableStageEnabled = true;
-        private boolean netEnabled = false;
+        private boolean netEnabled = true;
         private boolean tokenFramesEnabled = true;
         public ScreenSettings() {}
         public ScreenSettings(boolean helpEnabled, boolean tableStageEnabled, boolean netEnabled, boolean tokenFramesEnabled) {

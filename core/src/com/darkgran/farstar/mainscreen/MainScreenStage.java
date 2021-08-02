@@ -42,7 +42,7 @@ public class MainScreenStage extends ListeningStage {
         TextureRegion tr = Farstar.ASSET_LIBRARY.getAtlasRegion("FSLogo");
         FSLogo = new SimpleImage2((float) (Farstar.STAGE_WIDTH/2-tr.getRegionWidth()/2), (float) (Farstar.STAGE_HEIGHT*0.8), tr);
         TextureRegion measureTexture = Farstar.ASSET_LIBRARY.getAtlasRegion("solitary");
-        skirmishButton.setPosition(Farstar.STAGE_WIDTH/2f - skirmishButton.getWidth()/2, (float) (Farstar.STAGE_HEIGHT/2 - measureTexture.getRegionHeight()*0.5));
+        skirmishButton.setPosition(Farstar.STAGE_WIDTH/2f - skirmishButton.getWidth()/2, Math.round((float) (Farstar.STAGE_HEIGHT/2 - measureTexture.getRegionHeight()*0.5)));
         tr = Farstar.ASSET_LIBRARY.getAtlasRegion("otherModes");
         float otherY = (float) (Farstar.STAGE_HEIGHT * 0.18);
         otherModesPic = new SimpleImage2((float) (Farstar.STAGE_WIDTH / 2 - tr.getRegionWidth() / 2), (float) (otherY - simulationButton.getHeight()*0.05), tr);

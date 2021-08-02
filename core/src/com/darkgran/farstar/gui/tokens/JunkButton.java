@@ -21,10 +21,10 @@ public class JunkButton extends ClickToken implements DropTarget {
     public JunkButton(float x, float y, BattleStage battleStage, BattlePlayer battlePlayer) {
         super(null, x, y, battleStage, null, TokenType.JUNK, false, false);
         this.battlePlayer = battlePlayer;
-        float angle = 90f;
+        float angle = -90f;
         mx.rotate(new Vector3(0, 0, 1), angle);
         SimpleVector2 newXY = HandToken.getNewXYFromAngle(0, 0, getX(), getY(), Math.toRadians(angle));
-        mx.trn(newXY.x+getWidth(), newXY.y, 0);
+        mx.trn(newXY.x, newXY.y+getHeight(), 0);
     }
 
     @Override
