@@ -36,7 +36,7 @@ public class KeyboardProcessor extends InputAdapter {
     public boolean keyUp(int keycode) {
         if (keycode == Input.Keys.ESCAPE || (keycode == Input.Keys.SPACE && game.getSuperScreen() instanceof IntroScreen)) {
             if (game.getSuperScreen() != null) { game.getSuperScreen().userEscape(); }
-        } else if (keysDown.size == 1) {
+        } else { //if (keysDown.size == 1)
             switch (keycode) {
                 case Input.Keys.F2:
                     game.getSuperScreen().setTableStageEnabled(!game.getSuperScreen().isTableStageEnabled());
