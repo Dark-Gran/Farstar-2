@@ -57,7 +57,14 @@ public class BattleScreen extends SuperScreen {
         battle.getCombatManager().getCombatMenu().setBattleStage(battleStage);
         game.getInputMultiplexer().addProcessor(battleAdapter);
         game.getInputMultiplexer().addProcessor(battleStage);
-        battle.getRoundManager().launch();
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        if (!battle.getRoundManager().isLaunched()) {
+            battle.getRoundManager().launch();
+        }
     }
 
     @Override
