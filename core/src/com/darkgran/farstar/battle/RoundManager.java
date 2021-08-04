@@ -127,7 +127,7 @@ public class RoundManager {
         boolean success = false;
         if (!targetingActive && !abilityPicker.isActive() && token.getCardListMenu() != null && !(dropTarget instanceof HandMenu)) {
             CardType cardType = token.getCard().getCardInfo().getCardType();
-            if (!battle.activeCombatOrDuel() || cardType == CardType.TACTIC) {
+            if (battle.aintCombatOrDuel() || cardType == CardType.TACTIC) {
                 //OUTSIDE COMBAT OR TACTIC
                 BattlePlayer whoseTurn = battle.getWhoseTurn();
                 if (token.getCardListMenu().getBattlePlayer() == whoseTurn) {
@@ -142,7 +142,7 @@ public class RoundManager {
                             if (((SupportMenu) dropTarget).getCardList() instanceof Supports && position != -1) {
                                 Supports supports = (Supports) ((SupportMenu) dropTarget).getCardList();
                                 if ((cardType == CardType.SUPPORT && supports == whoseTurn.getSupports()) || CardType.isSpell(cardType)) {
-                                    if (!battle.activeCombatOrDuel()) {
+                                    if (battle.aintCombatOrDuel()) {
                                         if (!postAbility) {
                                             success = checkAllAbilities(token, null, AbilityStarter.DEPLOY, whoseTurn, dropTarget);
                                         }
@@ -319,12 +319,14 @@ public class RoundManager {
 
     public void processClick(Token token, BattlePlayer owner) {
         getBattle().getBattleScreen().hideScreenConceder();
-        if (!abilityPicker.isActive() && (!battle.activeCombatOrDuel() || (battle.getCombatManager().isTacticalPhase() && targetingActive)) && !battle.isEverythingDisabled() && getBattle().getWhoseTurn() instanceof LocalBattlePlayer) {
-            if (targetingActive) {
-                processTarget(token);
-            } else if (owner == battle.getWhoseTurn() && token != null && possibilityAdvisor.hasPossibleAbility(owner, token.getCard())) {
-                checkAllAbilities(token, null, AbilityStarter.USE, owner, null);
-                battle.refreshPossibilities();
+        if (getBattle().getBattleScreen().getBattleStage().isEnabled()) {
+            if (!abilityPicker.isActive() && (battle.aintCombatOrDuel() || (battle.getCombatManager().isTacticalPhase() && targetingActive)) && !battle.isEverythingDisabled() && getBattle().getWhoseTurn() instanceof LocalBattlePlayer) {
+                if (targetingActive) {
+                    processTarget(token);
+                } else if (owner == battle.getWhoseTurn() && token != null && possibilityAdvisor.hasPossibleAbility(owner, token.getCard())) {
+                    checkAllAbilities(token, null, AbilityStarter.USE, owner, null);
+                    battle.refreshPossibilities();
+                }
             }
         }
     }
@@ -402,7 +404,7 @@ public class RoundManager {
     }
 
     public boolean areMovesEnabled() {
-        return !getBattle().isEverythingDisabled() && !isTargetingActive() && !getAbilityPicker().isActive() && !getBattle().getCombatManager().getDuelManager().isActive();
+        return getBattle().getBattleScreen().getBattleStage().isEnabled() && !getBattle().isEverythingDisabled() && !isTargetingActive() && !getAbilityPicker().isActive() && !getBattle().getCombatManager().getDuelManager().isActive();
     }
 
     public static boolean ownsToken(BattlePlayer battlePlayer, Token token) {

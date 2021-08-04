@@ -38,6 +38,11 @@ public class KeyboardProcessor extends InputAdapter {
             if (game.getSuperScreen() != null) { game.getSuperScreen().userEscape(); }
         } else { //if (keysDown.size == 1)
             switch (keycode) {
+                case Input.Keys.F1:
+                    if (game.getSuperScreen() instanceof BattleScreen) {
+                        ((BattleScreen) game.getSuperScreen()).getBattleStage().toggleBattleHelp();
+                    }
+                    break;
                 case Input.Keys.F2:
                     game.getSuperScreen().setTableStageEnabled(!game.getSuperScreen().isTableStageEnabled());
                     break;
@@ -49,6 +54,12 @@ public class KeyboardProcessor extends InputAdapter {
                 case Input.Keys.F4:
                     if (game.getSuperScreen() instanceof BattleScreen) {
                         game.getSuperScreen().setNetEnabled(!game.getSuperScreen().isNetEnabled());
+                        //((BattleScreen) game.getSuperScreen()).getBattleStage().f1ButtonToNet();
+                    }
+                    break;
+                case Input.Keys.F5:
+                    if (game.getSuperScreen() instanceof BattleScreen) {
+                        ((BattleScreen) game.getSuperScreen()).getBattleStage().toggleF1Button();
                     }
                     break;
             }

@@ -34,7 +34,7 @@ public class HandMenu extends CardListMenu implements DropTarget {
         ClickListener clickListener = new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                setHandState(HandMenuState.UP);
+                if (getBattleStage().isEnabled()) { setHandState(HandMenuState.UP); }
                 super.enter(event, x, y, pointer, fromActor);
             }
 

@@ -58,7 +58,7 @@ public abstract class TokenZoom extends PrintToken {
 
     @Override
     public void enable(BattleCard battleCard, TokenType targetType, SimpleVector2 targetXY) {
-        if (getCard() != battleCard && (targetType != TokenType.HAND || battleCard.getBattlePlayer() instanceof LocalBattlePlayer || getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION)) {
+        if (getBattleStage().isEnabled() && getCard() != battleCard && (targetType != TokenType.HAND || battleCard.getBattlePlayer() instanceof LocalBattlePlayer || getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION)) {
             counter.setEnabled(true);
             counting = true;
             hidden = false;

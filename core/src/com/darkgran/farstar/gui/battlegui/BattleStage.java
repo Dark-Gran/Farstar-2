@@ -7,15 +7,11 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
-import com.darkgran.farstar.gui.AnimationManager;
+import com.darkgran.farstar.gui.*;
 import com.darkgran.farstar.gui.tokens.*;
-import com.darkgran.farstar.gui.ButtonWithExtraState;
-import com.darkgran.farstar.gui.ListeningStage;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.cards.CardType;
-import com.darkgran.farstar.gui.SimpleBox2;
-import com.darkgran.farstar.gui.SimpleVector2;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -46,7 +42,7 @@ public abstract class BattleStage extends ListeningStage {
         }
         @Override
         public void clicked() {
-            if (battleScreen.getBattle().getWhoseTurn() instanceof LocalBattlePlayer) {
+            if (isEnabled() && battleScreen.getBattle().getWhoseTurn() instanceof LocalBattlePlayer) {
                 battleScreen.getBattle().getRoundManager().endTurn();
                 battleScreen.hideScreenConceder();
             }
@@ -63,6 +59,40 @@ public abstract class BattleStage extends ListeningStage {
     private Herald herald;
     private final ShotManager shotManager = new ShotManager();
     private final AnimationManager animationManager = new AnimationManager();
+    private BattleHelp battleHelp;
+    private final ActorButton f1button = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("f1"), Farstar.ASSET_LIBRARY.getAtlasRegion("f1O")){
+        //private SimpleImage2 bck = new SimpleImage2(0, 0, Farstar.ASSET_LIBRARY.getAtlasRegion("f1back"));
+        @Override
+        public void setPosition(float x, float y) {
+            super.setPosition(x, y);
+            //bck.x = x;
+            //bck.y = y;
+        }
+        /*@Override
+        public void draw(Batch batch, float parentAlpha) {
+            bck.draw(batch);
+            super.draw(batch, parentAlpha);
+        }*/
+        @Override
+        public void clicked() {
+            if (getBattleHelp() != null) {
+                toggleBattleHelp();
+            }
+        }
+    };
+    public void f1ButtonToNet() { //used to connect Net and F1 button (makes sense only if the default for Net is On)
+        setF1ButtonVisibility(getBattleScreen().isNetEnabled());
+    }
+    public void toggleF1Button() {
+        setF1ButtonVisibility(!getActors().contains(f1button, true));
+    }
+    public void setF1ButtonVisibility(boolean enable) {
+        if (enable) {
+            addActor(f1button);
+        } else {
+            f1button.remove();
+        }
+    }
 
 
     public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen, CombatMenu combatMenu) {
@@ -79,6 +109,8 @@ public abstract class BattleStage extends ListeningStage {
     protected void createTopActors() { } /** MUST be called in constructor (as the very last thing) and set cardZoom+herald! */
 
     public void updateDeckInfos() { }
+
+    public void dropDownHands() { }
 
     public void drawBottomActors(float delta, Batch batch) {
         combatMenu.drawDuels(batch, getBattleScreen().getShapeRenderer());
@@ -98,6 +130,21 @@ public abstract class BattleStage extends ListeningStage {
     public void drawZoomed(Batch batch) {
         if (fakeToken != null) { fakeToken.draw(batch, getBattleScreen().getShapeRenderer()); }
         cardZoom.draw(batch);
+    }
+
+    public void drawBattleHelp(Batch batch) {
+        if (battleHelp != null) {
+            battleHelp.draw(batch);
+        }
+    }
+
+    public void toggleBattleHelp() {
+        if (battleHelp != null) {
+            battleHelp.setEnabled(!battleHelp.isEnabled());
+            getBattleScreen().getBattle().closeYards();
+            getBattleScreen().hideScreenConceder();
+            dropDownHands();
+        }
     }
 
     @Override
@@ -276,6 +323,10 @@ public abstract class BattleStage extends ListeningStage {
         if (fakeToken != null) { this.addActor(fakeToken); }
     }
 
+    public boolean isEnabled() {
+        return (battleHelp == null || !battleHelp.isEnabled());
+    }
+
     public FakeToken getFakeToken() { return fakeToken; }
 
     public BattleScreen getBattleScreen() { return battleScreen; }
@@ -316,5 +367,17 @@ public abstract class BattleStage extends ListeningStage {
 
     public AnimationManager getAnimationManager() {
         return animationManager;
+    }
+
+    public BattleHelp getBattleHelp() {
+        return battleHelp;
+    }
+
+    public void setBattleHelp(BattleHelp battleHelp) {
+        this.battleHelp = battleHelp;
+    }
+
+    public ActorButton getF1button() {
+        return f1button;
     }
 }

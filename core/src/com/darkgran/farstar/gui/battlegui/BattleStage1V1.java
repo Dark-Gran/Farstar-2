@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.BattlePlayer;
+import com.darkgran.farstar.gui.ActorButton;
 import com.darkgran.farstar.gui.tokens.*;
 import com.darkgran.farstar.gui.ButtonWithExtraState;
 
@@ -37,15 +38,21 @@ public class BattleStage1V1 extends BattleStage {
     private final ButtonWithExtraState yardButton1 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAtlasRegion("yard"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardO"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardP"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardOP")){
         @Override
         public void clicked() {
-            yardMenu1.switchVisibility();
+            switchYardVisibility(yardMenu1);
         }
     };
     private final ButtonWithExtraState yardButton2 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAtlasRegion("yard"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardO"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardP"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardOP")){
         @Override
         public void clicked() {
-            yardMenu2.switchVisibility();
+            switchYardVisibility(yardMenu2);
         }
     };
+    private void switchYardVisibility(YardMenu yardMenu) {
+        yardMenu.switchVisibility();
+        if (getBattleHelp() != null && getBattleHelp().isEnabled()) {
+            getBattleHelp().setEnabled(false);
+        }
+    }
 
     public BattleStage1V1(Farstar game, Viewport viewport, BattleScreen battleScreen, CombatMenu combatMenu, BattlePlayer battlePlayer1, BattlePlayer battlePlayer2) {
         super(game, viewport, battleScreen, combatMenu);
@@ -98,6 +105,12 @@ public class BattleStage1V1 extends BattleStage {
         addDropTarget(handMenu2);
         //TokenZoom
         createTopActors();
+        //F1
+        setBattleHelp(new BattleHelp1v1(0, 0));
+        getF1button().setPosition(Math.round(Farstar.STAGE_WIDTH*0.045f), Math.round(Farstar.STAGE_HEIGHT*0.095f));
+        //getF1button().setPosition(Math.round(Farstar.STAGE_WIDTH*0.003f), Math.round(Farstar.STAGE_HEIGHT*0.003f)); //over table - to be used with f1back
+        //f1ButtonToNet();
+        addActor(getF1button());
     }
 
     @Override
@@ -123,6 +136,12 @@ public class BattleStage1V1 extends BattleStage {
     public void updateDeckInfos() {
         deck1.update();
         deck2.update();
+    }
+
+    @Override
+    public void dropDownHands() {
+        handMenu1.setHandState(HandMenu.HandMenuState.IDLE);
+        handMenu2.setHandState(HandMenu.HandMenuState.IDLE);
     }
 
     @Override

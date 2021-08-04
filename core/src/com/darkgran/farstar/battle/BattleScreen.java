@@ -33,6 +33,7 @@ public class BattleScreen extends SuperScreen {
                 if (battle.getRoundManager().isLaunched() && battle.getWhoseTurn() instanceof LocalBattlePlayer) {
                     battle.getRoundManager().tryCancel();
                     battle.closeYards();
+                    if (battleStage.getBattleHelp() != null) { battleStage.getBattleHelp().setEnabled(false); }
                 }
             }
             battleStage.getCardZoom().deactivate(button==1);
@@ -63,9 +64,10 @@ public class BattleScreen extends SuperScreen {
     public void userEscape() {
         getNotificationManager().clear(Notification.NotificationType.MIDDLE);
         if (!isConcederActive()) {
-            if (getBattle().areYardsOpen() || getBattle().getRoundManager().isTargetingActive() || getBattleStage().getAbilityPicker().isActive()) {
+            if ((getBattleStage().getBattleHelp() != null && getBattleStage().getBattleHelp().isEnabled()) || getBattle().areYardsOpen() || getBattle().getRoundManager().isTargetingActive() || getBattleStage().getAbilityPicker().isActive()) {
                 getBattle().getRoundManager().tryCancel();
                 getBattle().closeYards();
+                getBattleStage().getBattleHelp().setEnabled(false);
             } else {
                 String txt = getBattle().isEverythingDisabled() || getBattleType() == BattleType.SIMULATION ? "LEAVE?" : "CONCEDE?";
                 String fontPath = "fonts/orbitron36.fnt";
@@ -110,6 +112,7 @@ public class BattleScreen extends SuperScreen {
         super.drawTopContent(delta, batch);
         battleStage.drawTopBattleStage(delta, batch);
         battleStage.drawZoomed(batch);
+        battleStage.drawBattleHelp(batch);
     }
 
     private void drawBox2DDebug(Batch batch) {

@@ -26,10 +26,12 @@ public class AbilityPickerOption extends PrintToken {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                if (button == 0) {
-                    battle.getRoundManager().processPick(abilityInfo);
-                } else if (button == 1) {
-                    battle.getRoundManager().tryCancel();
+                if (battle.getBattleScreen().getBattleStage().isEnabled()) {
+                    if (button == 0) {
+                        battle.getRoundManager().processPick(abilityInfo);
+                    } else if (button == 1) {
+                        battle.getRoundManager().tryCancel();
+                    }
                 }
             }
         };

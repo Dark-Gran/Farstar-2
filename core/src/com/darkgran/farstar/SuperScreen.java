@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.gui.NotificationManager;
 import com.darkgran.farstar.gui.TableStage;
@@ -71,8 +72,6 @@ public abstract class SuperScreen implements Screen {
             if (game.MWQ.isMouseInsideWindow()) {
                 HDOn = true;
                 batch.draw(HDCursor, coords.x - HDCursorOffsetX, Farstar.STAGE_HEIGHT - (coords.y - HDCursorOffsetY) - HDCursor.getRegionHeight());
-            } else {
-                HDOn = false;
             }
         }
         if (HDOn != HDCursorInUse) {
@@ -94,7 +93,7 @@ public abstract class SuperScreen implements Screen {
     public static class ScreenSettings {
         private boolean helpEnabled = false;
         private boolean tableStageEnabled = true;
-        private boolean netEnabled = true;
+        private boolean netEnabled = false;
         private boolean tokenFramesEnabled = true;
         public ScreenSettings() {}
         public ScreenSettings(boolean helpEnabled, boolean tableStageEnabled, boolean netEnabled, boolean tokenFramesEnabled) {
@@ -108,10 +107,12 @@ public abstract class SuperScreen implements Screen {
         screenSettings.tableStageEnabled = tableStageEnabled;
         if (tableStage != null) { tableStage.enableButtons(tableStageEnabled); }
     }
+    public void setNetEnabled(boolean netEnabled) {
+        screenSettings.netEnabled = netEnabled;
+    }
     public boolean isTableStageEnabled() { return screenSettings.tableStageEnabled; }
     public void setHelpEnabled(boolean helpEnabled) { screenSettings.helpEnabled = helpEnabled; }
     public boolean isHelpEnabled() { return screenSettings.helpEnabled; }
-    public void setNetEnabled(boolean netEnabled) { screenSettings.netEnabled = netEnabled; }
     public boolean isNetEnabled() { return screenSettings.netEnabled; }
     public void setTokenFramesEnabled(boolean tokenFramesEnabled) { screenSettings.tokenFramesEnabled = tokenFramesEnabled; }
     public boolean isTokenFramesEnabled() { return screenSettings.tokenFramesEnabled; }
@@ -147,6 +148,8 @@ public abstract class SuperScreen implements Screen {
     protected void drawMenus(float delta, Batch batch) { //for all screens except intro
         batch.begin();
         perfMeter.drawText(batch);
+        //All buttons, included the ones in YXQuestionBox, are drawn when the entire Stage is drawn, therefore moving screenConceder higher makes the box draw over the buttons.
+        //To be able to move screenConceder to a "higher layer", another Stage would need to be set up ("TopStage"), however this is unnecessary unless more features would use this Stage.
         if (screenConceder != null) { screenConceder.draw(batch, shapeRenderer); }
         batch.end();
     }

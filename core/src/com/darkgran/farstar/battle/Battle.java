@@ -33,7 +33,7 @@ public abstract class Battle {
         return false;
     }
 
-    protected void closeYards() { }
+    public void closeYards() { }
 
     public void dispose() {}
 
@@ -79,8 +79,8 @@ public abstract class Battle {
         getRoundManager().getPossibilityAdvisor().refresh(whoseTurn, this);
     }
 
-    public boolean activeCombatOrDuel() {
-        return combatManager.isActive() || combatManager.getDuelManager().isActive();
+    public boolean aintCombatOrDuel() {
+        return !combatManager.isActive() && !combatManager.getDuelManager().isActive();
     }
 
     public BattlePlayer getWhoseTurn() {
