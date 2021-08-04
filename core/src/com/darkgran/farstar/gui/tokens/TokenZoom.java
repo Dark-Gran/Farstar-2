@@ -89,6 +89,8 @@ public abstract class TokenZoom extends PrintToken {
 
     @Override
     public void setPosition(float x, float y) {
+        x = Math.round(x);
+        y = Math.round(y);
         super.setPosition(x, y);
         if (explainer != null) { explainer.setShiftedPosition(x, y); }
     }
