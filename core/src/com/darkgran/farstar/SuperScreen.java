@@ -71,13 +71,19 @@ public abstract class SuperScreen implements Screen {
             SimpleVector2 coords = getMouseCoordinates();
             if (game.MWQ.isMouseInsideWindow()) {
                 HDOn = true;
-                batch.draw(HDCursor, coords.x - HDCursorOffsetX, Farstar.STAGE_HEIGHT - (coords.y - HDCursorOffsetY) - HDCursor.getRegionHeight());
+                float scale = getScreenScale();
+                batch.draw(HDCursor, coords.x - HDCursorOffsetX, Farstar.STAGE_HEIGHT - (coords.y - HDCursorOffsetY) - HDCursor.getRegionHeight(), HDCursor.getRegionWidth()/2f, HDCursor.getRegionHeight()/2f, HDCursor.getRegionWidth(), HDCursor.getRegionHeight(), scale, scale, 0);
             }
         }
         if (HDOn != HDCursorInUse) {
             HDCursorInUse = HDOn;
             hideCursor(HDOn);
         }
+    }
+    public float getScreenScale() {
+        float scaleX = (float) Farstar.STAGE_WIDTH / Gdx.graphics.getWidth();
+        float scaleY = (float) Farstar.STAGE_HEIGHT / Gdx.graphics.getHeight();
+        return Math.max(scaleX, scaleY);
     }
     public static void hideCursor(boolean hide) {
         if (hide) {
@@ -207,6 +213,7 @@ public abstract class SuperScreen implements Screen {
         viewport.update(width, height);
         camera.position.set((float) Farstar.STAGE_WIDTH/2,(float) Farstar.STAGE_HEIGHT/2,0);
         camera.update();
+        Gdx.graphics.setVSync(Gdx.graphics.isFullscreen());
     }
 
     @Override

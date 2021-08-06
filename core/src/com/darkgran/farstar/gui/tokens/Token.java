@@ -91,13 +91,13 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
     }
 
     public void setParts() {
-        tokenDefense.x = Math.round(getX() + getWidth());
-        tokenDefense.x = Math.round(getX() + getWidth());
+        tokenDefense.x = this instanceof FakeToken ? getX() + getWidth() : Math.round(getX() + getWidth());
+        tokenDefense.x = this instanceof FakeToken ? getX() + getWidth() : Math.round(getX() + getWidth());
         tokenDefense.y = getY();
         tokenOffense.x = getX();
         tokenOffense.y = getY();
         tokenPrice.x = getX();
-        tokenPrice.y = Math.round(getY() + getHeight());
+        tokenPrice.y = this instanceof FakeToken ? getY() + getHeight() : Math.round(getY() + getHeight());
     }
 
     public void setup(BattleCard battleCard, TokenType targetType, SimpleVector2 targetXY) { //used only by non-standard tokens (that do not connectCard)
@@ -129,16 +129,20 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
 
     @Override
     public void setPosition(float x, float y) {
-        x = Math.round(x);
-        y = Math.round(y);
+        if (!(this instanceof FakeToken)) {
+            x = Math.round(x);
+            y = Math.round(y);
+        }
         super.setPosition(x, y);
         setParts();
     }
 
     @Override
     public void setBounds(float x, float y, float width, float height) {
-        x = Math.round(x);
-        y = Math.round(y);
+        if (!(this instanceof FakeToken)) {
+            x = Math.round(x);
+            y = Math.round(y);
+        }
         super.setBounds(x, y, width, height);
         setParts();
     }
