@@ -29,10 +29,10 @@ public interface CardGFX extends TextDrawer {
 
     default void resetCardGFX(CardCulture culture, TokenType tokenType) {
         if (tokenType != null) {
-            if (!isBackside()) {
-                setCardPic(Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("card" + culture.getAcronym() + "-", tokenType, false)));
-            } else {
+            if (isBackside()) {
                 setCardPic(Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("cardB-", tokenType, false)));
+            } else {
+                setCardPic(Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("card" + culture.getAcronym() + "-", tokenType, false)));
             }
         }
     }
@@ -42,8 +42,8 @@ public interface CardGFX extends TextDrawer {
             batch.draw(getCardPic(), x, y);
             if (getCard() != null && !isBackside()) {
                 drawText(getNameFont(tokenType), batch, x, y+getCardPic().getRegionHeight()*0.516f, getCardName(getCard()), Align.center);
-                drawText(getTierFont(tokenType), batch, x, y+getCardPic().getRegionHeight()*0.452f, getTierName(getCardTier(getCard()), getCardType(getCard())), Align.center);
-                drawText(getDescFont(tokenType), batch, x, y+getCardPic().getRegionHeight()*0.37f, getCardDescription(getCard()), Align.center, ColorPalette.BLACK);
+                drawText(getTierFont(tokenType), batch, x, y+getCardPic().getRegionHeight() * (getCardType(getCard()) == CardType.MS ? 0.458f : 0.453f), getTierName(getCardTier(getCard()), getCardType(getCard())), Align.center);
+                drawText(getDescFont(tokenType), batch, x, y+getCardPic().getRegionHeight()*0.37f, getCardDescription(getCard()), Align.center);
             }
         }
     }

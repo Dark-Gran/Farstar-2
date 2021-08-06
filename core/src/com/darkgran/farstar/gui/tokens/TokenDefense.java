@@ -23,6 +23,16 @@ public class TokenDefense extends TokenPart {
     }
 
     @Override
+    public void setupOffset() { //in-future: some fonts seem to be highly imperfect (either in origin or by import)... fix (= probably font edit)
+        super.setupOffset();
+        if (getToken().getTokenType() == TokenType.PRINT || getToken().getTokenType() == TokenType.SUPPORT || getToken().getTokenType() == TokenType.HAND) {
+            if (getContent().equals("0")) {
+                setTextOffsetX(1f);
+            }
+        }
+    }
+
+    @Override
     public String getContent() {
         return Integer.toString(getToken().getCard().getHealth());
     }

@@ -12,7 +12,7 @@ import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
 
 public class DeploymentCard extends DeploymentToken implements CardGFX {
-    private Color fontColor = ColorPalette.BLACKISH;
+    private Color fontColor = ColorPalette.BLACK;
     private TextureRegion cardPic;
 
     public DeploymentCard(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {

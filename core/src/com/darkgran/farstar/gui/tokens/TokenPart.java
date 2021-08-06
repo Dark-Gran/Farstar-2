@@ -28,6 +28,8 @@ public class TokenPart extends TextLine {
     private SimpleVector2 textWH;
     private float offsetY = 0f;
     private float offsetX = 0f;
+    private float textOffsetX = 0f;
+    private float textOffsetY = 0f;
     private ContentState currentContentState = ContentState.NORMAL;
 
     public TokenPart(String fontPath, Token token) {
@@ -43,7 +45,11 @@ public class TokenPart extends TextLine {
     }
 
     public void setupOffset() {
-        setOffsetY(0f);
+        if (TokenType.isDeployed(token.getTokenType())) { //quick-fix for position rounding; in-future: check Fleets even/odd positions + look into how the text is actually placed/centered
+            if (getContent().equals("1") || getContent().equals("0") || getContent().length() > 1) {
+                setTextOffsetX(1f);
+            }
+        }
     }
 
     public void setPad(TokenType tokenType) {
@@ -100,8 +106,8 @@ public class TokenPart extends TextLine {
         token.getBattleStage().getShotManager().drawRecoil(batch, token);
         if (isEnabled()) {
             batch.draw(pad, x - pad.getRegionWidth() + offsetX, y + offsetY);
-            float textX = x - pad.getRegionWidth()/2f - textWH.x/2f + offsetX;
-            float textY = y + pad.getRegionHeight()/2f + textWH.y/2f + offsetY;
+            float textX = x - pad.getRegionWidth()/2f - textWH.x/2f + offsetX + textOffsetX;
+            float textY = y + pad.getRegionHeight()/2f + textWH.y/2f + offsetY + textOffsetY;
             if (!(TokenType.isDeployed(getToken().getTokenType()) || getToken().getTokenType() == TokenType.PRINT)) {
                 drawText(getFont(), batch, textX, textY, getContent(), ColorPalette.BLACKISH);
             } else {
@@ -160,5 +166,21 @@ public class TokenPart extends TextLine {
 
     public void setCurrentContentState(ContentState currentContentState) {
         this.currentContentState = currentContentState;
+    }
+
+    public float getTextOffsetY() {
+        return textOffsetY;
+    }
+
+    public void setTextOffsetY(float textOffsetY) {
+        this.textOffsetY = textOffsetY;
+    }
+
+    public float getTextOffsetX() {
+        return textOffsetX;
+    }
+
+    public void setTextOffsetX(float textOffsetX) {
+        this.textOffsetX = textOffsetX;
     }
 }

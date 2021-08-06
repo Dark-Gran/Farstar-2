@@ -17,7 +17,7 @@ import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
  * Used for "card-zoom" etc.
  */
 public class PrintToken extends Token implements CardGFX {
-    private Color fontColor = ColorPalette.BLACKISH;
+    private Color fontColor = ColorPalette.BLACK;
     private TextureRegion cardPic;
     private TokenType targetType;
     private SimpleVector2 targetXY = new SimpleVector2(0, 0);

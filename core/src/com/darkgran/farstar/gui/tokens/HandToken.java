@@ -19,7 +19,7 @@ import com.darkgran.farstar.gui.SimpleVector2;
 import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
 
 public class HandToken extends AnchoredToken implements CardGFX, FakingTokens { //possibly in-future: use a slightly smaller version for the top side of the table (to simulate some visual perspective), but only if it's not a LocalPlayer (ie. outside Simulation)
-    private Color fontColor = ColorPalette.BLACKISH;
+    private Color fontColor = ColorPalette.BLACK;
     private TextureRegion cardPic;
     Matrix4 oldMX = null;
     Matrix4 mx;

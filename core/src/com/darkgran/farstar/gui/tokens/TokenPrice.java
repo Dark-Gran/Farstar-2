@@ -51,6 +51,7 @@ public class TokenPrice extends TokenPart {
 
     @Override
     public void setupOffset() {
+        super.setupOffset();
         setOffsetY(-getPad().getRegionHeight());
         setOffsetX(getPad().getRegionWidth());
     }

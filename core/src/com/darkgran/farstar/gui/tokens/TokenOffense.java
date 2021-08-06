@@ -40,6 +40,7 @@ public class TokenOffense extends TokenPart {
 
     @Override
     public void setupOffset() {
+        super.setupOffset();
         if (getPad() != null) {
             setOffsetX(getPad().getRegionWidth());
         }
