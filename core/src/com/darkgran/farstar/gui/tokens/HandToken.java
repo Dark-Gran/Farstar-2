@@ -53,6 +53,8 @@ public class HandToken extends AnchoredToken implements CardGFX, FakingTokens { 
             if (getBattleStage().getBattleScreen().getBattle().getRoundManager().isTokenMoveEnabled(this)) {
                 newFake(event, x, y, pointer, button, FakeTokenType.HAND);
                 setHidden(true);
+            } else {
+                setHidden(false);
             }
             return false;
         } else {

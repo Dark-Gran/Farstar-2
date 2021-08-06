@@ -29,7 +29,7 @@ public class MainScreen extends SuperScreen {
                     fontPath,
                     txt,
                     Farstar.STAGE_WIDTH/2f - textWH.x/2,
-                    Farstar.STAGE_HEIGHT/2f + textWH.y/2 + textWH.y*2,
+                    Farstar.STAGE_HEIGHT/2f + textWH.y*2,
                     textWH.x,
                     textWH.y,
                     true,

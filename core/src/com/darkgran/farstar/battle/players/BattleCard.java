@@ -30,11 +30,12 @@ public class BattleCard extends Card {
     }
 
     @Override
-    public void refreshToken(boolean def, boolean off) {
+    public void refreshToken(boolean def, boolean off, boolean abi) {
         if (getToken() != null) {
             if (getBattlePlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom() != null && this == getBattlePlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().getCard()) {
                 getBattlePlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().setup(this, getToken().getTokenType(), getBattlePlayer().getBattle().getBattleScreen().getBattleStage().getCardZoom().getTargetXY());
             }
+            if (abi) { getToken().getTokenPrice().update(); }
             if (def) { getToken().getTokenDefense().update(); }
             if (off) { getToken().getTokenOffense().update(); }
         }
@@ -51,14 +52,14 @@ public class BattleCard extends Card {
 
     public boolean receiveDMG(int dmg) { //returns survival
         damage += dmg;
-        refreshToken(true, false);
+        refreshToken(true, false, false);
         return getHealth() > 0;
     }
 
     public void repairDMG(int dmg) {
         damage -= dmg;
         if (damage < 0) { damage = 0; }
-        refreshToken(true, false);
+        refreshToken(true, false, false);
     }
 
     public int getHealth() { return getCardInfo().getDefense()-damage; }
@@ -81,6 +82,7 @@ public class BattleCard extends Card {
                 }
             }
         }
+        refreshToken(false, false, true);
     }
 
     public void death() { }
@@ -89,7 +91,7 @@ public class BattleCard extends Card {
 
     public void addToEffects (Effect effect) {
         effects.add(effect);
-        refreshToken(true, true);
+        refreshToken(true, true, true);
     }
 
     public boolean isDamaged() { return damage > 0; }

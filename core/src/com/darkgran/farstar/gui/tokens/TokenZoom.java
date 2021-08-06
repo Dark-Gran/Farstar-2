@@ -53,6 +53,9 @@ public abstract class TokenZoom extends PrintToken {
             hidden = false;
             counter.setEnabled(true);
             counting = true;
+            if (getCard().getToken() instanceof HandToken) {
+                ((HandToken) getCard().getToken()).setHidden(true);
+            }
         }
     }
 
@@ -65,14 +68,15 @@ public abstract class TokenZoom extends PrintToken {
             super.enable(battleCard, targetType, targetXY);
             if (targetType != TokenType.JUNK && battleCard.getToken().getCardListMenu() instanceof HandMenu) {
                 ((HandMenu) battleCard.getToken().getCardListMenu()).setHandState(HandMenu.HandMenuState.UP);
-                if (battleCard.getBattlePlayer() instanceof LocalBattlePlayer && battleCard.getToken() != null && getBattleStage().getBattleScreen().getBattle().getRoundManager().isTokenMoveEnabled(battleCard.getToken()) && !Gdx.input.isButtonPressed(Input.Buttons.LEFT) && battleCard.getBattlePlayer() == getBattleStage().getBattleScreen().getBattle().getWhoseTurn()) { ((HandToken) battleCard.getToken()).setHidden(true); }
+                if (!Gdx.input.isButtonPressed(Input.Buttons.LEFT) && battleCard.getBattlePlayer() instanceof LocalBattlePlayer && battleCard.getToken() != null) { ((HandToken) battleCard.getToken()).setHidden(true); }
             }
         }
     }
 
     @Override
     public void disable() {
-        if (getCard() != null && getCard().getToken().getTokenType() != TokenType.JUNK && getCard().getToken().getCardListMenu() instanceof HandMenu) {
+        //in-future: consider split (TokenZoom -> _Preview_ x Herald) class instead of "asking parent if he's a child", which probably isn't the best practice
+        if (!(this instanceof Herald) && getCard() != null && getCard().getToken().getTokenType() != TokenType.JUNK && getCard().getToken().getCardListMenu() instanceof HandMenu) {
             ((HandMenu) getCard().getToken().getCardListMenu()).setHandState(HandMenu.HandMenuState.IDLE);
             if (getCard().getBattlePlayer() instanceof LocalBattlePlayer && !Gdx.input.isButtonPressed(Input.Buttons.LEFT)) { ((HandToken) getCard().getToken()).setHidden(false); }
         }

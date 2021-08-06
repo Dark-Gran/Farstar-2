@@ -34,6 +34,19 @@ public class NotificationManager {
         }
     }
 
+    public boolean newNotification(Notification.NotificationType notificationType, String message, int duration, boolean forceClear) {
+        if (forceClear) {
+            if (notifications.get(notificationType) != null) {
+                for (Notification notification : notifications.get(notificationType)) {
+                    if (!notification.getText().equals(message)) {
+                        notification.getTimer().setEnabled(false);
+                    }
+                }
+            }
+        }
+        return newNotification(notificationType, message, duration);
+    }
+
     public boolean newNotification(Notification.NotificationType notificationType, String message, int duration) {
         ArrayList<Notification> n = new ArrayList<>();
         //check for duplicates
@@ -52,11 +65,21 @@ public class NotificationManager {
     }
 
     public void clear(Notification.NotificationType notificationType) {
-        notifications.remove(notificationType);
+        if (notifications.size() > 0 && notifications.containsKey(notificationType)) {
+            for (Notification notification : notifications.get(notificationType)) {
+                notification.getTimer().setEnabled(false);
+            }
+        }
     }
 
     public void clearAll() {
-        notifications.clear();
+        if (notifications.size() > 0) {
+            for (Map.Entry<Notification.NotificationType, ArrayList<Notification>> entry : notifications.entrySet()) {
+                if (entry.getValue().size() > 0) {
+                    entry.getValue().get(0).getTimer().setEnabled(false);
+                }
+            }
+        }
     }
 
 }

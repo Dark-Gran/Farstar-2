@@ -69,6 +69,9 @@ public class TokenPrice extends TokenPart {
             textWH2.x = textWH2.x+3f;
         }
         if (!(getToken() instanceof CardGFX)) {
+            showGuardMark = false;
+            showFSMark = false;
+            showReachMark = false;
             showUseMark = AbilityManager.hasStarter(getToken().getCard(), AbilityStarter.USE);
             for (AbilityInfo abilityInfo : getToken().getCard().getCardInfo().getAbilities()) {
                 if (abilityInfo.getStarter() == AbilityStarter.NONE) {
@@ -135,6 +138,9 @@ public class TokenPrice extends TokenPart {
     }
 
     private int getResource(boolean energy, TokenType tokenType) {
+        if (getToken().getCard().isMS() && tokenType == TokenType.PRINT) {
+            tokenType = TokenType.MS;
+        }
         switch (tokenType) {
             case YARD:
             case JUNK:

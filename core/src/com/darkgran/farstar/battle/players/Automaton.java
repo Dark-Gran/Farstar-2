@@ -390,7 +390,7 @@ public class Automaton extends Bot {
                         duels.remove((FleetToken) ship.getToken());
                         enemy = getDuelTarget(ship.getToken());
                         if (enemy != null) {
-                            if (enemy != currentEnemy) { //"don't attack (= receive dmg) for no reason"
+                            if (enemy != currentEnemy || currentEnemy.getCard().isMS()) { //"don't attack (= receive dmg) for no reason"
                                 duels.put((FleetToken) ship.getToken(), new DuelManager.AttackInfo(ship.getToken(), enemy));
                             }
                         }

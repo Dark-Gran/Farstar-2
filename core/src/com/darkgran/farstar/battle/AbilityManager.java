@@ -131,24 +131,24 @@ public class AbilityManager {
             switch (changeStatType) {
                 case OFFENSE:
                     target.getCardInfo().changeOffense(floatObjectToInt(changeInfo));
-                    target.refreshToken(false, true);
+                    target.refreshToken(false, true, false);
                     success = true;
                     break;
                 case DEFENSE:
                     target.getCardInfo().changeDefense(floatObjectToInt(changeInfo));
-                    target.refreshToken(true, false);
+                    target.refreshToken(true, false, false);
                     success = true;
                     break;
                 case OFFENSE_TYPE:
                     techType = TechType.valueOf(changeInfo.toString());
                     target.getCardInfo().setOffenseType(techType);
-                    target.refreshToken(false, true);
+                    target.refreshToken(false, true, false);
                     success = true;
                     break;
                 case DEFENSE_TYPE:
                     techType = TechType.valueOf(changeInfo.toString());
                     target.getCardInfo().setDefenseType(techType);
-                    target.refreshToken(true, false);
+                    target.refreshToken(true, false, false);
                     success = true;
                     break;
                 case ABILITY:
@@ -164,6 +164,7 @@ public class AbilityManager {
                             target.getCardInfo().addAbility(newAbility); //in-future: When adding Reach where it's already present, upgrade with it instead (ie. sum)
                             success = true;
                         }
+                        target.refreshToken(false, false, true);
                     }
                     break;
             }
@@ -183,18 +184,18 @@ public class AbilityManager {
             switch (changeStatType) {
                 case OFFENSE:
                     target.getCardInfo().changeOffense(-floatObjectToInt(changeInfo));
-                    target.refreshToken(false, true);
+                    target.refreshToken(false, true, false);
                     success = true;
                     break;
                 case DEFENSE:
                     target.getCardInfo().changeDefense(-floatObjectToInt(changeInfo));
-                    target.refreshToken(true, false);
+                    target.refreshToken(true, false, false);
                     success = true;
                     break;
                 case OFFENSE_TYPE:
                 case DEFENSE_TYPE:
                     reverseType(target, effect, changeStatType);
-                    target.refreshToken(changeStatType == DEFENSE_TYPE, changeStatType == OFFENSE_TYPE);
+                    target.refreshToken(changeStatType == DEFENSE_TYPE, changeStatType == OFFENSE_TYPE, false);
                     success = true;
                     break;
                 case ABILITY:

@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.CombatManager;
+import com.darkgran.farstar.gui.Notification;
 import com.darkgran.farstar.gui.battlegui.Menu;
 import com.darkgran.farstar.gui.battlegui.YardMenu;
 import com.darkgran.farstar.cards.AbilityInfo;
@@ -19,27 +20,27 @@ public class PossibilityAdvisor {
         boolean tacticalPhase = battle.getCombatManager().isTacticalPhase();
         BattlePlayer whoseTurn = battle.getWhoseTurn();
         if (battlePlayer == whoseTurn) {
-            if (!inCombat && hasPossibleAbility(battlePlayer, battlePlayer.getMs())) {
+            if (!inCombat && hasPossibleAbility(battlePlayer, battlePlayer.getMs(), false)) {
                 possibilities.add(new PossibilityInfo(battlePlayer.getMs(), null));
             }
             for (BattleCard battleCard : battlePlayer.getSupports()) {
-                if (!inCombat && hasPossibleAbility(battlePlayer, battleCard)) {
+                if (!inCombat && hasPossibleAbility(battlePlayer, battleCard, false)) {
                     possibilities.add(new PossibilityInfo(battleCard, battlePlayer.getSupports().getCardListMenu()));
                 }
             }
             for (BattleCard battleCard : battlePlayer.getHand()) {
-                if ((!inCombat || (battleCard.isTactic() && tacticalPhase && !battlePlayer.getFleet().isEmpty())) && isPossibleToDeploy(battlePlayer, whoseTurn, battleCard, true, battle)) {
+                if ((!inCombat || (battleCard.isTactic() && tacticalPhase)) && isPossibleToDeploy(battlePlayer, whoseTurn, battleCard, true, battle, false)) {
                     possibilities.add(new PossibilityInfo(battleCard, battlePlayer.getHand().getCardListMenu()));
                 }
             }
             for (int i = battlePlayer.getYard().size()-1; i >= 0; i--) {
-                if ((!inCombat || (battlePlayer.getYard().get(i).isTactic() && tacticalPhase)) && isPossibleToDeploy(battlePlayer, whoseTurn, battlePlayer.getYard().get(i), true, battle)) {
+                if ((!inCombat || (battlePlayer.getYard().get(i).isTactic() && tacticalPhase)) && isPossibleToDeploy(battlePlayer, whoseTurn, battlePlayer.getYard().get(i), true, battle, false)) {
                     possibilities.add(new PossibilityInfo(battlePlayer.getYard().get(i), battlePlayer.getYard().getCardListMenu()));
                 }
             }
             for (Ship ship : battlePlayer.getFleet().getShips()) {
                 if (ship != null && CombatManager.getDuel(ship.getToken(), battle.getCombatManager().getDuels()) == null) {
-                    if ((!inCombat && hasPossibleAbility(battlePlayer, ship)) || (inCombat && !tacticalPhase && !ship.isUsed())) {
+                    if ((!inCombat && hasPossibleAbility(battlePlayer, ship, false)) || (inCombat && !tacticalPhase && !ship.isUsed())) {
                         possibilities.add(new PossibilityInfo(ship, battlePlayer.getFleet().getFleetMenu()));
                     }
                 }
@@ -48,7 +49,20 @@ public class PossibilityAdvisor {
         return possibilities;
     }
 
-    public boolean hasPossibleAbility(BattlePlayer battlePlayer, BattleCard battleCard) {
+    public static void reportDeployability(Battle battle, boolean affordable, boolean learned, boolean targetsPresent, boolean space) {
+        int duration = 3;
+        if (!learned) {
+            battle.getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Insufficient Technological Tier.", duration, true);
+        } else if (!affordable) {
+            battle.getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Insufficient Resources.", duration, true);
+        } else if (!targetsPresent) {
+            battle.getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "No Possible Targets.", duration, true);
+        } else if (!space) {
+            battle.getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Cannot Man More Ships.", duration, true);
+        }
+    }
+
+    public boolean hasPossibleAbility(BattlePlayer battlePlayer, BattleCard battleCard, boolean signs) {
         if (battleCard != null && !battleCard.isUsed()) {
             for (int i = 0; i < battleCard.getCardInfo().getAbilities().size(); i++) {
                 if (battleCard.getCardInfo().getAbilities().get(i) != null) {
@@ -56,6 +70,8 @@ public class PossibilityAdvisor {
                         AbilityInfo abilityInfo = battleCard.getCardInfo().getAbilities().get(i);
                         if (battlePlayer.canAfford(abilityInfo.getResourcePrice().getEnergy(), abilityInfo.getResourcePrice().getMatter())) {
                             return true;
+                        } else if (signs) {
+                            reportDeployability(battlePlayer.getBattle(), false, true, true, true);
                         }
                     }
                 }
@@ -64,9 +80,14 @@ public class PossibilityAdvisor {
         return false;
     }
 
-    public boolean isPossibleToDeploy(BattlePlayer battlePlayer, BattlePlayer whoseTurn, BattleCard battleCard, boolean checkSpace, Battle battle) { //in-future: "spread" or parametrize to be used with Notifications (eg. "Insufficient Resources.")... (see RoundManager's call)
-        if (battlePlayer == whoseTurn && battlePlayer.canAfford(battleCard) && tierAllowed(battleCard.getCardInfo().getTier(), battle) && allowedAoE(battlePlayer, battleCard, battle) && (!battlePlayer.getFleet().isEmpty() || !battleCard.isPurelyOffensiveChange())) {
-            return !checkSpace || ((battlePlayer.getSupports().hasSpace() || battleCard.getCardInfo().getCardType() != CardType.SUPPORT) && (battlePlayer.getFleet().hasSpace() || (battleCard.getCardInfo().getCardType() != CardType.YARDPRINT && battleCard.getCardInfo().getCardType() != CardType.BLUEPRINT)));
+    public boolean isPossibleToDeploy(BattlePlayer battlePlayer, BattlePlayer whoseTurn, BattleCard battleCard, boolean checkSpace, Battle battle, boolean signs) { //in-future: "spread" or parametrize to be used with Notifications (eg. "Insufficient Resources.")... (see RoundManager's call)
+        boolean affordable = battlePlayer.canAfford(battleCard);
+        boolean learned = tierAllowed(battleCard.getCardInfo().getTier(), battle);
+        boolean targetsPresent = allowedAoE(battlePlayer, battleCard, battle) && (!battlePlayer.getFleet().isEmpty() || !battleCard.isPurelyOffensiveChange());
+        boolean space = !checkSpace || ((battlePlayer.getSupports().hasSpace() || battleCard.getCardInfo().getCardType() != CardType.SUPPORT) && (battlePlayer.getFleet().hasSpace() || (battleCard.getCardInfo().getCardType() != CardType.YARDPRINT && battleCard.getCardInfo().getCardType() != CardType.BLUEPRINT)));
+        if (signs) { reportDeployability(battle, affordable, learned, targetsPresent, space); }
+        if (battlePlayer == whoseTurn && affordable && learned && targetsPresent) {
+            return space;
         }
         return false;
     }
