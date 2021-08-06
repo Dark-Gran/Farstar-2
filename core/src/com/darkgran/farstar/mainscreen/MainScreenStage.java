@@ -14,7 +14,7 @@ import com.darkgran.farstar.battle.players.PlayerFactory;
 public class MainScreenStage extends ListeningStage {
     private final PlayerFactory playerFactory = new PlayerFactory();
     private final SimpleImage2 FSLogo;
-    private final VersionInfo versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN);
+    private final VersionInfo versionInfo;
     private final ActorButton solitaryButton = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("solitary"), Farstar.ASSET_LIBRARY.getAtlasRegion("solitaryO")){
         @Override
         public void clicked() { launchBattleScreen(BattleType.SOLITARY); }
@@ -39,6 +39,7 @@ public class MainScreenStage extends ListeningStage {
 
     public MainScreenStage(final Farstar game, Viewport viewport) {
         super(game, viewport);
+        versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN, Farstar.APP_VERSION_NAME);
         TextureRegion tr = Farstar.ASSET_LIBRARY.getAtlasRegion("FSLogo");
         FSLogo = new SimpleImage2((float) (Farstar.STAGE_WIDTH/2-tr.getRegionWidth()/2), (float) (Farstar.STAGE_HEIGHT*0.8), tr);
         TextureRegion measureTexture = Farstar.ASSET_LIBRARY.getAtlasRegion("solitary");

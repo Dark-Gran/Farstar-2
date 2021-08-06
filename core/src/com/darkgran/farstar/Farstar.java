@@ -7,7 +7,7 @@ import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.NotificationManager;
 
 public class Farstar extends Game {
-	public static final String APP_VERSION = "v0.2 (Alpha)";
+	public static final String APP_VERSION_NAME = "v0.3 (Alpha)";
 	public static final int STAGE_WIDTH = 1920;
 	public static final int STAGE_HEIGHT = 960;
 	public static final CardLibrary CARD_LIBRARY = new CardLibrary();
