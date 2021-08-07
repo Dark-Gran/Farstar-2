@@ -146,7 +146,8 @@ public class Automaton extends Bot {
         return (possibilityInfo.getCard().isTactic() == getBattle().getCombatManager().isTacticalPhase()) && !abilityNonsense(possibilityInfo.getCard());
     }
 
-    private boolean abilityNonsense(BattleCard battleCard) {
+    private boolean abilityNonsense(BattleCard battleCard) { //in-future: consider effect duration (temp vs perm) - atm not needed (all current tactic cards are temp, all current non-tactics are perm)
+        boolean overallNonsense = false; //"consider all at once for TechSwitches" quick-fix
         for (AbilityInfo ability : battleCard.getCardInfo().getAbilities()) {
             for (Effect effect : ability.getEffects()) {
                 if (effect != null && effect.getEffectType() != null) {
@@ -170,14 +171,14 @@ public class Automaton extends Bot {
                                         if (enemies == null || enemies.size() == 0) { return true; }
                                         enemy = enemies.get(0).getCard();
                                         if (techTypeNonsense(ally, enemy, changeStatType, changeInfo)) {
-                                            return true;
+                                            overallNonsense = true;
                                         }
                                         if (ability.isPurelyTypeChange()) {
                                             if ((changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && (ally.getCardInfo().getOffense() <= 1 || enemy.getCardInfo().getDefense() < ally.getCardInfo().getOffense())) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && (enemy.getCardInfo().getOffense() <= 1 || ally.getCardInfo().getDefense() < enemy.getCardInfo().getOffense()))) {
-                                                return true;
+                                                overallNonsense = true;
                                             } else {
-                                                TechType techType = TechType.valueOf(changeInfo.toString()); //in-future: rework invalidating "switches" (changing both types at the same time)
-                                                return ((changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && techType == ally.getCardInfo().getDefenseType() || changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && techType == ally.getCardInfo().getOffenseType()));
+                                                TechType techType = TechType.valueOf(changeInfo.toString());
+                                                overallNonsense = ((changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && techType == ally.getCardInfo().getDefenseType() || changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && techType == ally.getCardInfo().getOffenseType()));
                                             }
                                         }
                                     }
@@ -194,7 +195,7 @@ public class Automaton extends Bot {
                                                 enemies = CombatManager.getDuelOpponent(allyToken, getBattle().getCombatManager().getDuels());
                                                 if (enemies == null || enemies.size() == 0) { return true; }
                                                 enemy = enemies.get(0).getCard();
-                                                if (enemy.isMS() || (duel.getValue().getUpperStrike() != null && duel.getValue().getUpperStrike() == ally)) {
+                                                if (enemy.isMS() || (duel.getValue().getUpperStrike() != null && duel.getValue().getUpperStrike() == ally) && DuelManager.getDmgAgainstShields(ally.getCardInfo().getOffense(), enemy.getHealth(), ally.getCardInfo().getOffenseType(), enemy.getCardInfo().getDefenseType()) < enemy.getHealth()) { //note: if OUTNUMBERED_DEBUFF becomes enabled, this condition must be updated
                                                     return true;
                                                 }
                                             } else { //OUTSIDE COMBAT
@@ -229,7 +230,7 @@ public class Automaton extends Bot {
                 }
             }
         }
-        return false;
+        return overallNonsense;
     }
 
     private Token getWoundedAlly() {
