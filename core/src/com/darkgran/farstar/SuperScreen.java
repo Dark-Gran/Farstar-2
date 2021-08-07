@@ -194,8 +194,8 @@ public abstract class SuperScreen implements Screen {
             }
         }
 
-        game.batch.begin(); //batch.begin() and batch.end() should be minimized (preferably only 1 of each per 1 frame)
-        //other things to limit as much as possible ("not to make batch flush"): changes to projection/transformation matrices (try Affine2?), enabling/disabling blending (also: OpenGL calls vs spriteBatch.enableBlending())
+        game.batch.begin(); //batch.begin() and batch.end() should be minimized (preferably only 1 of each per 1 frame... consider sharing the main batch with Stages)
+        //other things to limit ("not to make batch flush"): changes to projection/transformation matrices (try Affine2 instead?), enabling/disabling blending (also: OpenGL calls vs spriteBatch.enableBlending())
         game.batch.setColor(1, 1, 1, 1);
         drawContent(delta, game.batch);
         game.batch.end();
