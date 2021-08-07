@@ -192,8 +192,7 @@ public class DuelManager implements Delayer {
     }
 
     public static TechType noneToInferior(TechType techType) {
-        if (techType == TechType.NONE) { techType = TechType.INFERIOR; }
-        return techType;
+        return techType == TechType.NONE ? TechType.INFERIOR : techType;
     }
 
     public boolean isActive() {
