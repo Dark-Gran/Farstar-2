@@ -17,7 +17,7 @@ public class CardInfo {
     private TechType offenseType;
     private TechType defenseType;
     private final ArrayList<AbilityInfo> abilities;
-    private final int animatedShots;
+    private final int animatedShots; //in-future: enable "upgrade" effects to change animatedShots
 
     public CardInfo(byte id, String name, CardCulture culture, String description, CardType cardType, CardRarity cardRarity, int tier, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType, ArrayList<AbilityInfo> abilities, int animatedShots) {
         this.id = id;
