@@ -8,7 +8,7 @@ public interface BotSettings {
             this.timerDelay = timerDelay;
         }
         public float getTimerDelay(boolean simulation) {
-            return simulation ? 0.1f : timerDelay;
+            return simulation ? 0.1f : timerDelay; //in-future: allow speeding up simulation to 0 delay (for dev purposes only)
         }
     }
 
