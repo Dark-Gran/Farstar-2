@@ -143,7 +143,7 @@ public class AssetLibrary {
         TextureLoader.TextureParameter texParams = new TextureLoader.TextureParameter();
         texParams.minFilter = Texture.TextureFilter.Linear;
         texParams.magFilter = Texture.TextureFilter.Linear;
-        assetManager.load("images/tableMain-1920.png", Texture.class, texParams);
+        assetManager.load("images/tableMain-1920.png", Texture.class, texParams); //in-future: cut table and net to avoid rendering huge areas with 0 alpha
         //Atlases
         assetManager.load("images/fs2linear.atlas", TextureAtlas.class);
         assetManager.load("images/fs2nearest.atlas", TextureAtlas.class);
