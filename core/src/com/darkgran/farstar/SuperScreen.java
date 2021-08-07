@@ -102,21 +102,23 @@ public abstract class SuperScreen implements Screen {
         private boolean tableStageEnabled = true;
         private boolean netEnabled = false;
         private boolean tokenFramesEnabled = true;
+        private boolean perfMeterEnabled = true;
         public ScreenSettings() {}
-        public ScreenSettings(boolean helpEnabled, boolean tableStageEnabled, boolean netEnabled, boolean tokenFramesEnabled) {
+        public ScreenSettings(boolean helpEnabled, boolean tableStageEnabled, boolean netEnabled, boolean tokenFramesEnabled, boolean perfMeterEnabled) {
             this.helpEnabled = helpEnabled;
             this.tableStageEnabled = tableStageEnabled;
             this.netEnabled = netEnabled;
             this.tokenFramesEnabled = tokenFramesEnabled;
+            this.perfMeterEnabled = perfMeterEnabled;
         }
     }
     public void setTableStageEnabled(boolean tableStageEnabled) {
         screenSettings.tableStageEnabled = tableStageEnabled;
         if (tableStage != null) { tableStage.enableButtons(tableStageEnabled); }
     }
-    public void setNetEnabled(boolean netEnabled) {
-        screenSettings.netEnabled = netEnabled;
-    }
+    public boolean isPerfMeterEnabled() { return screenSettings.perfMeterEnabled; }
+    public void setPerfMeterEnabled(boolean perfMeterEnabled) { screenSettings.perfMeterEnabled = perfMeterEnabled; }
+    public void setNetEnabled(boolean netEnabled) { screenSettings.netEnabled = netEnabled; }
     public boolean isTableStageEnabled() { return screenSettings.tableStageEnabled; }
     public void setHelpEnabled(boolean helpEnabled) { screenSettings.helpEnabled = helpEnabled; }
     public boolean isHelpEnabled() { return screenSettings.helpEnabled; }
@@ -154,7 +156,7 @@ public abstract class SuperScreen implements Screen {
 
     protected void drawMenus(float delta, Batch batch) { //for all screens except intro
         batch.begin();
-        perfMeter.drawText(batch);
+        if (isPerfMeterEnabled()) { perfMeter.drawText(batch); }
         //All buttons, included the ones in YXQuestionBox, are drawn when the entire Stage is drawn, therefore moving screenConceder higher makes the box draw over the buttons.
         //To be able to move screenConceder to a "higher layer", another Stage would need to be set up ("TopStage"), however this is unnecessary unless more features would use this Stage.
         if (screenConceder != null) { screenConceder.draw(batch, shapeRenderer); }

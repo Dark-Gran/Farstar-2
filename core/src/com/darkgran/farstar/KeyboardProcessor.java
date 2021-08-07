@@ -63,6 +63,9 @@ public class KeyboardProcessor extends InputAdapter {
                         ((BattleScreen) game.getSuperScreen()).getBattleStage().toggleF1Button();
                     }
                     break;
+                case Input.Keys.F6:
+                    game.getSuperScreen().setPerfMeterEnabled(!game.getSuperScreen().isPerfMeterEnabled());
+                    break;
                 case Input.Keys.F8:
                     if (game.currentFPSCap == Farstar.DEFAULT_FPS) {
                         game.currentFPSCap = 0;
