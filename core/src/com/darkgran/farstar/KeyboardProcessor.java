@@ -1,5 +1,6 @@
 package com.darkgran.farstar;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.utils.IntSet;
@@ -61,6 +62,16 @@ public class KeyboardProcessor extends InputAdapter {
                     if (game.getSuperScreen() instanceof BattleScreen) {
                         ((BattleScreen) game.getSuperScreen()).getBattleStage().toggleF1Button();
                     }
+                    break;
+                case Input.Keys.F8:
+                    if (game.currentFPSCap == Farstar.DEFAULT_FPS) {
+                        game.currentFPSCap = 0;
+                        Gdx.graphics.setVSync(false);
+                    } else {
+                        game.currentFPSCap = Farstar.DEFAULT_FPS;
+                        Gdx.graphics.setVSync(Gdx.graphics.isFullscreen());
+                    }
+                    game.setForegroundFPS(game.currentFPSCap);
                     break;
             }
         }

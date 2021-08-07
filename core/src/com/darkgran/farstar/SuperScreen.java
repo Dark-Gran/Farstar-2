@@ -18,6 +18,7 @@ import com.darkgran.farstar.gui.YXQuestionBox;
 import com.darkgran.farstar.gui.SimpleVector2;
 
 import static com.darkgran.farstar.Farstar.ASSET_LIBRARY;
+import static com.darkgran.farstar.Farstar.DEFAULT_FPS;
 
 public abstract class SuperScreen implements Screen {
     public final static boolean DEBUG_RENDER = false;
@@ -213,7 +214,7 @@ public abstract class SuperScreen implements Screen {
         viewport.update(width, height);
         camera.position.set((float) Farstar.STAGE_WIDTH/2,(float) Farstar.STAGE_HEIGHT/2,0);
         camera.update();
-        Gdx.graphics.setVSync(Gdx.graphics.isFullscreen());
+        Gdx.graphics.setVSync(Gdx.graphics.isFullscreen()&&game.currentFPSCap!=0);
     }
 
     @Override

@@ -60,7 +60,7 @@ public class Notification extends TextInTheBox {
 
     @Override
     public void draw(Batch batch, ShapeRenderer shapeRenderer) {
-        float a = timeToAlpha(timer.getCount(), timer.getCountCap());
+        float a = timeToAlpha(timer.getAccumulator(), timer.getCountCap());
         batch.end();
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -77,13 +77,13 @@ public class Notification extends TextInTheBox {
     private float timeToAlpha(float time, float duration) {
         if (time < 1) {
             return timer.getAccumulator();
-        } else if (time > duration-2) {
-            return 1-timer.getAccumulator();
+        } else if (time > duration-1f) {
+            return duration-timer.getAccumulator();
         }
         return 1;
     }
 
-    public SimpleCounter getTimer() {
+    public DeltaCounter getTimer() {
         return timer;
     }
 

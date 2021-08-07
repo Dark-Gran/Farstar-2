@@ -15,7 +15,7 @@ import com.darkgran.farstar.gui.SimpleVector2;
 
 public class Herald extends TokenZoom {
 
-    public Herald(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, int counterCap) {
+    public Herald(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, float counterCap) {
         super(battleCard, x, y, battleStage, cardListMenu, counterCap);
         setTouchable(Touchable.disabled);
         ClickListener clickListener = new ClickListener() {
@@ -38,9 +38,9 @@ public class Herald extends TokenZoom {
 
     @Override
     public void update(float delta) {
-        getCounter().update();
+        getCounter().update(delta);
         if (!isHidden() && !getCounter().isEnabled()) {
-            disable();
+            disable(); //in-future: fade-out?
             setTouchable(Touchable.disabled);
         }
     }
@@ -50,7 +50,7 @@ public class Herald extends TokenZoom {
         if (getCard() != battleCard) {
             setTouchable(Touchable.enabled);
             if (getCounter().isEnabled()) {
-                getCounter().setCount(0);
+                getCounter().setAccumulator(0);
             }
             setHidden(false);
             getCounter().setEnabled(true);

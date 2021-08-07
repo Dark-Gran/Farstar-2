@@ -115,8 +115,8 @@ public class BattleStage1V1 extends BattleStage {
 
     @Override
     protected void createTopActors() {
-        setCardZoom(new TokenZoom1v1(null, 0, 0, this, null, 30));
-        setHerald(new Herald(null, Math.round(Farstar.STAGE_WIDTH*0.09f), Math.round(Farstar.STAGE_HEIGHT*0.38f), this, null, 210));
+        setCardZoom(new TokenZoom1v1(null, 0, 0, this, null, 0.3f));
+        setHerald(new Herald(null, Math.round(Farstar.STAGE_WIDTH*0.09f), Math.round(Farstar.STAGE_HEIGHT*0.38f), this, null, 2.1f));
         addActor(getHerald());
     }
 

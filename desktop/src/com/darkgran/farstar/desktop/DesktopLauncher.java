@@ -20,12 +20,16 @@ public class DesktopLauncher {
 		config.title = "FARSTAR";
 		config.width = 1920;
 		config.height = 960;
-		config.foregroundFPS = 60;
 		config.resizable = true;
 		config.fullscreen = false;
 		config.vSyncEnabled = false;
 		config.samples = 8;
-		new LwjglApplication(new Farstar(new MWQImplementation()), config);
+		new LwjglApplication(new Farstar(new MWQImplementation()){
+			@Override
+			protected void setForegroundFPS(int value) { config.foregroundFPS = value; }
+			@Override
+			protected void setBackgroundFPS(int value) { config.backgroundFPS = value; }
+		}, config);
 	}
 
 }

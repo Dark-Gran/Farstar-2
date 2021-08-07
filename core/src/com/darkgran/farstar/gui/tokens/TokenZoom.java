@@ -9,24 +9,24 @@ import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.gui.battlegui.HandMenu;
-import com.darkgran.farstar.util.SimpleCounter;
+import com.darkgran.farstar.util.DeltaCounter;
 import com.darkgran.farstar.gui.SimpleVector2;
 
 public abstract class TokenZoom extends PrintToken {
-    private final SimpleCounter counter;
+    private final DeltaCounter counter;
     private boolean enabled = true;
     private boolean counting;
     private boolean hidden = true;
     private final Explainer explainer = new Explainer();
     private boolean showExplainer = false;
 
-    public TokenZoom(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, int counterCap) {
+    public TokenZoom(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, float counterCap) {
         super(battleCard, x, y, battleStage, cardListMenu, false);
-        counter = new SimpleCounter(false, counterCap, 0);
+        counter = new DeltaCounter(false, counterCap, 0);
     }
 
     public void update(float delta) {
-        counter.update();
+        counter.update(delta);
         if (counting && !counter.isEnabled()) {
             counting = false;
             showExplainer = true;
@@ -87,7 +87,7 @@ public abstract class TokenZoom extends PrintToken {
     private void hideExplainer() {
         showExplainer = false;
         counter.setEnabled(false);
-        counter.setCount(0);
+        counter.setAccumulator(0);
         counting = false;
     }
 
@@ -105,7 +105,7 @@ public abstract class TokenZoom extends PrintToken {
         }
     }
 
-    public SimpleCounter getCounter() {
+    public DeltaCounter getCounter() {
         return counter;
     }
 

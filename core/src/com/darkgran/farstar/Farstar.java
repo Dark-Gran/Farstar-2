@@ -10,6 +10,7 @@ public class Farstar extends Game {
 	public static final String APP_VERSION_NAME = "v0.3 (Alpha)";
 	public static final int STAGE_WIDTH = 1920;
 	public static final int STAGE_HEIGHT = 960;
+	public static final int DEFAULT_FPS = 60;
 	public static final CardLibrary CARD_LIBRARY = new CardLibrary();
 	public static final AssetLibrary ASSET_LIBRARY = new AssetLibrary();
 	private final InputMultiplexer inputMultiplexer = new InputMultiplexer();
@@ -17,15 +18,21 @@ public class Farstar extends Game {
 	protected SuperScreen superScreen;
 	SpriteBatch batch;
 	public final MouseWindowQuery MWQ;
+	protected int currentFPSCap = DEFAULT_FPS;
 
 	public Farstar(MouseWindowQuery MWQ) {
 		this.MWQ = MWQ;
 	}
 
+	protected void setForegroundFPS(int value) { } //see DesktopLauncher
+	protected void setBackgroundFPS(int value) { }
+
 	public void loadLibrary() { CARD_LIBRARY.loadLocal("content/cards.json"); }
 
 	@Override
 	public void create () {
+		setForegroundFPS(currentFPSCap);
+		setBackgroundFPS(currentFPSCap);
 		ASSET_LIBRARY.loadAssets();
 		batch = new SpriteBatch();
 		this.setScreen(new IntroScreen(this, new NotificationManager(), new SuperScreen.ScreenSettings()));
