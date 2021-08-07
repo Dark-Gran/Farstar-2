@@ -97,7 +97,7 @@ public class DuelManager implements Delayer {
             delayAction(this::iterateDuels, combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay*2f);
         } else {
             System.out.println("Invalid number of duels to launch (0 or null).");
-            //delayAction(this::afterDuels, duelDelay);
+            delayAction(this::afterDuels, duelDelay);
         }
     }
 
