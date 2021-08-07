@@ -19,7 +19,7 @@ This time in Java (with LibGDX for OpenGL). One of the main reasons behind the o
 LAN support will be added after the first release.  
 
 Customizable Decks, additional Cards, Tutorial, proper support of different resolutions, and Server Application with user registrations, matchmaking, a shop for card packs, and direct card-trading between players (all are features of the original game) will be added depending on reception.  
-Same goes for story-driven Campaigns, unique portraits for non-ship cards, better and/or more visual effects, general performance optimization, mobile support, and other game-modes besides 1v1.
+Same goes for story-driven Campaigns, unique portraits for non-ship cards, better and/or more visual effects, general optimization, mobile support, and other game-modes besides 1v1.
   
 ~~Paper-Prototype~~  
 ~~Prototype (Java + LibGDX)~~  
