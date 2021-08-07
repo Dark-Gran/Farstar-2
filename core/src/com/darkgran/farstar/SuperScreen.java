@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.gui.NotificationManager;
 import com.darkgran.farstar.gui.TableStage;
@@ -18,7 +17,6 @@ import com.darkgran.farstar.gui.YXQuestionBox;
 import com.darkgran.farstar.gui.SimpleVector2;
 
 import static com.darkgran.farstar.Farstar.ASSET_LIBRARY;
-import static com.darkgran.farstar.Farstar.DEFAULT_FPS;
 
 public abstract class SuperScreen implements Screen {
     public final static boolean DEBUG_RENDER = false;
@@ -103,19 +101,23 @@ public abstract class SuperScreen implements Screen {
         private boolean netEnabled = false;
         private boolean tokenFramesEnabled = true;
         private boolean perfMeterEnabled = true;
+        private boolean f1buttonEnabled = true;
         public ScreenSettings() {}
-        public ScreenSettings(boolean helpEnabled, boolean tableStageEnabled, boolean netEnabled, boolean tokenFramesEnabled, boolean perfMeterEnabled) {
+        public ScreenSettings(boolean helpEnabled, boolean tableStageEnabled, boolean netEnabled, boolean tokenFramesEnabled, boolean perfMeterEnabled, boolean f1buttonEnabled) {
             this.helpEnabled = helpEnabled;
             this.tableStageEnabled = tableStageEnabled;
             this.netEnabled = netEnabled;
             this.tokenFramesEnabled = tokenFramesEnabled;
             this.perfMeterEnabled = perfMeterEnabled;
+            this.f1buttonEnabled = f1buttonEnabled;
         }
     }
     public void setTableStageEnabled(boolean tableStageEnabled) {
         screenSettings.tableStageEnabled = tableStageEnabled;
         if (tableStage != null) { tableStage.enableButtons(tableStageEnabled); }
     }
+    public boolean isF1buttonEnabled() { return screenSettings.f1buttonEnabled; }
+    public void setF1buttonEnabled(boolean f1buttonEnabled) { screenSettings.f1buttonEnabled = f1buttonEnabled; }
     public boolean isPerfMeterEnabled() { return screenSettings.perfMeterEnabled; }
     public void setPerfMeterEnabled(boolean perfMeterEnabled) { screenSettings.perfMeterEnabled = perfMeterEnabled; }
     public void setNetEnabled(boolean netEnabled) { screenSettings.netEnabled = netEnabled; }

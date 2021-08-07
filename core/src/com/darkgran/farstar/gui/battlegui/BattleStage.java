@@ -80,12 +80,6 @@ public abstract class BattleStage extends ListeningStage {
             }
         }
     };
-    public void f1ButtonToNet() { //used to connect Net and F1 button (makes sense only if the default for Net is On)
-        setF1ButtonVisibility(getBattleScreen().isNetEnabled());
-    }
-    public void toggleF1Button() {
-        setF1ButtonVisibility(!getActors().contains(f1button, true));
-    }
     public void setF1ButtonVisibility(boolean enable) {
         if (enable) {
             addActor(f1button);
@@ -93,7 +87,6 @@ public abstract class BattleStage extends ListeningStage {
             f1button.remove();
         }
     }
-
 
     public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen, CombatMenu combatMenu) {
         super(game, viewport);

@@ -110,7 +110,7 @@ public class BattleStage1V1 extends BattleStage {
         getF1button().setPosition(Math.round(Farstar.STAGE_WIDTH*0.045f), Math.round(Farstar.STAGE_HEIGHT*0.095f));
         //getF1button().setPosition(Math.round(Farstar.STAGE_WIDTH*0.003f), Math.round(Farstar.STAGE_HEIGHT*0.003f)); //over table - to be used with f1back
         //f1ButtonToNet();
-        addActor(getF1button());
+        if (battleScreen.isF1buttonEnabled()) { addActor(getF1button()); }
     }
 
     @Override

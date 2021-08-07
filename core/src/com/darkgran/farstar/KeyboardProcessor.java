@@ -60,7 +60,8 @@ public class KeyboardProcessor extends InputAdapter {
                     break;
                 case Input.Keys.F5:
                     if (game.getSuperScreen() instanceof BattleScreen) {
-                        ((BattleScreen) game.getSuperScreen()).getBattleStage().toggleF1Button();
+                        game.getSuperScreen().setF1buttonEnabled(!game.getSuperScreen().isF1buttonEnabled());
+                        ((BattleScreen) game.getSuperScreen()).getBattleStage().setF1ButtonVisibility(game.getSuperScreen().isF1buttonEnabled());
                     }
                     break;
                 case Input.Keys.F6:
