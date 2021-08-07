@@ -22,7 +22,7 @@ public class HandToken extends AnchoredToken implements CardGFX, FakingTokens { 
     private Color fontColor = ColorPalette.BLACK;
     private TextureRegion cardPic;
     Matrix4 oldMX = null;
-    Matrix4 mx;
+    Matrix4 mx; //in-future: try Affine2 instead of transformation matrix? (see SuperScreen)
     private boolean hidden;
     public static SimpleVector2 getNewXYFromAngle(float currentX, float currentY, float centerX, float centerY, double rads) {
         return new SimpleVector2(
