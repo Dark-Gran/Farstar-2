@@ -194,7 +194,7 @@ public abstract class SuperScreen implements Screen {
             }
         }
 
-        game.batch.begin();
+        game.batch.begin(); //batch.begin() and batch.end() should be minimized (preferably only 1 of each per 1 frame)
         game.batch.setColor(1, 1, 1, 1);
         drawContent(delta, game.batch);
         game.batch.end();

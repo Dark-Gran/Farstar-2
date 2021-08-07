@@ -104,7 +104,7 @@ public class TokenPart extends TextLine {
 
     public void draw(Batch batch) {
         token.getBattleStage().getShotManager().drawRecoil(batch, token);
-        if (isEnabled()) {
+        if (isEnabled()) { //in-future: optimize (don't declare and calculate, instead keep and update)
             batch.draw(pad, x - pad.getRegionWidth() + offsetX, y + offsetY);
             float textX = x - pad.getRegionWidth()/2f - textWH.x/2f + offsetX + textOffsetX;
             float textY = y + pad.getRegionHeight()/2f + textWH.y/2f + offsetY + textOffsetY;

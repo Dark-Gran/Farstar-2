@@ -28,7 +28,7 @@ public class AbilityPicker extends BPB2DrawerBattle {
     public void draw(Batch batch) {
         if (active) {
             if (abilityGraphics.size() > 0) {
-                for (AbilityPickerOption option : abilityGraphics) {
+                for (AbilityPickerOption option : abilityGraphics) { //in-future: loops like this actually create an object, which hurts performance when done in render loop - use classic loop to boost performance (as it only creates a primitive int). Goes for all loops like this!
                     option.draw(batch);
                 }
             }
