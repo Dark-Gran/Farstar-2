@@ -89,6 +89,8 @@ public class BattleStage1V1 extends BattleStage {
         deck2 = new CardSource(Farstar.STAGE_WIDTH*0.96f, Farstar.STAGE_HEIGHT*0.559f, this, battlePlayer2, false);
         addActor(deck1);
         addActor(deck2);
+        //TokenZoom
+        createTopActors();
         //Yards
         yardMenu1 = new YardMenu(battlePlayer1.getShipyard(), false, 194f, Farstar.STAGE_HEIGHT*0.078f, this, battlePlayer1);
         yardButton1.setPosition(Math.round(Farstar.STAGE_WIDTH*0.094f), Math.round(Farstar.STAGE_HEIGHT*0.029f));
@@ -103,8 +105,6 @@ public class BattleStage1V1 extends BattleStage {
         handMenu2 = new HandMenu(battlePlayer2.getHand(),Farstar.STAGE_WIDTH*0.5f, Farstar.STAGE_HEIGHT*0.95f, this, battlePlayer2, false);
         addDropTarget(handMenu1);
         addDropTarget(handMenu2);
-        //TokenZoom
-        createTopActors();
         //F1
         setBattleHelp(new BattleHelp1v1(0, 0));
         getF1button().setPosition(Math.round(Farstar.STAGE_WIDTH*0.045f), Math.round(Farstar.STAGE_HEIGHT*0.095f));

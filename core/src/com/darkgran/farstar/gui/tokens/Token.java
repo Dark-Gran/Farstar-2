@@ -25,7 +25,7 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
     private final BattleStage battleStage;
     private final CardListMenu cardListMenu;
     private final TokenType tokenType;
-    private boolean noPics;
+    private final boolean noPics;
     private TextureRegion portrait;
     private TextureRegion frame;
     private GlowState glowState = GlowState.DIM;
@@ -60,26 +60,7 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
         setPosition(x, y);
         if (battleCard != null && connectCard) {
             battleCard.setToken(this);
-        }
-        battleStage.addActor(this);
-    }
-
-    public Token(BattleCard battleCard, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, boolean connectCard) {
-        noPics = true;
-        setWidth(tokenType.getWidth());
-        setHeight(tokenType.getHeight());
-        setX(0);
-        setY(0);
-        this.battleCard = battleCard;
-        this.battleStage = battleStage;
-        this.cardListMenu = cardListMenu;
-        this.tokenType = tokenType;
-        tokenDefense = new TokenDefense(getFontPath(), this);
-        tokenOffense = new TokenOffense(getFontPath(), this);
-        tokenPrice = new TokenPrice(getFontPath(), this);
-        setParts();
-        if (battleCard != null && connectCard) {
-            battleCard.setToken(this);
+            battleStage.addActor(this);
         }
     }
 

@@ -25,6 +25,7 @@ public class JunkButton extends ClickToken implements DropTarget {
         mx.rotate(new Vector3(0, 0, 1), angle);
         SimpleVector2 newXY = HandToken.getNewXYFromAngle(0, 0, getX(), getY(), Math.toRadians(angle));
         mx.trn(newXY.x, newXY.y+getHeight(), 0);
+        battleStage.addActor(this);
     }
 
     @Override
