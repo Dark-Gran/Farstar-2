@@ -16,7 +16,7 @@ import com.darkgran.farstar.gui.SimpleVector2;
 import java.util.ArrayList;
 
 import static com.darkgran.farstar.battle.BattleSettings.CARDS_PER_TURN;
-import static com.darkgran.farstar.battle.BattleSettings.MAX_TECH_INCOME;
+import static com.darkgran.farstar.battle.BattleSettings.MAX_INCOME;
 
 //in-future: depending on how other mods than 1v1 treat combat-phase, split into abstract+RoundManager1v1 might be required (probably not needed unless combat shared between allies)
 public class RoundManager {
@@ -89,8 +89,8 @@ public class RoundManager {
     }
 
     public int capIncome(int income) {
-        if (income > MAX_TECH_INCOME) {
-            income = MAX_TECH_INCOME;
+        if (income > MAX_INCOME) {
+            income = MAX_INCOME;
         }
         return income;
     }

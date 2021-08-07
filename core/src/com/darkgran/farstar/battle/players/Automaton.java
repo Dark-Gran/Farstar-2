@@ -220,7 +220,7 @@ public class Automaton extends Bot {
                                 //int change = AbilityManager.floatObjectToInt(changeInfo);
                                 switch (resource) {
                                     case ENERGY:
-                                        return getEnergy() > getMatter();
+                                        return getEnergy() > getMatter() || getMatter() <= 1;
                                     case MATTER:
                                         return getMatter()/2 > getEnergy();
                                 }
@@ -350,11 +350,13 @@ public class Automaton extends Bot {
     public void pickAbility(Token caster, Token target, DropTarget dropTarget, ArrayList<AbilityInfo> options) {
         if (options.size() > 0) {
             setPickingAbility(true);
-            //in-future: consider eco obviously
-            if (caster.getCard().getCardInfo().getId() == BONUS_CARD_ID) {
-                getBattle().getRoundManager().processPick(options.get(1));
-            } else { //atm there is only Labour Deck
+            //in-future: consider eco properly
+            //atm there are only SpareResources and LabourDeck, so the decision is always Energy vs Matter
+            //if (caster.getCard().getCardInfo().getId() == BONUS_CARD_ID) {}
+            if (getEnergy() < getMatter()) {
                 getBattle().getRoundManager().processPick(options.get(0));
+            } else {
+                getBattle().getRoundManager().processPick(options.get(1));
             }
         } else {
             report("error: pickAbility() failed!");

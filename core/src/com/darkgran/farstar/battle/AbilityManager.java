@@ -41,7 +41,7 @@ public class AbilityManager {
                         case ENEMY_FLEET:
                             getBattle().getRoundManager().askForTargets(casterToken, ability, dropTarget);
                             break;
-                        case ENTIRE_ENEMY_FLEET:
+                        case ENTIRE_ENEMY_FLEET: //targets all enemy fleets
                             BattlePlayer[] enemies = getBattle().getEnemies(caster.getBattlePlayer());
                             for (BattlePlayer enemy : enemies) {
                                 for (int i = 0; i < enemy.getFleet().getShips().length; i++) {
@@ -51,7 +51,7 @@ public class AbilityManager {
                                 }
                             }
                             break;
-                        case ENTIRE_ALLIED_FLEET:
+                        case ENTIRE_ALLIED_FLEET: //targets all allied fleets
                             for (int i = 0; i < caster.getBattlePlayer().getFleet().getShips().length; i++) {
                                 if (caster.getBattlePlayer().getFleet().getShips()[i] != null) {
                                     targets.add(caster.getBattlePlayer().getFleet().getShips()[i]);
