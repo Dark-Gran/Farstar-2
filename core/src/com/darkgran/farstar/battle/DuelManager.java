@@ -13,7 +13,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 public class DuelManager implements Delayer {
-    private final float duelDelay = 0.3f;
+    private final float duelDelay = 0.2f;
+    private final float simDelay = 0.1f;
 
     public static class AttackInfo implements Comparable<AttackInfo> {
         private final Token attacker;
@@ -93,7 +94,7 @@ public class DuelManager implements Delayer {
             Set<Map.Entry<FleetToken, AttackInfo>> duelSet = entriesSortedByValuesThenKeys(duels);
             it = duelSet.iterator();
             System.out.println("Launching Duels.");
-            delayAction(this::iterateDuels, 0.5f);
+            delayAction(this::iterateDuels, combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay*2f);
         } else {
             System.out.println("Invalid number of duels to launch (0 or null).");
             //delayAction(this::afterDuels, duelDelay);
@@ -104,17 +105,17 @@ public class DuelManager implements Delayer {
         if (it.hasNext()) {
             Map.Entry<FleetToken, AttackInfo> duel = it.next();
             combatManager.setDuelState(duel, (byte) 1);
-            delayAction(() -> performDuel(duel), duelDelay);
+            delayAction(() -> performDuel(duel), combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay);
         } else {
             //afterDuels();
-            delayAction(this::afterDuels, 0.5f);
+            delayAction(this::afterDuels, combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay*2f);
         }
     }
 
     private void performDuel(Map.Entry<FleetToken, AttackInfo> duel) {
         exeDuel(duel.getKey().getCard(), duel.getValue());
         combatManager.setDuelState(duel, (byte) 2);
-        delayAction(this::iterateDuels, duelDelay);
+        delayAction(this::iterateDuels, combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay);
     }
 
     private void afterDuels() {
@@ -171,7 +172,7 @@ public class DuelManager implements Delayer {
                 if (!delayedAnimation) {
                     shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots());
                 } else {
-                    delayAction(() -> shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots()), duelDelay * 1.5f);
+                    delayAction(() -> shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots()), combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay * 1.5f);
                 }
             }
             return def.receiveDMG(dmg);

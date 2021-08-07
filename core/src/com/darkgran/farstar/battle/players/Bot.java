@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.battle.BattleType;
 import com.darkgran.farstar.gui.battlegui.*;
 import com.darkgran.farstar.gui.tokens.HandToken;
 import com.darkgran.farstar.gui.tokens.Token;
@@ -97,27 +98,27 @@ public abstract class Bot extends BattlePlayer implements BotSettings, Delayer {
     }
 
     protected void delayedTurn(boolean combat, CombatOK combatOK) {
-        delayAction(()->turn(combat, combatOK), botTier.getTimerDelay());
+        delayAction(()->turn(combat, combatOK), botTier.getTimerDelay(getBattle().getBattleScreen().getBattleType() == BattleType.SIMULATION));
     }
 
     protected void delayedEndTurn() {
-        delayAction(this::endTurn, botTier.getTimerDelay());
+        delayAction(this::endTurn, botTier.getTimerDelay(getBattle().getBattleScreen().getBattleType() == BattleType.SIMULATION));
     }
 
     protected void delayedCombatEnd() {
-        delayAction(this::endCombat, botTier.getTimerDelay());
+        delayAction(this::endCombat, botTier.getTimerDelay(getBattle().getBattleScreen().getBattleType() == BattleType.SIMULATION));
     }
 
     protected void delayedCombat() {
-        delayAction(this::combat, botTier.getTimerDelay());
+        delayAction(this::combat, botTier.getTimerDelay(getBattle().getBattleScreen().getBattleType() == BattleType.SIMULATION));
     }
 
     protected void delayedTactical(CombatOK combatOK) {
-        delayAction(()-> tactical(combatOK), botTier.getTimerDelay());
+        delayAction(()-> tactical(combatOK), botTier.getTimerDelay(getBattle().getBattleScreen().getBattleType() == BattleType.SIMULATION));
     }
 
     protected void delayedDuelReady(CombatOK combatOK) {
-        delayAction(()-> combatReady(combatOK), botTier.getTimerDelay());
+        delayAction(()-> combatReady(combatOK), botTier.getTimerDelay(getBattle().getBattleScreen().getBattleType() == BattleType.SIMULATION));
     }
 
     protected boolean deploy(BattleCard battleCard, Menu menu, int position) {

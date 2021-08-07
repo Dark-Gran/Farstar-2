@@ -42,7 +42,7 @@ public class Automaton extends Bot {
                 }
             } else {
                 report("No possibilities.");
-                if (!combat) { delayedEndTurn(); }
+                if (!combat) { delayedEndTurn(); } //creates feeling of "thinking" after the last move - switch for endTurn() if needed
                 else { combatReady(combatOK); }
             }
         }
