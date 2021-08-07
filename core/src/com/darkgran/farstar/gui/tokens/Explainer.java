@@ -3,6 +3,7 @@ package com.darkgran.farstar.gui.tokens;
 import com.badlogic.gdx.graphics.Color;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.AbilityManager;
+import com.darkgran.farstar.cards.AbilityStarter;
 import com.darkgran.farstar.cards.CardType;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.cards.AbilityInfo;
@@ -19,7 +20,7 @@ public class Explainer extends TextInTheBox {
     }
 
     public Explainer() {
-        super(ColorPalette.LIGHT, ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f), "fonts/bahnschrift24.fnt", "", false);
+        super(ColorPalette.LIGHT, ColorPalette.changeAlpha(ColorPalette.DARK, 0.6f), "fonts/bahnschrift26.fnt", "", false);
         setWrapWidth(400f);
         setWrap(true);
     }
@@ -86,16 +87,17 @@ public class Explainer extends TextInTheBox {
                         break;
                 }
             }
-            switch (abilityInfo.getStarter()) { //more cases will be added in future
+            USEpresent = abilityInfo.getStarter() == AbilityStarter.USE;
+            /*switch (abilityInfo.getStarter()) {
                 case USE:
                     USEpresent = true;
                     break;
-                /*case DEPLOY:
-                    if (!first) { str += "\n"; }
+                case DEPLOY:
+                    if (!first) { str.append("\n"); }
                     else { first = false; }
-                    str += "Does something when played.";
-                    break;*/
-            }
+                    str.append("Does something when played.");
+                    break;
+            }*/
         }
         if (USEpresent) {
             if (!first) { str.append("\n"); }

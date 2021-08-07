@@ -107,7 +107,7 @@ public class AssetLibrary {
         assetManager.load("fonts/arial15.fnt", BitmapFont.class, bmpParams);
         //Bahnschrift
         assetManager.load("fonts/bahnschrift24.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/bahnschrift24p.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/bahnschrift26.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift30.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift38.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift40.fnt", BitmapFont.class, bmpParams);
