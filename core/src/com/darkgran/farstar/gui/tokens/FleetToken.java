@@ -11,8 +11,10 @@ import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.gui.battlegui.FleetMenu;
 import org.jetbrains.annotations.NotNull;
 
-public class FleetToken extends ClickToken implements DisableMark, FakingTokens, Comparable<FleetToken> {
-    private FleetMenu fleetMenu;
+import java.util.Objects;
+
+public final class FleetToken extends ClickToken implements DisableMark, FakingTokens, Comparable<FleetToken> {
+    private final FleetMenu fleetMenu;
     private TextureRegion disableMark;
 
     public FleetToken(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, FleetMenu fleetMenu, boolean noPics, boolean connectCard) {
@@ -65,16 +67,9 @@ public class FleetToken extends ClickToken implements DisableMark, FakingTokens,
 
     public FleetMenu getFleetMenu() { return fleetMenu; }
 
-    public void setFleetMenu(FleetMenu fleetMenu) { this.fleetMenu = fleetMenu; }
-
     @Override
     public TextureRegion getMark() {
         return disableMark;
-    }
-
-    @Override
-    public void setMark(TextureRegion texture) {
-        disableMark = texture;
     }
 
     @Override
@@ -86,10 +81,27 @@ public class FleetToken extends ClickToken implements DisableMark, FakingTokens,
         }
     }
 
+    @Override
+    public void setMark(TextureRegion texture) {
+        disableMark = texture;
+    }
+
     //Tokens sorted from left to right (for the duels-execution)
     @Override
     public int compareTo(@NotNull FleetToken o) {
-        return Float.compare(this.getX(), o.getX());
+        return Float.compare(this.getX(), o.getX()); //if movement becomes desirable for FleetTokens, anchors should be used here instead (see AnchoredToken)
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FleetToken that = (FleetToken) o;
+        return Objects.equals(this.getX(), that.getX());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getX());
+    }
 }

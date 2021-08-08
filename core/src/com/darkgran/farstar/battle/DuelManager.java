@@ -66,6 +66,13 @@ public class DuelManager implements Delayer {
             boolean oFS = AbilityManager.hasAttribute(((AttackInfo) obj).attacker.getCard(), EffectType.FIRST_STRIKE) || AbilityManager.hasAttribute(((AttackInfo) obj).defender.getCard(), EffectType.FIRST_STRIKE);
             return Boolean.compare(oTopStrike, thisTopStrike) == 0 && Boolean.compare(oFS, thisFS) == 0;
         }
+
+        @Override
+        public int hashCode() {
+            boolean thisTopStrike = upperStrike != null;
+            boolean thisFS = AbilityManager.hasAttribute(this.attacker.getCard(), EffectType.FIRST_STRIKE) || AbilityManager.hasAttribute(this.defender.getCard(), EffectType.FIRST_STRIKE);
+            return Objects.hash(thisTopStrike, thisFS);
+        }
     }
 
     private CombatManager combatManager;
