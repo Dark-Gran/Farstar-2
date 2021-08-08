@@ -102,7 +102,7 @@ public class BattleStage1V1 extends BattleStage {
         addActor(yardButton2);
         //Hands
         handMenu1 = new HandMenu(battlePlayer1.getHand(),Farstar.STAGE_WIDTH*0.5f, -Farstar.STAGE_HEIGHT*0.35f, this, battlePlayer1, true);
-        handMenu2 = new HandMenu(battlePlayer2.getHand(),Farstar.STAGE_WIDTH*0.5f, Farstar.STAGE_HEIGHT*0.95f, this, battlePlayer2, false);
+        handMenu2 = new HandMenu(battlePlayer2.getHand(),Farstar.STAGE_WIDTH*0.5f, Farstar.STAGE_HEIGHT*0.95f, this, battlePlayer2, false); //in-future: make non-Local Hand look smaller?
         addDropTarget(handMenu1);
         addDropTarget(handMenu2);
         //F1
