@@ -7,8 +7,8 @@ public final class BattleSettings {
     //Battle
     public static final int STARTING_ENERGY = 0;
     public static final int STARTING_MATTER = 1;
-    public static final int STARTING_CARDS_ATT = 1;
-    public static final int STARTING_CARDS_DEF = 2;
+    public static final int STARTING_CARDS_ATT = 3;
+    public static final int STARTING_CARDS_DEF = 4;
     public static final int CARDS_PER_TURN = 1;
     public static final int MAX_INCOME = 6;
     public static final int MAX_IN_HAND = 8;
