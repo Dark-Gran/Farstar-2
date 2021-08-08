@@ -14,19 +14,19 @@ import java.util.ArrayList;
 
 public class PossibilityAdvisor {
 
-    public ArrayList<PossibilityInfo> getPossibilities(BattlePlayer battlePlayer, Battle battle) { //also used by Automaton
+    public ArrayList<PossibilityInfo> getPossibilities(BattlePlayer battlePlayer, Battle battle) { //also used by Automaton, who also cares about the order of priorities ("plays whatever comes first" by definition; the order does not matter for non-bot purposes (ie. gui)); in-future: bots should sort possibilities for themselves by whatever specific rules they have
         ArrayList<PossibilityInfo> possibilities = new ArrayList<>();
         boolean inCombat = battle.getCombatManager().isActive();
         boolean tacticalPhase = battle.getCombatManager().isTacticalPhase();
         BattlePlayer whoseTurn = battle.getWhoseTurn();
         if (battlePlayer == whoseTurn) {
-            if (!inCombat && hasPossibleAbility(battlePlayer, battlePlayer.getMs(), false)) {
-                possibilities.add(new PossibilityInfo(battlePlayer.getMs(), null));
-            }
             for (BattleCard battleCard : battlePlayer.getSupports()) {
                 if (!inCombat && hasPossibleAbility(battlePlayer, battleCard, false)) {
                     possibilities.add(new PossibilityInfo(battleCard, battlePlayer.getSupports().getCardListMenu()));
                 }
+            }
+            if (!inCombat && hasPossibleAbility(battlePlayer, battlePlayer.getMs(), false)) {
+                possibilities.add(new PossibilityInfo(battlePlayer.getMs(), null));
             }
             for (BattleCard battleCard : battlePlayer.getHand()) {
                 if ((!inCombat || (battleCard.isTactic() && tacticalPhase)) && isPossibleToDeploy(battlePlayer, whoseTurn, battleCard, true, battle, false)) {
