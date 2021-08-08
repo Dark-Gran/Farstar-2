@@ -3,7 +3,7 @@ package com.darkgran.farstar.battle.players;
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.gui.battlegui.ResourceMeter;
 
-public class BattlePlayer {
+public abstract class BattlePlayer {
     private Battle battle;
     private final byte battleID; //must be unique for each Player in match
     private int energy;
