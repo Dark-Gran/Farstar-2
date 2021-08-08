@@ -34,7 +34,7 @@ public class NotificationManager {
         }
     }
 
-    public boolean newNotification(Notification.NotificationType notificationType, String message, int duration, boolean forceClear) {
+    public boolean newNotification(Notification.NotificationType notificationType, String message, int duration, boolean forceClear) { //in-future: optimization - don't actually create new notifications, instead have one instance (make static) of each type and keep just the message+duration (= the instance reappears as "another notification")
         if (forceClear) {
             if (notifications.get(notificationType) != null) {
                 for (Notification notification : notifications.get(notificationType)) {
