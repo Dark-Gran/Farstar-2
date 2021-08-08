@@ -10,7 +10,7 @@ public final class BattleSettings {
     public static final int STARTING_CARDS_ATT = 3;
     public static final int STARTING_CARDS_DEF = 4;
     public static final int CARDS_PER_TURN = 1;
-    public static final int MAX_INCOME = 6;
+    public static final int MAX_INCOME = 6; //in-future: test higher settings with more powerful(expensive) high-end ships
     public static final int MAX_IN_HAND = 8;
     public static final int DECK_SIZE = 30;
     public static final int YARD_SIZE = 5;
