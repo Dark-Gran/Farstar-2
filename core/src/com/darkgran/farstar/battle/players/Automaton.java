@@ -401,13 +401,13 @@ public class Automaton extends Bot {
         for (Ship ship : getFleet().getShips()) {
             if (ship != null && !ship.isUsed()) {
                 ArrayList<Token> enemies = CombatManager.getDuelOpponent(ship.getToken(), duels);
-                if (enemies != null && enemies.size() > 0) {
+                if (enemies != null && enemies.size() > 1) {
                     Token currentEnemy = enemies.get(0); //Attackers always have only one target
-                    if (isAlreadyTargetedFatally(currentEnemy, duels, ship.getToken())) {
+                    if (!currentEnemy.getCard().isMS() && isAlreadyTargetedFatally(currentEnemy, duels, ship.getToken())) {
                         duels.remove((FleetToken) ship.getToken());
                         enemy = getDuelTarget(ship.getToken());
                         if (enemy != null) {
-                            if (enemy != currentEnemy || enemy.getCard().isMS()) { //"don't attack (= receive dmg) for no reason"
+                            if (enemy != currentEnemy) { //"don't attack (= receive dmg) for no reason"
                                 duels.put((FleetToken) ship.getToken(), new DuelManager.AttackInfo(ship.getToken(), enemy));
                             }
                         }
@@ -464,12 +464,12 @@ public class Automaton extends Bot {
     //returns whether the token has an opponent that will (supposedly) destroy it
     private boolean isAlreadyTargetedFatally(Token token, TreeMap<FleetToken, DuelManager.AttackInfo> duelMap, Token exclude) {
         ArrayList<Token> opponents = CombatManager.getDuelOpponent(token, duelMap);
-        if (opponents != null) {
+        if (opponents != null && opponents.size() > 0) {
             int totalDmg = 0;
             int health = token.getCard().getHealth();
             int dmg;
             for (Token opponent : opponents) {
-                if (exclude != opponent) {
+                if (opponent != exclude) {
                     dmg = DuelManager.getDmgAgainstShields(opponent.getCard().getCardInfo().getOffense(), health, opponent.getCard().getCardInfo().getOffenseType(), token.getCard().getCardInfo().getDefenseType());
                     totalDmg += dmg;
                     health -= dmg;
