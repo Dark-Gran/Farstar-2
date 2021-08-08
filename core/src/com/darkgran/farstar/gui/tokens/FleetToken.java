@@ -88,8 +88,11 @@ public final class FleetToken extends ClickToken implements DisableMark, FakingT
 
     //Tokens sorted from left to right (for the duels-execution)
     @Override
-    public int compareTo(@NotNull FleetToken o) {
-        return Float.compare(this.getX(), o.getX()); //if movement becomes desirable for FleetTokens, anchors should be used here instead (see AnchoredToken)
+    public int compareTo(@NotNull FleetToken that) { //if movement becomes desirable for FleetTokens, anchors should be used instead of actual position (see AnchoredToken)
+        if (this.fleetMenu != that.fleetMenu) {
+            return -1;
+        }
+        return Float.compare(this.getX(), that.getX());
     }
 
     @Override
@@ -97,11 +100,11 @@ public final class FleetToken extends ClickToken implements DisableMark, FakingT
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FleetToken that = (FleetToken) o;
-        return Objects.equals(this.getX(), that.getX());
+        return this.getX()==that.getX() && this.fleetMenu.equals(that.fleetMenu);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getX());
+        return Objects.hash(this.getX(), this.fleetMenu);
     }
 }
