@@ -17,14 +17,13 @@ public class Junkpile extends CardList {
 
     @Override
     protected void setupSize() {
-        setMaxSize(BattleSettings.DECK_SIZE*2);
+        setMaxSize(BattleSettings.DECK_SIZE);
     }
 
     @Override
     public boolean addCard(BattleCard battleCard) {
         add(battleCard);
         if (junkButton != null) {
-
             junkButton.setup(battleCard, TokenType.JUNK, new SimpleVector2(junkButton.getX(), junkButton.getY()));
         }
         return true;
