@@ -187,9 +187,10 @@ public final class Automaton extends Bot {
                                         for (Token enemyToken : enemies) {
                                             enemy = enemyToken.getCard();
                                             if (biggestEnemyShip == null || isBiggerShip(enemy, biggestEnemyShip)) {
+                                                if (biggestEnemyShip != null) { overallNonsense = false; }
                                                 biggestEnemyShip = enemy;
                                                 //"don't change what is correct"
-                                                if ((changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && enemy.getCardInfo().getDefense() >= ally.getCardInfo().getOffense()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && enemy.getCardInfo().getOffense() > 1 && enemy.getCardInfo().getOffense() <= ally.getHealth() && !enemy.isMS())) {
+                                                if ((changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && enemy.getHealth() >= ally.getCardInfo().getOffense()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && enemy.getCardInfo().getOffense() > 1 && enemy.getCardInfo().getOffense() <= ally.getHealth() && !enemy.isMS())) {
                                                     if (alreadyHasCorrectTech(ally, enemy, changeStatType)) {
                                                         overallNonsense = true;
                                                         currentNonsense = true;
@@ -204,7 +205,7 @@ public final class Automaton extends Bot {
                                                             //"don't change pointlessly"; in-future: consider "overall" properly (eg. don't allow changing type on stat 1 but allow it if the other stat gets changed as well (and it is the right move))
                                                         } else if (!currentNonsense) {
                                                             //atm because of how tech-switch-effects are ordered, correct Defense will enable/disable playing card that in fact (in)validates Offense (= bot sacrifices damage if it protects the ship)
-                                                            overallNonsense = (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && (ally.getCardInfo().getOffense() <= 1 || enemy.getHealth() < ally.getCardInfo().getOffense() || techType == enemy.getCardInfo().getDefenseType())) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && (enemy.getCardInfo().getOffense() <= 1 || ally.getHealth() < enemy.getCardInfo().getOffense() || (!enemy.isMS() && techType != enemy.getCardInfo().getOffenseType())));
+                                                            overallNonsense = (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && (ally.getCardInfo().getOffense() <= 1 || enemy.getHealth() < ally.getCardInfo().getOffense() || techType == enemy.getCardInfo().getDefenseType())) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && (enemy.getCardInfo().getOffense() <= 1 || ally.getHealth() < enemy.getCardInfo().getOffense() || (techType != enemy.getCardInfo().getOffenseType() && !TechType.isInferior(enemy.getCardInfo().getOffenseType()) && !enemy.isMS())));
                                                         }
                                                     }
                                                 }
@@ -285,7 +286,7 @@ public final class Automaton extends Bot {
     }
 
     private boolean alreadyHasCorrectTech(BattleCard ally, BattleCard enemy, EffectTypeSpecifics.ChangeStatType changeStatType) { //stops changing type that is already "correct" (relative to the enemy)
-        return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && DuelManager.noneToInferior(ally.getCardInfo().getOffenseType()) != TechType.INFERIOR && ally.getCardInfo().getOffenseType() != enemy.getCardInfo().getDefenseType()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && ally.getCardInfo().getDefenseType() == enemy.getCardInfo().getOffenseType());
+        return (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && !TechType.isInferior(ally.getCardInfo().getOffenseType()) && ally.getCardInfo().getOffenseType() != enemy.getCardInfo().getDefenseType()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && ally.getCardInfo().getDefenseType() == enemy.getCardInfo().getOffenseType());
     }
 
     private Token getWoundedAlly() {
