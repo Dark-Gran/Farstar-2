@@ -44,37 +44,37 @@ public abstract class SuperScreen implements Screen {
                 return Gdx.graphics.newCursor(ASSET_LIBRARY.get("images/cursor_aim.png"), 16, 16);
         }
     }*/
-    private static TextureRegion HDCursor;
-    private static int HDCursorOffsetX;
-    private static int HDCursorOffsetY;
-    private static boolean HDCursorInUse;
+    private static TextureRegion hdCursor;
+    private static int hdCursorOffsetX;
+    private static int hdCursorOffsetY;
+    private static boolean hdCursorInUse;
     public static void switchCursor(CursorType cursorType) {
         switch (cursorType) {
             default:
             case DEFAULT:
-                HDCursor = ASSET_LIBRARY.getAtlasRegion("cursor-default");
-                HDCursorOffsetX = 0;
-                HDCursorOffsetY = 0;
+                hdCursor = ASSET_LIBRARY.getAtlasRegion("cursor-default");
+                hdCursorOffsetX = 0;
+                hdCursorOffsetY = 0;
                 break;
             case AIM:
-                HDCursor = ASSET_LIBRARY.getAtlasRegion("cursor-aim");
-                HDCursorOffsetX = 16;
-                HDCursorOffsetY = 16;
+                hdCursor = ASSET_LIBRARY.getAtlasRegion("cursor-aim");
+                hdCursorOffsetX = 16;
+                hdCursorOffsetY = 16;
                 break;
         }
     }
     private static void drawCursor(Batch batch, Farstar game) {
         boolean HDOn = false;
-        if (HDCursor != null) {
+        if (hdCursor != null) {
             SimpleVector2 coords = getMouseCoordinates();
             if (game.MWQ.isMouseInsideWindow()) {
                 HDOn = true;
                 float scale = getScreenScale();
-                batch.draw(HDCursor, coords.x - HDCursorOffsetX, Farstar.STAGE_HEIGHT - (coords.y - HDCursorOffsetY) - HDCursor.getRegionHeight(), HDCursor.getRegionWidth()/2f, HDCursor.getRegionHeight()/2f, HDCursor.getRegionWidth(), HDCursor.getRegionHeight(), scale, scale, 0);
+                batch.draw(hdCursor, coords.x - hdCursorOffsetX, Farstar.STAGE_HEIGHT - (coords.y - hdCursorOffsetY) - hdCursor.getRegionHeight(), hdCursor.getRegionWidth()/2f, hdCursor.getRegionHeight()/2f, hdCursor.getRegionWidth(), hdCursor.getRegionHeight(), scale, scale, 0);
             }
         }
-        if (HDOn != HDCursorInUse) {
-            HDCursorInUse = HDOn;
+        if (HDOn != hdCursorInUse) {
+            hdCursorInUse = HDOn;
             hideCursor(HDOn);
         }
     }
