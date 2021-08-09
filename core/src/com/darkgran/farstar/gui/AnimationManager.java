@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Handles all png-animations except for Attacks/Shots (see ShotManager).
  */
-public class AnimationManager {
+public class AnimationManager { //in-future: apply Singleton-pattern
     private static class DeathAnimation {
         private final TextureRegion deathPic;
         private final float x;

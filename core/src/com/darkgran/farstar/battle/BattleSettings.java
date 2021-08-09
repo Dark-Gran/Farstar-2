@@ -1,6 +1,6 @@
 package com.darkgran.farstar.battle;
 
-public final class BattleSettings {
+public final class BattleSettings { //in-future: apply Singleton-pattern
     private BattleSettings() { }
     //Cards.json setup
     public static final int BONUS_CARD_ID = 21;

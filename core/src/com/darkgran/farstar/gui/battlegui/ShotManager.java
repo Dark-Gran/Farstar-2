@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 /** Responsible for all shot animations. (see AnimationManager for other) */
-public class ShotManager { //in-future: apply Singleton-pattern (check other "Managers" as well)
+public class ShotManager { //in-future: apply Singleton-pattern
     public enum ShotType {
         BULLET("shot-bullet", 4000f),
         BLAST("shot-beam", 2000f);
