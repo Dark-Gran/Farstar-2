@@ -19,7 +19,7 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
 
     private final static float INTRO_SPEED = 0.35f;
 
-    public IntroScreen(final Farstar game, NotificationManager notificationManager) {
+    public IntroScreen(final Farstar game) {
         super(game);
         hideCursor(true);
         delayAction(this::activate, 0.5f);
