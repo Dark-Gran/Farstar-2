@@ -129,7 +129,7 @@ public class DuelManager implements Delayer {
         } else {
             if (phase >= 2) {
                 //afterDuels();
-                delayAction(this::afterDuels, combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay*1.5f);
+                delayAction(this::afterDuels, combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay);
             } else {
                 phase++;
                 it = duels.entrySet().iterator();
