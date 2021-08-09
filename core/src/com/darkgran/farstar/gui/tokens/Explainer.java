@@ -39,7 +39,7 @@ public class Explainer extends TextInTheBox {
         if (textWH.x < getWrapWidth()) {
             x = (x + (getWrapWidth() - textWH.x)/2);
         }
-        setupBox(x, y, getWrapWidth()+20f, textWH.y+40f);
+        setupBox(x, y, getWrapWidth()+40f, textWH.y+40f);
         centralizeBox();
         //getSimpleBox().setY(getSimpleBox().y-1f);
     }
@@ -53,7 +53,7 @@ public class Explainer extends TextInTheBox {
         StringBuilder str = new StringBuilder();
         boolean first = true;
         if (CardType.needsDefense(battleCard.getCardInfo().getCardType()) && battleCard.getDamage() > 0) {
-            str.append("Current/Max. Shields: ").append(battleCard.getHealth()).append("/").append(battleCard.getCardInfo().getDefense()).append("          \n");
+            str.append("Current/Max. Shields: ").append(battleCard.getHealth()).append("/").append(battleCard.getCardInfo().getDefense()).append("                      \n");
             first = false;
         }
         String shipOrSupport = battleCard.getCardInfo().getCardType() == CardType.SUPPORT ? "support" : "ship";
@@ -102,7 +102,7 @@ public class Explainer extends TextInTheBox {
         if (USEpresent) {
             if (!first) { str.append("\n"); }
             else { first = false; }
-            str.append("Usable Ability:\nMay be used only once per Turn.\n");
+            str.append("Usable Ability:\nMay be used only once per Turn.             \n");
         }
         if (!FSpresent) { FSpresent = AbilityManager.upgradesFirstStrike(battleCard); }
         if (FSpresent) {
