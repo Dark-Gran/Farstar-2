@@ -187,7 +187,7 @@ public final class Automaton extends Bot {
                                         for (Token enemyToken : enemies) {
                                             enemy = enemyToken.getCard();
                                             if (biggestEnemyShip == null || isBiggerShip(enemy, biggestEnemyShip)) {
-                                                if (biggestEnemyShip != null) { overallNonsense = false; }
+                                                if (biggestEnemyShip != null) { currentNonsense = false; }
                                                 biggestEnemyShip = enemy;
                                                 //"don't change what is correct"
                                                 if ((changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && enemy.getHealth() >= ally.getCardInfo().getOffense()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && enemy.getCardInfo().getOffense() > 1 && enemy.getCardInfo().getOffense() <= ally.getHealth() && !enemy.isMS())) {
