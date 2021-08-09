@@ -14,7 +14,7 @@ import java.util.*;
 
 
 public class DuelManager implements Delayer {
-    private final float duelDelay = 0.2f;
+    private final float duelDelay = 0.3f;
     private final float simDelay = 0.1f;
 
     public static class AttackInfo implements Comparable<AttackInfo> {
@@ -125,7 +125,7 @@ public class DuelManager implements Delayer {
         if (it != null && it.hasNext()) {
             Map.Entry<FleetToken, AttackInfo> duel = it.next();
             combatManager.setDuelState(duel, (byte) 1);
-            delayAction(() -> performDuel(duel, phase), combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay);
+            performDuel(duel, phase);
         } else {
             if (phase >= 2) {
                 //afterDuels();
@@ -141,45 +141,56 @@ public class DuelManager implements Delayer {
     private void performDuel(Map.Entry<FleetToken, AttackInfo> duel, byte phase) {
         BattleCard att = duel.getKey().getCard();
         BattleCard def = duel.getValue().getDefender().getCard();
-        boolean attFS = !att.isMS() && AbilityManager.hasAttribute(att, EffectType.FIRST_STRIKE);
-        boolean defFS = !def.isMS() && AbilityManager.hasAttribute(def, EffectType.FIRST_STRIKE);
+        boolean attFS = AbilityManager.hasAttribute(att, EffectType.FIRST_STRIKE);
+        boolean defFS = AbilityManager.hasAttribute(def, EffectType.FIRST_STRIKE);
         boolean attTop = duel.getValue().getUpperStrike() == att;
         boolean defTop = duel.getValue().getUpperStrike() == def;
+        boolean madeShots = false;
         switch (phase) {
             case 0:
-                if (attTop) {
+                if (attTop && !att.isMS()) {
+                    madeShots = true;
                     if (!exeOneSide(att, def, false)) {
                         def.setKilledByTopStrike(true);
                     }
                 }
-                if (defTop) {
+                if (defTop && !def.isMS()) {
+                    madeShots = true;
                     if (!exeOneSide(def, att, false)) {
                         att.setKilledByTopStrike(true);
                     }
                 }
                 break;
             case 1:
-                if (!attTop && attFS && !att.isKilledByTopStrike()) {
+                if (!attTop && attFS && !att.isKilledByTopStrike() && !att.isMS()) {
+                    madeShots = true;
                     if (!exeOneSide(att, def, false)) {
                         def.setKilledByFirstStrike(true);
                     }
                 }
-                if (!defTop && defFS && !def.isKilledByTopStrike()) {
+                if (!defTop && defFS && !def.isKilledByTopStrike() && !def.isMS()) {
+                    madeShots = true;
                     if (!exeOneSide(def, att, false)) {
                         att.setKilledByFirstStrike(true);
                     }
                 }
                 break;
             case 2:
-                if (!attTop && !attFS && !att.isKilledByTopStrike() && !att.isKilledByFirstStrike()) {
+                if (!attTop && !attFS && !att.isKilledByTopStrike() && !att.isKilledByFirstStrike() && !att.isMS()) {
+                    madeShots = true;
                     exeOneSide(att, def, false);
                 }
-                if (!defTop && !defFS && !def.isKilledByTopStrike() && !def.isKilledByFirstStrike()) {
+                if (!defTop && !defFS && !def.isKilledByTopStrike() && !def.isKilledByFirstStrike() && !def.isMS()) {
+                    madeShots = true;
                     exeOneSide(def, att, false);
                 }
                 break;
         }
-        iterateDuels();
+        if (madeShots) {
+            delayAction(this::iterateDuels, combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay);
+        } else {
+            iterateDuels();
+        }
     }
 
     private boolean exeOneSide(BattleCard att, BattleCard def, boolean delayedAnimation) { //returns survival
