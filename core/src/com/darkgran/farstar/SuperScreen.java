@@ -94,7 +94,7 @@ public abstract class SuperScreen implements Screen {
         camera.unproject(pos);
         return new SimpleVector2(pos.x, Farstar.STAGE_HEIGHT-pos.y);
     }
-    public static final class ScreenSettings { //in-future: use Singleton-pattern instead of static
+    public static final class ScreenSettings { //in-future: use Singleton-pattern instead of static + check thread-safety
         public static boolean tableStageEnabled = true;
         public static boolean netEnabled = false;
         public static boolean tokenFramesEnabled = true;
