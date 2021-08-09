@@ -3,6 +3,7 @@ package com.darkgran.farstar.battle.players;
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.CombatManager;
 import com.darkgran.farstar.gui.Notification;
+import com.darkgran.farstar.gui.NotificationManager;
 import com.darkgran.farstar.gui.battlegui.Menu;
 import com.darkgran.farstar.gui.battlegui.YardMenu;
 import com.darkgran.farstar.cards.AbilityInfo;
@@ -52,13 +53,13 @@ public class PossibilityAdvisor {
     public static void reportDeployability(Battle battle, boolean affordable, boolean learned, boolean targetsPresent, boolean space) {
         int duration = 3;
         if (!learned) {
-            battle.getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Insufficient Technological Tier.", duration, true);
+            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Insufficient Technological Tier.", duration, true);
         } else if (!affordable) {
-            battle.getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Insufficient Resources.", duration, true);
+            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Insufficient Resources.", duration, true);
         } else if (!targetsPresent) {
-            battle.getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "No Possible Targets.", duration, true);
+            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "No Possible Targets.", duration, true);
         } else if (!space) {
-            battle.getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Cannot Man More Ships.", duration, true);
+            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Cannot Man More Ships.", duration, true);
         }
     }
 

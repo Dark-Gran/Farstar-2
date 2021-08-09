@@ -35,25 +35,25 @@ public class TableStage extends ListeningStage {
     private final ActorButton soundButton = new ActorButton(empty, empty, sound){
         @Override
         public void clicked() {
-            getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Sound Not Available.", 3);
+            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Sound Not Available.", 3);
         }
     };
     private final ActorButton logoutButton = new ActorButton(empty, empty, logout){
         @Override
         public void clicked() {
-            getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Server Not Available.", 3);
+            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Server Not Available.", 3);
         }
     };
     private final ActorButton qualityButton = new ActorButton(empty, empty, quality){
         @Override
         public void clicked() {
-            getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Settings Not Available.", 3);
+            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Settings Not Available.", 3);
         }
     };
     private final ActorButton friendsButton = new ActorButton(empty, empty, friends){
         @Override
         public void clicked() {
-            getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Contacts Not Available.", 3);
+            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Contacts Not Available.", 3);
         }
     };
 

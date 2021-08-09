@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
+import com.darkgran.farstar.gui.NotificationManager;
 import com.darkgran.farstar.gui.tokens.*;
 import com.darkgran.farstar.cards.AbilityInfo;
 import com.darkgran.farstar.cards.AbilityStarter;
@@ -65,14 +66,14 @@ public class RoundManager {
         System.out.println("Player #"+battle.getWhoseTurn().getBattleID()+" may play his Cards.");
         if (battle.getWhoseTurn() instanceof LocalBattlePlayer) {
             possibilityAdvisor.markPossibilities(battle.getWhoseTurn(), battle);
-            getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "YOUR TURN", 3);
+            NotificationManager.newNotification(Notification.NotificationType.MIDDLE, "YOUR TURN", 3);
             getBattle().getBattleScreen().getBattleStage().getTurnButton().setDisabled(false);
         } else {
             if (battle.getWhoseTurn() instanceof Bot) {
                 ((Bot) battle.getWhoseTurn()).newTurn();
             }
             if (getBattle().getBattleScreen().getBattleType() != BattleType.SIMULATION) {
-                getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "ENEMY TURN", 3);
+                NotificationManager.newNotification(Notification.NotificationType.MIDDLE, "ENEMY TURN", 3);
             }
             getBattle().getBattleScreen().getBattleStage().getTurnButton().setDisabled(true);
         }
@@ -270,7 +271,7 @@ public class RoundManager {
             abilityPicker.enable(caster.getCard());
             cancelButton.setPosition(Farstar.STAGE_WIDTH*0.69f, Farstar.STAGE_HEIGHT*0.28f);
             getBattle().getBattleScreen().getBattleStage().addActor(cancelButton);
-            getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Choose an Ability.", 3);
+            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Choose an Ability.", 3);
             ((YardMenu) caster.getCard().getBattlePlayer().getYard().getCardListMenu()).setOpen(false);
         }
     }
@@ -309,10 +310,10 @@ public class RoundManager {
             ((Bot) whoseTurn).chooseTargets(token, ability);
         } else {
             token.setPicked(true);
-            getBattle().getBattleScreen().switchCursor(SuperScreen.CursorType.AIM);
+            SuperScreen.switchCursor(SuperScreen.CursorType.AIM);
             cancelButton.setPosition(Farstar.STAGE_WIDTH*0.62f, Farstar.STAGE_HEIGHT*0.08f);
             getBattle().getBattleScreen().getBattleStage().addActor(cancelButton);
-            getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Choose a Target.", 3);
+            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Choose a Target.", 3);
             ((YardMenu) whoseTurn.getYard().getCardListMenu()).setOpen(false);
         }
     }
@@ -344,7 +345,7 @@ public class RoundManager {
                     } else {
                         //System.out.println("Reprocessing original drop...");
                         targetingActive = false;
-                        getBattle().getBattleScreen().switchCursor(SuperScreen.CursorType.DEFAULT);
+                        SuperScreen.switchCursor(SuperScreen.CursorType.DEFAULT);
                         processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, postponedDeploy.getAbility().getStarter()==AbilityStarter.DEPLOY);
                         if (target.getCard() != null && battle.getCombatManager().isTacticalPhase() && postponedDeploy.getCaster().getCard().getCardInfo().getCardType() == CardType.TACTIC) {
                             battle.getCombatManager().saveTactic(postponedDeploy.getCaster().getCard(), target.getCard());
@@ -376,7 +377,7 @@ public class RoundManager {
 
     private void endTargeting() {
         targetingActive = false;
-        getBattle().getBattleScreen().switchCursor(SuperScreen.CursorType.DEFAULT);
+        SuperScreen.switchCursor(SuperScreen.CursorType.DEFAULT);
         postponedDeploy.resetInDeployment();
         cancelButton.remove();
     }

@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle;
 
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.gui.NotificationManager;
 import com.darkgran.farstar.gui.battlegui.*;
 import com.darkgran.farstar.battle.players.*;
 import com.darkgran.farstar.gui.Notification;
@@ -103,9 +104,9 @@ public class Battle1v1 extends Battle {
 
     protected void battleEndNotification(BattlePlayer battlePlayer) {
         if (battlePlayer == getWinner()) {
-            getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "VICTORY", 4);
+            NotificationManager.newNotification(Notification.NotificationType.MIDDLE, "VICTORY", 4);
         } else {
-            getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "DEFEAT", 4);
+            NotificationManager.newNotification(Notification.NotificationType.MIDDLE, "DEFEAT", 4);
         }
     }
 

@@ -23,11 +23,10 @@ public abstract class SuperScreen implements Screen {
     private final Farstar game;
     private final static OrthographicCamera camera = new OrthographicCamera();
     private final Viewport viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);
-    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
-    private TableStage tableStage;
+    private final static ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private TableStage tableStage; //in-future: possibly make static (but needs to be disabled on Screens like Intro)
     private YXQuestionBox screenConceder = null;
-    private final NotificationManager notificationManager;
-    private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.0885), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN);
+    private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.0885), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN); //in-future: possibly make static (but needs to be disabled on Screens like Intro)
     public enum CursorType {
         DEFAULT, AIM
     }
@@ -45,11 +44,11 @@ public abstract class SuperScreen implements Screen {
                 return Gdx.graphics.newCursor(ASSET_LIBRARY.get("images/cursor_aim.png"), 16, 16);
         }
     }*/
-    private TextureRegion HDCursor;
-    private int HDCursorOffsetX;
-    private int HDCursorOffsetY;
-    private boolean HDCursorInUse;
-    public void switchCursor(CursorType cursorType) {
+    private static TextureRegion HDCursor;
+    private static int HDCursorOffsetX;
+    private static int HDCursorOffsetY;
+    private static boolean HDCursorInUse;
+    public static void switchCursor(CursorType cursorType) {
         switch (cursorType) {
             default:
             case DEFAULT:
@@ -64,7 +63,7 @@ public abstract class SuperScreen implements Screen {
                 break;
         }
     }
-    private void drawCursor(Batch batch) {
+    private static void drawCursor(Batch batch, Farstar game) {
         boolean HDOn = false;
         if (HDCursor != null) {
             SimpleVector2 coords = getMouseCoordinates();
@@ -79,7 +78,7 @@ public abstract class SuperScreen implements Screen {
             hideCursor(HDOn);
         }
     }
-    public float getScreenScale() {
+    public static float getScreenScale() {
         float scaleX = (float) Farstar.STAGE_WIDTH / Gdx.graphics.getWidth();
         float scaleY = (float) Farstar.STAGE_HEIGHT / Gdx.graphics.getHeight();
         return Math.max(scaleX, scaleY);
@@ -110,9 +109,8 @@ public abstract class SuperScreen implements Screen {
     private ScreenSettings screenSettings;
 
 
-    public SuperScreen(final Farstar game, NotificationManager notificationManager) {
+    public SuperScreen(final Farstar game) {
         this.game = game;
-        this.notificationManager = notificationManager;
         camera.setToOrtho(false, Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT);
         viewport.apply();
         camera.position.set((float) Farstar.STAGE_WIDTH/2,(float) Farstar.STAGE_HEIGHT/2,0);
@@ -143,7 +141,7 @@ public abstract class SuperScreen implements Screen {
     }
 
     protected void drawSigns(Batch batch) {
-        notificationManager.drawAll(batch, shapeRenderer);
+        NotificationManager.drawAll(batch, shapeRenderer);
     }
 
     public static void switchFullscreen() {
@@ -180,7 +178,7 @@ public abstract class SuperScreen implements Screen {
         game.batch.begin();
         drawTopContent(delta, game.batch);
         drawSigns(game.batch);
-        drawCursor(game.batch);
+        drawCursor(game.batch, game);
         game.batch.end();
 
         update(delta);
@@ -188,7 +186,7 @@ public abstract class SuperScreen implements Screen {
     }
 
     protected void update(float delta) {
-        notificationManager.update(delta);
+        NotificationManager.update(delta);
     }
 
     @Override
@@ -230,8 +228,6 @@ public abstract class SuperScreen implements Screen {
     public TableStage getTableMenu() { return tableStage; }
 
     public ShapeRenderer getShapeRenderer() { return shapeRenderer; }
-
-    public NotificationManager getNotificationManager() { return notificationManager; }
 
     public YXQuestionBox getScreenConceder() { return screenConceder; }
 

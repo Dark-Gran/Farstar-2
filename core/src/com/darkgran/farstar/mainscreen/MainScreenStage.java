@@ -76,7 +76,7 @@ public class MainScreenStage extends ListeningStage {
         Battle battle = null;
         switch (battleType) {
             case SKIRMISH:
-                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Use F1 for Instructions.", 5, true);
+                NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Use F1 for Instructions.", 5, true);
                 battle = new Battle1v1(
                         playerFactory.getPlayer("LOCAL", 1, 0),
                         playerFactory.getPlayer("AUTO", 2, 15),
@@ -89,7 +89,7 @@ public class MainScreenStage extends ListeningStage {
                         playerFactory.getPlayer("AUTO", 2, 15),
                         battleType
                 );
-                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Game Mode: AI vs AI.", 5);
+                NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Game Mode: AI vs AI.", 5);
                 break;
             case SOLITARY:
 
@@ -98,11 +98,11 @@ public class MainScreenStage extends ListeningStage {
                         playerFactory.getPlayer("LOCAL", 2, 15),
                         battleType
                 );
-                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Game Mode: Local Player vs Local Player.", 5);
+                NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Game Mode: Local Player vs Local Player.", 5);
                 break;
         }
         if (battle != null) {
-            getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), battle, battleType, getGame().getSuperScreen().getNotificationManager()));
+            getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), battle, battleType));
         }
     }
 
