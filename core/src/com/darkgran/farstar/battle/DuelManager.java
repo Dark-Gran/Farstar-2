@@ -15,6 +15,7 @@ import java.util.*;
 
 public class DuelManager implements Delayer {
     private final float duelDelay = 0.2f;
+    private final float nextTargetDelay = 0.4f;
     private final float simDelay = 0.1f;
 
     public static class AttackInfo implements Comparable<AttackInfo> {
@@ -222,7 +223,7 @@ public class DuelManager implements Delayer {
             delayAction(() -> iterateAllTargets(shooter), combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay);
         } else {
             //afterDuels();
-            delayAction(this::afterDuels, combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay*2f);
+            delayAction(this::afterDuels, combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : nextTargetDelay);
         }
     }
 
