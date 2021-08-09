@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Controls all notifications across all Screens.
  */
-public final class NotificationManager {
+public final class NotificationManager { //consider using a Singleton-pattern instead of static methods
     private static final EnumMap<Notification.NotificationType, ArrayList<Notification>> notifications = new EnumMap<>(Notification.NotificationType.class);
 
     public static void drawAll(Batch batch, ShapeRenderer shapeRenderer) {
