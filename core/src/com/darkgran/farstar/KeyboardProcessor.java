@@ -45,27 +45,26 @@ public class KeyboardProcessor extends InputAdapter {
                     }
                     break;
                 case Input.Keys.F2:
-                    game.getSuperScreen().setTableStageEnabled(!game.getSuperScreen().isTableStageEnabled());
+                    game.getSuperScreen().setTableStageEnabled(!SuperScreen.ScreenSettings.tableStageEnabled);
                     break;
                 case Input.Keys.F3:
                     if (game.getSuperScreen() instanceof BattleScreen) {
-                        game.getSuperScreen().setTokenFramesEnabled(!game.getSuperScreen().isTokenFramesEnabled());
+                        SuperScreen.ScreenSettings.tokenFramesEnabled = !SuperScreen.ScreenSettings.tokenFramesEnabled;
                     }
                     break;
                 case Input.Keys.F4:
                     if (game.getSuperScreen() instanceof BattleScreen) {
-                        game.getSuperScreen().setNetEnabled(!game.getSuperScreen().isNetEnabled());
-                        //((BattleScreen) game.getSuperScreen()).getBattleStage().f1ButtonToNet();
+                        SuperScreen.ScreenSettings.netEnabled = !SuperScreen.ScreenSettings.netEnabled;
                     }
                     break;
                 case Input.Keys.F5:
                     if (game.getSuperScreen() instanceof BattleScreen) {
-                        game.getSuperScreen().setF1buttonEnabled(!game.getSuperScreen().isF1buttonEnabled());
-                        ((BattleScreen) game.getSuperScreen()).getBattleStage().setF1ButtonVisibility(game.getSuperScreen().isF1buttonEnabled());
+                        SuperScreen.ScreenSettings.f1buttonEnabled = !SuperScreen.ScreenSettings.f1buttonEnabled;
+                        ((BattleScreen) game.getSuperScreen()).getBattleStage().setF1ButtonVisibility(SuperScreen.ScreenSettings.f1buttonEnabled);
                     }
                     break;
                 case Input.Keys.F6:
-                    game.getSuperScreen().setPerfMeterEnabled(!game.getSuperScreen().isPerfMeterEnabled());
+                    SuperScreen.ScreenSettings.perfMeterEnabled = !SuperScreen.ScreenSettings.perfMeterEnabled;
                     break;
                 case Input.Keys.F8:
                     if (game.currentFPSCap == Farstar.DEFAULT_FPS) {

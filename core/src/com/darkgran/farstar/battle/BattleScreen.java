@@ -41,8 +41,8 @@ public class BattleScreen extends SuperScreen {
         }
     };
 
-    public BattleScreen(final Farstar game, TableStage tableStage, Battle battle, BattleType battleType, NotificationManager notificationManager, ScreenSettings screenSettings) {
-        super(game, notificationManager, screenSettings);
+    public BattleScreen(final Farstar game, TableStage tableStage, Battle battle, BattleType battleType, NotificationManager notificationManager) {
+        super(game, notificationManager);
         setTableMenu(tableStage);
         Box2D.init();
         this.battle = battle;
@@ -91,7 +91,7 @@ public class BattleScreen extends SuperScreen {
                         false,
                         battleStage,
                         this::userEscape,
-                        () -> getGame().setScreen(new MainScreen(getGame(), getTableMenu(), getNotificationManager(), getScreenSettings()))
+                        () -> getGame().setScreen(new MainScreen(getGame(), getTableMenu(), getNotificationManager()))
                 ));
             }
         } else {

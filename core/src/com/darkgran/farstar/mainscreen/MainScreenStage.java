@@ -102,7 +102,7 @@ public class MainScreenStage extends ListeningStage {
                 break;
         }
         if (battle != null) {
-            getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), battle, battleType, getGame().getSuperScreen().getNotificationManager(), getGame().getSuperScreen().getScreenSettings()));
+            getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), battle, battleType, getGame().getSuperScreen().getNotificationManager()));
         }
     }
 

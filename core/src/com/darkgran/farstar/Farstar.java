@@ -36,7 +36,7 @@ public class Farstar extends Game {
 		setBackgroundFPS(currentFPSCap);
 		ASSET_LIBRARY.loadAssets();
 		batch = new SpriteBatch();
-		this.setScreen(new IntroScreen(this, new NotificationManager(), new SuperScreen.ScreenSettings()));
+		this.setScreen(new IntroScreen(this, new NotificationManager()));
 		inputMultiplexer.addProcessor(keyboardProcessor);
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}

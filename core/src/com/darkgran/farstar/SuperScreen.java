@@ -96,44 +96,22 @@ public abstract class SuperScreen implements Screen {
         return new SimpleVector2(pos.x, Farstar.STAGE_HEIGHT-pos.y);
     }
     public static class ScreenSettings {
-        private boolean helpEnabled = false;
-        private boolean tableStageEnabled = true;
-        private boolean netEnabled = false;
-        private boolean tokenFramesEnabled = true;
-        private boolean perfMeterEnabled = true;
-        private boolean f1buttonEnabled = true;
-        public ScreenSettings() {}
-        public ScreenSettings(boolean helpEnabled, boolean tableStageEnabled, boolean netEnabled, boolean tokenFramesEnabled, boolean perfMeterEnabled, boolean f1buttonEnabled) {
-            this.helpEnabled = helpEnabled;
-            this.tableStageEnabled = tableStageEnabled;
-            this.netEnabled = netEnabled;
-            this.tokenFramesEnabled = tokenFramesEnabled;
-            this.perfMeterEnabled = perfMeterEnabled;
-            this.f1buttonEnabled = f1buttonEnabled;
-        }
+        public static boolean helpEnabled = false;
+        public static boolean tableStageEnabled = true;
+        public static boolean netEnabled = false;
+        public static boolean tokenFramesEnabled = true;
+        public static boolean perfMeterEnabled = true;
+        public static boolean f1buttonEnabled = true;
+        private ScreenSettings() {}
     }
     public void setTableStageEnabled(boolean tableStageEnabled) {
-        screenSettings.tableStageEnabled = tableStageEnabled;
+        ScreenSettings.tableStageEnabled = tableStageEnabled;
         if (tableStage != null) { tableStage.enableButtons(tableStageEnabled); }
     }
-    public boolean isF1buttonEnabled() { return screenSettings.f1buttonEnabled; }
-    public void setF1buttonEnabled(boolean f1buttonEnabled) { screenSettings.f1buttonEnabled = f1buttonEnabled; }
-    public boolean isPerfMeterEnabled() { return screenSettings.perfMeterEnabled; }
-    public void setPerfMeterEnabled(boolean perfMeterEnabled) { screenSettings.perfMeterEnabled = perfMeterEnabled; }
-    public void setNetEnabled(boolean netEnabled) { screenSettings.netEnabled = netEnabled; }
-    public boolean isTableStageEnabled() { return screenSettings.tableStageEnabled; }
-    public void setHelpEnabled(boolean helpEnabled) { screenSettings.helpEnabled = helpEnabled; }
-    public boolean isHelpEnabled() { return screenSettings.helpEnabled; }
-    public boolean isNetEnabled() { return screenSettings.netEnabled; }
-    public void setTokenFramesEnabled(boolean tokenFramesEnabled) { screenSettings.tokenFramesEnabled = tokenFramesEnabled; }
-    public boolean isTokenFramesEnabled() { return screenSettings.tokenFramesEnabled; }
-    public ScreenSettings getScreenSettings() { return screenSettings; }
-    public void setScreenSettings(ScreenSettings screenSettings) { this.screenSettings = screenSettings; }
     private ScreenSettings screenSettings;
 
 
-    public SuperScreen(final Farstar game, NotificationManager notificationManager, ScreenSettings screenSettings) {
-        this.screenSettings = screenSettings;
+    public SuperScreen(final Farstar game, NotificationManager notificationManager) {
         this.game = game;
         this.notificationManager = notificationManager;
         camera.setToOrtho(false, Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT);
@@ -158,7 +136,7 @@ public abstract class SuperScreen implements Screen {
 
     protected void drawMenus(float delta, Batch batch) { //for all screens except intro
         batch.begin();
-        if (isPerfMeterEnabled()) { perfMeter.drawText(batch); }
+        if (ScreenSettings.perfMeterEnabled) { perfMeter.drawText(batch); }
         //All buttons, included the ones in YXQuestionBox, are drawn when the entire Stage is drawn, therefore moving screenConceder higher makes the box draw over the buttons.
         //To be able to move screenConceder to a "higher layer", another Stage would need to be set up ("TopStage"), however this is unnecessary unless more features would use this Stage.
         if (screenConceder != null) { screenConceder.draw(batch, shapeRenderer); }
@@ -187,8 +165,8 @@ public abstract class SuperScreen implements Screen {
         shapeRenderer.setProjectionMatrix(camera.combined);
 
         if (tableStage != null) { //should persist over all screens
-            tableStage.drawBackground(game.batch, screenSettings.tableStageEnabled, screenSettings.netEnabled);
-            if (screenSettings.tableStageEnabled) {
+            tableStage.drawBackground(game.batch, ScreenSettings.tableStageEnabled, ScreenSettings.netEnabled);
+            if (ScreenSettings.tableStageEnabled) {
                 tableStage.act(delta);
                 tableStage.draw();
             }
