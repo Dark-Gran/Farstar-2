@@ -90,7 +90,7 @@ public final class FleetToken extends ClickToken implements DisableMark, FakingT
     @Override
     public int compareTo(@NotNull FleetToken that) { //if movement becomes desirable for FleetTokens, anchors should be used instead of actual position (see AnchoredToken)
         if (this.fleetMenu != that.fleetMenu) {
-            return -1;
+            return 1;
         }
         return Float.compare(this.getX(), that.getX());
     }

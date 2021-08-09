@@ -13,6 +13,7 @@ public class BattleCard extends Card {
     private boolean used; //for AbilityStarter.USE
     private int damage = 0;
     private boolean killedByFirstStrike;
+    private boolean killedByTopStrike;
 
     public BattleCard(CardInfo cardInfo, BattlePlayer battlePlayer) {
         super(cardInfo);
@@ -124,5 +125,13 @@ public class BattleCard extends Card {
 
     public void setKilledByFirstStrike(boolean killedByFirstStrike) {
         this.killedByFirstStrike = killedByFirstStrike;
+    }
+
+    public boolean isKilledByTopStrike() {
+        return killedByTopStrike;
+    }
+
+    public void setKilledByTopStrike(boolean killedByTopStrike) {
+        this.killedByTopStrike = killedByTopStrike;
     }
 }
