@@ -29,7 +29,7 @@ public abstract class Battle {
         return null;
     }
 
-    protected boolean areYardsOpen() {
+    public boolean areYardsOpen() {
         return false;
     }
 

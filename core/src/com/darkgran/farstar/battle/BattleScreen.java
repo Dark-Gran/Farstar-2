@@ -72,9 +72,9 @@ public class BattleScreen extends SuperScreen {
         getNotificationManager().clear(Notification.NotificationType.MIDDLE);
         if (!isConcederActive()) {
             if ((getBattleStage().getBattleHelp() != null && getBattleStage().getBattleHelp().isEnabled()) || getBattle().areYardsOpen() || getBattle().getRoundManager().isTargetingActive() || getBattleStage().getAbilityPicker().isActive()) {
-                getBattle().getRoundManager().tryCancel();
-                getBattle().closeYards();
-                getBattleStage().getBattleHelp().setEnabled(false);
+                if (getBattle().getRoundManager().isTargetingActive() || getBattleStage().getAbilityPicker().isActive()) { getBattle().getRoundManager().tryCancel(); }
+                if (getBattle().areYardsOpen()) { getBattle().closeYards(); }
+                if ((getBattleStage().getBattleHelp() != null && getBattleStage().getBattleHelp().isEnabled())) { getBattleStage().getBattleHelp().setEnabled(false); }
             } else {
                 String txt = getBattle().isEverythingDisabled() || getBattleType() == BattleType.SIMULATION ? "LEAVE?" : "CONCEDE?";
                 String fontPath = "fonts/orbitron36.fnt";

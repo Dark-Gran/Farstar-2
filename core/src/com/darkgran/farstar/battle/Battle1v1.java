@@ -51,7 +51,7 @@ public class Battle1v1 extends Battle {
     }
 
     @Override
-    protected boolean areYardsOpen() {
+    public boolean areYardsOpen() {
         return ((YardMenu) (battlePlayer1.getShipyard().getCardListMenu())).isOpen() || ((YardMenu) (battlePlayer2.getShipyard().getCardListMenu())).isOpen();
     }
 

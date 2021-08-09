@@ -134,7 +134,7 @@ public abstract class BattleStage extends ListeningStage {
     public void toggleBattleHelp() {
         if (battleHelp != null) {
             battleHelp.setEnabled(!battleHelp.isEnabled());
-            getBattleScreen().getBattle().closeYards();
+            if (getBattleScreen().getBattle().areYardsOpen()) { getBattleScreen().getBattle().closeYards(); }
             getBattleScreen().hideScreenConceder();
             dropDownHands();
         }

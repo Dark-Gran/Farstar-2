@@ -97,7 +97,7 @@ public class RoundManager {
 
     public void endTurn() {
         if (!battle.getCombatManager().isActive() && !battle.isEverythingDisabled() && !targetingActive) {
-            battle.closeYards();
+            if (battle.getWhoseTurn() instanceof LocalBattlePlayer) { battle.closeYards(); }
             getBattle().getBattleScreen().getBattleStage().getTurnButton().setDisabled(true);
             battle.getCombatManager().launchCombat();
             battle.refreshPossibilities();
