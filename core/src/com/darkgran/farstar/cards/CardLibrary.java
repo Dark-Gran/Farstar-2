@@ -5,7 +5,17 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 
 public class CardLibrary {
+    private static CardLibrary cardLibrary = null;
     private Array<CardInfo> cards;
+
+    private CardLibrary() {}
+    public static CardLibrary getInstance() {
+        if (cardLibrary == null) {
+            cardLibrary = new CardLibrary();
+        }
+        return cardLibrary;
+    }
+
     /**
      * The given Json must contain CardInfos only (a set of Arrays, Floats and Strings).
      * (Also see: AbilityManager, Effect)

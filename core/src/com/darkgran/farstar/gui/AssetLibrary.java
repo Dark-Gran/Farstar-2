@@ -13,7 +13,16 @@ import com.darkgran.farstar.cards.TechType;
 import com.darkgran.farstar.cards.CardInfo;
 
 public class AssetLibrary {
+    private static AssetLibrary assetLibrary = null;
     private final AssetManager assetManager = new AssetManager();
+
+    private AssetLibrary() {}
+    public static AssetLibrary getInstance() {
+        if (assetLibrary == null) {
+            assetLibrary = new AssetLibrary();
+        }
+        return assetLibrary;
+    }
 
     public TextureRegion getPortrait(CardInfo cardInfo, TokenType tokenType) {
         return getAtlasRegion(getPortraitName(cardInfo, tokenType));

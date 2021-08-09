@@ -11,8 +11,8 @@ public class Farstar extends Game {
 	public static final int STAGE_WIDTH = 1920;
 	public static final int STAGE_HEIGHT = 960;
 	public static final int DEFAULT_FPS = 60;
-	public static final CardLibrary CARD_LIBRARY = new CardLibrary();
-	public static final AssetLibrary ASSET_LIBRARY = new AssetLibrary();
+	public static final CardLibrary CARD_LIBRARY = CardLibrary.getInstance();
+	public static final AssetLibrary ASSET_LIBRARY = AssetLibrary.getInstance();
 	private final InputMultiplexer inputMultiplexer = new InputMultiplexer();
 	private final KeyboardProcessor keyboardProcessor = new KeyboardProcessor(this);
 	protected SuperScreen superScreen;
