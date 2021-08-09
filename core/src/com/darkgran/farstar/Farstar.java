@@ -19,6 +19,7 @@ public class Farstar extends Game {
 	SpriteBatch batch;
 	public final MouseWindowQuery MWQ;
 	protected int currentFPSCap = DEFAULT_FPS;
+	public static boolean firstMatchThisLaunch = true; //in-future: bind to user settings (file-write or user-acc)
 
 	public Farstar(MouseWindowQuery MWQ) {
 		this.MWQ = MWQ;

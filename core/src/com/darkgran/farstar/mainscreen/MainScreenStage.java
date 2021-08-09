@@ -71,7 +71,7 @@ public class MainScreenStage extends ListeningStage {
         }
     }
 
-    private void launchBattleScreen(BattleType battleType) {
+    private void launchBattleScreen(BattleType battleType) { //in-future: rework for "custom players"
         System.out.println("Starting "+battleType.getName()+".");
         Battle battle = null;
         switch (battleType) {
@@ -79,13 +79,15 @@ public class MainScreenStage extends ListeningStage {
                 getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Use F1 for Instructions.", 5, true);
                 battle = new Battle1v1(
                         playerFactory.getPlayer("LOCAL", 1, 0),
-                        playerFactory.getPlayer("AUTO", 2, 15)
+                        playerFactory.getPlayer("AUTO", 2, 15),
+                        battleType
                 );
                 break;
             case SIMULATION:
                 battle = new Battle1v1(
                         playerFactory.getPlayer("AUTO", 1, 0),
-                        playerFactory.getPlayer("AUTO", 2, 15)
+                        playerFactory.getPlayer("AUTO", 2, 15),
+                        battleType
                 );
                 getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Game Mode: AI vs AI.", 5);
                 break;
@@ -93,7 +95,8 @@ public class MainScreenStage extends ListeningStage {
 
                 battle = new Battle1v1(
                         playerFactory.getPlayer("LOCAL", 1, 0),
-                        playerFactory.getPlayer("LOCAL", 2, 15)
+                        playerFactory.getPlayer("LOCAL", 2, 15),
+                        battleType
                 );
                 getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Game Mode: Local Player vs Local Player.", 5);
                 break;

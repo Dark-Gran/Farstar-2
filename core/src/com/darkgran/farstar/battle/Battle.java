@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public abstract class Battle {
     private BattleScreen battleScreen;
+    private final BattleType battleType;
     private BattlePlayer whoseTurn;
     private RoundManager roundManager;
     private CombatManager combatManager;
@@ -17,8 +18,9 @@ public abstract class Battle {
     private boolean everythingDisabled = false;
     private final ArrayList<BattlePlayer> gameOvers = new ArrayList<>();
 
-    public Battle() {
+    public Battle(@NotNull BattleType battleType) {
         System.out.println("Launching Battle...");
+        this.battleType = battleType;
     }
 
     public BattleStage createBattleStage(@NotNull Farstar game, @NotNull Viewport viewport, @NotNull BattleScreen battleScreen) {
@@ -111,5 +113,9 @@ public abstract class Battle {
 
     public BattleScreen getBattleScreen() {
         return battleScreen;
+    }
+
+    public BattleType getBattleType() {
+        return battleType;
     }
 }

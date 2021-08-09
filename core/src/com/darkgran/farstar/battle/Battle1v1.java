@@ -16,8 +16,8 @@ public class Battle1v1 extends Battle {
     private final BattlePlayer battlePlayer1;
     private final BattlePlayer battlePlayer2;
 
-    public Battle1v1(@NotNull BattlePlayer battlePlayer1, @NotNull BattlePlayer battlePlayer2) {
-        super();
+    public Battle1v1(@NotNull BattlePlayer battlePlayer1, @NotNull BattlePlayer battlePlayer2, @NotNull BattleType battleType) {
+        super(battleType);
         this.battlePlayer1 = battlePlayer1;
         this.battlePlayer2 = battlePlayer2;
         this.battlePlayer1.setBattle(this);
@@ -42,7 +42,12 @@ public class Battle1v1 extends Battle {
 
     @Override
     protected void coinToss() {
-        setWhoseTurn((ThreadLocalRandom.current().nextInt(0, 2) == 0) ? battlePlayer1 : battlePlayer2);
+        if (Farstar.firstMatchThisLaunch && getBattleType() == BattleType.SKIRMISH) {
+            setWhoseTurn(battlePlayer1);
+            Farstar.firstMatchThisLaunch = false;
+        } else {
+            setWhoseTurn((ThreadLocalRandom.current().nextInt(0, 2) == 0) ? battlePlayer1 : battlePlayer2);
+        }
     }
 
     @Override
