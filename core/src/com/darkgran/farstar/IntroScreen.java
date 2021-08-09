@@ -17,8 +17,6 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
     private float alpha = 0;
     private boolean fadeDirection = true; //true in, false out
 
-    private final static float INTRO_SPEED = 0.35f;
-
     public IntroScreen(final Farstar game) {
         super(game);
         hideCursor(true);
@@ -41,7 +39,8 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
 
     private void updateAlpha(float delta) {
         //if (delta > 0.03f) { delta = 0.03f; }
-        alpha += fadeDirection ? (INTRO_SPEED *delta) : -(INTRO_SPEED *delta)*4;
+        float introSpeed = 0.35f;
+        alpha += fadeDirection ? (introSpeed *delta) : -(introSpeed *delta)*4;
         if (alpha >= 1) {
             fadeDirection = false;
             active = false;
