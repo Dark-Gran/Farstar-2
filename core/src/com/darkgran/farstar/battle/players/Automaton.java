@@ -255,8 +255,8 @@ public final class Automaton extends Bot {
                             break;
                         case REPAIR:
                             Token w = getWoundedAlly();
-                            if (w!= null && effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 1 && effect.getEffectInfo().get(0) != null) {
-                                return getWoundedAlly().getCard().getDamage()>=AbilityManager.floatObjectToInt(effect.getEffectInfo().get(0));
+                            if (w != null && effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 1 && effect.getEffectInfo().get(0) != null) {
+                                return w.getCard().getDamage()>=AbilityManager.floatObjectToInt(effect.getEffectInfo().get(0));
                             }
                             return true;
                         case CHANGE_RESOURCE: //in-future: rework (see pickAbility())
@@ -290,7 +290,7 @@ public final class Automaton extends Bot {
     }
 
     private Token getWoundedAlly() {
-        if (getMs().getDamage() > getMs().getCardInfo().getDefense()/2) { //PREFERS MS BELOW 50% HEALTH
+        if (getMs().getDamage() >= getMs().getCardInfo().getDefense()/2) { //PREFERS MS WITH 50% OR LESS HEALTH
             return getMs().getToken();
         }
         for (Ship ship : getFleet().getShips()) {
