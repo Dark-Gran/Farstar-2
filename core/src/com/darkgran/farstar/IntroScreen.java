@@ -39,7 +39,7 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
 
     private void updateAlpha(float delta) {
         //if (delta > 0.03f) { delta = 0.03f; }
-        float introSpeed = 0.35f;
+        final float introSpeed = 0.35f;
         alpha += fadeDirection ? (introSpeed *delta) : -(introSpeed *delta)*4;
         if (alpha >= 1) {
             fadeDirection = false;
