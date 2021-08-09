@@ -14,7 +14,7 @@ import java.util.*;
 
 
 public class DuelManager implements Delayer {
-    private final float duelDelay = 0.3f;
+    private final float duelDelay = 0.5f;
     private final float simDelay = 0.1f;
 
     public static class AttackInfo implements Comparable<AttackInfo> {
@@ -109,7 +109,7 @@ public class DuelManager implements Delayer {
             //it = duelSet.iterator();
             phase = 0;
             it = duels.entrySet().iterator();
-            delayAction(this::iterateDuels, combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay);
+            delayAction(this::iterateDuels, combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay*2);
         } else {
             System.out.println("Invalid number of duels to launch (0 or null).");
             delayAction(this::afterDuels, duelDelay);
@@ -129,7 +129,7 @@ public class DuelManager implements Delayer {
         } else {
             if (phase >= 2) {
                 //afterDuels();
-                delayAction(this::afterDuels, combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay*2f);
+                delayAction(this::afterDuels, combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay*1.5f);
             } else {
                 phase++;
                 it = duels.entrySet().iterator();
