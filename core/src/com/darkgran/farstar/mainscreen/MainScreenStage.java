@@ -76,6 +76,7 @@ public class MainScreenStage extends ListeningStage {
         Battle battle = null;
         switch (battleType) {
             case SKIRMISH:
+                getGame().getSuperScreen().getNotificationManager().newNotification(Notification.NotificationType.BOT_LEFT, "Use F1 for Instructions.", 5, true);
                 battle = new Battle1v1(
                         playerFactory.getPlayer("LOCAL", 1, 0),
                         playerFactory.getPlayer("AUTO", 2, 15)

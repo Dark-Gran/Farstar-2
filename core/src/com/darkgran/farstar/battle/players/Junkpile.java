@@ -22,6 +22,7 @@ public class Junkpile extends CardList {
 
     @Override
     public boolean addCard(BattleCard battleCard) {
+        battleCard.reset();
         add(battleCard);
         if (junkButton != null) {
             junkButton.setup(battleCard, TokenType.JUNK, new SimpleVector2(junkButton.getX(), junkButton.getY()));

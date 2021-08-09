@@ -72,11 +72,11 @@ public abstract class Battle {
     }
 
     public void unMarkAllPossibilities() {
-        getRoundManager().getPossibilityAdvisor().unMarkAll(whoseTurn, this);
+        getRoundManager().getPossibilityAdvisor().unMarkAll(getWhoseTurn(), this);
     }
 
     public void refreshPossibilities() {
-        getRoundManager().getPossibilityAdvisor().refresh(whoseTurn, this);
+        getRoundManager().getPossibilityAdvisor().refresh(getWhoseTurn(), this);
     }
 
     public boolean aintCombatOrDuel() {

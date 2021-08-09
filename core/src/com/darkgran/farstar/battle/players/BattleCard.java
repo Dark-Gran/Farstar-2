@@ -30,6 +30,15 @@ public class BattleCard extends Card {
         battlePlayer = null;
     }
 
+    public void reset() {
+        setDamage(0);
+        setUsed(false);
+        getEffects().clear();
+        getHistory().clear();
+        setKilledByTopStrike(false);
+        setKilledByFirstStrike(false);
+    }
+
     @Override
     public void refreshToken(boolean def, boolean off, boolean abi) {
         if (getToken() != null) {

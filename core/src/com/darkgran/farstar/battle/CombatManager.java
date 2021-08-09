@@ -164,14 +164,14 @@ public abstract class CombatManager {
                     entry.getValue().getDefender().setPicked(false);
                 }
             }
-            boolean attFS = AbilityManager.hasAttribute(entry.getKey().getCard(), EffectType.FIRST_STRIKE);
+            /*boolean attFS = AbilityManager.hasAttribute(entry.getKey().getCard(), EffectType.FIRST_STRIKE);
             boolean defFS = AbilityManager.hasAttribute(entry.getValue().getDefender().getCard(), EffectType.FIRST_STRIKE);
             if (attFS) {
                 entry.getKey().getCard().setPossible(true);
             }
             if (defFS) {
                 entry.getValue().getDefender().getCard().setPossible(true);
-            }
+            }*/
         }
     }
 
@@ -214,6 +214,7 @@ public abstract class CombatManager {
         combatMenu.removeOK(combatOK);
         combatOK.setExtraState(true);
         if (areAllReady()) {
+            battle.getRoundManager().getPossibilityAdvisor().unMarkAll(activePlayer.getBattlePlayer(), battle);
             engage();
         } else {
             switchActivePlayer();
