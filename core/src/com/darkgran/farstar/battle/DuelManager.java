@@ -97,7 +97,7 @@ public class DuelManager implements Delayer {
         return sortedEntries;
     }
 
-
+    //in-future: (only "possibly", depends on desired gameplay) if a ship is facing more attackers, allow attacking/defending player to decide order (matters in certain situations because of the colors; for now, priority is always left>right)
     void launchDuels(CombatManager combatManager, TreeMap<FleetToken, AttackInfo> duels, ShotManager shotManager) {
         this.shotManager = shotManager;
         this.duels = duels;
