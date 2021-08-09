@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
+
 public class DuelManager implements Delayer {
     private final float duelDelay = 0.2f;
     private final float simDelay = 0.1f;
@@ -189,17 +190,13 @@ public class DuelManager implements Delayer {
 
     public static int getDmgAgainstShields(int dmg, int health, TechType dmgType, TechType shieldType) {
         if (dmg <= health) {
-            dmgType = noneToInferior(dmgType);
-            shieldType = noneToInferior(shieldType);
+            dmgType = TechType.noneToInferior(dmgType);
+            shieldType = TechType.noneToInferior(shieldType);
             if (dmg != 0 && ((shieldType == TechType.SUPERIOR && dmgType != TechType.SUPERIOR) || (shieldType != TechType.INFERIOR && (dmgType == TechType.INFERIOR || dmgType == shieldType)))) {
                 return 1;
             }
         }
         return dmg;
-    }
-
-    public static TechType noneToInferior(TechType techType) {
-        return techType == TechType.NONE ? TechType.INFERIOR : techType;
     }
 
     public boolean isActive() {

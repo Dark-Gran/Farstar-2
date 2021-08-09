@@ -25,6 +25,10 @@ public enum TechType {
         return techType == NONE || techType == INFERIOR;
     }
 
+    public static TechType noneToInferior(TechType techType) {
+        return techType == TechType.NONE ? TechType.INFERIOR : techType;
+    }
+
     public ShotManager.ShotType getShotType() {
         return shotType;
     }
