@@ -9,11 +9,8 @@ public class KeyboardProcessor extends InputAdapter { //in-future: check all sin
     private final IntSet keysDown = new IntSet(20);
     private Farstar game;
 
-    private static KeyboardProcessor keyboardProcessor = null;
-    private KeyboardProcessor() {}
-    public static KeyboardProcessor getInstance() {
-        if (keyboardProcessor == null) { keyboardProcessor = new KeyboardProcessor(); }
-        return keyboardProcessor;
+    public KeyboardProcessor(Farstar game) {
+        this.game = game;
     }
 
     private void multipleKeysDown() {
@@ -38,41 +35,41 @@ public class KeyboardProcessor extends InputAdapter { //in-future: check all sin
     @Override
     public boolean keyUp(int keycode) {
         if (game != null) {
-            if (keycode == Input.Keys.ESCAPE || (keycode == Input.Keys.SPACE && getGame().getSuperScreen() instanceof IntroScreen)) {
-                if (getGame().getSuperScreen() != null) {
-                    getGame().getSuperScreen().userEscape();
+            if (keycode == Input.Keys.ESCAPE || (keycode == Input.Keys.SPACE && game.getSuperScreen() instanceof IntroScreen)) {
+                if (game.getSuperScreen() != null) {
+                    game.getSuperScreen().userEscape();
                 }
             } else { //if (keysDown.size == 1)
                 switch (keycode) {
                     case Input.Keys.F1:
-                        if (getGame().getSuperScreen() instanceof BattleScreen) {
-                            ((BattleScreen) getGame().getSuperScreen()).getBattleStage().toggleBattleHelp();
+                        if (game.getSuperScreen() instanceof BattleScreen) {
+                            ((BattleScreen) game.getSuperScreen()).getBattleStage().toggleBattleHelp();
                         }
                         break;
                     case Input.Keys.F2:
-                        getGame().getSuperScreen().getScreenSettings().setTableStageEnabled(!getGame().getSuperScreen().getScreenSettings().isTableStageEnabled(), getGame().getSuperScreen().getTableMenu());
+                        game.getSuperScreen().getScreenSettings().setTableStageEnabled(!game.getSuperScreen().getScreenSettings().isTableStageEnabled(), game.getSuperScreen().getTableMenu());
                         break;
                     case Input.Keys.F3:
-                        if (getGame().getSuperScreen() instanceof BattleScreen) {
-                            getGame().getSuperScreen().getScreenSettings().setTokenFramesEnabled(!getGame().getSuperScreen().getScreenSettings().areTokenFramesEnabled());
+                        if (game.getSuperScreen() instanceof BattleScreen) {
+                            game.getSuperScreen().getScreenSettings().setTokenFramesEnabled(!game.getSuperScreen().getScreenSettings().areTokenFramesEnabled());
                         }
                         break;
                     case Input.Keys.F4:
-                        if (getGame().getSuperScreen() instanceof BattleScreen) {
-                            getGame().getSuperScreen().getScreenSettings().setNetEnabled(!getGame().getSuperScreen().getScreenSettings().isNetEnabled());
+                        if (game.getSuperScreen() instanceof BattleScreen) {
+                            game.getSuperScreen().getScreenSettings().setNetEnabled(!game.getSuperScreen().getScreenSettings().isNetEnabled());
                         }
                         break;
                     case Input.Keys.F5:
-                        if (getGame().getSuperScreen() instanceof BattleScreen) {
-                            getGame().getSuperScreen().getScreenSettings().setF1buttonEnabled(!getGame().getSuperScreen().getScreenSettings().isF1buttonEnabled());
-                            ((BattleScreen) getGame().getSuperScreen()).getBattleStage().setF1ButtonVisibility(getGame().getSuperScreen().getScreenSettings().isF1buttonEnabled());
+                        if (game.getSuperScreen() instanceof BattleScreen) {
+                            game.getSuperScreen().getScreenSettings().setF1buttonEnabled(!game.getSuperScreen().getScreenSettings().isF1buttonEnabled());
+                            ((BattleScreen) game.getSuperScreen()).getBattleStage().setF1ButtonVisibility(game.getSuperScreen().getScreenSettings().isF1buttonEnabled());
                         }
                         break;
                     case Input.Keys.F6:
-                        getGame().getSuperScreen().getScreenSettings().setPerfMeterEnabled(!getGame().getSuperScreen().getScreenSettings().isPerfMeterEnabled());
+                        game.getSuperScreen().getScreenSettings().setPerfMeterEnabled(!game.getSuperScreen().getScreenSettings().isPerfMeterEnabled());
                         break;
                     case Input.Keys.F8:
-                        getGame().getSuperScreen().toggleFPSthrottle();
+                        game.getSuperScreen().toggleFPSthrottle();
                         break;
                 }
             }
@@ -85,11 +82,4 @@ public class KeyboardProcessor extends InputAdapter { //in-future: check all sin
         return keysDown;
     }
 
-    public Farstar getGame() {
-        return game;
-    }
-
-    public void setGame(Farstar game) {
-        this.game = game;
-    }
 }

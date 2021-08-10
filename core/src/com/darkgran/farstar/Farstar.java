@@ -32,9 +32,7 @@ public class Farstar extends Game {
 		CardLibrary.getInstance().loadLocal("content/cards.json");
 		batch = new SpriteBatch();
 		this.setScreen(new IntroScreen(this, new ScreenSettings()));
-		KeyboardProcessor kp = KeyboardProcessor.getInstance();
-		kp.setGame(this);
-		inputMultiplexer.addProcessor(kp);
+		inputMultiplexer.addProcessor(new KeyboardProcessor(this));
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 
