@@ -10,6 +10,7 @@ import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.TextDrawer;
 import com.darkgran.farstar.gui.TextLine;
 import com.darkgran.farstar.gui.SimpleVector2;
+import com.darkgran.farstar.gui.battlegui.ShotManager;
 
 public class TokenPart extends TextLine {
     enum ContentState {
@@ -103,7 +104,7 @@ public class TokenPart extends TextLine {
     public void resetContentState() {}
 
     public void draw(Batch batch) {
-        token.getBattleStage().getShotManager().drawRecoil(batch, token);
+        ShotManager.getInstance().drawRecoil(batch, token);
         if (isEnabled()) { //in-future: optimize (don't declare and calculate, instead keep and update)
             batch.draw(pad, x - pad.getRegionWidth() + offsetX, y + offsetY);
             float textX = x - pad.getRegionWidth()/2f - textWH.x/2f + offsetX + textOffsetX;

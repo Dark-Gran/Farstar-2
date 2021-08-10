@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.gui.AnimationManager;
 import com.darkgran.farstar.gui.tokens.TokenType;
 
 public class Mothership extends BattleCard {
@@ -10,7 +11,7 @@ public class Mothership extends BattleCard {
     public void death() {
         if (getBattlePlayer() != null) {
             getToken().getBattleStage().getBattleScreen().getBattle().addGameOver(getBattlePlayer());
-            getToken().getBattleStage().getAnimationManager().newDeathEffect(getToken().getX(), getToken().getY(), TokenType.MS);
+            AnimationManager.getInstance().newDeathEffect(getToken().getX(), getToken().getY(), TokenType.MS);
         }
     }
 

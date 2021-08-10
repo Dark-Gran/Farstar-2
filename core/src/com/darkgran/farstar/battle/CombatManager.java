@@ -272,7 +272,7 @@ public abstract class CombatManager {
     private void engage() {
         activePlayer = null;
         tacticalPhase = false;
-        duelManager.launchDuels(this, duels, battleStage.getShotManager());
+        duelManager.launchDuels(this, duels);
     }
 
     void setDuelState(Map.Entry<FleetToken, DuelManager.AttackInfo> duel, byte state) {

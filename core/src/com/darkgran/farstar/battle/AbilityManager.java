@@ -2,6 +2,7 @@ package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.cards.*;
 import com.darkgran.farstar.gui.battlegui.DropTarget;
+import com.darkgran.farstar.gui.battlegui.ShotManager;
 import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.*;
 
@@ -219,7 +220,7 @@ public class AbilityManager {
             TechType techType = TechType.valueOf(effect.getEffectInfo().get(1).toString());
             int dmg = DuelManager.getDmgAgainstShields(power, target.getHealth(), techType, target.getCardInfo().getDefenseType());
             if (caster != null) {
-                getBattle().getBattleScreen().getBattleStage().getShotManager().newAttack(caster.getBattlePlayer().getMs().getToken(), target.getToken(), power, techType, caster.getCardInfo().getAnimatedShots());
+                ShotManager.getInstance().newAttack(caster.getBattlePlayer().getMs().getToken(), target.getToken(), power, techType, caster.getCardInfo().getAnimatedShots());
             }
             if (target instanceof Ship) {
                 target.receiveDMG(dmg);

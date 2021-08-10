@@ -3,6 +3,7 @@ package com.darkgran.farstar.gui.tokens;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.darkgran.farstar.battle.players.BattleCard;
+import com.darkgran.farstar.gui.AnimationManager;
 import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
@@ -36,7 +37,7 @@ public class SupportToken extends ClickToken implements DisableMark {
         if (getCardListMenu()!=null) {
             getCardListMenu().getTokens().remove(this);
             getCardListMenu().getCardList().remove(getCard());
-            getCardListMenu().getBattleStage().getAnimationManager().newDeathEffect(getX(), getY(), TokenType.SUPPORT);
+            AnimationManager.getInstance().newDeathEffect(getX(), getY(), TokenType.SUPPORT);
         }
     }
 

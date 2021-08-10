@@ -76,7 +76,6 @@ public class DuelManager implements Delayer {
         }
     }
 
-    private ShotManager shotManager;
     private CombatManager combatManager;
     private boolean active = false;
     private Iterator<Map.Entry<FleetToken, AttackInfo>> it;
@@ -98,8 +97,7 @@ public class DuelManager implements Delayer {
     }
 
     //in-future: (only "possibly", depends on desired gameplay) if a ship is facing more attackers, allow attacking/defending player to decide order (matters in certain situations because of the colors; for now, priority is always left>right)
-    void launchDuels(CombatManager combatManager, TreeMap<FleetToken, AttackInfo> duels, ShotManager shotManager) {
-        this.shotManager = shotManager;
+    void launchDuels(CombatManager combatManager, TreeMap<FleetToken, AttackInfo> duels) {
         this.duels = duels;
         if (duels != null && duels.size() > 0) {
             this.combatManager = combatManager;
@@ -210,9 +208,9 @@ public class DuelManager implements Delayer {
             if (dmg > 0) {
                 dmg = getDmgAgainstShields(dmg, def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
                 if (!delayedAnimation) {
-                    shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots());
+                    ShotManager.getInstance().newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots());
                 } else {
-                    delayAction(() -> shotManager.newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots()), combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay * 1.5f);
+                    delayAction(() -> ShotManager.getInstance().newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots()), combatManager.getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION ? simDelay : duelDelay * 1.5f);
                 }
             }
             return def.receiveDMG(dmg);

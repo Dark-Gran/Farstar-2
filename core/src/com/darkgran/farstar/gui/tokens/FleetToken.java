@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.players.BattleCard;
+import com.darkgran.farstar.gui.AnimationManager;
 import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
@@ -62,7 +63,7 @@ public final class FleetToken extends ClickToken implements DisableMark, FakingT
     @Override
     public void destroy() {
         remove();
-        getFleetMenu().getBattleStage().getAnimationManager().newDeathEffect(getX(), getY(), TokenType.FLEET);
+        AnimationManager.getInstance().newDeathEffect(getX(), getY(), TokenType.FLEET);
     }
 
     public FleetMenu getFleetMenu() { return fleetMenu; }

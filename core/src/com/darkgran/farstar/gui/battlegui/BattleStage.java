@@ -57,8 +57,6 @@ public abstract class BattleStage extends ListeningStage {
     };
     private TokenZoom cardZoom;
     private Herald herald;
-    private final ShotManager shotManager = ShotManager.getInstance();
-    private final AnimationManager animationManager = AnimationManager.getInstance();
     private BattleHelp battleHelp;
     private final ActorButton f1button = new ActorButton(AssetLibrary.getInstance().getAtlasRegion("f1"), AssetLibrary.getInstance().getAtlasRegion("f1O")){
         //private SimpleImage2 bck = new SimpleImage2(0, 0, AssetLibrary.getInstance().getAtlasRegion("f1back"));
@@ -107,13 +105,13 @@ public abstract class BattleStage extends ListeningStage {
 
     public void drawBottomActors(float delta, Batch batch) {
         combatMenu.drawDuels(batch, getBattleScreen().getShapeRenderer());
-        animationManager.draw(batch, delta, true);
+        AnimationManager.getInstance().draw(batch, delta, true);
     }
 
     public void drawBattleStage(float delta, Batch batch) {
         roundCounter.draw(batch);
-        animationManager.draw(batch, delta, false);
-        shotManager.drawAttacks(batch, delta, false);
+        AnimationManager.getInstance().draw(batch, delta, false);
+        ShotManager.getInstance().drawAttacks(batch, delta, false);
         abilityPicker.draw(batch);
         herald.draw(batch);
     }
@@ -306,7 +304,7 @@ public abstract class BattleStage extends ListeningStage {
         turnButton.removeListener(turnButton.getClickListener());
         combatEndButton.remove();
         abilityPicker.dispose();
-        shotManager.dispose();
+        ShotManager.getInstance().dispose();
         super.dispose();
     }
 
@@ -353,14 +351,6 @@ public abstract class BattleStage extends ListeningStage {
     public ButtonWithExtraState getCombatEndButton() { return combatEndButton; }
 
     public AbilityPicker getAbilityPicker() { return abilityPicker; }
-
-    public ShotManager getShotManager() {
-        return shotManager;
-    }
-
-    public AnimationManager getAnimationManager() {
-        return animationManager;
-    }
 
     public BattleHelp getBattleHelp() {
         return battleHelp;
