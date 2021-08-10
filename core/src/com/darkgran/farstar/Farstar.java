@@ -12,7 +12,6 @@ public class Farstar extends Game {
 	public static final int DEFAULT_FPS = 60;
 	private static SuperScreen superScreen;
 	private final InputMultiplexer inputMultiplexer = new InputMultiplexer();
-	private final KeyboardProcessor keyboardProcessor = KeyboardProcessor.getInstance();
 	public final MouseWindowQuery MWQ;
 	protected SpriteBatch batch;
 	protected int currentFPSCap = DEFAULT_FPS;
@@ -33,7 +32,7 @@ public class Farstar extends Game {
 		CardLibrary.getInstance().loadLocal("content/cards.json");
 		batch = new SpriteBatch();
 		this.setScreen(new IntroScreen(this));
-		inputMultiplexer.addProcessor(keyboardProcessor);
+		inputMultiplexer.addProcessor(KeyboardProcessor.getInstance());
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 
