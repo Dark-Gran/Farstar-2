@@ -14,16 +14,6 @@ import com.darkgran.farstar.cards.CardType;
 import java.util.ArrayList;
 
 public class PossibilityAdvisor {
-    private static PossibilityAdvisor possibilityAdvisor;
-
-    private PossibilityAdvisor() {}
-
-    public static PossibilityAdvisor getInstance() {
-        if (possibilityAdvisor == null) {
-            possibilityAdvisor = new PossibilityAdvisor();
-        }
-        return possibilityAdvisor;
-    }
 
     public ArrayList<PossibilityInfo> getPossibilities(BattlePlayer battlePlayer, Battle battle) { //also used by Automaton, who also cares about the order of priorities ("plays whatever comes first" by definition; the order does not matter for non-bot purposes (ie. gui)); in-future: bots should sort possibilities for themselves by whatever specific rules they have
         ArrayList<PossibilityInfo> possibilities = new ArrayList<>();

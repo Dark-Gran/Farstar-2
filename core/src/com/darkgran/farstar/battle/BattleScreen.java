@@ -48,7 +48,7 @@ public class BattleScreen extends SuperScreen {
         this.battle = battle;
         this.battleType = battleType;
         battle.startingSetup(this,
-                new RoundManager(battle, PossibilityAdvisor.getInstance()),
+                new RoundManager(battle, new PossibilityAdvisor()),
                 battle.createCombatManager(),
                 new AbilityManager(battle)
         );
