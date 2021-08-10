@@ -9,15 +9,6 @@ public final class ScreenSettings {
     private boolean perfMeterEnabled = true;
     private boolean f1buttonEnabled = true;
 
-    private static ScreenSettings screenSettings = null;
-    private ScreenSettings() {}
-    public static ScreenSettings getInstance() {
-        if (screenSettings == null) {
-            screenSettings = new ScreenSettings();
-        }
-        return screenSettings;
-    }
-
     public boolean isTableStageEnabled() {
         return tableStageEnabled;
     }

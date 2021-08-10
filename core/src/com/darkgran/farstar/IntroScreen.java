@@ -14,8 +14,8 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
     private float alpha = 0;
     private boolean fadeDirection = true; //true in, false out
 
-    public IntroScreen(final Farstar game) {
-        super(game);
+    public IntroScreen(final Farstar game, ScreenSettings screenSettings) {
+        super(game, screenSettings);
         hideCursor(true);
         delayAction(this::activate, 0.5f);
         TextureRegion ltr = AssetLibrary.getInstance().getAtlasRegion("logo");
@@ -28,7 +28,7 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
     }
 
     private void endIntro() {
-        getGame().setScreen(new MainScreen(getGame(), new TableStage(getGame(), getViewport())));
+        getGame().setScreen(new MainScreen(getGame(), getScreenSettings(), new TableStage(getGame(), getViewport())));
         NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Alpha Warning: Most Features Not Available.", 8);
     }
 

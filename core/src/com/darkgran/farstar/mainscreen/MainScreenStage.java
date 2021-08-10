@@ -101,7 +101,7 @@ public class MainScreenStage extends ListeningStage {
                 break;
         }
         if (battle != null) {
-            getGame().setScreen(new BattleScreen(getGame(), Farstar.getSuperScreen().getTableMenu(), battle, battleType));
+            getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getScreenSettings(), getGame().getSuperScreen().getTableMenu(), battle, battleType));
         }
     }
 
@@ -109,7 +109,7 @@ public class MainScreenStage extends ListeningStage {
     public void draw() { //uses Stage batch
         super.draw();
         getBatch().begin();
-        if (!Farstar.getSuperScreen().isConcederActive()) {
+        if (!getGame().getSuperScreen().isConcederActive()) {
             otherModesPic.draw(getBatch());
         }
         FSLogo.draw(getBatch());

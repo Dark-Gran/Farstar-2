@@ -111,7 +111,7 @@ public class BattleStage1V1 extends BattleStage {
         getF1button().setPosition(Math.round(Farstar.STAGE_WIDTH*0.045f), Math.round(Farstar.STAGE_HEIGHT*0.095f));
         //getF1button().setPosition(Math.round(Farstar.STAGE_WIDTH*0.003f), Math.round(Farstar.STAGE_HEIGHT*0.003f)); //over table - to be used with f1back
         //f1ButtonToNet();
-        if (ScreenSettings.getInstance().isF1buttonEnabled()) { addActor(getF1button()); }
+        if (getGame().getSuperScreen().getScreenSettings().isF1buttonEnabled()) { addActor(getF1button()); }
     }
 
     @Override
@@ -162,7 +162,7 @@ public class BattleStage1V1 extends BattleStage {
         fleetMenu2.drawTokens(batch);
         supportMenu1.drawTokens(batch);
         supportMenu2.drawTokens(batch);
-        if (ScreenSettings.getInstance().isNetEnabled()) {
+        if (getGame().getSuperScreen().getScreenSettings().isNetEnabled()) {
             supportMenu1.drawNetSpots(batch);
             supportMenu2.drawNetSpots(batch);
         }

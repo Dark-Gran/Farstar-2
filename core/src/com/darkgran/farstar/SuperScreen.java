@@ -22,6 +22,7 @@ public abstract class SuperScreen implements Screen {
     private TableStage tableStage; //in-future: possibly make static (but needs to be disabled on Screens like Intro)
     private YXQuestionBox screenConceder = null;
     private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.0885), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN); //in-future: possibly make static (but needs to be disabled on Screens like Intro)
+    private final ScreenSettings screenSettings;
     //Cursor
     public enum CursorType {
         DEFAULT, AIM
@@ -92,8 +93,9 @@ public abstract class SuperScreen implements Screen {
     }
 
 
-    public SuperScreen(final Farstar game) {
+    public SuperScreen(final Farstar game, ScreenSettings screenSettings) {
         this.game = game;
+        this.screenSettings = screenSettings;
         camera.setToOrtho(false, Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT);
         viewport.apply();
         camera.position.set((float) Farstar.STAGE_WIDTH/2,(float) Farstar.STAGE_HEIGHT/2,0);
@@ -116,7 +118,7 @@ public abstract class SuperScreen implements Screen {
 
     protected void drawMenus(float delta, Batch batch) { //for all screens except intro
         batch.begin();
-        if (ScreenSettings.getInstance().isPerfMeterEnabled()) { perfMeter.drawText(batch); }
+        if (getScreenSettings().isPerfMeterEnabled()) { perfMeter.drawText(batch); }
         //All buttons, included the ones in YXQuestionBox, are drawn when the entire Stage is drawn, therefore moving screenConceder higher makes the box draw over the buttons.
         //To be able to move screenConceder to a "higher layer", another Stage would need to be set up ("TopStage"), however this is unnecessary unless more features would use this Stage.
         if (screenConceder != null) { screenConceder.draw(batch, shapeRenderer); }
@@ -158,8 +160,8 @@ public abstract class SuperScreen implements Screen {
         shapeRenderer.setProjectionMatrix(camera.combined);
 
         if (tableStage != null) { //should persist over all screens
-            tableStage.drawBackground(game.batch, ScreenSettings.getInstance().isTableStageEnabled(), ScreenSettings.getInstance().isNetEnabled());
-            if (ScreenSettings.getInstance().isTableStageEnabled()) {
+            tableStage.drawBackground(game.batch, getScreenSettings().isTableStageEnabled(), getScreenSettings().isNetEnabled());
+            if (getScreenSettings().isTableStageEnabled()) {
                 tableStage.act(delta);
                 tableStage.draw();
             }
@@ -230,4 +232,6 @@ public abstract class SuperScreen implements Screen {
     public void setScreenConceder(YXQuestionBox screenConceder) { this.screenConceder = screenConceder; }
 
     public boolean isConcederActive() { return screenConceder != null; }
+
+    public ScreenSettings getScreenSettings() { return screenSettings; }
 }

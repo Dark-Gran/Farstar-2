@@ -10,7 +10,7 @@ public class Farstar extends Game {
 	public static final int STAGE_WIDTH = 1920;
 	public static final int STAGE_HEIGHT = 960;
 	public static final int DEFAULT_FPS = 60;
-	private static SuperScreen superScreen;
+	private SuperScreen superScreen;
 	private final InputMultiplexer inputMultiplexer = new InputMultiplexer();
 	public final MouseWindowQuery MWQ;
 	protected SpriteBatch batch;
@@ -31,8 +31,10 @@ public class Farstar extends Game {
 		AssetLibrary.getInstance().loadAssets();
 		CardLibrary.getInstance().loadLocal("content/cards.json");
 		batch = new SpriteBatch();
-		this.setScreen(new IntroScreen(this));
-		inputMultiplexer.addProcessor(KeyboardProcessor.getInstance());
+		this.setScreen(new IntroScreen(this, new ScreenSettings()));
+		KeyboardProcessor kp = KeyboardProcessor.getInstance();
+		kp.setGame(this);
+		inputMultiplexer.addProcessor(kp);
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 
@@ -49,7 +51,7 @@ public class Farstar extends Game {
 		AssetLibrary.getInstance().dispose();
 	}
 
-	public static SuperScreen getSuperScreen() {
+	public SuperScreen getSuperScreen() {
 		return superScreen;
 	}
 

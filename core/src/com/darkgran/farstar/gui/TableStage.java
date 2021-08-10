@@ -23,7 +23,7 @@ public class TableStage extends ListeningStage {
     private final ActorButton exitButton = new ActorButton(empty, empty, exit){
         @Override
         public void clicked() {
-            Farstar.getSuperScreen().userEscape();
+           getGame().getSuperScreen().userEscape();
         }
     };
     private final ActorButton fsButton = new ActorButton(empty, empty, fs){
@@ -82,7 +82,7 @@ public class TableStage extends ListeningStage {
         batch.begin();
         batch.setColor(1, 1, 1, 1);
         batch.draw(space, 0, 0);
-        if (netEnabled && Farstar.getSuperScreen() instanceof BattleScreen) { batch.draw(net, 0, 0); }
+        if (netEnabled && getGame().getSuperScreen() instanceof BattleScreen) { batch.draw(net, 0, 0); }
         if (tableEnabled) { batch.draw(table, tableCoords.x, tableCoords.y); }
         batch.end();
     }
