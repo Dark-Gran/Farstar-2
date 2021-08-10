@@ -39,9 +39,9 @@ public class TokenPrice extends TokenPart {
 
     @Override
     public void setPad(TokenType tokenType) {
-        setPad(AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.addTokenTypeAcronym("padE-", tokenType, true)));
-        pad2 = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.addTokenTypeAcronym("padM-", tokenType, true));
-        if (tokenType != TokenType.PRINT) { useMark = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.addTokenTypeAcronym("abiU-", tokenType, true)); }
+        setPad(AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.getInstance().addTokenTypeAcronym("padE-", tokenType, true)));
+        pad2 = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.getInstance().addTokenTypeAcronym("padM-", tokenType, true));
+        if (tokenType != TokenType.PRINT) { useMark = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.getInstance().addTokenTypeAcronym("abiU-", tokenType, true)); }
         if (tokenType == TokenType.FLEET) {
             fsMark = AssetLibrary.getInstance().getAtlasRegion("abiFS-F");
             guardMark = AssetLibrary.getInstance().getAtlasRegion("abiG-F");

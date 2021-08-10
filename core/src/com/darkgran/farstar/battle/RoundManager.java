@@ -386,7 +386,7 @@ public class RoundManager {
     //-UTILITIES-//
     //-----------//
 
-    public static boolean ownsToken(BattlePlayer battlePlayer, Token token) {
+    public boolean ownsToken(BattlePlayer battlePlayer, Token token) {
         if (token instanceof TargetingToken)  {
             return battlePlayer == ((FleetToken) token.getCard().getToken()).getFleetMenu().getBattlePlayer();
         } else if (token instanceof FleetToken) {
@@ -399,15 +399,15 @@ public class RoundManager {
     public boolean isTokenMoveEnabled(Token token) { //Turn and Tactical Only - used by GUI
         boolean affordable = (token.getTokenType() != TokenType.YARD || getBattle().getWhoseTurn().canAfford(token.getCard()));
         boolean learned = PossibilityAdvisor.tierAllowed(token.getCard().getCardInfo().getTier(), battle);
-        if (token.getCard().getBattlePlayer() instanceof LocalBattlePlayer) { PossibilityAdvisor.reportDeployability(battle, affordable, learned, true, true); }
-        if (token.getCard() != null && token.getCard().getBattlePlayer() instanceof LocalBattlePlayer && RoundManager.ownsToken(getBattle().getWhoseTurn(), token) && learned && affordable && (!getBattle().getCombatManager().isActive() || (getBattle().getCombatManager().isTacticalPhase() && token.getCard().isTactic()))) {
+        if (token.getCard().getBattlePlayer() instanceof LocalBattlePlayer) { possibilityAdvisor.reportDeployability(battle, affordable, learned, true, true); }
+        if (token.getCard() != null && token.getCard().getBattlePlayer() instanceof LocalBattlePlayer && ownsToken(getBattle().getWhoseTurn(), token) && learned && affordable && (!getBattle().getCombatManager().isActive() || (getBattle().getCombatManager().isTacticalPhase() && token.getCard().isTactic()))) {
             return areMovesEnabled();
         }
         return false;
     }
 
     public boolean isCombatMoveEnabled(Token token) { //Duel-Picking Only - used by GUI
-        if (token.getCard() != null && token.getCard().getBattlePlayer() instanceof LocalBattlePlayer && RoundManager.ownsToken(getBattle().getWhoseTurn(), token) && getBattle().getCombatManager().isActive() && !getBattle().getCombatManager().isTacticalPhase()) {
+        if (token.getCard() != null && token.getCard().getBattlePlayer() instanceof LocalBattlePlayer && ownsToken(getBattle().getWhoseTurn(), token) && getBattle().getCombatManager().isActive() && !getBattle().getCombatManager().isTacticalPhase()) {
             return areMovesEnabled();
         }
         return false;

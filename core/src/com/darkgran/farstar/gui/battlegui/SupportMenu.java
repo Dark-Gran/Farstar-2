@@ -65,7 +65,7 @@ public class SupportMenu extends CardListMenu implements DropTarget {
         }
     }
 
-    public static int translatePosition(int position) {
+    public int translatePosition(int position) {
         switch (position) {
             case 0:
                 return 2;
@@ -84,7 +84,7 @@ public class SupportMenu extends CardListMenu implements DropTarget {
         }
     }
 
-    public static int unTranslatePosition(int position) {
+    public int unTranslatePosition(int position) {
         switch (position) {
             case 0:
                 return 4;

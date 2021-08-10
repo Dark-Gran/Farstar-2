@@ -73,7 +73,7 @@ public class AssetLibrary {
         return addTokenTypeAcronym(name+"-", tokenType, true);
     }
 
-    public static String addTokenTypeAcronym(String string, TokenType tokenType, boolean pad) {
+    public String addTokenTypeAcronym(String string, TokenType tokenType, boolean pad) {
         switch (tokenType) {
             default:
             case JUNK:
@@ -97,7 +97,7 @@ public class AssetLibrary {
         return this.get(getFontPath(fontSize, fontName));
     }
 
-    public static String getFontPath(String fontSize, String fontName) {
+    public String getFontPath(String fontSize, String fontName) {
         return "fonts/"+fontName+fontSize+".fnt";
     }
 

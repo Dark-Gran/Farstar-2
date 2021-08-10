@@ -41,7 +41,7 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
     public Token(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, TokenType tokenType, boolean noPics, boolean connectCard){
         setWidth(tokenType.getWidth());
         setHeight(tokenType.getHeight());
-        setFont(AssetLibrary.getFontPath(tokenType.getDefaultFontSize(), "bahnschrift"));
+        setFont(AssetLibrary.getInstance().getFontPath(tokenType.getDefaultFontSize(), "bahnschrift"));
         this.battleCard = battleCard;
         this.tokenType = tokenType;
         this.noPics = noPics;
@@ -65,8 +65,8 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
     }
 
     public void setGlows() {
-        glowG = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.addTokenTypeAcronym("glowG-", tokenType, false));
-        glowY = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.addTokenTypeAcronym("glowY-", tokenType, false));
+        glowG = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.getInstance().addTokenTypeAcronym("glowG-", tokenType, false));
+        glowY = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.getInstance().addTokenTypeAcronym("glowY-", tokenType, false));
         glowOffsetX = -glowG.getRegionWidth()/2f+frame.getRegionWidth()/2f;
         glowOffsetY = -glowG.getRegionHeight()/2f+frame.getRegionHeight()/2f;
     }

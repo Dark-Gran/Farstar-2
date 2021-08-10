@@ -161,7 +161,7 @@ public abstract class BattleStage extends ListeningStage {
         return false;
     }
 
-    public static boolean coordsOverClickTokens(ClickToken[] clickTokens, float x, float y) {
+    public boolean coordsOverClickTokens(ClickToken[] clickTokens, float x, float y) {
         for (ClickToken clickToken : clickTokens) {
             if (clickToken != null && isInBox(new SimpleBox2(clickToken.getX(), clickToken.getY(), clickToken.getWidth(), clickToken.getHeight()), x, y)) {
                 return true;
@@ -294,7 +294,7 @@ public abstract class BattleStage extends ListeningStage {
         return -1;
     }
 
-    public static boolean isInBox(SimpleBox2 simpleBox2, float x, float y) {
+    public boolean isInBox(SimpleBox2 simpleBox2, float x, float y) {
         Rectangle rectangle = new Rectangle((int) simpleBox2.x, (int) simpleBox2.y, (int) simpleBox2.getWidth(), (int) simpleBox2.getHeight());
         return rectangle.contains(x, y);
     }

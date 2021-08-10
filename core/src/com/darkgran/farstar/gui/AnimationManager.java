@@ -55,7 +55,7 @@ public class AnimationManager {
     }
 
     public void newDeathEffect(float x, float y, TokenType tokenType) {
-        TextureRegion texture = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.addTokenTypeAcronym("death-", tokenType, false));
+        TextureRegion texture = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.getInstance().addTokenTypeAcronym("death-", tokenType, false));
         deathAnimations.add(new DeathAnimation(texture, x+tokenType.getWidth()/2f-texture.getRegionWidth()/2f, y+tokenType.getHeight()/2f-texture.getRegionHeight()/2f));
     }
 

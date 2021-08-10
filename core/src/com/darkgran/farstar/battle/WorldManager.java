@@ -13,11 +13,11 @@ import java.util.ArrayList;
  */
 
 public class WorldManager {
-    public static float FPS = 60.0f;
+    /*public static float FPS = 60.0f;
     public static float STEP_TIME = 1f / FPS;
     public static int VELOCITY_ITERATIONS = 15;
     public static int POSITION_ITERATIONS = 12;
-    /*public static float WORLD_WIDTH = 9.6f;
+    public static float WORLD_WIDTH = 9.6f;
     public static float WORLD_HEIGHT = 4.8f;
     public static float CAMERA_CLOSEUP_X = 0.2f;
     public static float CAMERA_CLOSEUP_Y = 0.1f;*/
@@ -62,15 +62,15 @@ public class WorldManager {
     //Stepping
     public void worldTimer(float delta) {
         accumulator += delta;
-        if (accumulator >= STEP_TIME) {
+        /*if (accumulator >= STEP_TIME) {
             accumulator -= STEP_TIME;
             worldTick(world);
-        }
+        }*/
     }
 
     private void worldTick(World world) {
         reap(world);
-        world.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+        //world.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     }
 
     //Utilities

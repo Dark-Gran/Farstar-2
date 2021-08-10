@@ -50,7 +50,7 @@ public class TextInTheBox extends TextLine {
         setupBox(boxOrigin.x, boxOrigin.y, simpleBox.getWidth(), simpleBox.getHeight());
     }
 
-    public static SimpleVector2 boxOriginFromTextCenter(float width, float height, BitmapFont font, String text, float x, float y, float wrapWidth, boolean wrap) {
+    public SimpleVector2 boxOriginFromTextCenter(float width, float height, BitmapFont font, String text, float x, float y, float wrapWidth, boolean wrap) {
         return new SimpleVector2((x + TextDrawer.getTextWH(font, text, wrapWidth, wrap).x/2) - width/2,(y - TextDrawer.getTextWH(font, text, wrapWidth, wrap).y/2) - height/2);
     }
 

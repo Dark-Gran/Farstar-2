@@ -205,7 +205,7 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
         }
     }
 
-    public static int getFleetTokenCount(FleetToken[] tokens) {
+    public int getFleetTokenCount(FleetToken[] tokens) {
         int count = 0;
         for (FleetToken fleetToken : tokens) {
             if (fleetToken != null) {

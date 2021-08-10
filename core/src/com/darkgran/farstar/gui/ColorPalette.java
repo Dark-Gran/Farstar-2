@@ -2,7 +2,7 @@ package com.darkgran.farstar.gui;
 
 import com.badlogic.gdx.graphics.Color;
 
-public final class ColorPalette {
+public final class ColorPalette { //in-future: make into a SuperScreen instance as there will be multiple ColorPallets from which the player may choose
     private ColorPalette(){}
     public static final Color MAIN = new Color(0.31f, 0.498f, 0.706f, 1); //4f7fb4
     public static final Color DARK = new Color(0f, 0.16f, 0.33f, 1); //002954

@@ -34,7 +34,6 @@ public class Notification extends TextInTheBox {
         }
     }
 
-    private static final int MIN_DURATION = 3;
     private final NotificationType notificationType;
     private final DeltaCounter timer;
 
@@ -51,6 +50,7 @@ public class Notification extends TextInTheBox {
             this.y = this.y+textWH.y;
             centralizeBox();
         }
+        int MIN_DURATION = 3;
         timer = new DeltaCounter(true, Math.max(duration, MIN_DURATION), 0);
     }
 

@@ -60,7 +60,7 @@ public class PossibilityAdvisor {
         return possibilities;
     }
 
-    public static void reportDeployability(Battle battle, boolean affordable, boolean learned, boolean targetsPresent, boolean space) {
+    public void reportDeployability(Battle battle, boolean affordable, boolean learned, boolean targetsPresent, boolean space) {
         int duration = 3;
         if (!learned) {
             NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Insufficient Technological Tier.", duration, true);
