@@ -8,7 +8,7 @@ public class CardLibrary {
     private static CardLibrary cardLibrary = null;
     private Array<CardInfo> cards = null;
 
-    private CardLibrary() { }
+    private CardLibrary() {}
 
     public static CardLibrary getInstance() {
         if (cardLibrary == null) {
@@ -26,10 +26,7 @@ public class CardLibrary {
         cards = json.fromJson(Array.class, CardInfo.class, Gdx.files.internal(path));
     }
 
-    public CardInfo getCard(int id) {
-        if (cards == null) {
-            loadLocal("content/cards.json");
-        }
+    public CardInfo getCard(int id) { //throws null exception unless loadLocal() called before the first getCard()
         return cards.get(id);
     }
 

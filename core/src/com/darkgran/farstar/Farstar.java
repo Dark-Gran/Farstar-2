@@ -2,6 +2,7 @@ package com.darkgran.farstar;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.darkgran.farstar.cards.CardLibrary;
 import com.darkgran.farstar.gui.AssetLibrary;
 
 public class Farstar extends Game {
@@ -29,6 +30,7 @@ public class Farstar extends Game {
 		setForegroundFPS(currentFPSCap);
 		setBackgroundFPS(currentFPSCap);
 		AssetLibrary.getInstance().loadAssets();
+		CardLibrary.getInstance().loadLocal("content/cards.json");
 		batch = new SpriteBatch();
 		this.setScreen(new IntroScreen(this));
 		inputMultiplexer.addProcessor(keyboardProcessor);
