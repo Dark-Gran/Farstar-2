@@ -124,3 +124,5 @@ Thumbs.db
 /core/assets/fonts/
 /core/assets/content/cards.json
 /core/assets/images/
+/desktop/out/
+/out/artifacts/Farstar2_jar/Farstar2.jar
