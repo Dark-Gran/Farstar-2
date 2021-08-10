@@ -5,7 +5,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.utils.IntSet;
 import com.darkgran.farstar.battle.BattleScreen;
 
-public class KeyboardProcessor extends InputAdapter { //in-future: check all singletons for thread-safety
+public class KeyboardProcessor extends InputAdapter { //in-future: check all singletons for thread-safety (see PlayerFactory)
     private final IntSet keysDown = new IntSet(20);
 
     private static KeyboardProcessor keyboardProcessor = null;
