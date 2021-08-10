@@ -6,9 +6,10 @@ import com.badlogic.gdx.utils.Json;
 
 public class CardLibrary {
     private static CardLibrary cardLibrary = null;
-    private Array<CardInfo> cards;
+    private Array<CardInfo> cards = null;
 
-    private CardLibrary() {}
+    private CardLibrary() { }
+
     public static CardLibrary getInstance() {
         if (cardLibrary == null) {
             cardLibrary = new CardLibrary();
@@ -26,6 +27,9 @@ public class CardLibrary {
     }
 
     public CardInfo getCard(int id) {
+        if (cards == null) {
+            loadLocal("content/cards.json");
+        }
         return cards.get(id);
     }
 

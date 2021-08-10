@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static com.darkgran.farstar.battle.BattleSettings.BONUS_CARD_ID;
-
 /**
  *  "Just Play Something":
  *  -- No sensors beyond PossibilityAdvisor
@@ -260,7 +258,7 @@ public final class Automaton extends Bot {
                             }
                             return true;
                         case CHANGE_RESOURCE: //in-future: rework (see pickAbility())
-                            if (battleCard.getCardInfo().getId() == BONUS_CARD_ID || battleCard.getCardInfo().getId() == 20) {
+                            if (battleCard.getCardInfo().getId() == BattleSettings.getInstance().BONUS_CARD_ID || battleCard.getCardInfo().getId() == 20) {
                                 return false;
                             }
                             if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {

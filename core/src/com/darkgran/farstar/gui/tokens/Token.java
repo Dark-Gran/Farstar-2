@@ -4,11 +4,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.darkgran.farstar.SuperScreen;
+import com.darkgran.farstar.ScreenSettings;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.gui.AssetLibrary;
-import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.gui.JustFont;
@@ -48,8 +47,8 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
         this.noPics = noPics;
         if (!noPics) {
             if (battleCard != null) {
-                portrait = Farstar.ASSET_LIBRARY.getPortrait(battleCard.getCardInfo(), tokenType);
-                frame = Farstar.ASSET_LIBRARY.getAtlasRegion(Farstar.ASSET_LIBRARY.getFrameName(battleCard.getCardInfo(), tokenType));
+                portrait = AssetLibrary.getInstance().getPortrait(battleCard.getCardInfo(), tokenType);
+                frame = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.getInstance().getFrameName(battleCard.getCardInfo(), tokenType));
                 setGlows();
             }
         }
@@ -66,8 +65,8 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
     }
 
     public void setGlows() {
-        glowG = Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("glowG-", tokenType, false));
-        glowY = Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("glowY-", tokenType, false));
+        glowG = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.addTokenTypeAcronym("glowG-", tokenType, false));
+        glowY = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.addTokenTypeAcronym("glowY-", tokenType, false));
         glowOffsetX = -glowG.getRegionWidth()/2f+frame.getRegionWidth()/2f;
         glowOffsetY = -glowG.getRegionHeight()/2f+frame.getRegionHeight()/2f;
     }
@@ -84,8 +83,8 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
 
     public void setup(BattleCard battleCard, TokenType targetType, SimpleVector2 targetXY) { //used only by non-standard tokens (that do not connectCard)
         setCard(battleCard);
-        setPortrait(Farstar.ASSET_LIBRARY.getPortrait(battleCard.getCardInfo(), getTokenType()));
-        setFrame(Farstar.ASSET_LIBRARY.getAtlasRegion(Farstar.ASSET_LIBRARY.getFrameName(battleCard.getCardInfo(), getTokenType())));
+        setPortrait(AssetLibrary.getInstance().getPortrait(battleCard.getCardInfo(), getTokenType()));
+        setFrame(AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.getInstance().getFrameName(battleCard.getCardInfo(), getTokenType())));
         getTokenDefense().update();
         getTokenDefense().setPad(getTokenType());
         getTokenDefense().setupOffset();
@@ -165,7 +164,7 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
 
     protected void drawPortrait(Batch batch) {
         if (portrait != null) { batch.draw(portrait, getX(), getY()); }
-        if (frame != null && SuperScreen.ScreenSettings.tokenFramesEnabled) { batch.draw(frame, getX(), getY()); }
+        if (frame != null && ScreenSettings.getInstance().areTokenFramesEnabled()) { batch.draw(frame, getX(), getY()); }
     }
 
     public void destroy() {

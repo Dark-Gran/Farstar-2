@@ -49,7 +49,7 @@ public abstract class CombatManager {
             } else {
                 battleStage.enableCombatEnd();
                 battleStage.getCombatEndButton().setExtraState(duels.size()>0);
-                NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Choose Your Attacks.", 3);
+                NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Choose Your Attacks.", 3);
                 //getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "ATTACK", 3);
             }
         }
@@ -105,7 +105,7 @@ public abstract class CombatManager {
             markFSGlows();
             System.out.println("Tactical Phase started.");
             if (getBattle().getBattleScreen().getBattleType() != BattleType.SIMULATION) {
-                NotificationManager.newNotification(Notification.NotificationType.MIDDLE, "TACTICAL PHASE", 3);
+                NotificationManager.getInstance().newNotification(Notification.NotificationType.MIDDLE, "TACTICAL PHASE", 3);
             }
             if (!(activePlayer.getBattlePlayer() instanceof Bot)) {
                 combatMenu.addOK(activePlayer.getCombatButton());

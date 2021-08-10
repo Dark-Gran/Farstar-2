@@ -12,22 +12,22 @@ import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.PlayerFactory;
 
 public class MainScreenStage extends ListeningStage {
-    private final PlayerFactory playerFactory = new PlayerFactory();
+    private final PlayerFactory playerFactory = PlayerFactory.getInstance();
     private final SimpleImage2 FSLogo;
     private final VersionInfo versionInfo;
-    private final ActorButton solitaryButton = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("solitary"), Farstar.ASSET_LIBRARY.getAtlasRegion("solitaryO")){
+    private final ActorButton solitaryButton = new ActorButton(AssetLibrary.getInstance().getAtlasRegion("solitary"), AssetLibrary.getInstance().getAtlasRegion("solitaryO")){
         @Override
         public void clicked() { launchBattleScreen(BattleType.SOLITARY); }
     };
-    private final ActorButton skirmishButton = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("skirmish"), Farstar.ASSET_LIBRARY.getAtlasRegion("skirmishO")){
+    private final ActorButton skirmishButton = new ActorButton(AssetLibrary.getInstance().getAtlasRegion("skirmish"), AssetLibrary.getInstance().getAtlasRegion("skirmishO")){
         @Override
         public void clicked() { launchBattleScreen(BattleType.SKIRMISH); }
     };
-    private final ActorButton simulationButton = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("sim"), Farstar.ASSET_LIBRARY.getAtlasRegion("simO")){
+    private final ActorButton simulationButton = new ActorButton(AssetLibrary.getInstance().getAtlasRegion("sim"), AssetLibrary.getInstance().getAtlasRegion("simO")){
         @Override
         public void clicked() { launchBattleScreen(BattleType.SIMULATION); }
     };
-    private final ActorButton webButton = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("web"), Farstar.ASSET_LIBRARY.getAtlasRegion("webO")){
+    private final ActorButton webButton = new ActorButton(AssetLibrary.getInstance().getAtlasRegion("web"), AssetLibrary.getInstance().getAtlasRegion("webO")){
         @Override
         public void clicked() {
             System.out.println("Opening Web-Browser.");
@@ -40,11 +40,11 @@ public class MainScreenStage extends ListeningStage {
     public MainScreenStage(final Farstar game, Viewport viewport) {
         super(game, viewport);
         versionInfo = new VersionInfo((float) (Farstar.STAGE_WIDTH*0.85), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN, Farstar.APP_VERSION_NAME);
-        TextureRegion tr = Farstar.ASSET_LIBRARY.getAtlasRegion("FSLogo");
+        TextureRegion tr = AssetLibrary.getInstance().getAtlasRegion("FSLogo");
         FSLogo = new SimpleImage2((float) (Farstar.STAGE_WIDTH/2-tr.getRegionWidth()/2), (float) (Farstar.STAGE_HEIGHT*0.8), tr);
-        TextureRegion measureTexture = Farstar.ASSET_LIBRARY.getAtlasRegion("solitary");
+        TextureRegion measureTexture = AssetLibrary.getInstance().getAtlasRegion("solitary");
         skirmishButton.setPosition(Farstar.STAGE_WIDTH/2f - skirmishButton.getWidth()/2, Math.round((float) (Farstar.STAGE_HEIGHT/2 - measureTexture.getRegionHeight()*0.5)));
-        tr = Farstar.ASSET_LIBRARY.getAtlasRegion("otherModes");
+        tr = AssetLibrary.getInstance().getAtlasRegion("otherModes");
         float otherY = (float) (Farstar.STAGE_HEIGHT * 0.18);
         otherModesPic = new SimpleImage2((float) (Farstar.STAGE_WIDTH / 2 - tr.getRegionWidth() / 2), (float) (otherY - simulationButton.getHeight()*0.05), tr);
         solitaryButton.setPosition((float) (Farstar.STAGE_WIDTH/2 - measureTexture.getRegionWidth()/2), (float) (otherY - simulationButton.getHeight()*0.8));
@@ -76,7 +76,7 @@ public class MainScreenStage extends ListeningStage {
         Battle battle = null;
         switch (battleType) {
             case SKIRMISH:
-                NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Use F1 for Instructions.", 5, true);
+                NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Use F1 for Instructions.", 5, true);
                 battle = new Battle1v1(
                         playerFactory.getPlayer("LOCAL", 1, 0),
                         playerFactory.getPlayer("AUTO", 2, 15),
@@ -89,7 +89,7 @@ public class MainScreenStage extends ListeningStage {
                         playerFactory.getPlayer("AUTO", 2, 15),
                         battleType
                 );
-                NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Game Mode: AI vs AI.", 5);
+                NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Game Mode: AI vs AI.", 5);
                 break;
             case SOLITARY:
 
@@ -98,11 +98,11 @@ public class MainScreenStage extends ListeningStage {
                         playerFactory.getPlayer("LOCAL", 2, 15),
                         battleType
                 );
-                NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Game Mode: Local Player vs Local Player.", 5);
+                NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Game Mode: Local Player vs Local Player.", 5);
                 break;
         }
         if (battle != null) {
-            getGame().setScreen(new BattleScreen(getGame(), getGame().getSuperScreen().getTableMenu(), battle, battleType));
+            getGame().setScreen(new BattleScreen(getGame(), Farstar.getSuperScreen().getTableMenu(), battle, battleType));
         }
     }
 
@@ -110,7 +110,7 @@ public class MainScreenStage extends ListeningStage {
     public void draw() { //uses Stage batch
         super.draw();
         getBatch().begin();
-        if (!getGame().getSuperScreen().isConcederActive()) {
+        if (!Farstar.getSuperScreen().isConcederActive()) {
             otherModesPic.draw(getBatch());
         }
         FSLogo.draw(getBatch());

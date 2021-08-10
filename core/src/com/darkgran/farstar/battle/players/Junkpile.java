@@ -17,7 +17,7 @@ public class Junkpile extends CardList {
 
     @Override
     protected void setupSize() {
-        setMaxSize(BattleSettings.DECK_SIZE);
+        setMaxSize(BattleSettings.getInstance().DECK_SIZE);
     }
 
     @Override

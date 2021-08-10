@@ -23,10 +23,10 @@ public abstract class BattleStage extends ListeningStage {
     private final ArrayList<DropTarget> dropTargets = new ArrayList<>();
     private final AbilityPicker abilityPicker;
     private final RoundCounter roundCounter;
-    public final ButtonWithExtraState turnButton = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAtlasRegion("turn"), Farstar.ASSET_LIBRARY.getAtlasRegion("turnO"), Farstar.ASSET_LIBRARY.getAtlasRegion("turnP"), Farstar.ASSET_LIBRARY.getAtlasRegion("turnOP")){
-        private final TextureRegion turnBackground = Farstar.ASSET_LIBRARY.getAtlasRegion("turn-b");
-        private final TextureRegion turnCombat = Farstar.ASSET_LIBRARY.getAtlasRegion("turn-combat");
-        private final TextureRegion turnWait = Farstar.ASSET_LIBRARY.getAtlasRegion("turn-wait");
+    public final ButtonWithExtraState turnButton = new ButtonWithExtraState(AssetLibrary.getInstance().getAtlasRegion("turn"), AssetLibrary.getInstance().getAtlasRegion("turnO"), AssetLibrary.getInstance().getAtlasRegion("turnP"), AssetLibrary.getInstance().getAtlasRegion("turnOP")){
+        private final TextureRegion turnBackground = AssetLibrary.getInstance().getAtlasRegion("turn-b");
+        private final TextureRegion turnCombat = AssetLibrary.getInstance().getAtlasRegion("turn-combat");
+        private final TextureRegion turnWait = AssetLibrary.getInstance().getAtlasRegion("turn-wait");
         @Override
         public void draw(Batch batch, float parentAlpha) {
             batch.draw(turnBackground, getX(), getY());
@@ -48,7 +48,7 @@ public abstract class BattleStage extends ListeningStage {
             }
         }
     };
-    private final ButtonWithExtraState combatEndButton = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAtlasRegion("combat-end"), Farstar.ASSET_LIBRARY.getAtlasRegion("combat-endO"), Farstar.ASSET_LIBRARY.getAtlasRegion("combat-endA"), Farstar.ASSET_LIBRARY.getAtlasRegion("combat-endAO")) {
+    private final ButtonWithExtraState combatEndButton = new ButtonWithExtraState(AssetLibrary.getInstance().getAtlasRegion("combat-end"), AssetLibrary.getInstance().getAtlasRegion("combat-endO"), AssetLibrary.getInstance().getAtlasRegion("combat-endA"), AssetLibrary.getInstance().getAtlasRegion("combat-endAO")) {
         @Override
         public void clicked() {
             battleScreen.hideScreenConceder();
@@ -57,11 +57,11 @@ public abstract class BattleStage extends ListeningStage {
     };
     private TokenZoom cardZoom;
     private Herald herald;
-    private final ShotManager shotManager = new ShotManager();
-    private final AnimationManager animationManager = new AnimationManager();
+    private final ShotManager shotManager = ShotManager.getInstance();
+    private final AnimationManager animationManager = AnimationManager.getInstance();
     private BattleHelp battleHelp;
-    private final ActorButton f1button = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("f1"), Farstar.ASSET_LIBRARY.getAtlasRegion("f1O")){
-        //private SimpleImage2 bck = new SimpleImage2(0, 0, Farstar.ASSET_LIBRARY.getAtlasRegion("f1back"));
+    private final ActorButton f1button = new ActorButton(AssetLibrary.getInstance().getAtlasRegion("f1"), AssetLibrary.getInstance().getAtlasRegion("f1O")){
+        //private SimpleImage2 bck = new SimpleImage2(0, 0, AssetLibrary.getInstance().getAtlasRegion("f1back"));
         @Override
         public void setPosition(float x, float y) {
             super.setPosition(x, y);

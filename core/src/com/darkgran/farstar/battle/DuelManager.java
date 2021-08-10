@@ -196,7 +196,7 @@ public class DuelManager implements Delayer {
     private boolean exeOneSide(BattleCard att, BattleCard def, boolean delayedAnimation) { //returns survival
         if (!att.isMS()) {
             int dmg = att.getCardInfo().getOffense();
-            if (att instanceof Ship && BattleSettings.OUTNUMBERED_DEBUFF_ENABLED) {
+            if (att instanceof Ship && BattleSettings.getInstance().OUTNUMBERED_DEBUFF_ENABLED) {
                 Ship ship = (Ship) att;
                 dmg -= ship.getDmgDoneThisBattle();
                 ship.setDmgDoneThisBattle(ship.getDmgDoneThisBattle() + att.getCardInfo().getOffense());

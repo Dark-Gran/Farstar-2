@@ -6,11 +6,11 @@ import com.darkgran.farstar.battle.players.BattlePlayer;
  * "BaseMenu but Actor"
  */
 
-public abstract class BaseActorMenuBattle extends BattlePlayerActor implements Menu {
+public abstract class BaseActorMenu extends BattlePlayerActor implements Menu {
     private float offset;
     private boolean negativeOffset;
 
-    public BaseActorMenuBattle(float x, float y, boolean negativeOffset, BattleStage battleStage, BattlePlayer battlePlayer) {
+    public BaseActorMenu(float x, float y, boolean negativeOffset, BattleStage battleStage, BattlePlayer battlePlayer) {
         super(x, y, battleStage, battlePlayer);
         this.negativeOffset = negativeOffset;
         setupOffset();

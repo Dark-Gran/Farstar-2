@@ -10,9 +10,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.darkgran.farstar.battle.BattleSettings.STARTING_CARDS_ATT;
-import static com.darkgran.farstar.battle.BattleSettings.STARTING_CARDS_DEF;
-
 public class Battle1v1 extends Battle {
     private final BattlePlayer battlePlayer1;
     private final BattlePlayer battlePlayer2;
@@ -76,13 +73,13 @@ public class Battle1v1 extends Battle {
     @Override
     protected void startingCards() {
         if (getWhoseTurn() == battlePlayer1) {
-            battlePlayer1.getHand().getNewCards(battlePlayer1.getDeck(), STARTING_CARDS_ATT);
-            battlePlayer2.getHand().getNewCards(battlePlayer2.getDeck(), STARTING_CARDS_DEF);
-            battlePlayer2.getHand().getNewCards(BattleSettings.BONUS_CARD_ID, 1, battlePlayer2);
+            battlePlayer1.getHand().getNewCards(battlePlayer1.getDeck(), BattleSettings.getInstance().STARTING_CARDS_ATT);
+            battlePlayer2.getHand().getNewCards(battlePlayer2.getDeck(), BattleSettings.getInstance().STARTING_CARDS_DEF);
+            battlePlayer2.getHand().getNewCards(BattleSettings.getInstance().BONUS_CARD_ID, 1, battlePlayer2);
         } else {
-            battlePlayer1.getHand().getNewCards(battlePlayer1.getDeck(), STARTING_CARDS_DEF);
-            battlePlayer1.getHand().getNewCards(BattleSettings.BONUS_CARD_ID, 1, battlePlayer1);
-            battlePlayer2.getHand().getNewCards(battlePlayer2.getDeck(), STARTING_CARDS_ATT);
+            battlePlayer1.getHand().getNewCards(battlePlayer1.getDeck(), BattleSettings.getInstance().STARTING_CARDS_DEF);
+            battlePlayer1.getHand().getNewCards(BattleSettings.getInstance().BONUS_CARD_ID, 1, battlePlayer1);
+            battlePlayer2.getHand().getNewCards(battlePlayer2.getDeck(), BattleSettings.getInstance().STARTING_CARDS_ATT);
         }
     }
 
@@ -104,9 +101,9 @@ public class Battle1v1 extends Battle {
 
     protected void battleEndNotification(BattlePlayer battlePlayer) {
         if (battlePlayer == getWinner()) {
-            NotificationManager.newNotification(Notification.NotificationType.MIDDLE, "VICTORY", 4);
+            NotificationManager.getInstance().newNotification(Notification.NotificationType.MIDDLE, "VICTORY", 4);
         } else {
-            NotificationManager.newNotification(Notification.NotificationType.MIDDLE, "DEFEAT", 4);
+            NotificationManager.getInstance().newNotification(Notification.NotificationType.MIDDLE, "DEFEAT", 4);
         }
     }
 

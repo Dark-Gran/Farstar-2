@@ -17,7 +17,7 @@ import com.darkgran.farstar.gui.SimpleVector2;
 
 //The only "Menu" that does NOT extend CardListMenu! (ie. Fleet is not a CardList!)
 //(uses Array instead of ArrayList... in-future: maybe it should use ArrayList because of non1v1 modes (and variability in general))
-public class FleetMenu extends BaseActorMenuBattle implements DropTarget {
+public class FleetMenu extends BaseActorMenu implements DropTarget {
     private final Fleet fleet;
     private final FleetToken[] fleetTokens = new FleetToken[7]; //in-future: consider removing (FleetToken is held by the Ship itself)
     private final FleetToken[] tokensPrediction = new FleetToken[7];

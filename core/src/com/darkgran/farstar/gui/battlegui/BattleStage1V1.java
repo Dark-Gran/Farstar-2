@@ -3,10 +3,10 @@ package com.darkgran.farstar.gui.battlegui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.SuperScreen;
+import com.darkgran.farstar.ScreenSettings;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.BattlePlayer;
-import com.darkgran.farstar.gui.ActorButton;
+import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.tokens.*;
 import com.darkgran.farstar.gui.ButtonWithExtraState;
 
@@ -36,13 +36,13 @@ public class BattleStage1V1 extends BattleStage {
     private final CardSource deck2;
     private final TierCounter tier1;
     private final TierCounter tier2;
-    private final ButtonWithExtraState yardButton1 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAtlasRegion("yard"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardO"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardP"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardOP")){
+    private final ButtonWithExtraState yardButton1 = new ButtonWithExtraState(AssetLibrary.getInstance().getAtlasRegion("yard"), AssetLibrary.getInstance().getAtlasRegion("yardO"), AssetLibrary.getInstance().getAtlasRegion("yardP"), AssetLibrary.getInstance().getAtlasRegion("yardOP")){
         @Override
         public void clicked() {
             switchYardVisibility(yardMenu1);
         }
     };
-    private final ButtonWithExtraState yardButton2 = new ButtonWithExtraState(Farstar.ASSET_LIBRARY.getAtlasRegion("yard"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardO"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardP"), Farstar.ASSET_LIBRARY.getAtlasRegion("yardOP")){
+    private final ButtonWithExtraState yardButton2 = new ButtonWithExtraState(AssetLibrary.getInstance().getAtlasRegion("yard"), AssetLibrary.getInstance().getAtlasRegion("yardO"), AssetLibrary.getInstance().getAtlasRegion("yardP"), AssetLibrary.getInstance().getAtlasRegion("yardOP")){
         @Override
         public void clicked() {
             switchYardVisibility(yardMenu2);
@@ -111,7 +111,7 @@ public class BattleStage1V1 extends BattleStage {
         getF1button().setPosition(Math.round(Farstar.STAGE_WIDTH*0.045f), Math.round(Farstar.STAGE_HEIGHT*0.095f));
         //getF1button().setPosition(Math.round(Farstar.STAGE_WIDTH*0.003f), Math.round(Farstar.STAGE_HEIGHT*0.003f)); //over table - to be used with f1back
         //f1ButtonToNet();
-        if (SuperScreen.ScreenSettings.f1buttonEnabled) { addActor(getF1button()); }
+        if (ScreenSettings.getInstance().isF1buttonEnabled()) { addActor(getF1button()); }
     }
 
     @Override
@@ -162,7 +162,7 @@ public class BattleStage1V1 extends BattleStage {
         fleetMenu2.drawTokens(batch);
         supportMenu1.drawTokens(batch);
         supportMenu2.drawTokens(batch);
-        if (SuperScreen.ScreenSettings.netEnabled) {
+        if (ScreenSettings.getInstance().isNetEnabled()) {
             supportMenu1.drawNetSpots(batch);
             supportMenu2.drawNetSpots(batch);
         }

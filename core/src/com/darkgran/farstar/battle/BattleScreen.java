@@ -48,7 +48,7 @@ public class BattleScreen extends SuperScreen {
         this.battle = battle;
         this.battleType = battleType;
         battle.startingSetup(this,
-                new RoundManager(battle, new PossibilityAdvisor()),
+                new RoundManager(battle, PossibilityAdvisor.getInstance()),
                 battle.createCombatManager(),
                 new AbilityManager(battle)
         );
@@ -69,7 +69,7 @@ public class BattleScreen extends SuperScreen {
 
     @Override
     public void userEscape() {
-        NotificationManager.clear(Notification.NotificationType.MIDDLE);
+        NotificationManager.getInstance().clear(Notification.NotificationType.MIDDLE);
         if (!isConcederActive()) {
             if ((getBattleStage().getBattleHelp() != null && getBattleStage().getBattleHelp().isEnabled()) || getBattle().areYardsOpen() || getBattle().getRoundManager().isTargetingActive() || getBattleStage().getAbilityPicker().isActive()) {
                 if (getBattle().getRoundManager().isTargetingActive() || getBattleStage().getAbilityPicker().isActive()) { getBattle().getRoundManager().tryCancel(); }
@@ -78,7 +78,7 @@ public class BattleScreen extends SuperScreen {
             } else {
                 String txt = getBattle().isEverythingDisabled() || getBattleType() == BattleType.SIMULATION ? "LEAVE?" : "CONCEDE?";
                 String fontPath = "fonts/orbitron36.fnt";
-                SimpleVector2 textWH = TextDrawer.getTextWH(Farstar.ASSET_LIBRARY.getAssetManager().get(fontPath, BitmapFont.class), txt);
+                SimpleVector2 textWH = TextDrawer.getTextWH(AssetLibrary.getInstance().get(fontPath, BitmapFont.class), txt);
                 setScreenConceder(new YXQuestionBox(
                         ColorPalette.LIGHT,
                         ColorPalette.changeAlpha(ColorPalette.DARK, 0.5f),

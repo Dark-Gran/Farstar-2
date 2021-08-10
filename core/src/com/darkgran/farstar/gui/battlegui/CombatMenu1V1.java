@@ -1,7 +1,10 @@
 package com.darkgran.farstar.gui.battlegui;
 
-import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.CombatManager;
+import com.darkgran.farstar.gui.AssetLibrary;
+
+import static com.darkgran.farstar.Farstar.STAGE_HEIGHT;
+import static com.darkgran.farstar.Farstar.STAGE_WIDTH;
 
 public class CombatMenu1V1 extends CombatMenu {
     public final CombatOK duelButton1;
@@ -9,10 +12,10 @@ public class CombatMenu1V1 extends CombatMenu {
 
     public CombatMenu1V1(CombatManager combatManager) {
         super(combatManager);
-        duelButton1 = new CombatOK(Farstar.ASSET_LIBRARY.getAtlasRegion("tacticalOK"), Farstar.ASSET_LIBRARY.getAtlasRegion("tacticalOKO"), Farstar.ASSET_LIBRARY.getAtlasRegion("tacticalOKC"), Farstar.ASSET_LIBRARY.getAtlasRegion("tacticalOKCO"), combatManager);
-        duelButton2 = new CombatOK(Farstar.ASSET_LIBRARY.getAtlasRegion("tacticalOK"), Farstar.ASSET_LIBRARY.getAtlasRegion("tacticalOKO"), Farstar.ASSET_LIBRARY.getAtlasRegion("tacticalOKC"), Farstar.ASSET_LIBRARY.getAtlasRegion("tacticalOKCO"), combatManager);
-        duelButton1.setPosition(Farstar.STAGE_WIDTH*0.6f, Farstar.STAGE_HEIGHT*0.28f);
-        duelButton2.setPosition(Farstar.STAGE_WIDTH*0.6f, Farstar.STAGE_HEIGHT*0.69f);
+        duelButton1 = new CombatOK(AssetLibrary.getInstance().getAtlasRegion("tacticalOK"), AssetLibrary.getInstance().getAtlasRegion("tacticalOKO"), AssetLibrary.getInstance().getAtlasRegion("tacticalOKC"), AssetLibrary.getInstance().getAtlasRegion("tacticalOKCO"), combatManager);
+        duelButton2 = new CombatOK(AssetLibrary.getInstance().getAtlasRegion("tacticalOK"), AssetLibrary.getInstance().getAtlasRegion("tacticalOKO"), AssetLibrary.getInstance().getAtlasRegion("tacticalOKC"), AssetLibrary.getInstance().getAtlasRegion("tacticalOKCO"), combatManager);
+        duelButton1.setPosition(STAGE_WIDTH*0.6f, STAGE_HEIGHT*0.28f);
+        duelButton2.setPosition(STAGE_WIDTH*0.6f, STAGE_HEIGHT*0.69f);
     }
 
     @Override

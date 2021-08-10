@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.cards.TechType;
+import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.gui.SimpleVector2;
@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 /** Responsible for all shot animations. (see AnimationManager for other) */
-public class ShotManager { //in-future: apply Singleton-pattern
+public class ShotManager {
+    private static ShotManager shotManager = null;
+
     public enum ShotType {
         BULLET("shot-bullet", 4000f),
         BLAST("shot-beam", 2000f);
@@ -153,8 +155,8 @@ public class ShotManager { //in-future: apply Singleton-pattern
         }
         private final ShotType shotType;
         private final TextureRegion shotPic;
-        private final TextureRegion shrapnelPic = Farstar.ASSET_LIBRARY.getAtlasRegion("shrapnel");
-        private final TextureRegion recoilPic = Farstar.ASSET_LIBRARY.getAtlasRegion("recoil");
+        private final TextureRegion shrapnelPic = AssetLibrary.getInstance().getAtlasRegion("shrapnel");
+        private final TextureRegion recoilPic = AssetLibrary.getInstance().getAtlasRegion("recoil");
         private final Token att;
         private final Token def;
         private final int dmg;
@@ -174,7 +176,7 @@ public class ShotManager { //in-future: apply Singleton-pattern
             this.dmg = dmg;
             this.start = start;
             this.end = end;
-            shotPic = new TextureRegion(Farstar.ASSET_LIBRARY.getAtlasRegion(shotType.shotPicName));
+            shotPic = new TextureRegion(AssetLibrary.getInstance().getAtlasRegion(shotType.shotPicName));
             this.directionX = directionX;
             this.directionY = directionY;
             this.angle = angle;
@@ -212,6 +214,13 @@ public class ShotManager { //in-future: apply Singleton-pattern
     }
     private final ArrayList<AniAttack> aniAttacks = new ArrayList<>();
 
+    private ShotManager() {}
+    public static ShotManager getInstance() {
+        if (shotManager == null) {
+            shotManager = new ShotManager();
+        }
+        return shotManager;
+    }
 
     public void newAttack(Token att, Token def, int dmg, TechType techType, int numberOfShots) {
         SimpleVector2 start = new SimpleVector2(att.getX() + att.getTokenOffense().getPad().getRegionWidth() / 2f, att.getY() + att.getTokenOffense().getPad().getRegionHeight() / 2f);

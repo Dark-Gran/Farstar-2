@@ -39,13 +39,13 @@ public class TokenPrice extends TokenPart {
 
     @Override
     public void setPad(TokenType tokenType) {
-        setPad(Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("padE-", tokenType, true)));
-        pad2 = Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("padM-", tokenType, true));
-        if (tokenType != TokenType.PRINT) { useMark = Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("abiU-", tokenType, true)); }
+        setPad(AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.addTokenTypeAcronym("padE-", tokenType, true)));
+        pad2 = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.addTokenTypeAcronym("padM-", tokenType, true));
+        if (tokenType != TokenType.PRINT) { useMark = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.addTokenTypeAcronym("abiU-", tokenType, true)); }
         if (tokenType == TokenType.FLEET) {
-            fsMark = Farstar.ASSET_LIBRARY.getAtlasRegion("abiFS-F");
-            guardMark = Farstar.ASSET_LIBRARY.getAtlasRegion("abiG-F");
-            reachMark = Farstar.ASSET_LIBRARY.getAtlasRegion("abiR-F");
+            fsMark = AssetLibrary.getInstance().getAtlasRegion("abiFS-F");
+            guardMark = AssetLibrary.getInstance().getAtlasRegion("abiG-F");
+            reachMark = AssetLibrary.getInstance().getAtlasRegion("abiR-F");
         }
     }
 

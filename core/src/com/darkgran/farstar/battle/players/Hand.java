@@ -1,8 +1,7 @@
 package com.darkgran.farstar.battle.players;
 
-import com.darkgran.farstar.Farstar;
-
-import static com.darkgran.farstar.battle.BattleSettings.MAX_IN_HAND;
+import com.darkgran.farstar.battle.BattleSettings;
+import com.darkgran.farstar.cards.CardLibrary;
 
 public class Hand extends CardList {
 
@@ -13,7 +12,7 @@ public class Hand extends CardList {
     }
 
     public void getNewCards(Deck deck, int howMany) {
-        for (int i = 0; i < howMany && size() < MAX_IN_HAND; i++) {
+        for (int i = 0; i < howMany && size() < BattleSettings.getInstance().MAX_IN_HAND; i++) {
             BattleCard battleCard = deck.drawCard();
             if (battleCard != null) {
                 add(battleCard);
@@ -25,8 +24,8 @@ public class Hand extends CardList {
     }
 
     public void getNewCards(int id, int howMany, BattlePlayer battlePlayer) {
-        for (int i = 0; i < howMany && size() < MAX_IN_HAND; i++) {
-            BattleCard battleCard = new BattleCard(Farstar.CARD_LIBRARY.getCard(id), battlePlayer);
+        for (int i = 0; i < howMany && size() < BattleSettings.getInstance().MAX_IN_HAND; i++) {
+            BattleCard battleCard = new BattleCard(CardLibrary.getInstance().getCard(id), battlePlayer);
             add(battleCard);
             if (getCardListMenu() != null) {
                 getCardListMenu().generateNewToken(battleCard);
@@ -36,7 +35,7 @@ public class Hand extends CardList {
 
     @Override
     protected void setupSize() {
-        setMaxSize(MAX_IN_HAND);
+        setMaxSize(BattleSettings.getInstance().MAX_IN_HAND);
     }
 
 }

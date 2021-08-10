@@ -1,8 +1,7 @@
 package com.darkgran.farstar.battle;
 
-import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.SuperScreen;
-import com.darkgran.farstar.gui.NotificationManager;
+import com.darkgran.farstar.gui.*;
 import com.darkgran.farstar.gui.tokens.*;
 import com.darkgran.farstar.cards.AbilityInfo;
 import com.darkgran.farstar.cards.AbilityStarter;
@@ -10,14 +9,11 @@ import com.darkgran.farstar.gui.battlegui.*;
 import com.darkgran.farstar.battle.players.*;
 import com.darkgran.farstar.cards.CardInfo;
 import com.darkgran.farstar.cards.CardType;
-import com.darkgran.farstar.gui.ActorButton;
-import com.darkgran.farstar.gui.Notification;
-import com.darkgran.farstar.gui.SimpleVector2;
 
 import java.util.ArrayList;
 
-import static com.darkgran.farstar.battle.BattleSettings.CARDS_PER_TURN;
-import static com.darkgran.farstar.battle.BattleSettings.MAX_INCOME;
+import static com.darkgran.farstar.Farstar.STAGE_HEIGHT;
+import static com.darkgran.farstar.Farstar.STAGE_WIDTH;
 
 //in-future: depending on how other mods than 1v1 treat combat-phase, split into abstract+RoundManager1v1 might be required (probably not needed unless combat shared between allies)
 public class RoundManager {
@@ -30,7 +26,7 @@ public class RoundManager {
     private boolean targetingActive;
     private final DeploymentInfo postponedDeploy = new DeploymentInfo(); //in-future: turn into a List to enable deployment-chains (eg. on-deploy summoning (targeted) that leads to another targeted on-deploy ability; atm there are no such battleCards)
     private AbilityPicker abilityPicker;
-    private final ActorButton cancelButton = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("cancel"), Farstar.ASSET_LIBRARY.getAtlasRegion("cancelO")){
+    private final ActorButton cancelButton = new ActorButton(AssetLibrary.getInstance().getAtlasRegion("cancel"), AssetLibrary.getInstance().getAtlasRegion("cancelO")){
         @Override
         public void clicked() { tryCancel(); }
     };
@@ -61,19 +57,19 @@ public class RoundManager {
     }
 
     public void newTurn() {
-        battle.getWhoseTurn().getHand().getNewCards(battle.getWhoseTurn().getDeck(), CARDS_PER_TURN);
+        battle.getWhoseTurn().getHand().getNewCards(battle.getWhoseTurn().getDeck(), BattleSettings.getInstance().CARDS_PER_TURN);
         resourceIncomes(battle.getWhoseTurn());
         System.out.println("Player #"+battle.getWhoseTurn().getBattleID()+" may play his Cards.");
         if (battle.getWhoseTurn() instanceof LocalBattlePlayer) {
             possibilityAdvisor.markPossibilities(battle.getWhoseTurn(), battle);
-            NotificationManager.newNotification(Notification.NotificationType.MIDDLE, "YOUR TURN", 3);
+            NotificationManager.getInstance().newNotification(Notification.NotificationType.MIDDLE, "YOUR TURN", 3);
             getBattle().getBattleScreen().getBattleStage().getTurnButton().setDisabled(false);
         } else {
             if (battle.getWhoseTurn() instanceof Bot) {
                 ((Bot) battle.getWhoseTurn()).newTurn();
             }
             if (getBattle().getBattleScreen().getBattleType() != BattleType.SIMULATION) {
-                NotificationManager.newNotification(Notification.NotificationType.MIDDLE, "ENEMY TURN", 3);
+                NotificationManager.getInstance().newNotification(Notification.NotificationType.MIDDLE, "ENEMY TURN", 3);
             }
             getBattle().getBattleScreen().getBattleStage().getTurnButton().setDisabled(true);
         }
@@ -90,8 +86,8 @@ public class RoundManager {
     }
 
     public int capIncome(int income) {
-        if (income > MAX_INCOME) {
-            income = MAX_INCOME;
+        if (income > BattleSettings.getInstance().MAX_INCOME) {
+            income = BattleSettings.getInstance().MAX_INCOME;
         }
         return income;
     }
@@ -269,9 +265,9 @@ public class RoundManager {
                 abilityPicker.getAbilityInfos().add(option);
             }
             abilityPicker.enable(caster.getCard());
-            cancelButton.setPosition(Farstar.STAGE_WIDTH*0.69f, Farstar.STAGE_HEIGHT*0.28f);
+            cancelButton.setPosition(STAGE_WIDTH*0.69f, STAGE_HEIGHT*0.28f);
             getBattle().getBattleScreen().getBattleStage().addActor(cancelButton);
-            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Choose an Ability.", 3);
+            NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Choose an Ability.", 3);
             ((YardMenu) caster.getCard().getBattlePlayer().getYard().getCardListMenu()).setOpen(false);
         }
     }
@@ -311,9 +307,9 @@ public class RoundManager {
         } else {
             token.setPicked(true);
             SuperScreen.switchCursor(SuperScreen.CursorType.AIM);
-            cancelButton.setPosition(Farstar.STAGE_WIDTH*0.62f, Farstar.STAGE_HEIGHT*0.08f);
+            cancelButton.setPosition(STAGE_WIDTH*0.62f, STAGE_HEIGHT*0.08f);
             getBattle().getBattleScreen().getBattleStage().addActor(cancelButton);
-            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Choose a Target.", 3);
+            NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Choose a Target.", 3);
             ((YardMenu) whoseTurn.getYard().getCardListMenu()).setOpen(false);
         }
     }

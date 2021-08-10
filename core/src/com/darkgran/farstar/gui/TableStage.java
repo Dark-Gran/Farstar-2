@@ -9,21 +9,21 @@ import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.battle.BattleScreen;
 
 public class TableStage extends ListeningStage {
-    private final Texture table = Farstar.ASSET_LIBRARY.get("images/tableMain-1920.png");
-    private final TextureRegion empty = Farstar.ASSET_LIBRARY.getAtlasRegion("empty");
-    private final TextureRegion exit = Farstar.ASSET_LIBRARY.getAtlasRegion("exit");
-    private final TextureRegion quality = Farstar.ASSET_LIBRARY.getAtlasRegion("quality");
-    private final TextureRegion fs = Farstar.ASSET_LIBRARY.getAtlasRegion("fs");
-    private final TextureRegion sound = Farstar.ASSET_LIBRARY.getAtlasRegion("sound");
-    private final TextureRegion logout = Farstar.ASSET_LIBRARY.getAtlasRegion("logout");
-    private final TextureRegion friends = Farstar.ASSET_LIBRARY.getAtlasRegion("friends");
-    private final TextureRegion space = Farstar.ASSET_LIBRARY.getAtlasRegion("Space-1920");
-    private final TextureRegion net = Farstar.ASSET_LIBRARY.getAtlasRegion("net-1920"); //atm only for 1v1
+    private final Texture table = AssetLibrary.getInstance().get("images/tableMain-1920.png");
+    private final TextureRegion empty = AssetLibrary.getInstance().getAtlasRegion("empty");
+    private final TextureRegion exit = AssetLibrary.getInstance().getAtlasRegion("exit");
+    private final TextureRegion quality = AssetLibrary.getInstance().getAtlasRegion("quality");
+    private final TextureRegion fs = AssetLibrary.getInstance().getAtlasRegion("fs");
+    private final TextureRegion sound = AssetLibrary.getInstance().getAtlasRegion("sound");
+    private final TextureRegion logout = AssetLibrary.getInstance().getAtlasRegion("logout");
+    private final TextureRegion friends = AssetLibrary.getInstance().getAtlasRegion("friends");
+    private final TextureRegion space = AssetLibrary.getInstance().getAtlasRegion("Space-1920");
+    private final TextureRegion net = AssetLibrary.getInstance().getAtlasRegion("net-1920"); //atm only for 1v1
 
     private final ActorButton exitButton = new ActorButton(empty, empty, exit){
         @Override
         public void clicked() {
-            getGame().getSuperScreen().userEscape();
+            Farstar.getSuperScreen().userEscape();
         }
     };
     private final ActorButton fsButton = new ActorButton(empty, empty, fs){
@@ -35,25 +35,25 @@ public class TableStage extends ListeningStage {
     private final ActorButton soundButton = new ActorButton(empty, empty, sound){
         @Override
         public void clicked() {
-            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Sound Not Available.", 3);
+            NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Sound Not Available.", 3);
         }
     };
     private final ActorButton logoutButton = new ActorButton(empty, empty, logout){
         @Override
         public void clicked() {
-            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Server Not Available.", 3);
+            NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Server Not Available.", 3);
         }
     };
     private final ActorButton qualityButton = new ActorButton(empty, empty, quality){
         @Override
         public void clicked() {
-            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Settings Not Available.", 3);
+            NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Settings Not Available.", 3);
         }
     };
     private final ActorButton friendsButton = new ActorButton(empty, empty, friends){
         @Override
         public void clicked() {
-            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Contacts Not Available.", 3);
+            NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Contacts Not Available.", 3);
         }
     };
 
@@ -82,7 +82,7 @@ public class TableStage extends ListeningStage {
         batch.begin();
         batch.setColor(1, 1, 1, 1);
         batch.draw(space, 0, 0);
-        if (netEnabled && getGame().getSuperScreen() instanceof BattleScreen) { batch.draw(net, 0, 0); }
+        if (netEnabled && Farstar.getSuperScreen() instanceof BattleScreen) { batch.draw(net, 0, 0); }
         if (tableEnabled) { batch.draw(table, tableCoords.x, tableCoords.y); }
         batch.end();
     }

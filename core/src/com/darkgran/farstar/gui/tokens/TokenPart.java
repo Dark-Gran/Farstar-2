@@ -53,7 +53,7 @@ public class TokenPart extends TextLine {
     }
 
     public void setPad(TokenType tokenType) {
-        pad = Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("padI-", tokenType, true));
+        pad = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.addTokenTypeAcronym("padI-", tokenType, true));
     }
 
     public String getContent() {
@@ -117,7 +117,7 @@ public class TokenPart extends TextLine {
     }
 
     public BitmapFont getContentStateFont(ContentState contentState, TokenType tokenType) {
-        return Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("fonts/"+ contentState.getFontName() + "_", tokenType, true)+".fnt");
+        return AssetLibrary.getInstance().get(AssetLibrary.addTokenTypeAcronym("fonts/"+ contentState.getFontName() + "_", tokenType, true)+".fnt");
     }
 
     public boolean isEnabled() {

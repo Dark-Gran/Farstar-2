@@ -30,9 +30,9 @@ public interface CardGFX extends TextDrawer {
     default void resetCardGFX(CardCulture culture, TokenType tokenType) {
         if (tokenType != null) {
             if (isBackside()) {
-                setCardPic(Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("cardB-", tokenType, false)));
+                setCardPic(AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.addTokenTypeAcronym("cardB-", tokenType, false)));
             } else {
-                setCardPic(Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("card" + culture.getAcronym() + "-", tokenType, false)));
+                setCardPic(AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.addTokenTypeAcronym("card" + culture.getAcronym() + "-", tokenType, false)));
             }
         }
     }
@@ -84,14 +84,14 @@ public interface CardGFX extends TextDrawer {
     }
 
     default BitmapFont getNameFont(TokenType tokenType) {
-        return Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("fonts/orbitron_name", tokenType, false)+".fnt");
+        return AssetLibrary.getInstance().get(AssetLibrary.addTokenTypeAcronym("fonts/orbitron_name", tokenType, false)+".fnt");
     }
 
     default BitmapFont getTierFont(TokenType tokenType) { //barlow Z>FK>F 26>20>18
-        return Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("fonts/barlow_tier", tokenType, false)+".fnt");
+        return AssetLibrary.getInstance().get(AssetLibrary.addTokenTypeAcronym("fonts/barlow_tier", tokenType, false)+".fnt");
     }
     default BitmapFont getDescFont(TokenType tokenType) {
-        return Farstar.ASSET_LIBRARY.get(AssetLibrary.addTokenTypeAcronym("fonts/barlow_desc", tokenType, false)+".fnt");
+        return AssetLibrary.getInstance().get(AssetLibrary.addTokenTypeAcronym("fonts/barlow_desc", tokenType, false)+".fnt");
     }
 
     default String getCardName(Card card) {

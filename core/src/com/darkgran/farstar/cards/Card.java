@@ -1,6 +1,5 @@
 package com.darkgran.farstar.cards;
 
-import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.tokens.Token;
 
 public abstract class Card {
@@ -15,12 +14,12 @@ public abstract class Card {
     }
 
     public Card() {
-        originalInfo = Farstar.CARD_LIBRARY.getCard(0);
+        originalInfo = CardLibrary.getInstance().getCard(0);
         cardInfo = instanceCardInfo(originalInfo);
     }
 
     public Card(int id) {
-        originalInfo = Farstar.CARD_LIBRARY.getCard(id);
+        originalInfo = CardLibrary.getInstance().getCard(id);
         cardInfo = instanceCardInfo(originalInfo);
     }
 

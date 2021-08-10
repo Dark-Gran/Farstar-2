@@ -94,7 +94,7 @@ public class AssetLibrary {
     }
 
     public BitmapFont getFont(String fontSize, String fontName) {
-        return Farstar.ASSET_LIBRARY.get(getFontPath(fontSize, fontName));
+        return this.get(getFontPath(fontSize, fontName));
     }
 
     public static String getFontPath(String fontSize, String fontName) {
@@ -168,6 +168,10 @@ public class AssetLibrary {
 
     public <T> T get(String filename) {
         return assetManager.get(filename);
+    }
+
+    public <T> T get(String fileName, Class<T> type) {
+        return assetManager.get(fileName, type);
     }
 
     public void dispose() {

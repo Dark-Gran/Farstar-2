@@ -2,8 +2,8 @@ package com.darkgran.farstar.gui.tokens;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.BattleCard;
+import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 
@@ -12,7 +12,7 @@ public class SupportToken extends ClickToken implements DisableMark {
 
     public SupportToken(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
         super(battleCard, x, y, battleStage, cardListMenu, TokenType.SUPPORT, false, true);
-        setMark(Farstar.ASSET_LIBRARY.getAtlasRegion("disable-S"));
+        setMark(AssetLibrary.getInstance().getAtlasRegion("disable-S"));
         setZIndex(0);
     }
 

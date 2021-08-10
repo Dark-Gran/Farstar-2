@@ -3,17 +3,13 @@ package com.darkgran.farstar.gui.battlegui;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.darkgran.farstar.gui.ColorPalette;
-import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.gui.*;
 import com.darkgran.farstar.battle.Battle;
-import com.darkgran.farstar.gui.TextDrawer;
-import com.darkgran.farstar.gui.SimpleBox2;
-import com.darkgran.farstar.gui.SimpleVector2;
 
 public class RoundCounter extends SimpleBox2 implements TextDrawer {
     private boolean wrap = false;
     private float wrapWidth = 0f;
-    private final TextureRegion pic = Farstar.ASSET_LIBRARY.getAtlasRegion("rounds");
+    private final TextureRegion pic = AssetLibrary.getInstance().getAtlasRegion("rounds");
     private final Battle battle;
     private Color fontColor;
     private String fontPath = "fonts/bahnschrift30.fnt";

@@ -3,8 +3,8 @@ package com.darkgran.farstar.gui.tokens;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.BattleCard;
+import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.ColorPalette;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
@@ -29,8 +29,8 @@ public class DeploymentCard extends DeploymentToken implements CardGFX {
 
     @Override
     public void setGlows() {
-        setGlowG(Farstar.ASSET_LIBRARY.getAtlasRegion("glowG-U"));
-        setGlowY(Farstar.ASSET_LIBRARY.getAtlasRegion("glowY-U"));
+        setGlowG(AssetLibrary.getInstance().getAtlasRegion("glowG-U"));
+        setGlowY(AssetLibrary.getInstance().getAtlasRegion("glowY-U"));
     }
 
     @Override

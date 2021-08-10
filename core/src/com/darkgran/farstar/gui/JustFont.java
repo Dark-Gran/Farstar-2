@@ -17,7 +17,7 @@ public interface JustFont {
     }
 
     default BitmapFont getFont() {
-        return Farstar.ASSET_LIBRARY.getAssetManager().get(getFontPath(), BitmapFont.class);
+        return AssetLibrary.getInstance().getAssetManager().get(getFontPath(), BitmapFont.class);
     }
 
     String getFontPath();

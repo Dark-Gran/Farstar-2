@@ -11,9 +11,8 @@ public class MainScreen extends SuperScreen {
     public MainScreen(final Farstar game, TableStage tableMenu) {
         super(game);
         setTableMenu(tableMenu);
-        game.loadLibrary();
         game.getInputMultiplexer().addProcessor(mainScreenStage);
-        NotificationManager.clear(Notification.NotificationType.MIDDLE);
+        NotificationManager.getInstance().clear(Notification.NotificationType.MIDDLE);
     }
 
     @Override
@@ -22,7 +21,7 @@ public class MainScreen extends SuperScreen {
             mainScreenStage.enableMainButtons(true);
             String txt = "GAME OVER?";
             String fontPath = "fonts/orbitron36.fnt";
-            SimpleVector2 textWH = TextDrawer.getTextWH(Farstar.ASSET_LIBRARY.getAssetManager().get(fontPath, BitmapFont.class), txt);
+            SimpleVector2 textWH = TextDrawer.getTextWH(AssetLibrary.getInstance().getAssetManager().get(fontPath, BitmapFont.class), txt);
             setScreenConceder(new YXQuestionBox(
                     ColorPalette.LIGHT,
                     ColorPalette.DARK,

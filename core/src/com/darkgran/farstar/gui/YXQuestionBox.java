@@ -7,13 +7,13 @@ import com.darkgran.farstar.Farstar;
 public class YXQuestionBox extends TextInTheBox {
     private final Runnable runY;
     private final Runnable runX;
-    private final ActorButton yBut = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("y"), Farstar.ASSET_LIBRARY.getAtlasRegion("yO"), Farstar.ASSET_LIBRARY.getAtlasRegion("yO")){
+    private final ActorButton yBut = new ActorButton(AssetLibrary.getInstance().getAtlasRegion("y"), AssetLibrary.getInstance().getAtlasRegion("yO"), AssetLibrary.getInstance().getAtlasRegion("yO")){
         @Override
         public void clicked() {
             Gdx.app.postRunnable(runY);
         }
     };
-    private final ActorButton xBut = new ActorButton(Farstar.ASSET_LIBRARY.getAtlasRegion("x"), Farstar.ASSET_LIBRARY.getAtlasRegion("xO"), Farstar.ASSET_LIBRARY.getAtlasRegion("xO")){
+    private final ActorButton xBut = new ActorButton(AssetLibrary.getInstance().getAtlasRegion("x"), AssetLibrary.getInstance().getAtlasRegion("xO"), AssetLibrary.getInstance().getAtlasRegion("xO")){
         @Override
         public void clicked() {
             Gdx.app.postRunnable(runX);

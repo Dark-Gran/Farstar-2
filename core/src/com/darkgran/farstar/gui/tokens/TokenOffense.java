@@ -1,7 +1,7 @@
 package com.darkgran.farstar.gui.tokens;
 
-import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.cards.TechType;
+import com.darkgran.farstar.gui.AssetLibrary;
 
 public class TokenOffense extends TokenPart {
     public TokenOffense(String fontPath, Token token) {
@@ -24,7 +24,7 @@ public class TokenOffense extends TokenPart {
 
     @Override
     public void setPad(TokenType tokenType) {
-        setPad(Farstar.ASSET_LIBRARY.getAtlasRegion(Farstar.ASSET_LIBRARY.getTypePad(getToken().getCard().getCardInfo().getOffenseType(), tokenType)));
+        setPad(AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.getInstance().getTypePad(getToken().getCard().getCardInfo().getOffenseType(), tokenType)));
     }
 
     @Override

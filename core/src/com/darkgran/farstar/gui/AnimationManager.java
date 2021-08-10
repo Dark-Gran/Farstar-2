@@ -10,7 +10,9 @@ import java.util.ArrayList;
 /**
  * Handles all png-animations except for Attacks/Shots (see ShotManager).
  */
-public class AnimationManager { //in-future: apply Singleton-pattern
+public class AnimationManager {
+    private static AnimationManager animationManager = null;
+
     private static class DeathAnimation {
         private final TextureRegion deathPic;
         private final float x;
@@ -43,8 +45,17 @@ public class AnimationManager { //in-future: apply Singleton-pattern
     }
     private final ArrayList<DeathAnimation> deathAnimations = new ArrayList<>();
 
+    private AnimationManager() {}
+
+    public static AnimationManager getInstance() {
+        if (animationManager == null) {
+            animationManager = new AnimationManager();
+        }
+        return animationManager;
+    }
+
     public void newDeathEffect(float x, float y, TokenType tokenType) {
-        TextureRegion texture = Farstar.ASSET_LIBRARY.getAtlasRegion(AssetLibrary.addTokenTypeAcronym("death-", tokenType, false));
+        TextureRegion texture = AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.addTokenTypeAcronym("death-", tokenType, false));
         deathAnimations.add(new DeathAnimation(texture, x+tokenType.getWidth()/2f-texture.getRegionWidth()/2f, y+tokenType.getHeight()/2f-texture.getRegionHeight()/2f));
     }
 

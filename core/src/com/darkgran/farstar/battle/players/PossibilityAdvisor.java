@@ -14,6 +14,16 @@ import com.darkgran.farstar.cards.CardType;
 import java.util.ArrayList;
 
 public class PossibilityAdvisor {
+    private static PossibilityAdvisor possibilityAdvisor;
+
+    private PossibilityAdvisor() {}
+
+    public static PossibilityAdvisor getInstance() {
+        if (possibilityAdvisor == null) {
+            possibilityAdvisor = new PossibilityAdvisor();
+        }
+        return possibilityAdvisor;
+    }
 
     public ArrayList<PossibilityInfo> getPossibilities(BattlePlayer battlePlayer, Battle battle) { //also used by Automaton, who also cares about the order of priorities ("plays whatever comes first" by definition; the order does not matter for non-bot purposes (ie. gui)); in-future: bots should sort possibilities for themselves by whatever specific rules they have
         ArrayList<PossibilityInfo> possibilities = new ArrayList<>();
@@ -53,13 +63,13 @@ public class PossibilityAdvisor {
     public static void reportDeployability(Battle battle, boolean affordable, boolean learned, boolean targetsPresent, boolean space) {
         int duration = 3;
         if (!learned) {
-            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Insufficient Technological Tier.", duration, true);
+            NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Insufficient Technological Tier.", duration, true);
         } else if (!affordable) {
-            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Insufficient Resources.", duration, true);
+            NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Insufficient Resources.", duration, true);
         } else if (!targetsPresent) {
-            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "No Possible Targets.", duration, true);
+            NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "No Possible Targets.", duration, true);
         } else if (!space) {
-            NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Cannot Man More Ships.", duration, true);
+            NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Cannot Man More Ships.", duration, true);
         }
     }
 

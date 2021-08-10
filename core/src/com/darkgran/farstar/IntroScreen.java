@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.darkgran.farstar.gui.Notification;
-import com.darkgran.farstar.gui.NotificationManager;
-import com.darkgran.farstar.gui.SimpleImage2;
-import com.darkgran.farstar.gui.TableStage;
+import com.darkgran.farstar.gui.*;
 import com.darkgran.farstar.mainscreen.MainScreen;
 import com.darkgran.farstar.util.Delayer;
 
@@ -21,7 +18,7 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
         super(game);
         hideCursor(true);
         delayAction(this::activate, 0.5f);
-        TextureRegion ltr = Farstar.ASSET_LIBRARY.getAtlasRegion("logo");
+        TextureRegion ltr = AssetLibrary.getInstance().getAtlasRegion("logo");
         logo = new SimpleImage2((float) (Farstar.STAGE_WIDTH / 2 - ltr.getRegionWidth() / 2), (float) (Farstar.STAGE_HEIGHT / 2 - ltr.getRegionHeight() / 2), ltr);
     }
 
@@ -32,7 +29,7 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
 
     private void endIntro() {
         getGame().setScreen(new MainScreen(getGame(), new TableStage(getGame(), getViewport())));
-        NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Alpha Warning: Most Features Not Available.", 8);
+        NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Alpha Warning: Most Features Not Available.", 8);
     }
 
     private void activate() { active = true; }

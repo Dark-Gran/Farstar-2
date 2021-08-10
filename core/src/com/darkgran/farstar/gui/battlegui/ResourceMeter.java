@@ -5,20 +5,16 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.darkgran.farstar.battle.players.BattlePlayer;
-import com.darkgran.farstar.gui.ColorPalette;
-import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.gui.*;
 import com.darkgran.farstar.battle.Battle;
-import com.darkgran.farstar.gui.JustFont;
-import com.darkgran.farstar.gui.SimpleVector2;
-import com.darkgran.farstar.gui.TextDrawer;
 
 public class ResourceMeter extends Actor implements JustFont {
     private final Battle battle;
     private final BattlePlayer battlePlayer;
     private final boolean onBottom;
     private String fontPath = "";
-    private TextureRegion enePic = Farstar.ASSET_LIBRARY.getAtlasRegion("energy");
-    private TextureRegion matPic = Farstar.ASSET_LIBRARY.getAtlasRegion("matter");
+    private TextureRegion enePic = AssetLibrary.getInstance().getAtlasRegion("energy");
+    private TextureRegion matPic = AssetLibrary.getInstance().getAtlasRegion("matter");
     private SimpleVector2 eneWH;
     private SimpleVector2 matWH;
 

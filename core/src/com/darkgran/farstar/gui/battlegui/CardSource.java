@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.ColorPalette;
-import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.BattlePlayer;
 import com.darkgran.farstar.gui.TextInTheBox;
 
@@ -14,7 +14,7 @@ import com.darkgran.farstar.gui.TextInTheBox;
  * "Deck"
  */
 public class CardSource extends Actor {
-    private final TextureRegion pic = Farstar.ASSET_LIBRARY.getAtlasRegion("deck");
+    private final TextureRegion pic = AssetLibrary.getInstance().getAtlasRegion("deck");
     private final BPB2DrawerBattle drawer;
     private final TextInTheBox info;
     private final ClickListener clickListener = new ClickListener(){};

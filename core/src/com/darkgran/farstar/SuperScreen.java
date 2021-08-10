@@ -10,23 +10,19 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.darkgran.farstar.gui.ColorPalette;
-import com.darkgran.farstar.gui.NotificationManager;
-import com.darkgran.farstar.gui.TableStage;
-import com.darkgran.farstar.gui.YXQuestionBox;
-import com.darkgran.farstar.gui.SimpleVector2;
+import com.darkgran.farstar.gui.*;
 
-import static com.darkgran.farstar.Farstar.ASSET_LIBRARY;
 
 public abstract class SuperScreen implements Screen {
-    public final static boolean DEBUG_RENDER = false;
+    public static final boolean DEBUG_RENDER = false;
     private final Farstar game;
-    private final static OrthographicCamera camera = new OrthographicCamera();
+    private static final OrthographicCamera camera = new OrthographicCamera();
     private final Viewport viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);
-    private final static ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private static final ShapeRenderer shapeRenderer = new ShapeRenderer();
     private TableStage tableStage; //in-future: possibly make static (but needs to be disabled on Screens like Intro)
     private YXQuestionBox screenConceder = null;
     private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.0885), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN); //in-future: possibly make static (but needs to be disabled on Screens like Intro)
+    //Cursor
     public enum CursorType {
         DEFAULT, AIM
     }
@@ -52,12 +48,12 @@ public abstract class SuperScreen implements Screen {
         switch (cursorType) {
             default:
             case DEFAULT:
-                hdCursor = ASSET_LIBRARY.getAtlasRegion("cursor-default");
+                hdCursor = AssetLibrary.getInstance().getAtlasRegion("cursor-default");
                 hdCursorOffsetX = 0;
                 hdCursorOffsetY = 0;
                 break;
             case AIM:
-                hdCursor = ASSET_LIBRARY.getAtlasRegion("cursor-aim");
+                hdCursor = AssetLibrary.getInstance().getAtlasRegion("cursor-aim");
                 hdCursorOffsetX = 16;
                 hdCursorOffsetY = 16;
                 break;
@@ -94,19 +90,6 @@ public abstract class SuperScreen implements Screen {
         camera.unproject(pos);
         return new SimpleVector2(pos.x, Farstar.STAGE_HEIGHT-pos.y);
     }
-    public static final class ScreenSettings { //in-future: use Singleton-pattern instead of static + check thread-safety
-        public static boolean tableStageEnabled = true;
-        public static boolean netEnabled = false;
-        public static boolean tokenFramesEnabled = true;
-        public static boolean perfMeterEnabled = true;
-        public static boolean f1buttonEnabled = true;
-        private ScreenSettings() {}
-    }
-    public void setTableStageEnabled(boolean tableStageEnabled) {
-        ScreenSettings.tableStageEnabled = tableStageEnabled;
-        if (tableStage != null) { tableStage.enableButtons(tableStageEnabled); }
-    }
-    private ScreenSettings screenSettings;
 
 
     public SuperScreen(final Farstar game) {
@@ -133,7 +116,7 @@ public abstract class SuperScreen implements Screen {
 
     protected void drawMenus(float delta, Batch batch) { //for all screens except intro
         batch.begin();
-        if (ScreenSettings.perfMeterEnabled) { perfMeter.drawText(batch); }
+        if (ScreenSettings.getInstance().isPerfMeterEnabled()) { perfMeter.drawText(batch); }
         //All buttons, included the ones in YXQuestionBox, are drawn when the entire Stage is drawn, therefore moving screenConceder higher makes the box draw over the buttons.
         //To be able to move screenConceder to a "higher layer", another Stage would need to be set up ("TopStage"), however this is unnecessary unless more features would use this Stage.
         if (screenConceder != null) { screenConceder.draw(batch, shapeRenderer); }
@@ -141,7 +124,7 @@ public abstract class SuperScreen implements Screen {
     }
 
     protected void drawSigns(Batch batch) {
-        NotificationManager.drawAll(batch, shapeRenderer);
+        NotificationManager.getInstance().drawAll(batch, shapeRenderer);
     }
 
     public static void switchFullscreen() {
@@ -150,6 +133,19 @@ public abstract class SuperScreen implements Screen {
             Gdx.graphics.setWindowedMode(currentMode.width, currentMode.height);
         } else {
             Gdx.graphics.setFullscreenMode(currentMode);
+        }
+    }
+
+    public void toggleFPSthrottle() {
+        if (game != null) {
+            if (game.currentFPSCap == Farstar.DEFAULT_FPS) {
+                game.currentFPSCap = 0;
+                Gdx.graphics.setVSync(false);
+            } else {
+                game.currentFPSCap = Farstar.DEFAULT_FPS;
+                Gdx.graphics.setVSync(Gdx.graphics.isFullscreen());
+            }
+            game.setForegroundFPS(game.currentFPSCap);
         }
     }
 
@@ -162,8 +158,8 @@ public abstract class SuperScreen implements Screen {
         shapeRenderer.setProjectionMatrix(camera.combined);
 
         if (tableStage != null) { //should persist over all screens
-            tableStage.drawBackground(game.batch, ScreenSettings.tableStageEnabled, ScreenSettings.netEnabled);
-            if (ScreenSettings.tableStageEnabled) {
+            tableStage.drawBackground(game.batch, ScreenSettings.getInstance().isTableStageEnabled(), ScreenSettings.getInstance().isNetEnabled());
+            if (ScreenSettings.getInstance().isTableStageEnabled()) {
                 tableStage.act(delta);
                 tableStage.draw();
             }
@@ -186,7 +182,7 @@ public abstract class SuperScreen implements Screen {
     }
 
     protected void update(float delta) {
-        NotificationManager.update(delta);
+        NotificationManager.getInstance().update(delta);
     }
 
     @Override

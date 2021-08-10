@@ -15,7 +15,7 @@ public class AbilityPicker extends BPB2DrawerBattle {
     private ArrayList<AbilityPickerOption> abilityGraphics = new ArrayList<>();
     private final float originX;
     private final float originY;
-    private final static float SPACE_BETWEEN = 30f;
+    private static final float SPACE_BETWEEN = 30f;
 
 
     public AbilityPicker(float x, float y, BattleStage battleStage, BattlePlayer battlePlayer) {

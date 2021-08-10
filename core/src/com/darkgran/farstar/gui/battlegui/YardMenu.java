@@ -57,7 +57,7 @@ public class YardMenu extends CardListMenu {
     }
 
     private void accessDenied() {
-        NotificationManager.newNotification(Notification.NotificationType.BOT_LEFT, "Access Denied.", 3);
+        NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Access Denied.", 3);
     }
 
     private void setTouchable(boolean enable) {

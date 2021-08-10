@@ -10,8 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.darkgran.farstar.battle.BattleType;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
+import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.ColorPalette;
-import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.gui.SimpleVector2;
@@ -43,8 +43,8 @@ public class HandToken extends AnchoredToken implements CardGFX, FakingTokens { 
 
     @Override
     public void setGlows() {
-        setGlowG(Farstar.ASSET_LIBRARY.getAtlasRegion("glowG-D"));
-        setGlowY(Farstar.ASSET_LIBRARY.getAtlasRegion("glowY-D"));
+        setGlowG(AssetLibrary.getInstance().getAtlasRegion("glowG-D"));
+        setGlowY(AssetLibrary.getInstance().getAtlasRegion("glowY-D"));
     }
 
     @Override

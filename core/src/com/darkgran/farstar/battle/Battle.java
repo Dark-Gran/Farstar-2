@@ -37,7 +37,9 @@ public abstract class Battle {
 
     public void closeYards() { }
 
-    public void dispose() {}
+    public void dispose() {
+        BattleSettings.getInstance().dispose();
+    }
 
     public void startingSetup(@NotNull BattleScreen battleScreen, @NotNull RoundManager roundManager, @NotNull CombatManager combatManager, @NotNull AbilityManager abilityManager) {
         this.battleScreen = battleScreen;

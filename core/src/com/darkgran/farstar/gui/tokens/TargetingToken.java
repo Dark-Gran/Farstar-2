@@ -9,12 +9,14 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.battle.players.BattleCard;
+import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.ColorPalette;
-import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.Dragger;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.gui.SimpleVector2;
+
+import static com.darkgran.farstar.Farstar.STAGE_HEIGHT;
 
 public class TargetingToken extends FakeToken {
     private Dragger dragger;
@@ -22,11 +24,11 @@ public class TargetingToken extends FakeToken {
 
     public TargetingToken(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
         super(battleCard, x, y, battleStage, cardListMenu, true);
-        aimPic = Farstar.ASSET_LIBRARY.getAtlasRegion("combat-aim");
+        aimPic = AssetLibrary.getInstance().getAtlasRegion("combat-aim");
         setWidth(aimPic.getRegionWidth());
         setHeight(aimPic.getRegionHeight());
         SimpleVector2 coords = SuperScreen.getMouseCoordinates();
-        setPosition(coords.x-getWidth()/2f, Farstar.STAGE_HEIGHT-(coords.y+getHeight()/2f));
+        setPosition(coords.x-getWidth()/2f, STAGE_HEIGHT-(coords.y+getHeight()/2f));
         battleCard.getToken().setPicked(true);
     }
 

@@ -4,13 +4,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.ColorPalette;
-import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.gui.SimpleVector2;
 
+import static com.darkgran.farstar.Farstar.STAGE_WIDTH;
 import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
 
 /**
@@ -37,15 +38,15 @@ public class PrintToken extends Token implements CardGFX {
 
     @Override
     public void setGlows() {
-        setGlowG(Farstar.ASSET_LIBRARY.getAtlasRegion("glowG-Z"));
-        setGlowY(Farstar.ASSET_LIBRARY.getAtlasRegion("glowY-Z"));
+        setGlowG(AssetLibrary.getInstance().getAtlasRegion("glowG-Z"));
+        setGlowY(AssetLibrary.getInstance().getAtlasRegion("glowY-Z"));
         setGlowOffsetX(-getGlowG().getRegionWidth()/2f+getFrame().getRegionWidth()/2f);
         setGlowOffsetY(-getGlowG().getRegionHeight()/2f+getCardPic().getRegionHeight()/2f);
     }
 
     @Override
     public void setup(BattleCard battleCard, TokenType targetType, SimpleVector2 targetXY) {
-        if (targetXY.x+targetType.getWidth()+5f+TokenType.PRINT.getWidth() > Farstar.STAGE_WIDTH) {
+        if (targetXY.x+targetType.getWidth()+5f+TokenType.PRINT.getWidth() > STAGE_WIDTH) {
             targetXY.x -= targetType.getWidth()+10f+TokenType.PRINT.getWidth();
         }
         super.setup(battleCard, targetType, targetXY);
