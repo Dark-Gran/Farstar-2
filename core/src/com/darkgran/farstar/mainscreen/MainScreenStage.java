@@ -12,7 +12,6 @@ import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.PlayerFactory;
 
 public class MainScreenStage extends ListeningStage {
-    private final PlayerFactory playerFactory = PlayerFactory.getInstance();
     private final SimpleImage2 FSLogo;
     private final VersionInfo versionInfo;
     private final ActorButton solitaryButton = new ActorButton(AssetLibrary.getInstance().getAtlasRegion("solitary"), AssetLibrary.getInstance().getAtlasRegion("solitaryO")){
@@ -78,15 +77,15 @@ public class MainScreenStage extends ListeningStage {
             case SKIRMISH:
                 NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Use F1 for Instructions.", 5, true);
                 battle = new Battle1v1(
-                        playerFactory.getPlayer("LOCAL", 1, 0),
-                        playerFactory.getPlayer("AUTO", 2, 15),
+                        PlayerFactory.getInstance().getPlayer("LOCAL", 1, 0),
+                        PlayerFactory.getInstance().getPlayer("AUTO", 2, 15),
                         battleType
                 );
                 break;
             case SIMULATION:
                 battle = new Battle1v1(
-                        playerFactory.getPlayer("AUTO", 1, 0),
-                        playerFactory.getPlayer("AUTO", 2, 15),
+                        PlayerFactory.getInstance().getPlayer("AUTO", 1, 0),
+                        PlayerFactory.getInstance().getPlayer("AUTO", 2, 15),
                         battleType
                 );
                 NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Game Mode: AI vs AI.", 5);
@@ -94,8 +93,8 @@ public class MainScreenStage extends ListeningStage {
             case SOLITARY:
 
                 battle = new Battle1v1(
-                        playerFactory.getPlayer("LOCAL", 1, 0),
-                        playerFactory.getPlayer("LOCAL", 2, 15),
+                        PlayerFactory.getInstance().getPlayer("LOCAL", 1, 0),
+                        PlayerFactory.getInstance().getPlayer("LOCAL", 2, 15),
                         battleType
                 );
                 NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Game Mode: Local Player vs Local Player.", 5);
