@@ -41,7 +41,7 @@ public class Explainer extends TextInTheBox {
         }
         BitmapFont font = AssetLibrary.getInstance().getAssetManager().get(italicPath, BitmapFont.class);
         flavourOffsetY = textWH.y - ((flavour.equals("") ? 0 : font.getLineHeight()));
-        setupBox(x, y, getWrapWidth()+40f, textWH.y+40f+((flavour.equals("") ? 0 : font.getLineHeight())));
+        setupBox(x, y, getWrapWidth()+40f, textWH.y+40f+((flavour.equals("") ? 0 : font.getLineHeight()*2)));
         centralizeBox();
         //getSimpleBox().setY(getSimpleBox().y-1f);
     }
