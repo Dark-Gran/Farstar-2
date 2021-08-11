@@ -94,7 +94,6 @@ public class RoundManager {
             if (battle.getWhoseTurn() instanceof LocalBattlePlayer) { battle.closeYards(); }
             getBattle().getBattleScreen().getBattleStage().getTurnButton().setDisabled(true);
             battle.getCombatManager().launchCombat();
-            battle.refreshPossibilities();
         }
     }
 

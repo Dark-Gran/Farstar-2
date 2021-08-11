@@ -144,6 +144,8 @@ public class PossibilityAdvisor {
             }
         } else if (!battle.getCombatManager().isActive()){
             battle.getBattleScreen().getBattleStage().getTurnButton().setExtraState(true);
+        } else {
+            battle.getBattleScreen().getBattleStage().getCombatEndButton().setState(2);
         }
     }
 

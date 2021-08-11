@@ -15,6 +15,7 @@ import com.darkgran.farstar.cards.CardType;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public abstract class BattleStage extends ListeningStage {
     private final BattleScreen battleScreen;
@@ -52,7 +53,15 @@ public abstract class BattleStage extends ListeningStage {
             }
         }
     };
-    private final ButtonWithExtraState combatEndButton = new ButtonWithExtraState(AssetLibrary.getInstance().getAtlasRegion("combat-end"), AssetLibrary.getInstance().getAtlasRegion("combat-endO"), AssetLibrary.getInstance().getAtlasRegion("combat-endA"), AssetLibrary.getInstance().getAtlasRegion("combat-endAO")) {
+    private final ButtonWithMultipleStates combatEndButton = new ButtonWithMultipleStates(
+            new ArrayList<>(Arrays.asList(
+                    AssetLibrary.getInstance().getAtlasRegion("combat-end"),
+                    AssetLibrary.getInstance().getAtlasRegion("combat-endO"),
+                    AssetLibrary.getInstance().getAtlasRegion("combat-endA"),
+                    AssetLibrary.getInstance().getAtlasRegion("combat-endAO"),
+                    AssetLibrary.getInstance().getAtlasRegion("combat-endAP"),
+                    AssetLibrary.getInstance().getAtlasRegion("combat-endAPO")
+            )),true) {
         @Override
         public void clicked() {
             battleScreen.hideScreenConceder();
@@ -353,7 +362,7 @@ public abstract class BattleStage extends ListeningStage {
         return turnButton;
     }
 
-    public ButtonWithExtraState getCombatEndButton() { return combatEndButton; }
+    public ButtonWithMultipleStates getCombatEndButton() { return combatEndButton; }
 
     public AbilityPicker getAbilityPicker() { return abilityPicker; }
 

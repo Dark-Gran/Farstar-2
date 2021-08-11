@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 public class ActorButton extends Actor {
     private final TextureRegion imageUp;
     private final TextureRegion imageOver;
-    private final TextureRegion imageDown;
+    private TextureRegion imageDown;
     private boolean disabled = false;
     private final ClickListener clickListener = new ClickListener(){
         @Override
@@ -66,5 +66,9 @@ public class ActorButton extends Actor {
 
     public ClickListener getClickListener() {
         return clickListener;
+    }
+
+    protected void setImageDown(TextureRegion imageDown) {
+        this.imageDown = imageDown;
     }
 }

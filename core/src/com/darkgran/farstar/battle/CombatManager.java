@@ -48,7 +48,8 @@ public abstract class CombatManager {
                 ((Bot) battle.getWhoseTurn()).newCombat();
             } else {
                 battleStage.enableCombatEnd();
-                battleStage.getCombatEndButton().setExtraState(duels.size()>0);
+                battleStage.getCombatEndButton().setState(duels.size()>0 ? 1 : 0);
+                battle.getRoundManager().getPossibilityAdvisor().refresh(battle.getWhoseTurn(), battle);
                 NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Choose Your Attacks.", 3);
                 //getBattle().getBattleScreen().getNotificationManager().newNotification(Notification.NotificationType.MIDDLE, "ATTACK", 3);
             }
@@ -65,8 +66,8 @@ public abstract class CombatManager {
                     duels.put((FleetToken) token, new DuelManager.AttackInfo(token, targetToken));
                 }
             }
+            battleStage.getCombatEndButton().setState(duels.size()>0 ? 1 : 0);
             if (token.getCard().getBattlePlayer() instanceof LocalBattlePlayer) { battle.getRoundManager().getPossibilityAdvisor().refresh(token.getCard().getBattlePlayer(), battle); }
-            battleStage.getCombatEndButton().setExtraState(duels.size()>0);
         }
     }
 
