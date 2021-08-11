@@ -21,10 +21,10 @@ import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
 
 public class HandToken extends AnchoredToken implements CardGFX, FakingTokens { //possibly in-future: use a slightly smaller version for the top side of the table (to simulate some visual perspective), but only if it's not a LocalPlayer (ie. outside Simulation)
     private Color fontColor = ColorPalette.BLACK;
-    BitmapFont nameFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/orbitron_name", TokenType.PRINT, false)+".fnt");
-    BitmapFont tierFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_tier", TokenType.PRINT, false)+".fnt");
-    BitmapFont descNFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_desc", TokenType.PRINT, false)+".fnt");
-    BitmapFont descBFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_descB", TokenType.PRINT, false)+".fnt");
+    BitmapFont nameFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/orbitron_name", TokenType.FLEET, false)+".fnt");
+    BitmapFont tierFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_tier", TokenType.FLEET, false)+".fnt");
+    BitmapFont descNFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_desc", TokenType.FLEET, false)+".fnt");
+    BitmapFont descBFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_descB", TokenType.FLEET, false)+".fnt");
     private TextureRegion cardPic;
     Matrix4 oldMX = null;
     Matrix4 mx; //in-future: try Affine2 instead of transformation matrix? (see SuperScreen)
