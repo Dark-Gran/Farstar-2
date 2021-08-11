@@ -73,7 +73,7 @@ public class MainScreenStage extends ListeningStage {
     private void launchBattleScreen(BattleType battleType) { //in-future: rework for "custom players"
         System.out.println("Starting "+battleType.getName()+".");
         Battle battle = null;
-        switch (battleType) {
+        switch (battleType) { //in-future: BattleFactory
             case SKIRMISH:
                 NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Use F1 for Instructions.", 5, true);
                 battle = new Battle1v1(
