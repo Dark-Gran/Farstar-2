@@ -7,8 +7,8 @@ import com.darkgran.farstar.gui.AssetLibrary;
 
 public class Farstar extends Game {
 	public static final String APP_VERSION_NAME = "v0.3 (Alpha)";
-	public static final int STAGE_WIDTH = 1920;
-	public static final int STAGE_HEIGHT = 960;
+	public static final int STAGE_WIDTH = 1920; //move to SuperScreen?
+	public static final int STAGE_HEIGHT = 960; //move to SuperScreen?
 	public static final int DEFAULT_FPS = 60;
 	private SuperScreen superScreen;
 	private final InputMultiplexer inputMultiplexer = new InputMultiplexer();
