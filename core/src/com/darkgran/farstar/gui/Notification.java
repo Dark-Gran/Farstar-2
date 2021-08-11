@@ -5,8 +5,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.util.*;
+
+import static com.darkgran.farstar.Farstar.STAGE_HEIGHT;
+import static com.darkgran.farstar.Farstar.STAGE_WIDTH;
 
 /**
  *  Stylized on-screen message.
@@ -14,8 +16,8 @@ import com.darkgran.farstar.util.*;
  */
 public class Notification extends TextInTheBox {
     public enum NotificationType {
-        BOT_LEFT(Farstar.STAGE_WIDTH/12f, Farstar.STAGE_HEIGHT/5f, Farstar.STAGE_WIDTH * 0.36f, 50f, -70f, "bahnschrift30"),
-        MIDDLE(Farstar.STAGE_WIDTH/2f, Farstar.STAGE_HEIGHT/2f, Farstar.STAGE_WIDTH * 0.2f, 80f, 0f, "orbitron36");
+        BOT_LEFT(STAGE_WIDTH/12f, STAGE_HEIGHT/5f, STAGE_WIDTH * 0.36f, 50f, -70f, "bahnschrift30"),
+        MIDDLE(STAGE_WIDTH/2f, STAGE_HEIGHT/2f, STAGE_WIDTH * 0.2f, 80f, 0f, "orbitron36");
 
         private final float x;
         private final float y;
