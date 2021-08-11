@@ -30,7 +30,7 @@ public class PossibilityAdvisor {
                 possibilities.add(new PossibilityInfo(battlePlayer.getMs(), null));
             }
             for (BattleCard battleCard : battlePlayer.getHand()) {
-                if ((!inCombat || (battleCard.isTactic() && tacticalPhase)) && isPossibleToDeploy(battlePlayer, whoseTurn, battleCard, true, battle, false)) {
+                if (((!inCombat && !battleCard.isTactic()) || (battleCard.isTactic() && tacticalPhase)) && isPossibleToDeploy(battlePlayer, whoseTurn, battleCard, true, battle, false)) {
                     possibilities.add(new PossibilityInfo(battleCard, battlePlayer.getHand().getCardListMenu()));
                 }
             }
