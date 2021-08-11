@@ -79,7 +79,7 @@ public class Explainer extends TextInTheBox {
             else { first = false; }
             switch (battleCard.getCardInfo().getCardType()) {
                 case TACTIC:
-                    str.append("Tactic:\nTactics may be played both in Your Turn and in the Tactical Phase.\n");
+                    str.append("Tactic:\nTactics may be played both in Your Turn and in the Tactical Phase.\nUsually the best choice is to keep them for the Tactical Phase.\n");
                     break;
                 case SUPPORT:
                     str.append("Support:\nYou can Deploy Supports next to Your Mothership.\n");
@@ -121,7 +121,7 @@ public class Explainer extends TextInTheBox {
         if (USEpresent) {
             if (!first) { str.append("\n"); }
             else { first = false; }
-            str.append("Usable Ability:\nMay be used only once per Turn.             \n");
+            str.append("Usable Ability:\nMay be used only once per Turn and only in Your Turn.\n");
         }
         if (!FSpresent) { FSpresent = AbilityManager.upgradesFirstStrike(battleCard); }
         if (FSpresent) {
