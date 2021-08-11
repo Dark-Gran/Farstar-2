@@ -15,8 +15,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /** Responsible for all shot animations. (see AnimationManager for other) */
 public class ShotManager {
-    private static ShotManager shotManager = null;
-
     public enum ShotType {
         BULLET("shot-bullet", 4000f),
         BLAST("shot-beam", 2000f);
@@ -215,11 +213,11 @@ public class ShotManager {
     private final ArrayList<AniAttack> aniAttacks = new ArrayList<>();
 
     private ShotManager() {}
+    private static class InstanceHolder {
+        private final static ShotManager shotManager = new ShotManager();
+    }
     public static ShotManager getInstance() {
-        if (shotManager == null) {
-            shotManager = new ShotManager();
-        }
-        return shotManager;
+        return InstanceHolder.shotManager;
     }
 
     public void newAttack(Token att, Token def, int dmg, TechType techType, int numberOfShots) {

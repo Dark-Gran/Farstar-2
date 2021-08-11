@@ -2,7 +2,6 @@ package com.darkgran.farstar.gui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.gui.tokens.TokenType;
 
 import java.util.ArrayList;
@@ -11,8 +10,6 @@ import java.util.ArrayList;
  * Handles all png-animations except for Attacks/Shots (see ShotManager).
  */
 public class AnimationManager {
-    private static AnimationManager animationManager = null;
-
     private static class DeathAnimation {
         private final TextureRegion deathPic;
         private final float x;
@@ -46,12 +43,11 @@ public class AnimationManager {
     private final ArrayList<DeathAnimation> deathAnimations = new ArrayList<>();
 
     private AnimationManager() {}
-
+    private static class InstanceHolder {
+        private static final AnimationManager animationManager = new AnimationManager();
+    }
     public static AnimationManager getInstance() {
-        if (animationManager == null) {
-            animationManager = new AnimationManager();
-        }
-        return animationManager;
+        return InstanceHolder.animationManager;
     }
 
     public void newDeathEffect(float x, float y, TokenType tokenType) {
