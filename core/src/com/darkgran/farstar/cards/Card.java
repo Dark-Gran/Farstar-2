@@ -23,11 +23,11 @@ public abstract class Card {
         cardInfo = instanceCardInfo(originalInfo);
     }
 
-    public void refreshToken(boolean def, boolean off, boolean abi) { }
-
     private CardInfo instanceCardInfo(CardInfo cardInfo) {
-        return new CardInfo(cardInfo.getId(), cardInfo.getName(), cardInfo.getCulture(), cardInfo.getDescription(), cardInfo.getCardType(), cardInfo.getCardRarity(), cardInfo.getTier(), cardInfo.getEnergy(), cardInfo.getMatter(), cardInfo.getOffense(), cardInfo.getDefense(), cardInfo.getOffenseType(), cardInfo.getDefenseType(), cardInfo.getAbilities(), cardInfo.getAnimatedShots());
+        return new CardInfo(cardInfo.getId(), cardInfo.getName(), cardInfo.getCulture(), cardInfo.getDescription(), cardInfo.getCardType(), cardInfo.getCardRarity(), cardInfo.getTier(), cardInfo.getEnergy(), cardInfo.getMatter(), cardInfo.getOffense(), cardInfo.getDefense(), cardInfo.getOffenseType(), cardInfo.getDefenseType(), cardInfo.getAbilities(), cardInfo.getAnimatedShots(), cardInfo.getFlavour());
     }
+
+    public void refreshToken(boolean def, boolean off, boolean abi) { }
 
     public boolean isPurelyOffensiveChange() {
         boolean foundOffense = false;

@@ -1,26 +1,24 @@
 package com.darkgran.farstar.gui.tokens;
 
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.cards.AbilityStarter;
 import com.darkgran.farstar.cards.CardType;
-import com.darkgran.farstar.gui.ColorPalette;
+import com.darkgran.farstar.gui.*;
 import com.darkgran.farstar.cards.AbilityInfo;
 import com.darkgran.farstar.cards.Effect;
 import com.darkgran.farstar.battle.players.BattleCard;
-import com.darkgran.farstar.gui.TextDrawer;
-import com.darkgran.farstar.gui.TextInTheBox;
-import com.darkgran.farstar.gui.SimpleVector2;
 
 public class Explainer extends TextInTheBox {
-
-    public Explainer(Color fontColor, Color boxColor, String fontPath, String text, boolean noBox) {
-        super(fontColor, boxColor, fontPath, text, noBox);
-    }
+    private final String italicPath = "fonts/explainerI.fnt";
+    private String explanation = "";
+    private String flavour = "";
+    private float flavourOffsetY = 0f;
 
     public Explainer() {
-        super(ColorPalette.LIGHT, ColorPalette.changeAlpha(ColorPalette.DARK, 0.6f), "fonts/bahnschrift26.fnt", "", false);
+        super(ColorPalette.LIGHT, ColorPalette.changeAlpha(ColorPalette.DARK, 0.6f), "fonts/explainerN.fnt", "", false);
         setWrapWidth(400f);
         setWrap(true);
     }
@@ -31,25 +29,40 @@ public class Explainer extends TextInTheBox {
         if (this.x+this.getSimpleBox().getWidth() > Farstar.STAGE_WIDTH-130f) {
             this.x = x - this.getSimpleBox().getWidth();
         }
+        this.x = Math.round(this.x);
+        this.y = Math.round(this.y);
         setupBox();
     }
 
     private void setupBox() {
-        SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), getText(), getWrapWidth(), getWrap());
+        SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), explanation, getWrapWidth(), getWrap());
         if (textWH.x < getWrapWidth()) {
             x = (x + (getWrapWidth() - textWH.x)/2);
         }
-        setupBox(x, y, getWrapWidth()+40f, textWH.y+40f);
+        SimpleVector2 flavourWH = TextDrawer.getTextWH(AssetLibrary.getInstance().getAssetManager().get(italicPath, BitmapFont.class), flavour, getWrapWidth(), getWrap());
+        SimpleVector2 oneLineOfFlavourWH = TextDrawer.getTextWH(AssetLibrary.getInstance().getAssetManager().get(italicPath, BitmapFont.class), "...", getWrapWidth(), getWrap());
+        flavourOffsetY = textWH.y - ((flavour.equals("") ? 0 : oneLineOfFlavourWH.y));
+        setupBox(x, y, getWrapWidth()+40f, textWH.y+40f+((flavour.equals("") ? 0 : flavourWH.y)));
         centralizeBox();
         //getSimpleBox().setY(getSimpleBox().y-1f);
     }
 
     public void refreshText(BattleCard battleCard) {
-        setText(getExplanation(battleCard));
+        explanation = getMainContent(battleCard);
+        flavour = getFlavourContent(battleCard);
+        setText(explanation+flavour);
         setupBox();
     }
 
-    protected String getExplanation(BattleCard battleCard) {
+    @Override
+    public void drawText(Batch batch) {
+        if (!getFontPath().equals("")) {
+            drawText(getFont(), batch, x, y, explanation, getFontColor());
+            drawText(AssetLibrary.getInstance().getAssetManager().get(italicPath, BitmapFont.class), batch, x, y-flavourOffsetY, flavour, getFontColor());
+        }
+    }
+
+    protected String getMainContent(BattleCard battleCard) {
         StringBuilder str = new StringBuilder();
         boolean first = true;
         if (CardType.needsDefense(battleCard.getCardInfo().getCardType()) && battleCard.getDamage() > 0) {
@@ -120,5 +133,13 @@ public class Explainer extends TextInTheBox {
         return str.toString();
     }
 
+    protected String getFlavourContent(BattleCard battleCard) {
+        StringBuilder str = new StringBuilder();
+        String flavour = battleCard.getCardInfo().getFlavour();
+        if (!flavour.equals("")) {
+            str.append("\n\"").append(flavour).append("\"");
+        }
+        return str.toString();
+    }
 
 }

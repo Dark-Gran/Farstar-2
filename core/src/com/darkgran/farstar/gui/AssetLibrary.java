@@ -114,7 +114,7 @@ public class AssetLibrary {
         bmpParams.minFilter = Texture.TextureFilter.Linear;
         bmpParams.magFilter = Texture.TextureFilter.Linear;
         assetManager.load("fonts/arial15.fnt", BitmapFont.class, bmpParams);
-        //Bahnschrift
+        //Bahnschrift/Barlow (names may not be correct)
         assetManager.load("fonts/bahnschrift24.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift26.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/bahnschrift30.fnt", BitmapFont.class, bmpParams);
@@ -146,6 +146,9 @@ public class AssetLibrary {
         assetManager.load("fonts/barlow_tierF.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/barlow_tierFK.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/barlow_tierZ.fnt", BitmapFont.class, bmpParams);
+        //Other (Hiero)
+        assetManager.load("fonts/explainerI.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/explainerN.fnt", BitmapFont.class, bmpParams); //barlow26
     }
 
     private void loadTextures() {

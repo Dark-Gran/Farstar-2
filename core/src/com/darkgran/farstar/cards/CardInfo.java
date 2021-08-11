@@ -18,8 +18,9 @@ public class CardInfo {
     private TechType defenseType;
     private final ArrayList<AbilityInfo> abilities;
     private final int animatedShots; //in-future: enable "upgrade" effects to change animatedShots
+    private final String flavour;
 
-    public CardInfo(byte id, String name, CardCulture culture, String description, CardType cardType, CardRarity cardRarity, int tier, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType, ArrayList<AbilityInfo> abilities, int animatedShots) {
+    public CardInfo(byte id, String name, CardCulture culture, String description, CardType cardType, CardRarity cardRarity, int tier, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType, ArrayList<AbilityInfo> abilities, int animatedShots, String flavour) {
         this.id = id;
         this.name = name;
         this.culture = culture;
@@ -35,6 +36,7 @@ public class CardInfo {
         this.abilities = instanceAbilities(abilities);
         this.tier = tier;
         this.animatedShots = animatedShots;
+        this.flavour = flavour;
     }
 
     public CardInfo() {
@@ -53,6 +55,7 @@ public class CardInfo {
         this.defenseType = TechType.INFERIOR;
         this.abilities = new ArrayList<>();
         this.animatedShots = 0;
+        this.flavour = "";
     }
 
     private ArrayList<AbilityInfo> instanceAbilities(ArrayList<AbilityInfo> abilities) {
@@ -115,5 +118,9 @@ public class CardInfo {
 
     public int getAnimatedShots() {
         return animatedShots;
+    }
+
+    public String getFlavour() {
+        return flavour;
     }
 }

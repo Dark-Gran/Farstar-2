@@ -28,7 +28,8 @@
         }
       ]
     }],
-    "animatedShots": 1
+    "animatedShots": 1,
+    "flavour": ""
   },
   {
     "id": 1,
@@ -45,7 +46,8 @@
     "offenseType": "KINETIC",
     "defenseType": "KINETIC",
     "abilities": [],
-    "animatedShots": 2
+    "animatedShots": 2,
+    "flavour": ""
   },
   {
     "id": 2,
@@ -62,7 +64,8 @@
     "offenseType": "KINETIC",
     "defenseType": "PARTICLE",
     "abilities": [],
-    "animatedShots": 2
+    "animatedShots": 2,
+    "flavour": ""
   },
   {
     "id": 3,
@@ -79,7 +82,8 @@
     "offenseType": "THERMAL",
     "defenseType": "KINETIC",
     "abilities": [],
-    "animatedShots": 2
+    "animatedShots": 3,
+    "flavour": ""
   },
   {
     "id": 4,
@@ -89,10 +93,10 @@
     "cardType": "YARDPRINT",
     "cardRarity": "IRON",
     "tier": 4,
-    "energy": 4,
-    "matter": 4,
+    "energy": 5,
+    "matter": 5,
     "offense": 4,
-    "defense": 4,
+    "defense": 5,
     "offenseType": "PARTICLE",
     "defenseType": "THERMAL",
     "abilities": [{
@@ -107,7 +111,8 @@
         }
       ]
     }],
-    "animatedShots": 2
+    "animatedShots": 3,
+    "flavour": ""
   },
   {
     "id": 5,
@@ -117,10 +122,10 @@
     "cardType": "YARDPRINT",
     "cardRarity": "IRON",
     "tier": 5,
-    "energy": 5,
-    "matter": 5,
-    "offense": 5,
-    "defense": 5,
+    "energy": 6,
+    "matter": 7,
+    "offense": 6,
+    "defense": 6,
     "offenseType": "THERMAL",
     "defenseType": "PARTICLE",
     "abilities": [{
@@ -135,20 +140,21 @@
         }
       ]
     }],
-    "animatedShots": 2
+    "animatedShots": 2,
+    "flavour": ""
   },
   {
     "id": 6,
     "name": "Reactive Armor",
     "culture": "HUMAN",
-    "description": "Give +1 Kinetic Shield\nto an allied ship.",
+    "description": "Give +2 Defense to an allied ship\nand change its Defense to Kinetic.",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
     "energy": 0,
     "matter": 1,
     "offense": 0,
-    "defense": 1,
+    "defense": 2,
     "offenseType": "NONE",
     "defenseType": "KINETIC",
     "abilities": [{
@@ -163,25 +169,26 @@
         },
         {
           "effectType": "CHANGE_STAT",
-          "effectInfo": ["DEFENSE", 1],
+          "effectInfo": ["DEFENSE", 2],
           "duration": -1
         }
       ]
     }],
-    "animatedShots": 0
+    "animatedShots": 0,
+    "flavour": ""
   },
   {
     "id": 7,
     "name": "Heat Sink",
     "culture": "HUMAN",
-    "description": "Give +1 Thermal Shield\nto an allied ship.",
+    "description": "Give +2 Defense to an allied ship\nand change its Defense to Thermal.",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
     "energy": 0,
     "matter": 1,
     "offense": 0,
-    "defense": 1,
+    "defense": 2,
     "offenseType": "NONE",
     "defenseType": "THERMAL",
     "abilities": [{
@@ -196,25 +203,26 @@
         },
         {
           "effectType": "CHANGE_STAT",
-          "effectInfo": ["DEFENSE", 1],
+          "effectInfo": ["DEFENSE", 2],
           "duration": -1
         }
       ]
     }],
-    "animatedShots": 0
+    "animatedShots": 0,
+    "flavour": ""
   },
   {
     "id": 8,
     "name": "Radiation Coils",
     "culture": "HUMAN",
-    "description": "Give +1 Particle Shield\nto an allied ship.",
+    "description": "Give +2 Defense to an allied ship\nand change its Defense to Particle.",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
     "energy": 0,
     "matter": 1,
     "offense": 0,
-    "defense": 1,
+    "defense": 2,
     "offenseType": "NONE",
     "defenseType": "PARTICLE",
     "abilities": [{
@@ -229,24 +237,25 @@
         },
         {
           "effectType": "CHANGE_STAT",
-          "effectInfo": ["DEFENSE", 1],
+          "effectInfo": ["DEFENSE", 2],
           "duration": -1
         }
       ]
     }],
-    "animatedShots": 0
+    "animatedShots": 0,
+    "flavour": ""
   },
   {
     "id": 9,
     "name": "Mass Drivers",
     "culture": "HUMAN",
-    "description": "Give +1 Kinetic Weapons\nto an allied ship.",
+    "description": "Give +2 Attack to an allied ship\nand change its Attack to Kinetic.",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
     "energy": 0,
     "matter": 1,
-    "offense": 1,
+    "offense": 2,
     "defense": 0,
     "offenseType": "KINETIC",
     "defenseType": "NONE",
@@ -262,24 +271,25 @@
         },
         {
           "effectType": "CHANGE_STAT",
-          "effectInfo": ["OFFENSE", 1],
+          "effectInfo": ["OFFENSE", 2],
           "duration": -1
         }
       ]
     }],
-    "animatedShots": 0
+    "animatedShots": 0,
+    "flavour": ""
   },
   {
     "id": 10,
     "name": "Plasma Railguns",
     "culture": "HUMAN",
-    "description": "Give +1 Thermal Weapons\nto an allied ship.",
+    "description": "Give +2 Attack to an allied ship\nand change its Attack to Thermal.",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
     "energy": 0,
     "matter": 1,
-    "offense": 1,
+    "offense": 2,
     "defense": 0,
     "offenseType": "THERMAL",
     "defenseType": "NONE",
@@ -295,24 +305,25 @@
         },
         {
           "effectType": "CHANGE_STAT",
-          "effectInfo": ["OFFENSE", 1],
+          "effectInfo": ["OFFENSE", 2],
           "duration": -1
         }
       ]
     }],
-    "animatedShots": 0
+    "animatedShots": 0,
+    "flavour": ""
   },
   {
     "id": 11,
     "name": "Phion Exciter",
     "culture": "HUMAN",
-    "description": "Give +1 Particle Weapons\nto an allied ship.",
+    "description": "Give +2 Attack to an allied ship\nand change its Attack to Particle.",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
     "energy": 0,
     "matter": 1,
-    "offense": 1,
+    "offense": 2,
     "defense": 0,
     "offenseType": "PARTICLE",
     "defenseType": "NONE",
@@ -328,18 +339,19 @@
         },
         {
           "effectType": "CHANGE_STAT",
-          "effectInfo": ["OFFENSE", 1],
+          "effectInfo": ["OFFENSE", 2],
           "duration": -1
         }
       ]
     }],
-    "animatedShots": 0
+    "animatedShots": 0,
+    "flavour": ""
   },
   {
     "id": 12,
     "name": "Kinetic Switch",
     "culture": "NEUTRAL",
-    "description": "Change Weapon and Shield Type\nof an allied ship to Kinetic\nfor 1 Turn.",
+    "description": "Change Attack and Defense\nof an allied ship to Kinetic\nfor 1 Turn.",
     "cardType": "TACTIC",
     "cardRarity": "IRON",
     "tier": 1,
@@ -366,13 +378,14 @@
         }
       ]
     }],
-    "animatedShots": 0
+    "animatedShots": 0,
+    "flavour": ""
   },
   {
     "id": 13,
     "name": "Thermal Switch",
     "culture": "NEUTRAL",
-    "description": "Change Weapon and Shield Type\nof an allied ship to Thermal\nfor 1 Turn.",
+    "description": "Change Attack and Defense\nof an allied ship to Thermal\nfor 1 Turn.",
     "cardType": "TACTIC",
     "cardRarity": "IRON",
     "tier": 1,
@@ -399,13 +412,14 @@
         }
       ]
     }],
-    "animatedShots": 0
+    "animatedShots": 0,
+    "flavour": ""
   },
   {
     "id": 14,
     "name": "Particle Switch",
     "culture": "NEUTRAL",
-    "description": "Change Weapon and Shield Type\nof an allied ship to Particle\nfor 1 Turn.",
+    "description": "Change Attack and Defense\nof an allied ship to Particle\nfor 1 Turn.",
     "cardType": "TACTIC",
     "cardRarity": "IRON",
     "tier": 1,
@@ -432,7 +446,8 @@
         }
       ]
     }],
-    "animatedShots": 0
+    "animatedShots": 0,
+    "flavour": ""
   },
   {
     "id": 15,
@@ -463,13 +478,14 @@
         }
       ]
     }],
-    "animatedShots": 0
+    "animatedShots": 0,
+    "flavour": ""
   },
   {
     "id": 16,
     "name": "Furnace",
     "culture": "HUMAN",
-    "description": "Gain 1 Energy.",
+    "description": "Gain 2 Energy.",
     "cardType": "ACTION",
     "cardRarity": "IRON",
     "tier": 1,
@@ -486,12 +502,13 @@
       "effects": [
         {
           "effectType": "CHANGE_RESOURCE",
-          "effectInfo": ["ENERGY", 1],
+          "effectInfo": ["ENERGY", 2],
           "duration": -1
         }
       ]
     }],
-    "animatedShots": 0
+    "animatedShots": 0,
+    "flavour": ""
   },
   {
     "id": 17,
@@ -502,7 +519,7 @@
     "cardRarity": "BRONZE",
     "tier": 1,
     "energy": 3,
-    "matter": 2,
+    "matter": 1,
     "offense": 5,
     "defense": 0,
     "offenseType": "KINETIC",
@@ -519,7 +536,8 @@
         }
       ]
     }],
-    "animatedShots": 1
+    "animatedShots": 1,
+    "flavour": ""
   },
   {
     "id": 18,
@@ -529,8 +547,8 @@
     "cardType": "ACTION",
     "cardRarity": "BRONZE",
     "tier": 1,
-    "energy": 2,
-    "matter": 2,
+    "energy": 3,
+    "matter": 0,
     "offense": 2,
     "defense": 0,
     "offenseType": "THERMAL",
@@ -547,7 +565,8 @@
         }
       ]
     }],
-    "animatedShots": 1
+    "animatedShots": 3,
+    "flavour": ""
   },
   {
     "id": 19,
@@ -575,7 +594,8 @@
         }
       ]
     }],
-    "animatedShots": 0
+    "animatedShots": 0,
+    "flavour": ""
   },
   {
     "id": 20,
@@ -585,10 +605,10 @@
     "cardType": "SUPPORT",
     "cardRarity": "BRONZE",
     "tier": 1,
-    "energy": 2,
-    "matter": 3,
+    "energy": 1,
+    "matter": 2,
     "offense": 0,
-    "defense": 3,
+    "defense": 2,
     "offenseType": "NONE",
     "defenseType": "KINETIC",
     "abilities": [{
@@ -616,12 +636,13 @@
         "effects": [
           {
             "effectType": "CHANGE_RESOURCE",
-            "effectInfo": ["MATTER", 2],
+            "effectInfo": ["MATTER", 1],
             "duration": -1
           }
         ]
       }],
-    "animatedShots": 0
+    "animatedShots": 0,
+    "flavour": ""
   },
   {
     "id": 21,
@@ -656,11 +677,12 @@
         "effects": [
           {
             "effectType": "CHANGE_RESOURCE",
-            "effectInfo": ["MATTER", 2],
+            "effectInfo": ["MATTER", 1],
             "duration": -1
           }
         ]
       }],
-    "animatedShots": 0
+    "animatedShots": 0,
+    "flavour": ""
   }
 ]
