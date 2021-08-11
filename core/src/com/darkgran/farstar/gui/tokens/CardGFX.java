@@ -7,8 +7,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Align;
 import com.darkgran.farstar.cards.Card;
 import com.darkgran.farstar.gui.AssetLibrary;
-import com.darkgran.farstar.gui.ColorPalette;
-import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.cards.CardCulture;
 import com.darkgran.farstar.cards.CardType;
 import com.darkgran.farstar.gui.TextDrawer;
@@ -21,6 +19,9 @@ public interface CardGFX extends TextDrawer {
     Card getCard();
     TokenType getTokenType();
     boolean isBackside();
+    BitmapFont getNameFont(TokenType tokenType);
+    BitmapFont getTierFont(TokenType tokenType);
+    BitmapFont getDescFont(TokenType tokenType, boolean bold);
 
     @Override
     default float getWrapWidth() { return getCardPic().getRegionWidth(); }
@@ -37,13 +38,47 @@ public interface CardGFX extends TextDrawer {
         }
     }
 
-    default void drawCardGFX(Batch batch, float x, float y, TokenType tokenType) {
+    default void drawCardGFX(Batch batch, float x, float y, TokenType tokenType) { //in-future: optimize
         if (getCardPic() != null) {
             batch.draw(getCardPic(), x, y);
             if (getCard() != null && !isBackside()) {
+                //Name
                 drawText(getNameFont(tokenType), batch, x, y+getCardPic().getRegionHeight()*0.516f, getCardName(getCard()), Align.center);
+                //Tier
                 drawText(getTierFont(tokenType), batch, x, y+getCardPic().getRegionHeight() * (getCardType(getCard()) == CardType.MS ? 0.458f : 0.453f), getTierName(getCardTier(getCard()), getCardType(getCard())), Align.center);
-                drawText(getDescFont(tokenType), batch, x, y+getCardPic().getRegionHeight()*0.37f, getCardDescription(getCard()), Align.center);
+                //Description
+                BitmapFont boldFont = getDescFont(tokenType, true);
+                BitmapFont normalFont = getDescFont(tokenType, false);
+                float pos = y+getCardPic().getRegionHeight()*0.37f;
+                String head = getCardDescriptionHead(getCard());
+                if (!head.equals("")) {
+                    drawText(
+                            boldFont,
+                            batch,
+                            x,
+                            pos,
+                            head,
+                            Align.center
+                    );
+                    pos -= TextDrawer.getTextWH(boldFont, getCardDescriptionHead(getCard())).y + (boldFont.getLineHeight() * 0.3f);
+                }
+                drawText(
+                        normalFont,
+                        batch,
+                        x,
+                        pos,
+                        getCardDescriptionMain(getCard()),
+                        Align.center
+                );
+                pos -= TextDrawer.getTextWH(normalFont, getCardDescriptionMain(getCard())).y+(boldFont.getLineHeight()*0.3f);
+                drawText(
+                        boldFont,
+                        batch,
+                        x,
+                        pos,
+                        getCardDescriptionFoot(getCard()),
+                        Align.center
+                );
             }
         }
     }
@@ -83,23 +118,20 @@ public interface CardGFX extends TextDrawer {
         return r;
     }
 
-    default BitmapFont getNameFont(TokenType tokenType) {
-        return AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/orbitron_name", tokenType, false)+".fnt");
-    }
-
-    default BitmapFont getTierFont(TokenType tokenType) { //barlow Z>FK>F 26>20>18
-        return AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_tier", tokenType, false)+".fnt");
-    }
-    default BitmapFont getDescFont(TokenType tokenType) {
-        return AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_desc", tokenType, false)+".fnt");
-    }
-
     default String getCardName(Card card) {
         return card.getCardInfo().getName();
     }
 
-    default String getCardDescription(Card card) {
+    default String getCardDescriptionHead(Card card) {
+        return card.getCardInfo().getDescriptionHead();
+    }
+
+    default String getCardDescriptionMain(Card card) {
         return card.getCardInfo().getDescription();
+    }
+
+    default String getCardDescriptionFoot(Card card) {
+        return card.getCardInfo().getDescriptionFoot();
     }
 
     default int getCardTier(Card card) {

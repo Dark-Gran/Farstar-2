@@ -2,6 +2,7 @@ package com.darkgran.farstar.gui.tokens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.darkgran.farstar.gui.AssetLibrary;
@@ -22,6 +23,10 @@ public class PrintToken extends Token implements CardGFX {
     private TextureRegion cardPic;
     private TokenType targetType;
     private SimpleVector2 targetXY = new SimpleVector2(0, 0);
+    BitmapFont nameFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/orbitron_name", TokenType.PRINT, false)+".fnt");
+    BitmapFont tierFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_tier", TokenType.PRINT, false)+".fnt");
+    BitmapFont descNFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_desc", TokenType.PRINT, false)+".fnt");
+    BitmapFont descBFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_descB", TokenType.PRINT, false)+".fnt");
 
     public PrintToken(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu, boolean connectCard) {
         super(battleCard, x, y, battleStage, cardListMenu, TokenType.PRINT, false, connectCard);
@@ -107,6 +112,21 @@ public class PrintToken extends Token implements CardGFX {
     }
 
     @Override
+    public BitmapFont getNameFont(TokenType tokenType) {
+        return nameFont;
+    }
+
+    @Override
+    public BitmapFont getTierFont(TokenType tokenType) {
+        return tierFont;
+    }
+
+    @Override
+    public BitmapFont getDescFont(TokenType tokenType, boolean bold) {
+        return bold ? descBFont : descNFont;
+    }
+
+    @Override
     public Color getFontColor() {
         return fontColor;
     }
@@ -115,4 +135,6 @@ public class PrintToken extends Token implements CardGFX {
     public void setFontColor(Color fontColor) {
         this.fontColor = fontColor;
     }
+
+
 }

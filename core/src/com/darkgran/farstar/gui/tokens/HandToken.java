@@ -2,6 +2,7 @@ package com.darkgran.farstar.gui.tokens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
@@ -20,6 +21,10 @@ import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
 
 public class HandToken extends AnchoredToken implements CardGFX, FakingTokens { //possibly in-future: use a slightly smaller version for the top side of the table (to simulate some visual perspective), but only if it's not a LocalPlayer (ie. outside Simulation)
     private Color fontColor = ColorPalette.BLACK;
+    BitmapFont nameFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/orbitron_name", TokenType.PRINT, false)+".fnt");
+    BitmapFont tierFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_tier", TokenType.PRINT, false)+".fnt");
+    BitmapFont descNFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_desc", TokenType.PRINT, false)+".fnt");
+    BitmapFont descBFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_descB", TokenType.PRINT, false)+".fnt");
     private TextureRegion cardPic;
     Matrix4 oldMX = null;
     Matrix4 mx; //in-future: try Affine2 instead of transformation matrix? (see SuperScreen)
@@ -170,4 +175,18 @@ public class HandToken extends AnchoredToken implements CardGFX, FakingTokens { 
         return !(getCard().getBattlePlayer() instanceof LocalBattlePlayer || getBattleStage().getBattleScreen().getBattleType() == BattleType.SIMULATION);
     }
 
+    @Override
+    public BitmapFont getNameFont(TokenType tokenType) {
+        return nameFont;
+    }
+
+    @Override
+    public BitmapFont getTierFont(TokenType tokenType) {
+        return tierFont;
+    }
+
+    @Override
+    public BitmapFont getDescFont(TokenType tokenType, boolean bold) {
+        return bold ? descBFont : descNFont;
+    }
 }

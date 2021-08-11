@@ -41,7 +41,7 @@ public class AbilityPickerOption extends PrintToken {
     }
 
     @Override
-    public String getCardDescription(Card card) {
+    public String getCardDescriptionMain(Card card) {
         return optionDescription;
     }
 

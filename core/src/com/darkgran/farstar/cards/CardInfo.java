@@ -6,7 +6,9 @@ public class CardInfo {
     private final byte id;
     private final String name;
     private final CardCulture culture;
+    private String descriptionHead;
     private String description;
+    private String descriptionFoot;
     private final CardType cardType;
     private final CardRarity cardRarity;
     private final int tier;
@@ -20,11 +22,13 @@ public class CardInfo {
     private final int animatedShots; //in-future: enable "upgrade" effects to change animatedShots
     private final String flavour;
 
-    public CardInfo(byte id, String name, CardCulture culture, String description, CardType cardType, CardRarity cardRarity, int tier, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType, ArrayList<AbilityInfo> abilities, int animatedShots, String flavour) {
+    public CardInfo(byte id, String name, CardCulture culture, String descriptionHead, String description, String descriptionFoot, CardType cardType, CardRarity cardRarity, int tier, int energy, int matter, int offense, int defense, TechType offenseType, TechType defenseType, ArrayList<AbilityInfo> abilities, int animatedShots, String flavour) {
         this.id = id;
         this.name = name;
         this.culture = culture;
+        this.descriptionHead = descriptionHead;
         this.description = description;
+        this.descriptionFoot = descriptionFoot;
         this.cardType = cardType;
         this.cardRarity = cardRarity;
         this.energy = energy;
@@ -43,7 +47,9 @@ public class CardInfo {
         this.id = 0;
         this.name = "X";
         this.culture = CardCulture.NEUTRAL;
+        this.descriptionHead = "";
         this.description = "";
+        this.descriptionFoot = "";
         this.cardType = CardType.ACTION;
         this.cardRarity = CardRarity.IRON;
         this.tier = 0;
@@ -68,6 +74,22 @@ public class CardInfo {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getDescriptionHead() {
+        return descriptionHead;
+    }
+
+    public void setDescriptionHead(String descriptionHead) {
+        this.descriptionHead = descriptionHead;
+    }
+
+    public String getDescriptionFoot() {
+        return descriptionFoot;
+    }
+
+    public void setDescriptionFoot(String descriptionFoot) {
+        this.descriptionFoot = descriptionFoot;
     }
 
     public void setDescription(String description) {

@@ -2,6 +2,7 @@ package com.darkgran.farstar.gui.tokens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.gui.AssetLibrary;
@@ -14,6 +15,10 @@ import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
 public class DeploymentCard extends DeploymentToken implements CardGFX {
     private Color fontColor = ColorPalette.BLACK;
     private TextureRegion cardPic;
+    BitmapFont nameFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/orbitron_name", TokenType.FAKE, false)+".fnt");
+    BitmapFont tierFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_tier", TokenType.FAKE, false)+".fnt");
+    BitmapFont descNFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_desc", TokenType.FAKE, false)+".fnt");
+    BitmapFont descBFont = AssetLibrary.getInstance().get(AssetLibrary.getInstance().addTokenTypeAcronym("fonts/barlow_descB", TokenType.FAKE, false)+".fnt");
 
     public DeploymentCard(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
         super(battleCard, x, y, battleStage, cardListMenu);
@@ -81,8 +86,24 @@ public class DeploymentCard extends DeploymentToken implements CardGFX {
     }
 
     @Override
+    public BitmapFont getNameFont(TokenType tokenType) {
+        return nameFont;
+    }
+
+    @Override
+    public BitmapFont getTierFont(TokenType tokenType) {
+        return tierFont;
+    }
+
+    @Override
+    public BitmapFont getDescFont(TokenType tokenType, boolean bold) {
+        return bold ? descBFont : descNFont;
+    }
+
+    @Override
     public boolean isBackside() {
         return false;
     }
+
 
 }

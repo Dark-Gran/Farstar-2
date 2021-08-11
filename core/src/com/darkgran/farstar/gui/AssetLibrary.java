@@ -140,15 +140,22 @@ public class AssetLibrary {
         assetManager.load("fonts/orbitron_nameF.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/orbitron_nameFK.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/orbitron_nameZ.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/barlow_descF.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/barlow_descFK.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/barlow_descZ.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/barlow_tierF.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/barlow_tierFK.fnt", BitmapFont.class, bmpParams);
-        assetManager.load("fonts/barlow_tierZ.fnt", BitmapFont.class, bmpParams);
         //Other (Hiero)
         assetManager.load("fonts/explainerI.fnt", BitmapFont.class, bmpParams);
         assetManager.load("fonts/explainerN.fnt", BitmapFont.class, bmpParams); //barlow26
+        //Misc
+        assetManager.load("fonts/barlow_descF.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_descFK.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_descZ.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_descBF.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_descBFK.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_descBZ.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_descIF.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_descIFK.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_descIZ.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_tierF.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_tierFK.fnt", BitmapFont.class, bmpParams);
+        assetManager.load("fonts/barlow_tierZ.fnt", BitmapFont.class, bmpParams);
     }
 
     private void loadTextures() {
