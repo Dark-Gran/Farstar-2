@@ -47,6 +47,7 @@ public class Farstar extends Game {
 	public void dispose () {
 		batch.dispose();
 		AssetLibrary.getInstance().dispose();
+		super.dispose();
 	}
 
 	public SuperScreen getSuperScreen() {
