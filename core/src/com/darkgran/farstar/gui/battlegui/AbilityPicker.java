@@ -3,6 +3,7 @@ package com.darkgran.farstar.gui.battlegui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.darkgran.farstar.battle.players.BattlePlayer;
 import com.darkgran.farstar.battle.players.BattleCard;
+import com.darkgran.farstar.gui.tokens.AbilityPickerOption;
 import com.darkgran.farstar.gui.tokens.TokenType;
 import com.darkgran.farstar.cards.AbilityInfo;
 
@@ -81,7 +82,7 @@ public class AbilityPicker extends BPB2Drawer {
         String[] descArr = description.split("\n");
         int optionCount = 0;
         for (int i = 0; i < descArr.length; i++) {
-            if (i % 2 != 0) {
+            if (i % 2 == 0) {
                 if (optionCount == optionNumber) {
                     optionDescription = descArr[i];
                 }
