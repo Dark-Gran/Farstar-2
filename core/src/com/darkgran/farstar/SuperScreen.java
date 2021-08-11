@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.gui.*;
@@ -208,7 +209,10 @@ public abstract class SuperScreen implements Screen {
     public void hide() { }
 
     @Override
-    public void dispose() { hideScreenConceder(); }
+    public void dispose() {
+        Timer.instance().clear();
+        hideScreenConceder();
+    }
 
     public void hideScreenConceder() {
         if (isConcederActive()) {

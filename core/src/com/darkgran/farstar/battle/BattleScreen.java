@@ -146,12 +146,12 @@ public class BattleScreen extends SuperScreen {
 
     @Override
     public void dispose() {
+        super.dispose();
         battle.dispose();
         //worldManager.disposeWorld();
         getGame().getInputMultiplexer().removeProcessor(battleAdapter);
         getGame().getInputMultiplexer().removeProcessor(battleStage);
         battleStage.dispose();
-        super.dispose();
     }
 
     public BattleStage getGUI() { return battleStage; }

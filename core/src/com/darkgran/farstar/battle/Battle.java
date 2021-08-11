@@ -39,7 +39,6 @@ public abstract class Battle {
     public void closeYards() { }
 
     public void dispose() {
-        Timer.instance().clear();
         BattleSettings.getInstance().dispose();
     }
 
