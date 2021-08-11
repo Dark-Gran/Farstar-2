@@ -13,7 +13,10 @@ import com.darkgran.farstar.gui.SimpleVector2;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-/** Responsible for all shot animations. (see AnimationManager for other) */
+/**
+ * Responsible for all shot animations. (see AnimationManager for others)
+ * (separated from AnimationManager just for convenience; as a rule of thumb, both should be treated the same way)
+ */
 public class ShotManager {
     public enum ShotType {
         BULLET("shot-bullet", 4000f),
