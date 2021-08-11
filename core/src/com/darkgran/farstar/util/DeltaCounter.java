@@ -5,7 +5,7 @@ public class DeltaCounter {
     private float countCap;
     private float accumulator;
 
-    /** Uses SimpleCounter to countUp seconds (and holds the accumulated delta in between). */
+    /** "Ticks" with gdx deltaTime, becomes disabled when it reaches cap. */
     public DeltaCounter(boolean enabled, float countCap, float count) {
         this.enabled = enabled;
         this.countCap = countCap;
