@@ -180,7 +180,8 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
         if (predictEnabled) {
             SimpleVector2 coords = SuperScreen.getMouseCoordinates();
             predicting = getBattleStage().coordsOverFleetMenus(coords.x, coords.y);
-            if (predicting && !lastPredictedCoords.isSame(coords)) {
+            if (predicting && !lastPredictedCoords.equals(coords)) {
+                System.out.println("EHM");
                 lastPredictedCoords.x = coords.x;
                 lastPredictedCoords.y = coords.y;
                 predictDeployPosition(coords);
