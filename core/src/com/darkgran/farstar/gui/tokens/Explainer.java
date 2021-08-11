@@ -39,10 +39,9 @@ public class Explainer extends TextInTheBox {
         if (textWH.x < getWrapWidth()) {
             x = (x + (getWrapWidth() - textWH.x)/2);
         }
-        SimpleVector2 flavourWH = TextDrawer.getTextWH(AssetLibrary.getInstance().getAssetManager().get(italicPath, BitmapFont.class), flavour, getWrapWidth(), getWrap());
-        SimpleVector2 oneLineOfFlavourWH = TextDrawer.getTextWH(AssetLibrary.getInstance().getAssetManager().get(italicPath, BitmapFont.class), "...", getWrapWidth(), getWrap());
-        flavourOffsetY = textWH.y - ((flavour.equals("") ? 0 : oneLineOfFlavourWH.y));
-        setupBox(x, y, getWrapWidth()+40f, textWH.y+40f+((flavour.equals("") ? 0 : flavourWH.y)));
+        BitmapFont font = AssetLibrary.getInstance().getAssetManager().get(italicPath, BitmapFont.class);
+        flavourOffsetY = textWH.y - ((flavour.equals("") ? 0 : font.getLineHeight()));
+        setupBox(x, y, getWrapWidth()+40f, textWH.y+40f+((flavour.equals("") ? 0 : font.getLineHeight())));
         centralizeBox();
         //getSimpleBox().setY(getSimpleBox().y-1f);
     }
