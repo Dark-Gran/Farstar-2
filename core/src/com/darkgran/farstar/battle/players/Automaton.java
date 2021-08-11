@@ -203,7 +203,7 @@ public final class Automaton extends Bot {
                                                             //"don't change pointlessly"; in-future: consider "overall" properly (eg. don't allow changing type on stat 1 but allow it if the other stat gets changed as well (and it is the right move))
                                                         } else if (!currentNonsense) {
                                                             //atm because of how tech-switch-effects are ordered, correct Defense will enable/disable playing card that in fact (in)validates Offense (= bot sacrifices damage if it protects the ship)
-                                                            overallNonsense = (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && (ally.getCardInfo().getOffense() <= 1 || enemy.getHealth() < ally.getCardInfo().getOffense() || techType == enemy.getCardInfo().getDefenseType())) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && (enemy.getCardInfo().getOffense() <= 1 || ally.getHealth() < enemy.getCardInfo().getOffense() || (techType != enemy.getCardInfo().getOffenseType() && !TechType.isInferior(enemy.getCardInfo().getOffenseType()) && !enemy.isMS())));
+                                                            overallNonsense = (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && (ally.getCardInfo().getOffense() <= 1 || (BattleSettings.getInstance().OVERWHELMED_DEBUFF_ENABLED && enemy.getHealth() < ally.getCardInfo().getOffense()) || techType == enemy.getCardInfo().getDefenseType())) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && (enemy.getCardInfo().getOffense() <= 1 || (BattleSettings.getInstance().OVERWHELMED_DEBUFF_ENABLED && ally.getHealth() < enemy.getCardInfo().getOffense()) || (techType != enemy.getCardInfo().getOffenseType() && !TechType.isInferior(enemy.getCardInfo().getOffenseType()) && !enemy.isMS())));
                                                         }
                                                     }
                                                 }
@@ -366,7 +366,8 @@ public final class Automaton extends Bot {
     protected Token getEnemyTarget(Token attacker, boolean checkReach) {
         BattlePlayer[] enemies = getBattle().getEnemies(this);
         Token picked = null;
-        Ship weakestShip = null;
+        Ship strongestKillable = null;
+        float dmg;
         boolean desperate = false;
         while (picked == null) {
             for (BattlePlayer enemy : enemies) {
@@ -375,8 +376,9 @@ public final class Automaton extends Bot {
                 } else {
                     for (Ship ship : enemy.getFleet().getShips()) {
                         if (ship != null) {
-                            if ((weakestShip == null || isBiggerShip(weakestShip, ship)) && (!checkReach || getBattle().getCombatManager().canReach(attacker, ship.getToken(), enemy.getFleet()))) {
-                                weakestShip = ship;
+                            dmg = DuelManager.getDmgAgainstShields(attacker.getCard().getCardInfo().getOffense(), ship.getHealth(), attacker.getCard().getCardInfo().getOffenseType(), ship.getCardInfo().getDefenseType());
+                            if ((strongestKillable == null || (isBiggerShip(ship, strongestKillable)) && dmg >= ship.getHealth()) && (!checkReach || getBattle().getCombatManager().canReach(attacker, ship.getToken(), enemy.getFleet()))) {
+                                strongestKillable = ship;
                                 picked = ship.getToken();
                             }
                         }
@@ -465,7 +467,8 @@ public final class Automaton extends Bot {
     private Token getDuelTarget(Token attacker) {
         BattlePlayer[] enemies = getBattle().getEnemies(this);
         Token picked = null;
-        Ship weakestShip = null;
+        Ship strongestKillable = null;
+        float dmg;
         boolean desperate = false;
         boolean noTargets = false;
         while (picked == null && !noTargets) {
@@ -479,8 +482,9 @@ public final class Automaton extends Bot {
                     if (picked == null) {
                         for (Ship ship : enemy.getFleet().getShips()) {
                             if (ship != null) {
-                                if ((desperate || !isAlreadyTargetedFatally(ship.getToken(), duels, null)) && (weakestShip == null || isBiggerShip(weakestShip, ship)) && getBattle().getCombatManager().canReach(attacker, ship.getToken(), enemy.getFleet())) {
-                                    weakestShip = ship;
+                                dmg = DuelManager.getDmgAgainstShields(attacker.getCard().getCardInfo().getOffense(), ship.getHealth(), attacker.getCard().getCardInfo().getOffenseType(), ship.getCardInfo().getDefenseType());
+                                if ((desperate || !isAlreadyTargetedFatally(ship.getToken(), duels, null)) && (strongestKillable == null || (isBiggerShip(ship, strongestKillable) && dmg >= ship.getHealth())) && getBattle().getCombatManager().canReach(attacker, ship.getToken(), enemy.getFleet())) {
+                                    strongestKillable = ship;
                                     picked = ship.getToken();
                                 }
                             }

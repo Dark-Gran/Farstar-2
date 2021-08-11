@@ -3,7 +3,7 @@ package com.darkgran.farstar.gui.battlegui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.ScreenSettings;
+import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.battle.BattleScreen;
 import com.darkgran.farstar.battle.players.BattlePlayer;
 import com.darkgran.farstar.gui.AssetLibrary;
@@ -77,14 +77,6 @@ public class BattleStage1V1 extends BattleStage {
         junkButton2 = new JunkButton(Farstar.STAGE_WIDTH*0.89f, Farstar.STAGE_HEIGHT*0.9f - TokenType.JUNK.getHeight(), this, battlePlayer2);
         battlePlayer1.getJunkpile().setJunkButton(junkButton1);
         battlePlayer2.getJunkpile().setJunkButton(junkButton2);
-        addDropTarget(junkButton1);
-        addDropTarget(junkButton2);
-        addDropTarget(mothershipToken2);
-        addDropTarget(mothershipToken1);
-        addDropTarget(supportMenu1);
-        addDropTarget(supportMenu2);
-        addDropTarget(fleetMenu1);
-        addDropTarget(fleetMenu2);
         //Decks
         deck1 = new CardSource(Farstar.STAGE_WIDTH*0.96f, Farstar.STAGE_HEIGHT*0.4f,this, battlePlayer1, true);
         deck2 = new CardSource(Farstar.STAGE_WIDTH*0.96f, Farstar.STAGE_HEIGHT*0.559f, this, battlePlayer2, false);
@@ -104,14 +96,25 @@ public class BattleStage1V1 extends BattleStage {
         //Hands
         handMenu1 = new HandMenu(battlePlayer1.getHand(),Farstar.STAGE_WIDTH*0.5f, -Farstar.STAGE_HEIGHT*0.35f, this, battlePlayer1, true);
         handMenu2 = new HandMenu(battlePlayer2.getHand(),Farstar.STAGE_WIDTH*0.5f, Farstar.STAGE_HEIGHT*0.95f, this, battlePlayer2, false); //in-future: make non-Local Hand look smaller?
-        addDropTarget(handMenu1);
-        addDropTarget(handMenu2);
         //F1
         setBattleHelp(new BattleHelp1v1(0, 0));
         getF1button().setPosition(Math.round(Farstar.STAGE_WIDTH*0.045f), Math.round(Farstar.STAGE_HEIGHT*0.095f));
         //getF1button().setPosition(Math.round(Farstar.STAGE_WIDTH*0.003f), Math.round(Farstar.STAGE_HEIGHT*0.003f)); //over table - to be used with f1back
         //f1ButtonToNet();
         if (getGame().getSuperScreen().getScreenSettings().isF1buttonEnabled()) { addActor(getF1button()); }
+        //DropTargets (priority order)
+        addDropTarget(yardMenu1);
+        addDropTarget(yardMenu2);
+        addDropTarget(handMenu1);
+        addDropTarget(handMenu2);
+        addDropTarget(junkButton1);
+        addDropTarget(junkButton2);
+        addDropTarget(mothershipToken2);
+        addDropTarget(mothershipToken1);
+        addDropTarget(supportMenu1);
+        addDropTarget(supportMenu2);
+        addDropTarget(fleetMenu1);
+        addDropTarget(fleetMenu2);
     }
 
     @Override
@@ -177,12 +180,12 @@ public class BattleStage1V1 extends BattleStage {
         handMenu1.drawTokens(batch);
         handMenu2.drawTokens(batch);
         if (DEBUG_RENDER) {
-            BattleScreen.drawDebugSimpleBox2(fleetMenu1.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
-            BattleScreen.drawDebugSimpleBox2(fleetMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
-            BattleScreen.drawDebugSimpleBox2(supportMenu1.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
-            BattleScreen.drawDebugSimpleBox2(supportMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
-            BattleScreen.drawDebugBox(handMenu1.getClickListenerActor().getX(), handMenu1.getClickListenerActor().getY(), handMenu1.getClickListenerActor().getWidth(), handMenu1.getClickListenerActor().getHeight(), getBattleScreen().getShapeRenderer(), batch);
-            BattleScreen.drawDebugBox(handMenu2.getClickListenerActor().getX(), handMenu2.getClickListenerActor().getY(), handMenu2.getClickListenerActor().getWidth(), handMenu2.getClickListenerActor().getHeight(), getBattleScreen().getShapeRenderer(), batch);
+            SuperScreen.drawDebugSimpleBox2(fleetMenu1.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
+            SuperScreen.drawDebugSimpleBox2(fleetMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
+            SuperScreen.drawDebugSimpleBox2(supportMenu1.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
+            SuperScreen.drawDebugSimpleBox2(supportMenu2.getSimpleBox2(), getBattleScreen().getShapeRenderer(), batch);
+            SuperScreen.drawDebugBox(handMenu1.getClickListenerActor().getX(), handMenu1.getClickListenerActor().getY(), handMenu1.getClickListenerActor().getWidth(), handMenu1.getClickListenerActor().getHeight(), getBattleScreen().getShapeRenderer(), batch);
+            SuperScreen.drawDebugBox(handMenu2.getClickListenerActor().getX(), handMenu2.getClickListenerActor().getY(), handMenu2.getClickListenerActor().getWidth(), handMenu2.getClickListenerActor().getHeight(), getBattleScreen().getShapeRenderer(), batch);
         }
     }
 

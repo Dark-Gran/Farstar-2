@@ -1,7 +1,9 @@
 package com.darkgran.farstar.gui.battlegui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.battle.players.BattlePlayer;
+import com.darkgran.farstar.gui.SimpleBox2;
 import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.gui.tokens.TokenType;
 import com.darkgran.farstar.battle.players.BattleCard;
@@ -37,6 +39,9 @@ public abstract class CardListMenu extends BaseMenu {
     }
 
     public void drawTokens(Batch batch) {
+        if (SuperScreen.DEBUG_RENDER) {
+            SuperScreen.drawDebugSimpleBox2(getSimpleBox2(), getBattleStage().getBattleScreen().getShapeRenderer(), batch);
+        }
         if (getTokens().size() > 0) {
             for (int i = 0; i < getTokens().size(); i++) {
                 getTokens().get(i).draw(batch);
@@ -64,4 +69,9 @@ public abstract class CardListMenu extends BaseMenu {
     public float getTokensY() {
         return tokensY;
     }
+
+    public SimpleBox2 getSimpleBox2() {
+        return this;
+    }
+
 }

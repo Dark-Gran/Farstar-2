@@ -4,9 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.darkgran.farstar.Farstar;
-import com.darkgran.farstar.ScreenSettings;
-import com.darkgran.farstar.battle.BattleScreen;
+import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
@@ -160,7 +158,7 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
     }
 
     protected void debugRender(Batch batch) {
-        BattleScreen.drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch);
+        SuperScreen.drawDebugSimpleBox2(new SimpleBox2(getX(), getY(), getWidth(), getHeight()), battleStage.getBattleScreen().getShapeRenderer(), batch);
     }
 
     protected void drawPortrait(Batch batch) {

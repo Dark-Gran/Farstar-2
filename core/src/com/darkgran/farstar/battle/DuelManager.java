@@ -219,7 +219,7 @@ public class DuelManager implements Delayer {
     }
 
     public static int getDmgAgainstShields(int dmg, int health, TechType dmgType, TechType shieldType) {
-        if (dmg <= health) {
+        if (dmg <= health || !BattleSettings.getInstance().OVERWHELMED_DEBUFF_ENABLED) {
             dmgType = TechType.noneToInferior(dmgType);
             shieldType = TechType.noneToInferior(shieldType);
             if (dmg != 0 && ((shieldType == TechType.SUPERIOR && dmgType != TechType.SUPERIOR) || (shieldType != TechType.INFERIOR && (dmgType == TechType.INFERIOR || dmgType == shieldType)))) {

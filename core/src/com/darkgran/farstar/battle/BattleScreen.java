@@ -132,18 +132,6 @@ public class BattleScreen extends SuperScreen {
         batch.begin();
     }
 
-    public static void drawDebugSimpleBox2(SimpleBox2 simpleBox2, ShapeRenderer shapeRenderer, Batch batch) {
-        drawDebugBox(simpleBox2.x, simpleBox2.y, simpleBox2.getWidth(), simpleBox2.getHeight(), shapeRenderer, batch);
-    }
-
-    public static void drawDebugBox(float x, float y, float width, float height, ShapeRenderer shapeRenderer, Batch batch) {
-        batch.end();
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.rect(x, y, width, height);
-        shapeRenderer.end();
-        batch.begin();
-    }
-
     @Override
     public void dispose() {
         super.dispose();

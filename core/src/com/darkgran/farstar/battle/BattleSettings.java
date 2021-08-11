@@ -25,4 +25,5 @@ public final class BattleSettings {
     public final int DECK_SIZE = 30;
     public final int YARD_SIZE = 5;
     public final boolean OUTNUMBERED_DEBUFF_ENABLED = false;
+    public final boolean OVERWHELMED_DEBUFF_ENABLED = false;
 }

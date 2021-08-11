@@ -21,7 +21,7 @@ public class DesktopLauncher {
 		config.width = 1920;
 		config.height = 960;
 		config.resizable = true;
-		config.fullscreen = false;
+		config.fullscreen = true;
 		config.vSyncEnabled = false;
 		config.samples = 8;
 		new LwjglApplication(new Farstar(new MWQImplementation()){

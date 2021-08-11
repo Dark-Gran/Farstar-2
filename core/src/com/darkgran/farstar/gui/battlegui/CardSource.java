@@ -15,12 +15,12 @@ import com.darkgran.farstar.gui.TextInTheBox;
  */
 public class CardSource extends Actor {
     private final TextureRegion pic = AssetLibrary.getInstance().getAtlasRegion("deck");
-    private final BPB2DrawerBattle drawer;
+    private final BPB2Drawer drawer;
     private final TextInTheBox info;
     private final ClickListener clickListener = new ClickListener(){};
 
     public CardSource(float x, float y, BattleStage battleStage, BattlePlayer battlePlayer, boolean onBottom) {
-        drawer = new BPB2DrawerBattle(x, y, battleStage, battlePlayer){
+        drawer = new BPB2Drawer(x, y, battleStage, battlePlayer){
             @Override
             public void draw(Batch batch) {
                 //super.draw(batch);

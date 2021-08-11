@@ -24,6 +24,7 @@ public abstract class SuperScreen implements Screen {
     private YXQuestionBox screenConceder = null;
     private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.0885), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN); //in-future: possibly make static (but needs to be disabled on Screens like Intro)
     private final ScreenSettings screenSettings;
+
     //Cursor
     public enum CursorType {
         DEFAULT, AIM
@@ -186,6 +187,18 @@ public abstract class SuperScreen implements Screen {
 
     protected void update(float delta) {
         NotificationManager.getInstance().update(delta);
+    }
+
+    public static void drawDebugSimpleBox2(SimpleBox2 simpleBox2, ShapeRenderer shapeRenderer, Batch batch) {
+        drawDebugBox(simpleBox2.x, simpleBox2.y, simpleBox2.getWidth(), simpleBox2.getHeight(), shapeRenderer, batch);
+    }
+
+    public static void drawDebugBox(float x, float y, float width, float height, ShapeRenderer shapeRenderer, Batch batch) {
+        batch.end();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.rect(x, y, width, height);
+        shapeRenderer.end();
+        batch.begin();
     }
 
     @Override

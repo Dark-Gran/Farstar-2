@@ -188,7 +188,7 @@ public abstract class BattleStage extends ListeningStage {
                     }
                 }
                 if (CardType.isShip(token.getCard().getCardInfo().getCardType())) {
-                    if (targetHit instanceof FleetMenu) {
+                    if (targetHit instanceof FleetMenu || targetHit instanceof SupportMenu || targetHit instanceof MothershipToken) {
                         targetHit = token.getCard().getBattlePlayer().getFleet().getFleetMenu();
                     }
                 }
@@ -215,7 +215,7 @@ public abstract class BattleStage extends ListeningStage {
 
     public DropTarget returnDropTarget(float x, float y) {
         for (DropTarget dropTarget : dropTargets) {
-            if (isInBox(dropTarget.getSimpleBox2(), x, y)) { return dropTarget; }
+            if (dropTarget.isActive() && isInBox(dropTarget.getSimpleBox2(), x, y)) { return dropTarget; }
         }
         return null;
     }

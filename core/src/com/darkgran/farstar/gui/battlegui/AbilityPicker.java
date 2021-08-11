@@ -8,7 +8,7 @@ import com.darkgran.farstar.cards.AbilityInfo;
 
 import java.util.ArrayList;
 
-public class AbilityPicker extends BPB2DrawerBattle {
+public class AbilityPicker extends BPB2Drawer {
     private boolean active = false;
     private BattleCard battleCard = null;
     private ArrayList<AbilityInfo> abilityInfos = new ArrayList<>();

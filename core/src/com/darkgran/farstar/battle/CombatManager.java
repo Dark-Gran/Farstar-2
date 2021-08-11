@@ -108,9 +108,13 @@ public abstract class CombatManager {
                 NotificationManager.getInstance().newNotification(Notification.NotificationType.MIDDLE, "TACTICAL PHASE", 3);
             }
             if (!(activePlayer.getBattlePlayer() instanceof Bot)) {
-                combatMenu.addOK(activePlayer.getCombatButton());
-                activePlayer.getCombatButton().setExtraState(false);
-                battle.getRoundManager().getPossibilityAdvisor().refresh(activePlayer.getBattlePlayer(), battle);
+                if (battle.getRoundManager().getPossibilityAdvisor().getPossibilities(activePlayer.getBattlePlayer(), battle).size() > 0) {
+                    combatMenu.addOK(activePlayer.getCombatButton());
+                    activePlayer.getCombatButton().setExtraState(false);
+                    battle.getRoundManager().getPossibilityAdvisor().refresh(activePlayer.getBattlePlayer(), battle);
+                } else {
+                    tacticalOK(activePlayer.getCombatButton());
+                }
             } else {
                 ((Bot) this.playersA[0].getBattlePlayer()).newCombatOK(this.playersA[0].getCombatButton());
             }
@@ -222,8 +226,12 @@ public abstract class CombatManager {
             if (activePlayer.getBattlePlayer() instanceof Bot) {
                 ((Bot) activePlayer.getBattlePlayer()).newCombatOK(activePlayer.getCombatButton());
             } else {
-                combatMenu.addOK(activePlayer.getCombatButton());
-                battle.getRoundManager().getPossibilityAdvisor().refresh(activePlayer.getBattlePlayer(), battle);
+                if (battle.getRoundManager().getPossibilityAdvisor().getPossibilities(activePlayer.getBattlePlayer(), battle).size() > 0) {
+                    combatMenu.addOK(activePlayer.getCombatButton());
+                    battle.getRoundManager().getPossibilityAdvisor().refresh(activePlayer.getBattlePlayer(), battle);
+                } else {
+                    tacticalOK(activePlayer.getCombatButton());
+                }
             }
         }
     }

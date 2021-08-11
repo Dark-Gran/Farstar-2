@@ -13,7 +13,6 @@ import com.darkgran.farstar.gui.SimpleBox2;
 import com.darkgran.farstar.gui.SimpleVector2;
 
 public class SupportMenu extends CardListMenu implements DropTarget {
-    private final SimpleBox2 simpleBox2 = new SimpleBox2();
     private TextureRegion netSpot = AssetLibrary.getInstance().getAtlasRegion("netspot-S");
     private final SimpleVector2[] netSpotPositions = new SimpleVector2[6];
 
@@ -103,6 +102,4 @@ public class SupportMenu extends CardListMenu implements DropTarget {
         }
     }
 
-    @Override
-    public SimpleBox2 getSimpleBox2() { return simpleBox2; }
 }

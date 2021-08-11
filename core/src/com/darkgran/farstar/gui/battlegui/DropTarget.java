@@ -7,5 +7,8 @@ public interface DropTarget {
     default void setupSimpleBox2(float x, float y, float width, float height) {
         getSimpleBox2().setupBox(x, y, width, height);
     }
+    default boolean isActive() {
+        return true;
+    }
 
 }

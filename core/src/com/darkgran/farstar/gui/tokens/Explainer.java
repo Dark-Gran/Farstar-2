@@ -62,10 +62,17 @@ public class Explainer extends TextInTheBox {
             else { first = false; }
             str.append("Disabled:\nThis ").append(shipOrSupport).append(" cannot attack or use abilities until next Turn.\n");
         }
-        if (battleCard.getCardInfo().getCardType() == CardType.TACTIC) {
+        if (battleCard.getCardInfo().getCardType() == CardType.TACTIC || battleCard.getCardInfo().getCardType() == CardType.SUPPORT) {
             if (!first) { str.append("\n"); }
             else { first = false; }
-            str.append("Tactic:\nTactics may be played both in Your Turn and in the Tactical Phase.\n");
+            switch (battleCard.getCardInfo().getCardType()) {
+                case TACTIC:
+                    str.append("Tactic:\nTactics may be played both in Your Turn and in the Tactical Phase.\n");
+                    break;
+                case SUPPORT:
+                    str.append("Support:\nYou can Deploy Supports next to Your Mothership.\n");
+                    break;
+            }
         }
         boolean FSpresent = false;
         boolean USEpresent = false;

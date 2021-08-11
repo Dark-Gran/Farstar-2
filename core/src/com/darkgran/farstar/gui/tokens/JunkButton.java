@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
-import com.darkgran.farstar.battle.BattleScreen;
+import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.battle.players.BattlePlayer;
 import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
@@ -42,7 +42,7 @@ public class JunkButton extends ClickToken implements DropTarget {
     @Override
     protected void debugRender(Batch batch) {
         batch.setTransformMatrix(oldMX);
-        BattleScreen.drawDebugBox(getSimpleBox2().x, getSimpleBox2().y, getSimpleBox2().getWidth(), getSimpleBox2().getHeight(), getBattleStage().getBattleScreen().getShapeRenderer(), batch);
+        SuperScreen.drawDebugBox(getSimpleBox2().x, getSimpleBox2().y, getSimpleBox2().getWidth(), getSimpleBox2().getHeight(), getBattleStage().getBattleScreen().getShapeRenderer(), batch);
     }
 
     @Override

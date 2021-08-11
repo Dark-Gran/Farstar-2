@@ -18,8 +18,12 @@ public class CombatOK extends ButtonWithExtraState {
 
     @Override
     public void clicked() {
-        combatManager.getBattleStage().getBattleScreen().hideScreenConceder();
-        combatManager.tacticalOK(this);
+        if (!combatManager.getBattle().getRoundManager().isTargetingActive() && !combatManager.getBattle().getRoundManager().getAbilityPicker().isActive()) {
+            combatManager.getBattleStage().getBattleScreen().hideScreenConceder();
+            combatManager.tacticalOK(this);
+        } else {
+            combatManager.getBattle().getRoundManager().tryCancel();
+        }
     }
 
     public void setDuelPlayer(CombatPlayer combatPlayer) { this.combatPlayer = combatPlayer; }

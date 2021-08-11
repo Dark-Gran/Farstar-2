@@ -54,6 +54,14 @@ public class TokenPrice extends TokenPart {
         super.setupOffset();
         setOffsetY(-getPad().getRegionHeight());
         setOffsetX(getPad().getRegionWidth());
+        if (getToken().getTokenType() == TokenType.SUPPORT) {
+            int res = getResource(true, TokenType.SUPPORT); //temp solution that works with the one Support in-game; in-future: needs to handle all parts of price (and atm does not use GetContent() - see draw()); also atm it does not support price >9 at all (text not centered)
+            if (res == 0) {
+                setTextOffsetX(-2.5f);
+            } else if (res != 1) {
+                setTextOffsetX(-1f);
+            }
+        }
     }
 
     @Override
@@ -124,14 +132,14 @@ public class TokenPrice extends TokenPart {
                 if (E != 0 || showUseMark) {
                     String e = Integer.toString(E);
                     batch.draw(getPad(), x, this.y + getOffsetY());
-                    drawText(getFont(), batch, x + getPad().getRegionWidth() * 0.5f - getTextWH().x * 0.5f, this.y + getOffsetY() + getPad().getRegionHeight() * 0.5f + getTextWH().y * 0.5f, e, ColorPalette.BLACKISH);
+                    drawText(getFont(), batch, x + getPad().getRegionWidth() * 0.5f - getTextWH().x * 0.5f + getTextOffsetX(), this.y + getOffsetY() + getPad().getRegionHeight() * 0.5f + getTextWH().y * 0.5f + getTextOffsetY(), e, ColorPalette.BLACKISH);
                     x += getPad().getRegionWidth();
                 }
                 int M = getResource(false, getToken() instanceof AbilityPickerOption ? TokenType.SUPPORT : getToken().getTokenType());
                 if (M != 0) {
                     String m = Integer.toString(M);
                     batch.draw(pad2, x, this.y + getOffsetY());
-                    drawText(getFont(), batch, x + getPad().getRegionWidth() * 0.5f - textWH2.x * 0.5f, this.y + getOffsetY() + getPad().getRegionHeight() * 0.5f + textWH2.y * 0.5f, m, ColorPalette.BLACKISH);
+                    drawText(getFont(), batch, x + getPad().getRegionWidth() * 0.5f - textWH2.x * 0.5f + getTextOffsetX(), this.y + getOffsetY() + getPad().getRegionHeight() * 0.5f + textWH2.y * 0.5f + getTextOffsetY(), m, ColorPalette.BLACKISH);
                 }
             }
         }

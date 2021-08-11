@@ -75,7 +75,7 @@ public class MainScreenStage extends ListeningStage {
         Battle battle = null;
         switch (battleType) { //in-future: BattleFactory
             case SKIRMISH:
-                NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Use F1 for Instructions.", 5, true);
+                if (Farstar.firstMatchThisLaunch) { NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Use F1 for Instructions.", 5, true); }
                 battle = new Battle1v1(
                         PlayerFactory.getInstance().getPlayer("LOCAL", 1, 0),
                         PlayerFactory.getInstance().getPlayer("AUTO", 2, 15),
