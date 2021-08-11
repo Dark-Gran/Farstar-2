@@ -23,6 +23,10 @@ public abstract class BattleStage extends ListeningStage {
     private final ArrayList<DropTarget> dropTargets = new ArrayList<>();
     private final AbilityPicker abilityPicker;
     private final RoundCounter roundCounter;
+    private final ActorButton cancelButton = new ActorButton(AssetLibrary.getInstance().getAtlasRegion("cancel"), AssetLibrary.getInstance().getAtlasRegion("cancelO")){
+        @Override
+        public void clicked() { getBattleScreen().getBattle().getRoundManager().tryCancel(); }
+    };
     public final ButtonWithExtraState turnButton = new ButtonWithExtraState(AssetLibrary.getInstance().getAtlasRegion("turn"), AssetLibrary.getInstance().getAtlasRegion("turnO"), AssetLibrary.getInstance().getAtlasRegion("turnP"), AssetLibrary.getInstance().getAtlasRegion("turnOP")){
         private final TextureRegion turnBackground = AssetLibrary.getInstance().getAtlasRegion("turn-b");
         private final TextureRegion turnCombat = AssetLibrary.getInstance().getAtlasRegion("turn-combat");
@@ -305,6 +309,7 @@ public abstract class BattleStage extends ListeningStage {
         combatEndButton.remove();
         abilityPicker.dispose();
         ShotManager.getInstance().dispose();
+        AnimationManager.getInstance().dispose();
         super.dispose();
     }
 
@@ -362,5 +367,9 @@ public abstract class BattleStage extends ListeningStage {
 
     public ActorButton getF1button() {
         return f1button;
+    }
+
+    public ActorButton getCancelButton() {
+        return cancelButton;
     }
 }

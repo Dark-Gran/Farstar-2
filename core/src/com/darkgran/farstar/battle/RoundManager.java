@@ -26,10 +26,7 @@ public class RoundManager {
     private boolean targetingActive;
     private final DeploymentInfo postponedDeploy = new DeploymentInfo(); //in-future: turn into a List to enable deployment-chains (eg. on-deploy summoning (targeted) that leads to another targeted on-deploy ability; atm there are no such battleCards)
     private AbilityPicker abilityPicker;
-    private final ActorButton cancelButton = new ActorButton(AssetLibrary.getInstance().getAtlasRegion("cancel"), AssetLibrary.getInstance().getAtlasRegion("cancelO")){
-        @Override
-        public void clicked() { tryCancel(); }
-    };
+
 
     public RoundManager(Battle battle, PossibilityAdvisor possibilityAdvisor) {
         this.battle = battle;
@@ -265,8 +262,8 @@ public class RoundManager {
                 abilityPicker.getAbilityInfos().add(option);
             }
             abilityPicker.enable(caster.getCard());
-            cancelButton.setPosition(STAGE_WIDTH*0.69f, STAGE_HEIGHT*0.28f);
-            getBattle().getBattleScreen().getBattleStage().addActor(cancelButton);
+            getCancelButton().setPosition(STAGE_WIDTH*0.69f, STAGE_HEIGHT*0.28f); //in-future: cancelButton should have 2 states and hold these values for the states by itself (this line is state 2)
+            getBattle().getBattleScreen().getBattleStage().addActor(getCancelButton());
             NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Choose an Ability.", 3);
             ((YardMenu) caster.getCard().getBattlePlayer().getYard().getCardListMenu()).setOpen(false);
         }
@@ -287,7 +284,7 @@ public class RoundManager {
         if (!battle.isEverythingDisabled() && postponedDeploy.getCaster() != null) {
             if (abilityPicker != null) {
                 abilityPicker.disable();
-                cancelButton.remove();
+                getCancelButton().remove();
             }
             if (playAbility(postponedDeploy.getCaster(), (postponedDeploy.getTarget()!=null) ? postponedDeploy.getTarget().getCard() : null, ability.getStarter(), postponedDeploy.getCaster().getCard().getBattlePlayer(), postponedDeploy.getDrop(), ability)) {
                 processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, ability.getStarter()==AbilityStarter.DEPLOY);
@@ -307,8 +304,8 @@ public class RoundManager {
         } else {
             token.setPicked(true);
             SuperScreen.switchCursor(SuperScreen.CursorType.AIM);
-            cancelButton.setPosition(STAGE_WIDTH*0.62f, STAGE_HEIGHT*0.08f);
-            getBattle().getBattleScreen().getBattleStage().addActor(cancelButton);
+            getCancelButton().setPosition(STAGE_WIDTH*0.62f, STAGE_HEIGHT*0.08f); //in-future: cancelButton should have 2 states and hold these values for the states by itself (this line is state 1)
+            getBattle().getBattleScreen().getBattleStage().addActor(getCancelButton());
             NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Choose a Target.", 3);
             ((YardMenu) whoseTurn.getYard().getCardListMenu()).setOpen(false);
         }
@@ -364,7 +361,7 @@ public class RoundManager {
         if (abilityPicker.isActive()) {
             abilityPicker.disable();
             postponedDeploy.resetInDeployment();
-            cancelButton.remove();
+            getCancelButton().remove();
         }
         if (!getBattle().getCombatManager().getDuelManager().isActive()) {
             battle.refreshPossibilities();
@@ -375,7 +372,7 @@ public class RoundManager {
         targetingActive = false;
         SuperScreen.switchCursor(SuperScreen.CursorType.DEFAULT);
         postponedDeploy.resetInDeployment();
-        cancelButton.remove();
+        getCancelButton().remove();
     }
 
     private void callHerald(BattleCard battleCard, TokenType targetType, SimpleVector2 targetXY) {
@@ -436,4 +433,8 @@ public class RoundManager {
     public BattlePlayer getStartingPlayer() { return startingBattlePlayer; }
 
     protected void setStartingPlayer(BattlePlayer startingBattlePlayer) { this.startingBattlePlayer = startingBattlePlayer; }
+
+    private ActorButton getCancelButton() {
+        return getBattle().getBattleScreen().getBattleStage().getCancelButton();
+    }
 }
