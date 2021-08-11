@@ -146,6 +146,7 @@ public class Battle1v1 extends Battle {
 
     @Override
     public void dispose() {
+        super.dispose();
         if (battlePlayer1 instanceof Bot) { ((Bot) battlePlayer1).dispose(); }
         if (battlePlayer2 instanceof Bot) { ((Bot) battlePlayer2).dispose(); }
     }
