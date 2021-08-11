@@ -46,6 +46,7 @@ public class ButtonWithMultipleStates extends ActorButton {
     }
 
     public void setState(int state) {
+        if (state < 0) { state = 0; }
         this.state = state;
     }
 }
