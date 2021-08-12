@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
+import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.battle.players.Fleet;
 import com.darkgran.farstar.battle.players.LocalBattlePlayer;
 import com.darkgran.farstar.gui.*;
@@ -187,6 +188,7 @@ public abstract class BattleStage extends ListeningStage {
         if (token != null) {
             CombatManager combatManager = getBattleScreen().getBattle().getCombatManager();
             DropTarget targetHit = returnDropTarget(x, y);
+            System.out.println(targetHit);
             //Deploy-Retargeting
             if (!(token instanceof TargetingToken)) {
                 if (token.getCard().getCardInfo().getCardType() == CardType.SUPPORT) {
