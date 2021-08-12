@@ -4,6 +4,7 @@ public enum AbilityTargets {
     NONE,
     ANY,
     SELF,
+    ADJACENT,
     ANY_ALLY,
     ALLIED_MS,
     ALLIED_FLEET, //"single fleet" targeting-process (see AbilityManager() for askForTargets()) possibly untested (no cards with such targets atm); not really needed until other mods than 1v1 become a thing and need special balance
@@ -20,6 +21,7 @@ public enum AbilityTargets {
             case ENEMY_FLEET:
             case ENTIRE_ALLIED_FLEET:
             case ENTIRE_ENEMY_FLEET:
+            case ADJACENT:
                 return true;
             default:
                 return false;

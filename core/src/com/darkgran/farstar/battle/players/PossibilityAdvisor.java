@@ -85,7 +85,7 @@ public class PossibilityAdvisor {
     public boolean isPossibleToDeploy(BattlePlayer battlePlayer, BattlePlayer whoseTurn, BattleCard battleCard, boolean checkSpace, Battle battle, boolean signs) { //in-future: "spread" or parametrize to be used with Notifications (eg. "Insufficient Resources.")... (see RoundManager's call)
         boolean affordable = battlePlayer.canAfford(battleCard);
         boolean learned = tierAllowed(battleCard.getCardInfo().getTier(), battle);
-        boolean targetsPresent = allowedAoE(battlePlayer, battleCard, battle) && (!battlePlayer.getFleet().isEmpty() || !battleCard.isPurelyOffensiveChange() || AbilityManager.hasAbilityTargets(battleCard, AbilityTargets.SELF));
+        boolean targetsPresent = allowedAoE(battlePlayer, battleCard, battle) && (!battleCard.isAnOffensiveChange() || AbilityManager.hasAbilityTargets(battleCard, AbilityTargets.SELF) || AbilityManager.hasStarter(battleCard, AbilityStarter.AURA));
         boolean space = !checkSpace || ((battlePlayer.getSupports().hasSpace() || battleCard.getCardInfo().getCardType() != CardType.SUPPORT) && (battlePlayer.getFleet().hasSpace() || (battleCard.getCardInfo().getCardType() != CardType.YARDPRINT && battleCard.getCardInfo().getCardType() != CardType.BLUEPRINT)));
         if (signs) { reportDeployability(battle, affordable, learned, targetsPresent, space); }
         if (battlePlayer == whoseTurn && affordable && learned && targetsPresent) {
@@ -95,15 +95,17 @@ public class PossibilityAdvisor {
     }
 
     public boolean allowedAoE (BattlePlayer battlePlayer, BattleCard battleCard, Battle battle) {
-        for (AbilityInfo ability : battleCard.getCardInfo().getAbilities()) {
-            if (AbilityTargets.isAoE(ability.getTargets())) {
-                BattlePlayer[] enemies = battle.getEnemies(battlePlayer);
-                for (BattlePlayer enemy : enemies) {
-                    if (!enemy.getFleet().isEmpty()) {
-                        return true;
+        if (!CardType.isShip(battleCard.getCardInfo().getCardType())) {
+            for (AbilityInfo ability : battleCard.getCardInfo().getAbilities()) {
+                if (AbilityTargets.isAoE(ability.getTargets())) {
+                    BattlePlayer[] enemies = battle.getEnemies(battlePlayer);
+                    for (BattlePlayer enemy : enemies) {
+                        if (!enemy.getFleet().isEmpty()) {
+                            return true;
+                        }
                     }
+                    return false;
                 }
-                return false;
             }
         }
         return true;

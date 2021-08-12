@@ -34,7 +34,7 @@ public abstract class Card {
 
     public void refreshToken(boolean def, boolean off, boolean abi) { }
 
-    public boolean isPurelyOffensiveChange() {
+    public boolean isAnOffensiveChange() {
         boolean foundOffense = false;
         for (AbilityInfo ability : cardInfo.getAbilities()) {
             if (ability.isPurelyOffensiveChange()) {

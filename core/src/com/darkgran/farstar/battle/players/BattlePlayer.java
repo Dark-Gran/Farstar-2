@@ -25,7 +25,7 @@ public abstract class BattlePlayer {
         this.deck = deck;
         this.yard = yard;
         junkpile = new Junkpile();
-        fleet = new Fleet(junkpile);
+        fleet = new Fleet(junkpile, this);
         this.supports = new Supports();
     }
 

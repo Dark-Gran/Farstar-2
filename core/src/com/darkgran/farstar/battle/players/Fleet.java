@@ -1,6 +1,9 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.AbilityManager;
+import com.darkgran.farstar.cards.AbilityInfo;
+import com.darkgran.farstar.cards.AbilityStarter;
+import com.darkgran.farstar.cards.AbilityTargets;
 import com.darkgran.farstar.gui.battlegui.FleetMenu;
 import com.darkgran.farstar.gui.tokens.FleetToken;
 import com.darkgran.farstar.gui.tokens.Token;
@@ -12,8 +15,12 @@ public class Fleet implements BattleTicks {
     private final Junkpile junkpile;
     private final Ship[] ships = new Ship[7]; //in-future: possibly use ArrayList (see FleetMenu top comment)
     private FleetMenu fleetMenu;
+    private final BattlePlayer battlePlayer;
 
-    public Fleet(Junkpile junkpile) { this.junkpile = junkpile; }
+    public Fleet(Junkpile junkpile, BattlePlayer battlePlayer) {
+        this.junkpile = junkpile;
+        this.battlePlayer = battlePlayer;
+    }
 
     public boolean addShip(Token token, int position) { //in-future: split to be used on any Ship[] field (so it can be used by FleetMenu in predictCoordinates())
         boolean success = false;
@@ -64,9 +71,34 @@ public class Fleet implements BattleTicks {
                 }
                 centralizeShips();
             }
+            if (success) {
+                if (AbilityManager.hasAbilityTargets(ship, AbilityTargets.ADJACENT)) {
+                    getBattlePlayer().getBattle().getAbilityManager().playPositional(ship);
+                }
+            }
         }
+
         return success;
     }
+
+    public void removeShip(Ship ship, boolean inAftermath) {
+        for (int i = 0; i < ships.length; i++) {
+            if (ships[i] == ship) {
+                removeShip(i, inAftermath);
+                if (!inAftermath) {
+                    shiftShipsToBlank(i);
+                    centralizeShips();
+                }
+            }
+        }
+    }
+
+    public void removeShip(int position, boolean noUpdate) {
+        ships[position] = null;
+        getFleetMenu().removeShip(position, noUpdate);
+    }
+
+    //POSITIONING
 
     public static SimpleVector2 getSideSizes(Ship[] arr) {
         int left = 0;
@@ -165,6 +197,18 @@ public class Fleet implements BattleTicks {
         }
     }
 
+    private void setShip(Ship ship, int position, FleetToken fleetToken) {
+        ships[position] = ship;
+        if (fleetToken == null) {
+            ship.setToken(getFleetMenu().addShip(ship, position));
+        } else {
+            ship.setToken(fleetToken);
+            getFleetMenu().overwriteToken(position, fleetToken);
+        }
+    }
+
+    //EFFECTS
+
     @Override
     public CardList getCardList() { return null; }
 
@@ -188,6 +232,8 @@ public class Fleet implements BattleTicks {
         for (Ship ship : ships) { if (ship != null) { ship.tacticTrigger(abilityManager); } }
     }
 
+    //UTILITIES
+
     public boolean noAttackers() {
         for (Ship ship : ships) { if (ship != null && !ship.isUsed()) { return false; } }
         return true;
@@ -209,33 +255,6 @@ public class Fleet implements BattleTicks {
         return false;
     }
 
-    public void removeShip(Ship ship, boolean inAftermath) {
-        for (int i = 0; i < ships.length; i++) {
-            if (ships[i] == ship) {
-                removeShip(i, inAftermath);
-                if (!inAftermath) {
-                    shiftShipsToBlank(i);
-                    centralizeShips();
-                }
-            }
-        }
-    }
-
-    public void removeShip(int position, boolean noUpdate) {
-        ships[position] = null;
-        getFleetMenu().removeShip(position, noUpdate);
-    }
-
-    private void setShip(Ship ship, int position, FleetToken fleetToken) {
-        ships[position] = ship;
-        if (fleetToken == null) {
-            ship.setToken(getFleetMenu().addShip(ship, position));
-        } else {
-            ship.setToken(fleetToken);
-            getFleetMenu().overwriteToken(position, fleetToken);
-        }
-    }
-
     public void receiveFleetMenu(FleetMenu fleetMenu) { this.fleetMenu = fleetMenu; }
 
     public FleetMenu getFleetMenu() { return fleetMenu; }
@@ -243,4 +262,8 @@ public class Fleet implements BattleTicks {
     public Ship[] getShips() { return ships; }
 
     public Junkpile getJunkpile() { return junkpile; }
+
+    public BattlePlayer getBattlePlayer() {
+        return battlePlayer;
+    }
 }

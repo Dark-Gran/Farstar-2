@@ -19,6 +19,36 @@ public class AbilityManager {
         this.battle = battle;
     }
 
+    public boolean playPositional(Ship ship) {
+        boolean success = false;
+        ArrayList<BattleCard> targets;
+        for (AbilityInfo ability : ship.getCardInfo().getAbilities()) {
+            targets = new ArrayList<>();
+            if (ability.getTargets() == AbilityTargets.ADJACENT) {
+                Ship[] ships = ship.getFleet().getShips();
+                int shipIx = -1;
+                for (int i = 0; i < ships.length; i++) {
+                    if (ships[i] != null && ships[i] == ship) {
+                        shipIx = i;
+                        break;
+                    }
+                }
+                for (int i = 0; i < ships.length; i++) {
+                    if (ships[i] != null && (i == shipIx - 1 || i == shipIx + 1)) {
+                        targets.add(ships[i]);
+                        if (i == shipIx + 1) {
+                            break;
+                        }
+                    }
+                }
+            }
+            if (targets.size() > 0) {
+                success = exeAbilityEffects(true, targets, ability, ship);
+            }
+        }
+        return success;
+    }
+
     public boolean playAbility(Token casterToken, BattleCard target, AbilityInfo ability, DropTarget dropTarget) { //in-future: use List for "target" to enable multi-targeting (atm no such battleCards)
         boolean success = false;
         BattleCard caster = casterToken.getCard();
@@ -49,7 +79,7 @@ public class AbilityManager {
                         case ANY_ENEMY:
                         case ENEMY_MS:
                         case ENEMY_FLEET:
-                            getBattle().getRoundManager().askForTargets(casterToken, ability, dropTarget);
+                            getBattle().getRoundManager().askForTargets(casterToken, ability, dropTarget); //possibly untested
                             break;
                         case ENTIRE_ENEMY_FLEET: //targets all enemy fleets
                             BattlePlayer[] enemies = getBattle().getEnemies(caster.getBattlePlayer());
@@ -60,6 +90,7 @@ public class AbilityManager {
                                     }
                                 }
                             }
+                            success = true;
                             break;
                         case ENTIRE_ALLIED_FLEET: //targets all allied fleets
                             for (int i = 0; i < caster.getBattlePlayer().getFleet().getShips().length; i++) {
@@ -67,36 +98,45 @@ public class AbilityManager {
                                     targets.add(caster.getBattlePlayer().getFleet().getShips()[i]);
                                 }
                             }
+                            success = true;
+                            break;
+                        case ADJACENT:
+                            success = true;
                             break;
                     }
                 } else if (validAbilityTarget(ability, caster, target)) {
                     targets.add(target);
                 }
                 //EXECUTION
-                ArrayList<BattlePlayer> targetedPlayers = new ArrayList<>();
-                for (BattleCard currentTarget : targets) {
-                    if (currentTarget != null) {
-                        for (int i = 0; i < ability.getEffects().size(); i++) {
-                            if (ability.getEffects().get(i) != null) {
-                                if (!success) {
-                                    success = executeEffect(currentTarget, ability.getEffects().get(i), false, caster);
-                                } else {
-                                    executeEffect(currentTarget, ability.getEffects().get(i), false, caster);
-                                }
-                            }
-                        }
-                        if (success) {
-                            currentTarget.addToHistory(caster, ability);
-                            if (!targetedPlayers.contains(currentTarget.getBattlePlayer())) {
-                                targetedPlayers.add(currentTarget.getBattlePlayer());
-                            }
+                success = exeAbilityEffects(success, targets, ability, caster);
+            }
+        }
+        return success;
+    }
+
+    private boolean exeAbilityEffects(boolean success, ArrayList<BattleCard> targets, AbilityInfo ability, BattleCard caster) {
+        ArrayList<BattlePlayer> targetedPlayers = new ArrayList<>();
+        for (BattleCard currentTarget : targets) {
+            if (currentTarget != null) {
+                for (int i = 0; i < ability.getEffects().size(); i++) {
+                    if (ability.getEffects().get(i) != null) {
+                        if (!success) {
+                            success = executeEffect(currentTarget, ability.getEffects().get(i), false, caster);
+                        } else {
+                            executeEffect(currentTarget, ability.getEffects().get(i), false, caster);
                         }
                     }
                 }
-                for (BattlePlayer targetPlayer : targetedPlayers) {
-                    getBattle().getCombatManager().checkPlayerForAftermath(targetPlayer);
+                if (success) {
+                    currentTarget.addToHistory(caster, ability);
+                    if (!targetedPlayers.contains(currentTarget.getBattlePlayer())) {
+                        targetedPlayers.add(currentTarget.getBattlePlayer());
+                    }
                 }
             }
+        }
+        for (BattlePlayer targetPlayer : targetedPlayers) {
+            getBattle().getCombatManager().checkPlayerForAftermath(targetPlayer);
         }
         return success;
     }
