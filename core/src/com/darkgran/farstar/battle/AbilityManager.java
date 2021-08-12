@@ -21,29 +21,22 @@ public class AbilityManager {
         this.battle = battle;
     }
 
-    public boolean playPositional(Ship ship, boolean reverse) {
+    public static int indexInArray(Object[] array, Object obj) {
+        for (int i = array.length-1; i >= 0; i--) {
+            if (array[i] != null && array[i] == obj) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public boolean playAuraAll(Ship ship, boolean reverse) {
         boolean success = false;
         Ship[] ships = ship.getFleet().getShips();
         ArrayList<BattleCard> targets;
         for (AbilityInfo ability : ship.getCardInfo().getAbilities()) {
             targets = new ArrayList<>();
-            if (ability.getTargets() == AbilityTargets.ADJACENT) {
-                int shipIx = -1;
-                for (int i = 0; i < ships.length; i++) {
-                    if (ships[i] != null && ships[i] == ship) {
-                        shipIx = i;
-                        break;
-                    }
-                }
-                for (int i = 0; i < ships.length; i++) {
-                    if (ships[i] != null && (i == shipIx - 1 || i == shipIx + 1)) {
-                        targets.add(ships[i]);
-                        if (i == shipIx + 1) {
-                            break;
-                        }
-                    }
-                }
-            } else if (ability.getTargets() == AbilityTargets.ENTIRE_ALLIED_FLEET) {
+            if (ability.getTargets() == AbilityTargets.ENTIRE_ALLIED_FLEET) {
                 targets.addAll(Arrays.asList(ship.getFleet().getShips()));
                 targets.remove(ship);
             }
@@ -51,18 +44,23 @@ public class AbilityManager {
                 success = exeAbilityEffects(true, targets, ability, ship, reverse);
             }
         }
+        return success;
+    }
+
+    public void checkAuraAlls(Ship ship, Ship[] ships, boolean reverse) {
         if (!reverse) {
             for (Ship s : ships) {
                 if (s != null && s != ship) {
                     for (AbilityInfo ability : s.getCardInfo().getAbilities()) {
                         if (ability.getStarter() == AbilityStarter.AURA) {
-                            exeAbilityEffects(true, new ArrayList<>(Collections.singletonList(ship)), ability, s, false);
+                            if (ability.getTargets() == AbilityTargets.ENTIRE_ALLIED_FLEET) {
+                                exeAbilityEffects(true, new ArrayList<>(Collections.singletonList(ship)), ability, s, false);
+                            }
                         }
                     }
                 }
             }
         }
-        return success;
     }
 
     public boolean playAbility(Token casterToken, BattleCard target, AbilityInfo ability, DropTarget dropTarget) { //in-future: use List for "target" to enable multi-targeting (atm no such battleCards)
