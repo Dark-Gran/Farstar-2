@@ -55,16 +55,16 @@ public class TokenPrice extends TokenPart {
         int res = getResource(true, TokenType.SUPPORT); //temp solution that works with the one Support in-game
         // in-future: needs to handle all parts of price (and atm does not use GetContent() - see draw()); also atm it does not support price >9 at all (text not centered)
         // in-future: fix the font itself (glyph of "1" should not be so different from "2")
-        if (getToken().getTokenType() == TokenType.SUPPORT) {
+        if (res != 1 && getToken().getTokenType() == TokenType.SUPPORT) {
             if (res == 0) {
                 setTextOffsetX(-2.5f);
-            } else if (res != 1) {
+            } else {
                 setTextOffsetX(-1f);
             }
-        } else if (getToken().getTokenType() == TokenType.MS || (getToken().getCard().isMS() && getToken().getTokenType() == TokenType.PRINT)) {
-            if (res == 1) {
-                setTextOffsetX(4f);
-            }
+        } else if (res == 1 &&(getToken().getTokenType() == TokenType.MS || (getToken().getCard().isMS() && getToken().getTokenType() == TokenType.PRINT))) {
+            setTextOffsetX(4f);
+        } else {
+            setTextOffsetX(0f);
         }
     }
 
