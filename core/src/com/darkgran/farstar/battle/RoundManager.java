@@ -214,6 +214,9 @@ public class RoundManager {
             }
         }*/
         battle.refreshPossibilities();
+        if (token.getCard().isTactic() && (success || postAbility)) {
+            battle.tacticTrigger();
+        }
         return success;
     }
 

@@ -17,4 +17,8 @@ public interface BattleTicks {
         for (BattleCard battleCard : getCardList()) { if (battleCard != null) { battleCard.checkEffects(abilityManager); } }
     }
 
+    default void tacticTriggerOnAll(AbilityManager abilityManager) {
+        for (BattleCard battleCard : getCardList()) { if (battleCard != null) { battleCard.tacticTrigger(abilityManager); } }
+    }
+
 }

@@ -6,6 +6,8 @@ import com.darkgran.farstar.gui.tokens.FleetToken;
 import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.gui.SimpleVector2;
 
+import java.util.ArrayList;
+
 public class Fleet implements BattleTicks {
     private final Junkpile junkpile;
     private final Ship[] ships = new Ship[7]; //in-future: possibly use ArrayList (see FleetMenu top comment)
@@ -17,8 +19,8 @@ public class Fleet implements BattleTicks {
         boolean success = false;
         if (hasSpace() && position > -1 && position < 7) {
             Ship ship = new Ship(this, token.getCard().getCardInfo(), token.getCard().getOriginalInfo(), token.getCard().getBattlePlayer());
-            ship.setEffects(token.getCard().getEffects());
-            ship.setHistory(token.getCard().getHistory());
+            ship.setEffects(new ArrayList<>(token.getCard().getEffects()));
+            ship.setHistory(new ArrayList<>(token.getCard().getHistory()));
             ship.setUsed(true);
             if (position == 3 && ships[3] == null) {
                 setShip(ship, position, null);
@@ -179,6 +181,11 @@ public class Fleet implements BattleTicks {
     @Override
     public void checkEffectsOnAll(AbilityManager abilityManager) {
         for (Ship ship : ships) { if (ship != null) { ship.checkEffects(abilityManager); } }
+    }
+
+    @Override
+    public void tacticTriggerOnAll(AbilityManager abilityManager) {
+        for (Ship ship : ships) { if (ship != null) { ship.tacticTrigger(abilityManager); } }
     }
 
     public boolean noAttackers() {

@@ -1,6 +1,7 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.AbilityManager;
+import com.darkgran.farstar.battle.RoundManager;
 import com.darkgran.farstar.cards.*;
 import com.darkgran.farstar.gui.tokens.Token;
 
@@ -90,7 +91,6 @@ public class BattleCard extends Card {
     public void checkEffects(AbilityManager abilityManager) { //does not tick
         for (int i = 0; i < effects.size(); i++) {
             Effect effect = effects.get(i);
-            System.out.println(effect.getDuration());
             if (effect.getDuration() == 0) {
                 if (abilityManager.executeEffect(this, effect, true, null)) {
                     effects.remove(effect);
@@ -99,6 +99,14 @@ public class BattleCard extends Card {
             }
         }
         refreshToken(false, false, true);
+    }
+
+    public void tacticTrigger(AbilityManager abilityManager) { //"Whenever You play Tactic"
+        for (AbilityInfo abilityInfo : getCardInfo().getAbilities()) {
+            if (abilityInfo.getStarter() == AbilityStarter.TACTIC) {
+                abilityManager.playAbility(this.getToken(), null, abilityInfo, null);
+            }
+        }
     }
 
     public void death() { }

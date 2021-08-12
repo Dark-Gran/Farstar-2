@@ -31,12 +31,16 @@ public class AbilityManager {
                     switch (abilityTargets) {
                         case NONE:
                         case SELF:
-                            caster.getToken().setPicked(false);
-                            BattleCard futureSelf = new BattleCard(caster.getCardInfo(), caster.getCardInfo(), caster.getBattlePlayer());
-                            futureSelf.setToken(casterToken);
-                            casterToken.setBattleCard(futureSelf);
-                            caster = futureSelf;
-                            targets.add(futureSelf);
+                            if (ability.getStarter() == AbilityStarter.DEPLOY) {
+                                caster.getToken().setPicked(false);
+                                BattleCard futureSelf = new BattleCard(caster.getCardInfo(), caster.getCardInfo(), caster.getBattlePlayer());
+                                futureSelf.setToken(casterToken);
+                                casterToken.setBattleCard(futureSelf);
+                                caster = futureSelf;
+                                targets.add(futureSelf);
+                            } else {
+                                targets.add(casterToken.getCard());
+                            }
                             break;
                         case ANY:
                         case ANY_ALLY:

@@ -63,6 +63,12 @@ public abstract class Battle {
         setEverythingDisabled(true);
     }
 
+    public void tacticTrigger() {
+        getWhoseTurn().getMs().tacticTrigger(abilityManager);
+        getWhoseTurn().getFleet().tacticTriggerOnAll(abilityManager);
+        getWhoseTurn().getSupports().tacticTriggerOnAll(abilityManager);
+    }
+
     public void tickEffects() {
         whoseTurn.getMs().tickEffects(abilityManager);
         whoseTurn.getFleet().tickEffectsOnAll(abilityManager);
