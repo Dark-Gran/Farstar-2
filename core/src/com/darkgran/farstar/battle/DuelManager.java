@@ -206,7 +206,7 @@ public class DuelManager implements Delayer {
                 }
             }
             if (dmg > 0) {
-                dmg = getDmgAgainstShields(dmg, def.getHealth(), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
+                dmg = getDmgAgainstShields(dmg, def.getHealth(), AbilityManager.getArmor(def), att.getCardInfo().getOffenseType(), def.getCardInfo().getDefenseType());
                 if (!delayedAnimation) {
                     ShotManager.getInstance().newAttack(att.getToken(), def.getToken(), att.getCardInfo().getOffense(), att.getCardInfo().getOffenseType(), att.getCardInfo().getAnimatedShots());
                 } else {
@@ -218,12 +218,16 @@ public class DuelManager implements Delayer {
         return true;
     }
 
-    public static int getDmgAgainstShields(int dmg, int health, TechType dmgType, TechType shieldType) {
+    public static int getDmgAgainstShields(int dmg, int health, int armor, TechType dmgType, TechType shieldType) {
         if (dmg <= health || !BattleSettings.getInstance().OVERWHELMED_DEBUFF_ENABLED) {
             dmgType = TechType.noneToInferior(dmgType);
             shieldType = TechType.noneToInferior(shieldType);
             if (dmg != 0 && ((shieldType == TechType.SUPERIOR && dmgType != TechType.SUPERIOR) || (shieldType != TechType.INFERIOR && (dmgType == TechType.INFERIOR || dmgType == shieldType)))) {
-                return 1;
+                dmg = 1;
+            }
+            dmg -= armor;
+            if (dmg < 0) {
+                dmg = 0;
             }
         }
         return dmg;

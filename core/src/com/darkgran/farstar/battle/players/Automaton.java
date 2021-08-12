@@ -231,7 +231,7 @@ public final class Automaton extends Bot {
                                                     enemy = enemyToken.getCard();
                                                     if (biggestEnemyShip == null || isBiggerShip(enemy, biggestEnemyShip)) {
                                                         biggestEnemyShip = enemy;
-                                                        if (!enemy.isMS() && (duel.getValue().getUpperStrike() == null || duel.getValue().getUpperStrike() != ally) && DuelManager.getDmgAgainstShields(ally.getCardInfo().getOffense(), enemy.getHealth(), ally.getCardInfo().getOffenseType(), enemy.getCardInfo().getDefenseType()) >= enemy.getHealth()) { //note: if OUTNUMBERED_DEBUFF becomes enabled, this condition must be updated
+                                                        if (!enemy.isMS() && (duel.getValue().getUpperStrike() == null || duel.getValue().getUpperStrike() != ally) && DuelManager.getDmgAgainstShields(ally.getCardInfo().getOffense(), enemy.getHealth(), AbilityManager.getArmor(enemy), ally.getCardInfo().getOffenseType(), enemy.getCardInfo().getDefenseType()) >= enemy.getHealth()) { //note: if OUTNUMBERED_DEBUFF becomes enabled, this condition must be updated
                                                             overallNonsense = false;
                                                         }
                                                     }
@@ -340,7 +340,7 @@ public final class Automaton extends Bot {
 
     @Override
     protected Token getAlliedTarget(Token caster, EffectType effectType) {
-        if (getFleet().isEmpty() && !EffectType.isAttribute(effectType)) {
+        if (getFleet().isEmpty() && !EffectType.isParaoffenseEffect(effectType)) {
             if (!AbilityManager.hasEffectType(getMs(), effectType)) {
                 return getMs().getToken();
             }
@@ -376,7 +376,7 @@ public final class Automaton extends Bot {
                 } else {
                     for (Ship ship : enemy.getFleet().getShips()) {
                         if (ship != null) {
-                            dmg = DuelManager.getDmgAgainstShields(attacker.getCard().getCardInfo().getOffense(), ship.getHealth(), attacker.getCard().getCardInfo().getOffenseType(), ship.getCardInfo().getDefenseType());
+                            dmg = DuelManager.getDmgAgainstShields(attacker.getCard().getCardInfo().getOffense(), ship.getHealth(), AbilityManager.getArmor(ship), attacker.getCard().getCardInfo().getOffenseType(), ship.getCardInfo().getDefenseType());
                             if ((strongestKillable == null || (isBiggerShip(ship, strongestKillable)) && dmg >= ship.getHealth()) && (!checkReach || getBattle().getCombatManager().canReach(attacker, ship.getToken(), enemy.getFleet()))) {
                                 strongestKillable = ship;
                                 picked = ship.getToken();
@@ -482,7 +482,7 @@ public final class Automaton extends Bot {
                     if (picked == null) {
                         for (Ship ship : enemy.getFleet().getShips()) {
                             if (ship != null) {
-                                dmg = DuelManager.getDmgAgainstShields(attacker.getCard().getCardInfo().getOffense(), ship.getHealth(), attacker.getCard().getCardInfo().getOffenseType(), ship.getCardInfo().getDefenseType());
+                                dmg = DuelManager.getDmgAgainstShields(attacker.getCard().getCardInfo().getOffense(), ship.getHealth(), AbilityManager.getArmor(ship), attacker.getCard().getCardInfo().getOffenseType(), ship.getCardInfo().getDefenseType());
                                 if ((desperate || !isAlreadyTargetedFatally(ship.getToken(), duels, null)) && (strongestKillable == null || (isBiggerShip(ship, strongestKillable) && dmg >= ship.getHealth())) && getBattle().getCombatManager().canReach(attacker, ship.getToken(), enemy.getFleet())) {
                                     strongestKillable = ship;
                                     picked = ship.getToken();
@@ -510,7 +510,7 @@ public final class Automaton extends Bot {
             int dmg;
             for (Token opponent : opponents) {
                 if (opponent != exclude) {
-                    dmg = DuelManager.getDmgAgainstShields(opponent.getCard().getCardInfo().getOffense(), health, opponent.getCard().getCardInfo().getOffenseType(), token.getCard().getCardInfo().getDefenseType());
+                    dmg = DuelManager.getDmgAgainstShields(opponent.getCard().getCardInfo().getOffense(), health, AbilityManager.getArmor(token.getCard()), opponent.getCard().getCardInfo().getOffenseType(), token.getCard().getCardInfo().getDefenseType());
                     totalDmg += dmg;
                     health -= dmg;
                 }

@@ -218,7 +218,7 @@ public class AbilityManager {
         if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
             int power = floatObjectToInt(effect.getEffectInfo().get(0));
             TechType techType = TechType.valueOf(effect.getEffectInfo().get(1).toString());
-            int dmg = DuelManager.getDmgAgainstShields(power, target.getHealth(), techType, target.getCardInfo().getDefenseType());
+            int dmg = DuelManager.getDmgAgainstShields(power, target.getHealth(), getArmor(target), techType, target.getCardInfo().getDefenseType());
             if (caster != null) {
                 ShotManager.getInstance().newAttack(caster.getBattlePlayer().getMs().getToken(), target.getToken(), power, techType, caster.getCardInfo().getAnimatedShots());
             }
@@ -334,6 +334,21 @@ public class AbilityManager {
             if (abilityInfo.getStarter() == AbilityStarter.NONE) {
                 for (Effect effect : abilityInfo.getEffects()) {
                     if (effect.getEffectType() == EffectType.REACH) {
+                        if (effect.getEffectInfo().size() > 0 && effect.getEffectInfo().get(0) != null) {
+                            return floatObjectToInt(effect.getEffectInfo().get(0));
+                        }
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+    public static int getArmor(BattleCard battleCard) {
+        for (AbilityInfo abilityInfo : battleCard.getCardInfo().getAbilities()) {
+            if (abilityInfo.getStarter() == AbilityStarter.NONE) {
+                for (Effect effect : abilityInfo.getEffects()) {
+                    if (effect.getEffectType() == EffectType.ARMOR) {
                         if (effect.getEffectInfo().size() > 0 && effect.getEffectInfo().get(0) != null) {
                             return floatObjectToInt(effect.getEffectInfo().get(0));
                         }
