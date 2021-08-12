@@ -7,6 +7,8 @@ import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.ListIterator;
 
 import static com.darkgran.farstar.cards.EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE;
@@ -19,13 +21,13 @@ public class AbilityManager {
         this.battle = battle;
     }
 
-    public boolean playPositional(Ship ship) {
+    public boolean playPositional(Ship ship, boolean reverse) {
         boolean success = false;
+        Ship[] ships = ship.getFleet().getShips();
         ArrayList<BattleCard> targets;
         for (AbilityInfo ability : ship.getCardInfo().getAbilities()) {
             targets = new ArrayList<>();
             if (ability.getTargets() == AbilityTargets.ADJACENT) {
-                Ship[] ships = ship.getFleet().getShips();
                 int shipIx = -1;
                 for (int i = 0; i < ships.length; i++) {
                     if (ships[i] != null && ships[i] == ship) {
@@ -41,9 +43,23 @@ public class AbilityManager {
                         }
                     }
                 }
+            } else if (ability.getTargets() == AbilityTargets.ENTIRE_ALLIED_FLEET) {
+                targets.addAll(Arrays.asList(ship.getFleet().getShips()));
+                targets.remove(ship);
             }
             if (targets.size() > 0) {
-                success = exeAbilityEffects(true, targets, ability, ship);
+                success = exeAbilityEffects(true, targets, ability, ship, reverse);
+            }
+        }
+        if (!reverse) {
+            for (Ship s : ships) {
+                if (s != null && s != ship) {
+                    for (AbilityInfo ability : s.getCardInfo().getAbilities()) {
+                        if (ability.getStarter() == AbilityStarter.AURA) {
+                            exeAbilityEffects(true, new ArrayList<>(Collections.singletonList(ship)), ability, s, false);
+                        }
+                    }
+                }
             }
         }
         return success;
@@ -108,27 +124,32 @@ public class AbilityManager {
                     targets.add(target);
                 }
                 //EXECUTION
-                success = exeAbilityEffects(success, targets, ability, caster);
+                success = exeAbilityEffects(success, targets, ability, caster, false);
             }
         }
         return success;
     }
 
-    private boolean exeAbilityEffects(boolean success, ArrayList<BattleCard> targets, AbilityInfo ability, BattleCard caster) {
+    private boolean exeAbilityEffects(boolean success, ArrayList<BattleCard> targets, AbilityInfo ability, BattleCard caster, boolean reverse) {
         ArrayList<BattlePlayer> targetedPlayers = new ArrayList<>();
         for (BattleCard currentTarget : targets) {
             if (currentTarget != null) {
                 for (int i = 0; i < ability.getEffects().size(); i++) {
                     if (ability.getEffects().get(i) != null) {
                         if (!success) {
-                            success = executeEffect(currentTarget, ability.getEffects().get(i), false, caster);
+                            success = executeEffect(currentTarget, ability.getEffects().get(i), reverse, caster);
                         } else {
-                            executeEffect(currentTarget, ability.getEffects().get(i), false, caster);
+                            executeEffect(currentTarget, ability.getEffects().get(i), reverse, caster);
+                        }
+                        if (success && reverse) {
+                            currentTarget.getEffects().remove(ability.getEffects().get(i));
                         }
                     }
                 }
                 if (success) {
-                    currentTarget.addToHistory(caster, ability);
+                    if (!reverse) {
+                        currentTarget.addToHistory(caster, ability);
+                    }
                     if (!targetedPlayers.contains(currentTarget.getBattlePlayer())) {
                         targetedPlayers.add(currentTarget.getBattlePlayer());
                     }

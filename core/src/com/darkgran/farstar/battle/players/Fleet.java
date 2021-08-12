@@ -72,12 +72,11 @@ public class Fleet implements BattleTicks {
                 centralizeShips();
             }
             if (success) {
-                if (AbilityManager.hasAbilityTargets(ship, AbilityTargets.ADJACENT)) {
-                    getBattlePlayer().getBattle().getAbilityManager().playPositional(ship);
+                if (AbilityManager.hasAbilityTargets(ship, AbilityTargets.ADJACENT) || AbilityManager.hasStarter(ship, AbilityStarter.AURA)) {
+                    getBattlePlayer().getBattle().getAbilityManager().playPositional(ship, false);
                 }
             }
         }
-
         return success;
     }
 
@@ -88,6 +87,9 @@ public class Fleet implements BattleTicks {
                 if (!inAftermath) {
                     shiftShipsToBlank(i);
                     centralizeShips();
+                }
+                if (AbilityManager.hasStarter(ship, AbilityStarter.AURA)) {
+                    getBattlePlayer().getBattle().getAbilityManager().playPositional(ship, true);
                 }
             }
         }
