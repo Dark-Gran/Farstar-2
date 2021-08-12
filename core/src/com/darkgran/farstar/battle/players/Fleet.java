@@ -28,6 +28,7 @@ public class Fleet implements BattleTicks {
             ship.setEffects(new ArrayList<>(token.getCard().getEffects()));
             ship.setHistory(new ArrayList<>(token.getCard().getHistory()));
             ship.setUsed(true);
+            getBattlePlayer().getBattle().getAbilityManager().checkAuraAdjacents(ships, true);
             if (position == 3 && ships[3] == null) {
                 setShip(ship, position, null);
                 success = true;
@@ -76,14 +77,16 @@ public class Fleet implements BattleTicks {
                 }
                 getBattlePlayer().getBattle().getAbilityManager().checkAuraAlls(ship, false);
                 if (AbilityManager.hasAbilityTargets(ship, AbilityTargets.ADJACENT) && AbilityManager.hasStarter(ship, AbilityStarter.DEPLOY)) {
-                    getBattlePlayer().getBattle().getAbilityManager().playOnAdjacent(ship, false,-1);
+                    getBattlePlayer().getBattle().getAbilityManager().playOnAdjacent(ship, false, -1);
                 }
             }
+            getBattlePlayer().getBattle().getAbilityManager().checkAuraAdjacents(ships, false);
         }
         return success;
     }
 
     public void removeShip(Ship ship, boolean inAftermath) {
+        if (!inAftermath) { getBattlePlayer().getBattle().getAbilityManager().checkAuraAdjacents(ships, true); }
         for (int i = 0; i < ships.length; i++) {
             if (ships[i] == ship) {
                 removeShip(i, inAftermath);
@@ -97,6 +100,7 @@ public class Fleet implements BattleTicks {
                 getBattlePlayer().getBattle().getAbilityManager().checkAuraAlls(ship, true);
             }
         }
+        if (!inAftermath) { getBattlePlayer().getBattle().getAbilityManager().checkAuraAdjacents(ships, false); }
     }
 
     public void removeShip(int position, boolean noUpdate) {

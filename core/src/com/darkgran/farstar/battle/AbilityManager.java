@@ -121,6 +121,18 @@ public class AbilityManager {
         }
     }
 
+    public void checkAuraAdjacents(Ship[] ships, boolean reverse) {
+        for (Ship ship : ships) {
+            if (ship != null) {
+                for (AbilityInfo ability : ship.getCardInfo().getAbilities()) {
+                    if (ability.getStarter() == AbilityStarter.AURA && ability.getTargets() == AbilityTargets.ADJACENT) {
+                        playOnAdjacent(ship, reverse, -1);
+                    }
+                }
+            }
+        }
+    }
+
     public void playOnAdjacent(Ship ship, boolean reverse, int position) {
         ArrayList<BattleCard> targets = getAdjacent(ship, position);
         if (targets.size() > 0) {
