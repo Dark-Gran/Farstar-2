@@ -188,7 +188,6 @@ public abstract class BattleStage extends ListeningStage {
         if (token != null) {
             CombatManager combatManager = getBattleScreen().getBattle().getCombatManager();
             DropTarget targetHit = returnDropTarget(x, y);
-            System.out.println(targetHit);
             //Deploy-Retargeting
             if (!(token instanceof TargetingToken)) {
                 if (token.getCard().getCardInfo().getCardType() == CardType.SUPPORT) {
