@@ -74,7 +74,10 @@ public class Fleet implements BattleTicks {
                 if (AbilityManager.hasAbilityTargets(ship, AbilityTargets.ENTIRE_ALLIED_FLEET) && AbilityManager.hasStarter(ship, AbilityStarter.AURA)) {
                     getBattlePlayer().getBattle().getAbilityManager().playAuraAll(ship, false);
                 }
-                getBattlePlayer().getBattle().getAbilityManager().checkAuraAlls(ship, ships, false);
+                getBattlePlayer().getBattle().getAbilityManager().checkAuraAlls(ship, false);
+                if (AbilityManager.hasAbilityTargets(ship, AbilityTargets.ADJACENT) && AbilityManager.hasStarter(ship, AbilityStarter.DEPLOY)) {
+                    getBattlePlayer().getBattle().getAbilityManager().playOnAdjacent(ship, false,-1);
+                }
             }
         }
         return success;
@@ -91,7 +94,7 @@ public class Fleet implements BattleTicks {
                 if (AbilityManager.hasAbilityTargets(ship, AbilityTargets.ENTIRE_ALLIED_FLEET) && AbilityManager.hasStarter(ship, AbilityStarter.AURA)) {
                     getBattlePlayer().getBattle().getAbilityManager().playAuraAll(ship, true);
                 }
-                getBattlePlayer().getBattle().getAbilityManager().checkAuraAlls(ship, ships, true);
+                getBattlePlayer().getBattle().getAbilityManager().checkAuraAlls(ship, true);
             }
         }
     }

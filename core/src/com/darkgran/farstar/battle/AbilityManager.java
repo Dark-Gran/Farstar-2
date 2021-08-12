@@ -21,47 +21,7 @@ public class AbilityManager {
         this.battle = battle;
     }
 
-    public static int indexInArray(Object[] array, Object obj) {
-        for (int i = array.length-1; i >= 0; i--) {
-            if (array[i] != null && array[i] == obj) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public boolean playAuraAll(Ship ship, boolean reverse) {
-        boolean success = false;
-        Ship[] ships = ship.getFleet().getShips();
-        ArrayList<BattleCard> targets;
-        for (AbilityInfo ability : ship.getCardInfo().getAbilities()) {
-            targets = new ArrayList<>();
-            if (ability.getTargets() == AbilityTargets.ENTIRE_ALLIED_FLEET) {
-                targets.addAll(Arrays.asList(ship.getFleet().getShips()));
-                targets.remove(ship);
-            }
-            if (targets.size() > 0) {
-                success = exeAbilityEffects(true, targets, ability, ship, reverse);
-            }
-        }
-        return success;
-    }
-
-    public void checkAuraAlls(Ship ship, Ship[] ships, boolean reverse) {
-        if (!reverse) {
-            for (Ship s : ships) {
-                if (s != null && s != ship) {
-                    for (AbilityInfo ability : s.getCardInfo().getAbilities()) {
-                        if (ability.getStarter() == AbilityStarter.AURA) {
-                            if (ability.getTargets() == AbilityTargets.ENTIRE_ALLIED_FLEET) {
-                                exeAbilityEffects(true, new ArrayList<>(Collections.singletonList(ship)), ability, s, false);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    //Targeting
 
     public boolean playAbility(Token casterToken, BattleCard target, AbilityInfo ability, DropTarget dropTarget) { //in-future: use List for "target" to enable multi-targeting (atm no such battleCards)
         boolean success = false;
@@ -115,7 +75,7 @@ public class AbilityManager {
                             success = true;
                             break;
                         case ADJACENT:
-                            success = true;
+                            success = true; //resolved after the ship is fully deployed (see playOnAdjacent())
                             break;
                     }
                 } else if (validAbilityTarget(ability, caster, target)) {
@@ -127,6 +87,74 @@ public class AbilityManager {
         }
         return success;
     }
+
+    public boolean playAuraAll(Ship ship, boolean reverse) {
+        boolean success = false;
+        ArrayList<BattleCard> targets;
+        for (AbilityInfo ability : ship.getCardInfo().getAbilities()) {
+            targets = new ArrayList<>();
+            if (ability.getTargets() == AbilityTargets.ENTIRE_ALLIED_FLEET) {
+                targets.addAll(Arrays.asList(ship.getFleet().getShips()));
+                targets.remove(ship);
+            }
+            if (targets.size() > 0) {
+                success = exeAbilityEffects(true, targets, ability, ship, reverse);
+            }
+        }
+        return success;
+    }
+
+    public void checkAuraAlls(Ship ship, boolean reverse) {
+        Ship[] ships = ship.getFleet().getShips();
+        if (!reverse) {
+            for (Ship s : ships) {
+                if (s != null && s != ship) {
+                    for (AbilityInfo ability : s.getCardInfo().getAbilities()) {
+                        if (ability.getStarter() == AbilityStarter.AURA) {
+                            if (ability.getTargets() == AbilityTargets.ENTIRE_ALLIED_FLEET) {
+                                exeAbilityEffects(true, new ArrayList<>(Collections.singletonList(ship)), ability, s, false);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void playOnAdjacent(Ship ship, boolean reverse, int position) {
+        ArrayList<BattleCard> targets = getAdjacent(ship, position);
+        if (targets.size() > 0) {
+            for (AbilityInfo ability : ship.getCardInfo().getAbilities()) {
+                exeAbilityEffects(true, targets, ability, ship, reverse);
+            }
+        }
+    }
+
+    public ArrayList<BattleCard> getAdjacent(Ship ship, int position) {
+        ArrayList<BattleCard> targets = new ArrayList<>();
+        Ship[] ships = ship.getFleet().getShips();
+        int shipIx = position == -1 ? indexInArray(ships, ship) : position;
+        for (int i = 0; i < ships.length; i++) {
+            if (ships[i] != null && (i == shipIx - 1 || i == shipIx + 1 || i == position)) {
+                targets.add(ships[i]);
+                if (i == shipIx + 1) {
+                    break;
+                }
+            }
+        }
+        return targets;
+    }
+
+    public static int indexInArray(Object[] array, Object obj) {
+        for (int i = array.length-1; i >= 0; i--) {
+            if (array[i] != null && array[i] == obj) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    //Execution
 
     private boolean exeAbilityEffects(boolean success, ArrayList<BattleCard> targets, AbilityInfo ability, BattleCard caster, boolean reverse) {
         ArrayList<BattlePlayer> targetedPlayers = new ArrayList<>();
