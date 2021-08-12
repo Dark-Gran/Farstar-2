@@ -79,10 +79,10 @@ public class Explainer extends TextInTheBox {
             else { first = false; }
             switch (battleCard.getCardInfo().getCardType()) {
                 case TACTIC:
-                    str.append("Tactic:\nTactics may be played both in Your Turn and in the Tactical Phase.\nUsually the best choice is to keep them for the Tactical Phase.\n");
+                    str.append("Tactic:\nTactics may be deployed both in Your Turn and in the Tactical Phase.\nUsually the best choice is to keep them for the Tactical Phase.\n");
                     break;
                 case SUPPORT:
-                    str.append("Support:\nYou can Deploy Supports next to Your Mothership.\n");
+                    str.append("Support:\nYou can deploy Supports next to Your Mothership.\n");
                     break;
             }
         }
@@ -119,7 +119,7 @@ public class Explainer extends TextInTheBox {
                 case DEPLOY:
                     if (!first) { str.append("\n"); }
                     else { first = false; }
-                    str.append("Does something when played.");
+                    str.append("Does something when deployed.");
                     break;
             }*/
         }
