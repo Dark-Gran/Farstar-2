@@ -101,6 +101,11 @@ public class Explainer extends TextInTheBox {
                         else { first = false; }
                         str.append("Reach:\nAllows targeting over Guards, but only if the Reach is same as (or greater than) number of Guards.\n");
                         break;
+                    case ARMOR:
+                        if (!first) { str.append("\n"); }
+                        else { first = false; }
+                        str.append("Armor:\nReduces all incoming damage.\n");
+                        break;
                     case FIRST_STRIKE:
                         FSpresent = true;
                         break;
