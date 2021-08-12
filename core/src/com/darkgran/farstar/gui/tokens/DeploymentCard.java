@@ -4,12 +4,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.darkgran.farstar.SuperScreen;
 import com.darkgran.farstar.battle.players.BattleCard;
 import com.darkgran.farstar.gui.AssetLibrary;
 import com.darkgran.farstar.gui.ColorPalette;
+import com.darkgran.farstar.gui.SimpleVector2;
 import com.darkgran.farstar.gui.battlegui.BattleStage;
 import com.darkgran.farstar.gui.battlegui.CardListMenu;
 
+import static com.darkgran.farstar.Farstar.STAGE_HEIGHT;
 import static com.darkgran.farstar.SuperScreen.DEBUG_RENDER;
 
 public class DeploymentCard extends DeploymentToken implements CardGFX {
@@ -23,12 +26,14 @@ public class DeploymentCard extends DeploymentToken implements CardGFX {
     public DeploymentCard(BattleCard battleCard, float x, float y, BattleStage battleStage, CardListMenu cardListMenu) {
         super(battleCard, x, y, battleStage, cardListMenu);
         setWidth(TokenType.FAKE.getWidth());
-        setHeight(361f);
         resetCardGFX(getCard().getCardInfo().getCulture(), TokenType.FAKE);
+        setHeight(getCardPic().getRegionHeight());
         setGlowOffsetX(-getGlowG().getRegionWidth()/2f+getFrame().getRegionWidth()/2f);
         setGlowOffsetY(-getGlowG().getRegionHeight()/2f+getCardPic().getRegionHeight()/2f);
         setOriginX(getWidth()/2);
         setOriginY(getHeight()/2);
+        SimpleVector2 coords = SuperScreen.getMouseCoordinates();
+        setPosition(coords.x-getWidth()/2f, STAGE_HEIGHT-(coords.y+getHeight()/2f));
         setParts();
     }
 

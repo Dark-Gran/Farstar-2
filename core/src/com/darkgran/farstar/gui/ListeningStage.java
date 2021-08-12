@@ -18,7 +18,7 @@ public abstract class ListeningStage extends Stage {
     public void act(float delta) {
         if (mainDrag != null) {
             SimpleVector2 coords = SuperScreen.getMouseCoordinates();
-            mainDrag.getDragger().drag(coords.x, coords.y);
+            mainDrag.getDragger().update(delta, coords.x, coords.y);
         }
         super.act(delta);
     }

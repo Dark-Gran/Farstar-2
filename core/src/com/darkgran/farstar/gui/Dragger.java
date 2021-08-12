@@ -9,9 +9,13 @@ import static com.darkgran.farstar.Farstar.STAGE_HEIGHT;
 
 public abstract class Dragger extends InputListener {
     protected boolean canceled = false;
+    protected boolean countingHold = false;
+    protected boolean held = false;
     protected boolean active = false;
     private final Draggable draggable;
     private final ListeningStage listeningStage;
+    private float timer = 0f;
+    private static final float HOLD_TIME = 0.2f;
 
     public Dragger(Draggable draggable, ListeningStage listeningStage) {
         this.draggable = draggable;
@@ -24,20 +28,41 @@ public abstract class Dragger extends InputListener {
             event.getStage().removeTouchFocus(this, event.getListenerActor(), event.getTarget(), event.getPointer(), event.getButton());
             canceled = true;
         } else {
-            canceled = false;
-            active = true;
-            listeningStage.setMainDrag(draggable);
+            if (!active) {
+                activate();
+            } else {
+                dropAtMouse();
+            }
         }
         return true;
     }
 
-    @Override
-    public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-        super.touchUp(event, x, y, pointer, button);
-        if (button == 0 && !canceled) {
-            SimpleVector2 coords = SuperScreen.getMouseCoordinates();
-            drop(coords.x, coords.y);
+    public void deactivate() {
+        active = false;
+        listeningStage.setMainDrag(null);
+        countingHold = false;
+        held = false;
+        timer = 0f;
+    }
+
+    public void activate() {
+        active = true;
+        listeningStage.setMainDrag(draggable);
+        countingHold = true;
+        held = false;
+        timer = 0f;
+    }
+
+    public void update(float delta, float x, float y) {
+        if (countingHold) {
+            timer += delta;
+            if (timer >= HOLD_TIME) {
+                held = true;
+                countingHold = false;
+                timer = 0f;
+            }
         }
+        drag(x, y);
     }
 
     public void drag(float x, float y) {
@@ -47,15 +72,31 @@ public abstract class Dragger extends InputListener {
                     draggable.getActor().setPosition(x - draggable.getActor().getWidth() / 2, STAGE_HEIGHT - (y + draggable.getActor().getHeight() / 2));
                 }
             } else {
-                active = false;
-                listeningStage.setMainDrag(null);
+                deactivate();
+            }
+        }
+    }
+
+    private void dropAtMouse() {
+        SimpleVector2 coords = SuperScreen.getMouseCoordinates();
+        drop(coords.x, coords.y);
+    }
+
+    @Override
+    public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+        super.touchUp(event, x, y, pointer, button);
+        if (button == 0 && !canceled) {
+            if (held) {
+                dropAtMouse();
+            } else {
+                countingHold = false;
+                timer = 0f;
             }
         }
     }
 
     public void drop(float x, float y) {
-        active = false;
-        listeningStage.setMainDrag(null);
+        deactivate();
     }
 
     public Draggable getDraggable() {

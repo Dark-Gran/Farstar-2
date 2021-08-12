@@ -5,6 +5,8 @@ import com.darkgran.farstar.gui.Dragger;
 import com.darkgran.farstar.gui.Draggable;
 import com.darkgran.farstar.gui.ListeningStage;
 
+import static com.darkgran.farstar.Farstar.STAGE_HEIGHT;
+
 
 public class TokenDragger extends Dragger {
 
@@ -27,7 +29,7 @@ public class TokenDragger extends Dragger {
     public void drop(float x, float y) {
         super.drop(x ,y);
         if (!canceled) {
-            ((Token) getDraggable()).getBattleStage().processDrop(x, y, (Token) getDraggable());
+            ((Token) getDraggable()).getBattleStage().processDrop(x, STAGE_HEIGHT-y, (Token) getDraggable());
         }
     }
 
