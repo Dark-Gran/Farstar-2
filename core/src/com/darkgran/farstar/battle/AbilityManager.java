@@ -31,7 +31,12 @@ public class AbilityManager {
                     switch (abilityTargets) {
                         case NONE:
                         case SELF:
-                            targets.add(casterToken.getCard());
+                            caster.getToken().setPicked(false);
+                            BattleCard futureSelf = new BattleCard(caster.getCardInfo(), caster.getCardInfo(), caster.getBattlePlayer());
+                            futureSelf.setToken(casterToken);
+                            casterToken.setBattleCard(futureSelf);
+                            caster = futureSelf;
+                            targets.add(futureSelf);
                             break;
                         case ANY:
                         case ANY_ALLY:
@@ -295,6 +300,15 @@ public class AbilityManager {
     public static boolean hasStarter(BattleCard battleCard, AbilityStarter abilityStarter) {
         for (AbilityInfo abilityInfo : battleCard.getCardInfo().getAbilities()) {
             if (abilityInfo.getStarter() == abilityStarter) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean hasAbilityTargets(BattleCard battleCard, AbilityTargets abilityTargets) {
+        for (AbilityInfo abilityInfo : battleCard.getCardInfo().getAbilities()) {
+            if (abilityInfo.getTargets() == abilityTargets) {
                 return true;
             }
         }

@@ -8,12 +8,17 @@ import java.util.ArrayList;
 
 public class BattleCard extends Card {
     private BattlePlayer battlePlayer;
-    private final ArrayList<Effect> effects = new ArrayList<>();
-    private final ArrayList<AbilityRecord> history = new ArrayList<>();
+    private ArrayList<Effect> effects = new ArrayList<>();
+    private ArrayList<AbilityRecord> history = new ArrayList<>();
     private boolean used; //for AbilityStarter.USE
     private int damage = 0;
     private boolean killedByFirstStrike;
     private boolean killedByTopStrike;
+
+    public BattleCard(CardInfo cardInfo, CardInfo originalInfo, BattlePlayer battlePlayer) {
+        super(cardInfo, originalInfo);
+        this.battlePlayer = battlePlayer;
+    }
 
     public BattleCard(CardInfo cardInfo, BattlePlayer battlePlayer) {
         super(cardInfo);
@@ -85,6 +90,7 @@ public class BattleCard extends Card {
     public void checkEffects(AbilityManager abilityManager) { //does not tick
         for (int i = 0; i < effects.size(); i++) {
             Effect effect = effects.get(i);
+            System.out.println(effect.getDuration());
             if (effect.getDuration() == 0) {
                 if (abilityManager.executeEffect(this, effect, true, null)) {
                     effects.remove(effect);
@@ -97,7 +103,9 @@ public class BattleCard extends Card {
 
     public void death() { }
 
-    public void addToHistory (BattleCard battleCard, AbilityInfo ability) { history.add(new AbilityRecord(battleCard, ability));  }
+    public void addToHistory (BattleCard battleCard, AbilityInfo ability) {
+        history.add(new AbilityRecord(battleCard, ability));
+    }
 
     public void addToEffects (Effect effect) {
         effects.add(effect);
@@ -115,6 +123,14 @@ public class BattleCard extends Card {
     public ArrayList<Effect> getEffects() { return effects; }
 
     public ArrayList<AbilityRecord> getHistory() { return history; }
+
+    public void setEffects(ArrayList<Effect> effects) {
+        this.effects = effects;
+    }
+
+    public void setHistory(ArrayList<AbilityRecord> history) {
+        this.history = history;
+    }
 
     public boolean isUsed() { return used; }
 

@@ -13,6 +13,11 @@ public abstract class Card {
         this.cardInfo = instanceCardInfo(originalInfo);
     }
 
+    public Card(CardInfo cardInfo, CardInfo originalInfo) {
+        this.cardInfo = instanceCardInfo(cardInfo);
+        this.originalInfo = originalInfo;
+    }
+
     public Card() {
         originalInfo = CardLibrary.getInstance().getCard(0);
         cardInfo = instanceCardInfo(originalInfo);
@@ -23,7 +28,7 @@ public abstract class Card {
         cardInfo = instanceCardInfo(originalInfo);
     }
 
-    private CardInfo instanceCardInfo(CardInfo cardInfo) {
+    public CardInfo instanceCardInfo(CardInfo cardInfo) {
         return new CardInfo(cardInfo.getId(), cardInfo.getName(), cardInfo.getCulture(), cardInfo.getDescriptionHead(), cardInfo.getDescription(), cardInfo.getDescriptionFoot(), cardInfo.getCardType(), cardInfo.getCardRarity(), cardInfo.getTier(), cardInfo.getEnergy(), cardInfo.getMatter(), cardInfo.getOffense(), cardInfo.getDefense(), cardInfo.getOffenseType(), cardInfo.getDefenseType(), cardInfo.getAbilities(), cardInfo.getAnimatedShots(), cardInfo.getFlavour());
     }
 

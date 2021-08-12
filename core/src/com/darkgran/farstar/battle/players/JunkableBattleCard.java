@@ -5,7 +5,9 @@ import com.darkgran.farstar.cards.CardType;
 
 public abstract class JunkableBattleCard extends BattleCard {
 
-    public JunkableBattleCard(CardInfo cardInfo, BattlePlayer battlePlayer) { super(cardInfo, battlePlayer); }
+    public JunkableBattleCard(CardInfo cardInfo, CardInfo originalInfo, BattlePlayer battlePlayer) { super(cardInfo, originalInfo, battlePlayer); }
+
+    public JunkableBattleCard(CardInfo cardInfo, BattlePlayer battlePlayer) { super(cardInfo, cardInfo, battlePlayer); }
 
     public JunkableBattleCard() { super(); }
 

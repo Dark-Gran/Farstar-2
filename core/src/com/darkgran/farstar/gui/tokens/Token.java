@@ -204,6 +204,10 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
 
     public BattleCard getCard() { return battleCard; }
 
+    public void setBattleCard(BattleCard battleCard) {
+        this.battleCard = battleCard;
+    }
+
     public BattleStage getBattleStage() { return battleStage; }
 
     public CardListMenu getCardListMenu() { return cardListMenu; }

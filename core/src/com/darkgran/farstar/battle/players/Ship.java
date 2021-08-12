@@ -6,8 +6,13 @@ public class Ship extends JunkableBattleCard {
     private final Fleet fleet;
     private int dmgDoneThisBattle = 0;
 
+    public Ship(Fleet fleet, CardInfo cardInfo, CardInfo originalInfo, BattlePlayer battlePlayer) {
+        super(cardInfo, originalInfo, battlePlayer);
+        this.fleet = fleet;
+    }
+
     public Ship(Fleet fleet, CardInfo cardInfo, BattlePlayer battlePlayer) {
-        super(cardInfo, battlePlayer);
+        super(cardInfo, cardInfo, battlePlayer);
         this.fleet = fleet;
     }
 

@@ -16,7 +16,9 @@ public class Fleet implements BattleTicks {
     public boolean addShip(Token token, int position) { //in-future: split to be used on any Ship[] field (so it can be used by FleetMenu in predictCoordinates())
         boolean success = false;
         if (hasSpace() && position > -1 && position < 7) {
-            Ship ship = new Ship(this, token.getCard().getCardInfo(), token.getCard().getBattlePlayer());
+            Ship ship = new Ship(this, token.getCard().getCardInfo(), token.getCard().getOriginalInfo(), token.getCard().getBattlePlayer());
+            ship.setEffects(token.getCard().getEffects());
+            ship.setHistory(token.getCard().getHistory());
             ship.setUsed(true);
             if (position == 3 && ships[3] == null) {
                 setShip(ship, position, null);
