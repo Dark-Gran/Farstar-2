@@ -17,8 +17,8 @@ public abstract class Dragger extends InputListener {
     private final ListeningStage listeningStage;
     private float timer = 0f;
     private float distanceTraveled = 0f;
-    private static final float HOLD_TIME = 0.25f;
-    private static final float HOLD_DISTANCE = TokenType.FLEET.getWidth();
+    private static final float HOLD_TIME = 0.2f;
+    private static final float HOLD_DISTANCE = TokenType.FLEET.getWidth()*0.9f;
 
     public Dragger(Draggable draggable, ListeningStage listeningStage) {
         this.draggable = draggable;
