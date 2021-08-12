@@ -320,7 +320,7 @@ public abstract class CombatManager {
         for (Ship ship : ships) {
             if (ship != null) {
                 ship.setDmgDoneThisBattle(0);
-                if (ship.getHealth() <= 0) {
+                if (ship.getHealth() <= 0 && !ship.isDead()) {
                     ship.deathInAfterMath();
                 }
             }

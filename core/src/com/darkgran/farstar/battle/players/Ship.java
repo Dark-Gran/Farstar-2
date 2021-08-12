@@ -5,6 +5,7 @@ import com.darkgran.farstar.cards.CardInfo;
 public class Ship extends JunkableBattleCard {
     private final Fleet fleet;
     private int dmgDoneThisBattle = 0;
+    private boolean dead = false;
 
     public Ship(Fleet fleet, CardInfo cardInfo, CardInfo originalInfo, BattlePlayer battlePlayer) {
         super(cardInfo, originalInfo, battlePlayer);
@@ -17,12 +18,14 @@ public class Ship extends JunkableBattleCard {
     }
 
     public void deathInAfterMath() {
+        dead = true;
         super.death();
         if (fleet != null) { fleet.removeShip(this, true); }
     }
 
     @Override
     public void death() {
+        dead = true;
         super.death();
         if (fleet != null) { fleet.removeShip(this, false); }
     }
@@ -36,4 +39,9 @@ public class Ship extends JunkableBattleCard {
     public void setDmgDoneThisBattle(int dmgDoneThisBattle) {
         this.dmgDoneThisBattle = dmgDoneThisBattle;
     }
+
+    public boolean isDead() {
+        return dead;
+    }
+
 }

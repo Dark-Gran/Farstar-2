@@ -126,6 +126,7 @@ public class AbilityManager {
             if (ship != null) {
                 for (AbilityInfo ability : ship.getCardInfo().getAbilities()) {
                     if (ability.getStarter() == AbilityStarter.AURA && ability.getTargets() == AbilityTargets.ADJACENT) {
+                        System.out.println("EHM: "+reverse);
                         playOnAdjacent(ship, reverse, -1);
                     }
                 }

@@ -86,7 +86,7 @@ public class Fleet implements BattleTicks {
     }
 
     public void removeShip(Ship ship, boolean inAftermath) {
-        if (!inAftermath) { getBattlePlayer().getBattle().getAbilityManager().checkAuraAdjacents(ships, true); }
+        getBattlePlayer().getBattle().getAbilityManager().checkAuraAdjacents(ships, true);
         for (int i = 0; i < ships.length; i++) {
             if (ships[i] == ship) {
                 removeShip(i, inAftermath);
@@ -100,7 +100,7 @@ public class Fleet implements BattleTicks {
                 getBattlePlayer().getBattle().getAbilityManager().checkAuraAlls(ship, true);
             }
         }
-        if (!inAftermath) { getBattlePlayer().getBattle().getAbilityManager().checkAuraAdjacents(ships, false); }
+        getBattlePlayer().getBattle().getAbilityManager().checkAuraAdjacents(ships, false);
     }
 
     public void removeShip(int position, boolean noUpdate) {
