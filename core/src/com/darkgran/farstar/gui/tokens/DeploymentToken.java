@@ -20,7 +20,6 @@ public class DeploymentToken extends FakeToken {
 
     @Override
     public void destroy() {
-        getCard().getToken().setPicked(false);
         super.destroy();
         if (getCardListMenu() != null) { getCardListMenu().getBattlePlayer().getFleet().getFleetMenu().setPredictEnabled(false); }
     }

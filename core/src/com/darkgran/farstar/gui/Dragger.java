@@ -3,6 +3,8 @@ package com.darkgran.farstar.gui;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.darkgran.farstar.SuperScreen;
+import com.darkgran.farstar.gui.tokens.FakeToken;
+import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.gui.tokens.TokenType;
 
 
@@ -29,6 +31,9 @@ public abstract class Dragger extends InputListener {
     public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
         if (button == 1) {
             event.getStage().removeTouchFocus(this, event.getListenerActor(), event.getTarget(), event.getPointer(), event.getButton());
+            if (getDraggable() instanceof FakeToken) {
+                ((Token) getDraggable()).getCard().getToken().setPicked(false);
+            }
             canceled = true;
         } else {
             if (!active) {

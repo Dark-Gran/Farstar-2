@@ -21,10 +21,11 @@ public class Fleet implements BattleTicks {
         this.battlePlayer = battlePlayer;
     }
 
-    public boolean addShip(Token token, int position) { //in-future: split to be used on any Ship[] field (so it can be used by FleetMenu in predictCoordinates())
+    public Ship addShip(Token token, int position) { //in-future: split to be used on any Ship[] field (so it can be used by FleetMenu in predictCoordinates())
         boolean success = false;
+        Ship ship = null;
         if (hasSpace() && position > -1 && position < 7) {
-            Ship ship = new Ship(this, token.getCard().getCardInfo(), token.getCard().getOriginalInfo(), token.getCard().getBattlePlayer());
+            ship = new Ship(this, token.getCard().getCardInfo(), token.getCard().getOriginalInfo(), token.getCard().getBattlePlayer());
             ship.setEffects(new ArrayList<>(token.getCard().getEffects()));
             ship.setHistory(new ArrayList<>(token.getCard().getHistory()));
             ship.setUsed(true);
@@ -82,7 +83,7 @@ public class Fleet implements BattleTicks {
             }
             getBattlePlayer().getBattle().getAbilityManager().checkAuraAdjacents(ships, false);
         }
-        return success;
+        return success ? ship : null;
     }
 
     public void removeShip(Ship ship, boolean inAftermath) {

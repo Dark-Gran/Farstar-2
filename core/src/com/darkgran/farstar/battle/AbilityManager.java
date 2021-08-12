@@ -5,6 +5,7 @@ import com.darkgran.farstar.gui.battlegui.DropTarget;
 import com.darkgran.farstar.gui.battlegui.ShotManager;
 import com.darkgran.farstar.gui.tokens.Token;
 import com.darkgran.farstar.battle.players.*;
+import com.darkgran.farstar.gui.tokens.TokenType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,7 +83,9 @@ public class AbilityManager {
                     targets.add(target);
                 }
                 //EXECUTION
-                success = exeAbilityEffects(success, targets, ability, caster, false);
+                if (targets.size() > 0) {
+                    success = exeAbilityEffects(success, targets, ability, caster, false);
+                }
             }
         }
         return success;
@@ -126,7 +129,6 @@ public class AbilityManager {
             if (ship != null) {
                 for (AbilityInfo ability : ship.getCardInfo().getAbilities()) {
                     if (ability.getStarter() == AbilityStarter.AURA && ability.getTargets() == AbilityTargets.ADJACENT) {
-                        System.out.println("EHM: "+reverse);
                         playOnAdjacent(ship, reverse, -1);
                     }
                 }
@@ -328,7 +330,7 @@ public class AbilityManager {
             int power = floatObjectToInt(effect.getEffectInfo().get(0));
             TechType techType = TechType.valueOf(effect.getEffectInfo().get(1).toString());
             int dmg = DuelManager.getDmgAgainstShields(power, target.getHealth(), getArmor(target), techType, target.getCardInfo().getDefenseType());
-            if (caster != null) {
+            if (caster != null && !CardType.isShip(caster.getCardInfo().getCardType()) && caster.getToken().getTokenType() == TokenType.HAND) {
                 ShotManager.getInstance().newAttack(caster.getBattlePlayer().getMs().getToken(), target.getToken(), power, techType, caster.getCardInfo().getAnimatedShots());
             }
             if (target instanceof Ship) {

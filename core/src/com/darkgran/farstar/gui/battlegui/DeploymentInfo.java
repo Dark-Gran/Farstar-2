@@ -19,7 +19,7 @@ public class DeploymentInfo {
 
     public void resetInDeployment() {
         if (caster != null) {
-            caster.setPicked(false);
+            caster.getCard().getToken().setPicked(false);
             caster = null;
         }
         drop = null;

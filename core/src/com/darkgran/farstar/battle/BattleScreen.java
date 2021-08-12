@@ -33,7 +33,6 @@ public class BattleScreen extends SuperScreen {
             if (button == 1) { //mouse.right
                 if (battle.getRoundManager().isLaunched() && battle.getWhoseTurn() instanceof LocalBattlePlayer) {
                     battle.getRoundManager().tryCancel();
-                    battle.closeYards();
                     if (battleStage.getBattleHelp() != null) { battleStage.getBattleHelp().setEnabled(false); }
                 }
             }

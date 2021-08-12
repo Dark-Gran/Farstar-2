@@ -1,14 +1,11 @@
 package com.darkgran.farstar.battle;
 
 import com.darkgran.farstar.SuperScreen;
+import com.darkgran.farstar.cards.*;
 import com.darkgran.farstar.gui.*;
 import com.darkgran.farstar.gui.tokens.*;
-import com.darkgran.farstar.cards.AbilityInfo;
-import com.darkgran.farstar.cards.AbilityStarter;
 import com.darkgran.farstar.gui.battlegui.*;
 import com.darkgran.farstar.battle.players.*;
-import com.darkgran.farstar.cards.CardInfo;
-import com.darkgran.farstar.cards.CardType;
 
 import java.util.ArrayList;
 
@@ -161,7 +158,20 @@ public class RoundManager {
                                         if (postAbility || success) {
                                             //DEPLOYMENT
                                             if (CardType.isShip(cardType)) {
-                                                success = fleet.addShip(token, position);
+                                                Ship newShip = fleet.addShip(token, position);
+                                                success = newShip != null;
+                                                //Postponed DealDamage Animation
+                                                if (success && postAbility && postponedDeploy.getCaster() != null && postponedDeploy.getTarget() != null) {
+                                                    for (AbilityInfo ability : postponedDeploy.getCaster().getCard().getCardInfo().getAbilities()) {
+                                                        for (Effect effect : ability.getEffects()) {
+                                                            if (effect.getEffectType() == EffectType.DEAL_DMG) {
+                                                                int power = AbilityManager.floatObjectToInt(effect.getEffectInfo().get(0));
+                                                                TechType techType = TechType.valueOf(effect.getEffectInfo().get(1).toString());
+                                                                ShotManager.getInstance().newAttack(newShip.getToken(), postponedDeploy.getTarget(), power, techType, postponedDeploy.getCaster().getCard().getCardInfo().getAnimatedShots());
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -182,6 +192,7 @@ public class RoundManager {
                     //PAYMENT + DISCARD (incl. targeting discard)
                     if (success || postAbility) {
                         //System.out.println("Drop Success.");
+                        token.getCard().getToken().setPicked(false);
                         if (payPrice) { whoseTurn.payday(token.getCard()); }
                         if (!CardType.isShip(cardType) && cardType != CardType.SUPPORT && cardType != CardType.MS) { token.getCard().getToken().addCardToJunk(); }
                     } else if (dropTarget instanceof JunkButton && (token instanceof DeploymentCard || token instanceof HandToken)) { //Target: Discard
@@ -267,7 +278,8 @@ public class RoundManager {
             getCancelButton().setPosition(STAGE_WIDTH*0.69f, STAGE_HEIGHT*0.28f); //in-future: cancelButton should have 2 states and hold these values for the states by itself (this line is state 2)
             getBattle().getBattleScreen().getBattleStage().addActor(getCancelButton());
             NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Choose an Ability.", 3);
-            ((YardMenu) caster.getCard().getBattlePlayer().getYard().getCardListMenu()).setOpen(false);
+            if (caster.getCard().getCardInfo().getCardType() != CardType.YARDPRINT) { ((YardMenu) caster.getCard().getBattlePlayer().getYard().getCardListMenu()).setOpen(false); }
+            caster.getCard().getToken().setPicked(true);
         }
     }
 
@@ -309,7 +321,8 @@ public class RoundManager {
             getCancelButton().setPosition(STAGE_WIDTH*0.62f, STAGE_HEIGHT*0.08f); //in-future: cancelButton should have 2 states and hold these values for the states by itself (this line is state 1)
             getBattle().getBattleScreen().getBattleStage().addActor(getCancelButton());
             NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Choose a Target.", 3);
-            ((YardMenu) whoseTurn.getYard().getCardListMenu()).setOpen(false);
+            if (token.getCard().getCardInfo().getCardType() != CardType.YARDPRINT) { ((YardMenu) whoseTurn.getYard().getCardListMenu()).setOpen(false); }
+            token.getCard().getToken().setPicked(true);
         }
     }
 
@@ -341,6 +354,7 @@ public class RoundManager {
                         //System.out.println("Reprocessing original drop...");
                         targetingActive = false;
                         SuperScreen.switchCursor(SuperScreen.CursorType.DEFAULT);
+                        postponedDeploy.setTarget(target);
                         processDrop(postponedDeploy.getCaster(), postponedDeploy.getDrop(), postponedDeploy.getPosition(), true, postponedDeploy.getAbility().getStarter()==AbilityStarter.DEPLOY);
                         if (target.getCard() != null && battle.getCombatManager().isTacticalPhase() && postponedDeploy.getCaster().getCard().getCardInfo().getCardType() == CardType.TACTIC) {
                             battle.getCombatManager().saveTactic(postponedDeploy.getCaster().getCard(), target.getCard());
@@ -356,6 +370,9 @@ public class RoundManager {
     }
 
     public void tryCancel() {
+        if (!targetingActive && !abilityPicker.isActive()) {
+            battle.closeYards();
+        }
         if (targetingActive) {
             endTargeting();
             System.out.println("Targeting Cancelled.");
