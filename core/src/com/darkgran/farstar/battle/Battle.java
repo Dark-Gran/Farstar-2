@@ -1,6 +1,5 @@
 package com.darkgran.farstar.battle;
 
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.players.BattlePlayer;
