@@ -1,7 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
 import com.darkgran.farstar.battle.AbilityManager;
-import com.darkgran.farstar.cards.AbilityInfo;
 import com.darkgran.farstar.cards.AbilityStarter;
 import com.darkgran.farstar.cards.AbilityTargets;
 import com.darkgran.farstar.gui.battlegui.FleetMenu;
@@ -72,9 +71,10 @@ public class Fleet implements BattleTicks {
                 centralizeShips();
             }
             if (success) {
-                if (AbilityManager.hasAbilityTargets(ship, AbilityTargets.ADJACENT) || AbilityManager.hasStarter(ship, AbilityStarter.AURA)) {
-                    getBattlePlayer().getBattle().getAbilityManager().playPositional(ship, false);
+                if (AbilityManager.hasAbilityTargets(ship, AbilityTargets.ENTIRE_ALLIED_FLEET) && AbilityManager.hasStarter(ship, AbilityStarter.AURA)) {
+                    getBattlePlayer().getBattle().getAbilityManager().playAuraAll(ship, false);
                 }
+                getBattlePlayer().getBattle().getAbilityManager().checkAuraAlls(ship, ships, false);
             }
         }
         return success;
@@ -88,9 +88,10 @@ public class Fleet implements BattleTicks {
                     shiftShipsToBlank(i);
                     centralizeShips();
                 }
-                if (AbilityManager.hasStarter(ship, AbilityStarter.AURA)) {
-                    getBattlePlayer().getBattle().getAbilityManager().playPositional(ship, true);
+                if (AbilityManager.hasAbilityTargets(ship, AbilityTargets.ENTIRE_ALLIED_FLEET) && AbilityManager.hasStarter(ship, AbilityStarter.AURA)) {
+                    getBattlePlayer().getBattle().getAbilityManager().playAuraAll(ship, true);
                 }
+                getBattlePlayer().getBattle().getAbilityManager().checkAuraAlls(ship, ships, true);
             }
         }
     }
