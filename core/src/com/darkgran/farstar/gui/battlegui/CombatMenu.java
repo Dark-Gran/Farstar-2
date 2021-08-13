@@ -59,4 +59,6 @@ public abstract class CombatMenu {
 
     public void setBattleStage(BattleStage battleStage) { this.battleStage = battleStage; }
 
+    public void dispose() { }
+
 }

@@ -28,4 +28,11 @@ public class CombatMenu1V1 extends CombatMenu {
 
     public CombatOK getDuelButton2() { return duelButton2; }
 
+    @Override
+    public void dispose() {
+        super.dispose();
+        removeAllOKs();
+        duelButton1.dispose();
+        duelButton2.dispose();
+    }
 }

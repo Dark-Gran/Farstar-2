@@ -58,6 +58,8 @@ public abstract class Battle {
         gameOvers.add(battlePlayer);
     }
 
+    public BattlePlayer getWinner() { return null; }
+
     public void battleEnd() {
         System.out.println("GAME OVER");
         setEverythingDisabled(true);

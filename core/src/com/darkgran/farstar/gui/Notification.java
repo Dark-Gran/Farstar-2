@@ -34,6 +34,12 @@ public class Notification extends TextInTheBox {
             this.boxOffsetX = boxOffsetX;
             this.fontName = fontName;
         }
+        public float getX() { return x; }
+        public float getY() { return y; }
+        public float getBoxWidth() { return boxWidth; }
+        public float getBoxHeight() { return boxHeight; }
+        public float getBoxOffsetX() { return boxOffsetX; }
+        public String getFontName() { return fontName; }
     }
 
     private final NotificationType notificationType;

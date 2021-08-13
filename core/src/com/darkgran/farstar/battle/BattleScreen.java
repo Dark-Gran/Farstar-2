@@ -71,7 +71,9 @@ public class BattleScreen extends SuperScreen {
     public void userEscape() {
         NotificationManager.getInstance().clear(Notification.NotificationType.MIDDLE);
         if (!isConcederActive()) {
-            if ((getBattleStage().getBattleHelp() != null && getBattleStage().getBattleHelp().isEnabled()) || getBattle().areYardsOpen() || getBattle().getRoundManager().isTargetingActive() || getBattleStage().getAbilityPicker().isActive()) {
+            if (getBattleStage().getEndScore() != null) {
+                escapeToMenu();
+            } else if ((getBattleStage().getBattleHelp() != null && getBattleStage().getBattleHelp().isEnabled()) || getBattle().areYardsOpen() || getBattle().getRoundManager().isTargetingActive() || getBattleStage().getAbilityPicker().isActive()) {
                 if (getBattle().getRoundManager().isTargetingActive() || getBattleStage().getAbilityPicker().isActive()) { getBattle().getRoundManager().tryCancel(); }
                 if (getBattle().areYardsOpen()) { getBattle().closeYards(); }
                 if ((getBattleStage().getBattleHelp() != null && getBattleStage().getBattleHelp().isEnabled())) { getBattleStage().getBattleHelp().setEnabled(false); }
@@ -91,12 +93,16 @@ public class BattleScreen extends SuperScreen {
                         false,
                         battleStage,
                         this::userEscape,
-                        () -> getGame().setScreen(new MainScreen(getGame(), getScreenSettings(), getTableMenu()))
+                        this::escapeToMenu
                 ));
             }
         } else {
             hideScreenConceder();
         }
+    }
+
+    public void escapeToMenu() {
+        getGame().setScreen(new MainScreen(getGame(), getScreenSettings(), getTableMenu()));
     }
 
     @Override

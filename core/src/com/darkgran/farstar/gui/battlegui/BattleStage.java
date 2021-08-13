@@ -72,6 +72,7 @@ public abstract class BattleStage extends ListeningStage {
     private TokenZoom cardZoom;
     private Herald herald;
     private BattleHelp battleHelp;
+    private EndScore endScore;
     private final ActorButton f1button = new ActorButton(AssetLibrary.getInstance().getAtlasRegion("f1"), AssetLibrary.getInstance().getAtlasRegion("f1O")){
         //private SimpleImage2 bck = new SimpleImage2(0, 0, AssetLibrary.getInstance().getAtlasRegion("f1back"));
         @Override
@@ -99,6 +100,7 @@ public abstract class BattleStage extends ListeningStage {
             f1button.remove();
         }
     }
+
 
     public BattleStage(final Farstar game, Viewport viewport, BattleScreen battleScreen, CombatMenu combatMenu) {
         super(game, viewport);
@@ -128,6 +130,7 @@ public abstract class BattleStage extends ListeningStage {
         ShotManager.getInstance().drawAttacks(batch, delta, false);
         abilityPicker.draw(batch);
         herald.draw(batch);
+        if (endScore != null) { endScore.draw(delta, batch); }
     }
 
     public void drawTopBattleStage(float delta, Batch batch) { }
@@ -318,11 +321,19 @@ public abstract class BattleStage extends ListeningStage {
 
     @Override
     public void dispose() {
-        turnButton.removeListener(turnButton.getClickListener());
+        turnButton.remove();
+        turnButton.dispose();
+        cancelButton.remove();
+        cancelButton.dispose();
+        f1button.remove();
+        f1button.dispose();
         combatEndButton.remove();
+        combatEndButton.dispose();
         abilityPicker.dispose();
         ShotManager.getInstance().dispose();
         AnimationManager.getInstance().dispose();
+        if (endScore != null) { endScore.dispose(); }
+        combatMenu.dispose();
         super.dispose();
     }
 
@@ -384,5 +395,13 @@ public abstract class BattleStage extends ListeningStage {
 
     public ActorButton getCancelButton() {
         return cancelButton;
+    }
+
+    public EndScore getEndScore() {
+        return endScore;
+    }
+
+    public void setEndScore(EndScore endScore) {
+        this.endScore = endScore;
     }
 }

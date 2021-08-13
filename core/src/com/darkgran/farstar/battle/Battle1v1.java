@@ -94,20 +94,12 @@ public class Battle1v1 extends Battle {
         super.battleEnd();
         System.out.println("Player #" + getWinner().getBattleID() + " wins!");
         if (battlePlayer1 instanceof Bot) { ((Bot) battlePlayer1).gameOver(getWinner()); }
-        else { battleEndNotification(battlePlayer1); }
         if (battlePlayer2 instanceof Bot) { ((Bot) battlePlayer2).gameOver(getWinner()); }
-        else { battleEndNotification(battlePlayer2); }
+        getBattleScreen().getBattleStage().setEndScore(new EndScore(this));
     }
 
-    protected void battleEndNotification(BattlePlayer battlePlayer) {
-        if (battlePlayer == getWinner()) {
-            NotificationManager.getInstance().newNotification(Notification.NotificationType.MIDDLE, "VICTORY", 4);
-        } else {
-            NotificationManager.getInstance().newNotification(Notification.NotificationType.MIDDLE, "DEFEAT", 4);
-        }
-    }
-
-    private BattlePlayer getWinner() {
+    @Override
+    public BattlePlayer getWinner() {
         if (getGameOvers().contains(battlePlayer1)) {
             return battlePlayer2;
         } else {

@@ -41,7 +41,9 @@ public class YXQuestionBox extends TextInTheBox {
 
     public void dispose() {
         yBut.remove();
+        yBut.dispose();
         xBut.remove();
+        xBut.dispose();
     }
 
 }
