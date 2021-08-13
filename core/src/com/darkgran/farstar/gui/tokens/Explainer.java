@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.AbilityManager;
+import com.darkgran.farstar.battle.BattleSettings;
 import com.darkgran.farstar.cards.AbilityStarter;
 import com.darkgran.farstar.cards.CardType;
 import com.darkgran.farstar.gui.*;
@@ -66,54 +67,75 @@ public class Explainer extends TextInTheBox {
 
     protected String getMainContent(BattleCard battleCard) {
         StringBuilder str = new StringBuilder();
-        boolean first = true;
-        if (CardType.needsDefense(battleCard.getCardInfo().getCardType()) && battleCard.getDamage() > 0) {
-            str.append("Current/Max. Shields: ").append(battleCard.getHealth()).append("/").append(battleCard.getCardInfo().getDefense()).append("                      \n");
-            first = false;
-        }
-        String shipOrSupport = battleCard.getCardInfo().getCardType() == CardType.SUPPORT ? "support" : "ship";
-        if (battleCard.isUsed()) {
-            if (!first) { str.append("\n"); }
-            else { first = false; }
-            str.append("Disabled:\nThis ").append(shipOrSupport).append(" cannot attack or use abilities until next Turn.\n");
-        }
-        boolean tactic = battleCard.getCardInfo().getCardType() == CardType.TACTIC; // || AbilityManager.hasStarter(battleCard, AbilityStarter.TACTIC)
-        if (tactic) {
-            if (!first) { str.append("\n"); }
-            else { first = false; }
-            str.append("Tactic:\nTactics may be deployed both in Your Turn and in the Tactical Phase.\nUsually the best choice is to keep them for the Tactical Phase.\n");
-        }
-        if (battleCard.getCardInfo().getCardType() == CardType.SUPPORT) {
-            if (!first) { str.append("\n"); }
-            else { first = false; }
-            str.append("Support:\nYou can deploy Supports next to Your Mothership.\n");
-        }
-        boolean FSpresent = false;
-        boolean USEpresent = false;
-        for (AbilityInfo abilityInfo : battleCard.getCardInfo().getAbilities()) {
-            for (Effect effect : abilityInfo.getEffects()) {
-                switch (effect.getEffectType()) {
-                    case GUARD:
-                        if (!first) { str.append("\n"); }
-                        else { first = false; }
-                        str.append("Guard:\nAttackers without Reach must always target Guards first.\n");
-                        break;
-                    case REACH:
-                        if (!first) { str.append("\n"); }
-                        else { first = false; }
-                        str.append("Reach:\nAllows targeting over Guards, but only if the Reach is same as (or greater than) number of Guards.\n");
-                        break;
-                    case ARMOR:
-                        if (!first) { str.append("\n"); }
-                        else { first = false; }
-                        str.append("Armor:\nReduces all incoming damage.\n");
-                        break;
-                    case FIRST_STRIKE:
-                        FSpresent = true;
-                        break;
-                }
+        if (battleCard.getCardInfo().getId() == BattleSettings.getInstance().BONUS_CARD_ID){
+            str.append("When the match begins, the second player draws an extra card and receives Spare Resources.");
+        } else {
+            boolean first = true;
+            if (CardType.needsDefense(battleCard.getCardInfo().getCardType()) && battleCard.getDamage() > 0) {
+                str.append("Current/Max. Shields: ").append(battleCard.getHealth()).append("/").append(battleCard.getCardInfo().getDefense()).append("                      \n");
+                first = false;
             }
-            USEpresent = abilityInfo.getStarter() == AbilityStarter.USE;
+            String shipOrSupport = battleCard.getCardInfo().getCardType() == CardType.SUPPORT ? "support" : "ship";
+            if (battleCard.isUsed()) {
+                if (!first) {
+                    str.append("\n");
+                } else {
+                    first = false;
+                }
+                str.append("Disabled:\nThis ").append(shipOrSupport).append(" cannot attack or use abilities until next Turn.\n");
+            }
+            boolean tactic = battleCard.getCardInfo().getCardType() == CardType.TACTIC; // || AbilityManager.hasStarter(battleCard, AbilityStarter.TACTIC)
+            if (tactic) {
+                if (!first) {
+                    str.append("\n");
+                } else {
+                    first = false;
+                }
+                str.append("Tactic:\nTactics may be deployed both in Your Turn and in the Tactical Phase.\nUsually the best choice is to keep them for the Tactical Phase.\n");
+            }
+            if (battleCard.getCardInfo().getCardType() == CardType.SUPPORT) {
+                if (!first) {
+                    str.append("\n");
+                } else {
+                    first = false;
+                }
+                str.append("Support:\nYou can deploy Supports next to Your Mothership.\n");
+            }
+            boolean FSpresent = false;
+            boolean USEpresent = false;
+            for (AbilityInfo abilityInfo : battleCard.getCardInfo().getAbilities()) {
+                for (Effect effect : abilityInfo.getEffects()) {
+                    switch (effect.getEffectType()) {
+                        case GUARD:
+                            if (!first) {
+                                str.append("\n");
+                            } else {
+                                first = false;
+                            }
+                            str.append("Guard:\nAttackers without Reach must always target Guards first.\n");
+                            break;
+                        case REACH:
+                            if (!first) {
+                                str.append("\n");
+                            } else {
+                                first = false;
+                            }
+                            str.append("Reach:\nAllows targeting over Guards, but only if the Reach is same as (or greater than) number of Guards.\n");
+                            break;
+                        case ARMOR:
+                            if (!first) {
+                                str.append("\n");
+                            } else {
+                                first = false;
+                            }
+                            str.append("Armor:\nReduces all incoming damage.\n");
+                            break;
+                        case FIRST_STRIKE:
+                            FSpresent = true;
+                            break;
+                    }
+                }
+                USEpresent = abilityInfo.getStarter() == AbilityStarter.USE;
             /*switch (abilityInfo.getStarter()) {
                 case USE:
                     USEpresent = true;
@@ -124,17 +146,25 @@ public class Explainer extends TextInTheBox {
                     str.append("Does something when deployed.");
                     break;
             }*/
-        }
-        if (USEpresent) {
-            if (!first) { str.append("\n"); }
-            else { first = false; }
-            str.append("Usable Ability:\nMay be used only once per Turn and only in Your Turn.\n");
-        }
-        if (!FSpresent) { FSpresent = AbilityManager.upgradesFirstStrike(battleCard); }
-        if (FSpresent) {
-            if (!first) { str.append("\n"); }
-            //else { first = false; }
-            str.append("First Strike:\nShips with First Strike always shoot first: if a ship is destroyed by First Strike, it will not retaliate.\n");
+            }
+            if (USEpresent) {
+                if (!first) {
+                    str.append("\n");
+                } else {
+                    first = false;
+                }
+                str.append("Usable Ability:\nMay be used only once per Turn and only in Your Turn.\n");
+            }
+            if (!FSpresent) {
+                FSpresent = AbilityManager.upgradesFirstStrike(battleCard);
+            }
+            if (FSpresent) {
+                if (!first) {
+                    str.append("\n");
+                }
+                //else { first = false; }
+                str.append("First Strike:\nShips with First Strike always shoot first: if a ship is destroyed by First Strike, it will not retaliate.\n");
+            }
         }
         return str.toString();
     }
