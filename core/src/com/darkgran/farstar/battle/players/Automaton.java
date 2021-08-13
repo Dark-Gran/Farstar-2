@@ -18,8 +18,9 @@ import java.util.TreeMap;
  *  -- In combat, attempts to pick unique targets for each ship and also not to attack with it (= risk damage) unless the attack is necessary to destroy the opposing ship.
  *
  *  There is only so much that can be achieved with "play anything, but not this".
- *  "Visualize all possible outcomes, pick the best one and play what leads to it" is required for better plays.
- *  However, Automaton should not be upgraded - instead a new class should extend Bot in the future.
+ *  "Visualize all possible outcomes, pick the best one and play what leads to it" is required for better plays. It also does not require updates with new content.
+ *  Automaton should not be upgraded: instead a new class should extend Bot in the future.
+ *  This means that "in-future", Automaton _will_ become Deprecated.
  */
 public final class Automaton extends Bot {
 
@@ -117,11 +118,21 @@ public final class Automaton extends Bot {
     private PossibilityInfo getTurnPossibility() {
         ArrayList<PossibilityInfo> possibilities = getBattle().getRoundManager().getPossibilityAdvisor().getPossibilities(this, getBattle());
         if (possibilities.size() > 0) {
-            //1. Have at least one defender
+            //0. Prefer MS Ability if the alternative is ending the turn and therefore losing Energy
+            if (possibilities.size() == 1 && possibilities.get(0).getCard().isMS() && (!holdsUpperHand() || getEnergy() >= 1+possibilities.get(0).getCard().getCardInfo().getAbilities().get(0).getResourcePrice().getEnergy())) {
+                return possibilities.get(0);
+            }
+            //1. Labour first
+            for (PossibilityInfo possibility : possibilities) {
+                if (possibility.getCard().getCardInfo().getName().equals("Labour Deck")) {
+                    return possibility;
+                }
+            }
+            //2. Have at least one defender
             if (getFleet().isEmpty()) {
                 PossibilityInfo ship = null;
                 for (PossibilityInfo possibilityInfo : possibilities) {
-                    if (CardType.isShip(possibilityInfo.getCard().getCardInfo().getCardType())) {
+                    if (CardType.isShip(possibilityInfo.getCard().getCardInfo().getCardType()) && !AbilityManager.hasAbilityTargets(possibilityInfo.getCard(), AbilityTargets.ADJACENT) && !AbilityManager.hasStarter(possibilityInfo.getCard(), AbilityStarter.AURA)) { //no auras into empty fleet
                         if (ship == null) { ship = possibilityInfo; }
                         if (AbilityManager.hasAttribute(possibilityInfo.getCard(), EffectType.GUARD)) { //Guard Preference
                             return possibilityInfo;
@@ -132,7 +143,13 @@ public final class Automaton extends Bot {
                     return ship;
                 }
             }
-            //2. Play the first playable thing that's not "nonsense"
+            //3. Save 1 Energy for Upper Hand
+            if (getEnergy() == 1 && getFleet().countShips() >= 2) {
+                if (holdsUpperHand()) {
+                    return null;
+                }
+            }
+            //4. Play the first playable thing that's not "nonsense"
             for (PossibilityInfo possibilityInfo : possibilities) {
                 if (aintNonsense(possibilityInfo)) {
                     return possibilityInfo;
@@ -140,6 +157,15 @@ public final class Automaton extends Bot {
             }
         }
         return null;
+    }
+
+    private boolean holdsUpperHand() {
+        for (BattleCard battleCard : getHand()) {
+            if (battleCard.getCardInfo().getName().equals("Upper Hand")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean aintNonsense(PossibilityInfo possibilityInfo) {
@@ -151,129 +177,158 @@ public final class Automaton extends Bot {
         boolean currentNonsense;
         byte effectIx = 0;
         for (AbilityInfo ability : battleCard.getCardInfo().getAbilities()) {
-            for (Effect effect : ability.getEffects()) {
-                if (effect != null && effect.getEffectType() != null) {
-                    currentNonsense = false;
-                    switch (effect.getEffectType()) {
-                        case CHANGE_STAT:
-                            if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
-                                Object changeInfo = effect.getEffectInfo().get(1);
-                                EffectTypeSpecifics.ChangeStatType changeStatType = EffectTypeSpecifics.ChangeStatType.valueOf(effect.getEffectInfo().get(0).toString());
-                                Token allyToken;
-                                BattleCard ally;
-                                ArrayList<Token> enemies;
-                                BattleCard enemy;
-                                BattleCard biggestEnemyShip = null;
-                                //Validate change of Type (color)
-                                if (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE || changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE) {
-                                    if (getBattle().getCombatManager().isTacticalPhase()) { //COMBAT ONLY
-                                        allyToken = getAlliedTarget(battleCard.getToken(), null);
-                                        Map.Entry<FleetToken, DuelManager.AttackInfo> duel = CombatManager.getDuel(allyToken, getBattle().getCombatManager().getDuels());
-                                        if (duel == null) {
-                                            return true;
-                                        }
-                                        ally = allyToken.getCard();
-                                        enemies = CombatManager.getDuelOpponent(allyToken, getBattle().getCombatManager().getDuels());
-                                        if (enemies == null || enemies.size() == 0) {
-                                            return true;
-                                        }
-                                        //enemy = enemies.get(0).getCard();
-                                        for (Token enemyToken : enemies) {
-                                            enemy = enemyToken.getCard();
-                                            if (biggestEnemyShip == null || isBiggerShip(enemy, biggestEnemyShip)) {
-                                                if (biggestEnemyShip != null) { currentNonsense = false; }
-                                                biggestEnemyShip = enemy;
-                                                //"don't change what is correct"
-                                                if ((changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && enemy.getHealth() >= ally.getCardInfo().getOffense()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && enemy.getCardInfo().getOffense() > 1 && enemy.getCardInfo().getOffense() <= ally.getHealth() && !enemy.isMS())) {
-                                                    if (alreadyHasCorrectTech(ally, enemy, changeStatType)) {
-                                                        overallNonsense = true;
-                                                        currentNonsense = true;
-                                                    }
-                                                }
-                                                if (ability.isPurelyTypeChange()) {
-                                                    if ((effectIx == 0 || overallNonsense)) {
-                                                        TechType techType = TechType.valueOf(changeInfo.toString());
-                                                        //"don't change when it isn't an actual a change"
-                                                        if ((changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && techType == ally.getCardInfo().getDefenseType()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && techType == ally.getCardInfo().getOffenseType())) {
-                                                            overallNonsense = true;
-                                                            //"don't change pointlessly"; in-future: consider "overall" properly (eg. don't allow changing type on stat 1 but allow it if the other stat gets changed as well (and it is the right move))
-                                                        } else if (!currentNonsense) {
-                                                            //atm because of how tech-switch-effects are ordered, correct Defense will enable/disable playing card that in fact (in)validates Offense (= bot sacrifices damage if it protects the ship)
-                                                            overallNonsense = (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && (ally.getCardInfo().getOffense() <= 1 || (BattleSettings.getInstance().OVERWHELMED_DEBUFF_ENABLED && enemy.getHealth() < ally.getCardInfo().getOffense()) || techType == enemy.getCardInfo().getDefenseType())) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && (enemy.getCardInfo().getOffense() <= 1 || (BattleSettings.getInstance().OVERWHELMED_DEBUFF_ENABLED && ally.getHealth() < enemy.getCardInfo().getOffense()) || (techType != enemy.getCardInfo().getOffenseType() && !TechType.isInferior(enemy.getCardInfo().getOffenseType()) && !enemy.isMS())));
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
+            if (ability.getTargets() == AbilityTargets.ADJACENT && getFleet().isEmpty()) {
+                return true;
+            } else {
+                for (Effect effect : ability.getEffects()) {
+                    if (effect != null && effect.getEffectType() != null) {
+                        currentNonsense = false;
+                        switch (effect.getEffectType()) {
+                            case DEAL_DMG:
+                                if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
+                                    Token target = getEnemyTarget(battleCard.getToken(), false);
+                                    if (CardType.isShip(battleCard.getCardInfo().getCardType()) || target.getCard().getHealth()<=1) {
+                                        return false;
+                                    } else {
+                                        return target.getCard().getCardInfo().getDefenseType()==TechType.valueOf(effect.getEffectInfo().get(1).toString());
                                     }
-                                    //Validate Ability change
-                                } else if (changeStatType == EffectTypeSpecifics.ChangeStatType.ABILITY) {
-                                    EffectType effectType = EffectType.valueOf(changeInfo.toString());
-                                    switch (effectType) { //more cases will be added in future
-                                        case FIRST_STRIKE:
-                                            if (getBattle().getCombatManager().isTacticalPhase()) { //COMBAT ONLY
-                                                allyToken = getAlliedTarget(battleCard.getToken(), EffectType.FIRST_STRIKE);
-                                                Map.Entry<FleetToken, DuelManager.AttackInfo> duel = CombatManager.getDuel(allyToken, getBattle().getCombatManager().getDuels());
-                                                if (duel == null) {
-                                                    return true;
-                                                }
-                                                ally = allyToken.getCard();
-                                                enemies = CombatManager.getDuelOpponent(allyToken, getBattle().getCombatManager().getDuels());
-                                                if (enemies == null || enemies.size() == 0) {
-                                                    return true;
-                                                }
-                                                overallNonsense = true;
-                                                for (Token enemyToken : enemies) {
-                                                    enemy = enemyToken.getCard();
-                                                    if (biggestEnemyShip == null || isBiggerShip(enemy, biggestEnemyShip)) {
-                                                        biggestEnemyShip = enemy;
-                                                        if (!enemy.isMS() && (duel.getValue().getUpperStrike() == null || duel.getValue().getUpperStrike() != ally) && DuelManager.getDmgAgainstShields(ally.getCardInfo().getOffense(), enemy.getHealth(), AbilityManager.getArmor(enemy), ally.getCardInfo().getOffenseType(), enemy.getCardInfo().getDefenseType()) >= enemy.getHealth()) { //note: if OUTNUMBERED_DEBUFF becomes enabled, this condition must be updated
-                                                            overallNonsense = false;
-                                                        }
-                                                    }
-                                                }
-                                                return overallNonsense;
-                                            } else { //OUTSIDE COMBAT
-                                                for (Ship ship : getFleet().getShips()) {
-                                                    if (ship != null && !AbilityManager.hasAttribute(ship, EffectType.FIRST_STRIKE)) {
-                                                        return false;
-                                                    }
-                                                }
+                                } else {
+                                    return true;
+                                }
+                            case CHANGE_STAT:
+                                if (effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 2 && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
+                                    Object changeInfo = effect.getEffectInfo().get(1);
+                                    EffectTypeSpecifics.ChangeStatType changeStatType = EffectTypeSpecifics.ChangeStatType.valueOf(effect.getEffectInfo().get(0).toString());
+                                    Token allyToken;
+                                    BattleCard ally;
+                                    ArrayList<Token> enemies;
+                                    BattleCard enemy;
+                                    BattleCard biggestEnemyShip = null;
+                                    //Validate change of Type (color)
+                                    if (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE || changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE) {
+                                        if (getBattle().getCombatManager().isTacticalPhase()) { //COMBAT ONLY
+                                            allyToken = getAlliedTarget(battleCard.getToken(), null);
+                                            Map.Entry<FleetToken, DuelManager.AttackInfo> duel = CombatManager.getDuel(allyToken, getBattle().getCombatManager().getDuels());
+                                            if (duel == null) {
                                                 return true;
                                             }
+                                            ally = allyToken.getCard();
+                                            enemies = CombatManager.getDuelOpponent(allyToken, getBattle().getCombatManager().getDuels());
+                                            if (enemies == null || enemies.size() == 0) {
+                                                return true;
+                                            }
+                                            for (Token enemyToken : enemies) {
+                                                enemy = enemyToken.getCard();
+                                                if (biggestEnemyShip == null || isBiggerShip(enemy, biggestEnemyShip)) {
+                                                    if (biggestEnemyShip != null) {
+                                                        currentNonsense = false;
+                                                    }
+                                                    biggestEnemyShip = enemy;
+                                                    //"don't change what is correct"
+                                                    if ((changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && (!BattleSettings.getInstance().OVERWHELMED_DEBUFF_ENABLED || enemy.getHealth() >= ally.getCardInfo().getOffense())) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && (!BattleSettings.getInstance().OVERWHELMED_DEBUFF_ENABLED || (enemy.getCardInfo().getOffense() > 1 && enemy.getCardInfo().getOffense() <= ally.getHealth() && !enemy.isMS())))) {
+                                                        if (alreadyHasCorrectTech(ally, enemy, changeStatType)) {
+                                                            overallNonsense = true;
+                                                            currentNonsense = true;
+                                                        }
+                                                    }
+                                                    if (ability.isPurelyTypeChange()) {
+                                                        if (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && isAlreadyTargetedFatally(allyToken, getBattle().getCombatManager().getDuels(), null) && (duel.getValue().getUpperStrike() == enemy || (AbilityManager.hasAttribute(enemy, EffectType.FIRST_STRIKE) && !AbilityManager.hasAttribute(ally, EffectType.FIRST_STRIKE)))) {
+                                                            overallNonsense = true;
+                                                        }
+                                                        if ((effectIx == 0 || overallNonsense)) {
+                                                            TechType techType = TechType.valueOf(changeInfo.toString());
+                                                            //"don't change when it isn't an actual a change"
+                                                            if ((changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && techType == ally.getCardInfo().getDefenseType()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && techType == ally.getCardInfo().getOffenseType())) {
+                                                                overallNonsense = true;
+                                                            //"don't change pointlessly"; in-future: consider "overall" properly (eg. don't allow changing type on stat 1 but allow it if the other stat gets changed as well (and it is the right move))
+                                                            } else if (!currentNonsense) {
+                                                                //atm because of how tech-switch-effects are ordered, correct Defense will enable/disable playing card that in fact (in)validates Offense (= bot sacrifices damage if it protects the ship)
+                                                                if (BattleSettings.getInstance().OVERWHELMED_DEBUFF_ENABLED && ((changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && enemy.getHealth() < ally.getCardInfo().getOffense()) || (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && ally.getHealth() < enemy.getCardInfo().getOffense()))) {
+                                                                    overallNonsense = true;
+                                                                } else {
+                                                                    if (changeStatType == EffectTypeSpecifics.ChangeStatType.OFFENSE_TYPE && ally.getCardInfo().getOffense() > 1) {
+                                                                        overallNonsense = techType == enemy.getCardInfo().getDefenseType();
+                                                                    } else if (changeStatType == EffectTypeSpecifics.ChangeStatType.DEFENSE_TYPE && enemy.getCardInfo().getOffense() > 1) {
+                                                                        overallNonsense = techType != enemy.getCardInfo().getOffenseType() && !TechType.isInferior(enemy.getCardInfo().getOffenseType()) && !enemy.isMS();
+                                                                    } else {
+                                                                        overallNonsense = true;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        //Validate Ability change
+                                    } else if (changeStatType == EffectTypeSpecifics.ChangeStatType.ABILITY) {
+                                        EffectType effectType = EffectType.valueOf(changeInfo.toString());
+                                        switch (effectType) { //more cases will be added in future
+                                            case FIRST_STRIKE:
+                                                if (getBattle().getCombatManager().isTacticalPhase()) { //COMBAT ONLY
+                                                    allyToken = getAlliedTarget(battleCard.getToken(), EffectType.FIRST_STRIKE);
+                                                    Map.Entry<FleetToken, DuelManager.AttackInfo> duel = CombatManager.getDuel(allyToken, getBattle().getCombatManager().getDuels());
+                                                    if (duel == null) {
+                                                        return true;
+                                                    }
+                                                    ally = allyToken.getCard();
+                                                    enemies = CombatManager.getDuelOpponent(allyToken, getBattle().getCombatManager().getDuels());
+                                                    if (enemies == null || enemies.size() == 0) {
+                                                        return true;
+                                                    }
+                                                    overallNonsense = true;
+                                                    for (Token enemyToken : enemies) {
+                                                        enemy = enemyToken.getCard();
+                                                        if (biggestEnemyShip == null || isBiggerShip(enemy, biggestEnemyShip)) {
+                                                            biggestEnemyShip = enemy;
+                                                            if (!enemy.isMS() && (duel.getValue().getUpperStrike() == null || duel.getValue().getUpperStrike() != ally) && DuelManager.getDmgAgainstShields(ally.getCardInfo().getOffense(), enemy.getHealth(), AbilityManager.getArmor(enemy), ally.getCardInfo().getOffenseType(), enemy.getCardInfo().getDefenseType()) >= enemy.getHealth()) { //note: if OUTNUMBERED_DEBUFF becomes enabled, this condition must be updated
+                                                                overallNonsense = false;
+                                                            }
+                                                        }
+                                                    }
+                                                    return overallNonsense;
+                                                } else { //OUTSIDE COMBAT
+                                                    for (Ship ship : getFleet().getShips()) {
+                                                        if (ship != null && !AbilityManager.hasAttribute(ship, EffectType.FIRST_STRIKE)) {
+                                                            return false;
+                                                        }
+                                                    }
+                                                    return true;
+                                                }
+                                        }
                                     }
+                                } else {
+                                    return true;
                                 }
-                            } else {
-                                return true;
-                            }
-                            break;
-                        case REPAIR:
-                            Token w = getWoundedAlly();
-                            if (w != null && effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 1 && effect.getEffectInfo().get(0) != null) {
-                                return w.getCard().getDamage()>=AbilityManager.floatObjectToInt(effect.getEffectInfo().get(0));
-                            }
-                            return true;
-                        case CHANGE_RESOURCE: //in-future: rework (see pickAbility())
-                            if (battleCard.getCardInfo().getId() == BattleSettings.getInstance().BONUS_CARD_ID || battleCard.getCardInfo().getId() == 20) {
-                                return false;
-                            }
-                            if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
-                                //Object changeInfo = effect.getEffectInfo().get(1);
-                                EffectTypeSpecifics.ChangeResourceType resource = EffectTypeSpecifics.ChangeResourceType.valueOf(effect.getEffectInfo().get(0).toString());
-                                //int change = AbilityManager.floatObjectToInt(changeInfo);
-                                switch (resource) {
-                                    case ENERGY:
-                                        return getEnergy() > getMatter() || getMatter() <= 1;
-                                    case MATTER:
-                                        return getMatter()/2 > getEnergy();
+                                break;
+                            case REPAIR:
+                                Token w = getWoundedAlly();
+                                if (w != null && effect.getEffectInfo() != null && effect.getEffectInfo().size() >= 1 && effect.getEffectInfo().get(0) != null) {
+                                    return w.getCard().getDamage() >= AbilityManager.floatObjectToInt(effect.getEffectInfo().get(0));
                                 }
-                            } else {
                                 return true;
-                            }
-                            break;
+                            case CHANGE_RESOURCE: //in-future: rework (see pickAbility())
+                                if (battleCard.getCardInfo().getId() == BattleSettings.getInstance().BONUS_CARD_ID || battleCard.getCardInfo().getId() == 20) {
+                                    return false;
+                                }
+                                if (effect.getEffectInfo() != null && effect.getEffectInfo().get(0) != null && effect.getEffectInfo().get(1) != null) {
+                                    //Object changeInfo = effect.getEffectInfo().get(1);
+                                    EffectTypeSpecifics.ChangeResourceType resource = EffectTypeSpecifics.ChangeResourceType.valueOf(effect.getEffectInfo().get(0).toString());
+                                    //int change = AbilityManager.floatObjectToInt(changeInfo);
+                                    switch (resource) {
+                                        case ENERGY:
+                                            return getEnergy() > getMatter() || getMatter() <= 1;
+                                        case MATTER:
+                                            return getMatter() / 2 > getEnergy();
+                                    }
+                                } else {
+                                    return true;
+                                }
+                                break;
+                        }
                     }
+                    effectIx++;
                 }
-                effectIx++;
             }
         }
         return overallNonsense;
@@ -401,7 +456,7 @@ public final class Automaton extends Bot {
             //in-future: consider eco properly
             //atm there are only SpareResources and LabourDeck, so the decision is always Energy vs Matter
             //if (caster.getCard().getCardInfo().getId() == BONUS_CARD_ID) {}
-            if (getEnergy() < getMatter()-1) {
+            if (getEnergy() < getMatter()) {
                 getBattle().getRoundManager().processPick(options.get(0));
             } else {
                 getBattle().getRoundManager().processPick(options.get(1));
@@ -479,9 +534,11 @@ public final class Automaton extends Bot {
                         for (Ship ship : enemy.getFleet().getShips()) {
                             if (ship != null) {
                                 dmg = DuelManager.getDmgAgainstShields(attacker.getCard().getCardInfo().getOffense(), ship.getHealth(), AbilityManager.getArmor(ship), attacker.getCard().getCardInfo().getOffenseType(), ship.getCardInfo().getDefenseType());
-                                if ((desperate || !isAlreadyTargetedFatally(ship.getToken(), duels, null)) && (strongestKillable == null || (isBiggerShip(ship, strongestKillable) && dmg >= ship.getHealth())) && getBattle().getCombatManager().canReach(attacker, ship.getToken(), enemy.getFleet())) {
-                                    strongestKillable = ship;
-                                    picked = ship.getToken();
+                                if (dmg != 0) {
+                                    if ((desperate || !isAlreadyTargetedFatally(ship.getToken(), duels, null)) && (strongestKillable == null || (isBiggerShip(ship, strongestKillable) && dmg >= ship.getHealth())) && getBattle().getCombatManager().canReach(attacker, ship.getToken(), enemy.getFleet())) {
+                                        strongestKillable = ship;
+                                        picked = ship.getToken();
+                                    }
                                 }
                             }
                         }
