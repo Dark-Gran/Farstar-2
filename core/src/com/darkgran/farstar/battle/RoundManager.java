@@ -121,7 +121,7 @@ public class RoundManager {
                 //OUTSIDE COMBAT OR TACTIC
                 BattlePlayer whoseTurn = battle.getWhoseTurn();
                 if (token.getCardListMenu().getBattlePlayer() == whoseTurn) {
-                    if (possibilityAdvisor.isPossibleToDeploy(whoseTurn, whoseTurn, token.getCard(), CardType.isShip(token.getCard().getCardInfo().getCardType()), battle, token.getCard().getBattlePlayer() instanceof LocalBattlePlayer)) {
+                    if (possibilityAdvisor.isPossibleToDeploy(whoseTurn, whoseTurn, token.getCard(), CardType.isShip(token.getCard().getCardInfo().getCardType()), battle, (token.getCard().getBattlePlayer() instanceof LocalBattlePlayer && !(dropTarget instanceof JunkButton)))) {
                         //DEPLOYING ANYWHERE FOR SPELLS
                         if (CardType.isSpell(cardType) && !(dropTarget instanceof JunkButton)) {
                             if (!postAbility) {
