@@ -82,17 +82,19 @@ public class Token extends Actor implements JustFont { //in-future: split to Bat
 
     public void setup(BattleCard battleCard, TokenType targetType, SimpleVector2 targetXY) { //used only by non-standard tokens (that do not connectCard)
         setCard(battleCard);
-        setPortrait(AssetLibrary.getInstance().getPortrait(battleCard.getCardInfo(), getTokenType()));
-        setFrame(AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.getInstance().getFrameName(battleCard.getCardInfo(), getTokenType())));
-        getTokenDefense().update();
-        getTokenDefense().setPad(getTokenType());
-        getTokenDefense().setupOffset();
-        getTokenOffense().update();
-        getTokenOffense().setPad(getTokenType());
-        getTokenOffense().setupOffset();
-        getTokenPrice().update();
-        getTokenPrice().setPad(getTokenType());
-        getTokenPrice().setupOffset();
+        if (battleCard != null) {
+            setPortrait(AssetLibrary.getInstance().getPortrait(battleCard.getCardInfo(), getTokenType()));
+            setFrame(AssetLibrary.getInstance().getAtlasRegion(AssetLibrary.getInstance().getFrameName(battleCard.getCardInfo(), getTokenType())));
+            getTokenDefense().update();
+            getTokenDefense().setPad(getTokenType());
+            getTokenDefense().setupOffset();
+            getTokenOffense().update();
+            getTokenOffense().setPad(getTokenType());
+            getTokenOffense().setupOffset();
+            getTokenPrice().update();
+            getTokenPrice().setPad(getTokenType());
+            getTokenPrice().setupOffset();
+        }
     }
 
     @Override

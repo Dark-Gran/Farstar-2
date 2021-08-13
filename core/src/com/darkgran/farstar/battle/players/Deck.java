@@ -73,6 +73,16 @@ public class Deck extends CardList {
 
     public void eatJunk() {
         ArrayList<BattleCard> junkBattleCards = getBattlePlayer().getJunkpile();
+        int bonusIx = -1;
+        for (int i = junkBattleCards.size()-1; i >= 0; i--) {
+            if (junkBattleCards.get(i).getCardInfo().getId() == BattleSettings.getInstance().BONUS_CARD_ID) {
+                bonusIx = i;
+                break;
+            }
+        }
+        if (bonusIx != -1) {
+            junkBattleCards.remove(bonusIx);
+        }
         this.addAll(junkBattleCards);
         getBattlePlayer().getJunkpile().clear();
     }

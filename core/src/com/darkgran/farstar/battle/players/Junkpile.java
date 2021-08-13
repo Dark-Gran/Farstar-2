@@ -22,14 +22,22 @@ public class Junkpile extends CardList {
 
     @Override
     public boolean addCard(BattleCard battleCard) {
-        if (battleCard.getCardInfo().getId() != BattleSettings.getInstance().BONUS_CARD_ID) {
-            battleCard.reset();
-            add(battleCard);
-            if (junkButton != null) {
-                junkButton.setup(battleCard, TokenType.JUNK, new SimpleVector2(junkButton.getX(), junkButton.getY()));
-            }
-        }
+        battleCard.reset();
+        add(battleCard);
+        refreshToken(battleCard);
         return true;
+    }
+
+    public void refreshToken(BattleCard battleCard) {
+        if (junkButton != null) {
+            junkButton.setup(battleCard, TokenType.JUNK, new SimpleVector2(junkButton.getX(), junkButton.getY()));
+        }
+    }
+
+    @Override
+    public void clear() {
+        super.clear();
+        refreshToken(null);
     }
 
     public JunkButton getJunkButton() {
