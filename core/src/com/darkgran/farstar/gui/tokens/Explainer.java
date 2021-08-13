@@ -135,7 +135,7 @@ public class Explainer extends TextInTheBox {
         if (FSpresent) {
             if (!first) { str.append("\n"); }
             //else { first = false; }
-            str.append("First-Strike:\nShips with First-Strike always shoot first: if a ship is destroyed by First-Strike, it will not retaliate.\n");
+            str.append("First Strike:\nShips with First Strike always shoot first: if a ship is destroyed by First Strike, it will not retaliate.\n");
         }
         return str.toString();
     }
@@ -144,7 +144,7 @@ public class Explainer extends TextInTheBox {
         StringBuilder str = new StringBuilder();
         String flavour = battleCard.getCardInfo().getFlavour();
         if (!flavour.equals("")) {
-            str.append("\n\"").append(flavour).append("\"");
+            str.append("\n").append(flavour);
         }
         return str.toString();
     }
