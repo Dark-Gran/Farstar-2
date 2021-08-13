@@ -124,7 +124,7 @@ public class PossibilityAdvisor {
 
     public void refresh(BattlePlayer currentBattlePlayer, Battle battle) {
         battle.unMarkAllPossibilities();
-        if (!(currentBattlePlayer instanceof Bot)) {
+        if (!(currentBattlePlayer instanceof Bot) && !battle.isEverythingDisabled()) {
             markPossibilities(currentBattlePlayer, battle);
         }
     }

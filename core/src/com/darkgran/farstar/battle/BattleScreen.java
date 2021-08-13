@@ -71,12 +71,13 @@ public class BattleScreen extends SuperScreen {
     public void userEscape() {
         NotificationManager.getInstance().clear(Notification.NotificationType.MIDDLE);
         if (!isConcederActive()) {
-            if (getBattleStage().getEndScore() != null) {
+            if (getBattleStage().getBattleHelp() != null && getBattleStage().getBattleHelp().isEnabled()) {
+                getBattleStage().getBattleHelp().setEnabled(false);
+            } else if (getBattleStage().getEndScore() != null) {
                 escapeToMenu();
-            } else if ((getBattleStage().getBattleHelp() != null && getBattleStage().getBattleHelp().isEnabled()) || getBattle().areYardsOpen() || getBattle().getRoundManager().isTargetingActive() || getBattleStage().getAbilityPicker().isActive()) {
+            } else if (getBattle().areYardsOpen() || getBattle().getRoundManager().isTargetingActive() || getBattleStage().getAbilityPicker().isActive()) {
                 if (getBattle().getRoundManager().isTargetingActive() || getBattleStage().getAbilityPicker().isActive()) { getBattle().getRoundManager().tryCancel(); }
                 if (getBattle().areYardsOpen()) { getBattle().closeYards(); }
-                if ((getBattleStage().getBattleHelp() != null && getBattleStage().getBattleHelp().isEnabled())) { getBattleStage().getBattleHelp().setEnabled(false); }
             } else {
                 String txt = getBattle().isEverythingDisabled() || getBattleType() == BattleType.SIMULATION ? "LEAVE?" : "CONCEDE?";
                 String fontPath = "fonts/orbitron36.fnt";
