@@ -30,7 +30,7 @@ public class MainScreenStage extends ListeningStage {
         @Override
         public void clicked() {
             System.out.println("Opening Web-Browser.");
-            Gdx.net.openURI("https://github.com/Dark-Gran/Farstar-2");
+            Gdx.net.openURI("https://github.com/Dark-Gran/Farstar-2/blob/master/README.md");
         }
     };
     private final SimpleImage2 otherModesPic;
