@@ -51,7 +51,7 @@ public class YardMenu extends CardListMenu implements DropTarget {
 
     public void switchVisibility(boolean visible) {
         if (getBattlePlayer() instanceof LocalBattlePlayer) {
-            setOpen(!visible);
+            open = !visible;
             switchVisibility();
         } else {
             if (visible) {
@@ -90,7 +90,5 @@ public class YardMenu extends CardListMenu implements DropTarget {
     }
 
     public boolean isOpen() { return open; }
-
-    public void setOpen(boolean open) { this.open = open; }
 
 }

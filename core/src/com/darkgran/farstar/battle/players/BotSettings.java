@@ -2,7 +2,7 @@ package com.darkgran.farstar.battle.players;
 
 public interface BotSettings {
     enum BotTier {
-        AUTOMATON(1f);
+        AUTOMATON(1.25f);
         private final float timerDelay;
         BotTier(float timerDelay) {
             this.timerDelay = timerDelay;

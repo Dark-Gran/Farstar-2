@@ -213,6 +213,9 @@ public abstract class BattleStage extends ListeningStage {
             } else if (token instanceof AnchoredToken) {
                 ((AnchoredToken) token).resetPosition();
             }
+            if (token.getCard().getCardInfo().getCardType() == CardType.YARDPRINT && targetHit instanceof YardMenu) {
+                token.getCard().getToken().setPicked(false);
+            }
             if (token instanceof FakeToken) {
                 token.destroy();
             }

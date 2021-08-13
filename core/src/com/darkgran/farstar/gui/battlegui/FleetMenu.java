@@ -85,7 +85,7 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
     private void predictDeployPosition(SimpleVector2 coords) { //simulates fleet.addShip
         int pos = getBattleStage().getRoundDropPosition(coords.x, coords.y, this, CardType.YARDPRINT);
         if (lastPredictedPos != pos) {
-            if (fleet.hasSpace() && pos > -1 && pos < 7) {
+            if (pos > -1 && pos < 7) {
                 //System.out.println("Predicting...");
                 lastPredictedPos = pos;
                 //Copy ships
@@ -177,7 +177,7 @@ public class FleetMenu extends BaseActorMenu implements DropTarget {
     }
 
     public void drawTokens(Batch batch) {
-        if (predictEnabled) {
+        if (predictEnabled && fleet.hasSpace()) {
             SimpleVector2 coords = SuperScreen.getMouseCoordinates();
             predicting = getBattleStage().coordsOverFleetMenus(coords.x, coords.y);
             if (predicting && !lastPredictedCoords.equals(coords)) {

@@ -121,7 +121,7 @@ public class RoundManager {
                 //OUTSIDE COMBAT OR TACTIC
                 BattlePlayer whoseTurn = battle.getWhoseTurn();
                 if (token.getCardListMenu().getBattlePlayer() == whoseTurn) {
-                    if (possibilityAdvisor.isPossibleToDeploy(whoseTurn, whoseTurn, token.getCard(), false, battle, token.getCard().getBattlePlayer() instanceof LocalBattlePlayer)) {
+                    if (possibilityAdvisor.isPossibleToDeploy(whoseTurn, whoseTurn, token.getCard(), CardType.isShip(token.getCard().getCardInfo().getCardType()), battle, token.getCard().getBattlePlayer() instanceof LocalBattlePlayer)) {
                         //DEPLOYING ANYWHERE FOR SPELLS
                         if (CardType.isSpell(cardType) && !(dropTarget instanceof JunkButton)) {
                             if (!postAbility) {
@@ -278,7 +278,7 @@ public class RoundManager {
             getCancelButton().setPosition(STAGE_WIDTH*0.69f, STAGE_HEIGHT*0.28f); //in-future: cancelButton should have 2 states and hold these values for the states by itself (this line is state 2)
             getBattle().getBattleScreen().getBattleStage().addActor(getCancelButton());
             NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Choose an Ability.", 3);
-            if (caster.getCard().getCardInfo().getCardType() != CardType.YARDPRINT) { ((YardMenu) caster.getCard().getBattlePlayer().getYard().getCardListMenu()).setOpen(false); }
+            if (caster.getCard().getCardInfo().getCardType() != CardType.YARDPRINT) { ((YardMenu) caster.getCard().getBattlePlayer().getYard().getCardListMenu()).switchVisibility(false); }
             caster.getCard().getToken().setPicked(true);
         }
     }
@@ -321,7 +321,7 @@ public class RoundManager {
             getCancelButton().setPosition(STAGE_WIDTH*0.62f, STAGE_HEIGHT*0.08f); //in-future: cancelButton should have 2 states and hold these values for the states by itself (this line is state 1)
             getBattle().getBattleScreen().getBattleStage().addActor(getCancelButton());
             NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Choose a Target.", 3);
-            if (token.getCard().getCardInfo().getCardType() != CardType.YARDPRINT) { ((YardMenu) whoseTurn.getYard().getCardListMenu()).setOpen(false); }
+            if (token.getCard().getCardInfo().getCardType() != CardType.YARDPRINT) { ((YardMenu) whoseTurn.getYard().getCardListMenu()).switchVisibility(false); }
             token.getCard().getToken().setPicked(true);
         }
     }

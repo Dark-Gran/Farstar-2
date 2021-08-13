@@ -18,10 +18,10 @@ public class YardToken extends ClickToken implements FakingTokens{
     @Override
     boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         if (button == 0) {
-            if (yardMenu.isOpen() && getBattleStage().getBattleScreen().getBattle().getRoundManager().isTokenMoveEnabled(this)) {
+            if (yardMenu.isOpen() && getBattleStage().getMainDrag() == null && getBattleStage().getBattleScreen().getBattle().getRoundManager().isTokenMoveEnabled(this)) {
                 newFake(event, x, y, pointer, button, FakeTokenType.YARD);
                 if (getCard().getBattlePlayer().getFleet().countShips() >= 5) {
-                    yardMenu.setOpen(false);
+                    yardMenu.switchVisibility(false);
                 }
                 setPicked(true);
             }
