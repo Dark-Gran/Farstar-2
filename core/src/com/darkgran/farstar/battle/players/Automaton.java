@@ -95,11 +95,7 @@ public final class Automaton extends Bot {
 
     private int getBestPosition(BattleCard battleCard, Menu sourceMenu, Menu targetMenu) {
         if (CardType.isShip(battleCard.getCardInfo().getCardType())) {
-            if (targetMenu.isEmpty()) {
-                return 3;
-            } else {
-                return 2;
-            }
+            return 3;
         } else if (targetMenu instanceof FleetMenu && CardType.isSpell(battleCard.getCardInfo().getCardType())){
             FleetMenu fleetMenu = (FleetMenu) targetMenu;
             Token ally = getAlliedTarget(cardToToken(battleCard, sourceMenu), null);
