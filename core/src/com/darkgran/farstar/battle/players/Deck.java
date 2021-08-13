@@ -1,5 +1,6 @@
 package com.darkgran.farstar.battle.players;
 
+import com.darkgran.farstar.Farstar;
 import com.darkgran.farstar.battle.BattleSettings;
 import com.darkgran.farstar.cards.CardLibrary;
 
@@ -27,9 +28,29 @@ public class Deck extends CardList {
         shuffle();
     }
 
+    public Deck(boolean cheatEnabled) {
+        this();
+        if (cheatEnabled && Farstar.firstMatchThisLaunch) {
+            firstMatchCheat();
+        }
+    }
+
     public Deck(int id) {
         super(id);
         shuffle();
+    }
+
+    private void firstMatchCheat() {
+        int ix = -1;
+        for (int i = 0; i < size(); i++) {
+            if (get(i).getCardInfo().getName().equals("Upper Hand")) {
+                ix = i;
+                break;
+            }
+        }
+        if (ix != -1 && ix >= BattleSettings.getInstance().STARTING_CARDS_DEF) {
+            Collections.swap(this, 0, ix);
+        }
     }
 
     @Override
