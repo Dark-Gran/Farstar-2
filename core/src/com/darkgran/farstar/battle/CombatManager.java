@@ -97,6 +97,7 @@ public abstract class CombatManager {
 
     public void startTacticalPhase() {
         getBattleStage().disableCombatEnd();
+        battle.getRoundManager().getPossibilityAdvisor().unMarkAll(battle.getWhoseTurn(), battle);
         if (duels.size() > 0) {
             playersA = playersToCombatPlayers(getBattle().getAllies(battle.getWhoseTurn()));
             playersD = playersToCombatPlayers(getBattle().getEnemies(battle.getWhoseTurn()));
