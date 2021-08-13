@@ -384,6 +384,10 @@ public class RoundManager {
         }
         if (!getBattle().getCombatManager().getDuelManager().isActive()) {
             battle.refreshPossibilities();
+            if (!getBattle().getBattleScreen().getBattleStage().getCombatEndButton().isDisabled()) {
+                getBattle().getBattleScreen().getBattleStage().getCombatEndButton().setState(getBattle().getCombatManager().getDuels().size()>0 ? 1 : 0);
+            }
+
         }
     }
 
