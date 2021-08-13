@@ -3,7 +3,8 @@ package com.darkgran.farstar.cards;
 public enum AbilityTargets {
     NONE,
     ANY,
-    SELF,
+    SELF, //= ship
+    OWNER, //= player
     ADJACENT,
     ANY_ALLY,
     ALLIED_MS,

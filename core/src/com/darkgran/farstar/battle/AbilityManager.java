@@ -47,6 +47,9 @@ public class AbilityManager {
                                 targets.add(casterToken.getCard());
                             }
                             break;
+                        case OWNER:
+                            targets.add(casterToken.getCard());
+                            break;
                         case ANY:
                         case ANY_ALLY:
                         case ALLIED_FLEET:

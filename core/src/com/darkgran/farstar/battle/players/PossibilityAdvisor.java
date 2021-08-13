@@ -3,14 +3,11 @@ package com.darkgran.farstar.battle.players;
 import com.darkgran.farstar.battle.AbilityManager;
 import com.darkgran.farstar.battle.Battle;
 import com.darkgran.farstar.battle.CombatManager;
+import com.darkgran.farstar.cards.*;
 import com.darkgran.farstar.gui.Notification;
 import com.darkgran.farstar.gui.NotificationManager;
 import com.darkgran.farstar.gui.battlegui.Menu;
 import com.darkgran.farstar.gui.battlegui.YardMenu;
-import com.darkgran.farstar.cards.AbilityInfo;
-import com.darkgran.farstar.cards.AbilityStarter;
-import com.darkgran.farstar.cards.AbilityTargets;
-import com.darkgran.farstar.cards.CardType;
 
 import java.util.ArrayList;
 
@@ -85,7 +82,7 @@ public class PossibilityAdvisor {
     public boolean isPossibleToDeploy(BattlePlayer battlePlayer, BattlePlayer whoseTurn, BattleCard battleCard, boolean checkSpace, Battle battle, boolean signs) { //in-future: "spread" or parametrize to be used with Notifications (eg. "Insufficient Resources.")... (see RoundManager's call)
         boolean affordable = battlePlayer.canAfford(battleCard);
         boolean learned = tierAllowed(battleCard.getCardInfo().getTier(), battle);
-        boolean targetsPresent = allowedAoE(battlePlayer, battleCard, battle) && (!battleCard.isAnOffensiveChange() || AbilityManager.hasAbilityTargets(battleCard, AbilityTargets.SELF) || AbilityManager.hasStarter(battleCard, AbilityStarter.AURA));
+        boolean targetsPresent = allowedAoE(battlePlayer, battleCard, battle) && (!battlePlayer.getFleet().isEmpty() || (CardType.isShip(battleCard.getCardInfo().getCardType()) && battlePlayer.getFleet().isEmpty()) ||!battleCard.isAnOffensiveChange() || AbilityManager.hasAbilityTargets(battleCard, AbilityTargets.SELF) || AbilityManager.hasStarter(battleCard, AbilityStarter.AURA));
         boolean space = !checkSpace || ((battlePlayer.getSupports().hasSpace() || battleCard.getCardInfo().getCardType() != CardType.SUPPORT) && (battlePlayer.getFleet().hasSpace() || (battleCard.getCardInfo().getCardType() != CardType.YARDPRINT && battleCard.getCardInfo().getCardType() != CardType.BLUEPRINT)));
         if (signs) { reportDeployability(battle, affordable, learned, targetsPresent, space); }
         if (battlePlayer == whoseTurn && affordable && learned && targetsPresent) {
