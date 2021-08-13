@@ -26,9 +26,9 @@ public class ButtonWithExtraState extends ActorButton {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if (extraState) {
-            if (getClickListener().isPressed()) {
+            if (!isDisabled() && getClickListener().isPressed()) {
                 batch.draw(extraDown, getX(), getY());
-            } else if (getClickListener().isOver()) {
+            } else if (!isDisabled() && getClickListener().isOver()) {
                 batch.draw(extraOver, getX(), getY());
             } else {
                 batch.draw(extraUp, getX(), getY());

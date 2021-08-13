@@ -13,9 +13,9 @@ public final class ScreenSettings {
         return tableStageEnabled;
     }
 
-    public void setTableStageEnabled(boolean tableStageEnabled, TableStage tableMenu) {
+    public void setTableStageEnabled(boolean tableStageEnabled, TableStage tableStage) {
         this.tableStageEnabled = tableStageEnabled;
-        if (tableMenu != null) { tableMenu.enableButtons(tableStageEnabled); }
+        if (tableStage != null) { tableStage.enableButtons(tableStageEnabled); }
     }
 
     public boolean isNetEnabled() {

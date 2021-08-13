@@ -26,9 +26,9 @@ public class ButtonWithMultipleStates extends ActorButton {
     public void draw(Batch batch, float parentAlpha) {
         if (state > 0) {
             int ix;
-            if (getClickListener().isPressed()) {
+            if (!isDisabled() && getClickListener().isPressed()) {
                 ix = state*(noPressedTexture ? 2 : 3)+(noPressedTexture ? 1 : 2);
-            } else if (getClickListener().isOver()) {
+            } else if (!isDisabled() && getClickListener().isOver()) {
                 ix = state*(noPressedTexture ? 2 : 3)+1;
             } else {
                 ix = state*(noPressedTexture ? 2 : 3);

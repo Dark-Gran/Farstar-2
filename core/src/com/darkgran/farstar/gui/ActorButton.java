@@ -43,9 +43,9 @@ public class ActorButton extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        if (clickListener.isPressed()) {
+        if (!isDisabled() && clickListener.isPressed()) {
             batch.draw(imageDown, getX(), getY());
-        } else if (clickListener.isOver()) {
+        } else if (!isDisabled() && clickListener.isOver()) {
             batch.draw(imageOver, getX(), getY());
         } else {
             batch.draw(imageUp, getX(), getY());

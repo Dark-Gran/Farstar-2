@@ -55,11 +55,18 @@ public class MainScreenStage extends ListeningStage {
         addActor(webButton);
     }
 
+    public void disableWebButton(boolean disable) {
+        webButton.setDisabled(disable);
+    }
+
     public void enableMainButtons(boolean disable) {
         solitaryButton.setDisabled(disable);
         skirmishButton.setDisabled(disable);
         simulationButton.setDisabled(disable);
-        if (disable) {
+    }
+
+    public void hideMainButtons(boolean hide) {
+        if (hide) {
             solitaryButton.remove();
             skirmishButton.remove();
             simulationButton.remove();

@@ -19,11 +19,12 @@ public abstract class SuperScreen implements Screen {
     private final Farstar game;
     private static final OrthographicCamera camera = new OrthographicCamera();
     private final Viewport viewport = new ExtendViewport(Farstar.STAGE_WIDTH, Farstar.STAGE_HEIGHT, camera);
-    private static final ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
     private TableStage tableStage; //in-future: possibly make static (but needs to be disabled on Screens like Intro)
     private YXQuestionBox screenConceder = null;
     private final PerfMeter perfMeter = new PerfMeter((float) (Farstar.STAGE_WIDTH*0.0885), (float) (Farstar.STAGE_HEIGHT*0.98), ColorPalette.MAIN); //in-future: possibly make static (but needs to be disabled on Screens like Intro)
     private final ScreenSettings screenSettings;
+    private boolean blockTableButtons = false;
 
     //Cursor
     public enum CursorType {
@@ -251,4 +252,13 @@ public abstract class SuperScreen implements Screen {
     public boolean isConcederActive() { return screenConceder != null; }
 
     public ScreenSettings getScreenSettings() { return screenSettings; }
+
+    public boolean isBlockTableButtonsOn() {
+        return blockTableButtons;
+    }
+
+    protected void setBlockTableButtons(boolean blockTableButtons) {
+        this.blockTableButtons = blockTableButtons;
+        if (tableStage != null) { tableStage.enableButtons(!blockTableButtons); }
+    }
 }

@@ -29,7 +29,6 @@ public class IntroScreen extends SuperScreen implements Delayer { //Animation us
 
     private void endIntro() {
         getGame().setScreen(new MainScreen(getGame(), getScreenSettings(), new TableStage(getGame(), getViewport())));
-        NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Alpha Warning: Most Features Not Available.", 8);
     }
 
     private void activate() { active = true; }
