@@ -84,7 +84,7 @@ public class Explainer extends TextInTheBox {
         } else {
             boolean first = true;
             if (CardType.needsDefense(battleCard.getCardInfo().getCardType()) && battleCard.getDamage() > 0) {
-                str.append("Current/Max. Shields: ").append(battleCard.getHealth()).append("/").append(battleCard.getCardInfo().getDefense()).append("                      ");
+                str.append("Current/Max. Defense: ").append(battleCard.getHealth()).append("/").append(battleCard.getCardInfo().getDefense()).append("                      ");
                 first = false;
             }
             String shipOrSupport = battleCard.getCardInfo().getCardType() == CardType.SUPPORT ? "support" : "ship";
