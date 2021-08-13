@@ -77,17 +77,16 @@ public class Explainer extends TextInTheBox {
             else { first = false; }
             str.append("Disabled:\nThis ").append(shipOrSupport).append(" cannot attack or use abilities until next Turn.\n");
         }
-        if (battleCard.getCardInfo().getCardType() == CardType.TACTIC || battleCard.getCardInfo().getCardType() == CardType.SUPPORT) {
+        boolean tactic = battleCard.getCardInfo().getCardType() == CardType.TACTIC; // || AbilityManager.hasStarter(battleCard, AbilityStarter.TACTIC)
+        if (tactic) {
             if (!first) { str.append("\n"); }
             else { first = false; }
-            switch (battleCard.getCardInfo().getCardType()) {
-                case TACTIC:
-                    str.append("Tactic:\nTactics may be deployed both in Your Turn and in the Tactical Phase.\nUsually the best choice is to keep them for the Tactical Phase.\n");
-                    break;
-                case SUPPORT:
-                    str.append("Support:\nYou can deploy Supports next to Your Mothership.\n");
-                    break;
-            }
+            str.append("Tactic:\nTactics may be deployed both in Your Turn and in the Tactical Phase.\nUsually the best choice is to keep them for the Tactical Phase.\n");
+        }
+        if (battleCard.getCardInfo().getCardType() == CardType.SUPPORT) {
+            if (!first) { str.append("\n"); }
+            else { first = false; }
+            str.append("Support:\nYou can deploy Supports next to Your Mothership.\n");
         }
         boolean FSpresent = false;
         boolean USEpresent = false;
