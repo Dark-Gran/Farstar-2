@@ -333,7 +333,7 @@ public class AbilityManager {
             int power = floatObjectToInt(effect.getEffectInfo().get(0));
             TechType techType = TechType.valueOf(effect.getEffectInfo().get(1).toString());
             int dmg = DuelManager.getDmgAgainstShields(power, target.getHealth(), getArmor(target), techType, target.getCardInfo().getDefenseType());
-            if (caster != null && !CardType.isShip(caster.getCardInfo().getCardType()) && caster.getToken().getTokenType() == TokenType.HAND) {
+            if (caster != null && !CardType.isShip(caster.getCardInfo().getCardType())) {
                 ShotManager.getInstance().newAttack(caster.getBattlePlayer().getMs().getToken(), target.getToken(), power, techType, caster.getCardInfo().getAnimatedShots());
             }
             if (target instanceof Ship) {
