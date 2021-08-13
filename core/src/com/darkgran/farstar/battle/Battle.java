@@ -54,8 +54,12 @@ public abstract class Battle {
 
     protected void startingCards() { }
 
-    public void addGameOver(BattlePlayer battlePlayer) {
-        gameOvers.add(battlePlayer);
+    public boolean addGameOver(BattlePlayer battlePlayer) {
+        if (!gameOvers.contains(battlePlayer)) {
+            gameOvers.add(battlePlayer);
+            return true;
+        }
+        return false;
     }
 
     public BattlePlayer getWinner() { return null; }
