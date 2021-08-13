@@ -41,7 +41,7 @@ public class Battle1v1 extends Battle {
     @Override
     protected void coinToss() {
         if (Farstar.firstMatchThisLaunch && getBattleType() == BattleType.SKIRMISH) {
-            setWhoseTurn(battlePlayer2);
+            setWhoseTurn(battlePlayer1);
             Farstar.firstMatchThisLaunch = false;
         } else {
             setWhoseTurn((ThreadLocalRandom.current().nextInt(0, 2) == 0) ? battlePlayer1 : battlePlayer2);
