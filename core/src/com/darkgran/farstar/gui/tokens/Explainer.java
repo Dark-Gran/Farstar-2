@@ -38,16 +38,24 @@ public class Explainer extends TextInTheBox {
     private void setupBox() {
         SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), explanation, getWrapWidth(), getWrap());
         BitmapFont font = AssetLibrary.getInstance().getAssetManager().get(italicPath, BitmapFont.class);
+        SimpleVector2 flavourWH = TextDrawer.getTextWH(font, flavour, getWrapWidth(), getWrap());
         if (textWH.x <= 0) {
-            textWH.x = TextDrawer.getTextWH(font, flavour).x;
+            textWH.x = flavourWH.x;
         }
         if (textWH.x < getWrapWidth()) {
             x = (x + (getWrapWidth() - textWH.x)/2);
         }
-        flavourOffsetY = textWH.y - ((flavour.equals("") ? 0 : font.getLineHeight()));
-        setupBox(x, y, getWrapWidth()+40f, textWH.y+40f+((flavour.equals("") ? 0 : font.getLineHeight()*2)));
+        flavourOffsetY = (explanation.equals("") ? 0 : textWH.y);
+        setupBox(x, y, getWrapWidth()+40f, (textWH.y+flavourWH.y)+40f);
         centralizeBox();
-        //getSimpleBox().setY(getSimpleBox().y-1f);
+    }
+
+    @Override
+    public SimpleVector2 boxOriginFromTextCenter(float width, float height, BitmapFont font, String text, float x, float y, float wrapWidth, boolean wrap) {
+        SimpleVector2 textWH = TextDrawer.getTextWH(getFont(), explanation, wrapWidth, wrap);
+        SimpleVector2 flavourWH = TextDrawer.getTextWH(AssetLibrary.getInstance().getAssetManager().get(italicPath, BitmapFont.class), flavour, wrapWidth, wrap);
+        SimpleVector2 totalWH = new SimpleVector2(Math.max(textWH.x, flavourWH.x), textWH.y+flavourWH.y);
+        return new SimpleVector2((x + totalWH.x/2) - width/2,(y - totalWH.y/2) - height/2);
     }
 
     public void refreshText(BattleCard battleCard) {
@@ -170,12 +178,7 @@ public class Explainer extends TextInTheBox {
     }
 
     protected String getFlavourContent(BattleCard battleCard) {
-        StringBuilder str = new StringBuilder();
-        String flavour = battleCard.getCardInfo().getFlavour();
-        if (!flavour.equals("")) {
-            str.append("\n").append(flavour);
-        }
-        return str.toString();
+        return battleCard.getCardInfo().getFlavour();
     }
 
 }
