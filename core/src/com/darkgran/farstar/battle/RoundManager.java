@@ -298,7 +298,7 @@ public class RoundManager {
         if (!battle.isEverythingDisabled() && postponedDeploy.getCaster() != null) {
             if (abilityPicker != null) {
                 abilityPicker.disable();
-                ((YardMenu) battle.getWhoseTurn().getYard().getCardListMenu()).switchVisibility(false); //hybrid vs yard quickfix
+                ((YardMenu) battle.getWhoseTurn().getYard().getCardListMenu()).setTouchable(((YardMenu) battle.getWhoseTurn().getYard().getCardListMenu()).isOpen());
                 getCancelButton().remove();
             }
             if (playAbility(postponedDeploy.getCaster(), (postponedDeploy.getTarget()!=null) ? postponedDeploy.getTarget().getCard() : null, ability.getStarter(), postponedDeploy.getCaster().getCard().getBattlePlayer(), postponedDeploy.getDrop(), ability)) {

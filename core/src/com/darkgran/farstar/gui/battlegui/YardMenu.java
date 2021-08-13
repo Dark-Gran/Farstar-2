@@ -50,12 +50,14 @@ public class YardMenu extends CardListMenu implements DropTarget {
     }
 
     public void switchVisibility(boolean visible) {
-        if (getBattlePlayer() instanceof LocalBattlePlayer) {
-            open = !visible;
-            switchVisibility();
-        } else {
-            if (visible) {
-                accessDenied();
+        if (open != visible) {
+            if (getBattlePlayer() instanceof LocalBattlePlayer) {
+                open = !visible;
+                switchVisibility();
+            } else {
+                if (visible) {
+                    accessDenied();
+                }
             }
         }
     }
@@ -78,7 +80,7 @@ public class YardMenu extends CardListMenu implements DropTarget {
         NotificationManager.getInstance().newNotification(Notification.NotificationType.BOT_LEFT, "Access Denied.", 3);
     }
 
-    private void setTouchable(boolean enable) {
+    public void setTouchable(boolean enable) {
         for (Token token : getTokens()) {
             token.setTouchable(enable ? Touchable.enabled : Touchable.disabled);
         }
