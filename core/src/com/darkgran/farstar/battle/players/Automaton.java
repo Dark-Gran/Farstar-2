@@ -120,7 +120,15 @@ public final class Automaton extends Bot {
         if (possibilities.size() > 0) {
             //0. Prefer MS Ability if the alternative is ending the turn and therefore losing Energy
             if (possibilities.size() == 1 && possibilities.get(0).getCard().isMS() && (!holdsUpperHand() || getEnergy() >= 1+possibilities.get(0).getCard().getCardInfo().getAbilities().get(0).getResourcePrice().getEnergy())) {
-                return possibilities.get(0);
+                Token target;
+                if (AbilityManager.hasEffectType(getMs(), EffectType.REPAIR)) {
+                    target = getWoundedAlly();
+                } else {
+                    target = getAlliedTarget(getMs().getToken(), null);
+                }
+                if (target != null) {
+                    return possibilities.get(0);
+                }
             }
             //1. Labour first
             for (PossibilityInfo possibility : possibilities) {
