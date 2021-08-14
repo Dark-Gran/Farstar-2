@@ -126,3 +126,7 @@ Thumbs.db
 /core/assets/images/
 /desktop/out/
 /out/artifacts/Farstar2_jar/Farstar2.jar
+/out/packr/custom-runtime/
+/out/packr/out-win/
+/out/packr/packr-all-4.0.0.jar
+/out/packr/Farstar2.jar

@@ -1,0 +1,2 @@
+@echo off
+java -jar packr-all-4.0.0.jar --executable Farstar2 --bundle com.darkgran.farstar --platform windows64 --jdk custom-runtime --classpath Farstar2.jar --removelibs Farstar2.jar --mainclass com.darkgran.farstar.desktop.DesktopLauncher --vmargs Xmx1G --output out-win --minimizejre minim.json
