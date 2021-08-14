@@ -1,6 +1,6 @@
 # Farstar 2  
   
-![main_preview](tpreview.png)  
+![main_preview](mpreview.png)  
   
 This is a FREE game demo.  
   
