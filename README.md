@@ -7,7 +7,8 @@ This is a FREE game demo.
 [WINDOWS RELEASE DOWNLOAD](https://github.com/Dark-Gran/Farstar-2/releases/download/v0.3-alpha/FARSTAR2_DOWNLOAD_WIN.rar)  
   
 Use [WinRAR](https://www.google.com/search?q=winrar) or similar to extract game files.  
-Launch with *.exe (no installation required).
+Launch with exe (no installation required).
+*Use F1 in game to show Help/Instructions.*
 
 (For the original game, see [Farstar: Exodus](https://github.com/Dark-Gran/Farstar-Exodus).)    
   
