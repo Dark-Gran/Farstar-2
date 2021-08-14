@@ -28,7 +28,7 @@ Same goes for story-driven Campaigns, unique portraits for non-ship cards, bette
 ~~Battle GUI+GFX 'import'~~  
 ~~Card Portraits 'import'~~  
 ~~Game-Rules Summary (F1)~~  
-Finishing touches (eg. card and AI revision)  
+~~Finishing touches (eg. card and AI revision)~~  
 Alpha Release  
 
 
