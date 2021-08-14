@@ -18,7 +18,7 @@ This time in Java (with LibGDX for OpenGL). One of the main reasons behind the o
 **_Current goal is to create an 'offline demo' of the reworked gameplay (incl. artwork and basic effects)._**  
 LAN support will be added after the first release.  
 
-Customizable Decks, additional Cards, Tutorial, proper support of different resolutions, and Server Application with user registrations, matchmaking, a shop for card packs, and direct card-trading between players (all are features of the original game) will be added depending on reception.  
+Customizable Decks, additional Cards, Tutorial, sound and music, proper support of different resolutions, and Server Application with user registrations, matchmaking, a shop for card packs, and direct card-trading between players (all are features of the original game) will be added depending on reception.  
 Same goes for story-driven Campaigns, unique portraits for non-ship cards, better and/or more visual effects, better/harder AI, general optimization, mobile support, and other game-modes besides 1v1.
   
 ~~Paper-Prototype~~  
