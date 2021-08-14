@@ -22,7 +22,8 @@ This time in Java (with LibGDX for OpenGL). One of the main reasons behind the o
 
   
 ## Progress  
-  
+
+_(to be updated)_  
 **_Current goal is to create an 'offline demo' of the reworked gameplay (incl. artwork and basic effects)._**  
 LAN support will be added after the first release.  
 
@@ -38,9 +39,8 @@ Same goes for story-driven Campaigns, unique portraits for non-ship cards, bette
 ~~Game-Rules Summary (F1)~~  
 ~~Finishing touches (eg. card and AI revision)~~  
 ~~Alpha Release~~  
-_(to be updated)_
-
-
+  
+  
 ### Font Credits
 
 **ALL FONTS** used in the game belong to their respective authors, and so do my thanks for publishing these fonts under Open Font License or similar:  
