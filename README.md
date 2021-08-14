@@ -2,7 +2,15 @@
   
 ![main_preview](preview.png)  
   
-For the original game, see [Farstar: Exodus](https://github.com/Dark-Gran/Farstar-Exodus).  
+This is a FREE game demo.  
+  
+[WINDOWS RELEASE DOWNLOAD](https://github.com/Dark-Gran/Farstar-2/releases/download/v0.3-alpha/FARSTAR2_DOWNLOAD_WIN.rar)  
+  
+Use [WinRAR](https://www.google.com/search?q=winrar) or similar to extract game files.  
+Launch with *.exe (no installation required).
+
+(For the original game, see [Farstar: Exodus](https://github.com/Dark-Gran/Farstar-Exodus).)    
+  
   
 ## About Project  
   
@@ -29,7 +37,8 @@ Same goes for story-driven Campaigns, unique portraits for non-ship cards, bette
 ~~Card Portraits 'import'~~  
 ~~Game-Rules Summary (F1)~~  
 ~~Finishing touches (eg. card and AI revision)~~  
-Alpha Release  
+~~Alpha Release~~  
+_(to be updated)_
 
 
 ### Font Credits
