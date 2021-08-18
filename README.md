@@ -11,10 +11,7 @@ Launch with exe (no installation required).
 *Use F1 in game to show Help/Instructions.*  
 If you'd like to give me feedback or see my other projects, [join us on Discord!](https://discord.com/invite/N4JxKsX3Q5)[![discord-icon](discord32flip.png)](https://discord.com/invite/N4JxKsX3Q5)
 
-In case you like the game so much you want to see it grow, [consider becoming a Patron!](https://www.patreon.com/bePatron?u=60109614)
-
-(For the original game, see [Farstar: Exodus](https://github.com/Dark-Gran/Farstar-Exodus).)    
-  
+In case you like the game so much you want to see it grow, [consider becoming a Patron!](https://www.patreon.com/bePatron?u=60109614)  
   
 ## About Project  
 
@@ -23,7 +20,9 @@ I've always enjoyed card games (both collectible and 'classic'), so after an att
   
 With that in mind (and with feedback in hands), game's rules have been _drastically_ changed, therefore the entire application is being 'rewritten' from the scratch.  
   
-This time in Java (with LibGDX for OpenGL). One of the main reasons behind the original choice of Adobe Air (in which the original game has been written) was the fact that it is cross-platform, however such is the case with Java as well. For applications of this size, Java is also a more lightweight (performance-wise) solution.
+This time in Java (with LibGDX for OpenGL). One of the main reasons behind the original choice of Adobe Air (in which the original game has been written) was the fact that it is cross-platform, however such is the case with Java as well. For applications of this size, Java is also a more lightweight (performance-wise) solution.  
+
+(For the previous version of the game, see [Farstar: Exodus](https://github.com/Dark-Gran/Farstar-Exodus).)   
 
   
 ## Progress  
