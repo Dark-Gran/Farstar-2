@@ -11,7 +11,7 @@ Launch with exe (no installation required).
 *Use F1 in game to show Help/Instructions.*  
 If you'd like to give me feedback or see my other projects, [join us on Discord!](https://discord.com/invite/N4JxKsX3Q5)[![discord-icon](discord32flip.png)](https://discord.com/invite/N4JxKsX3Q5)
 
-In case you like the game so much you want to see it grow, [consider becoming a Patron!](https://www.patreon.com/bePatron?u=60109614)[![patreon-icon](patreon32.png)](https://www.patreon.com/bePatron?u=60109614)
+In case you like the game so much you want to see it grow, [consider becoming a Patron!](https://www.patreon.com/bePatron?u=60109614)
 
 (For the original game, see [Farstar: Exodus](https://github.com/Dark-Gran/Farstar-Exodus).)    
   
