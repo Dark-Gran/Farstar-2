@@ -13,6 +13,8 @@ If you'd like to give me feedback or see my other projects, [join us on Discord!
 
 If you like the game so much you want to see it grow, [I've already made a Patreon page](https://www.patreon.com/darkgran), _just in case_.  
   
+(if you want to know about everything we do, you can [also follow me on Twitter](https://twitter.com/DarkGran_CZ))
+  
 ## About Project  
 
 _(to be updated)_  
