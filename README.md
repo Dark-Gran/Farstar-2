@@ -24,30 +24,30 @@ And by a lot, I mean:
 ### Things to add that actually were in the original game
   
 - **Customizable Decks**  
-- **_Way more cards_** 
+- **Way more cards** 
   - Over 60 ship portraits are waiting to be updated and added, which includes both shipyard and rare ships that you draw like Actions or Tactics. The original game also contained over 200 "actions", bringing the total with ships close to 300 cards - and that was meant only as a start of something much greater! This of course includes adding many new abilities to go with these cards.  
-- **_Multiplayer_**  
-- **_Server for matchmaking and user-stats_**
-- **_In-game reward system for unlocking/crafting cards_**   
+- **Multiplayer**  
+- **Server for matchmaking and user-stats**
+- **In-game reward system for unlocking/crafting cards**   
   - It's not meant to be a grind, but it is a _collectible_ card game. Giving new players the entire collection right away ruins a part of the fun.
-- **_Real-time card-trading between players_** 
+- **Real-time card-trading between players** 
   - Check out each others "cards for trade" and make a deal, like in a real world game room. Something that no other online card game has (auctions, at best :p). We did!
-- **_Complete support of different resolutions_**
-- **_Tutorial_**
+- **Complete support of different resolutions**
+- **Tutorial**
 
 ### And more
 
-- **_2v2_** 
+- **2v2** 
   - Yes: the paper version is already playable as 2v2, and if you check out current versions code, you may notice that it's actually already prepared for more than just 1v1 (which does not mean just the possibility of 2v2, but for example a free-for-all as well). Let's fight friends with friends! ;)
-- **_Story-driven Campaigns_** 
+- **Story-driven Campaigns** 
   - The original Tutorial was not only hand-holdy, but also filled with way too much story, keeping away the player from focusing on the mechanics. But I clearly love to tell stories! So we would like to continue with those, this time in a proper campaign mode.  
-- **_Sound and Music_** 
+- **Sound and Music** 
   - Well, the original game actually had both, but the music track is actually a quick placeholder and the quality of equipment we had to make the sounds was just to low to achieve anything decent. With enough time though, anything is possible.  
-- **_Better visual effects_** 
+- **Better visual effects** 
   - There is only a "necessary handful" of effects in game: most cards actually deserve their own, and there should be effects at certain points of plays that are just missing at this moment. The effects that are there were made with limited time too - especially the ship-explosion is just a placeholder.  
-- **_Unique portraits for all non-ships too_** _(may change)_  
-- **_Better AI_**  
-- **_Mobile release_**
+- **Unique portraits for all non-ships too** _(may change)_  
+- **Better AI**  
+- **Release for mobiles and other platforms**
 
 Visuals to make and lines of code to write are many.  
 **If you made it this far, and you would love to see it all happen, please consider [becoming our Patron](https://www.patreon.com/bePatron?u=60109614) to support us, we would greatly appreciate it!**  
