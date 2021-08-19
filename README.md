@@ -26,7 +26,7 @@ If you want to know about _everything_ we do, I'll be happy if you [follow me on
 - **Multiplayer**  
 - **Server for matchmaking and user-stats**
 - **In-game reward system for unlocking/crafting cards**   
-  - It's not meant to be a grind, but it is a _collectible_ card game. Giving new players the entire collection right away ruins a part of the fun.
+  - It's not meant to be a grind, but it is a _collectible_ card game. Giving the entire collection to new players right away ruins part of the fun.
 - **Real-time card-trading between players** 
   - Check out each others "cards for trade" and make a deal, like in a real world game room. Something that no other online card game has (auctions, at best :p).
 - **Complete support of different resolutions**
