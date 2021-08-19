@@ -37,7 +37,7 @@ And by a lot, I mean:
 
 ### And more
 
-- **2v2** 
+- **2v2 Mode** 
   - Yes: the paper version is already playable as 2v2, and if you check out current versions code, you may notice that it's actually prepared for more than just 1v1 matches as well (which does not mean just the possibility of 2v2, but for example a free-for-all as well). Let's fight friends with friends! ;)
 - **Story-driven Campaigns** 
   - The original Tutorial was not only hand-holdy, but also filled with way too much story, keeping away the player from focusing on the mechanics. But I clearly love to tell stories! So we would like to continue with those, this time in a proper campaign mode.  
