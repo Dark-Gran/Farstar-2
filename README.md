@@ -2,7 +2,7 @@
   
 ![main_preview](mpreview.png)  
   
-This is a FREE game demo.  
+This is a FREE game.  
   
 [**WINDOWS RELEASE DOWNLOAD**](https://github.com/Dark-Gran/Farstar-2/releases/download/v0.3-alpha/FARSTAR2_DOWNLOAD_WIN.rar)  
   
