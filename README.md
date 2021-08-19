@@ -4,7 +4,7 @@
   
 This is a FREE game.  
   
-[**WINDOWS RELEASE DOWNLOAD**](https://github.com/Dark-Gran/Farstar-2/releases/download/v0.3-alpha/FARSTAR2_DOWNLOAD_WIN.rar)  
+[**WINDOWS RELEASE DOWNLOAD** (v0.3 Alpha)](https://github.com/Dark-Gran/Farstar-2/releases/download/v0.3-alpha/FARSTAR2_DOWNLOAD_WIN.rar)  
   
 Use [WinRAR](https://www.google.com/search?q=winrar) or similar to extract game files.  
 Launch with exe (no installation required).  
