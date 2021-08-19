@@ -21,26 +21,33 @@ If you want to know about _everything_ we do, I'll be happy if you [follow me on
 As this is only an early Alpha, there's still a lot I'd love to add.  
 And by a lot, I mean:  
 
-### Things that actually were in the original game
+### Things to add that actually were in the original game
   
-**_Customizable Decks_**  
-**_Way more cards_** - over 60 ship portraits are waiting to be updated and added, which includes both shipyard and rare ships that you draw like Actions or Tactics. The original game also contained over 200 "actions", bringing the total with ships close to 300 cards - and that was meant only as a start of something much greater! This of course includes adding many new abilities to go with these cards.  
-**_Multiplayer_**  
-**_Server for matchmaking and user-stats_**  
-**_In-game reward system for unlocking/crafting cards_** - It's not meant to be a grind, but it is a _collectible_ card game. Giving new players the entire collection right away ruins a part of the fun.  
-**_Real-time card-trading between players_** - Check out each others "cards for trade" and make a deal, like in a real world game room. Something that no other online card game has (auctions, at best :p). We did!  
-**_Complete support of different resolutions_** - This is currently mostly about the font quality in different scales (easily fixed but _everything_ takes time).  
-**_Tutorial_** - proper introduction for the new player (this time not too hand-holdy)
+- **Customizable Decks**  
+- **_Way more cards_** 
+  - Over 60 ship portraits are waiting to be updated and added, which includes both shipyard and rare ships that you draw like Actions or Tactics. The original game also contained over 200 "actions", bringing the total with ships close to 300 cards - and that was meant only as a start of something much greater! This of course includes adding many new abilities to go with these cards.  
+- **_Multiplayer_**  
+- **_Server for matchmaking and user-stats_**
+- **_In-game reward system for unlocking/crafting cards_**   
+  - It's not meant to be a grind, but it is a _collectible_ card game. Giving new players the entire collection right away ruins a part of the fun.
+- **_Real-time card-trading between players_** 
+  - Check out each others "cards for trade" and make a deal, like in a real world game room. Something that no other online card game has (auctions, at best :p). We did!
+- **_Complete support of different resolutions_**
+- **_Tutorial_**
 
-### Things that were planned for the original game too
+### And more
 
-**_Story-driven Campaigns_** - the original Tutorial was not only hand-holdy, but also filled with way too much story, keeping away the player from focusing on the mechanics. But I clearly love to tell stories! So we would like to continue with those, this time in a proper campaign mode.  
-**_Sound and Music_** - well, the original game actually had both, but the music track is actually a quick placeholder and the quality of equipment we had to make the sounds was just to low to achieve anything decent. With enough time though, anything is possible.  
-**_Better visual effects_** - there is only a "necessary handful" of effects in game: most cards actually deserve their own, and there should be effects at certain points of plays that are just missing at this moment. The effects that are there were made with limited time too - especially the ship-explosion is just a placeholder.  
-**_Unique portraits for non-ships_** - the current portraits were _always_ meant as placeholders, because all cards were meant to have unique portraits (eg. you would see some ship-insides showing coils with "Radiation Coils"), but I already had so much work with ships that I needed to save some time. And it always bugged me, but some simplified portraits are proving practical, so maybe we'll think about the whole things first.  
-**_Better AI_** - once you get to know the current AI, you will find out it is actually not very smart. If we are to add more cards, it definitely needs an upgrade so it can handle anything we throw at it.  
-**_Mobile support_** - both games were written with multiple platforms in mind, but publishing for each one still takes some time, especially when we're talking about mobiles. Although truth be told, this version of a game is much more prepared for the size of a mobile screen than the previous.  
-**_2v2_** - yes: the paper version is already playable as 2v2, and if you check out current versions code, you may notice that it's actually already prepared for more than just 1v1 (which does not mean just the possibility of 2v2, but for example a free-for-all as well). Let's fight friends with friends! ;)
+- **_2v2_** 
+  - Yes: the paper version is already playable as 2v2, and if you check out current versions code, you may notice that it's actually already prepared for more than just 1v1 (which does not mean just the possibility of 2v2, but for example a free-for-all as well). Let's fight friends with friends! ;)
+- **_Story-driven Campaigns_** 
+  - The original Tutorial was not only hand-holdy, but also filled with way too much story, keeping away the player from focusing on the mechanics. But I clearly love to tell stories! So we would like to continue with those, this time in a proper campaign mode.  
+- **_Sound and Music_** 
+  - Well, the original game actually had both, but the music track is actually a quick placeholder and the quality of equipment we had to make the sounds was just to low to achieve anything decent. With enough time though, anything is possible.  
+- **_Better visual effects_** 
+  - There is only a "necessary handful" of effects in game: most cards actually deserve their own, and there should be effects at certain points of plays that are just missing at this moment. The effects that are there were made with limited time too - especially the ship-explosion is just a placeholder.  
+- **_Unique portraits for all non-ships too_** _(may change)_  
+- **_Better AI_**  
+- **_Mobile release_**
 
 Visuals to make and lines of code to write are many.  
 **If you made it this far, and you would love to see it all happen, please consider [becoming our Patron](https://www.patreon.com/bePatron?u=60109614) to support us, we would greatly appreciate it!**  
