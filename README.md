@@ -49,6 +49,7 @@ If you want to know about _everything_ we do, I'll be happy if you [follow me on
 - **Release for mobiles and other platforms**
 
 Visuals to make and lines of code to write are many.  
+  
 **If you made it this far, and you would love to see it all happen, please consider [becoming our Patron](https://www.patreon.com/bePatron?u=60109614) to support us, we would greatly appreciate it!**  
 
   
