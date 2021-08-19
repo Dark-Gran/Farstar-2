@@ -35,7 +35,7 @@ If you want to learn about _everything_ we do, I'll be happy if you [follow me o
 ### More things we want to add
 
 - **2v2 Mode** 
-  - Yes: the paper version is already playable as 2v2, and if you check out the code, you may notice that it's actually prepared for more than just 1v1 matches as well (which does not only mean the possibility of 2v2, but for example a free-for-all as well). Let's fight friends with friends! ;)
+  - Yes: the paper version is already playable as 2v2, and if you check out the non-gui code, you may notice that it's actually prepared for more than just 1v1 matches as well (which does not only mean the possibility of 2v2, but for example a free-for-all as well). Let's fight friends with friends! ;)
 - **Story-driven Campaigns** 
   - The original Tutorial was not only hand-holdy, but also filled with way too much story, keeping away the player from focusing on the mechanics. But I clearly love to tell stories! So we would like to continue with those, this time in a proper campaign mode.
 - **Even more cards**
