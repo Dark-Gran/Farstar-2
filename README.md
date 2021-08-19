@@ -21,7 +21,7 @@ If you want to know about _everything_ we do, I'll be happy if you [follow me on
 As this is only an early Alpha, there's still a lot I'd love to add.  
 And by a lot, I mean:  
 
-###Things that actually were in the original game
+### Things that actually were in the original game
   
 **_Customizable Decks_**  
 **_Way more cards_** - over 60 ship portraits are waiting to be updated and added, which includes both shipyard and rare ships that you draw like Actions or Tactics. The original game also contained over 200 "actions", bringing the total with ships close to 300 cards - and that was meant only as a start of something much greater! This of course includes adding many new abilities to go with these cards.  
@@ -32,7 +32,7 @@ And by a lot, I mean:
 **_Complete support of different resolutions_** - This is currently mostly about the font quality in different scales (easily fixed but _everything_ takes time).  
 **_Tutorial_** - proper introduction for the new player (this time not too hand-holdy)
 
-###Things that were planned for the original game too
+### Things that were planned for the original game too
 
 **_Story-driven Campaigns_** - the original Tutorial was not only hand-holdy, but also filled with way too much story, keeping away the player from focusing on the mechanics. But I clearly love to tell stories! So we would like to continue with those, this time in a proper campaign mode.  
 **_Sound and Music_** - well, the original game actually had both, but the music track is actually a quick placeholder and the quality of equipment we had to make the sounds was just to low to achieve anything decent. With enough time though, anything is possible.  
