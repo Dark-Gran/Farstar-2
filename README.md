@@ -11,7 +11,7 @@ Launch with exe (no installation required).
 *Use F1 in game to show Help/Instructions.*  
 If you'd like to give me feedback or see my other projects, [talk to us on Discord!](https://discord.com/invite/N4JxKsX3Q5)[![discord-icon](discord32flip.png)](https://discord.com/invite/N4JxKsX3Q5)  
   
-If you want to know about _everything_ we do, I'll be happy if you [follow me on my humble Twitter](https://twitter.com/DarkGran_CZ).
+If you want to learn about _everything_ we do, I'll be happy if you [follow me on my humble Twitter](https://twitter.com/DarkGran_CZ).
   
 [_(jump to spoilers)_](#screenshots)
   
