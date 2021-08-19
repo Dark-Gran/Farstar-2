@@ -18,7 +18,7 @@ If you want to learn about _everything_ we do, I'll be happy if you [follow me o
   
 ## Future Features
 
-### Things to add that actually were in the original game
+### Things to add that were in the original game
   
 - **Customizable Decks**  
 - **Way more cards** 
