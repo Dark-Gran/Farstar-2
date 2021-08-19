@@ -32,7 +32,7 @@ If you want to know about _everything_ we do, I'll be happy if you [follow me on
 - **Complete support of different resolutions**
 - **Tutorial**
 
-### And more
+### More things we want to add
 
 - **2v2 Mode** 
   - Yes: the paper version is already playable as 2v2, and if you check out the code, you may notice that it's actually prepared for more than just 1v1 matches as well (which does not only mean the possibility of 2v2, but for example a free-for-all as well). Let's fight friends with friends! ;)
