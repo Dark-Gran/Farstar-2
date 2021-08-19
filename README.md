@@ -16,10 +16,7 @@ If you want to know about _everything_ we do, I'll be happy if you [follow me on
 [_(jump to spoilers)_](#screenshots)
   
   
-## Future Features  
-
-As this is only an early Alpha, there's still a lot I'd love to add.  
-And by a lot, I mean:  
+## Future Features
 
 ### Things to add that actually were in the original game
   
