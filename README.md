@@ -23,8 +23,8 @@ If you want to learn about _everything_ we do, I'll be happy if you [follow me o
 - **Customizable Decks**  
 - **Way more cards** 
   - Over 60 ship portraits are waiting to be updated and added, which includes both shipyard and rare ships that you draw like Actions or Tactics. The original game also contained over 200 "actions", bringing the total with ships close to 300 cards - and that was meant only as a start of something much greater! This of course includes adding many new abilities to go with these cards.  
-- **Multiplayer**  
-- **Server for matchmaking and user-stats**
+- **Online multiplayer**  
+- **Server App for matchmaking and user-stats**
 - **In-game reward system for unlocking/crafting cards**   
   - It's not meant to be a grind, but it is a _collectible_ card game. Giving the entire collection to new players right away ruins part of the fun.
 - **Real-time card-trading between players** 
