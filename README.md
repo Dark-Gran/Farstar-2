@@ -38,13 +38,15 @@ And by a lot, I mean:
 ### And more
 
 - **2v2 Mode** 
-  - Yes: the paper version is already playable as 2v2, and if you check out current versions code, you may notice that it's actually prepared for more than just 1v1 matches as well (which does not mean just the possibility of 2v2, but for example a free-for-all as well). Let's fight friends with friends! ;)
+  - Yes: the paper version is already playable as 2v2, and if you check out the code, you may notice that it's actually prepared for more than just 1v1 matches as well (which does not only mean the possibility of 2v2, but for example a free-for-all as well). Let's fight friends with friends! ;)
 - **Story-driven Campaigns** 
-  - The original Tutorial was not only hand-holdy, but also filled with way too much story, keeping away the player from focusing on the mechanics. But I clearly love to tell stories! So we would like to continue with those, this time in a proper campaign mode.  
+  - The original Tutorial was not only hand-holdy, but also filled with way too much story, keeping away the player from focusing on the mechanics. But I clearly love to tell stories! So we would like to continue with those, this time in a proper campaign mode.
+- **Even more cards!**
+  - We talked about the almost 300 cards in the original game, but we actually have around _700 card drafts_ lying around from 5 Species containing 11 Factions. This includes different game mechanics for each Species, whether it's a twist on resources or a way they treat their Shipyard (or ships in general).  
 - **Sound and Music** 
-  - Well, the original game actually had both, but the music track is actually a quick placeholder and the quality of equipment we had to make the sounds was just to low to achieve anything decent. With enough time though, anything is possible.  
+  - Well, the original game actually had both, but the music track is just a quick placeholder, and the quality of equipment (and, again, time) that we had to make the sounds was just to low to achieve anything decent.  
 - **Better visual effects** 
-  - There is only a "necessary handful" of effects in game: most cards actually deserve their own, and there should be effects at certain points of plays that are just missing at this moment. The effects that are there were made with limited time too - especially the ship-explosion is just a placeholder.  
+  - There is only a "necessary handful" of effects in game: most cards actually deserve their own, and there should be effects at certain points of plays that are just missing at this moment. And the effects that _are_ there were made with limited time too - especially the ship-explosion is just a placeholder.  
 - **Unique portraits for all non-ships too** _(may change)_  
 - **Better AI**  
 - **Release for mobiles and other platforms**
