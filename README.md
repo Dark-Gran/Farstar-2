@@ -39,7 +39,7 @@ If you want to learn about _everything_ we do, I'll be happy if you [follow me o
 - **Story-driven Campaigns** 
   - The original Tutorial was not only hand-holdy, but also filled with way too much story, keeping away the player from focusing on the mechanics. But I clearly love to tell stories! So we would like to continue with those, this time in a proper campaign mode.
 - **Even more cards**
-  - We talked about the almost 300 cards in the original game, but we actually have around _700 card drafts_ lying around from 5 Species containing 11 Factions. This includes different game mechanics for each Species, whether it's a twist on resources or a way they treat their Shipyard (or ships in general).  
+  - We talked about the almost 300 cards in the original game, but we actually have around _700 card drafts_ lying around from 5 Species containing 11 Factions (all with their own place in the Farstar universe). This includes different game mechanics for each Species, whether it's a twist on resources or a way they treat their Shipyard (or ships in general).  
 - **Sound and Music** 
   - Well, the original game actually had both, but the music track is just a quick placeholder, and the quality of equipment (and, again, time) that we had to make the sounds was just to low to achieve anything decent.  
 - **Better visual effects** 
