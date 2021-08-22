@@ -46,7 +46,7 @@ If you want to learn about _everything_ we do, I'll be happy if you [follow me o
   - There is only a "necessary handful" of effects in game: most cards actually deserve their own, and there should be visual effects at certain points of plays that are just missing at this moment. And the effects that _are_ there were made with limited time too - especially the ship-explosion is just a placeholder.  
 - **Better "Quality of life"**
   - This includes the option to view "history" of cards played in a match and a list of currently active effects on a ship (it's only GUI that is missing).
-- **Unique portraits for all non-ships too** _(may change)_  
+- **Unique portraits for all non-ships too**  
 - **Better AI**  
 - **Release for mobiles and other platforms**
 
