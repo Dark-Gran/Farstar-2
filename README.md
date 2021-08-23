@@ -1,6 +1,6 @@
 # Farstar 2  
   
-![main_preview](mpreview.png)  
+![main_preview](banner.png)  
   
 This is a FREE game.  
   
@@ -13,7 +13,7 @@ If you'd like to give me feedback or see my other projects, [talk to us on Disco
   
 If you want to learn about _everything_ we do, I'll be happy if you [follow me on my humble Twitter](https://twitter.com/DarkGran_CZ).
   
-[_(jump to spoilers)_](#screenshots)
+[_(jump to screenshots)_](#screenshots)
   
   
 ## Future Features
@@ -78,6 +78,8 @@ Orbitron - Matt McInerney
   
   
 ## Screenshots  
+  
+![main-preview](mpreview.png)  
   
 ![screenshot-0](screen0.png)  
 
