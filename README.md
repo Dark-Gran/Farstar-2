@@ -58,7 +58,7 @@ If you want to learn about _everything_ we do, I'll be happy if you [follow me o
  
 I've always enjoyed card games (both collectible and 'classic'), so after a rather experimental attempt to merge them with a strategy genre, which lead to a gameplay that I was not satisfied with, I've decided to make a game that actually fits the 'card game' description while using only a few of the original ideas.  
   
-With that in mind (and with some feedback in hands), game's rules have been _drastically_ changed, therefore the entire application has been 'rewritten' from the scratch.  
+With that in mind (and with some feedback in hands), game's rules have been _drastically_ changed, therefore the entire application has been 'rewritten' from scratch.  
   
 This time in Java (with LibGDX for OpenGL). One of the main reasons behind the original choice of Adobe Air (in which the original game has been written) was the fact that it is cross-platform, however such is the case with Java as well. For applications of this size, Java is also a more lightweight (performance-wise) solution.  
 
