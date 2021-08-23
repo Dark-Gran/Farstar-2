@@ -79,8 +79,6 @@ Orbitron - Matt McInerney
   
 ## Screenshots  
   
-![main-preview](mpreview.png)  
-  
 ![screenshot-0](screen0.png)  
 
 ![screenshot-1](screen1.png)  
