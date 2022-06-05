@@ -49,9 +49,6 @@ If you want to learn about _everything_ we do, I'll be happy if you [follow me o
 - **Unique portraits for all non-ships too**  
 - **Better AI**  
 - **Release for mobiles and other platforms**
-
-**If you made it this far, and you would love to see it all happen, please consider supporting us by [becoming our Patron](https://www.patreon.com/bePatron?u=60109614), we would greatly appreciate it!**  
-
   
   
 ## About Project  
