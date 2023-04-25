@@ -59,12 +59,9 @@ With that in mind (and with some feedback in hands), game's rules have been _dra
 This time in Java (with LibGDX for OpenGL). One of the main reasons behind the original choice of Adobe Air (in which the original game has been written) was the fact that it is cross-platform, however such is the case with Java as well. For applications of this size, Java is also a more lightweight (performance-wise) solution.  
 
 (For the previous version of the game, see [Farstar: Exodus](https://github.com/Dark-Gran/Farstar-Exodus) - but be warned, it's so dark it's barely visible.)   
-
-## Credits
-
-Thanks to all my bros for helping me with the gameplay! Especially Mr. Anderson who is responsible for some of the key mechanics.
   
-### Font Credits
+  
+## Font Credits
 
 **ALL FONTS** used in the game belong to their respective authors, and so do my thanks for publishing these fonts under Open Font License or similar:  
 Bahnschrift - Aaron Bell  
