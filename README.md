@@ -9,16 +9,15 @@ This is a FREE game.
 Use [WinRAR](https://www.google.com/search?q=winrar) or similar to extract game files.  
 Launch with exe (no installation required).  
 *Use F1 in game to show Help/Instructions.*  
-If you'd like to give me feedback or see my other projects, [talk to us on Discord!](https://discord.gg/Hwetj9cWNn)[![discord-icon](discord32flip.png)](https://discord.com/invite/N4JxKsX3Q5)  
   
-If you want to learn about _everything_ we do, I'll be happy if you [follow me on my humble Twitter](https://twitter.com/DarkGran_CZ).
+If you want to learn about _everything_ I do, I'll be happy if you [follow me on my humble Twitter](https://twitter.com/DarkGran_CZ).
   
 [_(jump to screenshots)_](#screenshots)
   
   
 ## Future Features
 
-### Things to add that were in the original game
+### Things to add that were in the previous iteration
   
 - **Customizable Decks**  
 - **Way more cards** 
@@ -32,16 +31,16 @@ If you want to learn about _everything_ we do, I'll be happy if you [follow me o
 - **Complete support of different resolutions**
 - **Tutorial**
 
-### More things we want to add
+### More things to add
 
 - **2v2 Mode** 
   - Yes: the paper version is already playable as 2v2, and if you check out the source code, you may notice that it's actually prepared for more than just 1v1 matches as well (which does not only mean the possibility of 2v2, but for example a free-for-all as well). Let's fight friends with friends! ;)
 - **Story-driven Campaigns** 
-  - The original Tutorial was not only hand-holdy, but also filled with way too much story, keeping away the player from focusing on the mechanics. But I clearly love to tell stories! So we would like to continue with those, this time in a proper campaign mode.
+  - The original Tutorial was not only hand-holdy, but also filled with way too much story, keeping away the player from focusing on the mechanics. But I clearly love to tell stories! So I would like to continue with those, this time in a proper campaign mode.
 - **Even more cards**
-  - We talked about the almost 300 cards in the original game, but we actually have around _700 card drafts_ lying around from 5 Species containing 11 Factions (each with its own place in the Farstar universe). This includes different game mechanics for each Species, whether it's a twist on resources or a way they treat their Shipyard (or ships in general).  
+  - I talked about the almost 300 cards in the original game, but I actually have around _700 card drafts_ lying around from 5 Species containing 11 Factions (each with its own place in the Farstar universe). This includes different game mechanics for each Species, whether it's a twist on resources or a way they treat their Shipyard (or ships in general).  
 - **Sound and Music** 
-  - Well, the original game actually had both, but the music track is just a quick placeholder, and the quality of equipment (and, again, time) that we had back then to make the sounds was just to low to achieve anything decent,  
+  - Well, the original game actually had both, but the music track is just a quick placeholder, and the quality of equipment (and, again, time) that I had back then to make the sounds was just to low to achieve anything decent,  
 - **Better visual effects** 
   - There is only a "necessary handful" of effects in game: most cards actually deserve their own, and there should be visual effects at certain points of plays that are just missing at this moment. And the effects that _are_ there were made with limited time too - especially the ship-explosion is just a placeholder.  
 - **Better "Quality of life"**
