@@ -10,7 +10,7 @@ Use [WinRAR](https://www.google.com/search?q=winrar) or similar to extract game 
 Launch with exe (no installation required).  
 *Use F1 in game to show Help/Instructions.*  
   
-If you want to learn about _everything_ I do, I'll be happy if you [follow me on my humble Twitter](https://twitter.com/DarkGran_CZ).
+If you want to learn about _everything_ I do, I'll be happy if you [follow me on my humble Twitter](https://twitter.com/DarkGran_CZ).  
   
 [_(jump to screenshots)_](#screenshots)
   
