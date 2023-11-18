@@ -9,6 +9,8 @@ This is a FREE game.
 Use [WinRAR](https://www.google.com/search?q=winrar) or similar to extract game files.  
 Launch with exe (no installation required).  
 *Use F1 in game to show Help/Instructions.*  
+
+[Visit itch.io page](https://darkgran.itch.io/farstar2-alpha) if you want to donate to my work.
   
 [_(jump to screenshots)_](#screenshots)
   
